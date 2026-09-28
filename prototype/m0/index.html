@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lightweight SRM V1 - M0 Prototype</title>
+<style>
+:root{--bg:#f5f7fb;--panel:#fff;--line:#dfe4ec;--text:#1f2937;--muted:#6b7280;--primary:#2563eb;--soft:#eff6ff;--warn:#b45309;--danger:#b91c1c;--ok:#047857}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit} button{cursor:pointer}
+.app{max-width:1500px;margin:auto;padding:18px}
+.top{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+h1{font-size:22px;margin:0 0 5px}.sub{color:var(--muted);font-size:13px}
+.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px;font-weight:600}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.tab{border:1px solid var(--line);background:#fff;padding:9px 14px;border-radius:10px;font-weight:650}.tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.panel{display:none}.panel.active{display:block}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;box-shadow:0 3px 16px rgba(0,0,0,.03)}
+.cardhead{padding:13px 15px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.cardbody{padding:14px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 10px;background:#fff}
+.btn{border:1px solid var(--line);background:#fff;padding:8px 11px;border-radius:8px;font-weight:600}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}.btn.soft{background:var(--soft);border-color:#bfdbfe;color:#1d4ed8}.btn.danger{color:var(--danger)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(360px,.9fr);gap:14px}
+@media(max-width:980px){.grid2{grid-template-columns:1fr}}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:10px;margin:0 0 14px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:#fff;border:1px solid var(--line);border-radius:11px;padding:12px}.stat b{display:block;font-size:22px}.stat small{color:var(--muted)}
+.tablewrap{overflow:auto;max-height:620px}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{padding:8px 9px;border-bottom:1px solid #edf0f4;text-align:left;white-space:nowrap}.table th{position:sticky;top:0;background:#f9fafb;z-index:2}.table tr:hover td{background:#fafcff}
+.muted{color:var(--muted)}.small{font-size:12px}.warn{color:var(--warn)}.ok{color:var(--ok)}.dangertext{color:var(--danger)}
+.pager{display:flex;justify-content:space-between;align-items:center;padding:10px 0 0;gap:8px}
+.modebar{display:flex;gap:8px}.modebtn{padding:7px 10px;border:1px solid var(--line);background:#fff;border-radius:8px}.modebtn.active{background:#111827;color:#fff}
+.supplierList{display:flex;flex-direction:column;gap:8px;max-height:620px;overflow:auto}
+.srow{border:1px solid var(--line);border-radius:10px;padding:10px}.srow.selected{border-color:#93c5fd;background:#f8fbff}
+.sline{display:flex;justify-content:space-between;gap:10px;align-items:center}.reason{font-size:12px;color:var(--muted);margin-top:3px}
+.tri{font-weight:700}.tri.full{color:var(--ok)}.tri.partial{color:var(--warn)}.tri.none{color:var(--muted)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:999px;padding:3px 7px;font-size:12px}
+.notice{padding:10px 12px;background:#fffbeb;border:1px solid #fde68a;border-radius:9px;font-size:13px}
+.preview{margin-top:10px;padding:10px;border:1px dashed #93c5fd;background:#eff6ff;border-radius:9px;display:none}
+.quotePrice.low{font-weight:800;color:var(--ok)}.quotePrice.second{font-weight:700;color:#1d4ed8}.selectedCell{outline:2px solid #60a5fa;outline-offset:-2px;background:#eff6ff!important}
+.headerPick{font-size:11px;padding:3px 6px}.reasonTag{font-size:11px;color:#7c2d12;background:#ffedd5;padding:2px 5px;border-radius:5px}
+.footerNote{margin-top:14px;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div>
+      <h1>Lightweight SRM V1 · M0 交互原型</h1>
+      <div class="sub">仅用于验证“长清单 → 多对多分配 → Coverage → 报价比较”的产品交互。全部为浏览器内生成的虚构数据。</div>
+    </div>
+    <span class="badge">Prototype / No real data</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="items">1. 拟询价清单</button>
+    <button class="tab" data-tab="assign">2. 询价分配中心</button>
+    <button class="tab" data-tab="quotes">3. 报价比较</button>
+  </div>
+
+  <section id="items" class="panel active">
+    <div class="card">
+      <div class="cardhead">
+        <div><b>RFQ-DEMO-001</b> <span class="muted small">拟询价清单（演示 1,200 行）</span></div>
+        <div class="toolbar">
+          <input id="itemSearch" type="text" placeholder="搜索编码/名称">
+          <select id="catFilter"><option value="">全部分类</option></select>
+          <button class="btn" id="selectPage">选择当前页</button>
+          <button class="btn" id="selectFiltered">选择全部筛选结果</button>
+          <button class="btn danger" id="clearItemSelection">清空选择</button>
+        </div>
+      </div>
+      <div class="cardbody">
+        <div class="notice">业务上不设置拟询价物料条数上限；原型用分页模拟长清单，避免一次渲染全部记录。</div>
+        <div class="tablewrap" style="margin-top:10px">
+          <table class="table">
+            <thead><tr><th></th><th>物料编码</th><th>名称</th><th>分类</th><th>数量</th><th>单位</th><th>已分配供应商</th></tr></thead>
+            <tbody id="itemBody"></tbody>
+          </table>
+        </div>
+        <div class="pager"><span id="itemCount"></span><div><button class="btn" id="prevItem">上一页</button> <button class="btn" id="nextItem">下一页</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="assign" class="panel">
+    <div class="stats">
+      <div class="stat"><small>拟询价物料</small><b id="stTotal">0</b></div>
+      <div class="stat"><small>已分配 ≥1 家</small><b id="stCovered">0</b></div>
+      <div class="stat"><small>仅 1 家</small><b id="stSingle">0</b></div>
+      <div class="stat"><small>未分配</small><b id="stNone">0</b></div>
+    </div>
+
+    <div class="card" style="margin-bottom:14px">
+      <div class="cardhead">
+        <div class="modebar">
+          <button class="modebtn active" data-mode="itemFirst">按物料分配供应商</button>
+          <button class="modebtn" data-mode="supplierFirst">按供应商分配物料</button>
+        </div>
+        <div class="toolbar">
+          <button class="btn soft" id="previewBtn">生成前预览</button>
+          <button class="btn primary" id="generateBtn">生成已分配询价单</button>
+        </div>
+      </div>
+      <div class="cardbody">
+        <div class="notice">Coverage 只是提示，不是硬门槛。即使低于 100%，也允许生成已完成分配部分的询价单。</div>
+        <div id="previewBox" class="preview"></div>
+      </div>
+    </div>
+
+    <div id="itemFirstView" class="grid2">
+      <div class="card">
+        <div class="cardhead">
+          <b>选择物料</b>
+          <div class="toolbar">
+            <input id="assignItemSearch" type="text" placeholder="搜索物料">
+            <select id="assignCatFilter"><option value="">全部分类</option></select>
+            <select id="assignStateFilter">
+              <option value="">全部状态</option>
+              <option value="none">未分配</option>
+              <option value="single">仅1家</option>
+              <option value="multi">2家及以上</option>
+            </select>
+            <button class="btn" id="selectAssignPage">选择当前页</button>
+            <button class="btn danger" id="clearAssignSelection">清空选择</button>
+          </div>
+        </div>
+        <div class="cardbody">
+          <div class="small muted" style="margin-bottom:8px">已选 <b id="assignSelectedCount">0</b> 项。选择供应商时默认“追加关系”，不会覆盖已有供应商。</div>
+          <div class="tablewrap">
+            <table class="table">
+              <thead><tr><th></th><th>物料</th><th>分类</th><th>当前供应商</th></tr></thead>
+              <tbody id="assignItemBody"></tbody>
+            </table>
+          </div>
+          <div class="pager"><span id="assignItemCount"></span><div><button class="btn" id="prevAssign">上一页</button> <button class="btn" id="nextAssign">下一页</button></div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardhead">
+          <div><b>本次候选供应商池</b> <span class="muted small">三态显示</span></div>
+          <input id="supplierSearch" type="text" placeholder="搜索供应商">
+        </div>
+        <div class="cardbody">
+          <div id="supplierList" class="supplierList"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="supplierFirstView" class="grid2" style="display:none">
+      <div class="card">
+        <div class="cardhead"><b>选择供应商</b><input id="supplierFirstSearch" type="text" placeholder="搜索供应商"></div>
+        <div class="cardbody"><div id="supplierFirstList" class="supplierList"></div></div>
+      </div>
+      <div class="card">
+        <div class="cardhead">
+          <div><b id="supplierFirstTitle">选择左侧供应商</b></div>
+          <div class="toolbar">
+            <input id="sfItemSearch" type="text" placeholder="搜索物料">
+            <select id="sfCatFilter"><option value="">全部分类</option></select>
+            <button class="btn" id="sfSelectPage">选择当前页</button>
+            <button class="btn soft" id="sfAdd">+ 添加所选物料</button>
+            <button class="btn danger" id="sfRemove">− 移除所选物料</button>
+          </div>
+        </div>
+        <div class="cardbody">
+          <div class="tablewrap">
+            <table class="table"><thead><tr><th></th><th>物料</th><th>分类</th><th>当前状态</th></tr></thead><tbody id="sfItemBody"></tbody></table>
+          </div>
+          <div class="pager"><span id="sfItemCount"></span><div><button class="btn" id="sfPrev">上一页</button> <button class="btn" id="sfNext">下一页</button></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quotes" class="panel">
+    <div class="card">
+      <div class="cardhead">
+        <div><b>报价比较</b> <span class="muted small">虚构报价，仅验证交互</span></div>
+        <div class="toolbar"><button class="btn" id="resetAwards">清空选择</button></div>
+      </div>
+      <div class="cardbody">
+        <div class="notice">最低价仅作为提示；允许选择非最低价，但必须填写原因。V1 每项物料最终选择一家供应商。</div>
+        <div class="tablewrap" style="margin-top:10px">
+          <table class="table" id="quoteTable"></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footerNote">M0 原型不保存数据、不连接网络、不导入真实文件。它只用于确认产品交互，正式数据层从 M1 开始。</div>
+</div>
+
+<script>
+const categories=["类别A","类别B","类别C","类别D","类别E","类别F"];
+const units=["件","套","个"];
+const items=Array.from({length:1200},(_,i)=>({
+  id:"ITEM-"+String(i+1).padStart(5,"0"),
+  name:"示例物料 "+String(i+1).padStart(4,"0"),
+  cat:categories[i%categories.length],
+  qty:(i%17)+1,
+  unit:units[i%units.length]
+}));
+const suppliers=Array.from({length:24},(_,i)=>({
+  id:"SUP-"+String(i+1).padStart(3,"0"),
+  name:"示例供应商 "+String(i+1).padStart(2,"0"),
+  reason:i<6?"历史采购":i<12?"历史报价":i<18?"同类物料":"人工候选"
+}));
+const assignments=new Map();
+function getSet(itemId){if(!assignments.has(itemId)) assignments.set(itemId,new Set());return assignments.get(itemId)}
+for(let i=0;i<180;i++){getSet(items[i].id).add(suppliers[i%6].id);if(i%3===0)getSet(items[i].id).add(suppliers[(i+2)%8].id)}
+for(let i=180;i<300;i++){getSet(items[i].id).add(suppliers[i%10].id)}
+
+const itemSel=new Set(), assignSel=new Set(), sfSel=new Set();
+let itemPage=0, assignPage=0, sfPage=0, assignMode="itemFirst", activeSupplier=null;
+const PAGE=50;
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
+function fillCats(){["catFilter","assignCatFilter","sfCatFilter"].forEach(id=>{const el=document.getElementById(id);categories.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o)})})}
+fillCats();
+
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active");if(b.dataset.tab==="assign")renderAssignAll();if(b.dataset.tab==="quotes")renderQuotes()});
+document.querySelectorAll(".modebtn").forEach(b=>b.onclick=()=>{assignMode=b.dataset.mode;document.querySelectorAll(".modebtn").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("itemFirstView").style.display=assignMode==="itemFirst"?"grid":"none";document.getElementById("supplierFirstView").style.display=assignMode==="supplierFirst"?"grid":"none";renderAssignAll()});
+
+function filteredItems(searchId,catId,stateId){
+  const q=(document.getElementById(searchId)?.value||"").trim().toLowerCase(), cat=document.getElementById(catId)?.value||"", state=document.getElementById(stateId)?.value||"";
+  return items.filter(it=>{
+    const n=getSet(it.id).size;
+    const stateOk=!state||(state==="none"&&n===0)||(state==="single"&&n===1)||(state==="multi"&&n>=2);
+    return (!q||(it.id+" "+it.name).toLowerCase().includes(q))&&(!cat||it.cat===cat)&&stateOk
+  })
+}
+function renderItemList(){
+  const list=filteredItems("itemSearch","catFilter"), pages=Math.max(1,Math.ceil(list.length/PAGE));itemPage=Math.min(itemPage,pages-1);
+  const slice=list.slice(itemPage*PAGE,itemPage*PAGE+PAGE);
+  document.getElementById("itemBody").innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-item="${it.id}" ${itemSel.has(it.id)?"checked":""}></td><td>${it.id}</td><td>${it.name}</td><td>${it.cat}</td><td>${it.qty}</td><td>${it.unit}</td><td>${getSet(it.id).size}</td></tr>`).join("");
+  document.querySelectorAll("#itemBody input[data-item]").forEach(c=>c.onchange=()=>{c.checked?itemSel.add(c.dataset.item):itemSel.delete(c.dataset.item)});
+  document.getElementById("itemCount").textContent=`筛选结果 ${list.length} 项 · 第 ${itemPage+1}/${pages} 页 · 已选择 ${itemSel.size} 项`;
+}
+["itemSearch","catFilter"].forEach(id=>document.getElementById(id).oninput=()=>{itemPage=0;renderItemList()});
+document.getElementById("prevItem").onclick=()=>{if(itemPage>0)itemPage--;renderItemList()};
+document.getElementById("nextItem").onclick=()=>{const n=filteredItems("itemSearch","catFilter").length;if((itemPage+1)*PAGE<n)itemPage++;renderItemList()};
+document.getElementById("selectPage").onclick=()=>{filteredItems("itemSearch","catFilter").slice(itemPage*PAGE,itemPage*PAGE+PAGE).forEach(it=>itemSel.add(it.id));renderItemList()};
+document.getElementById("selectFiltered").onclick=()=>{filteredItems("itemSearch","catFilter").forEach(it=>itemSel.add(it.id));renderItemList()};
+document.getElementById("clearItemSelection").onclick=()=>{itemSel.clear();renderItemList()};
+
+function coverage(){
+  let covered=0,single=0,none=0;
+  items.forEach(it=>{const n=getSet(it.id).size;if(n===0)none++;else{covered++;if(n===1)single++}});
+  return {covered,single,none}
+}
+function renderStats(){const c=coverage();stTotal.textContent=items.length;stCovered.textContent=c.covered;stSingle.textContent=c.single;stNone.textContent=c.none}
+function renderAssignItems(){
+  const list=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"), pages=Math.max(1,Math.ceil(list.length/PAGE));assignPage=Math.min(assignPage,pages-1);
+  const slice=list.slice(assignPage*PAGE,assignPage*PAGE+PAGE);
+  assignItemBody.innerHTML=slice.map(it=>{const names=[...getSet(it.id)].slice(0,3).map(sid=>suppliers.find(s=>s.id===sid)?.name).filter(Boolean);return `<tr><td><input type="checkbox" data-ai="${it.id}" ${assignSel.has(it.id)?"checked":""}></td><td><b>${it.id}</b><br><span class="muted">${it.name}</span></td><td>${it.cat}</td><td>${names.length?names.map(n=>`<span class="chip">${n}</span>`).join(" "):'<span class="dangertext">未分配</span>'}</td></tr>`}).join("");
+  document.querySelectorAll("#assignItemBody input[data-ai]").forEach(c=>c.onchange=()=>{c.checked?assignSel.add(c.dataset.ai):assignSel.delete(c.dataset.ai);renderSuppliers()});
+  assignSelectedCount.textContent=assignSel.size;
+  assignItemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${assignPage+1}/${pages} 页`;
+}
+["assignItemSearch","assignCatFilter","assignStateFilter"].forEach(id=>document.getElementById(id).oninput=()=>{assignPage=0;renderAssignItems()});
+document.getElementById("prevAssign").onclick=()=>{if(assignPage>0)assignPage--;renderAssignItems()};
+document.getElementById("nextAssign").onclick=()=>{const n=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter").length;if((assignPage+1)*PAGE<n)assignPage++;renderAssignItems()};
+document.getElementById("selectAssignPage").onclick=()=>{filteredItems("assignItemSearch","assignCatFilter","assignStateFilter").slice(assignPage*PAGE,assignPage*PAGE+PAGE).forEach(it=>assignSel.add(it.id));renderAssignAll()};
+document.getElementById("clearAssignSelection").onclick=()=>{assignSel.clear();renderAssignAll()};
+
+function renderSuppliers(){
+  const q=supplierSearch.value.trim().toLowerCase(), selected=[...assignSel], total=selected.length;
+  supplierList.innerHTML=suppliers.filter(s=>(s.id+" "+s.name).toLowerCase().includes(q)).map(s=>{
+    const count=selected.filter(i=>getSet(i).has(s.id)).length;
+    const cls=total===0||count===0?"none":count===total?"full":"partial";
+    const icon=total===0||count===0?"☐":count===total?"☑":"◩";
+    return `<div class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><div class="tri ${cls}">${icon} ${count}/${total}</div></div><div class="toolbar" style="margin-top:8px"><button class="btn soft" data-add="${s.id}" ${total===0?"disabled":""}>+ 添加到未关联项</button><button class="btn danger" data-rem="${s.id}" ${count===0?"disabled":""}>− 移除已关联项</button></div></div>`
+  }).join("");
+  document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{let n=0;assignSel.forEach(i=>{const set=getSet(i);if(!set.has(b.dataset.add)){set.add(b.dataset.add);n++}});flash(`已新增 ${n} 条物料—供应商关系；原有分配未改变。`);renderAssignAll()});
+  document.querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>{let n=0;assignSel.forEach(i=>{const set=getSet(i);if(set.delete(b.dataset.rem))n++});flash(`已移除 ${n} 条关系。`);renderAssignAll()});
+}
+supplierSearch.oninput=renderSuppliers;
+
+function renderSupplierFirstList(){
+  const q=supplierFirstSearch.value.trim().toLowerCase();
+  supplierFirstList.innerHTML=suppliers.filter(s=>(s.id+" "+s.name).toLowerCase().includes(q)).map(s=>{
+    let c=0;items.forEach(it=>{if(getSet(it.id).has(s.id))c++});
+    return `<div class="srow ${activeSupplier===s.id?"selected":""}" data-sf-s="${s.id}"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><div>${c} 项</div></div></div>`
+  }).join("");
+  document.querySelectorAll("[data-sf-s]").forEach(x=>x.onclick=()=>{activeSupplier=x.dataset.sfS;sfSel.clear();sfPage=0;renderSupplierFirstList();renderSfItems()})
+}
+supplierFirstSearch.oninput=renderSupplierFirstList;
+function filteredSfItems(){
+  const q=sfItemSearch.value.trim().toLowerCase(), cat=sfCatFilter.value;
+  return items.filter(it=>(!q||(it.id+" "+it.name).toLowerCase().includes(q))&&(!cat||it.cat===cat))
+}
+function renderSfItems(){
+  if(!activeSupplier){supplierFirstTitle.textContent="选择左侧供应商";sfItemBody.innerHTML="";sfItemCount.textContent="";return}
+  const sup=suppliers.find(s=>s.id===activeSupplier);supplierFirstTitle.textContent=sup.name+"：选择物料";
+  const list=filteredSfItems(),pages=Math.max(1,Math.ceil(list.length/PAGE));sfPage=Math.min(sfPage,pages-1);
+  const slice=list.slice(sfPage*PAGE,sfPage*PAGE+PAGE);
+  sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.id}" ${sfSel.has(it.id)?"checked":""}></td><td><b>${it.id}</b><br><span class="muted">${it.name}</span></td><td>${it.cat}</td><td>${getSet(it.id).has(activeSupplier)?'<span class="ok">已关联</span>':'<span class="muted">未关联</span>'}</td></tr>`).join("");
+  document.querySelectorAll("[data-sfi]").forEach(c=>c.onchange=()=>{c.checked?sfSel.add(c.dataset.sfi):sfSel.delete(c.dataset.sfi)});
+  sfItemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${sfPage+1}/${pages} 页 · 已选择 ${sfSel.size} 项`;
+}
+["sfItemSearch","sfCatFilter"].forEach(id=>document.getElementById(id).oninput=()=>{sfPage=0;renderSfItems()});
+sfSelectPage.onclick=()=>{filteredSfItems().slice(sfPage*PAGE,sfPage*PAGE+PAGE).forEach(it=>sfSel.add(it.id));renderSfItems()};
+sfPrev.onclick=()=>{if(sfPage>0)sfPage--;renderSfItems()};sfNext.onclick=()=>{if((sfPage+1)*PAGE<filteredSfItems().length)sfPage++;renderSfItems()};
+sfAdd.onclick=()=>{if(!activeSupplier)return;let n=0;sfSel.forEach(i=>{const set=getSet(i);if(!set.has(activeSupplier)){set.add(activeSupplier);n++}});flash(`已新增 ${n} 条关系。`);renderAssignAll()};
+sfRemove.onclick=()=>{if(!activeSupplier)return;let n=0;sfSel.forEach(i=>{if(getSet(i).delete(activeSupplier))n++});flash(`已移除 ${n} 条关系。`);renderAssignAll()};
+
+function renderAssignAll(){renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
+function flash(msg){document.getElementById("previewBox").style.display="block";document.getElementById("previewBox").textContent=msg}
+previewBtn.onclick=()=>{
+  const rows=suppliers.map(s=>{let c=0;items.forEach(it=>{if(getSet(it.id).has(s.id))c++});return [s,c]}).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]);
+  const c=coverage();
+  previewBox.style.display="block";
+  previewBox.innerHTML=`<b>生成预览</b><div class="small" style="margin:6px 0">已覆盖 ${c.covered}/${items.length} 项；未覆盖 ${c.none} 项。未覆盖不阻止生成。</div>`+rows.slice(0,12).map(([s,n])=>`<div>${s.name}：${n} 项</div>`).join("")+(rows.length>12?`<div class="muted">……另有 ${rows.length-12} 家</div>`:"");
+};
+generateBtn.onclick=()=>{const c=coverage();alert(`原型动作：允许生成。\n已覆盖 ${c.covered}/${items.length} 项，未覆盖 ${c.none} 项将保留在当前 RFQ 中。\n正式 M4 再实现 Excel 文件生成。`)};
+
+const quoteSuppliers=suppliers.slice(0,4);
+const quoteItems=items.slice(0,24);
+const awards=new Map(), awardReasons=new Map();
+function quoteFor(i,s){if((i+s)%9===0)return null;return 80+((i*13+s*17)%70)+((s+1)*0.35)}
+function renderQuotes(){
+  let h=`<thead><tr><th>物料</th><th>上次采购价</th>`+quoteSuppliers.map((s,si)=>`<th>${s.name}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`).join("")+`<th>最终选择</th></tr></thead><tbody>`;
+  quoteItems.forEach((it,i)=>{
+    const vals=quoteSuppliers.map((s,si)=>({sid:s.id,v:quoteFor(i,si)})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);
+    const low=vals[0]?.sid, second=vals[1]?.sid, prev=(95+((i*11)%50)).toFixed(2);
+    h+=`<tr><td><b>${it.id}</b><br><span class="muted">${it.name}</span></td><td>¥${prev}</td>`;
+    quoteSuppliers.forEach((s,si)=>{
+      const v=quoteFor(i,si), cls=s.id===low?"low":s.id===second?"second":"", selected=awards.get(it.id)===s.id;
+      h+=`<td class="${selected?"selectedCell":""}">${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}" data-award="${it.id}|${s.id}">¥${v.toFixed(2)}</button><br><span class="small muted">交期 ${3+((i+si)%18)} 天 · MOQ ${1+((i+si)%5)*5}</span>`}</td>`
+    });
+    const win=awards.get(it.id), r=awardReasons.get(it.id);
+    h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:""):'<span class="muted">未选择</span>'}</td></tr>`;
+  });
+  h+="</tbody>";quoteTable.innerHTML=h;
+  document.querySelectorAll("[data-award]").forEach(b=>b.onclick=()=>{const [iid,sid]=b.dataset.award.split("|");chooseAward(iid,sid)});
+  document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall;quoteItems.forEach((it,i)=>{const si=quoteSuppliers.findIndex(s=>s.id===sid);if(quoteFor(i,si)!=null)awards.set(it.id,sid)});renderQuotes()});
+}
+function chooseAward(iid,sid){
+  const i=quoteItems.findIndex(x=>x.id===iid), vals=quoteSuppliers.map((s,si)=>({sid:s.id,v:quoteFor(i,si)})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);
+  if(vals[0]?.sid!==sid){
+    const reason=prompt("选择的不是最低报价，请填写原因：","");
+    if(reason===null||!reason.trim())return;
+    awardReasons.set(iid,reason.trim());
+  }else awardReasons.delete(iid);
+  awards.set(iid,sid);renderQuotes()
+}
+resetAwards.onclick=()=>{awards.clear();awardReasons.clear();renderQuotes()};
+
+renderItemList();renderAssignAll();renderQuotes();
+</script>
+</body>
+</html>
