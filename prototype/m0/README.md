@@ -84,3 +84,21 @@ M0 should also validate the quotation-return import interaction before M5 implem
 Real Excel parsing, reusable mapping templates, normalization, persistence, and production quotation import remain M5 responsibilities.
 
 Clipboard inquiry-item input now provides separate **Clear input** and **Clear preview** actions so users can reset either side independently.
+
+
+## Quotation import and rounds in M0
+
+The M0 prototype now includes quotation-return import through manual entry, clipboard paste, CSV/TXT import, and a simulated Excel-import flow.
+
+Imported rows are written into a supplier-specific quotation round and can be manually corrected afterward.
+
+Quotation rounds follow these rules:
+- rounds belong to one RFQ + one supplier;
+- a new round never overwrites an earlier round;
+- later rounds may contain only changed items;
+- missing lines in a later round are not automatically treated as unchanged;
+- buyers can explicitly mark missing lines as confirmed carry-forward from the prior round;
+- a repeated same price is still stored in the new round and shows 0 price change;
+- only confirmed rounds become effective in quotation comparison.
+
+M0 displays the previous-round price and current-round price side by side to validate the negotiation-history workflow.
