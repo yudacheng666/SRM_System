@@ -86,15 +86,34 @@ For batch selection, use three states:
 - checked: all selected items are assigned
 
 Partial state actions should allow:
-- add supplier to remaining items
-- remove supplier from already assigned items
+- add the supplier to the selected items that are not yet related
+- remove the supplier from selected items that are already related
 - inspect affected items
+
+Use direct, explicit action labels such as:
+- "Add this supplier to selected items"
+- "Remove this supplier from selected items"
+
+In supplier-first mode, the checkbox is the relationship state itself:
+- checked = this item is assigned to the active supplier
+- unchecked = this item is not assigned to the active supplier
+
+Toggling the checkbox changes the relationship directly. Do not use a separate temporary-selection checkbox followed by another "add selected items" action, because that creates a misleading second state.
+
+Long checkbox lists should support Shift range selection.
+
+To reduce repetitive assignment work while preserving supplier-specific differences, supplier-first mode should support:
+- copying another supplier's assigned-item scope as a starting point
+- adding or removing only the differences afterward
+- bulk-linking or bulk-unlinking the current filtered result when appropriate
 
 Batch operations should report how many relationships were added or removed and should support undo where practical.
 
 ## 5. Candidate supplier pool
 
-An RFQ should use a candidate supplier pool instead of forcing users to operate against the complete supplier master list.
+An RFQ should use a buyer-managed candidate supplier pool instead of forcing users to operate against the complete supplier master list.
+
+Supplier-first assignment must show only suppliers already added to the current RFQ. The buyer explicitly adds suppliers from supplier master data into the RFQ supplier pool.
 
 Candidate suppliers may be suggested from:
 - historical purchases for the item
@@ -188,6 +207,8 @@ Automatically expose:
 - second-lowest quotation
 - previous purchase price, when available
 
+For each item, select the lowest valid quotation by default. This is only the initial system selection and remains editable by the buyer.
+
 Allow selection of a non-lowest-price supplier, but require a reason.
 
 Comparison should support:
@@ -203,9 +224,13 @@ V1 does not require quantity splitting across multiple suppliers for the same it
 Continuously retain:
 - historical purchase prices
 - historical quotations
+- quotation round / negotiation round
+- historical quotations by item and supplier
 - historical suppliers by item
 - historical RFQ assignments
 - prior supplier selections
+
+The system must support querying the complete quotation history for a specific item-supplier pair across RFQs and negotiation rounds, including quotation date, price, MOQ, lead time, and related RFQ.
 
 The accumulated data should improve future candidate supplier suggestions.
 
@@ -270,3 +295,54 @@ Keep UI, business logic, and data access separated so that a later server versio
 ## 16. Public repository rule
 
 All examples, fixtures, screenshots, documents, comments, and test data in this repository must be fictional or anonymized. No real organization, person, customer, supplier, product, project, price, quantity, system/vendor identity, or internal operating statistic may be committed.
+
+
+## 17. Negotiation rounds and OA comparison report
+
+The quotation model must retain negotiation history instead of overwriting the previous quotation.
+
+At minimum, the workflow must support:
+- initial quotation / round 1
+- second negotiation quotation / round 2
+- later rounds as an extensible data structure
+
+A negotiation round may result in no price reduction. The supplier may keep the same price, and that outcome is valid as long as the round is recorded.
+
+For every item-supplier quotation series, retain each round separately and calculate, when applicable:
+- previous-round price
+- current-round price
+- reduction amount
+- reduction percentage
+- whether the price changed
+- quotation / negotiation date
+- notes or negotiation result
+
+The system must generate a comparison report suitable for submission into an external OA approval process.
+
+The comparison report should include, at minimum:
+- RFQ identification
+- inquiry items
+- participating suppliers
+- each supplier's quotation by negotiation round
+- previous purchase price when available
+- price change between rounds
+- reduction amount and reduction percentage
+- lead time
+- MOQ
+- final selected supplier
+- non-lowest-price selection reason when applicable
+- items or suppliers that did not reduce price in the second negotiation round
+
+The OA report is an export artifact. Direct OA API integration is not required for V1 unless separately specified.
+
+## 18. Future item drawing integration
+
+Plan a later extension for item drawings and technical-document preview.
+
+The item model should be able to reference one or more drawing/document files.
+
+In the assignment interface, the buyer should be able to select an item and open an embedded preview without leaving the SRM page. This preview is intended to help the buyer judge which suppliers are appropriate for the item.
+
+Initial browser-preview targets should prioritize formats that can be reliably displayed in an offline HTML application, such as PDF and common image formats. Native CAD formats may require later conversion or a dedicated viewer and should not block V1.
+
+The drawing-preview feature is a future enhancement and is not part of the current M0 acceptance scope.
