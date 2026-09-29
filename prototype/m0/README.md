@@ -124,3 +124,19 @@ The demo compact format is similar to:
 `1-99:100|100-499:90|500+:80`
 
 This is only an M0 interaction format. M5 will normalize tier prices from different Excel layouts into the same underlying tier structure.
+
+
+## Newly integrated V1 planning decisions
+
+The V1 roadmap now treats PDF drawings as part of the core RFQ workflow rather than a future enhancement.
+
+Planned production behavior includes:
+- multi-page PDF preview and multiple PDF documents per item;
+- supplier RFQ packages containing the supplier-specific RFQ file plus only the relevant PDF drawings;
+- attachment completeness checks before package generation;
+- RFQ-time attachment snapshots for historical traceability;
+- aggregate quotation analysis such as supplier quoted-scope totals, common-item-scope totals, selected-scope totals, theoretical-lowest total, and final-selected total;
+- permanent quotation history retention beginning in M5;
+- pre-go-live legacy purchase-order / inquiry / quotation migration without inventing unsupported historical events.
+
+These items are roadmap/data-model decisions. The current M0 HTML has not yet implemented the full multi-page PDF viewer, attachment-package generator, or aggregate-total analysis UI.
