@@ -680,8 +680,6 @@ function editQuoteLine(index){
 }
 function fillCats(){["assignCatFilter","sfCatFilter"].forEach(id=>{const el=document.getElementById(id);categories.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o)})})}
 fillCats();
-quoteSupplierOptions();
-if(quoteImportSupplier.value)renderQuoteRoundSelector(true);
 
 quoteImportSupplier.onchange=()=>{clearQuoteImportPreview();renderQuoteRoundSelector(true)};
 quoteRoundSelect.onchange=renderQuoteRound;
@@ -960,6 +958,8 @@ resetAwards.onclick=()=>{awards.clear();awardReasons.clear();setDefaultLowestAwa
 
 refreshFieldControls();
 setDefaultLowestAwards();
+quoteSupplierOptions();
+if(quoteImportSupplier.value)renderQuoteRoundSelector(true);
 renderItemList();renderAssignAll();renderQuotes();
 </script>
 </body>
