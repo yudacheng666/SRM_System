@@ -615,3 +615,41 @@ Coverage anomalies should not be silently discarded. The buyer should be able to
 Extra or duplicate rows should not automatically enter the effective quotation dataset without resolution.
 
 Quotation coverage results should later be available to the comparison report so the approval reviewer can distinguish full quotation coverage from partial or exceptional quotation responses.
+
+
+## 32. Tiered quotation pricing
+
+Tiered pricing must be supported without creating a separate quotation workflow.
+
+A quotation line remains one item quotation record for one supplier and one quotation round.
+
+The line may use either:
+- a single unit price; or
+- an optional tier-price structure containing multiple quantity ranges and unit prices.
+
+Example normalized tier structure:
+
+- quantity 1–99 → unit price 100
+- quantity 100–499 → unit price 90
+- quantity 500+ → unit price 80
+
+The full tier structure must be retained as part of the quotation source data. The system must not replace or destroy the tier structure after calculating a currently applicable price.
+
+For comparison:
+- use the RFQ requested quantity to determine the applicable tier;
+- display the effective unit price used for comparison;
+- clearly indicate that the source quotation is tiered;
+- allow the buyer to inspect the full set of tiers;
+- use the effective price at the same RFQ quantity when calculating round-to-round price changes.
+
+Tier prices belong to the quotation line and quotation round. A later negotiation round may change all tiers, some tiers, or replace a tiered quote with a single price, and earlier rounds remain unchanged.
+
+Quotation import should normalize different source layouts into the same tier structure. Production M5 should support supplier files where tiers may be represented as:
+- multiple tier columns;
+- multiple rows;
+- compact text;
+- or other mapped layouts.
+
+M0 uses a compact synthetic representation only to validate the interaction and normalized data model.
+
+The comparison / OA report in M6 should show the effective price used for the RFQ quantity and provide the complete tier-price detail where the quotation is tiered. This prevents approval users from mistaking one calculated tier price for the supplier's entire quotation.
