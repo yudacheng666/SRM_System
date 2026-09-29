@@ -49,6 +49,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 .rfqSupplierNav{display:flex;flex-direction:column;gap:7px;max-height:65vh;overflow:auto}.rfqSupplierNav button{text-align:left}
 .rfqDoc{border:1px solid var(--line);border-radius:10px;background:white;padding:16px}.rfqDocHead{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px}.rfqDoc table{width:100%;border-collapse:collapse;font-size:12px}.rfqDoc th,.rfqDoc td{border:1px solid #dfe4ec;padding:6px;text-align:left}
 .colFilter{width:100%;min-width:84px;padding:5px 6px!important;font-size:11px!important}.fieldTools{margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fafbfc}
+.pageNums{display:inline-flex;gap:4px;flex-wrap:wrap;align-items:center}.pageNum{min-width:32px;padding:6px 8px;border:1px solid var(--line);background:#fff;border-radius:7px}.pageNum.active{background:#111827;color:#fff}.selectionBar{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.settingsGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.7fr);gap:14px}@media(max-width:900px){.settingsGrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -65,6 +66,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
     <button class="tab active" data-tab="items">1. 本次询价物料</button>
     <button class="tab" data-tab="assign">2. 询价分配中心</button>
     <button class="tab" data-tab="quotes">3. 报价比较</button>
+    <button class="tab" data-tab="settings">4. 系统设置</button>
   </div>
 
   <section id="items" class="panel active">
@@ -73,23 +75,26 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
         <div><b>RFQ-DEMO-001</b> <span class="muted small">本次询价物料（演示 1,200 行）</span></div>
         <div class="toolbar">
           <input id="itemSearch" type="text" placeholder="全字段模糊搜索">
+          <button class="btn" id="runItemSearch">搜索</button>
           <button class="btn soft" id="toggleItemIntake">+ 添加询价物料</button>
           <button class="btn danger" id="deleteSelectedItems">删除选中物料</button>
-          <button class="btn" id="toggleFieldTools">字段设置 / 批量更新</button>
+          <button class="btn" id="toggleFieldTools">批量更新字段值</button>
         </div>
       </div>
       <div class="cardbody">
         <div id="fieldTools" class="fieldTools" style="display:none">
           <div class="toolbar">
-            <button class="btn soft" id="addCustomField">+ 添加字段</button>
-            <select id="deleteFieldSelect"><option value="">选择要删除的自定义字段</option></select>
-            <button class="btn danger" id="deleteCustomField">删除字段</button>
-            <span class="muted">|</span>
             <select id="bulkFieldSelect"><option value="">选择批量更新字段</option></select>
             <input id="bulkFieldValue" type="text" placeholder="批量写入值">
             <button class="btn" id="bulkUpdateField">更新选中物料</button>
           </div>
-          <div class="small muted" style="margin-top:7px">M0 仅演示字段可扩展与批量更新。正式字段结构以后根据 ERP 字段及映射方案确定。</div>
+          <div class="toolbar" style="margin-top:10px">
+            <select id="matchKeyField"><option value="">匹配关键字段</option></select>
+            <select id="matchUpdateField"><option value="">要更新的字段</option></select>
+            <input id="matchUpdateFile" type="file" accept=".csv,.txt,.xlsx,.xls">
+            <button class="btn soft" id="demoMatchUpdate">演示表格匹配更新</button>
+          </div>
+          <div class="small muted" style="margin-top:7px">字段结构在“系统设置”维护；这里仅处理字段值。批量导入更新通过关键字段匹配目标记录。</div>
         </div>
 
         <div id="itemIntake" style="display:none">
@@ -106,7 +111,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
             </div>
             <div class="intakeBox">
               <h3>剪贴板批量粘贴</h3>
-              <textarea id="pasteItems" placeholder="每颗物料用分号或换行分隔；字段用逗号分隔。例如：&#10;P-001,示例轴,类别A,2,件;P-002,示例座,类别B,4,个"></textarea>
+              <textarea id="pasteItems" placeholder="支持中/英文逗号、分号、换行、Tab、空格混用。例如：&#10;P-001,示例轴，类别A 2 件；P-002 示例座 类别B,4,个"></textarea>
               <div class="toolbar">
                 <button class="btn" id="readClipboard">读取剪贴板</button>
                 <button class="btn soft" id="parsePaste">解析预览</button>
@@ -121,13 +126,19 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           </div>
           <div id="importPreview" class="importPreview" style="display:none"></div>
         </div>
+        <div class="selectionBar">
+          <button class="btn" id="itemSelectAll">全选</button>
+          <button class="btn" id="itemSelectPage">本页全选</button>
+          <button class="btn" id="itemInvertAll">反选</button>
+          <button class="btn" id="itemInvertPage">本页反选</button>
+        </div>
         <div class="tablewrap" style="margin-top:10px">
           <table class="table">
             <thead id="itemHead"></thead>
             <tbody id="itemBody"></tbody>
           </table>
         </div>
-        <div class="pager"><span id="itemCount"></span><div><button class="btn" id="prevItem">上一页</button> <button class="btn" id="nextItem">下一页</button></div></div>
+        <div class="pager"><span id="itemCount"></span><div id="itemPager"></div></div>
       </div>
     </div>
   </section>
@@ -169,7 +180,11 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
               <option value="single">仅1家</option>
               <option value="multi">2家及以上</option>
             </select>
-            <button class="btn" id="selectAssignPage">选择当前页</button>
+            <button class="btn" id="runAssignSearch">搜索</button>
+            <button class="btn" id="selectAssignAll">全选</button>
+            <button class="btn" id="selectAssignPage">本页全选</button>
+            <button class="btn" id="invertAssignAll">反选</button>
+            <button class="btn" id="invertAssignPage">本页反选</button>
             <button class="btn danger" id="clearAssignSelection">清空选择</button>
           </div>
         </div>
@@ -181,14 +196,14 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
               <tbody id="assignItemBody"></tbody>
             </table>
           </div>
-          <div class="pager"><span id="assignItemCount"></span><div><button class="btn" id="prevAssign">上一页</button> <button class="btn" id="nextAssign">下一页</button></div></div>
+          <div class="pager"><span id="assignItemCount"></span><div id="assignPager"></div></div>
         </div>
       </div>
 
       <div class="card">
         <div class="cardhead">
           <div><b>本次候选供应商池</b> <span class="muted small">三态显示</span></div>
-          <input id="supplierSearch" type="text" placeholder="搜索供应商">
+          <div class="toolbar"><input id="supplierSearch" type="text" placeholder="搜索供应商"><button class="btn" id="runSupplierSearch">搜索</button></div>
         </div>
         <div class="cardbody">
           <div id="supplierList" class="supplierList"></div>
@@ -202,6 +217,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           <b>本次询价供应商</b>
           <div class="toolbar">
             <input id="supplierFirstSearch" type="text" placeholder="搜索本次供应商（名称/编码）">
+            <button class="btn" id="runSupplierFirstSearch">搜索</button>
             <button class="btn soft" id="openSupplierPicker">+ 添加供应商到本次询价</button>
           </div>
         </div>
@@ -210,12 +226,17 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           <div id="supplierPicker" class="preview">
             <div class="toolbar" style="margin-bottom:8px">
               <input id="supplierPoolSearch" type="text" placeholder="搜索供应商（支持模糊搜索）">
+              <button class="btn" id="runSupplierPoolSearch">搜索</button>
+              <button class="btn" id="supplierPickAll">全选</button>
+              <button class="btn" id="supplierPickPage">本页全选</button>
+              <button class="btn" id="supplierInvertAll">反选</button>
+              <button class="btn" id="supplierInvertPage">本页反选</button>
               <button class="btn soft" id="addPickedSuppliers">加入勾选供应商</button>
               <button class="btn danger" id="clearPickedSuppliers">清空勾选</button>
               <button class="btn" id="closeSupplierPicker">关闭</button>
             </div>
             <div class="small muted" style="margin-bottom:8px">勾选清单支持 Shift 连选。</div>
-            <div id="supplierPoolList" class="supplierList"></div>
+            <div id="supplierPoolList" class="supplierList"></div><div class="pager"><span id="supplierPoolCount"></span><div id="supplierPoolPager"></div></div>
           </div>
           <div id="supplierFirstList" class="supplierList"></div>
         </div>
@@ -226,17 +247,21 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           <div class="toolbar">
             <input id="sfItemSearch" type="text" placeholder="全字段模糊搜索">
             <select id="sfCatFilter"><option value="">全部分类</option></select>
+            <button class="btn" id="runSfSearch">搜索</button>
             <select id="copyFromSupplier"><option value="">复制其他供应商的物料范围…</option></select>
             <button class="btn soft" id="sfCopyRange">复制为起点</button>
-            <button class="btn" id="sfLinkFiltered">当前筛选全部关联</button>
-            <button class="btn danger" id="sfUnlinkFiltered">当前筛选全部取消</button>
+            <button class="btn" id="sfLinkFiltered">全选</button>
+            <button class="btn" id="sfLinkPage">本页全选</button>
+            <button class="btn" id="sfInvertFiltered">反选</button>
+            <button class="btn" id="sfInvertPage">本页反选</button>
+            <button class="btn danger" id="sfUnlinkFiltered">全部取消</button>
           </div>
         </div>
         <div class="cardbody">
           <div class="tablewrap">
             <table class="table"><thead><tr><th>已关联</th><th>物料</th><th>分类</th></tr></thead><tbody id="sfItemBody"></tbody></table>
           </div>
-          <div class="pager"><span id="sfItemCount"></span><div><button class="btn" id="sfPrev">上一页</button> <button class="btn" id="sfNext">下一页</button></div></div>
+          <div class="pager"><span id="sfItemCount"></span><div id="sfPager"></div></div>
         </div>
       </div>
     </div>
@@ -252,6 +277,30 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
         <div class="notice">最低价仅作为提示；允许选择非最低价，但必须填写原因。V1 每项物料最终选择一家供应商。</div>
         <div class="tablewrap" style="margin-top:10px">
           <table class="table" id="quoteTable"></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="settings" class="panel">
+    <div class="settingsGrid">
+      <div class="card">
+        <div class="cardhead"><b>字段维护</b><span class="muted small">正式版本按 ERP 字段与映射方案配置</span></div>
+        <div class="cardbody">
+          <div class="toolbar">
+            <button class="btn soft" id="addCustomField">+ 添加字段</button>
+            <select id="deleteFieldSelect"><option value="">选择要删除的自定义字段</option></select>
+            <button class="btn danger" id="deleteCustomField">删除字段</button>
+          </div>
+          <div class="notice" style="margin-top:10px">这里维护“字段结构”；日常询价页面只修改字段值，不修改字段定义。</div>
+          <div id="fieldDefinitionList" style="margin-top:10px"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cardhead"><b>字段规划说明</b></div>
+        <div class="cardbody small">
+          <p>当前物料编码、名称、分类、数量、单位均为 M0 演示字段。</p>
+          <p>正式字段由 ERP 字段、采购询价字段、报价字段、图纸/技术资料字段共同确定，并通过映射配置接入。</p>
         </div>
       </div>
     </div>
@@ -304,8 +353,8 @@ const customFields=[];
 const fieldFilters={id:"",name:"",cat:"",qty:"",unit:"",supplierCount:""};
 const rfqSupplierPool=new Set();
 items.forEach(it=>getSet(it.id).forEach(sid=>rfqSupplierPool.add(sid)));
-let itemPage=0, assignPage=0, sfPage=0, assignMode="itemFirst", activeSupplier=null;
-const PAGE=50;
+let itemPage=0, assignPage=0, sfPage=0, supplierPoolPage=0, assignMode="itemFirst", activeSupplier=null;
+const PAGE=50, SUPPLIER_PAGE=10;
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
 function compactText(s){return String(s).toLowerCase().replace(/[\s\-_.()（）]/g,"")}
 function isSubsequence(needle,hay){needle=compactText(needle);hay=compactText(hay);let i=0;for(const ch of hay){if(ch===needle[i])i++;if(i===needle.length)return true}return needle.length===0}
@@ -342,6 +391,18 @@ function bindShiftRange(selector,group,idAttr,apply,after){
   });
 }
 function resetRange(group){rangeAnchors.delete(group)}
+function pageSlice(list,page,size=PAGE){return list.slice(page*size,page*size+size)}
+function renderPageNav(el,page,total,size,onPage){
+  const pages=Math.max(1,Math.ceil(total/size));page=Math.min(page,pages-1);
+  let nums=[];for(let i=0;i<pages;i++){if(i===0||i===pages-1||Math.abs(i-page)<=2)nums.push(i)}
+  nums=[...new Set(nums)];
+  let html='<div class="pageNums"><button class="btn" data-pg="prev">上一页</button>';
+  let last=-2;nums.forEach(i=>{if(i-last>1)html+='<span>…</span>';html+=`<button class="pageNum ${i===page?"active":""}" data-pg="${i}">${i+1}</button>`;last=i});
+  html+='<button class="btn" data-pg="next">下一页</button></div>';el.innerHTML=html;
+  el.querySelectorAll("[data-pg]").forEach(b=>b.onclick=()=>{let p=page;if(b.dataset.pg==="prev")p=Math.max(0,page-1);else if(b.dataset.pg==="next")p=Math.min(pages-1,page+1);else p=Number(b.dataset.pg);onPage(p)});
+}
+function selectAllIds(set,list){list.forEach(x=>set.add(x.id))}
+function invertIds(set,list){list.forEach(x=>set.has(x.id)?set.delete(x.id):set.add(x.id))}
 function drawingSvg(it,large=false){
   const n=parseInt(it.id.replace(/\D/g,""),10)||1;
   const holes=2+(n%4), w=large?760:150, h=large?500:100;
@@ -364,8 +425,8 @@ function closeDrawingModal(){drawingModal.classList.remove("open");drawingModal.
 closeDrawing.onclick=closeDrawingModal;drawingModal.onclick=e=>{if(e.target===drawingModal)closeDrawingModal()};
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeDrawingModal();if(document.getElementById("rfqPreviewModal")?.classList.contains("open"))closeRfqPreview.click()}});
 function parseItemRows(text){
-  return String(text||"").split(/[;\n\r]+/).map(x=>x.trim()).filter(Boolean).map((row,idx)=>{
-    const p=row.split(/[，,\t]/).map(x=>x.trim());
+  return String(text||"").split(/[;；\n\r]+/).map(x=>x.trim()).filter(Boolean).map((row,idx)=>{
+    const p=row.split(/[，,\t ]+/).map(x=>x.trim()).filter(Boolean);
     return {id:p[0]||("INPUT-"+String(Date.now()+idx)),name:p[1]||"未命名物料",cat:p[2]||"类别A",qty:Number(p[3])||1,unit:p[4]||"件"};
   });
 }
@@ -404,9 +465,13 @@ importFile.onchange=()=>{
   }
 };
 function refreshFieldControls(){
-  const base=[["name","名称"],["cat","分类"],["qty","数量"],["unit","单位"]];
-  bulkFieldSelect.innerHTML='<option value="">选择批量更新字段</option>'+base.concat(customFields.map(f=>[f.key,f.label])).map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("");
+  const base=[["id","物料编码"],["name","名称"],["cat","分类"],["qty","数量"],["unit","单位"]];
+  const editable=[["name","名称"],["cat","分类"],["qty","数量"],["unit","单位"],...customFields.map(f=>[f.key,f.label])];
+  bulkFieldSelect.innerHTML='<option value="">选择批量更新字段</option>'+editable.map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("");
+  matchKeyField.innerHTML='<option value="">匹配关键字段</option>'+base.concat(customFields.map(f=>[f.key,f.label])).map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("");
+  matchUpdateField.innerHTML='<option value="">要更新的字段</option>'+editable.map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("");
   deleteFieldSelect.innerHTML='<option value="">选择要删除的自定义字段</option>'+customFields.map(f=>`<option value="${f.key}">${esc(f.label)}</option>`).join("");
+  fieldDefinitionList.innerHTML='<table class="table"><thead><tr><th>字段</th><th>类型</th><th>来源</th></tr></thead><tbody>'+base.map(x=>`<tr><td>${x[1]}</td><td>演示</td><td>基础字段</td></tr>`).join("")+customFields.map(f=>`<tr><td>${esc(f.label)}</td><td>文本</td><td>自定义</td></tr>`).join("")+'</tbody></table>';
 }
 toggleFieldTools.onclick=()=>{fieldTools.style.display=fieldTools.style.display==="none"?"block":"none";refreshFieldControls()};
 addCustomField.onclick=()=>{
@@ -428,6 +493,17 @@ bulkUpdateField.onclick=()=>{
   const value=bulkFieldValue.value;let n=0;
   itemManageSel.forEach(id=>{const it=items.find(x=>x.id===id);if(!it)return;if(["name","cat","qty","unit"].includes(key)){it[key]=key==="qty"?(Number(value)||0):value}else{it.custom=it.custom||{};it.custom[key]=value}n++});
   renderItemList();renderAssignAll();alert(`已更新 ${n} 项。`);
+};
+function applyMatchedUpdates(rows){
+  const key=matchKeyField.value,target=matchUpdateField.value;if(!key||!target){alert("请选择匹配关键字段和更新字段。");return}
+  let hit=0,miss=0;rows.forEach(([matchVal,newVal])=>{const it=items.find(x=>String(itemFieldValue(x,key)).trim()===String(matchVal).trim());if(!it){miss++;return}if(["name","cat","qty","unit"].includes(target))it[target]=target==="qty"?(Number(newVal)||0):newVal;else{it.custom=it.custom||{};it.custom[target]=newVal}hit++});
+  renderItemList();renderAssignAll();alert(`匹配更新完成：成功 ${hit} 项，未匹配 ${miss} 项。`);
+}
+demoMatchUpdate.onclick=()=>{applyMatchedUpdates([["ITEM-00001","批量更新示例A"],["ITEM-00002","批量更新示例B"],["ITEM-99999","无匹配示例"]])};
+matchUpdateFile.onchange=()=>{
+  const file=matchUpdateFile.files?.[0];if(!file)return;const ext=(file.name.split(".").pop()||"").toLowerCase();
+  if(ext==="csv"||ext==="txt"){const r=new FileReader();r.onload=()=>{const rows=String(r.result).split(/[;；\n\r]+/).map(x=>x.trim()).filter(Boolean).map(x=>x.split(/[，,\t ]+/).slice(0,2));applyMatchedUpdates(rows)};r.readAsText(file)}
+  else alert("M0 对 Excel 仅演示流程；正式版本由 Excel 解析器按关键字段匹配更新。可点击“演示表格匹配更新”。");
 };
 deleteSelectedItems.onclick=()=>{
   if(!itemManageSel.size){alert("请先勾选要删除的询价物料。");return}
@@ -472,16 +548,19 @@ function renderItemList(){
     ...customFields.map(f=>({key:f.key,label:f.label}))
   ];
   itemHead.innerHTML=`<tr><th></th>${fields.map(f=>`<th>${esc(f.label)}</th>`).join("")}</tr><tr><th></th>${fields.map(f=>`<th><input class="colFilter" type="text" data-field-filter="${f.key}" value="${esc(fieldFilters[f.key]||"")}" placeholder="模糊搜索"></th>`).join("")}</tr>`;
-  document.querySelectorAll("[data-field-filter]").forEach(x=>x.oninput=()=>{fieldFilters[x.dataset.fieldFilter]=x.value;itemPage=0;renderItemList()});
+  document.querySelectorAll("[data-field-filter]").forEach(x=>x.oninput=()=>{fieldFilters[x.dataset.fieldFilter]=x.value});
   const list=currentItemList(),pages=Math.max(1,Math.ceil(list.length/PAGE));itemPage=Math.min(itemPage,pages-1),slice=list.slice(itemPage*PAGE,itemPage*PAGE+PAGE);
   itemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-im="${it.id}" ${itemManageSel.has(it.id)?"checked":""}></td><td>${itemCell(it)}</td><td>${esc(it.name)}</td><td>${esc(it.cat)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td>${getSet(it.id).size}</td>${customFields.map(f=>`<td>${esc(itemFieldValue(it,f.key))}</td>`).join("")}</tr>`).join("");
   bindDrawingThumbs();
   bindShiftRange("#itemBody input[data-im]","item-manage","im",(id,checked)=>checked?itemManageSel.add(id):itemManageSel.delete(id),renderItemList);
   itemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${itemPage+1}/${pages} 页 · 已选择 ${itemManageSel.size} 项`;
+  renderPageNav(itemPager,itemPage,list.length,PAGE,p=>{itemPage=p;resetRange("item-manage");renderItemList()});
 }
-itemSearch.oninput=()=>{itemPage=0;renderItemList()};
-prevItem.onclick=()=>{if(itemPage>0)itemPage--;resetRange("item-manage");renderItemList()};
-nextItem.onclick=()=>{const n=currentItemList().length;if((itemPage+1)*PAGE<n)itemPage++;resetRange("item-manage");renderItemList()};
+runItemSearch.onclick=()=>{itemPage=0;resetRange("item-manage");renderItemList()};
+itemSelectAll.onclick=()=>{selectAllIds(itemManageSel,currentItemList());renderItemList()};
+itemSelectPage.onclick=()=>{selectAllIds(itemManageSel,pageSlice(currentItemList(),itemPage));renderItemList()};
+itemInvertAll.onclick=()=>{invertIds(itemManageSel,currentItemList());renderItemList()};
+itemInvertPage.onclick=()=>{invertIds(itemManageSel,pageSlice(currentItemList(),itemPage));renderItemList()};
 
 function coverage(){
   let covered=0,single=0,none=0;
@@ -497,12 +576,14 @@ function renderAssignItems(){
   bindShiftRange("#assignItemBody input[data-ai]","assign-items","ai",(id,checked)=>checked?assignSel.add(id):assignSel.delete(id),()=>{renderAssignItems();renderSuppliers()});
   assignSelectedCount.textContent=assignSel.size;
   assignItemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${assignPage+1}/${pages} 页`;
+  renderPageNav(assignPager,assignPage,list.length,PAGE,p=>{assignPage=p;resetRange("assign-items");renderAssignItems()});
 }
-["assignItemSearch","assignCatFilter","assignStateFilter"].forEach(id=>document.getElementById(id).oninput=()=>{assignPage=0;resetRange("assign-items");renderAssignItems()});
-document.getElementById("prevAssign").onclick=()=>{if(assignPage>0)assignPage--;resetRange("assign-items");renderAssignItems()};
-document.getElementById("nextAssign").onclick=()=>{const n=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter").length;if((assignPage+1)*PAGE<n)assignPage++;resetRange("assign-items");renderAssignItems()};
-document.getElementById("selectAssignPage").onclick=()=>{filteredItems("assignItemSearch","assignCatFilter","assignStateFilter").slice(assignPage*PAGE,assignPage*PAGE+PAGE).forEach(it=>assignSel.add(it.id));renderAssignAll()};
-document.getElementById("clearAssignSelection").onclick=()=>{assignSel.clear();renderAssignAll()};
+runAssignSearch.onclick=()=>{assignPage=0;resetRange("assign-items");renderAssignItems();renderSuppliers()};
+selectAssignAll.onclick=()=>{selectAllIds(assignSel,filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"));renderAssignAll()};
+selectAssignPage.onclick=()=>{selectAllIds(assignSel,pageSlice(filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"),assignPage));renderAssignAll()};
+invertAssignAll.onclick=()=>{invertIds(assignSel,filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"));renderAssignAll()};
+invertAssignPage.onclick=()=>{invertIds(assignSel,pageSlice(filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"),assignPage));renderAssignAll()};
+clearAssignSelection.onclick=()=>{assignSel.clear();renderAssignAll()};
 
 function renderSuppliers(){
   const q=supplierSearch.value.trim(), selected=[...assignSel], total=selected.length;
@@ -515,7 +596,7 @@ function renderSuppliers(){
   document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{let n=0;assignSel.forEach(i=>{const set=getSet(i);if(!set.has(b.dataset.add)){set.add(b.dataset.add);n++}});flash(`已新增 ${n} 条物料—供应商关系；原有分配未改变。`);renderAssignAll()});
   document.querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>{let n=0;assignSel.forEach(i=>{const set=getSet(i);if(set.delete(b.dataset.rem))n++});flash(`已移除 ${n} 条关系。`);renderAssignAll()});
 }
-supplierSearch.oninput=renderSuppliers;
+runSupplierSearch.onclick=renderSuppliers;
 
 function renderSupplierFirstList(){
   const q=supplierFirstSearch.value.trim();
@@ -536,24 +617,33 @@ function renderSupplierFirstList(){
   });
   renderCopySources();
 }
-function renderSupplierPoolPicker(){
+function supplierPoolFiltered(){
   const q=supplierPoolSearch.value.trim();
-  const list=suppliers.filter(s=>!rfqSupplierPool.has(s.id)&&supplierMatches(s,q));
-  supplierPoolList.innerHTML=list.map(s=>`<label class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.id} · ${s.reason}</div></div><input type="checkbox" data-spick="${s.id}" ${supplierPickerSel.has(s.id)?"checked":""}></div></label>`).join("")||'<div class="muted small">没有更多可添加供应商。</div>';
+  return suppliers.filter(s=>!rfqSupplierPool.has(s.id)&&supplierMatches(s,q));
+}
+function renderSupplierPoolPicker(){
+  const list=supplierPoolFiltered(),pages=Math.max(1,Math.ceil(list.length/SUPPLIER_PAGE));supplierPoolPage=Math.min(supplierPoolPage,pages-1),slice=pageSlice(list,supplierPoolPage,SUPPLIER_PAGE);
+  supplierPoolList.innerHTML=slice.map(s=>`<label class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.id} · ${s.reason}</div></div><input type="checkbox" data-spick="${s.id}" ${supplierPickerSel.has(s.id)?"checked":""}></div></label>`).join("")||'<div class="muted small">没有更多可添加供应商。</div>';
   bindShiftRange("#supplierPoolList input[data-spick]","supplier-picker","spick",(id,checked)=>checked?supplierPickerSel.add(id):supplierPickerSel.delete(id),renderSupplierPoolPicker);
+  supplierPoolCount.textContent=`筛选结果 ${list.length} 家 · 第 ${supplierPoolPage+1}/${pages} 页 · 已选择 ${supplierPickerSel.size} 家`;
+  renderPageNav(supplierPoolPager,supplierPoolPage,list.length,SUPPLIER_PAGE,p=>{supplierPoolPage=p;resetRange("supplier-picker");renderSupplierPoolPicker()});
 }
 addPickedSuppliers.onclick=()=>{let n=0;supplierPickerSel.forEach(id=>{if(!rfqSupplierPool.has(id)){rfqSupplierPool.add(id);n++}});supplierPickerSel.clear();resetRange("supplier-picker");flash(`已加入 ${n} 家供应商。`);renderSupplierPoolPicker();renderAssignAll()};
 clearPickedSuppliers.onclick=()=>{supplierPickerSel.clear();resetRange("supplier-picker");renderSupplierPoolPicker()};
+supplierPickAll.onclick=()=>{selectAllIds(supplierPickerSel,supplierPoolFiltered());renderSupplierPoolPicker()};
+supplierPickPage.onclick=()=>{selectAllIds(supplierPickerSel,pageSlice(supplierPoolFiltered(),supplierPoolPage,SUPPLIER_PAGE));renderSupplierPoolPicker()};
+supplierInvertAll.onclick=()=>{invertIds(supplierPickerSel,supplierPoolFiltered());renderSupplierPoolPicker()};
+supplierInvertPage.onclick=()=>{invertIds(supplierPickerSel,pageSlice(supplierPoolFiltered(),supplierPoolPage,SUPPLIER_PAGE));renderSupplierPoolPicker()};
 function renderCopySources(){
   if(!document.getElementById("copyFromSupplier"))return;
   const current=copyFromSupplier.value;
   copyFromSupplier.innerHTML='<option value="">复制其他供应商的物料范围…</option>'+suppliers.filter(s=>rfqSupplierPool.has(s.id)&&s.id!==activeSupplier).map(s=>`<option value="${s.id}">${s.name}</option>`).join("");
   if([...copyFromSupplier.options].some(o=>o.value===current))copyFromSupplier.value=current;
 }
-supplierFirstSearch.oninput=renderSupplierFirstList;
+runSupplierFirstSearch.onclick=renderSupplierFirstList;
 openSupplierPicker.onclick=()=>{supplierPicker.style.display="block";resetRange("supplier-picker");renderSupplierPoolPicker()};
 closeSupplierPicker.onclick=()=>{supplierPicker.style.display="none"};
-supplierPoolSearch.oninput=renderSupplierPoolPicker;
+runSupplierPoolSearch.onclick=()=>{supplierPoolPage=0;resetRange("supplier-picker");renderSupplierPoolPicker()};
 function filteredSfItems(){
   const q=sfItemSearch.value.trim(), cat=sfCatFilter.value;
   return items.filter(it=>(!q||[it.id,it.name,it.cat,it.qty,it.unit,getSet(it.id).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))&&(!cat||it.cat===cat))
@@ -568,11 +658,14 @@ function renderSfItems(){
   bindShiftRange("#sfItemBody input[data-sfi]","supplier-items","sfi",(id,checked)=>{const set=getSet(id);checked?set.add(activeSupplier):set.delete(activeSupplier)},renderAssignAll);
   const related=list.filter(it=>getSet(it.id).has(activeSupplier)).length;
   sfItemCount.textContent=`筛选结果 ${list.length} 项 · 当前供应商已关联 ${related} 项 · 第 ${sfPage+1}/${pages} 页 · 勾选框即关联状态，支持 Shift 连选`;
+  renderPageNav(sfPager,sfPage,list.length,PAGE,p=>{sfPage=p;resetRange("supplier-items");renderSfItems()});
 }
-["sfItemSearch","sfCatFilter"].forEach(id=>document.getElementById(id).oninput=()=>{sfPage=0;resetRange("supplier-items");renderSfItems()});
-sfPrev.onclick=()=>{if(sfPage>0)sfPage--;resetRange("supplier-items");renderSfItems()};sfNext.onclick=()=>{if((sfPage+1)*PAGE<filteredSfItems().length)sfPage++;resetRange("supplier-items");renderSfItems()};
-sfLinkFiltered.onclick=()=>{if(!activeSupplier)return;let n=0;filteredSfItems().forEach(it=>{const set=getSet(it.id);if(!set.has(activeSupplier)){set.add(activeSupplier);n++}});flash(`已将当前筛选结果全部关联：新增 ${n} 条关系。`);renderAssignAll()};
-sfUnlinkFiltered.onclick=()=>{if(!activeSupplier)return;let n=0;filteredSfItems().forEach(it=>{if(getSet(it.id).delete(activeSupplier))n++});flash(`已取消当前筛选结果中的 ${n} 条关系。`);renderAssignAll()};
+runSfSearch.onclick=()=>{sfPage=0;resetRange("supplier-items");renderSfItems()};
+sfLinkFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>getSet(it.id).add(activeSupplier));renderAssignAll()};
+sfLinkPage.onclick=()=>{if(!activeSupplier)return;pageSlice(filteredSfItems(),sfPage).forEach(it=>getSet(it.id).add(activeSupplier));renderAssignAll()};
+sfInvertFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>{const set=getSet(it.id);set.has(activeSupplier)?set.delete(activeSupplier):set.add(activeSupplier)});renderAssignAll()};
+sfInvertPage.onclick=()=>{if(!activeSupplier)return;pageSlice(filteredSfItems(),sfPage).forEach(it=>{const set=getSet(it.id);set.has(activeSupplier)?set.delete(activeSupplier):set.add(activeSupplier)});renderAssignAll()};
+sfUnlinkFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>getSet(it.id).delete(activeSupplier));renderAssignAll()};
 sfCopyRange.onclick=()=>{if(!activeSupplier||!copyFromSupplier.value)return;const source=copyFromSupplier.value;let n=0;items.forEach(it=>{if(getSet(it.id).has(source)&&!getSet(it.id).has(activeSupplier)){getSet(it.id).add(activeSupplier);n++}});flash(`已复制物料范围作为起点：新增 ${n} 条关系。可继续直接勾选/取消差异物料。`);renderAssignAll()};
 
 function renderAssignAll(){renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
@@ -633,6 +726,7 @@ function chooseAward(iid,sid){
 resetAwards.textContent="恢复默认最低价";
 resetAwards.onclick=()=>{awards.clear();awardReasons.clear();setDefaultLowestAwards();renderQuotes()};
 
+refreshFieldControls();
 setDefaultLowestAwards();
 renderItemList();renderAssignAll();renderQuotes();
 </script>
