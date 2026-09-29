@@ -111,7 +111,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
             </div>
             <div class="intakeBox">
               <h3>剪贴板批量粘贴</h3>
-              <textarea id="pasteItems" placeholder="支持中/英文逗号、分号、换行、Tab、空格混用。例如：&#10;P-001,示例轴，类别A 2 件；P-002 示例座 类别B,4,个"></textarea>
+              <textarea id="pasteItems" placeholder="支持中/英文逗号、分号、换行、Tab 混用；普通空格不会作为字段分隔符。例如：&#10;P-001,示例轴，类别A,2,件；P-002\t示例座\t类别B\t4\t个"></textarea>
               <div class="toolbar">
                 <button class="btn" id="readClipboard">读取剪贴板</button>
                 <button class="btn soft" id="parsePaste">解析预览</button>
@@ -427,7 +427,7 @@ closeDrawing.onclick=closeDrawingModal;drawingModal.onclick=e=>{if(e.target===dr
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeDrawingModal();if(document.getElementById("rfqPreviewModal")?.classList.contains("open"))closeRfqPreview.click()}});
 function parseItemRows(text){
   return String(text||"").split(/[;；\n\r]+/).map(x=>x.trim()).filter(Boolean).map((row,idx)=>{
-    const p=row.split(/[，,\t ]+/).map(x=>x.trim()).filter(Boolean);
+    const p=row.split(/[，,\t]+/).map(x=>x.trim()).filter(Boolean);
     return {id:p[0]||("INPUT-"+String(Date.now()+idx)),name:p[1]||"未命名物料",cat:p[2]||"类别A",qty:Number(p[3])||1,unit:p[4]||"件"};
   });
 }
