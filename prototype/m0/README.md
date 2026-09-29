@@ -111,3 +111,16 @@ M0 now compares each quotation return against the expected item scope of the sel
 The coverage summary distinguishes quoted, explicit no-quote, cannot-supply, missing/omitted, extra, and duplicate lines. Missing, extra, and duplicate item IDs are listed for buyer review.
 
 A quotation round keeps its own expected-scope snapshot so a partial second negotiation is not incorrectly judged against the entire original RFQ.
+
+
+## Tiered pricing
+
+M0 supports optional tiered pricing on a quotation line without introducing a second quotation workflow.
+
+A line may contain either one unit price or several quantity-price tiers. Comparison uses the RFQ requested quantity to calculate the applicable tier price, while the complete tier structure is preserved.
+
+The demo compact format is similar to:
+
+`1-99:100|100-499:90|500+:80`
+
+This is only an M0 interaction format. M5 will normalize tier prices from different Excel layouts into the same underlying tier structure.
