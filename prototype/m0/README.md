@@ -36,3 +36,13 @@ This is not the production application. It does not persist data, import real fi
 - To reduce repetitive work, buyers can copy another supplier's assigned item scope as a starting point and then add/remove only the differences.
 - Long checkbox lists support Shift range selection.
 - Quotation comparison starts with the lowest valid quotation selected for each item by default.
+
+
+## Interaction clarifications after review
+
+- The first page is now a read/review view of the items already included in the current RFQ. It no longer creates a second, meaningless selection state in M0.
+- Supplier search in the RFQ supplier pool supports fuzzy matching across supplier name, code, and source/reason text.
+- Buyers can remove a previously added supplier from the current RFQ. Removing it also removes that supplier's current item relationships after confirmation.
+- Item rows include a drawing thumbnail. Clicking it opens an in-page enlarged drawing preview using synthetic M0 drawings.
+- Shift range selection uses the first clicked item's ID as an anchor and applies the second checkbox's target state across the visible range.
+- The supplier-list search label is phrased as "Search current RFQ suppliers" rather than "Search added suppliers".
