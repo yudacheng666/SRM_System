@@ -13,7 +13,7 @@ V1 focuses on RFQ and quotation management rather than recreating ERP functional
 - item master data
 - historical purchase data import
 - RFQ creation and tracking
-- bulk import of inquiry items
+- flexible creation of inquiry items through file import, manual entry, and clipboard batch paste
 - item-to-supplier assignment
 - supplier-specific RFQ document generation
 - quotation import and normalization
@@ -74,6 +74,8 @@ Two primary interaction modes are required:
 
 ### Item-first
 Select one or many items, then add one or many suppliers.
+
+All checkbox-style list selection in the product should support Shift range selection when a contiguous range is meaningful. This applies consistently across item lists, supplier selection lists, and other similar batch-selection lists rather than being implemented only on one screen.
 
 ### Supplier-first
 Select a supplier, then add one or many items.
@@ -155,7 +157,7 @@ Users may generate RFQ files even when coverage is below 100%. Only assigned ite
 
 Generate one RFQ file per supplier based on the assignment result.
 
-Before generation, show a preview with each supplier and the number of assigned items.
+Before generation, provide a supplier-specific RFQ preview. The user must be able to switch between suppliers and inspect the exact item lines that each supplier will receive, including RFQ header information and supplier-response columns. A supplier-count summary alone is not sufficient.
 
 Generated RFQ files should include:
 - RFQ number
@@ -366,3 +368,23 @@ Its primary purposes are:
 Do not introduce an additional temporary checkbox-selection state unless there is a concrete action attached to it. Importing, adding, and removing items from an RFQ belong to the RFQ item-management workflow rather than a purposeless selection layer.
 
 Where a drawing or technical document is available, show a small preview thumbnail next to the item code. Clicking the thumbnail should open an enlarged in-page preview without navigating away from the assignment workflow.
+
+
+## 20. Inquiry item input methods
+
+The current RFQ item list must support multiple practical input methods:
+
+1. File import
+   - Excel is the primary production format.
+   - CSV or other simple text formats may also be supported.
+   - Import must provide a preview before committing rows into the RFQ.
+
+2. Manual entry
+   - Allow the buyer to add a single item directly when only a small number of items need to be added.
+
+3. Clipboard batch paste
+   - Allow buyers to paste multiple items copied from Excel, ERP exports, email text, or other sources.
+   - Support a compact text format where fields may be separated by commas or tabs and items may be separated by semicolons or line breaks.
+   - Parse into a preview before adding the rows.
+
+All methods should converge into the same RFQ item data model and apply the same validation rules, including duplicate item-code handling and required-field checks.
