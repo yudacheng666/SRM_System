@@ -658,55 +658,61 @@ deleteSelectedItems.onclick=()=>{
   resetRange("item-manage");renderItemList();renderAssignAll();renderQuotes();
 };
 function quoteSupplierOptions(){
-  const ids=[...rfqSupplierPool];
+  const current=quoteImportSupplier.value,ids=[...rfqSupplierPool];
   quoteImportSupplier.innerHTML=ids.map(id=>{const s=suppliers.find(x=>x.id===id);return s?`<option value="${id}">${esc(s.name)} (${id})</option>`:""}).join("");
+  if(ids.includes(current))quoteImportSupplier.value=current;
 }
-function supplierRounds(sid){return quoteRounds.filter(r=>r.supplierId===sid).sort((a,b)=>a.roundNo-b.roundNo)}
+function supplierSubmissions(sid){return quoteRounds.filter(r=>r.supplierId===sid).sort((a,b)=>a.roundNo-b.roundNo||a.revisionNo-b.revisionNo)}
 function currentQuoteRound(){
-  const sid=quoteImportSupplier.value,rn=Number(quoteRoundSelect.value);
-  return quoteRounds.find(r=>r.supplierId===sid&&r.roundNo===rn)||null;
+  const sid=quoteImportSupplier.value,[rn,rv]=String(quoteRoundSelect.value||"").split("|").map(Number);
+  return quoteRounds.find(r=>r.supplierId===sid&&r.roundNo===rn&&r.revisionNo===rv)||null;
 }
+function assignedItemsForSupplier(sid){return items.filter(it=>getSet(it.id).has(sid))}
 function ensureFirstRound(){
   const sid=quoteImportSupplier.value;if(!sid)return null;
-  let rounds=supplierRounds(sid);
-  if(!rounds.length){quoteRounds.push({supplierId:sid,roundNo:1,status:"draft",lines:[],expectedItemIds:assignedItemsForSupplier(sid).map(x=>x.id),createdAt:new Date().toISOString()});rounds=supplierRounds(sid)}
-  return rounds[rounds.length-1];
+  let subs=supplierSubmissions(sid);
+  if(!subs.length){quoteRounds.push({supplierId:sid,roundNo:1,revisionNo:1,status:"draft",lines:[],expectedLineIds:assignedItemsForSupplier(sid).map(x=>x.lineId),evidenceType:"email_attachment",evidenceNote:"",createdAt:new Date().toISOString()});subs=supplierSubmissions(sid)}
+  return subs[subs.length-1];
 }
 function renderQuoteRoundSelector(selectLatest=false){
   const sid=quoteImportSupplier.value;if(!sid)return;
-  ensureFirstRound();
-  const rounds=supplierRounds(sid);
-  quoteRoundSelect.innerHTML=rounds.map(r=>`<option value="${r.roundNo}">第 ${r.roundNo} 轮 · ${r.status==="confirmed"?"已确认":"草稿"}</option>`).join("");
-  if(selectLatest||!quoteRoundSelect.value)quoteRoundSelect.value=String(rounds[rounds.length-1].roundNo);
+  ensureFirstRound();const subs=supplierSubmissions(sid),current=quoteRoundSelect.value;
+  quoteRoundSelect.innerHTML=subs.map(r=>`<option value="${r.roundNo}|${r.revisionNo}">第 ${r.roundNo} 轮 · 修订 ${r.revisionNo} · ${r.status==="confirmed"?"已确认":"草稿"}</option>`).join("");
+  if(selectLatest||![...quoteRoundSelect.options].some(o=>o.value===current))quoteRoundSelect.value=`${subs[subs.length-1].roundNo}|${subs[subs.length-1].revisionNo}`;else quoteRoundSelect.value=current;
   renderQuoteRound();
 }
-function assignedItemsForSupplier(sid){return items.filter(it=>getSet(it.id).has(sid))}
+function resolveQuoteItem(ref){const x=String(ref||"").trim();return items.find(it=>it.lineId===x)||items.find(it=>it.id===x)||null}
 function parseQuoteRows(text){
   return String(text||"").split(/[;；\n\r]+/).map(x=>x.trim()).filter(Boolean).map(row=>{
-    const p=row.split(/[，,\t]+/).map(x=>x.trim());
-    return {itemId:p[0]||"",price:p[1]||"",lead:p[2]||"",moq:p[3]||"",status:(p[4]||"quoted").toLowerCase()};
+    const p=row.split(/[，,\t]/).map(x=>x.trim());
+    return {itemRef:p[0]||"",price:p[1]||"",lead:p[2]||"",moq:p[3]||"",status:(p[4]||"quoted").toLowerCase()};
   });
 }
 function normalizeQuoteStatus(v){
-  const s=String(v||"quoted").toLowerCase();
+  const s=String(v||"quoted").trim().toLowerCase();
   if(["未报价","noquote","no quote"].includes(s))return"noquote";
   if(["不供货","不能供货","cannot","cannot supply"].includes(s))return"cannot";
   return"quoted";
 }
 function parseTierPrice(raw){
-  const s=String(raw??"").trim();
-  if(!s)return{price:null,tiers:[]};
-  if(!s.includes(":"))return{price:Number(s)||0,tiers:[]};
-  const tiers=s.split(/[|｜]/).map(x=>x.trim()).filter(Boolean).map(part=>{
-    const [range,priceRaw]=part.split(":").map(x=>x.trim());
-    const price=Number(priceRaw);if(!range||!Number.isFinite(price))return null;
-    let min=1,max=null;
-    if(range.endsWith("+"))min=Number(range.slice(0,-1))||1;
-    else if(range.includes("-")){const [a,b]=range.split("-").map(Number);min=a||1;max=Number.isFinite(b)?b:null}
-    else min=Number(range)||1;
-    return{min,max,price};
-  }).filter(Boolean).sort((a,b)=>a.min-b.min);
-  return{price:null,tiers};
+  const s=String(raw??"").trim(),errors=[];
+  if(!s)return{price:null,tiers:[],errors:["价格不能为空"]};
+  if(!s.includes(":")){const n=Number(s);return Number.isFinite(n)&&n>=0?{price:n,tiers:[],errors:[]}:{price:null,tiers:[],errors:["单价格式错误"]}}
+  const tiers=[];
+  s.split(/[|｜]/).map(x=>x.trim()).filter(Boolean).forEach(part=>{
+    const pos=part.lastIndexOf(":");if(pos<=0){errors.push("阶梯格式错误："+part);return}
+    const range=part.slice(0,pos).trim(),priceRaw=part.slice(pos+1).trim(),price=Number(priceRaw);
+    if(!Number.isFinite(price)||price<0){errors.push("阶梯价格错误："+part);return}
+    let min,max=null;
+    if(/^\d+(?:\.\d+)?\+$/.test(range))min=Number(range.slice(0,-1));
+    else if(/^\d+(?:\.\d+)?-\d+(?:\.\d+)?$/.test(range)){const p=range.split("-").map(Number);min=p[0];max=p[1]}
+    else {errors.push("阶梯区间错误："+range);return}
+    if(!(min>0)||max!==null&&max<min){errors.push("阶梯区间反向或非法："+range);return}
+    tiers.push({min,max,price});
+  });
+  tiers.sort((a,b)=>a.min-b.min);
+  for(let i=1;i<tiers.length;i++){const prev=tiers[i-1],cur=tiers[i];if(prev.max===null||cur.min<=prev.max)errors.push("阶梯区间重叠")}
+  return{price:null,tiers,errors};
 }
 function tierText(line){
   if(!line?.tiers?.length)return line?.price==null?"—":"¥"+Number(line.price).toFixed(2);
@@ -714,168 +720,113 @@ function tierText(line){
 }
 function effectivePriceForLine(line,qty){
   if(!line||line.status!=="quoted")return null;
-  if(!line.tiers?.length)return line.price==null?null:Number(line.price);
-  const q=Number(qty)||0;
-  let hit=line.tiers.find(t=>q>=t.min&&(t.max==null||q<=t.max));
-  if(!hit)hit=[...line.tiers].reverse().find(t=>q>=t.min)||line.tiers[0];
+  if(!line.tiers?.length)return line.price==null||!Number.isFinite(Number(line.price))?null:Number(line.price);
+  const q=Number(qty);if(!Number.isFinite(q)||q<=0)return null;
+  const hit=line.tiers.find(t=>q>=t.min&&(t.max==null||q<=t.max));
   return hit?Number(hit.price):null;
 }
 function expectedIdsForRound(round){
   if(!round)return[];
-  if(!Array.isArray(round.expectedItemIds))round.expectedItemIds=assignedItemsForSupplier(round.supplierId).map(x=>x.id);
-  return round.expectedItemIds;
+  if(!Array.isArray(round.expectedLineIds))round.expectedLineIds=assignedItemsForSupplier(round.supplierId).map(x=>x.lineId);
+  return round.expectedLineIds;
 }
 function validateQuotePreview(rows){
-  const round=currentQuoteRound(),expected=new Set(expectedIdsForRound(round)),seen=new Map();
-  rows.forEach(r=>seen.set(r.itemId,(seen.get(r.itemId)||0)+1));
-  return rows.map(r=>{
-    const status=normalizeQuoteStatus(r.status),exists=items.some(x=>x.id===r.itemId),duplicate=(seen.get(r.itemId)||0)>1;
+  const round=currentQuoteRound(),expected=new Set(expectedIdsForRound(round)),resolved=rows.map(r=>({...r,item:resolveQuoteItem(r.itemRef)})),seen=new Map();
+  resolved.forEach(r=>{const key=r.item?.lineId||r.itemRef;seen.set(key,(seen.get(key)||0)+1)});
+  return resolved.map(r=>{
+    const status=normalizeQuoteStatus(r.status),lineId=r.item?.lineId||r.itemRef,itemId=r.item?.id||"",duplicate=(seen.get(lineId)||0)>1,errors=[];
     let check="已报价";
-    if(duplicate)check="重复";
-    else if(!exists||!expected.has(r.itemId))check="多报";
-    else if(status==="noquote")check="明确未报价";
-    else if(status==="cannot")check="不供货";
-    return {...r,status,coverageCheck:check};
+    if(duplicate)check="重复";else if(!r.item||!expected.has(lineId))check="多报";else if(status==="noquote")check="明确未报价";else if(status==="cannot")check="不供货";
+    let parsed={price:null,tiers:[],errors:[]},lead={value:null,error:null},moq={value:null,error:null},effective=null;
+    if(status==="quoted"){
+      parsed=parseTierPrice(r.price);errors.push(...parsed.errors);
+      lead=parseOptionalNumber(r.lead,"交期");moq=parseOptionalNumber(r.moq,"MOQ");if(lead.error)errors.push(lead.error);if(moq.error)errors.push(moq.error);
+      effective=effectivePriceForLine({status,price:parsed.price,tiers:parsed.tiers},r.item?.qty);
+      if(!parsed.errors.length&&effective==null)errors.push("RFQ数量没有适用的阶梯价格");
+    }
+    if(errors.length&&["已报价"].includes(check))check="数据错误";
+    return {...r,status,lineId,itemId,priceParsed:parsed,leadValue:lead.value,moqValue:moq.value,effectivePrice:effective,errors,coverageCheck:check};
   });
 }
 function coverageFromRows(round,rows){
   const expected=expectedIdsForRound(round),expectedSet=new Set(expected),byId=new Map(),duplicates=[];
-  rows.forEach(r=>{if(byId.has(r.itemId))duplicates.push(r.itemId);else byId.set(r.itemId,r)});
-  let quoted=0,noquote=0,cannot=0,extra=0;
-  byId.forEach((r,id)=>{
-    if(!expectedSet.has(id)){extra++;return}
-    const st=normalizeQuoteStatus(r.status);
-    if(st==="noquote")noquote++;else if(st==="cannot")cannot++;else quoted++;
-  });
+  rows.forEach(r=>{const id=r.lineId||r.itemRef||r.itemId;if(byId.has(id))duplicates.push(id);else byId.set(id,r)});
+  let quoted=0,noquote=0,cannot=0;
+  byId.forEach((r,id)=>{if(!expectedSet.has(id))return;const st=normalizeQuoteStatus(r.status);if(st==="noquote")noquote++;else if(st==="cannot")cannot++;else if(!r.errors?.length)quoted++});
   const presentExpected=new Set([...byId.keys()].filter(id=>expectedSet.has(id)));
-  const missing=expected.filter(id=>!presentExpected.has(id));
-  const extras=[...byId.keys()].filter(id=>!expectedSet.has(id));
-  return {expected:expected.length,quoted,noquote,cannot,missing,extras,duplicates:[...new Set(duplicates)]};
+  return{expected:expected.length,quoted,noquote,cannot,missing:expected.filter(id=>!presentExpected.has(id)),extras:[...byId.keys()].filter(id=>!expectedSet.has(id)),duplicates:[...new Set(duplicates)]};
 }
+function quoteLineLabel(lineId){const it=items.find(x=>x.lineId===lineId);return it?`${it.id}(${lineId})`:lineId}
 function renderCoverageResult(result){
   qcExpected.textContent=result.expected;qcQuoted.textContent=result.quoted;qcNoquote.textContent=result.noquote;qcCannot.textContent=result.cannot;qcMissing.textContent=result.missing.length;qcExtra.textContent=result.extras.length;qcDuplicate.textContent=result.duplicates.length;
-  const fmt=(label,ids,cls="")=>ids.length?`<div class="${cls}"><b>${label}：</b>${ids.map(id=>esc(id)).join("、")}</div>`:`<div class="muted"><b>${label}：</b>无</div>`;
+  const fmt=(label,ids,cls="")=>ids.length?`<div class="${cls}"><b>${label}：</b>${ids.map(id=>esc(quoteLineLabel(id))).join("、")}</div>`:`<div class="muted"><b>${label}：</b>无</div>`;
   quoteCoverageDetails.innerHTML=fmt("漏报项目",result.missing,"dangertext")+fmt("多报项目",result.extras,"warn")+fmt("重复项目",result.duplicates,"warn");
 }
 function showQuotePreview(rows){
-  const round=currentQuoteRound();
-  quoteImportPreviewRows=validateQuotePreview(rows);
-  quoteImportPreview.style.display="block";
-  quoteImportPreviewBody.innerHTML=quoteImportPreviewRows.map(r=>{
-    const parsed=parseTierPrice(r.price),it=items.find(x=>x.id===r.itemId),tmp={price:parsed.price,tiers:parsed.tiers,status:r.status};
-    const eff=effectivePriceForLine(tmp,it?.qty);
-    return `<tr><td>${esc(r.itemId)}</td><td>${esc(parsed.tiers.length?parsed.tiers.map(t=>t.min+(t.max==null?"+":"-"+t.max)+":"+t.price).join(" | "):r.price)}</td><td>${eff==null?"—":"¥"+eff.toFixed(2)}</td><td>${esc(r.lead)}</td><td>${esc(r.moq)}</td><td>${esc(r.status)}</td><td class="${["已报价","明确未报价","不供货"].includes(r.coverageCheck)?"ok":"dangertext"}">${esc(r.coverageCheck)}</td></tr>`;
-  }).join("");
+  const round=currentQuoteRound();if(!round||round.status==="confirmed"){alert("已确认提交不可再导入；请新增本轮修订。");return}
+  quoteImportPreviewRows=validateQuotePreview(rows);quoteImportPreview.style.display="block";
+  quoteImportPreviewBody.innerHTML=quoteImportPreviewRows.map(r=>`<tr><td>${esc(r.itemId||r.itemRef)}<br><span class="muted">${esc(r.lineId||"")}</span></td><td>${esc(r.price)}</td><td>${r.effectivePrice==null?"—":"¥"+r.effectivePrice.toFixed(2)}</td><td>${esc(r.lead)}</td><td>${esc(r.moq)}</td><td>${esc(r.status)}</td><td class="${["已报价","明确未报价","不供货"].includes(r.coverageCheck)?"ok":"dangertext"}">${esc(r.coverageCheck)}${r.errors.length?" · "+esc(r.errors.join("；")):""}</td></tr>`).join("");
   renderCoverageResult(coverageFromRows(round,quoteImportPreviewRows));
 }
 function clearQuoteImportPreview(){quoteImportPreviewRows=[];quoteImportPreviewBody.innerHTML="";quoteImportPreview.style.display="none";const round=currentQuoteRound();if(round)renderCoverageResult(coverageFromRows(round,round.lines))}
 function upsertRoundLine(round,row,source="import"){
-  const existing=round.lines.find(x=>x.itemId===row.itemId),parsed=parseTierPrice(row.price);
-  const line={itemId:row.itemId,price:row.status==="quoted"?parsed.price:null,tiers:row.status==="quoted"?parsed.tiers:[],lead:row.status==="quoted"?Number(row.lead)||0:null,moq:row.status==="quoted"?Number(row.moq)||0:null,status:row.status,source,updatedAt:new Date().toISOString()};
-  if(existing)Object.assign(existing,line);else round.lines.push(line);
+  if(round.status==="confirmed")return false;
+  const existing=round.lines.find(x=>x.lineId===row.lineId),parsed=row.priceParsed||parseTierPrice(row.price);
+  const line={lineId:row.lineId,itemId:row.itemId,price:row.status==="quoted"?parsed.price:null,tiers:row.status==="quoted"?parsed.tiers:[],lead:row.status==="quoted"?(row.leadValue??parseOptionalNumber(row.lead,"交期").value):null,moq:row.status==="quoted"?(row.moqValue??parseOptionalNumber(row.moq,"MOQ").value):null,status:row.status,source,original:existing?.original||{price:row.price,lead:row.lead,moq:row.moq,status:row.status},updatedAt:new Date().toISOString()};
+  if(existing)Object.assign(existing,line);else round.lines.push(line);return true;
 }
-function previousEffectiveLine(sid,itemId,roundNo){
-  const rounds=supplierRounds(sid).filter(r=>r.roundNo<roundNo&&r.status==="confirmed").sort((a,b)=>b.roundNo-a.roundNo);
-  for(const r of rounds){const line=r.lines.find(x=>x.itemId===itemId&&x.status==="quoted");if(line)return{...line,roundNo:r.roundNo}}
+function latestConfirmedSubmissionForRound(sid,roundNo){
+  return supplierSubmissions(sid).filter(r=>r.roundNo===roundNo&&r.status==="confirmed").sort((a,b)=>b.revisionNo-a.revisionNo)[0]||null;
+}
+function priorApplicableLine(sid,lineId,beforeRoundNo){
+  const rounds=[...new Set(supplierSubmissions(sid).filter(r=>r.roundNo<beforeRoundNo&&r.status==="confirmed").map(r=>r.roundNo))].sort((a,b)=>b-a);
+  for(const rn of rounds){const sub=latestConfirmedSubmissionForRound(sid,rn);if(!sub||!expectedIdsForRound(sub).includes(lineId))continue;const line=sub.lines.find(x=>x.lineId===lineId);if(!line||line.status!=="quoted")return null;return{...line,roundNo:rn,revisionNo:sub.revisionNo}}
   return null;
 }
-function latestConfirmedQuoteLine(itemId,sid){
-  const rounds=supplierRounds(sid).filter(r=>r.status==="confirmed").sort((a,b)=>b.roundNo-a.roundNo);
-  for(const r of rounds){
-    const line=r.lines.find(x=>x.itemId===itemId);
-    if(!line)continue;
-    if(line.status==="quoted")return{...line,roundNo:r.roundNo};
-    if(line.status==="cannot"||line.status==="noquote")return null;
-  }
+function latestConfirmedQuoteLine(lineId,sid){
+  const rounds=[...new Set(supplierSubmissions(sid).filter(r=>r.status==="confirmed").map(r=>r.roundNo))].sort((a,b)=>b-a);
+  for(const rn of rounds){const sub=latestConfirmedSubmissionForRound(sid,rn);if(!sub||!expectedIdsForRound(sub).includes(lineId))continue;const line=sub.lines.find(x=>x.lineId===lineId);if(!line)return null;if(line.status==="quoted")return{...line,roundNo:rn,revisionNo:sub.revisionNo};return null}
   return null;
 }
 function renderQuoteRound(){
-  const round=currentQuoteRound();if(!round)return;
-  const sup=suppliers.find(s=>s.id===round.supplierId),assigned=assignedItemsForSupplier(round.supplierId);
-  quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认":"草稿"}</span><div class="small" style="margin-top:5px">本轮独立保存，不覆盖前一轮。第 2 轮及以后允许只更新部分物料。</div>`;
-  const expected=expectedIdsForRound(round);
-  quoteRoundHint.textContent=`该供应商当前分配 ${assigned.length} 项；本轮应报价范围 ${expected.length} 项；本轮已记录 ${round.lines.length} 项。`;
-  renderCoverageResult(coverageFromRows(round,round.lines));
-  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{
-    const it=items.find(x=>x.id===l.itemId),src=l.source==="carry"?"沿用上轮（已确认）":l.source==="manual"?"手工输入":"导入";
-    const prev=round.roundNo>1?previousEffectiveLine(round.supplierId,l.itemId,round.roundNo):null;
-    const prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);
-    let change="—";
-    if(prevEff!=null&&curEff!=null){
-      const diff=Number(curEff)-Number(prevEff),pct=Number(prevEff)!==0?diff/Number(prevEff)*100:0;
-      change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%";
-    }
-    return `<tr><td><b>${esc(l.itemId)}</b><br><span class="muted">${esc(it?.name||"")}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(l.status)}</td><td>${src}</td><td><button class="btn" data-edit-quote="${i}">修改</button></td></tr>`
-  }).join("")||'<tr><td colspan="11" class="muted">当前轮次还没有报价记录。</td></tr>';
+  const round=currentQuoteRound();if(!round)return;const sup=suppliers.find(s=>s.id===round.supplierId),expected=expectedIdsForRound(round);
+  quoteEvidenceType.value=round.evidenceType||"email_attachment";quoteEvidenceNote.value=round.evidenceNote||"";
+  quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮 · 修订 ${round.revisionNo}</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认/锁定":"草稿"}</span><div class="small" style="margin-top:5px">轮次表示议价阶段；修订表示同一轮报价的更正提交。已确认提交不可覆盖修改。</div>`;
+  quoteRoundHint.textContent=`本轮应报价范围 ${expected.length} 项；当前提交已记录 ${round.lines.length} 项。`;renderCoverageResult(coverageFromRows(round,round.lines));
+  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=l.source==="carry"?"明确沿用上轮":l.source==="manual"?"手工修正":l.source==="revision-copy"?"复制自上一修订":"导入",prev=round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(l.status)}</td><td>${src}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="11" class="muted">当前提交还没有报价记录。</td></tr>';
   document.querySelectorAll("[data-edit-quote]").forEach(b=>b.onclick=()=>editQuoteLine(Number(b.dataset.editQuote)));
-  carryForwardMissing.disabled=round.roundNo===1;
-  confirmQuoteRound.disabled=round.status==="confirmed";
-  renderQuotes();
+  carryForwardMissing.disabled=round.roundNo===1||round.status==="confirmed";editRoundScope.disabled=round.roundNo===1||round.status==="confirmed";confirmQuoteRound.disabled=round.status==="confirmed";commitQuoteImport.disabled=round.status==="confirmed";renderQuotes();
 }
 function editQuoteLine(index){
-  const round=currentQuoteRound(),l=round?.lines[index];if(!l)return;
-  const price=prompt("单价 / 阶梯价（例 1-99:100|100-499:90|500+:80）：",l.tiers?.length?l.tiers.map(t=>t.min+(t.max==null?"+":"-"+t.max)+":"+t.price).join("|"):(l.price??""));if(price===null)return;
-  const lead=prompt("交期（天）：",l.lead??"");if(lead===null)return;
-  const moq=prompt("MOQ：",l.moq??"");if(moq===null)return;
-  const status=prompt("状态：quoted / noquote / cannot",l.status);if(status===null)return;
-  upsertRoundLine(round,{itemId:l.itemId,price,lead,moq,status:normalizeQuoteStatus(status)}, "manual");
-  renderQuoteRound();
+  const round=currentQuoteRound(),l=round?.lines[index];if(!round||round.status==="confirmed"){alert("已确认提交不可直接修改，请新增本轮修订。");return}if(!l)return;
+  const price=prompt("单价 / 阶梯价：",l.tiers?.length?l.tiers.map(t=>t.min+(t.max==null?"+":"-"+t.max)+":"+t.price).join("|"):(l.price??""));if(price===null)return;
+  const lead=prompt("交期（天，可空）：",l.lead??"");if(lead===null)return;const moq=prompt("MOQ（可空）：",l.moq??"");if(moq===null)return;const status=normalizeQuoteStatus(prompt("状态：quoted / noquote / cannot",l.status)??l.status);
+  const row=validateQuotePreview([{itemRef:l.lineId,price,lead,moq,status}])[0];if(row.errors.length){alert(row.errors.join("；"));return}upsertRoundLine(round,row,"manual");renderQuoteRound();
 }
 function fillCats(){["assignCatFilter","sfCatFilter"].forEach(id=>{const el=document.getElementById(id);categories.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o)})})}
 fillCats();
 
 quoteImportSupplier.onchange=()=>{clearQuoteImportPreview();renderQuoteRoundSelector(true)};
-quoteRoundSelect.onchange=renderQuoteRound;
-newQuoteRound.onclick=()=>{
-  const sid=quoteImportSupplier.value;if(!sid)return;
-  const rounds=supplierRounds(sid),last=rounds[rounds.length-1];
-  if(last&&last.status!=="confirmed"&&!confirm("上一轮仍是草稿，仍要新建下一轮吗？"))return;
-  const next=(last?.roundNo||0)+1;
-  const expected=(last?.expectedItemIds?.length?last.expectedItemIds:assignedItemsForSupplier(sid).map(x=>x.id)).slice();
-  quoteRounds.push({supplierId:sid,roundNo:next,status:"draft",lines:[],expectedItemIds:expected,createdAt:new Date().toISOString()});renderQuoteRoundSelector(true);
-};
-confirmQuoteRound.onclick=()=>{
-  const round=currentQuoteRound();if(!round)return;
-  if(!round.lines.length){alert("当前轮次没有报价记录。");return}
-  const cov=coverageFromRows(round,round.lines);
-  if((cov.missing.length||cov.extras.length||cov.duplicates.length)&&!confirm(`覆盖检查仍有异常：漏报 ${cov.missing.length} 项，多报 ${cov.extras.length} 项，重复 ${cov.duplicates.length} 项。仍要确认本轮报价吗？`))return;
-  round.status="confirmed";
-  awards.clear();awardReasons.clear();setDefaultLowestAwards();
-  renderQuoteRound();renderQuoteRoundSelector();
-};
-quoteManualAdd.onclick=()=>{
-  const row={itemId:quoteManualItem.value.trim(),price:quoteManualPrice.value.trim(),lead:quoteManualLead.value.trim(),moq:quoteManualMoq.value.trim(),status:quoteManualStatus.value};
-  showQuotePreview([row]);
-};
+quoteRoundSelect.onchange=()=>{clearQuoteImportPreview();renderQuoteRound()};
+quoteEvidenceType.onchange=()=>{const r=currentQuoteRound();if(r&&r.status!=="confirmed")r.evidenceType=quoteEvidenceType.value};
+quoteEvidenceNote.onchange=()=>{const r=currentQuoteRound();if(r&&r.status!=="confirmed")r.evidenceNote=quoteEvidenceNote.value.trim()};
+newQuoteRound.onclick=()=>{const sid=quoteImportSupplier.value;if(!sid)return;const subs=supplierSubmissions(sid),last=subs[subs.length-1];if(last&&last.status!=="confirmed"){alert("请先确认当前草稿，或继续修改当前草稿。");return}const next=(last?.roundNo||0)+1,expected=(last?.expectedLineIds?.length?last.expectedLineIds:assignedItemsForSupplier(sid).map(x=>x.lineId)).slice();quoteRounds.push({supplierId:sid,roundNo:next,revisionNo:1,status:"draft",lines:[],expectedLineIds:expected,evidenceType:"email_attachment",evidenceNote:"",createdAt:new Date().toISOString()});renderQuoteRoundSelector(true)};
+newQuoteRevision.onclick=()=>{const cur=currentQuoteRound();if(!cur)return;if(cur.status!=="confirmed"){alert("当前提交仍是草稿，直接修改即可，无需创建修订。");return}const revisions=supplierSubmissions(cur.supplierId).filter(x=>x.roundNo===cur.roundNo),next=Math.max(...revisions.map(x=>x.revisionNo))+1;quoteRounds.push({supplierId:cur.supplierId,roundNo:cur.roundNo,revisionNo:next,status:"draft",lines:cur.lines.map(x=>({...x,tiers:(x.tiers||[]).map(t=>({...t})),source:"revision-copy"})),expectedLineIds:[...expectedIdsForRound(cur)],evidenceType:cur.evidenceType,evidenceNote:"",createdAt:new Date().toISOString()});renderQuoteRoundSelector(true)};
+function renderScopeEditor(){const r=currentQuoteRound();if(!r)return;const expected=new Set(expectedIdsForRound(r));quoteScopeList.innerHTML=assignedItemsForSupplier(r.supplierId).map(it=>`<label class="scopeRow"><input type="checkbox" data-scope-line="${it.lineId}" ${expected.has(it.lineId)?"checked":""}><span><b>${esc(it.id)}</b> · ${esc(it.name)} <span class="muted">${it.lineId}</span></span></label>`).join("");quoteScopeEditor.style.display="block"}
+editRoundScope.onclick=()=>{const r=currentQuoteRound();if(!r||r.roundNo===1||r.status==="confirmed")return;renderScopeEditor()};
+scopeSelectAll.onclick=()=>quoteScopeList.querySelectorAll("[data-scope-line]").forEach(x=>x.checked=true);
+scopeClearAll.onclick=()=>quoteScopeList.querySelectorAll("[data-scope-line]").forEach(x=>x.checked=false);
+closeRoundScope.onclick=()=>quoteScopeEditor.style.display="none";
+saveRoundScope.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;r.expectedLineIds=[...quoteScopeList.querySelectorAll("[data-scope-line]:checked")].map(x=>x.dataset.scopeLine);r.lines=r.lines.filter(x=>r.expectedLineIds.includes(x.lineId));quoteScopeEditor.style.display="none";renderQuoteRound()};
+confirmQuoteRound.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;if(!r.lines.length){alert("当前提交没有报价记录。");return}r.evidenceType=quoteEvidenceType.value;r.evidenceNote=quoteEvidenceNote.value.trim();const cov=coverageFromRows(r,r.lines);if((cov.missing.length||cov.extras.length||cov.duplicates.length)&&!confirm(`覆盖检查仍有异常：漏报 ${cov.missing.length} 项，多报 ${cov.extras.length} 项，重复 ${cov.duplicates.length} 项。仍要确认并锁定本次提交吗？`))return;r.status="confirmed";r.confirmedAt=new Date().toISOString();awards.clear();awardReasons.clear();setDefaultLowestAwards();renderQuoteRoundSelector()};
+quoteManualAdd.onclick=()=>showQuotePreview([{itemRef:quoteManualItem.value.trim(),price:quoteManualPrice.value.trim(),lead:quoteManualLead.value.trim(),moq:quoteManualMoq.value.trim(),status:quoteManualStatus.value}]);
 quoteParsePaste.onclick=()=>{const rows=parseQuoteRows(quotePaste.value);if(!rows.length){alert("没有识别到报价记录。");return}showQuotePreview(rows)};
 quoteReadClipboard.onclick=async()=>{try{quotePaste.value=await navigator.clipboard.readText();quoteParsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请按 Ctrl+V 粘贴。")}};
-quoteClearInput.onclick=()=>{quotePaste.value=""};
-quoteClearPreview.onclick=clearQuoteImportPreview;
-clearQuotePreview2.onclick=clearQuoteImportPreview;
-demoQuoteExcel.onclick=()=>showQuotePreview([
-  {itemId:assignedItemsForSupplier(quoteImportSupplier.value)[0]?.id||items[0].id,price:"1-9:118|10-49:108.5|50+:98",lead:"7",moq:"1",status:"quoted"},
-  {itemId:assignedItemsForSupplier(quoteImportSupplier.value)[1]?.id||items[1].id,price:"108.50",lead:"10",moq:"5",status:"quoted"}
-]);
-quoteImportFile.onchange=()=>{
-  const file=quoteImportFile.files?.[0];if(!file)return;const ext=(file.name.split(".").pop()||"").toLowerCase();
-  if(ext==="csv"||ext==="txt"){const r=new FileReader();r.onload=()=>showQuotePreview(parseQuoteRows(r.result));r.readAsText(file)}
-  else demoQuoteExcel.click();
-};
-commitQuoteImport.onclick=()=>{
-  const round=currentQuoteRound();if(!round)return;
-  const valid=quoteImportPreviewRows.filter(r=>["已报价","明确未报价","不供货"].includes(r.coverageCheck));if(!valid.length){alert("没有可写入的本轮有效报价。");return}
-  const seen=new Set();valid.filter(r=>{if(seen.has(r.itemId))return false;seen.add(r.itemId);return true}).forEach(r=>upsertRoundLine(round,r,"import"));clearQuoteImportPreview();renderQuoteRound();
-};
-carryForwardMissing.onclick=()=>{
-  const round=currentQuoteRound();if(!round||round.roundNo===1)return;
-  const existing=new Set(round.lines.map(x=>x.itemId));let n=0;
-  assignedItemsForSupplier(round.supplierId).forEach(it=>{
-    if(existing.has(it.id))return;
-    const prev=previousEffectiveLine(round.supplierId,it.id,round.roundNo);if(!prev)return;
-    round.lines.push({itemId:it.id,price:prev.price,tiers:(prev.tiers||[]).map(t=>({...t})),lead:prev.lead,moq:prev.moq,status:"quoted",source:"carry",updatedAt:new Date().toISOString()});n++;
-  });
-  alert(`已将 ${n} 项明确记录为“沿用上轮价格”。`);renderQuoteRound();
-};
+quoteClearInput.onclick=()=>{quotePaste.value=""};quoteClearPreview.onclick=clearQuoteImportPreview;clearQuotePreview2.onclick=clearQuoteImportPreview;
+demoQuoteExcel.onclick=()=>{const a=assignedItemsForSupplier(quoteImportSupplier.value);showQuotePreview([{itemRef:a[0]?.lineId||items[0].lineId,price:"1-9:118|10-49:108.5|50+:98",lead:"7",moq:"1",status:"quoted"},{itemRef:a[1]?.lineId||items[1].lineId,price:"108.50",lead:"10",moq:"5",status:"quoted"}])};
+quoteImportFile.onchange=()=>{const file=quoteImportFile.files?.[0];if(!file)return;const ext=(file.name.split(".").pop()||"").toLowerCase();if(ext==="csv"||ext==="txt"){const r=new FileReader();r.onload=()=>showQuotePreview(parseQuoteRows(r.result));r.readAsText(file)}else demoQuoteExcel.click()};
+commitQuoteImport.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed"){alert("已确认提交不可覆盖，请新增本轮修订。");return}const valid=quoteImportPreviewRows.filter(x=>["已报价","明确未报价","不供货"].includes(x.coverageCheck)&&!x.errors.length);if(!valid.length){alert("没有可写入的有效报价。");return}const seen=new Set();valid.filter(x=>{if(seen.has(x.lineId))return false;seen.add(x.lineId);return true}).forEach(x=>upsertRoundLine(r,x,"import"));clearQuoteImportPreview();renderQuoteRound()};
+carryForwardMissing.onclick=()=>{const r=currentQuoteRound();if(!r||r.roundNo===1||r.status==="confirmed")return;const existing=new Set(r.lines.map(x=>x.lineId));let n=0;expectedIdsForRound(r).forEach(lineId=>{if(existing.has(lineId))return;const prev=priorApplicableLine(r.supplierId,lineId,r.roundNo);if(!prev)return;const it=items.find(x=>x.lineId===lineId);r.lines.push({lineId,itemId:it?.id||prev.itemId,price:prev.price,tiers:(prev.tiers||[]).map(t=>({...t})),lead:prev.lead,moq:prev.moq,status:"quoted",source:"carry",original:{carryFromRound:prev.roundNo,carryFromRevision:prev.revisionNo},updatedAt:new Date().toISOString()});n++});alert(`已对本轮范围内 ${n} 项明确记录“沿用上轮”。未进入本轮范围的项目不会被处理。`);renderQuoteRound()};
 
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active");if(b.dataset.tab==="assign")renderAssignAll();if(b.dataset.tab==="quoteImport"){quoteSupplierOptions();renderQuoteRoundSelector()}if(b.dataset.tab==="quotes")renderQuotes()});
 document.querySelectorAll(".modebtn").forEach(b=>b.onclick=()=>{assignMode=b.dataset.mode;document.querySelectorAll(".modebtn").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("itemFirstView").style.display=assignMode==="itemFirst"?"grid":"none";document.getElementById("supplierFirstView").style.display=assignMode==="supplierFirst"?"grid":"none";renderAssignAll()});
