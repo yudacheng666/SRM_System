@@ -460,8 +460,8 @@ const assignments=new Map();
 const quoteRounds=[];
 let quoteImportPreviewRows=[];
 function getSet(itemId){if(!assignments.has(itemId)) assignments.set(itemId,new Set());return assignments.get(itemId)}
-for(let i=0;i<180;i++){getSet(items[i].id).add(suppliers[i%6].id);if(i%3===0)getSet(items[i].id).add(suppliers[(i+2)%8].id)}
-for(let i=180;i<300;i++){getSet(items[i].id).add(suppliers[i%10].id)}
+for(let i=0;i<180;i++){getSet(items[i].lineId).add(suppliers[i%6].id);if(i%3===0)getSet(items[i].lineId).add(suppliers[(i+2)%8].id)}
+for(let i=180;i<300;i++){getSet(items[i].lineId).add(suppliers[i%10].id)}
 
 const itemManageSel=new Set();
 const assignSel=new Set();
@@ -473,7 +473,7 @@ const fieldFilterDraft={lineId:"",id:"",name:"",cat:"",qty:"",unit:"",supplierCo
 const fieldFilters={lineId:"",id:"",name:"",cat:"",qty:"",unit:"",supplierCount:""};
 const appliedSearch={item:"",assignItem:"",assignCat:"",assignState:"",supplier:"",supplierFirst:"",supplierPool:"",sfItem:"",sfCat:""};
 const rfqSupplierPool=new Set();
-items.forEach(it=>getSet(it.id).forEach(sid=>rfqSupplierPool.add(sid)));
+items.forEach(it=>getSet(it.lineId).forEach(sid=>rfqSupplierPool.add(sid)));
 let itemPage=0, assignPage=0, sfPage=0, supplierPoolPage=0, supplierListPage=0, supplierFirstPage=0, quotePage=0, assignMode="itemFirst", activeSupplier=null;
 const PAGE=50, SUPPLIER_PAGE=10;
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
@@ -486,7 +486,7 @@ function fuzzyIncludes(value,q){
   return hay.includes(needle)||isSubsequence(needle,hay);
 }
 function itemFieldValue(it,key){
-  if(key==="supplierCount")return getSet(it.id).size;
+  if(key==="supplierCount")return getSet(it.lineId).size;
   if(["id","lineId","name","cat","qty","unit"].includes(key))return it[key];
   return it.custom?.[key]??"";
 }
@@ -538,14 +538,14 @@ function drawingSvg(it,doc,page,scale=1){
 }
 function itemCell(it){
   const docs=drawingDocsForItem(it);
-  if(!docs.length)return `<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="${it.id}" title="无图纸">PDF?</button><div><b>${it.id}</b><div class="pdfMeta">${it.lineId} · 缺图纸</div></div></div>`;
+  if(!docs.length)return `<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="${it.lineId}" title="无图纸">PDF?</button><div><b>${it.id}</b><div class="pdfMeta">${it.lineId} · 缺图纸</div></div></div>`;
   const d=docs[0];
-  return `<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="${it.id}" title="预览 PDF">${drawingSvg(it,d,1,.18)}</button><div><b>${it.id}</b><div class="pdfMeta">${it.lineId} · PDF ${d.pages}页${docs.length>1?" · "+docs.length+"个文件":""}</div></div></div>`;
+  return `<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="${it.lineId}" title="预览 PDF">${drawingSvg(it,d,1,.18)}</button><div><b>${it.id}</b><div class="pdfMeta">${it.lineId} · PDF ${d.pages}页${docs.length>1?" · "+docs.length+"个文件":""}</div></div></div>`;
 }
 function bindDrawingThumbs(){document.querySelectorAll("[data-drawing]").forEach(b=>b.onclick=e=>{e.stopPropagation();openDrawing(b.dataset.drawing)})}
 let drawingState={itemId:null,docIndex:0,page:1,scale:1};
 function renderDrawingPdf(){
-  const it=items.find(x=>x.id===drawingState.itemId);if(!it)return;
+  const it=items.find(x=>x.lineId===drawingState.itemId);if(!it)return;
   const docs=drawingDocsForItem(it);
   if(!docs.length){drawingDocSelect.innerHTML="";drawingPageInfo.textContent="无关联 PDF";drawingLarge.innerHTML='<div class="dangertext">该物料当前没有关联 PDF 图纸。</div>';return}
   drawingState.docIndex=Math.min(drawingState.docIndex,docs.length-1);
@@ -555,9 +555,9 @@ function renderDrawingPdf(){
   drawingLarge.innerHTML=drawingSvg(it,doc,drawingState.page,drawingState.scale);
   drawingPrevPage.disabled=drawingState.page<=1;drawingNextPage.disabled=drawingState.page>=doc.pages;
 }
-function openDrawing(itemId){
-  const it=items.find(x=>x.id===itemId);if(!it)return;
-  drawingState={itemId,docIndex:0,page:1,scale:1};drawingTitle.textContent=it.id+" · "+it.name+" · PDF 图纸";
+function openDrawing(lineId){
+  const it=items.find(x=>x.lineId===lineId);if(!it)return;
+  drawingState={itemId:lineId,docIndex:0,page:1,scale:1};drawingTitle.textContent=it.id+" · "+it.name+" · PDF 图纸";
   drawingModal.classList.add("open");drawingModal.setAttribute("aria-hidden","false");renderDrawingPdf();
 }
 drawingDocSelect.onchange=()=>{drawingState.docIndex=Number(drawingDocSelect.value)||0;drawingState.page=1;renderDrawingPdf()};
@@ -592,10 +592,10 @@ function setImportPreview(rows,source){
 function addRowsToRfq(rows){
   if(rows.some(r=>r._errors?.length)){alert("存在校验错误，不能写入。请先修正后重新预览。");return}
   let added=0,dup=0;
-  rows.forEach(r=>{if(items.some(x=>x.id===r.id)){dup++;return}items.push({...r,lineId:r.lineId||nextLineId(),custom:{...(r.custom||{})}});added++});
+  rows.forEach(r=>{if(items.some(x=>x.lineId===r.lineId)){dup++;return}items.push({...r,lineId:r.lineId||nextLineId(),custom:{...(r.custom||{})}});added++});
   pendingImportRows=[];importPreview.style.display="none";
   renderItemList();renderAssignAll();
-  alert(`已加入 ${added} 项；重复编码跳过 ${dup} 项。`);
+  alert(`已加入 ${added} 项；重复 RFQ Line ID 跳过 ${dup} 项。同一物料编码允许存在多条 RFQ 行，由 Line ID 区分。`);
 }
 toggleItemIntake.onclick=()=>{itemIntake.style.display=itemIntake.style.display==="none"?"block":"none"};
 manualAdd.onclick=()=>{const code=manualCode.value.trim(),name=manualName.value.trim(),qty=parsePositiveNumber(manualQty.value,"数量"),unit=manualUnit.value.trim();if(!code||!name||qty.error||!unit){alert([!code?"物料编码不能为空":"",!name?"物料名称不能为空":"",qty.error||"",!unit?"单位不能为空":""].filter(Boolean).join("；"));return}addRowsToRfq([{id:code,lineId:nextLineId(),name,cat:"类别A",qty:qty.value,unit,_errors:[]}]);manualCode.value=manualName.value=manualQty.value=manualUnit.value=""};
@@ -648,7 +648,7 @@ bulkUpdateField.onclick=()=>{
   if(!itemManageSel.size){alert("请先勾选要更新的物料。");return}
   const value=bulkFieldValue.value;let n=0;
   if(key==="qty"){const pv=parsePositiveNumber(value,"数量");if(pv.error){alert(pv.error);return}}
-  itemManageSel.forEach(id=>{const it=items.find(x=>x.id===id);if(!it)return;if(["name","cat","qty","unit"].includes(key)){it[key]=key==="qty"?Number(value):value}else{it.custom=it.custom||{};it.custom[key]=value}n++});
+  itemManageSel.forEach(id=>{const it=items.find(x=>x.lineId===id);if(!it)return;if(["name","cat","qty","unit"].includes(key)){it[key]=key==="qty"?Number(value):value}else{it.custom=it.custom||{};it.custom[key]=value}n++});
   renderItemList();renderAssignAll();alert(`已更新 ${n} 项。`);
 };
 function applyMatchedUpdates(rows){
@@ -664,11 +664,11 @@ matchUpdateFile.onchange=()=>{
 };
 deleteSelectedItems.onclick=()=>{
   if(!itemManageSel.size){alert("请先勾选要删除的询价物料。");return}
-  const count=itemManageSel.size,ids=new Set(itemManageSel),lineIds=new Set(items.filter(x=>ids.has(x.id)).map(x=>x.lineId));
+  const count=itemManageSel.size,lineIds=new Set(itemManageSel),ids=new Set(items.filter(x=>lineIds.has(x.lineId)).map(x=>x.id));
   if(quoteRounds.some(r=>r.lines.some(l=>lineIds.has(l.lineId))||(r.status==="confirmed"&&(r.expectedLineIds||[]).some(x=>lineIds.has(x))))){alert("选中物料已形成报价历史，M0 不允许物理删除。正式版应使用作废/取消并保留历史。");return}
   if(!confirm(`从本次 RFQ 删除选中的 ${count} 项物料？\n相关供应商分配关系也会同时删除。`))return;
-  for(let i=items.length-1;i>=0;i--){if(ids.has(items[i].id))items.splice(i,1)}
-  ids.forEach(id=>{assignments.delete(id);assignSel.delete(id);itemManageSel.delete(id)});
+  for(let i=items.length-1;i>=0;i--){if(lineIds.has(items[i].lineId))items.splice(i,1)}
+  lineIds.forEach(lineId=>{assignments.delete(lineId);assignSel.delete(lineId);itemManageSel.delete(lineId)});
   quoteRounds.filter(r=>r.status!=="confirmed").forEach(r=>{r.expectedLineIds=(r.expectedLineIds||[]).filter(x=>!lineIds.has(x));r.lines=r.lines.filter(l=>!lineIds.has(l.lineId))});
   resetRange("item-manage");renderItemList();renderAssignAll();renderQuotes();
 };
@@ -682,7 +682,7 @@ function currentQuoteRound(){
   const sid=quoteImportSupplier.value,[rn,rv]=String(quoteRoundSelect.value||"").split("|").map(Number);
   return quoteRounds.find(r=>r.supplierId===sid&&r.roundNo===rn&&r.revisionNo===rv)||null;
 }
-function assignedItemsForSupplier(sid){return items.filter(it=>getSet(it.id).has(sid))}
+function assignedItemsForSupplier(sid){return items.filter(it=>getSet(it.lineId).has(sid))}
 function ensureFirstRound(){
   const sid=quoteImportSupplier.value;if(!sid)return null;
   let subs=supplierSubmissions(sid);
@@ -696,7 +696,7 @@ function renderQuoteRoundSelector(selectLatest=false){
   if(selectLatest||![...quoteRoundSelect.options].some(o=>o.value===current))quoteRoundSelect.value=`${subs[subs.length-1].roundNo}|${subs[subs.length-1].revisionNo}`;else quoteRoundSelect.value=current;
   renderQuoteRound();
 }
-function resolveQuoteItem(ref){const x=String(ref||"").trim();return items.find(it=>it.lineId===x)||items.find(it=>it.id===x)||null}
+function resolveQuoteItem(ref){const x=String(ref||"").trim(),byLine=items.find(it=>it.lineId===x);if(byLine)return byLine;const byCode=items.filter(it=>it.id===x);return byCode.length===1?byCode[0]:null}
 function parseQuoteRows(text){
   return String(text||"").split(/[;；\n\r]+/).map(x=>x.trim()).filter(Boolean).map(row=>{
     const p=row.split(/[，,\t]/).map(x=>x.trim());
@@ -853,7 +853,7 @@ function appliedValue(id){const m={assignItem:"assignItemSearch",assignCat:"assi
 function filteredItems(searchId,catId,stateId){
   const q=appliedValue(searchId),cat=appliedValue(catId),state=appliedValue(stateId);
   return items.filter(it=>{
-    const n=getSet(it.id).size;
+    const n=getSet(it.lineId).size;
     const stateOk=!state||(state==="none"&&n===0)||(state==="single"&&n===1)||(state==="multi"&&n>=2);
     const searchOk=!q||[it.lineId,it.id,it.name,it.cat,it.qty,it.unit,n,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q));
     return searchOk&&(!cat||it.cat===cat)&&stateOk
@@ -862,7 +862,7 @@ function filteredItems(searchId,catId,stateId){
 function currentItemList(){
   const q=appliedSearch.item;
   return items.filter(it=>{
-    if(q&&![it.lineId,it.id,it.name,it.cat,it.qty,it.unit,getSet(it.id).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))return false;
+    if(q&&![it.lineId,it.id,it.name,it.cat,it.qty,it.unit,getSet(it.lineId).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))return false;
     const keys=["lineId","id","name","cat","qty","unit","supplierCount",...customFields.map(f=>f.key)];
     return keys.every(k=>!fieldFilters[k]||fuzzyIncludes(itemFieldValue(it,k),fieldFilters[k]));
   });
@@ -881,7 +881,7 @@ function renderItemList(){
   itemHead.innerHTML=`<tr><th></th>${fields.map(f=>`<th>${esc(f.label)}</th>`).join("")}</tr><tr><th></th>${fields.map(f=>`<th><input class="colFilter" type="text" data-field-filter="${f.key}" value="${esc(fieldFilterDraft[f.key]||"")}" placeholder="模糊搜索"></th>`).join("")}</tr>`;
   document.querySelectorAll("[data-field-filter]").forEach(x=>x.oninput=()=>{fieldFilterDraft[x.dataset.fieldFilter]=x.value});
   const list=currentItemList(),pages=Math.max(1,Math.ceil(list.length/PAGE));itemPage=Math.min(itemPage,pages-1),slice=list.slice(itemPage*PAGE,itemPage*PAGE+PAGE);
-  itemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-im="${it.id}" ${itemManageSel.has(it.id)?"checked":""}></td><td>${itemCell(it)}</td><td>${esc(it.name)}</td><td>${esc(it.cat)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td>${getSet(it.id).size}</td>${customFields.map(f=>`<td>${esc(itemFieldValue(it,f.key))}</td>`).join("")}</tr>`).join("");
+  itemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-im="${it.lineId}" ${itemManageSel.has(it.id)?"checked":""}></td><td>${itemCell(it)}</td><td>${esc(it.name)}</td><td>${esc(it.cat)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td>${getSet(it.lineId).size}</td>${customFields.map(f=>`<td>${esc(itemFieldValue(it,f.key))}</td>`).join("")}</tr>`).join("");
   bindDrawingThumbs();
   bindShiftRange("#itemBody input[data-im]","item-manage","im",(id,checked)=>checked?itemManageSel.add(id):itemManageSel.delete(id),renderItemList);
   itemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${itemPage+1}/${pages} 页 · 已选择 ${itemManageSel.size} 项`;
@@ -895,14 +895,14 @@ itemInvertPage.onclick=()=>{invertIds(itemManageSel,pageSlice(currentItemList(),
 
 function coverage(){
   let covered=0,single=0,none=0;
-  items.forEach(it=>{const n=getSet(it.id).size;if(n===0)none++;else{covered++;if(n===1)single++}});
+  items.forEach(it=>{const n=getSet(it.lineId).size;if(n===0)none++;else{covered++;if(n===1)single++}});
   return {covered,single,none}
 }
 function renderStats(){const c=coverage();stTotal.textContent=items.length;stCovered.textContent=c.covered;stSingle.textContent=c.single;stNone.textContent=c.none}
 function renderAssignItems(){
   const list=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"), pages=Math.max(1,Math.ceil(list.length/PAGE));assignPage=Math.min(assignPage,pages-1);
   const slice=list.slice(assignPage*PAGE,assignPage*PAGE+PAGE);
-  assignItemBody.innerHTML=slice.map(it=>{const names=[...getSet(it.id)].slice(0,3).map(sid=>suppliers.find(s=>s.id===sid)?.name).filter(Boolean);return `<tr><td><input type="checkbox" data-ai="${it.id}" ${assignSel.has(it.id)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td><td>${names.length?names.map(n=>`<span class="chip">${n}</span>`).join(" "):'<span class="dangertext">未分配</span>'}</td></tr>`}).join("");
+  assignItemBody.innerHTML=slice.map(it=>{const names=[...getSet(it.lineId)].slice(0,3).map(sid=>suppliers.find(s=>s.id===sid)?.name).filter(Boolean);return `<tr><td><input type="checkbox" data-ai="${it.lineId}" ${assignSel.has(it.id)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td><td>${names.length?names.map(n=>`<span class="chip">${n}</span>`).join(" "):'<span class="dangertext">未分配</span>'}</td></tr>`}).join("");
   bindDrawingThumbs();
   bindShiftRange("#assignItemBody input[data-ai]","assign-items","ai",(id,checked)=>checked?assignSel.add(id):assignSel.delete(id),()=>{renderAssignItems();renderSuppliers()});
   assignSelectedCount.textContent=assignSel.size;
@@ -936,17 +936,17 @@ function renderSupplierFirstList(){
   const q=appliedSearch.supplierFirst;
   const list=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&supplierMatches(s,q)),pages=Math.max(1,Math.ceil(list.length/SUPPLIER_PAGE));supplierFirstPage=Math.min(supplierFirstPage,pages-1);
   supplierFirstList.innerHTML=pageSlice(list,supplierFirstPage,SUPPLIER_PAGE).map(s=>{
-    let count=0;items.forEach(it=>{if(getSet(it.id).has(s.id))count++});
+    let count=0;items.forEach(it=>{if(getSet(it.lineId).has(s.id))count++});
     return `<div class="srow ${activeSupplier===s.id?"selected":""}" data-sf-s="${s.id}"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.id} · ${s.reason}</div></div><div class="toolbar"><span>${count} 项</span><button class="btn danger" data-pool-remove="${s.id}">移出本次询价</button></div></div></div>`
   }).join("")||'<div class="muted small">没有匹配的本次询价供应商。</div>';
   document.querySelectorAll("[data-sf-s]").forEach(x=>x.onclick=()=>{activeSupplier=x.dataset.sfS;sfPage=0;resetRange("supplier-items");renderSupplierFirstList();renderSfItems()});
   document.querySelectorAll("[data-pool-remove]").forEach(b=>b.onclick=e=>{
     e.stopPropagation();
     const sid=b.dataset.poolRemove, sup=suppliers.find(s=>s.id===sid);
-    let count=0;items.forEach(it=>{if(getSet(it.id).has(sid))count++});
+    let count=0;items.forEach(it=>{if(getSet(it.lineId).has(sid))count++});
     if(quoteRounds.some(r=>r.supplierId===sid&&(r.status==="confirmed"||r.lines.length))){alert("该供应商已有报价/修订历史，M0 不允许直接移出并破坏历史。正式版应使用取消参与/作废状态。");return}
     if(!confirm(`将“${sup?.name||sid}”移出本次询价？\n同时会取消它当前关联的 ${count} 个物料。`))return;
-    let removed=0;items.forEach(it=>{if(getSet(it.id).delete(sid))removed++});
+    let removed=0;items.forEach(it=>{if(getSet(it.lineId).delete(sid))removed++});
     for(let i=quoteRounds.length-1;i>=0;i--){if(quoteRounds[i].supplierId===sid&&quoteRounds[i].status==="draft"&&!quoteRounds[i].lines.length)quoteRounds.splice(i,1)}
     rfqSupplierPool.delete(sid);if(activeSupplier===sid)activeSupplier=null;
     flash(`已将供应商移出本次询价，并取消 ${removed} 条物料关联。`);
@@ -985,40 +985,40 @@ closeSupplierPicker.onclick=()=>{supplierPicker.style.display="none"};
 runSupplierPoolSearch.onclick=()=>{appliedSearch.supplierPool=supplierPoolSearch.value.trim();supplierPoolPage=0;resetRange("supplier-picker");renderSupplierPoolPicker()};
 function filteredSfItems(){
   const q=appliedSearch.sfItem,cat=appliedSearch.sfCat;
-  return items.filter(it=>(!q||[it.lineId,it.id,it.name,it.cat,it.qty,it.unit,getSet(it.id).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))&&(!cat||it.cat===cat))
+  return items.filter(it=>(!q||[it.lineId,it.id,it.name,it.cat,it.qty,it.unit,getSet(it.lineId).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))&&(!cat||it.cat===cat))
 }
 function renderSfItems(){
   if(!activeSupplier){supplierFirstTitle.textContent="选择左侧供应商";sfItemBody.innerHTML="";sfItemCount.textContent="";return}
   const sup=suppliers.find(s=>s.id===activeSupplier);supplierFirstTitle.textContent=sup.name+"：选择物料";
   const list=filteredSfItems(),pages=Math.max(1,Math.ceil(list.length/PAGE));sfPage=Math.min(sfPage,pages-1);
   const slice=list.slice(sfPage*PAGE,sfPage*PAGE+PAGE);
-  sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.id}" ${getSet(it.id).has(activeSupplier)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td></tr>`).join("");
+  sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.lineId}" ${getSet(it.lineId).has(activeSupplier)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td></tr>`).join("");
   bindDrawingThumbs();
   bindShiftRange("#sfItemBody input[data-sfi]","supplier-items","sfi",(id,checked)=>{const set=getSet(id);checked?set.add(activeSupplier):set.delete(activeSupplier)},renderAssignAll);
-  const related=list.filter(it=>getSet(it.id).has(activeSupplier)).length;
+  const related=list.filter(it=>getSet(it.lineId).has(activeSupplier)).length;
   sfItemCount.textContent=`筛选结果 ${list.length} 项 · 当前供应商已关联 ${related} 项 · 第 ${sfPage+1}/${pages} 页 · 勾选框即关联状态，支持 Shift 连选`;
   renderPageNav(sfPager,sfPage,list.length,PAGE,p=>{sfPage=p;resetRange("supplier-items");renderSfItems()});
 }
 runSfSearch.onclick=()=>{appliedSearch.sfItem=sfItemSearch.value.trim();appliedSearch.sfCat=sfCatFilter.value;sfPage=0;resetRange("supplier-items");renderSfItems()};
-sfLinkFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>getSet(it.id).add(activeSupplier));renderAssignAll()};
-sfLinkPage.onclick=()=>{if(!activeSupplier)return;pageSlice(filteredSfItems(),sfPage).forEach(it=>getSet(it.id).add(activeSupplier));renderAssignAll()};
-sfInvertFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>{const set=getSet(it.id);set.has(activeSupplier)?set.delete(activeSupplier):set.add(activeSupplier)});renderAssignAll()};
-sfInvertPage.onclick=()=>{if(!activeSupplier)return;pageSlice(filteredSfItems(),sfPage).forEach(it=>{const set=getSet(it.id);set.has(activeSupplier)?set.delete(activeSupplier):set.add(activeSupplier)});renderAssignAll()};
-sfUnlinkFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>getSet(it.id).delete(activeSupplier));renderAssignAll()};
-sfCopyRange.onclick=()=>{if(!activeSupplier||!copyFromSupplier.value)return;const source=copyFromSupplier.value;let n=0;items.forEach(it=>{if(getSet(it.id).has(source)&&!getSet(it.id).has(activeSupplier)){getSet(it.id).add(activeSupplier);n++}});flash(`已复制物料范围作为起点：新增 ${n} 条关系。可继续直接勾选/取消差异物料。`);renderAssignAll()};
+sfLinkFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>getSet(it.lineId).add(activeSupplier));renderAssignAll()};
+sfLinkPage.onclick=()=>{if(!activeSupplier)return;pageSlice(filteredSfItems(),sfPage).forEach(it=>getSet(it.lineId).add(activeSupplier));renderAssignAll()};
+sfInvertFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>{const set=getSet(it.lineId);set.has(activeSupplier)?set.delete(activeSupplier):set.add(activeSupplier)});renderAssignAll()};
+sfInvertPage.onclick=()=>{if(!activeSupplier)return;pageSlice(filteredSfItems(),sfPage).forEach(it=>{const set=getSet(it.lineId);set.has(activeSupplier)?set.delete(activeSupplier):set.add(activeSupplier)});renderAssignAll()};
+sfUnlinkFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>getSet(it.lineId).delete(activeSupplier));renderAssignAll()};
+sfCopyRange.onclick=()=>{if(!activeSupplier||!copyFromSupplier.value)return;const source=copyFromSupplier.value;let n=0;items.forEach(it=>{if(getSet(it.lineId).has(source)&&!getSet(it.lineId).has(activeSupplier)){getSet(it.lineId).add(activeSupplier);n++}});flash(`已复制物料范围作为起点：新增 ${n} 条关系。可继续直接勾选/取消差异物料。`);renderAssignAll()};
 
 function renderAssignAll(){renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
 function flash(msg){document.getElementById("previewBox").style.display="block";document.getElementById("previewBox").textContent=msg}
 let previewSupplierId=null;
 function rfqPreviewSuppliers(){
-  return suppliers.filter(s=>items.some(it=>getSet(it.id).has(s.id)));
+  return suppliers.filter(s=>items.some(it=>getSet(it.lineId).has(s.id)));
 }
 function renderRfqPreview(){
   const list=rfqPreviewSuppliers();if(!list.length){rfqPreviewContent.innerHTML='<div class="muted">当前还没有任何已分配的供应商询价内容。</div>';return}
   if(!previewSupplierId||!list.some(s=>s.id===previewSupplierId))previewSupplierId=list[0].id;
-  const sup=list.find(s=>s.id===previewSupplierId),rows=items.filter(it=>getSet(it.id).has(previewSupplierId));
+  const sup=list.find(s=>s.id===previewSupplierId),rows=items.filter(it=>getSet(it.lineId).has(previewSupplierId));
   const docs=[],missing=[];rows.forEach(it=>{const ds=drawingDocsForItem(it);if(!ds.length)missing.push(it);ds.forEach(d=>{if(!docs.some(x=>x.name===d.name))docs.push({...d,itemId:it.id})})});
-  rfqPreviewContent.innerHTML=`<div class="rfqSupplierNav">${list.map(s=>{const n=items.filter(it=>getSet(it.id).has(s.id)).length;return `<button class="btn ${s.id===previewSupplierId?"soft":""}" data-rfq-supplier="${s.id}">${esc(s.name)} · ${n} 项</button>`}).join("")}</div><div class="rfqDoc"><div class="rfqDocHead"><div><b>询价包 RFQ-DEMO-001 · Rev.0</b><div class="small muted">供应商：${esc(sup.name)}</div></div><div class="small">物料 ${rows.length} 项 · PDF ${docs.length} 个 · 缺图纸 ${missing.length} 项</div></div><div class="notice" style="margin-bottom:10px"><b>附件检查：</b>应按物料范围附带 PDF 图纸；当前找到 ${docs.length} 个唯一 PDF。${missing.length?` <span class="dangertext">缺图纸：${missing.map(x=>esc(x.id)).join("、")}</span>`:" 无缺失。"}</div><table><thead><tr><th>序号</th><th>RFQ Line ID</th><th>物料编码</th><th>名称</th><th>数量</th><th>单位</th><th>单价</th><th>交期</th><th>MOQ</th></tr></thead><tbody>${rows.map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.lineId)}</td><td>${esc(it.id)}</td><td>${esc(it.name)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td></td><td></td><td></td></tr>`).join("")}</tbody></table><div class="coverageDetails"><b>将打包的 PDF：</b><div class="small">${docs.length?docs.map(d=>esc(d.name)).join("、"):"无"} </div></div></div>`;
+  rfqPreviewContent.innerHTML=`<div class="rfqSupplierNav">${list.map(s=>{const n=items.filter(it=>getSet(it.lineId).has(s.id)).length;return `<button class="btn ${s.id===previewSupplierId?"soft":""}" data-rfq-supplier="${s.id}">${esc(s.name)} · ${n} 项</button>`}).join("")}</div><div class="rfqDoc"><div class="rfqDocHead"><div><b>询价包 RFQ-DEMO-001 · Rev.0</b><div class="small muted">供应商：${esc(sup.name)}</div></div><div class="small">物料 ${rows.length} 项 · PDF ${docs.length} 个 · 缺图纸 ${missing.length} 项</div></div><div class="notice" style="margin-bottom:10px"><b>附件检查：</b>应按物料范围附带 PDF 图纸；当前找到 ${docs.length} 个唯一 PDF。${missing.length?` <span class="dangertext">缺图纸：${missing.map(x=>esc(x.id)).join("、")}</span>`:" 无缺失。"}</div><table><thead><tr><th>序号</th><th>RFQ Line ID</th><th>物料编码</th><th>名称</th><th>数量</th><th>单位</th><th>单价</th><th>交期</th><th>MOQ</th></tr></thead><tbody>${rows.map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.lineId)}</td><td>${esc(it.id)}</td><td>${esc(it.name)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td></td><td></td><td></td></tr>`).join("")}</tbody></table><div class="coverageDetails"><b>将打包的 PDF：</b><div class="small">${docs.length?docs.map(d=>esc(d.name)).join("、"):"无"} </div></div></div>`;
   document.querySelectorAll("[data-rfq-supplier]").forEach(b=>b.onclick=()=>{previewSupplierId=b.dataset.rfqSupplier;renderRfqPreview()});
 }
 previewBtn.onclick=()=>{rfqPreviewModal.classList.add("open");rfqPreviewModal.setAttribute("aria-hidden","false");renderRfqPreview()};
@@ -1027,10 +1027,10 @@ rfqPreviewModal.onclick=e=>{if(e.target===rfqPreviewModal)closeRfqPreview.click(
 generateBtn.onclick=()=>{const c=coverage();alert(`原型动作：允许生成。\n已覆盖 ${c.covered}/${items.length} 项，未覆盖 ${c.none} 项将保留在当前 RFQ 中。\n正式 M4 再实现 Excel 文件生成。`)};
 
 const awards=new Map(), awardReasons=new Map();
-function comparisonSuppliers(){return suppliers.filter(s=>rfqSupplierPool.has(s.id)&&items.some(it=>getSet(it.id).has(s.id)))}
-function comparisonItems(){return items.filter(it=>[...getSet(it.id)].some(sid=>rfqSupplierPool.has(sid)))}
+function comparisonSuppliers(){return suppliers.filter(s=>rfqSupplierPool.has(s.id)&&items.some(it=>getSet(it.lineId).has(s.id)))}
+function comparisonItems(){return items.filter(it=>[...getSet(it.lineId)].some(sid=>rfqSupplierPool.has(sid)))}
 function quoteMetaFor(it,sup,i=0,si=0){
-  if(!getSet(it.id).has(sup.id))return null;
+  if(!getSet(it.lineId).has(sup.id))return null;
   const saved=latestConfirmedQuoteLine(it.lineId,sup.id),subs=supplierSubmissions(sup.id);
   if(saved){const eff=effectivePriceForLine(saved,it.qty);return eff==null?null:{price:eff,lead:saved.lead,moq:saved.moq,roundNo:saved.roundNo,revisionNo:saved.revisionNo,source:saved.source,tiers:saved.tiers||[],rawLine:saved}}
   if(subs.length)return null;
