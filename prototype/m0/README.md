@@ -102,3 +102,12 @@ Quotation rounds follow these rules:
 - only confirmed rounds become effective in quotation comparison.
 
 M0 displays the previous-round price and current-round price side by side to validate the negotiation-history workflow.
+
+
+## Quotation return coverage check
+
+M0 now compares each quotation return against the expected item scope of the selected supplier and quotation round.
+
+The coverage summary distinguishes quoted, explicit no-quote, cannot-supply, missing/omitted, extra, and duplicate lines. Missing, extra, and duplicate item IDs are listed for buyer review.
+
+A quotation round keeps its own expected-scope snapshot so a partial second negotiation is not incorrectly judged against the entire original RFQ.
