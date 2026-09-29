@@ -544,3 +544,46 @@ System Settings may:
 - define protected core fields
 
 The M0 prototype includes a minimal System Settings page only to validate this separation. Full field-administration behavior may be implemented in a later milestone.
+
+
+## 30. Quotation-return import and negotiation-round model
+
+M0 must validate quotation-return import interactions using synthetic data before M5 production implementation.
+
+Supported M0 input paths should mirror inquiry-item intake where practical:
+- single-line manual quotation entry
+- clipboard batch paste
+- CSV / TXT local import
+- Excel import-flow simulation
+- editable imported quotation lines after import
+
+Quotation rounds are modeled at the RFQ × supplier submission level, not independently per item.
+
+For each supplier:
+- Round 1 represents the initial quotation submission.
+- Round 2 represents the second negotiation / requotation submission.
+- Later rounds are allowed as an extensible sequence.
+- Creating a later round never overwrites an earlier round.
+
+Each round stores its own line-level quotation records.
+
+A later round may be partial. If a supplier only requotes some items:
+- quoted items receive new line records in the new round;
+- missing items must not automatically be interpreted as "price unchanged";
+- the UI must distinguish "not submitted in this round" from "confirmed carry-forward from the previous round".
+
+When purchasing confirms that a supplier explicitly keeps the prior quotation after negotiation, the system may create a new-round line marked as "carry forward previous round". This records that a negotiation round occurred even when the numeric price did not change.
+
+If the supplier explicitly submits the same numeric price again, the new round stores the repeated price normally and the calculated price change is 0.
+
+For each line in round 2 or later, expose:
+- previous effective quotation
+- current-round quotation
+- absolute price change
+- percentage price change
+- source: imported / manually corrected / confirmed carry-forward
+- quotation status
+
+A quotation round may remain Draft while imported values are reviewed and manually corrected. Confirming the round makes it eligible as the current quotation for comparison.
+
+Formal M5 implementation should retain an audit trail for post-import manual corrections and should not silently destroy the originally imported value.
