@@ -522,8 +522,8 @@ function renderPageNav(el,page,total,size,onPage){
   html+='<button class="btn" data-pg="next">下一页</button></div>';el.innerHTML=html;
   el.querySelectorAll("[data-pg]").forEach(b=>b.onclick=()=>{let p=page;if(b.dataset.pg==="prev")p=Math.max(0,page-1);else if(b.dataset.pg==="next")p=Math.min(pages-1,page+1);else p=Number(b.dataset.pg);onPage(p)});
 }
-function selectAllIds(set,list){list.forEach(x=>set.add(x.id))}
-function invertIds(set,list){list.forEach(x=>set.has(x.id)?set.delete(x.id):set.add(x.id))}
+function selectAllIds(set,list){list.forEach(x=>set.add(x.lineId||x.id))}
+function invertIds(set,list){list.forEach(x=>{const id=x.lineId||x.id;set.has(id)?set.delete(id):set.add(id)})}
 function drawingDocsForItem(it){
   const n=parseInt(it.id.replace(/\D/g,""),10)||1;
   if(n%11===0)return[];
@@ -882,7 +882,7 @@ function renderItemList(){
   itemHead.innerHTML=`<tr><th></th>${fields.map(f=>`<th>${esc(f.label)}</th>`).join("")}</tr><tr><th></th>${fields.map(f=>`<th><input class="colFilter" type="text" data-field-filter="${f.key}" value="${esc(fieldFilterDraft[f.key]||"")}" placeholder="模糊搜索"></th>`).join("")}</tr>`;
   document.querySelectorAll("[data-field-filter]").forEach(x=>x.oninput=()=>{fieldFilterDraft[x.dataset.fieldFilter]=x.value});
   const list=currentItemList(),pages=Math.max(1,Math.ceil(list.length/PAGE));itemPage=Math.min(itemPage,pages-1),slice=list.slice(itemPage*PAGE,itemPage*PAGE+PAGE);
-  itemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-im="${it.lineId}" ${itemManageSel.has(it.id)?"checked":""}></td><td>${itemCell(it)}</td><td>${esc(it.name)}</td><td>${esc(it.cat)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td>${getSet(it.lineId).size}</td>${customFields.map(f=>`<td>${esc(itemFieldValue(it,f.key))}</td>`).join("")}</tr>`).join("");
+  itemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-im="${it.lineId}" ${itemManageSel.has(it.lineId)?"checked":""}></td><td>${itemCell(it)}</td><td>${esc(it.name)}</td><td>${esc(it.cat)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td>${getSet(it.lineId).size}</td>${customFields.map(f=>`<td>${esc(itemFieldValue(it,f.key))}</td>`).join("")}</tr>`).join("");
   bindDrawingThumbs();
   bindShiftRange("#itemBody input[data-im]","item-manage","im",(id,checked)=>checked?itemManageSel.add(id):itemManageSel.delete(id),renderItemList);
   itemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${itemPage+1}/${pages} 页 · 已选择 ${itemManageSel.size} 项`;
@@ -903,7 +903,7 @@ function renderStats(){const c=coverage();stTotal.textContent=items.length;stCov
 function renderAssignItems(){
   const list=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"), pages=Math.max(1,Math.ceil(list.length/PAGE));assignPage=Math.min(assignPage,pages-1);
   const slice=list.slice(assignPage*PAGE,assignPage*PAGE+PAGE);
-  assignItemBody.innerHTML=slice.map(it=>{const names=[...getSet(it.lineId)].slice(0,3).map(sid=>suppliers.find(s=>s.id===sid)?.name).filter(Boolean);return `<tr><td><input type="checkbox" data-ai="${it.lineId}" ${assignSel.has(it.id)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td><td>${names.length?names.map(n=>`<span class="chip">${n}</span>`).join(" "):'<span class="dangertext">未分配</span>'}</td></tr>`}).join("");
+  assignItemBody.innerHTML=slice.map(it=>{const names=[...getSet(it.lineId)].slice(0,3).map(sid=>suppliers.find(s=>s.id===sid)?.name).filter(Boolean);return `<tr><td><input type="checkbox" data-ai="${it.lineId}" ${assignSel.has(it.lineId)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td><td>${names.length?names.map(n=>`<span class="chip">${n}</span>`).join(" "):'<span class="dangertext">未分配</span>'}</td></tr>`}).join("");
   bindDrawingThumbs();
   bindShiftRange("#assignItemBody input[data-ai]","assign-items","ai",(id,checked)=>checked?assignSel.add(id):assignSel.delete(id),()=>{renderAssignItems();renderSuppliers()});
   assignSelectedCount.textContent=assignSel.size;
