@@ -15,10 +15,12 @@ V1 focuses on RFQ and quotation management rather than recreating ERP functional
 - RFQ creation and tracking
 - flexible creation of inquiry items through file import, manual entry, and clipboard batch paste
 - item-to-supplier assignment
-- supplier-specific RFQ document generation
+- supplier-specific RFQ package generation, including related PDF drawings
+- item drawing / technical-document association and offline PDF preview
 - quotation import and normalization
 - quotation comparison and supplier selection
 - historical price and supplier relationship accumulation
+- pre-go-live legacy inquiry / quotation / purchase-order data migration
 - local backup and restore
 
 ### Out of scope for V1
@@ -267,10 +269,11 @@ V1 should remain compact:
 1. RFQ List
 2. Inquiry Item List
 3. Assignment Center
-4. RFQ Generation
+4. RFQ Package Generation
 5. Quotation Import & Comparison
 6. Supplier / Item Master Data
-7. Data Management
+7. Historical Data / Migration
+8. System Settings / Data Management
 
 A complex dashboard is not required for V1.
 
@@ -341,17 +344,56 @@ The comparison report should include, at minimum:
 
 The OA report is an export artifact. Direct OA API integration is not required for V1 unless separately specified.
 
-## 18. Future item drawing integration
+## 18. V1 PDF drawing and technical-document integration
 
-Plan a later extension for item drawings and technical-document preview.
+Item drawings are part of the V1 inquiry workflow rather than a post-V1 enhancement.
 
-The item model should be able to reference one or more drawing/document files.
+The primary drawing format is PDF. A PDF may contain one or many pages, and one item may reference one or more PDF drawing / technical-document files.
 
-In the assignment interface, the buyer should be able to select an item and open an embedded preview without leaving the SRM page. This preview is intended to help the buyer judge which suppliers are appropriate for the item.
+The item model must support:
+- one item → multiple PDF documents
+- document type / display name
+- source file reference
+- document version or revision information when available
+- page count when available
+- active / superseded state
+- RFQ-time attachment snapshot so a historical RFQ continues to reference the files or versions actually sent at that time
 
-Initial browser-preview targets should prioritize formats that can be reliably displayed in an offline HTML application, such as PDF and common image formats. Native CAD formats may require later conversion or a dedicated viewer and should not block V1.
+### Preview interaction
 
-The drawing-preview feature is a future enhancement and is not part of the current M0 acceptance scope.
+In item lists, use a compact PDF-oriented preview instead of treating drawings as ordinary images.
+
+A compact preview should show, where practical:
+- first-page thumbnail
+- PDF indicator
+- page count
+- document count when multiple files exist
+
+Opening the preview should provide an in-page PDF viewer with:
+- previous / next page
+- current page / total pages
+- zoom in / zoom out
+- fit width / fit page
+- document switcher when the item has multiple PDFs
+
+The production offline application should use a locally packaged PDF rendering/viewing capability. M0 only needs to validate the multi-page PDF interaction model.
+
+### RFQ attachment use
+
+Drawings are not only for internal preview. They are part of supplier RFQ package generation.
+
+When generating a supplier-specific RFQ package, the system must collect the PDF files associated with the items assigned to that supplier.
+
+Before generation, show an attachment-coverage check such as:
+- expected drawing files
+- found drawing files
+- missing drawing files
+- items without drawings
+- duplicate/shared documents where relevant
+
+Missing drawings should be visible to the buyer and should not be silently ignored.
+
+Historical RFQs must preserve the attachment set sent at generation time even if the item's current drawing is later replaced or revised.
 
 
 ## 19. Current-RFQ item list interaction
@@ -653,3 +695,141 @@ Quotation import should normalize different source layouts into the same tier st
 M0 uses a compact synthetic representation only to validate the interaction and normalized data model.
 
 The comparison / OA report in M6 should show the effective price used for the RFQ quantity and provide the complete tier-price detail where the quotation is tiered. This prevents approval users from mistaking one calculated tier price for the supplier's entire quotation.
+
+
+## 33. Supplier RFQ package generation
+
+The V1 output unit is a supplier RFQ package, not only an Excel quotation sheet.
+
+For each supplier, generation should produce a package similar to:
+
+- supplier-specific RFQ Excel
+- drawing / technical-document folder containing only files related to that supplier's assigned item scope
+- optional ZIP package containing the RFQ file and drawing folder
+
+The package must be derived from the supplier's assignment scope. Two suppliers with different assigned items may therefore receive different attachment packages.
+
+Package generation should:
+- preview the exact RFQ lines;
+- preview / check the drawing attachment set;
+- expose missing attachment warnings;
+- avoid silently copying unrelated drawings;
+- keep stable RFQ / supplier / line identifiers;
+- preserve the generated attachment snapshot for later audit and quotation traceability.
+
+A single PDF may legitimately be associated with multiple RFQ lines. The implementation should avoid unnecessary duplicate file copies inside the same supplier package where one shared document is sufficient.
+
+## 34. Quotation amount analysis
+
+Quotation comparison must support both line-level price comparison and aggregate amount analysis.
+
+Aggregate comparisons must not treat different quotation scopes as directly comparable without explaining the scope.
+
+At minimum support:
+
+### Supplier quoted-scope total
+For one supplier, sum the effective quotation amount across the items that supplier actually quoted:
+
+effective unit price × RFQ quantity.
+
+This describes the size of that supplier's quoted scope but is not by itself a fair cross-supplier ranking when scopes differ.
+
+### Common-item-scope total
+For two or more suppliers, identify the same set of items that all compared suppliers validly quoted, then compare total quotation amount on that common scope.
+
+The system must display the number / scope of common items so the user understands what is being compared.
+
+### User-selected scope total
+Allow the buyer to select an item subset and calculate each supplier's total on exactly that same subset.
+
+A missing quotation must remain missing / incomplete; it must never be treated as zero.
+
+### Theoretical lowest total
+Calculate the theoretical RFQ total if each item uses the lowest currently valid effective quotation.
+
+### Final selected total
+Calculate the total based on the buyer's final supplier selections and compare it with:
+- theoretical lowest total
+- previous-purchase total where comparable
+- other useful reference totals
+
+Tiered pricing must first resolve the effective unit price using the RFQ quantity before amount calculation.
+
+Aggregate price analysis must consider comparability conditions such as currency, tax basis, unit of measure, and quantity basis. Non-comparable quotations must be flagged rather than silently summed together.
+
+## 35. Historical quotation preservation and analysis
+
+Quotation history is core transaction data and must be preserved from the moment production quotation import is implemented in M5.
+
+M5 must permanently retain:
+- each supplier quotation round
+- original imported values
+- normalized values
+- tier structures
+- explicit no-quote / cannot-supply states
+- quotation coverage anomalies
+- confirmed carry-forward records
+- manual corrections and their audit information
+- quotation date / negotiation date
+- related RFQ / supplier / item identifiers
+
+M7 is responsible for history-query and analysis experiences, not for beginning historical retention.
+
+History analysis should support, at minimum:
+- one item's price history over time
+- one item × one supplier quotation history
+- comparison of multiple suppliers' historical quotations for one item
+- negotiation-round price changes
+- historical purchase price versus historical quotation
+- historical supplier participation / quotation coverage
+- price trend analysis where data is comparable
+
+Historical values must retain their original commercial context, including quantity / tier, currency, tax basis, and unit where available.
+
+## 36. Pre-go-live legacy data migration
+
+Before production go-live, the system must support importing relevant historical purchasing and inquiry / quotation information so the new SRM does not start with an empty history.
+
+Legacy migration must not force users to reconstruct business events that cannot be supported by evidence.
+
+Import the deepest historical layer supported by the available source data:
+
+### Purchase-order history
+If only ERP purchase-order history is available, import facts such as:
+- purchase / order date
+- item
+- supplier
+- quantity
+- unit price
+- order identifier
+- currency / tax / unit information where available
+
+This becomes historical purchase-order / purchase-price data. It must not be represented as a historical RFQ or supplier quotation unless evidence exists.
+
+### Historical inquiry / quotation data
+If legacy inquiry sheets, supplier quotations, email attachments, or other reliable records are available, import the supported facts such as:
+- historical inquiry / RFQ identifier
+- supplier
+- item
+- quotation date
+- quotation price
+- tier prices where available
+- lead time / MOQ where available
+- quotation / negotiation round when reliably known
+- source-evidence reference
+
+If the original round number is unknown, store it as unknown / legacy rather than inventing a round.
+
+### Migration controls
+Legacy records should carry:
+- legacy-import flag
+- source type
+- source file / evidence reference when available
+- migration batch ID
+- import timestamp
+- original source values
+- mapping / normalization result
+
+Migration should provide preview, duplicate detection, unmatched-item / supplier handling, and import logs.
+
+Legacy-imported data and post-go-live native SRM transactions should be distinguishable for traceability while remaining available in the same history analysis when their fields are comparable.
