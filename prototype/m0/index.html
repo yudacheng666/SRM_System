@@ -40,6 +40,8 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 .quotePrice.low{font-weight:800;color:var(--ok)}.quotePrice.second{font-weight:700;color:#1d4ed8}.selectedCell{outline:2px solid #60a5fa;outline-offset:-2px;background:#eff6ff!important}
 .headerPick{font-size:11px;padding:3px 6px}.reasonTag{font-size:11px;color:#7c2d12;background:#ffedd5;padding:2px 5px;border-radius:5px}
 .footerNote{margin-top:14px;color:var(--muted);font-size:12px}
+.itemWithDrawing{display:flex;align-items:center;gap:8px}.drawingThumb{width:42px;height:32px;border:1px solid #cfd6e1;border-radius:6px;background:#fff;padding:2px;display:inline-flex;align-items:center;justify-content:center}.drawingThumb:hover{border-color:#60a5fa;background:#eff6ff}.drawingThumb svg{width:100%;height:100%}
+.modalBackdrop{position:fixed;inset:0;background:rgba(15,23,42,.48);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}.modalBackdrop.open{display:flex}.modalCard{width:min(980px,96vw);max-height:92vh;background:#fff;border-radius:14px;border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.22);overflow:hidden}.modalHead{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.modalBody{padding:16px;overflow:auto;max-height:calc(92vh - 60px)}.drawingLarge{width:100%;min-height:560px;border:1px solid var(--line);background:#fafafa;border-radius:10px;display:flex;align-items:center;justify-content:center}.drawingLarge svg{width:92%;height:auto;max-height:72vh}
 </style>
 </head>
 <body>
@@ -53,7 +55,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
   </div>
 
   <div class="tabs">
-    <button class="tab active" data-tab="items">1. 拟询价清单</button>
+    <button class="tab active" data-tab="items">1. 本次询价物料</button>
     <button class="tab" data-tab="assign">2. 询价分配中心</button>
     <button class="tab" data-tab="quotes">3. 报价比较</button>
   </div>
@@ -61,20 +63,17 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
   <section id="items" class="panel active">
     <div class="card">
       <div class="cardhead">
-        <div><b>RFQ-DEMO-001</b> <span class="muted small">拟询价清单（演示 1,200 行）</span></div>
+        <div><b>RFQ-DEMO-001</b> <span class="muted small">本次询价物料（演示 1,200 行）</span></div>
         <div class="toolbar">
           <input id="itemSearch" type="text" placeholder="搜索编码/名称">
           <select id="catFilter"><option value="">全部分类</option></select>
-          <button class="btn" id="selectPage">选择当前页</button>
-          <button class="btn" id="selectFiltered">选择全部筛选结果</button>
-          <button class="btn danger" id="clearItemSelection">清空选择</button>
         </div>
       </div>
       <div class="cardbody">
-        <div class="notice">业务上不设置拟询价物料条数上限；原型用分页模拟长清单，避免一次渲染全部记录。</div>
+        <div class="notice">这里用于确认“本次 RFQ 有哪些物料”、查看图纸和分配结果。M0 暂不实现物料导入/增删，因此本页不再设置第二套勾选状态；供应商分配统一在“询价分配中心”完成。</div>
         <div class="tablewrap" style="margin-top:10px">
           <table class="table">
-            <thead><tr><th></th><th>物料编码</th><th>名称</th><th>分类</th><th>数量</th><th>单位</th><th>已分配供应商</th></tr></thead>
+            <thead><tr><th>物料编码 / 图纸</th><th>名称</th><th>分类</th><th>数量</th><th>单位</th><th>已分配供应商</th></tr></thead>
             <tbody id="itemBody"></tbody>
           </table>
         </div>
@@ -153,7 +152,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
         <div class="cardhead">
           <b>本次询价供应商</b>
           <div class="toolbar">
-            <input id="supplierFirstSearch" type="text" placeholder="搜索已加入供应商">
+            <input id="supplierFirstSearch" type="text" placeholder="搜索本次供应商（名称/编码）">
             <button class="btn soft" id="openSupplierPicker">+ 添加供应商到本次询价</button>
           </div>
         </div>
@@ -161,7 +160,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           <div class="small muted" style="margin-bottom:8px">这里只显示采购员已经加入本次 RFQ 的供应商，不展示完整供应商主数据。</div>
           <div id="supplierPicker" class="preview">
             <div class="toolbar" style="margin-bottom:8px">
-              <input id="supplierPoolSearch" type="text" placeholder="搜索可添加供应商">
+              <input id="supplierPoolSearch" type="text" placeholder="搜索供应商（支持模糊搜索）">
               <button class="btn" id="closeSupplierPicker">关闭</button>
             </div>
             <div id="supplierPoolList" class="supplierList"></div>
@@ -206,6 +205,13 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
     </div>
   </section>
 
+  <div id="drawingModal" class="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modalCard">
+      <div class="modalHead"><div><b id="drawingTitle">物料图纸预览</b><div class="small muted">M0 使用虚构示意图验证预览交互</div></div><button class="btn" id="closeDrawing">关闭</button></div>
+      <div class="modalBody"><div id="drawingLarge" class="drawingLarge"></div></div>
+    </div>
+  </div>
+
   <div class="footerNote">M0 原型不保存数据、不连接网络、不导入真实文件。它只用于确认产品交互，正式数据层从 M1 开始。</div>
 </div>
 
@@ -229,13 +235,43 @@ function getSet(itemId){if(!assignments.has(itemId)) assignments.set(itemId,new 
 for(let i=0;i<180;i++){getSet(items[i].id).add(suppliers[i%6].id);if(i%3===0)getSet(items[i].id).add(suppliers[(i+2)%8].id)}
 for(let i=180;i<300;i++){getSet(items[i].id).add(suppliers[i%10].id)}
 
-const itemSel=new Set(), assignSel=new Set();
+const assignSel=new Set();
 const rfqSupplierPool=new Set();
 items.forEach(it=>getSet(it.id).forEach(sid=>rfqSupplierPool.add(sid)));
 let itemPage=0, assignPage=0, sfPage=0, assignMode="itemFirst", activeSupplier=null;
-let lastItemCheckIndex=null, lastAssignCheckIndex=null, lastSfCheckIndex=null;
+let lastAssignAnchorId=null, lastSfAnchorId=null;
 const PAGE=50;
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
+function compactText(s){return String(s).toLowerCase().replace(/[\s\-_.()（）]/g,"")}
+function isSubsequence(needle,hay){needle=compactText(needle);hay=compactText(hay);let i=0;for(const ch of hay){if(ch===needle[i])i++;if(i===needle.length)return true}return needle.length===0}
+function supplierMatches(s,q){
+  const tokens=String(q||"").trim().toLowerCase().split(/\s+/).filter(Boolean);
+  if(!tokens.length)return true;
+  const fields=[s.id,s.name,s.reason].map(x=>String(x||"").toLowerCase());
+  const joined=fields.join(" ");
+  return tokens.every(t=>joined.includes(t)||fields.some(v=>compactText(v).includes(compactText(t))||isSubsequence(t,v)));
+}
+function drawingSvg(it,large=false){
+  const n=parseInt(it.id.replace(/\D/g,""),10)||1;
+  const holes=2+(n%4), w=large?760:150, h=large?500:100;
+  let hs="";for(let i=0;i<holes;i++){const x=120+i*(520/Math.max(1,holes-1));hs+=`<circle cx="${x}" cy="250" r="${22+(n%3)*4}" fill="none" stroke="#475569" stroke-width="6"/>`}
+  return `<svg viewBox="0 0 760 500" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg" aria-label="${esc(it.id)} 图纸示意"><rect x="70" y="110" width="620" height="280" rx="28" fill="none" stroke="#334155" stroke-width="8"/>${hs}<path d="M110 165 H650 M110 335 H650" stroke="#94a3b8" stroke-width="4" stroke-dasharray="12 10"/><path d="M380 80 V420" stroke="#94a3b8" stroke-width="3" stroke-dasharray="10 9"/><text x="90" y="70" font-size="34" fill="#0f172a">${esc(it.id)}</text><text x="90" y="455" font-size="25" fill="#64748b">M0 示例工程图 · ${esc(it.cat)}</text></svg>`;
+}
+function itemCell(it){
+  return `<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="${it.id}" title="预览图纸">${drawingSvg(it,false)}</button><div><b>${it.id}</b></div></div>`;
+}
+function bindDrawingThumbs(){
+  document.querySelectorAll("[data-drawing]").forEach(b=>b.onclick=e=>{e.stopPropagation();openDrawing(b.dataset.drawing)});
+}
+function openDrawing(itemId){
+  const it=items.find(x=>x.id===itemId);if(!it)return;
+  drawingTitle.textContent=it.id+" · "+it.name;
+  drawingLarge.innerHTML=drawingSvg(it,true);
+  drawingModal.classList.add("open");drawingModal.setAttribute("aria-hidden","false");
+}
+function closeDrawingModal(){drawingModal.classList.remove("open");drawingModal.setAttribute("aria-hidden","true")}
+closeDrawing.onclick=closeDrawingModal;drawingModal.onclick=e=>{if(e.target===drawingModal)closeDrawingModal()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawingModal()});
 function fillCats(){["catFilter","assignCatFilter","sfCatFilter"].forEach(id=>{const el=document.getElementById(id);categories.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o)})})}
 fillCats();
 
@@ -253,25 +289,13 @@ function filteredItems(searchId,catId,stateId){
 function renderItemList(){
   const list=filteredItems("itemSearch","catFilter"), pages=Math.max(1,Math.ceil(list.length/PAGE));itemPage=Math.min(itemPage,pages-1);
   const slice=list.slice(itemPage*PAGE,itemPage*PAGE+PAGE);
-  document.getElementById("itemBody").innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-item="${it.id}" ${itemSel.has(it.id)?"checked":""}></td><td>${it.id}</td><td>${it.name}</td><td>${it.cat}</td><td>${it.qty}</td><td>${it.unit}</td><td>${getSet(it.id).size}</td></tr>`).join("");
-  const checks=[...document.querySelectorAll("#itemBody input[data-item]")];
-  checks.forEach((c,idx)=>c.onclick=e=>{
-    const apply=x=>x.checked?itemSel.add(x.dataset.item):itemSel.delete(x.dataset.item);
-    if(e.shiftKey&&lastItemCheckIndex!==null){
-      const [a,b]=[lastItemCheckIndex,idx].sort((x,y)=>x-y);
-      for(let i=a;i<=b;i++){checks[i].checked=c.checked;apply(checks[i])}
-    }else apply(c);
-    lastItemCheckIndex=idx;
-    renderItemList();
-  });
-  document.getElementById("itemCount").textContent=`筛选结果 ${list.length} 项 · 第 ${itemPage+1}/${pages} 页 · 已选择 ${itemSel.size} 项 · 支持 Shift 连选`;
+  document.getElementById("itemBody").innerHTML=slice.map(it=>`<tr><td>${itemCell(it)}</td><td>${it.name}</td><td>${it.cat}</td><td>${it.qty}</td><td>${it.unit}</td><td>${getSet(it.id).size}</td></tr>`).join("");
+  bindDrawingThumbs();
+  document.getElementById("itemCount").textContent=`筛选结果 ${list.length} 项 · 第 ${itemPage+1}/${pages} 页`;
 }
 ["itemSearch","catFilter"].forEach(id=>document.getElementById(id).oninput=()=>{itemPage=0;renderItemList()});
 document.getElementById("prevItem").onclick=()=>{if(itemPage>0)itemPage--;renderItemList()};
 document.getElementById("nextItem").onclick=()=>{const n=filteredItems("itemSearch","catFilter").length;if((itemPage+1)*PAGE<n)itemPage++;renderItemList()};
-document.getElementById("selectPage").onclick=()=>{filteredItems("itemSearch","catFilter").slice(itemPage*PAGE,itemPage*PAGE+PAGE).forEach(it=>itemSel.add(it.id));renderItemList()};
-document.getElementById("selectFiltered").onclick=()=>{filteredItems("itemSearch","catFilter").forEach(it=>itemSel.add(it.id));renderItemList()};
-document.getElementById("clearItemSelection").onclick=()=>{itemSel.clear();renderItemList()};
 
 function coverage(){
   let covered=0,single=0,none=0;
@@ -282,29 +306,30 @@ function renderStats(){const c=coverage();stTotal.textContent=items.length;stCov
 function renderAssignItems(){
   const list=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"), pages=Math.max(1,Math.ceil(list.length/PAGE));assignPage=Math.min(assignPage,pages-1);
   const slice=list.slice(assignPage*PAGE,assignPage*PAGE+PAGE);
-  assignItemBody.innerHTML=slice.map(it=>{const names=[...getSet(it.id)].slice(0,3).map(sid=>suppliers.find(s=>s.id===sid)?.name).filter(Boolean);return `<tr><td><input type="checkbox" data-ai="${it.id}" ${assignSel.has(it.id)?"checked":""}></td><td><b>${it.id}</b><br><span class="muted">${it.name}</span></td><td>${it.cat}</td><td>${names.length?names.map(n=>`<span class="chip">${n}</span>`).join(" "):'<span class="dangertext">未分配</span>'}</td></tr>`}).join("");
-  const checks=[...document.querySelectorAll("#assignItemBody input[data-ai]")];
-  checks.forEach((c,idx)=>c.onclick=e=>{
-    const apply=x=>x.checked?assignSel.add(x.dataset.ai):assignSel.delete(x.dataset.ai);
-    if(e.shiftKey&&lastAssignCheckIndex!==null){
-      const [a,b]=[lastAssignCheckIndex,idx].sort((x,y)=>x-y);
-      for(let i=a;i<=b;i++){checks[i].checked=c.checked;apply(checks[i])}
-    }else apply(c);
-    lastAssignCheckIndex=idx;
+  assignItemBody.innerHTML=slice.map(it=>{const names=[...getSet(it.id)].slice(0,3).map(sid=>suppliers.find(s=>s.id===sid)?.name).filter(Boolean);return `<tr><td><input type="checkbox" data-ai="${it.id}" ${assignSel.has(it.id)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td><td>${names.length?names.map(n=>`<span class="chip">${n}</span>`).join(" "):'<span class="dangertext">未分配</span>'}</td></tr>`}).join("");
+  bindDrawingThumbs();
+  const visibleIds=slice.map(it=>it.id);
+  document.querySelectorAll("#assignItemBody input[data-ai]").forEach(c=>c.onclick=e=>{
+    const targetId=c.dataset.ai, targetChecked=c.checked;
+    if(e.shiftKey&&lastAssignAnchorId&&visibleIds.includes(lastAssignAnchorId)){
+      const a=visibleIds.indexOf(lastAssignAnchorId),b=visibleIds.indexOf(targetId),lo=Math.min(a,b),hi=Math.max(a,b);
+      visibleIds.slice(lo,hi+1).forEach(id=>targetChecked?assignSel.add(id):assignSel.delete(id));
+    }else targetChecked?assignSel.add(targetId):assignSel.delete(targetId);
+    lastAssignAnchorId=targetId;
     renderAssignItems();renderSuppliers();
   });
   assignSelectedCount.textContent=assignSel.size;
   assignItemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${assignPage+1}/${pages} 页`;
 }
-["assignItemSearch","assignCatFilter","assignStateFilter"].forEach(id=>document.getElementById(id).oninput=()=>{assignPage=0;renderAssignItems()});
-document.getElementById("prevAssign").onclick=()=>{if(assignPage>0)assignPage--;renderAssignItems()};
-document.getElementById("nextAssign").onclick=()=>{const n=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter").length;if((assignPage+1)*PAGE<n)assignPage++;renderAssignItems()};
+["assignItemSearch","assignCatFilter","assignStateFilter"].forEach(id=>document.getElementById(id).oninput=()=>{assignPage=0;lastAssignAnchorId=null;renderAssignItems()});
+document.getElementById("prevAssign").onclick=()=>{if(assignPage>0)assignPage--;lastAssignAnchorId=null;renderAssignItems()};
+document.getElementById("nextAssign").onclick=()=>{const n=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter").length;if((assignPage+1)*PAGE<n)assignPage++;lastAssignAnchorId=null;renderAssignItems()};
 document.getElementById("selectAssignPage").onclick=()=>{filteredItems("assignItemSearch","assignCatFilter","assignStateFilter").slice(assignPage*PAGE,assignPage*PAGE+PAGE).forEach(it=>assignSel.add(it.id));renderAssignAll()};
 document.getElementById("clearAssignSelection").onclick=()=>{assignSel.clear();renderAssignAll()};
 
 function renderSuppliers(){
-  const q=supplierSearch.value.trim().toLowerCase(), selected=[...assignSel], total=selected.length;
-  supplierList.innerHTML=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&(s.id+" "+s.name).toLowerCase().includes(q)).map(s=>{
+  const q=supplierSearch.value.trim(), selected=[...assignSel], total=selected.length;
+  supplierList.innerHTML=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&supplierMatches(s,q)).map(s=>{
     const count=selected.filter(i=>getSet(i).has(s.id)).length;
     const cls=total===0||count===0?"none":count===total?"full":"partial";
     const icon=total===0||count===0?"☐":count===total?"☑":"◩";
@@ -316,17 +341,27 @@ function renderSuppliers(){
 supplierSearch.oninput=renderSuppliers;
 
 function renderSupplierFirstList(){
-  const q=supplierFirstSearch.value.trim().toLowerCase();
-  supplierFirstList.innerHTML=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&(s.id+" "+s.name).toLowerCase().includes(q)).map(s=>{
-    let c=0;items.forEach(it=>{if(getSet(it.id).has(s.id))c++});
-    return `<div class="srow ${activeSupplier===s.id?"selected":""}" data-sf-s="${s.id}"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><div>${c} 项</div></div></div>`
-  }).join("");
-  document.querySelectorAll("[data-sf-s]").forEach(x=>x.onclick=()=>{activeSupplier=x.dataset.sfS;sfPage=0;lastSfCheckIndex=null;renderSupplierFirstList();renderSfItems()})
+  const q=supplierFirstSearch.value.trim();
+  supplierFirstList.innerHTML=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&supplierMatches(s,q)).map(s=>{
+    let count=0;items.forEach(it=>{if(getSet(it.id).has(s.id))count++});
+    return `<div class="srow ${activeSupplier===s.id?"selected":""}" data-sf-s="${s.id}"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.id} · ${s.reason}</div></div><div class="toolbar"><span>${count} 项</span><button class="btn danger" data-pool-remove="${s.id}">移出本次询价</button></div></div></div>`
+  }).join("")||'<div class="muted small">没有匹配的本次询价供应商。</div>';
+  document.querySelectorAll("[data-sf-s]").forEach(x=>x.onclick=()=>{activeSupplier=x.dataset.sfS;sfPage=0;lastSfAnchorId=null;renderSupplierFirstList();renderSfItems()});
+  document.querySelectorAll("[data-pool-remove]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation();
+    const sid=b.dataset.poolRemove, sup=suppliers.find(s=>s.id===sid);
+    let count=0;items.forEach(it=>{if(getSet(it.id).has(sid))count++});
+    if(!confirm(`将“${sup?.name||sid}”移出本次询价？\n同时会取消它当前关联的 ${count} 个物料。`))return;
+    let removed=0;items.forEach(it=>{if(getSet(it.id).delete(sid))removed++});
+    rfqSupplierPool.delete(sid);if(activeSupplier===sid)activeSupplier=null;
+    flash(`已将供应商移出本次询价，并取消 ${removed} 条物料关联。`);
+    renderAssignAll();renderSupplierPoolPicker();
+  });
   renderCopySources();
 }
 function renderSupplierPoolPicker(){
-  const q=supplierPoolSearch.value.trim().toLowerCase();
-  supplierPoolList.innerHTML=suppliers.filter(s=>!rfqSupplierPool.has(s.id)&&(s.id+" "+s.name).toLowerCase().includes(q)).map(s=>`<div class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><button class="btn soft" data-pool-add="${s.id}">加入本次询价</button></div></div>`).join("")||'<div class="muted small">没有更多可添加供应商。</div>';
+  const q=supplierPoolSearch.value.trim();
+  supplierPoolList.innerHTML=suppliers.filter(s=>!rfqSupplierPool.has(s.id)&&supplierMatches(s,q)).map(s=>`<div class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><button class="btn soft" data-pool-add="${s.id}">加入本次询价</button></div></div>`).join("")||'<div class="muted small">没有更多可添加供应商。</div>';
   document.querySelectorAll("[data-pool-add]").forEach(b=>b.onclick=()=>{rfqSupplierPool.add(b.dataset.poolAdd);flash("已加入本次询价供应商列表。");renderSupplierPoolPicker();renderAssignAll()});
 }
 function renderCopySources(){
@@ -348,22 +383,24 @@ function renderSfItems(){
   const sup=suppliers.find(s=>s.id===activeSupplier);supplierFirstTitle.textContent=sup.name+"：选择物料";
   const list=filteredSfItems(),pages=Math.max(1,Math.ceil(list.length/PAGE));sfPage=Math.min(sfPage,pages-1);
   const slice=list.slice(sfPage*PAGE,sfPage*PAGE+PAGE);
-  sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.id}" ${getSet(it.id).has(activeSupplier)?"checked":""}></td><td><b>${it.id}</b><br><span class="muted">${it.name}</span></td><td>${it.cat}</td></tr>`).join("");
-  const checks=[...document.querySelectorAll("[data-sfi]")];
-  checks.forEach((c,idx)=>c.onclick=e=>{
-    const apply=x=>{const set=getSet(x.dataset.sfi);x.checked?set.add(activeSupplier):set.delete(activeSupplier)};
-    if(e.shiftKey&&lastSfCheckIndex!==null){
-      const [a,b]=[lastSfCheckIndex,idx].sort((x,y)=>x-y);
-      for(let i=a;i<=b;i++){checks[i].checked=c.checked;apply(checks[i])}
-    }else apply(c);
-    lastSfCheckIndex=idx;
+  sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.id}" ${getSet(it.id).has(activeSupplier)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td></tr>`).join("");
+  bindDrawingThumbs();
+  const visibleIds=slice.map(it=>it.id);
+  document.querySelectorAll("[data-sfi]").forEach(c=>c.onclick=e=>{
+    const targetId=c.dataset.sfi,targetChecked=c.checked;
+    const apply=id=>{const set=getSet(id);targetChecked?set.add(activeSupplier):set.delete(activeSupplier)};
+    if(e.shiftKey&&lastSfAnchorId&&visibleIds.includes(lastSfAnchorId)){
+      const a=visibleIds.indexOf(lastSfAnchorId),b=visibleIds.indexOf(targetId),lo=Math.min(a,b),hi=Math.max(a,b);
+      visibleIds.slice(lo,hi+1).forEach(apply);
+    }else apply(targetId);
+    lastSfAnchorId=targetId;
     renderAssignAll();
   });
   const related=list.filter(it=>getSet(it.id).has(activeSupplier)).length;
   sfItemCount.textContent=`筛选结果 ${list.length} 项 · 当前供应商已关联 ${related} 项 · 第 ${sfPage+1}/${pages} 页 · 勾选框即关联状态，支持 Shift 连选`;
 }
-["sfItemSearch","sfCatFilter"].forEach(id=>document.getElementById(id).oninput=()=>{sfPage=0;lastSfCheckIndex=null;renderSfItems()});
-sfPrev.onclick=()=>{if(sfPage>0)sfPage--;lastSfCheckIndex=null;renderSfItems()};sfNext.onclick=()=>{if((sfPage+1)*PAGE<filteredSfItems().length)sfPage++;lastSfCheckIndex=null;renderSfItems()};
+["sfItemSearch","sfCatFilter"].forEach(id=>document.getElementById(id).oninput=()=>{sfPage=0;lastSfAnchorId=null;renderSfItems()});
+sfPrev.onclick=()=>{if(sfPage>0)sfPage--;lastSfAnchorId=null;renderSfItems()};sfNext.onclick=()=>{if((sfPage+1)*PAGE<filteredSfItems().length)sfPage++;lastSfAnchorId=null;renderSfItems()};
 sfLinkFiltered.onclick=()=>{if(!activeSupplier)return;let n=0;filteredSfItems().forEach(it=>{const set=getSet(it.id);if(!set.has(activeSupplier)){set.add(activeSupplier);n++}});flash(`已将当前筛选结果全部关联：新增 ${n} 条关系。`);renderAssignAll()};
 sfUnlinkFiltered.onclick=()=>{if(!activeSupplier)return;let n=0;filteredSfItems().forEach(it=>{if(getSet(it.id).delete(activeSupplier))n++});flash(`已取消当前筛选结果中的 ${n} 条关系。`);renderAssignAll()};
 sfCopyRange.onclick=()=>{if(!activeSupplier||!copyFromSupplier.value)return;const source=copyFromSupplier.value;let n=0;items.forEach(it=>{if(getSet(it.id).has(source)&&!getSet(it.id).has(activeSupplier)){getSet(it.id).add(activeSupplier);n++}});flash(`已复制物料范围作为起点：新增 ${n} 条关系。可继续直接勾选/取消差异物料。`);renderAssignAll()};
@@ -393,7 +430,7 @@ function renderQuotes(){
   quoteItems.forEach((it,i)=>{
     const vals=quoteSuppliers.map((s,si)=>({sid:s.id,v:quoteFor(i,si)})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);
     const low=vals[0]?.sid, second=vals[1]?.sid, prev=(95+((i*11)%50)).toFixed(2);
-    h+=`<tr><td><b>${it.id}</b><br><span class="muted">${it.name}</span></td><td>¥${prev}</td>`;
+    h+=`<tr><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>¥${prev}</td>`;
     quoteSuppliers.forEach((s,si)=>{
       const v=quoteFor(i,si), cls=s.id===low?"low":s.id===second?"second":"", selected=awards.get(it.id)===s.id;
       h+=`<td class="${selected?"selectedCell":""}">${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}" data-award="${it.id}|${s.id}">¥${v.toFixed(2)}</button><br><span class="small muted">交期 ${3+((i+si)%18)} 天 · MOQ ${1+((i+si)%5)*5}</span>`}</td>`
@@ -401,7 +438,7 @@ function renderQuotes(){
     const win=awards.get(it.id), r=awardReasons.get(it.id);
     h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:""):'<span class="muted">未选择</span>'}</td></tr>`;
   });
-  h+="</tbody>";quoteTable.innerHTML=h;
+  h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();
   document.querySelectorAll("[data-award]").forEach(b=>b.onclick=()=>{const [iid,sid]=b.dataset.award.split("|");chooseAward(iid,sid)});
   document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall;const nonLowest=quoteItems.filter((it,i)=>{const si=quoteSuppliers.findIndex(s=>s.id===sid);return quoteFor(i,si)!=null&&lowestSupplierForItem(i)!==sid});let reason="";if(nonLowest.length){reason=prompt(`其中 ${nonLowest.length} 项不是最低价，请填写本次批量选择原因：`,"")||"";if(!reason.trim())return}quoteItems.forEach((it,i)=>{const si=quoteSuppliers.findIndex(s=>s.id===sid);if(quoteFor(i,si)!=null){awards.set(it.id,sid);if(lowestSupplierForItem(i)!==sid)awardReasons.set(it.id,reason.trim());else awardReasons.delete(it.id)}});renderQuotes()});
 }
