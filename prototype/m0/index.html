@@ -150,8 +150,24 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 
     <div id="supplierFirstView" class="grid2" style="display:none">
       <div class="card">
-        <div class="cardhead"><b>选择供应商</b><input id="supplierFirstSearch" type="text" placeholder="搜索供应商"></div>
-        <div class="cardbody"><div id="supplierFirstList" class="supplierList"></div></div>
+        <div class="cardhead">
+          <b>本次询价供应商</b>
+          <div class="toolbar">
+            <input id="supplierFirstSearch" type="text" placeholder="搜索已加入供应商">
+            <button class="btn soft" id="openSupplierPicker">+ 添加供应商到本次询价</button>
+          </div>
+        </div>
+        <div class="cardbody">
+          <div class="small muted" style="margin-bottom:8px">这里只显示采购员已经加入本次 RFQ 的供应商，不展示完整供应商主数据。</div>
+          <div id="supplierPicker" class="preview">
+            <div class="toolbar" style="margin-bottom:8px">
+              <input id="supplierPoolSearch" type="text" placeholder="搜索可添加供应商">
+              <button class="btn" id="closeSupplierPicker">关闭</button>
+            </div>
+            <div id="supplierPoolList" class="supplierList"></div>
+          </div>
+          <div id="supplierFirstList" class="supplierList"></div>
+        </div>
       </div>
       <div class="card">
         <div class="cardhead">
@@ -159,14 +175,15 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           <div class="toolbar">
             <input id="sfItemSearch" type="text" placeholder="搜索物料">
             <select id="sfCatFilter"><option value="">全部分类</option></select>
-            <button class="btn" id="sfSelectPage">选择当前页</button>
-            <button class="btn soft" id="sfAdd">+ 添加所选物料</button>
-            <button class="btn danger" id="sfRemove">− 移除所选物料</button>
+            <select id="copyFromSupplier"><option value="">复制其他供应商的物料范围…</option></select>
+            <button class="btn soft" id="sfCopyRange">复制为起点</button>
+            <button class="btn" id="sfLinkFiltered">当前筛选全部关联</button>
+            <button class="btn danger" id="sfUnlinkFiltered">当前筛选全部取消</button>
           </div>
         </div>
         <div class="cardbody">
           <div class="tablewrap">
-            <table class="table"><thead><tr><th></th><th>物料</th><th>分类</th><th>当前状态</th></tr></thead><tbody id="sfItemBody"></tbody></table>
+            <table class="table"><thead><tr><th>已关联</th><th>物料</th><th>分类</th></tr></thead><tbody id="sfItemBody"></tbody></table>
           </div>
           <div class="pager"><span id="sfItemCount"></span><div><button class="btn" id="sfPrev">上一页</button> <button class="btn" id="sfNext">下一页</button></div></div>
         </div>
@@ -212,8 +229,11 @@ function getSet(itemId){if(!assignments.has(itemId)) assignments.set(itemId,new 
 for(let i=0;i<180;i++){getSet(items[i].id).add(suppliers[i%6].id);if(i%3===0)getSet(items[i].id).add(suppliers[(i+2)%8].id)}
 for(let i=180;i<300;i++){getSet(items[i].id).add(suppliers[i%10].id)}
 
-const itemSel=new Set(), assignSel=new Set(), sfSel=new Set();
+const itemSel=new Set(), assignSel=new Set();
+const rfqSupplierPool=new Set();
+items.forEach(it=>getSet(it.id).forEach(sid=>rfqSupplierPool.add(sid)));
 let itemPage=0, assignPage=0, sfPage=0, assignMode="itemFirst", activeSupplier=null;
+let lastItemCheckIndex=null, lastAssignCheckIndex=null, lastSfCheckIndex=null;
 const PAGE=50;
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
 function fillCats(){["catFilter","assignCatFilter","sfCatFilter"].forEach(id=>{const el=document.getElementById(id);categories.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o)})})}
@@ -234,8 +254,17 @@ function renderItemList(){
   const list=filteredItems("itemSearch","catFilter"), pages=Math.max(1,Math.ceil(list.length/PAGE));itemPage=Math.min(itemPage,pages-1);
   const slice=list.slice(itemPage*PAGE,itemPage*PAGE+PAGE);
   document.getElementById("itemBody").innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-item="${it.id}" ${itemSel.has(it.id)?"checked":""}></td><td>${it.id}</td><td>${it.name}</td><td>${it.cat}</td><td>${it.qty}</td><td>${it.unit}</td><td>${getSet(it.id).size}</td></tr>`).join("");
-  document.querySelectorAll("#itemBody input[data-item]").forEach(c=>c.onchange=()=>{c.checked?itemSel.add(c.dataset.item):itemSel.delete(c.dataset.item)});
-  document.getElementById("itemCount").textContent=`筛选结果 ${list.length} 项 · 第 ${itemPage+1}/${pages} 页 · 已选择 ${itemSel.size} 项`;
+  const checks=[...document.querySelectorAll("#itemBody input[data-item]")];
+  checks.forEach((c,idx)=>c.onclick=e=>{
+    const apply=x=>x.checked?itemSel.add(x.dataset.item):itemSel.delete(x.dataset.item);
+    if(e.shiftKey&&lastItemCheckIndex!==null){
+      const [a,b]=[lastItemCheckIndex,idx].sort((x,y)=>x-y);
+      for(let i=a;i<=b;i++){checks[i].checked=c.checked;apply(checks[i])}
+    }else apply(c);
+    lastItemCheckIndex=idx;
+    renderItemList();
+  });
+  document.getElementById("itemCount").textContent=`筛选结果 ${list.length} 项 · 第 ${itemPage+1}/${pages} 页 · 已选择 ${itemSel.size} 项 · 支持 Shift 连选`;
 }
 ["itemSearch","catFilter"].forEach(id=>document.getElementById(id).oninput=()=>{itemPage=0;renderItemList()});
 document.getElementById("prevItem").onclick=()=>{if(itemPage>0)itemPage--;renderItemList()};
@@ -254,7 +283,16 @@ function renderAssignItems(){
   const list=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"), pages=Math.max(1,Math.ceil(list.length/PAGE));assignPage=Math.min(assignPage,pages-1);
   const slice=list.slice(assignPage*PAGE,assignPage*PAGE+PAGE);
   assignItemBody.innerHTML=slice.map(it=>{const names=[...getSet(it.id)].slice(0,3).map(sid=>suppliers.find(s=>s.id===sid)?.name).filter(Boolean);return `<tr><td><input type="checkbox" data-ai="${it.id}" ${assignSel.has(it.id)?"checked":""}></td><td><b>${it.id}</b><br><span class="muted">${it.name}</span></td><td>${it.cat}</td><td>${names.length?names.map(n=>`<span class="chip">${n}</span>`).join(" "):'<span class="dangertext">未分配</span>'}</td></tr>`}).join("");
-  document.querySelectorAll("#assignItemBody input[data-ai]").forEach(c=>c.onchange=()=>{c.checked?assignSel.add(c.dataset.ai):assignSel.delete(c.dataset.ai);renderSuppliers()});
+  const checks=[...document.querySelectorAll("#assignItemBody input[data-ai]")];
+  checks.forEach((c,idx)=>c.onclick=e=>{
+    const apply=x=>x.checked?assignSel.add(x.dataset.ai):assignSel.delete(x.dataset.ai);
+    if(e.shiftKey&&lastAssignCheckIndex!==null){
+      const [a,b]=[lastAssignCheckIndex,idx].sort((x,y)=>x-y);
+      for(let i=a;i<=b;i++){checks[i].checked=c.checked;apply(checks[i])}
+    }else apply(c);
+    lastAssignCheckIndex=idx;
+    renderAssignItems();renderSuppliers();
+  });
   assignSelectedCount.textContent=assignSel.size;
   assignItemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${assignPage+1}/${pages} 页`;
 }
@@ -266,11 +304,11 @@ document.getElementById("clearAssignSelection").onclick=()=>{assignSel.clear();r
 
 function renderSuppliers(){
   const q=supplierSearch.value.trim().toLowerCase(), selected=[...assignSel], total=selected.length;
-  supplierList.innerHTML=suppliers.filter(s=>(s.id+" "+s.name).toLowerCase().includes(q)).map(s=>{
+  supplierList.innerHTML=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&(s.id+" "+s.name).toLowerCase().includes(q)).map(s=>{
     const count=selected.filter(i=>getSet(i).has(s.id)).length;
     const cls=total===0||count===0?"none":count===total?"full":"partial";
     const icon=total===0||count===0?"☐":count===total?"☑":"◩";
-    return `<div class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><div class="tri ${cls}">${icon} ${count}/${total}</div></div><div class="toolbar" style="margin-top:8px"><button class="btn soft" data-add="${s.id}" ${total===0?"disabled":""}>+ 添加到未关联项</button><button class="btn danger" data-rem="${s.id}" ${count===0?"disabled":""}>− 移除已关联项</button></div></div>`
+    return `<div class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><div class="tri ${cls}">${icon} ${count}/${total}</div></div><div class="toolbar" style="margin-top:8px"><button class="btn soft" data-add="${s.id}" ${total===0?"disabled":""}>给所选物料添加此供应商</button><button class="btn danger" data-rem="${s.id}" ${count===0?"disabled":""}>从所选物料移除此供应商</button></div></div>`
   }).join("");
   document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{let n=0;assignSel.forEach(i=>{const set=getSet(i);if(!set.has(b.dataset.add)){set.add(b.dataset.add);n++}});flash(`已新增 ${n} 条物料—供应商关系；原有分配未改变。`);renderAssignAll()});
   document.querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>{let n=0;assignSel.forEach(i=>{const set=getSet(i);if(set.delete(b.dataset.rem))n++});flash(`已移除 ${n} 条关系。`);renderAssignAll()});
@@ -279,13 +317,28 @@ supplierSearch.oninput=renderSuppliers;
 
 function renderSupplierFirstList(){
   const q=supplierFirstSearch.value.trim().toLowerCase();
-  supplierFirstList.innerHTML=suppliers.filter(s=>(s.id+" "+s.name).toLowerCase().includes(q)).map(s=>{
+  supplierFirstList.innerHTML=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&(s.id+" "+s.name).toLowerCase().includes(q)).map(s=>{
     let c=0;items.forEach(it=>{if(getSet(it.id).has(s.id))c++});
     return `<div class="srow ${activeSupplier===s.id?"selected":""}" data-sf-s="${s.id}"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><div>${c} 项</div></div></div>`
   }).join("");
-  document.querySelectorAll("[data-sf-s]").forEach(x=>x.onclick=()=>{activeSupplier=x.dataset.sfS;sfSel.clear();sfPage=0;renderSupplierFirstList();renderSfItems()})
+  document.querySelectorAll("[data-sf-s]").forEach(x=>x.onclick=()=>{activeSupplier=x.dataset.sfS;sfPage=0;lastSfCheckIndex=null;renderSupplierFirstList();renderSfItems()})
+  renderCopySources();
+}
+function renderSupplierPoolPicker(){
+  const q=supplierPoolSearch.value.trim().toLowerCase();
+  supplierPoolList.innerHTML=suppliers.filter(s=>!rfqSupplierPool.has(s.id)&&(s.id+" "+s.name).toLowerCase().includes(q)).map(s=>`<div class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><button class="btn soft" data-pool-add="${s.id}">加入本次询价</button></div></div>`).join("")||'<div class="muted small">没有更多可添加供应商。</div>';
+  document.querySelectorAll("[data-pool-add]").forEach(b=>b.onclick=()=>{rfqSupplierPool.add(b.dataset.poolAdd);flash("已加入本次询价供应商列表。");renderSupplierPoolPicker();renderAssignAll()});
+}
+function renderCopySources(){
+  if(!document.getElementById("copyFromSupplier"))return;
+  const current=copyFromSupplier.value;
+  copyFromSupplier.innerHTML='<option value="">复制其他供应商的物料范围…</option>'+suppliers.filter(s=>rfqSupplierPool.has(s.id)&&s.id!==activeSupplier).map(s=>`<option value="${s.id}">${s.name}</option>`).join("");
+  if([...copyFromSupplier.options].some(o=>o.value===current))copyFromSupplier.value=current;
 }
 supplierFirstSearch.oninput=renderSupplierFirstList;
+openSupplierPicker.onclick=()=>{supplierPicker.style.display="block";renderSupplierPoolPicker()};
+closeSupplierPicker.onclick=()=>{supplierPicker.style.display="none"};
+supplierPoolSearch.oninput=renderSupplierPoolPicker;
 function filteredSfItems(){
   const q=sfItemSearch.value.trim().toLowerCase(), cat=sfCatFilter.value;
   return items.filter(it=>(!q||(it.id+" "+it.name).toLowerCase().includes(q))&&(!cat||it.cat===cat))
@@ -295,15 +348,25 @@ function renderSfItems(){
   const sup=suppliers.find(s=>s.id===activeSupplier);supplierFirstTitle.textContent=sup.name+"：选择物料";
   const list=filteredSfItems(),pages=Math.max(1,Math.ceil(list.length/PAGE));sfPage=Math.min(sfPage,pages-1);
   const slice=list.slice(sfPage*PAGE,sfPage*PAGE+PAGE);
-  sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.id}" ${sfSel.has(it.id)?"checked":""}></td><td><b>${it.id}</b><br><span class="muted">${it.name}</span></td><td>${it.cat}</td><td>${getSet(it.id).has(activeSupplier)?'<span class="ok">已关联</span>':'<span class="muted">未关联</span>'}</td></tr>`).join("");
-  document.querySelectorAll("[data-sfi]").forEach(c=>c.onchange=()=>{c.checked?sfSel.add(c.dataset.sfi):sfSel.delete(c.dataset.sfi)});
-  sfItemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${sfPage+1}/${pages} 页 · 已选择 ${sfSel.size} 项`;
+  sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.id}" ${getSet(it.id).has(activeSupplier)?"checked":""}></td><td><b>${it.id}</b><br><span class="muted">${it.name}</span></td><td>${it.cat}</td></tr>`).join("");
+  const checks=[...document.querySelectorAll("[data-sfi]")];
+  checks.forEach((c,idx)=>c.onclick=e=>{
+    const apply=x=>{const set=getSet(x.dataset.sfi);x.checked?set.add(activeSupplier):set.delete(activeSupplier)};
+    if(e.shiftKey&&lastSfCheckIndex!==null){
+      const [a,b]=[lastSfCheckIndex,idx].sort((x,y)=>x-y);
+      for(let i=a;i<=b;i++){checks[i].checked=c.checked;apply(checks[i])}
+    }else apply(c);
+    lastSfCheckIndex=idx;
+    renderAssignAll();
+  });
+  const related=list.filter(it=>getSet(it.id).has(activeSupplier)).length;
+  sfItemCount.textContent=`筛选结果 ${list.length} 项 · 当前供应商已关联 ${related} 项 · 第 ${sfPage+1}/${pages} 页 · 勾选框即关联状态，支持 Shift 连选`;
 }
-["sfItemSearch","sfCatFilter"].forEach(id=>document.getElementById(id).oninput=()=>{sfPage=0;renderSfItems()});
-sfSelectPage.onclick=()=>{filteredSfItems().slice(sfPage*PAGE,sfPage*PAGE+PAGE).forEach(it=>sfSel.add(it.id));renderSfItems()};
-sfPrev.onclick=()=>{if(sfPage>0)sfPage--;renderSfItems()};sfNext.onclick=()=>{if((sfPage+1)*PAGE<filteredSfItems().length)sfPage++;renderSfItems()};
-sfAdd.onclick=()=>{if(!activeSupplier)return;let n=0;sfSel.forEach(i=>{const set=getSet(i);if(!set.has(activeSupplier)){set.add(activeSupplier);n++}});flash(`已新增 ${n} 条关系。`);renderAssignAll()};
-sfRemove.onclick=()=>{if(!activeSupplier)return;let n=0;sfSel.forEach(i=>{if(getSet(i).delete(activeSupplier))n++});flash(`已移除 ${n} 条关系。`);renderAssignAll()};
+["sfItemSearch","sfCatFilter"].forEach(id=>document.getElementById(id).oninput=()=>{sfPage=0;lastSfCheckIndex=null;renderSfItems()});
+sfPrev.onclick=()=>{if(sfPage>0)sfPage--;lastSfCheckIndex=null;renderSfItems()};sfNext.onclick=()=>{if((sfPage+1)*PAGE<filteredSfItems().length)sfPage++;lastSfCheckIndex=null;renderSfItems()};
+sfLinkFiltered.onclick=()=>{if(!activeSupplier)return;let n=0;filteredSfItems().forEach(it=>{const set=getSet(it.id);if(!set.has(activeSupplier)){set.add(activeSupplier);n++}});flash(`已将当前筛选结果全部关联：新增 ${n} 条关系。`);renderAssignAll()};
+sfUnlinkFiltered.onclick=()=>{if(!activeSupplier)return;let n=0;filteredSfItems().forEach(it=>{if(getSet(it.id).delete(activeSupplier))n++});flash(`已取消当前筛选结果中的 ${n} 条关系。`);renderAssignAll()};
+sfCopyRange.onclick=()=>{if(!activeSupplier||!copyFromSupplier.value)return;const source=copyFromSupplier.value;let n=0;items.forEach(it=>{if(getSet(it.id).has(source)&&!getSet(it.id).has(activeSupplier)){getSet(it.id).add(activeSupplier);n++}});flash(`已复制物料范围作为起点：新增 ${n} 条关系。可继续直接勾选/取消差异物料。`);renderAssignAll()};
 
 function renderAssignAll(){renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
 function flash(msg){document.getElementById("previewBox").style.display="block";document.getElementById("previewBox").textContent=msg}
@@ -319,6 +382,12 @@ const quoteSuppliers=suppliers.slice(0,4);
 const quoteItems=items.slice(0,24);
 const awards=new Map(), awardReasons=new Map();
 function quoteFor(i,s){if((i+s)%9===0)return null;return 80+((i*13+s*17)%70)+((s+1)*0.35)}
+function lowestSupplierForItem(i){
+  return quoteSuppliers.map((s,si)=>({sid:s.id,v:quoteFor(i,si)})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v)[0]?.sid||null;
+}
+function setDefaultLowestAwards(){
+  quoteItems.forEach((it,i)=>{const sid=lowestSupplierForItem(i);if(sid)awards.set(it.id,sid)});
+}
 function renderQuotes(){
   let h=`<thead><tr><th>物料</th><th>上次采购价</th>`+quoteSuppliers.map((s,si)=>`<th>${s.name}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`).join("")+`<th>最终选择</th></tr></thead><tbody>`;
   quoteItems.forEach((it,i)=>{
@@ -334,7 +403,7 @@ function renderQuotes(){
   });
   h+="</tbody>";quoteTable.innerHTML=h;
   document.querySelectorAll("[data-award]").forEach(b=>b.onclick=()=>{const [iid,sid]=b.dataset.award.split("|");chooseAward(iid,sid)});
-  document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall;quoteItems.forEach((it,i)=>{const si=quoteSuppliers.findIndex(s=>s.id===sid);if(quoteFor(i,si)!=null)awards.set(it.id,sid)});renderQuotes()});
+  document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall;const nonLowest=quoteItems.filter((it,i)=>{const si=quoteSuppliers.findIndex(s=>s.id===sid);return quoteFor(i,si)!=null&&lowestSupplierForItem(i)!==sid});let reason="";if(nonLowest.length){reason=prompt(`其中 ${nonLowest.length} 项不是最低价，请填写本次批量选择原因：`,"")||"";if(!reason.trim())return}quoteItems.forEach((it,i)=>{const si=quoteSuppliers.findIndex(s=>s.id===sid);if(quoteFor(i,si)!=null){awards.set(it.id,sid);if(lowestSupplierForItem(i)!==sid)awardReasons.set(it.id,reason.trim());else awardReasons.delete(it.id)}});renderQuotes()});
 }
 function chooseAward(iid,sid){
   const i=quoteItems.findIndex(x=>x.id===iid), vals=quoteSuppliers.map((s,si)=>({sid:s.id,v:quoteFor(i,si)})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);
@@ -345,8 +414,10 @@ function chooseAward(iid,sid){
   }else awardReasons.delete(iid);
   awards.set(iid,sid);renderQuotes()
 }
-resetAwards.onclick=()=>{awards.clear();awardReasons.clear();renderQuotes()};
+resetAwards.textContent="恢复默认最低价";
+resetAwards.onclick=()=>{awards.clear();awardReasons.clear();setDefaultLowestAwards();renderQuotes()};
 
+setDefaultLowestAwards();
 renderItemList();renderAssignAll();renderQuotes();
 </script>
 </body>
