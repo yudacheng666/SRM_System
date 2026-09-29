@@ -42,6 +42,12 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 .footerNote{margin-top:14px;color:var(--muted);font-size:12px}
 .itemWithDrawing{display:flex;align-items:center;gap:8px}.drawingThumb{width:42px;height:32px;border:1px solid #cfd6e1;border-radius:6px;background:#fff;padding:2px;display:inline-flex;align-items:center;justify-content:center}.drawingThumb:hover{border-color:#60a5fa;background:#eff6ff}.drawingThumb svg{width:100%;height:100%}
 .modalBackdrop{position:fixed;inset:0;background:rgba(15,23,42,.48);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}.modalBackdrop.open{display:flex}.modalCard{width:min(980px,96vw);max-height:92vh;background:#fff;border-radius:14px;border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.22);overflow:hidden}.modalHead{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.modalBody{padding:16px;overflow:auto;max-height:calc(92vh - 60px)}.drawingLarge{width:100%;min-height:560px;border:1px solid var(--line);background:#fafafa;border-radius:10px;display:flex;align-items:center;justify-content:center}.drawingLarge svg{width:92%;height:auto;max-height:72vh}
+.intakeGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}@media(max-width:980px){.intakeGrid{grid-template-columns:1fr}}
+.intakeBox{border:1px solid var(--line);border-radius:10px;padding:11px;background:#fafbfc}.intakeBox h3{font-size:14px;margin:0 0 8px}.intakeBox textarea{width:100%;min-height:112px;border:1px solid #cfd6e1;border-radius:8px;padding:8px;resize:vertical;font:inherit}.intakeBox input{max-width:100%}
+.importPreview{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px}.importPreview table{width:100%;border-collapse:collapse;font-size:12px}.importPreview td,.importPreview th{border-bottom:1px solid #edf0f4;padding:5px 6px;text-align:left}
+.rfqPreviewLayout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:14px}@media(max-width:820px){.rfqPreviewLayout{grid-template-columns:1fr}}
+.rfqSupplierNav{display:flex;flex-direction:column;gap:7px;max-height:65vh;overflow:auto}.rfqSupplierNav button{text-align:left}
+.rfqDoc{border:1px solid var(--line);border-radius:10px;background:white;padding:16px}.rfqDocHead{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px}.rfqDoc table{width:100%;border-collapse:collapse;font-size:12px}.rfqDoc th,.rfqDoc td{border:1px solid #dfe4ec;padding:6px;text-align:left}
 </style>
 </head>
 <body>
@@ -67,10 +73,39 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
         <div class="toolbar">
           <input id="itemSearch" type="text" placeholder="搜索编码/名称">
           <select id="catFilter"><option value="">全部分类</option></select>
+          <button class="btn soft" id="toggleItemIntake">+ 添加询价物料</button>
         </div>
       </div>
       <div class="cardbody">
-        <div class="notice">这里用于确认“本次 RFQ 有哪些物料”、查看图纸和分配结果。M0 暂不实现物料导入/增删，因此本页不再设置第二套勾选状态；供应商分配统一在“询价分配中心”完成。</div>
+        <div id="itemIntake" style="display:none">
+          <div class="intakeGrid">
+            <div class="intakeBox">
+              <h3>单条输入</h3>
+              <div class="toolbar">
+                <input id="manualCode" type="text" placeholder="物料编码">
+                <input id="manualName" type="text" placeholder="物料名称">
+                <input id="manualQty" type="text" placeholder="数量">
+                <input id="manualUnit" type="text" placeholder="单位">
+                <button class="btn soft" id="manualAdd">加入本次询价</button>
+              </div>
+            </div>
+            <div class="intakeBox">
+              <h3>剪贴板批量粘贴</h3>
+              <textarea id="pasteItems" placeholder="每颗物料用分号或换行分隔；字段用逗号分隔。例如：&#10;P-001,示例轴,类别A,2,件;P-002,示例座,类别B,4,个"></textarea>
+              <div class="toolbar">
+                <button class="btn" id="readClipboard">读取剪贴板</button>
+                <button class="btn soft" id="parsePaste">解析预览</button>
+              </div>
+            </div>
+            <div class="intakeBox">
+              <h3>文件导入</h3>
+              <input id="importFile" type="file" accept=".csv,.txt,.xlsx,.xls">
+              <div class="small muted" style="margin:7px 0">CSV/TXT 可直接解析；Excel 在 M0 用内置示例行演示“选择文件 → 预览 → 导入”的流程。</div>
+              <button class="btn soft" id="demoExcelImport">演示 Excel 导入</button>
+            </div>
+          </div>
+          <div id="importPreview" class="importPreview" style="display:none"></div>
+        </div>
         <div class="tablewrap" style="margin-top:10px">
           <table class="table">
             <thead><tr><th>物料编码 / 图纸</th><th>名称</th><th>分类</th><th>数量</th><th>单位</th><th>已分配供应商</th></tr></thead>
@@ -97,12 +132,11 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           <button class="modebtn" data-mode="supplierFirst">按供应商分配物料</button>
         </div>
         <div class="toolbar">
-          <button class="btn soft" id="previewBtn">生成前预览</button>
+          <button class="btn soft" id="previewBtn">预览询价单</button>
           <button class="btn primary" id="generateBtn">生成已分配询价单</button>
         </div>
       </div>
       <div class="cardbody">
-        <div class="notice">Coverage 只是提示，不是硬门槛。即使低于 100%，也允许生成已完成分配部分的询价单。</div>
         <div id="previewBox" class="preview"></div>
       </div>
     </div>
@@ -161,8 +195,11 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           <div id="supplierPicker" class="preview">
             <div class="toolbar" style="margin-bottom:8px">
               <input id="supplierPoolSearch" type="text" placeholder="搜索供应商（支持模糊搜索）">
+              <button class="btn soft" id="addPickedSuppliers">加入勾选供应商</button>
+              <button class="btn danger" id="clearPickedSuppliers">清空勾选</button>
               <button class="btn" id="closeSupplierPicker">关闭</button>
             </div>
+            <div class="small muted" style="margin-bottom:8px">勾选清单支持 Shift 连选。</div>
             <div id="supplierPoolList" class="supplierList"></div>
           </div>
           <div id="supplierFirstList" class="supplierList"></div>
@@ -212,7 +249,14 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
     </div>
   </div>
 
-  <div class="footerNote">M0 原型不保存数据、不连接网络、不导入真实文件。它只用于确认产品交互，正式数据层从 M1 开始。</div>
+  <div id="rfqPreviewModal" class="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modalCard" style="width:min(1180px,97vw)">
+      <div class="modalHead"><div><b>供应商询价单预览</b><div class="small muted">切换左侧供应商，查看该供应商实际将收到的询价内容。</div></div><button class="btn" id="closeRfqPreview">关闭</button></div>
+      <div class="modalBody"><div id="rfqPreviewContent" class="rfqPreviewLayout"></div></div>
+    </div>
+  </div>
+
+  <div class="footerNote">M0 原型不保存数据、不连接网络；CSV/TXT 可做本地导入演示，Excel 使用内置示例模拟解析结果。正式持久化数据层从 M1 开始。</div>
 </div>
 
 <script>
@@ -236,10 +280,12 @@ for(let i=0;i<180;i++){getSet(items[i].id).add(suppliers[i%6].id);if(i%3===0)get
 for(let i=180;i<300;i++){getSet(items[i].id).add(suppliers[i%10].id)}
 
 const assignSel=new Set();
+const supplierPickerSel=new Set();
+const rangeAnchors=new Map();
+let pendingImportRows=[];
 const rfqSupplierPool=new Set();
 items.forEach(it=>getSet(it.id).forEach(sid=>rfqSupplierPool.add(sid)));
 let itemPage=0, assignPage=0, sfPage=0, assignMode="itemFirst", activeSupplier=null;
-let lastAssignAnchorId=null, lastSfAnchorId=null;
 const PAGE=50;
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
 function compactText(s){return String(s).toLowerCase().replace(/[\s\-_.()（）]/g,"")}
@@ -251,6 +297,21 @@ function supplierMatches(s,q){
   const joined=fields.join(" ");
   return tokens.every(t=>joined.includes(t)||fields.some(v=>compactText(v).includes(compactText(t))||isSubsequence(t,v)));
 }
+function bindShiftRange(selector,group,idAttr,apply,after){
+  const boxes=[...document.querySelectorAll(selector)], ids=boxes.map(b=>b.dataset[idAttr]);
+  boxes.forEach(b=>b.onclick=e=>{
+    const id=b.dataset[idAttr],checked=b.checked,anchor=rangeAnchors.get(group);
+    let targets=[id];
+    if(e.shiftKey&&anchor&&ids.includes(anchor)){
+      const a=ids.indexOf(anchor),z=ids.indexOf(id),lo=Math.min(a,z),hi=Math.max(a,z);
+      targets=ids.slice(lo,hi+1);
+    }
+    targets.forEach(x=>apply(x,checked));
+    rangeAnchors.set(group,id);
+    if(after)after();
+  });
+}
+function resetRange(group){rangeAnchors.delete(group)}
 function drawingSvg(it,large=false){
   const n=parseInt(it.id.replace(/\D/g,""),10)||1;
   const holes=2+(n%4), w=large?760:150, h=large?500:100;
@@ -271,7 +332,47 @@ function openDrawing(itemId){
 }
 function closeDrawingModal(){drawingModal.classList.remove("open");drawingModal.setAttribute("aria-hidden","true")}
 closeDrawing.onclick=closeDrawingModal;drawingModal.onclick=e=>{if(e.target===drawingModal)closeDrawingModal()};
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawingModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeDrawingModal();if(document.getElementById("rfqPreviewModal")?.classList.contains("open"))closeRfqPreview.click()}});
+function parseItemRows(text){
+  return String(text||"").split(/[;\n\r]+/).map(x=>x.trim()).filter(Boolean).map((row,idx)=>{
+    const p=row.split(/[，,\t]/).map(x=>x.trim());
+    return {id:p[0]||("INPUT-"+String(Date.now()+idx)),name:p[1]||"未命名物料",cat:p[2]||"类别A",qty:Number(p[3])||1,unit:p[4]||"件"};
+  });
+}
+function setImportPreview(rows,source){
+  pendingImportRows=rows;
+  importPreview.style.display="block";
+  importPreview.innerHTML=`<div class="sline"><div><b>${esc(source)}</b> · 待加入 ${rows.length} 项</div><button class="btn primary" id="confirmImportRows">确认加入本次询价</button></div><div class="tablewrap" style="max-height:220px;margin-top:8px"><table><thead><tr><th>物料编码</th><th>名称</th><th>分类</th><th>数量</th><th>单位</th></tr></thead><tbody>${rows.slice(0,50).map(r=>`<tr><td>${esc(r.id)}</td><td>${esc(r.name)}</td><td>${esc(r.cat)}</td><td>${r.qty}</td><td>${esc(r.unit)}</td></tr>`).join("")}</tbody></table></div>`;
+  document.getElementById("confirmImportRows").onclick=()=>addRowsToRfq(pendingImportRows);
+}
+function addRowsToRfq(rows){
+  let added=0,dup=0;
+  rows.forEach(r=>{if(items.some(x=>x.id===r.id)){dup++;return}items.push({...r});added++});
+  pendingImportRows=[];importPreview.style.display="none";
+  renderItemList();renderAssignAll();
+  alert(`已加入 ${added} 项；重复编码跳过 ${dup} 项。`);
+}
+toggleItemIntake.onclick=()=>{itemIntake.style.display=itemIntake.style.display==="none"?"block":"none"};
+manualAdd.onclick=()=>{const code=manualCode.value.trim(),name=manualName.value.trim();if(!code||!name){alert("请填写物料编码和名称。");return}addRowsToRfq([{id:code,name,cat:"类别A",qty:Number(manualQty.value)||1,unit:manualUnit.value.trim()||"件"}]);manualCode.value=manualName.value=manualQty.value=manualUnit.value=""};
+parsePaste.onclick=()=>{const rows=parseItemRows(pasteItems.value);if(!rows.length){alert("没有识别到物料。");return}setImportPreview(rows,"剪贴板批量粘贴预览")};
+readClipboard.onclick=async()=>{try{pasteItems.value=await navigator.clipboard.readText();parsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请在文本框中按 Ctrl+V 粘贴。")}};
+demoExcelImport.onclick=()=>setImportPreview([
+  {id:"XLS-DEMO-001",name:"导入示例物料 A",cat:"类别A",qty:3,unit:"件"},
+  {id:"XLS-DEMO-002",name:"导入示例物料 B",cat:"类别B",qty:5,unit:"个"},
+  {id:"XLS-DEMO-003",name:"导入示例物料 C",cat:"类别C",qty:1,unit:"套"}
+],"Excel 导入演示预览（M0 内置示例）");
+importFile.onchange=()=>{
+  const file=importFile.files?.[0];if(!file)return;
+  const ext=(file.name.split(".").pop()||"").toLowerCase();
+  if(ext==="csv"||ext==="txt"){
+    const reader=new FileReader();reader.onload=()=>{const rows=parseItemRows(reader.result);setImportPreview(rows,file.name+" 导入预览")};reader.readAsText(file);
+  }else{
+    setImportPreview([
+      {id:"XLS-DEMO-101",name:"Excel 示例行 1",cat:"类别A",qty:2,unit:"件"},
+      {id:"XLS-DEMO-102",name:"Excel 示例行 2",cat:"类别B",qty:6,unit:"个"}
+    ],file.name+" · M0 Excel 流程演示");
+  }
+};
 function fillCats(){["catFilter","assignCatFilter","sfCatFilter"].forEach(id=>{const el=document.getElementById(id);categories.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o)})})}
 fillCats();
 
@@ -308,22 +409,13 @@ function renderAssignItems(){
   const slice=list.slice(assignPage*PAGE,assignPage*PAGE+PAGE);
   assignItemBody.innerHTML=slice.map(it=>{const names=[...getSet(it.id)].slice(0,3).map(sid=>suppliers.find(s=>s.id===sid)?.name).filter(Boolean);return `<tr><td><input type="checkbox" data-ai="${it.id}" ${assignSel.has(it.id)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td><td>${names.length?names.map(n=>`<span class="chip">${n}</span>`).join(" "):'<span class="dangertext">未分配</span>'}</td></tr>`}).join("");
   bindDrawingThumbs();
-  const visibleIds=slice.map(it=>it.id);
-  document.querySelectorAll("#assignItemBody input[data-ai]").forEach(c=>c.onclick=e=>{
-    const targetId=c.dataset.ai, targetChecked=c.checked;
-    if(e.shiftKey&&lastAssignAnchorId&&visibleIds.includes(lastAssignAnchorId)){
-      const a=visibleIds.indexOf(lastAssignAnchorId),b=visibleIds.indexOf(targetId),lo=Math.min(a,b),hi=Math.max(a,b);
-      visibleIds.slice(lo,hi+1).forEach(id=>targetChecked?assignSel.add(id):assignSel.delete(id));
-    }else targetChecked?assignSel.add(targetId):assignSel.delete(targetId);
-    lastAssignAnchorId=targetId;
-    renderAssignItems();renderSuppliers();
-  });
+  bindShiftRange("#assignItemBody input[data-ai]","assign-items","ai",(id,checked)=>checked?assignSel.add(id):assignSel.delete(id),()=>{renderAssignItems();renderSuppliers()});
   assignSelectedCount.textContent=assignSel.size;
   assignItemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${assignPage+1}/${pages} 页`;
 }
-["assignItemSearch","assignCatFilter","assignStateFilter"].forEach(id=>document.getElementById(id).oninput=()=>{assignPage=0;lastAssignAnchorId=null;renderAssignItems()});
-document.getElementById("prevAssign").onclick=()=>{if(assignPage>0)assignPage--;lastAssignAnchorId=null;renderAssignItems()};
-document.getElementById("nextAssign").onclick=()=>{const n=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter").length;if((assignPage+1)*PAGE<n)assignPage++;lastAssignAnchorId=null;renderAssignItems()};
+["assignItemSearch","assignCatFilter","assignStateFilter"].forEach(id=>document.getElementById(id).oninput=()=>{assignPage=0;resetRange("assign-items");renderAssignItems()});
+document.getElementById("prevAssign").onclick=()=>{if(assignPage>0)assignPage--;resetRange("assign-items");renderAssignItems()};
+document.getElementById("nextAssign").onclick=()=>{const n=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter").length;if((assignPage+1)*PAGE<n)assignPage++;resetRange("assign-items");renderAssignItems()};
 document.getElementById("selectAssignPage").onclick=()=>{filteredItems("assignItemSearch","assignCatFilter","assignStateFilter").slice(assignPage*PAGE,assignPage*PAGE+PAGE).forEach(it=>assignSel.add(it.id));renderAssignAll()};
 document.getElementById("clearAssignSelection").onclick=()=>{assignSel.clear();renderAssignAll()};
 
@@ -346,7 +438,7 @@ function renderSupplierFirstList(){
     let count=0;items.forEach(it=>{if(getSet(it.id).has(s.id))count++});
     return `<div class="srow ${activeSupplier===s.id?"selected":""}" data-sf-s="${s.id}"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.id} · ${s.reason}</div></div><div class="toolbar"><span>${count} 项</span><button class="btn danger" data-pool-remove="${s.id}">移出本次询价</button></div></div></div>`
   }).join("")||'<div class="muted small">没有匹配的本次询价供应商。</div>';
-  document.querySelectorAll("[data-sf-s]").forEach(x=>x.onclick=()=>{activeSupplier=x.dataset.sfS;sfPage=0;lastSfAnchorId=null;renderSupplierFirstList();renderSfItems()});
+  document.querySelectorAll("[data-sf-s]").forEach(x=>x.onclick=()=>{activeSupplier=x.dataset.sfS;sfPage=0;resetRange("supplier-items");renderSupplierFirstList();renderSfItems()});
   document.querySelectorAll("[data-pool-remove]").forEach(b=>b.onclick=e=>{
     e.stopPropagation();
     const sid=b.dataset.poolRemove, sup=suppliers.find(s=>s.id===sid);
@@ -361,9 +453,12 @@ function renderSupplierFirstList(){
 }
 function renderSupplierPoolPicker(){
   const q=supplierPoolSearch.value.trim();
-  supplierPoolList.innerHTML=suppliers.filter(s=>!rfqSupplierPool.has(s.id)&&supplierMatches(s,q)).map(s=>`<div class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><button class="btn soft" data-pool-add="${s.id}">加入本次询价</button></div></div>`).join("")||'<div class="muted small">没有更多可添加供应商。</div>';
-  document.querySelectorAll("[data-pool-add]").forEach(b=>b.onclick=()=>{rfqSupplierPool.add(b.dataset.poolAdd);flash("已加入本次询价供应商列表。");renderSupplierPoolPicker();renderAssignAll()});
+  const list=suppliers.filter(s=>!rfqSupplierPool.has(s.id)&&supplierMatches(s,q));
+  supplierPoolList.innerHTML=list.map(s=>`<label class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.id} · ${s.reason}</div></div><input type="checkbox" data-spick="${s.id}" ${supplierPickerSel.has(s.id)?"checked":""}></div></label>`).join("")||'<div class="muted small">没有更多可添加供应商。</div>';
+  bindShiftRange("#supplierPoolList input[data-spick]","supplier-picker","spick",(id,checked)=>checked?supplierPickerSel.add(id):supplierPickerSel.delete(id),renderSupplierPoolPicker);
 }
+addPickedSuppliers.onclick=()=>{let n=0;supplierPickerSel.forEach(id=>{if(!rfqSupplierPool.has(id)){rfqSupplierPool.add(id);n++}});supplierPickerSel.clear();resetRange("supplier-picker");flash(`已加入 ${n} 家供应商。`);renderSupplierPoolPicker();renderAssignAll()};
+clearPickedSuppliers.onclick=()=>{supplierPickerSel.clear();resetRange("supplier-picker");renderSupplierPoolPicker()};
 function renderCopySources(){
   if(!document.getElementById("copyFromSupplier"))return;
   const current=copyFromSupplier.value;
@@ -371,7 +466,7 @@ function renderCopySources(){
   if([...copyFromSupplier.options].some(o=>o.value===current))copyFromSupplier.value=current;
 }
 supplierFirstSearch.oninput=renderSupplierFirstList;
-openSupplierPicker.onclick=()=>{supplierPicker.style.display="block";renderSupplierPoolPicker()};
+openSupplierPicker.onclick=()=>{supplierPicker.style.display="block";resetRange("supplier-picker");renderSupplierPoolPicker()};
 closeSupplierPicker.onclick=()=>{supplierPicker.style.display="none"};
 supplierPoolSearch.oninput=renderSupplierPoolPicker;
 function filteredSfItems(){
@@ -385,34 +480,33 @@ function renderSfItems(){
   const slice=list.slice(sfPage*PAGE,sfPage*PAGE+PAGE);
   sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.id}" ${getSet(it.id).has(activeSupplier)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td></tr>`).join("");
   bindDrawingThumbs();
-  const visibleIds=slice.map(it=>it.id);
-  document.querySelectorAll("[data-sfi]").forEach(c=>c.onclick=e=>{
-    const targetId=c.dataset.sfi,targetChecked=c.checked;
-    const apply=id=>{const set=getSet(id);targetChecked?set.add(activeSupplier):set.delete(activeSupplier)};
-    if(e.shiftKey&&lastSfAnchorId&&visibleIds.includes(lastSfAnchorId)){
-      const a=visibleIds.indexOf(lastSfAnchorId),b=visibleIds.indexOf(targetId),lo=Math.min(a,b),hi=Math.max(a,b);
-      visibleIds.slice(lo,hi+1).forEach(apply);
-    }else apply(targetId);
-    lastSfAnchorId=targetId;
-    renderAssignAll();
-  });
+  bindShiftRange("#sfItemBody input[data-sfi]","supplier-items","sfi",(id,checked)=>{const set=getSet(id);checked?set.add(activeSupplier):set.delete(activeSupplier)},renderAssignAll);
   const related=list.filter(it=>getSet(it.id).has(activeSupplier)).length;
   sfItemCount.textContent=`筛选结果 ${list.length} 项 · 当前供应商已关联 ${related} 项 · 第 ${sfPage+1}/${pages} 页 · 勾选框即关联状态，支持 Shift 连选`;
 }
-["sfItemSearch","sfCatFilter"].forEach(id=>document.getElementById(id).oninput=()=>{sfPage=0;lastSfAnchorId=null;renderSfItems()});
-sfPrev.onclick=()=>{if(sfPage>0)sfPage--;lastSfAnchorId=null;renderSfItems()};sfNext.onclick=()=>{if((sfPage+1)*PAGE<filteredSfItems().length)sfPage++;lastSfAnchorId=null;renderSfItems()};
+["sfItemSearch","sfCatFilter"].forEach(id=>document.getElementById(id).oninput=()=>{sfPage=0;resetRange("supplier-items");renderSfItems()});
+sfPrev.onclick=()=>{if(sfPage>0)sfPage--;resetRange("supplier-items");renderSfItems()};sfNext.onclick=()=>{if((sfPage+1)*PAGE<filteredSfItems().length)sfPage++;resetRange("supplier-items");renderSfItems()};
 sfLinkFiltered.onclick=()=>{if(!activeSupplier)return;let n=0;filteredSfItems().forEach(it=>{const set=getSet(it.id);if(!set.has(activeSupplier)){set.add(activeSupplier);n++}});flash(`已将当前筛选结果全部关联：新增 ${n} 条关系。`);renderAssignAll()};
 sfUnlinkFiltered.onclick=()=>{if(!activeSupplier)return;let n=0;filteredSfItems().forEach(it=>{if(getSet(it.id).delete(activeSupplier))n++});flash(`已取消当前筛选结果中的 ${n} 条关系。`);renderAssignAll()};
 sfCopyRange.onclick=()=>{if(!activeSupplier||!copyFromSupplier.value)return;const source=copyFromSupplier.value;let n=0;items.forEach(it=>{if(getSet(it.id).has(source)&&!getSet(it.id).has(activeSupplier)){getSet(it.id).add(activeSupplier);n++}});flash(`已复制物料范围作为起点：新增 ${n} 条关系。可继续直接勾选/取消差异物料。`);renderAssignAll()};
 
 function renderAssignAll(){renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
 function flash(msg){document.getElementById("previewBox").style.display="block";document.getElementById("previewBox").textContent=msg}
-previewBtn.onclick=()=>{
-  const rows=suppliers.map(s=>{let c=0;items.forEach(it=>{if(getSet(it.id).has(s.id))c++});return [s,c]}).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]);
-  const c=coverage();
-  previewBox.style.display="block";
-  previewBox.innerHTML=`<b>生成预览</b><div class="small" style="margin:6px 0">已覆盖 ${c.covered}/${items.length} 项；未覆盖 ${c.none} 项。未覆盖不阻止生成。</div>`+rows.slice(0,12).map(([s,n])=>`<div>${s.name}：${n} 项</div>`).join("")+(rows.length>12?`<div class="muted">……另有 ${rows.length-12} 家</div>`:"");
-};
+let previewSupplierId=null;
+function rfqPreviewSuppliers(){
+  return suppliers.filter(s=>items.some(it=>getSet(it.id).has(s.id)));
+}
+function renderRfqPreview(){
+  const list=rfqPreviewSuppliers();
+  if(!list.length){rfqPreviewContent.innerHTML='<div class="muted">当前还没有任何已分配的供应商询价内容。</div>';return}
+  if(!previewSupplierId||!list.some(s=>s.id===previewSupplierId))previewSupplierId=list[0].id;
+  const sup=list.find(s=>s.id===previewSupplierId), rows=items.filter(it=>getSet(it.id).has(previewSupplierId));
+  rfqPreviewContent.innerHTML=`<div class="rfqSupplierNav">${list.map(s=>{const n=items.filter(it=>getSet(it.id).has(s.id)).length;return `<button class="btn ${s.id===previewSupplierId?"soft":""}" data-rfq-supplier="${s.id}">${esc(s.name)} · ${n} 项</button>`}).join("")}</div><div class="rfqDoc"><div class="rfqDocHead"><div><b>询价单 RFQ-DEMO-001</b><div class="small muted">供应商：${esc(sup.name)}</div></div><div class="small">物料数：${rows.length}</div></div><table><thead><tr><th>序号</th><th>物料编码</th><th>名称</th><th>数量</th><th>单位</th><th>单价</th><th>交期</th><th>MOQ</th></tr></thead><tbody>${rows.map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.id)}</td><td>${esc(it.name)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td></td><td></td><td></td></tr>`).join("")}</tbody></table></div>`;
+  document.querySelectorAll("[data-rfq-supplier]").forEach(b=>b.onclick=()=>{previewSupplierId=b.dataset.rfqSupplier;renderRfqPreview()});
+}
+previewBtn.onclick=()=>{rfqPreviewModal.classList.add("open");rfqPreviewModal.setAttribute("aria-hidden","false");renderRfqPreview()};
+closeRfqPreview.onclick=()=>{rfqPreviewModal.classList.remove("open");rfqPreviewModal.setAttribute("aria-hidden","true")};
+rfqPreviewModal.onclick=e=>{if(e.target===rfqPreviewModal)closeRfqPreview.click()};
 generateBtn.onclick=()=>{const c=coverage();alert(`原型动作：允许生成。\n已覆盖 ${c.covered}/${items.length} 项，未覆盖 ${c.none} 项将保留在当前 RFQ 中。\n正式 M4 再实现 Excel 文件生成。`)};
 
 const quoteSuppliers=suppliers.slice(0,4);
