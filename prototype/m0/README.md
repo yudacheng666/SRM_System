@@ -140,3 +140,24 @@ Planned production behavior includes:
 - pre-go-live legacy purchase-order / inquiry / quotation migration without inventing unsupported historical events.
 
 These items are roadmap/data-model decisions. The current M0 HTML has not yet implemented the full multi-page PDF viewer, attachment-package generator, or aggregate-total analysis UI.
+
+
+## M0 correction pass after acceptance review
+
+The prototype was revised after a formal M0 acceptance review. The correction pass adds or changes:
+- strict numeric validation with no silent 0/1 fallback;
+- empty-column preservation in pasted/imported rows;
+- Draft vs Applied search state;
+- RFQ Line ID;
+- quotation Round + Revision/Submission separation;
+- locked confirmed submissions;
+- editable later-round negotiation scope;
+- no silent fallback from a missing later-round quotation to an earlier price;
+- strict tier validation and no nearest-tier guessing;
+- PDF-style multi-page / multi-document preview;
+- supplier attachment coverage preview;
+- dynamic quotation comparison without fixed first-N item/supplier limits;
+- quoted-scope and common-scope totals plus theoretical-lowest/final-selected totals;
+- history-safe item/supplier removal guards.
+
+The canonical product requirement is now `docs/01_产品需求PRD.md`; long-term rules are in `docs/02_业务规则.md`.
