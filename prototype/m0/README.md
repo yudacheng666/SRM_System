@@ -65,3 +65,13 @@ This is not the production application. It does not persist data, import real fi
 - M0 base item columns are demonstration fields only. The production item schema will be aligned with ERP fields and import mapping requirements.
 - M0 demonstrates extensible custom fields: add field, delete field, and batch-update a selected set of inquiry items.
 - The item list supports both a global fuzzy search and independent fuzzy search inputs for every displayed field, including added custom fields.
+
+
+## List, search, paste, and field-management conventions
+
+- Clipboard item paste accepts mixed Chinese/English commas and semicolons, line breaks, tabs, and spaces as demo delimiters.
+- Fuzzy-search inputs do not execute while the user is typing. Users may fill multiple search/filter boxes first and explicitly click Search to run the combined conditions.
+- Multi-select lists provide four standard operations: Select all (current filtered result), Select current page, Invert all (current filtered result), and Invert current page.
+- Paginated lists show clickable numeric page navigation in addition to previous/next controls.
+- Field values can be batch-updated either by assigning one value to selected records or by importing a two-column update table and matching records by a selected key field.
+- Field-definition maintenance has been moved out of the RFQ business screen into the System Settings prototype page. Business screens update field values; System Settings changes field structure.
