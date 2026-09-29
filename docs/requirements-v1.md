@@ -388,3 +388,54 @@ The current RFQ item list must support multiple practical input methods:
    - Parse into a preview before adding the rows.
 
 All methods should converge into the same RFQ item data model and apply the same validation rules, including duplicate item-code handling and required-field checks.
+
+
+## 21. Add / remove symmetry
+
+As a general product interaction rule, when users can add an object to a working scope, they must also have a clear way to remove it from that scope unless the record is intentionally immutable for audit reasons.
+
+Examples include:
+- add inquiry item ↔ remove inquiry item
+- add supplier to current RFQ ↔ remove supplier from current RFQ
+- add custom field ↔ remove custom field
+
+Removal must clearly explain dependent effects before confirmation. For example, removing an inquiry item from an RFQ also removes that item's supplier-assignment relationships for the RFQ.
+
+Audit/history records that must not be physically deleted should use cancel/void/inactivate semantics rather than violating traceability.
+
+## 22. ERP-aligned and extensible fields
+
+The fields currently shown in M0 are demonstration fields and must not be treated as the final production schema.
+
+The production RFQ item model should be designed from:
+- actual ERP export/import fields
+- RFQ operational fields required by purchasing
+- quotation and comparison requirements
+- drawing/document references
+- future extensibility
+
+The field model must support configurable additional fields without requiring a code change for every new business field.
+
+Required capabilities include:
+- map ERP source fields into SRM fields
+- add a new configurable field
+- remove a configurable field when appropriate
+- define field display name and type
+- include configurable fields in import/export mapping
+- batch-update one field value across selected inquiry items
+- preserve source values where required for traceability
+
+Core identity/audit fields may be protected from deletion or incompatible type changes.
+
+## 23. Field-level fuzzy search
+
+Every searchable data field should support fuzzy matching, not only item code or item name.
+
+For tabular work areas:
+- provide a global fuzzy search across all visible/searchable fields
+- provide field-specific filtering/search for each field
+- newly added configurable fields inherit the same search/filter capability
+- numeric values may be treated as text for partial matching where useful
+- multiple active field filters should combine predictably
+
+The same principle applies to supplier lists, inquiry items, quotation data, and future configurable data tables.
