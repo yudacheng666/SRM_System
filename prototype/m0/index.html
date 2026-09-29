@@ -338,7 +338,20 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
         <h3>文件导入</h3>
         <input id="quoteImportFile" type="file" accept=".csv,.txt,.xlsx,.xls">
         <div class="small muted" style="margin:7px 0">CSV/TXT 可直接解析；Excel 在 M0 使用虚构行演示映射后的导入结果。</div>
+        <button class="btn" id="toggleQuoteMapping">字段映射</button>
         <button class="btn soft" id="demoQuoteExcel">演示 Excel 报价导入</button>
+        <div id="quoteMappingBox" class="coverageDetails small" style="display:none;margin-top:8px">
+          <div><b>本供应商报价模板映射（M0）</b></div>
+          <div class="toolbar" style="margin-top:6px">
+            <input id="mapItemRef" type="text" value="RFQ Line ID / 物料编码">
+            <input id="mapPrice" type="text" value="报价/单价">
+            <input id="mapLead" type="text" value="交期">
+            <input id="mapMoq" type="text" value="MOQ">
+            <input id="mapStatus" type="text" value="状态">
+            <button class="btn primary" id="saveQuoteMapping">保存映射</button>
+          </div>
+          <div id="quoteMappingHint" class="muted" style="margin-top:5px">M0 只验证映射交互；M5 实现真实 Excel 列读取和模板持久化。</div>
+        </div>
       </div>
     </div>
 
@@ -694,7 +707,8 @@ function normalizeQuoteStatus(v){
   const s=String(v||"quoted").trim().toLowerCase();
   if(["未报价","noquote","no quote"].includes(s))return"noquote";
   if(["不供货","不能供货","cannot","cannot supply"].includes(s))return"cannot";
-  return"quoted";
+  if(["quoted","报价","正常报价"].includes(s))return"quoted";
+  return null;
 }
 function parseTierPrice(raw){
   const s=String(raw??"").trim(),errors=[];
@@ -736,7 +750,7 @@ function validateQuotePreview(rows){
   const round=currentQuoteRound(),expected=new Set(expectedIdsForRound(round)),resolved=rows.map(r=>({...r,item:resolveQuoteItem(r.itemRef)})),seen=new Map();
   resolved.forEach(r=>{const key=r.item?.lineId||r.itemRef;seen.set(key,(seen.get(key)||0)+1)});
   return resolved.map(r=>{
-    const status=normalizeQuoteStatus(r.status),lineId=r.item?.lineId||r.itemRef,itemId=r.item?.id||"",duplicate=(seen.get(lineId)||0)>1,errors=[];
+    const status=normalizeQuoteStatus(r.status),lineId=r.item?.lineId||r.itemRef,itemId=r.item?.id||"",duplicate=(seen.get(lineId)||0)>1,errors=[];if(!status)errors.push("报价状态无法识别");
     let check="已报价";
     if(duplicate)check="重复";else if(!r.item||!expected.has(lineId))check="多报";else if(status==="noquote")check="明确未报价";else if(status==="cannot")check="不供货";
     let parsed={price:null,tiers:[],errors:[]},lead={value:null,error:null},moq={value:null,error:null},effective=null;
@@ -746,7 +760,7 @@ function validateQuotePreview(rows){
       effective=effectivePriceForLine({status,price:parsed.price,tiers:parsed.tiers},r.item?.qty);
       if(!parsed.errors.length&&effective==null)errors.push("RFQ数量没有适用的阶梯价格");
     }
-    if(errors.length&&["已报价"].includes(check))check="数据错误";
+    if(errors.length&&["已报价"].includes(check))check="数据错误";if(!status)check="数据错误";
     return {...r,status,lineId,itemId,priceParsed:parsed,leadValue:lead.value,moqValue:moq.value,effectivePrice:effective,errors,coverageCheck:check};
   });
 }
@@ -802,8 +816,8 @@ function renderQuoteRound(){
 function editQuoteLine(index){
   const round=currentQuoteRound(),l=round?.lines[index];if(!round||round.status==="confirmed"){alert("已确认提交不可直接修改，请新增本轮修订。");return}if(!l)return;
   const price=prompt("单价 / 阶梯价：",l.tiers?.length?l.tiers.map(t=>t.min+(t.max==null?"+":"-"+t.max)+":"+t.price).join("|"):(l.price??""));if(price===null)return;
-  const lead=prompt("交期（天，可空）：",l.lead??"");if(lead===null)return;const moq=prompt("MOQ（可空）：",l.moq??"");if(moq===null)return;const status=normalizeQuoteStatus(prompt("状态：quoted / noquote / cannot",l.status)??l.status);
-  const row=validateQuotePreview([{itemRef:l.lineId,price,lead,moq,status}])[0];if(row.errors.length){alert(row.errors.join("；"));return}upsertRoundLine(round,row,"manual");renderQuoteRound();
+  const lead=prompt("交期（天，可空）：",l.lead??"");if(lead===null)return;const moq=prompt("MOQ（可空）：",l.moq??"");if(moq===null)return;const rawStatus=prompt("状态：quoted / noquote / cannot",l.status);if(rawStatus===null)return;
+  const row=validateQuotePreview([{itemRef:l.lineId,price,lead,moq,status:rawStatus}])[0];if(row.errors.length){alert(row.errors.join("；"));return}upsertRoundLine(round,row,"manual");renderQuoteRound();
 }
 function fillCats(){["assignCatFilter","sfCatFilter"].forEach(id=>{const el=document.getElementById(id);categories.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o)})})}
 fillCats();
@@ -825,6 +839,8 @@ quoteManualAdd.onclick=()=>showQuotePreview([{itemRef:quoteManualItem.value.trim
 quoteParsePaste.onclick=()=>{const rows=parseQuoteRows(quotePaste.value);if(!rows.length){alert("没有识别到报价记录。");return}showQuotePreview(rows)};
 quoteReadClipboard.onclick=async()=>{try{quotePaste.value=await navigator.clipboard.readText();quoteParsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请按 Ctrl+V 粘贴。")}};
 quoteClearInput.onclick=()=>{quotePaste.value=""};quoteClearPreview.onclick=clearQuoteImportPreview;clearQuotePreview2.onclick=clearQuoteImportPreview;
+toggleQuoteMapping.onclick=()=>{quoteMappingBox.style.display=quoteMappingBox.style.display==="none"?"block":"none"};
+saveQuoteMapping.onclick=()=>{quoteMappingHint.textContent="已保存 M0 映射演示："+[mapItemRef.value,mapPrice.value,mapLead.value,mapMoq.value,mapStatus.value].join(" → ")};
 demoQuoteExcel.onclick=()=>{const a=assignedItemsForSupplier(quoteImportSupplier.value);showQuotePreview([{itemRef:a[0]?.lineId||items[0].lineId,price:"1-9:118|10-49:108.5|50+:98",lead:"7",moq:"1",status:"quoted"},{itemRef:a[1]?.lineId||items[1].lineId,price:"108.50",lead:"10",moq:"5",status:"quoted"}])};
 quoteImportFile.onchange=()=>{const file=quoteImportFile.files?.[0];if(!file)return;const ext=(file.name.split(".").pop()||"").toLowerCase();if(ext==="csv"||ext==="txt"){const r=new FileReader();r.onload=()=>showQuotePreview(parseQuoteRows(r.result));r.readAsText(file)}else demoQuoteExcel.click()};
 commitQuoteImport.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed"){alert("已确认提交不可覆盖，请新增本轮修订。");return}const valid=quoteImportPreviewRows.filter(x=>["已报价","明确未报价","不供货"].includes(x.coverageCheck)&&!x.errors.length);if(!valid.length){alert("没有可写入的有效报价。");return}const seen=new Set();valid.filter(x=>{if(seen.has(x.lineId))return false;seen.add(x.lineId);return true}).forEach(x=>upsertRoundLine(r,x,"import"));clearQuoteImportPreview();renderQuoteRound()};
