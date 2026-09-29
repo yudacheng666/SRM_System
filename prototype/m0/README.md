@@ -56,3 +56,12 @@ This is not the production application. It does not persist data, import real fi
 - All checkbox-style lists in M0 use one shared Shift-range-selection mechanism, including item selection, supplier-item relation selection, and supplier-pool selection.
 - The explanatory Coverage warning sentence was removed from the UI; Coverage remains visible through statistics and generation behavior.
 - "Preview RFQ" now opens a supplier-specific RFQ document preview with the exact assigned item rows and response columns before generation.
+
+
+## Field and delete behavior
+
+- The current RFQ item list supports selecting and deleting inquiry items. Deleting an inquiry item also removes its supplier-assignment relationships.
+- As a general interaction rule, user-created membership or configuration should not expose an add action without an understandable corresponding remove/delete action.
+- M0 base item columns are demonstration fields only. The production item schema will be aligned with ERP fields and import mapping requirements.
+- M0 demonstrates extensible custom fields: add field, delete field, and batch-update a selected set of inquiry items.
+- The item list supports both a global fuzzy search and independent fuzzy search inputs for every displayed field, including added custom fields.
