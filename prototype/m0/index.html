@@ -51,6 +51,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 .colFilter{width:100%;min-width:84px;padding:5px 6px!important;font-size:11px!important}.fieldTools{margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fafbfc}
 .pageNums{display:inline-flex;gap:4px;flex-wrap:wrap;align-items:center}.pageNum{min-width:32px;padding:6px 8px;border:1px solid var(--line);background:#fff;border-radius:7px}.pageNum.active{background:#111827;color:#fff}.selectionBar{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.settingsGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.7fr);gap:14px}@media(max-width:900px){.settingsGrid{grid-template-columns:1fr}}
 .roundBadge{display:inline-block;padding:3px 7px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:11px}.roundBadge.draft{background:#fff7ed;color:#9a3412}.roundBadge.confirmed{background:#ecfdf5;color:#047857}.quoteImportGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}@media(max-width:980px){.quoteImportGrid{grid-template-columns:1fr}}
+.coverageMini{display:grid;grid-template-columns:repeat(7,minmax(110px,1fr));gap:8px;margin-top:10px}@media(max-width:1100px){.coverageMini{grid-template-columns:repeat(3,1fr)}}@media(max-width:650px){.coverageMini{grid-template-columns:repeat(2,1fr)}}.coverageMini .stat b{font-size:18px}.coverageDetails{margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff}
 </style>
 </head>
 <body>
@@ -284,6 +285,16 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
       </div>
       <div class="cardbody">
         <div id="quoteRoundSummary" class="notice"></div>
+        <div id="quoteCoverageSummary" class="coverageMini">
+          <div class="stat"><small>本轮应报价</small><b id="qcExpected">0</b></div>
+          <div class="stat"><small>已报价</small><b id="qcQuoted">0</b></div>
+          <div class="stat"><small>明确未报价</small><b id="qcNoquote">0</b></div>
+          <div class="stat"><small>不供货</small><b id="qcCannot">0</b></div>
+          <div class="stat"><small>漏报</small><b id="qcMissing">0</b></div>
+          <div class="stat"><small>多报</small><b id="qcExtra">0</b></div>
+          <div class="stat"><small>重复</small><b id="qcDuplicate">0</b></div>
+        </div>
+        <div id="quoteCoverageDetails" class="coverageDetails small"></div>
       </div>
     </div>
 
@@ -319,7 +330,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 
     <div id="quoteImportPreview" class="card" style="margin-top:14px;display:none">
       <div class="cardhead"><b>导入预览</b><div class="toolbar"><button class="btn primary" id="commitQuoteImport">写入当前报价轮次</button><button class="btn danger" id="clearQuotePreview2">清空预览</button></div></div>
-      <div class="cardbody"><div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>单价</th><th>交期</th><th>MOQ</th><th>状态</th><th>匹配结果</th></tr></thead><tbody id="quoteImportPreviewBody"></tbody></table></div></div>
+      <div class="cardbody"><div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>单价</th><th>交期</th><th>MOQ</th><th>状态</th><th>覆盖检查</th></tr></thead><tbody id="quoteImportPreviewBody"></tbody></table></div></div>
     </div>
 
     <div class="card" style="margin-top:14px">
@@ -595,7 +606,7 @@ function currentQuoteRound(){
 function ensureFirstRound(){
   const sid=quoteImportSupplier.value;if(!sid)return null;
   let rounds=supplierRounds(sid);
-  if(!rounds.length){quoteRounds.push({supplierId:sid,roundNo:1,status:"draft",lines:[],createdAt:new Date().toISOString()});rounds=supplierRounds(sid)}
+  if(!rounds.length){quoteRounds.push({supplierId:sid,roundNo:1,status:"draft",lines:[],expectedItemIds:assignedItemsForSupplier(sid).map(x=>x.id),createdAt:new Date().toISOString()});rounds=supplierRounds(sid)}
   return rounds[rounds.length-1];
 }
 function renderQuoteRoundSelector(selectLatest=false){
@@ -619,16 +630,51 @@ function normalizeQuoteStatus(v){
   if(["不供货","不能供货","cannot","cannot supply"].includes(s))return"cannot";
   return"quoted";
 }
+function expectedIdsForRound(round){
+  if(!round)return[];
+  if(!Array.isArray(round.expectedItemIds))round.expectedItemIds=assignedItemsForSupplier(round.supplierId).map(x=>x.id);
+  return round.expectedItemIds;
+}
 function validateQuotePreview(rows){
-  const sid=quoteImportSupplier.value,allowed=new Set(assignedItemsForSupplier(sid).map(x=>x.id));
-  return rows.map(r=>({...r,status:normalizeQuoteStatus(r.status),match:!items.some(x=>x.id===r.itemId)?"物料不存在":!allowed.has(r.itemId)?"未分配给该供应商":"匹配"}));
+  const round=currentQuoteRound(),expected=new Set(expectedIdsForRound(round)),seen=new Map();
+  rows.forEach(r=>seen.set(r.itemId,(seen.get(r.itemId)||0)+1));
+  return rows.map(r=>{
+    const status=normalizeQuoteStatus(r.status),exists=items.some(x=>x.id===r.itemId),duplicate=(seen.get(r.itemId)||0)>1;
+    let check="已报价";
+    if(duplicate)check="重复";
+    else if(!exists||!expected.has(r.itemId))check="多报";
+    else if(status==="noquote")check="明确未报价";
+    else if(status==="cannot")check="不供货";
+    return {...r,status,coverageCheck:check};
+  });
+}
+function coverageFromRows(round,rows){
+  const expected=expectedIdsForRound(round),expectedSet=new Set(expected),byId=new Map(),duplicates=[];
+  rows.forEach(r=>{if(byId.has(r.itemId))duplicates.push(r.itemId);else byId.set(r.itemId,r)});
+  let quoted=0,noquote=0,cannot=0,extra=0;
+  byId.forEach((r,id)=>{
+    if(!expectedSet.has(id)){extra++;return}
+    const st=normalizeQuoteStatus(r.status);
+    if(st==="noquote")noquote++;else if(st==="cannot")cannot++;else quoted++;
+  });
+  const presentExpected=new Set([...byId.keys()].filter(id=>expectedSet.has(id)));
+  const missing=expected.filter(id=>!presentExpected.has(id));
+  const extras=[...byId.keys()].filter(id=>!expectedSet.has(id));
+  return {expected:expected.length,quoted,noquote,cannot,missing,extras,duplicates:[...new Set(duplicates)]};
+}
+function renderCoverageResult(result){
+  qcExpected.textContent=result.expected;qcQuoted.textContent=result.quoted;qcNoquote.textContent=result.noquote;qcCannot.textContent=result.cannot;qcMissing.textContent=result.missing.length;qcExtra.textContent=result.extras.length;qcDuplicate.textContent=result.duplicates.length;
+  const fmt=(label,ids,cls="")=>ids.length?`<div class="${cls}"><b>${label}：</b>${ids.map(id=>esc(id)).join("、")}</div>`:`<div class="muted"><b>${label}：</b>无</div>`;
+  quoteCoverageDetails.innerHTML=fmt("漏报项目",result.missing,"dangertext")+fmt("多报项目",result.extras,"warn")+fmt("重复项目",result.duplicates,"warn");
 }
 function showQuotePreview(rows){
+  const round=currentQuoteRound();
   quoteImportPreviewRows=validateQuotePreview(rows);
   quoteImportPreview.style.display="block";
-  quoteImportPreviewBody.innerHTML=quoteImportPreviewRows.map(r=>`<tr><td>${esc(r.itemId)}</td><td>${esc(r.price)}</td><td>${esc(r.lead)}</td><td>${esc(r.moq)}</td><td>${esc(r.status)}</td><td class="${r.match==="匹配"?"ok":"dangertext"}">${esc(r.match)}</td></tr>`).join("");
+  quoteImportPreviewBody.innerHTML=quoteImportPreviewRows.map(r=>`<tr><td>${esc(r.itemId)}</td><td>${esc(r.price)}</td><td>${esc(r.lead)}</td><td>${esc(r.moq)}</td><td>${esc(r.status)}</td><td class="${["已报价","明确未报价","不供货"].includes(r.coverageCheck)?"ok":"dangertext"}">${esc(r.coverageCheck)}</td></tr>`).join("");
+  renderCoverageResult(coverageFromRows(round,quoteImportPreviewRows));
 }
-function clearQuoteImportPreview(){quoteImportPreviewRows=[];quoteImportPreviewBody.innerHTML="";quoteImportPreview.style.display="none"}
+function clearQuoteImportPreview(){quoteImportPreviewRows=[];quoteImportPreviewBody.innerHTML="";quoteImportPreview.style.display="none";const round=currentQuoteRound();if(round)renderCoverageResult(coverageFromRows(round,round.lines))}
 function upsertRoundLine(round,row,source="import"){
   const existing=round.lines.find(x=>x.itemId===row.itemId);
   const line={itemId:row.itemId,price:row.status==="quoted"?Number(row.price)||0:null,lead:row.status==="quoted"?Number(row.lead)||0:null,moq:row.status==="quoted"?Number(row.moq)||0:null,status:row.status,source,updatedAt:new Date().toISOString()};
@@ -653,7 +699,9 @@ function renderQuoteRound(){
   const round=currentQuoteRound();if(!round)return;
   const sup=suppliers.find(s=>s.id===round.supplierId),assigned=assignedItemsForSupplier(round.supplierId);
   quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认":"草稿"}</span><div class="small" style="margin-top:5px">本轮独立保存，不覆盖前一轮。第 2 轮及以后允许只更新部分物料。</div>`;
-  quoteRoundHint.textContent=`该供应商当前分配 ${assigned.length} 项；本轮已记录 ${round.lines.length} 项。`;
+  const expected=expectedIdsForRound(round);
+  quoteRoundHint.textContent=`该供应商当前分配 ${assigned.length} 项；本轮应报价范围 ${expected.length} 项；本轮已记录 ${round.lines.length} 项。`;
+  renderCoverageResult(coverageFromRows(round,round.lines));
   quoteRoundBody.innerHTML=round.lines.map((l,i)=>{
     const it=items.find(x=>x.id===l.itemId),src=l.source==="carry"?"沿用上轮（已确认）":l.source==="manual"?"手工输入":"导入";
     const prev=round.roundNo>1?previousEffectiveLine(round.supplierId,l.itemId,round.roundNo):null;
@@ -687,11 +735,15 @@ newQuoteRound.onclick=()=>{
   const sid=quoteImportSupplier.value;if(!sid)return;
   const rounds=supplierRounds(sid),last=rounds[rounds.length-1];
   if(last&&last.status!=="confirmed"&&!confirm("上一轮仍是草稿，仍要新建下一轮吗？"))return;
-  const next=(last?.roundNo||0)+1;quoteRounds.push({supplierId:sid,roundNo:next,status:"draft",lines:[],createdAt:new Date().toISOString()});renderQuoteRoundSelector(true);
+  const next=(last?.roundNo||0)+1;
+  const expected=(last?.expectedItemIds?.length?last.expectedItemIds:assignedItemsForSupplier(sid).map(x=>x.id)).slice();
+  quoteRounds.push({supplierId:sid,roundNo:next,status:"draft",lines:[],expectedItemIds:expected,createdAt:new Date().toISOString()});renderQuoteRoundSelector(true);
 };
 confirmQuoteRound.onclick=()=>{
   const round=currentQuoteRound();if(!round)return;
   if(!round.lines.length){alert("当前轮次没有报价记录。");return}
+  const cov=coverageFromRows(round,round.lines);
+  if((cov.missing.length||cov.extras.length||cov.duplicates.length)&&!confirm(`覆盖检查仍有异常：漏报 ${cov.missing.length} 项，多报 ${cov.extras.length} 项，重复 ${cov.duplicates.length} 项。仍要确认本轮报价吗？`))return;
   round.status="confirmed";
   awards.clear();awardReasons.clear();setDefaultLowestAwards();
   renderQuoteRound();renderQuoteRoundSelector();
@@ -716,8 +768,8 @@ quoteImportFile.onchange=()=>{
 };
 commitQuoteImport.onclick=()=>{
   const round=currentQuoteRound();if(!round)return;
-  const valid=quoteImportPreviewRows.filter(r=>r.match==="匹配");if(!valid.length){alert("没有可写入的匹配报价。");return}
-  valid.forEach(r=>upsertRoundLine(round,r,"import"));clearQuoteImportPreview();renderQuoteRound();
+  const valid=quoteImportPreviewRows.filter(r=>["已报价","明确未报价","不供货"].includes(r.coverageCheck));if(!valid.length){alert("没有可写入的本轮有效报价。");return}
+  const seen=new Set();valid.filter(r=>{if(seen.has(r.itemId))return false;seen.add(r.itemId);return true}).forEach(r=>upsertRoundLine(round,r,"import"));clearQuoteImportPreview();renderQuoteRound();
 };
 carryForwardMissing.onclick=()=>{
   const round=currentQuoteRound();if(!round||round.roundNo===1)return;
