@@ -439,3 +439,107 @@ For tabular work areas:
 - multiple active field filters should combine predictably
 
 The same principle applies to supplier lists, inquiry items, quotation data, and future configurable data tables.
+
+
+## 24. Clipboard parsing tolerance
+
+Clipboard batch paste must tolerate common buyer workflows, especially direct copying from Excel or ERP exports.
+
+The parser should support mixed delimiters where practical:
+- English comma
+- Chinese comma
+- English semicolon
+- Chinese semicolon
+- tab
+- line break
+- whitespace / space-separated fields for simple pasted rows
+
+The import preview remains mandatory before records are committed so users can detect ambiguous parsing. Production parsing should prefer tabular structure when clipboard data originates from Excel and should avoid silently corrupting field boundaries.
+
+## 25. Explicit multi-condition search
+
+Fuzzy searching must not execute and re-render the list on every keystroke.
+
+Users should be able to:
+1. type values into one or more global / field-specific search boxes;
+2. configure additional filters;
+3. click a Search button;
+4. execute all conditions together.
+
+This prevents focus loss during entry and supports combined multi-field querying.
+
+Search rules:
+- field conditions are combined predictably, normally with AND across different fields;
+- fuzzy matching applies within each field condition;
+- global fuzzy search may search across configured searchable fields;
+- changing text alone does not execute a search;
+- clearing or resetting filters must be explicit.
+
+## 26. Standard list selection controls
+
+Every multi-select list should provide a consistent selection toolset:
+
+- Select all: select all records in the current filtered result, including records on other pages.
+- Select current page: select only visible records on the current page.
+- Invert all: invert selection across the current filtered result.
+- Invert current page: invert selection only on the current page.
+
+Shift range selection remains available for contiguous visible rows.
+
+The meaning of "all" must always respect the current search/filter result rather than silently including hidden records outside the filter.
+
+Lists whose interaction is inherently single-select may omit multi-select actions but should retain consistent search and pagination behavior.
+
+## 27. Numeric pagination
+
+Paginated list and table views must provide direct numeric page navigation in addition to Previous / Next controls.
+
+The pager should:
+- show the current page clearly;
+- allow direct jump to nearby and boundary pages;
+- handle large page counts with compact ellipsis;
+- preserve active search/filter conditions while changing pages.
+
+This applies to RFQ items, assignment lists, supplier lists, supplier pickers, quotation comparison, and other paginated operational lists.
+
+## 28. Key-based batch field update
+
+In addition to assigning one value to selected records, field values must support table-driven batch update.
+
+Workflow:
+1. choose the key field used to identify existing records, such as item code;
+2. choose the target field to update;
+3. import or paste an update table;
+4. preview matched, unmatched, duplicate, and invalid rows;
+5. confirm update.
+
+The system must not depend only on row order. Matching is based on the selected key value.
+
+Production behavior must explicitly handle:
+- missing keys
+- duplicate source keys
+- duplicate target keys where uniqueness is expected
+- unmatched rows
+- type conversion errors
+- blank values and whether they mean "clear" or "do not update"
+
+## 29. Field-definition administration
+
+Field-definition maintenance belongs in System Settings / Administration rather than the day-to-day RFQ business interface.
+
+Business screens may:
+- view fields
+- search/filter fields
+- edit permitted field values
+- batch-update field values
+
+System Settings may:
+- create configurable fields
+- remove configurable fields
+- rename fields
+- define type / validation
+- configure ERP mapping
+- control visibility / editability / searchability
+- define protected core fields
+
+The M0 prototype includes a minimal System Settings page only to validate this separation. Full field-administration behavior may be implemented in a later milestone.
