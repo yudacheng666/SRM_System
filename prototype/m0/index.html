@@ -115,6 +115,8 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
               <div class="toolbar">
                 <button class="btn" id="readClipboard">读取剪贴板</button>
                 <button class="btn soft" id="parsePaste">解析预览</button>
+                <button class="btn danger" id="clearPasteInput">清空输入</button>
+                <button class="btn danger" id="clearPastePreview">清空预览</button>
               </div>
             </div>
             <div class="intakeBox">
@@ -447,6 +449,8 @@ function addRowsToRfq(rows){
 toggleItemIntake.onclick=()=>{itemIntake.style.display=itemIntake.style.display==="none"?"block":"none"};
 manualAdd.onclick=()=>{const code=manualCode.value.trim(),name=manualName.value.trim();if(!code||!name){alert("请填写物料编码和名称。");return}addRowsToRfq([{id:code,name,cat:"类别A",qty:Number(manualQty.value)||1,unit:manualUnit.value.trim()||"件"}]);manualCode.value=manualName.value=manualQty.value=manualUnit.value=""};
 parsePaste.onclick=()=>{const rows=parseItemRows(pasteItems.value);if(!rows.length){alert("没有识别到物料。");return}setImportPreview(rows,"剪贴板批量粘贴预览")};
+clearPasteInput.onclick=()=>{pasteItems.value=""};
+clearPastePreview.onclick=()=>{pendingImportRows=[];importPreview.innerHTML="";importPreview.style.display="none"};
 readClipboard.onclick=async()=>{try{pasteItems.value=await navigator.clipboard.readText();parsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请在文本框中按 Ctrl+V 粘贴。")}};
 demoExcelImport.onclick=()=>setImportPreview([
   {id:"XLS-DEMO-001",name:"导入示例物料 A",cat:"类别A",qty:3,unit:"件"},
