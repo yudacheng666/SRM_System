@@ -587,3 +587,31 @@ For each line in round 2 or later, expose:
 A quotation round may remain Draft while imported values are reviewed and manually corrected. Confirming the round makes it eligible as the current quotation for comparison.
 
 Formal M5 implementation should retain an audit trail for post-import manual corrections and should not silently destroy the originally imported value.
+
+
+## 31. Quotation-return coverage validation
+
+Each quotation round must have an explicit expected quotation scope.
+
+For round 1, the default expected scope is the item scope sent to that supplier in the RFQ.
+
+For round 2 and later, the system must preserve a round-specific expected-scope snapshot. A later round may intentionally cover only part of the prior scope, so quotation coverage must always be measured against the expected scope of that round rather than blindly against the full RFQ.
+
+Quotation-return coverage should distinguish at least:
+
+- Quoted: expected item with a valid quotation.
+- Explicit no-quote: expected item returned with a status meaning the supplier does not quote this item.
+- Cannot supply: expected item explicitly marked as unavailable / cannot supply.
+- Missing / omitted: expected item has no returned record for the round.
+- Extra: returned item is outside the expected scope for the round, including items not assigned to the supplier.
+- Duplicate: the same item appears more than once in the returned quotation data.
+
+"Explicit no-quote" and "missing / omitted" are not equivalent. The first is a supplier response; the second may be a supplier omission, file omission, mapping failure, or buyer/import error.
+
+Before a quotation round is confirmed, show a coverage summary and the concrete item list for missing, extra, and duplicate records.
+
+Coverage anomalies should not be silently discarded. The buyer should be able to review and resolve them before confirmation. If confirmation is still allowed with unresolved anomalies, the system must display a clear warning and preserve the anomaly state for audit/review.
+
+Extra or duplicate rows should not automatically enter the effective quotation dataset without resolution.
+
+Quotation coverage results should later be available to the comparison report so the approval reviewer can distinguish full quotation coverage from partial or exceptional quotation responses.
