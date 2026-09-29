@@ -652,10 +652,11 @@ matchUpdateFile.onchange=()=>{
 deleteSelectedItems.onclick=()=>{
   if(!itemManageSel.size){alert("请先勾选要删除的询价物料。");return}
   const count=itemManageSel.size,ids=new Set(itemManageSel),lineIds=new Set(items.filter(x=>ids.has(x.id)).map(x=>x.lineId));
-  if(quoteRounds.some(r=>(r.expectedLineIds||[]).some(x=>lineIds.has(x))||r.lines.some(l=>lineIds.has(l.lineId)))){alert("选中物料已进入报价轮次/历史，M0 不允许物理删除。正式版应使用作废/取消并保留历史。");return}
+  if(quoteRounds.some(r=>r.lines.some(l=>lineIds.has(l.lineId))||(r.status==="confirmed"&&(r.expectedLineIds||[]).some(x=>lineIds.has(x))))){alert("选中物料已形成报价历史，M0 不允许物理删除。正式版应使用作废/取消并保留历史。");return}
   if(!confirm(`从本次 RFQ 删除选中的 ${count} 项物料？\n相关供应商分配关系也会同时删除。`))return;
   for(let i=items.length-1;i>=0;i--){if(ids.has(items[i].id))items.splice(i,1)}
   ids.forEach(id=>{assignments.delete(id);assignSel.delete(id);itemManageSel.delete(id)});
+  quoteRounds.filter(r=>r.status!=="confirmed").forEach(r=>{r.expectedLineIds=(r.expectedLineIds||[]).filter(x=>!lineIds.has(x));r.lines=r.lines.filter(l=>!lineIds.has(l.lineId))});
   resetRange("item-manage");renderItemList();renderAssignAll();renderQuotes();
 };
 function quoteSupplierOptions(){
@@ -927,9 +928,10 @@ function renderSupplierFirstList(){
     e.stopPropagation();
     const sid=b.dataset.poolRemove, sup=suppliers.find(s=>s.id===sid);
     let count=0;items.forEach(it=>{if(getSet(it.id).has(sid))count++});
-    if(quoteRounds.some(r=>r.supplierId===sid)){alert("该供应商已有报价/修订历史，M0 不允许直接移出并破坏历史。正式版应使用取消参与/作废状态。");return}
+    if(quoteRounds.some(r=>r.supplierId===sid&&(r.status==="confirmed"||r.lines.length))){alert("该供应商已有报价/修订历史，M0 不允许直接移出并破坏历史。正式版应使用取消参与/作废状态。");return}
     if(!confirm(`将“${sup?.name||sid}”移出本次询价？\n同时会取消它当前关联的 ${count} 个物料。`))return;
     let removed=0;items.forEach(it=>{if(getSet(it.id).delete(sid))removed++});
+    for(let i=quoteRounds.length-1;i>=0;i--){if(quoteRounds[i].supplierId===sid&&quoteRounds[i].status==="draft"&&!quoteRounds[i].lines.length)quoteRounds.splice(i,1)}
     rfqSupplierPool.delete(sid);if(activeSupplier===sid)activeSupplier=null;
     flash(`已将供应商移出本次询价，并取消 ${removed} 条物料关联。`);
     renderAssignAll();renderSupplierPoolPicker();
@@ -1013,8 +1015,9 @@ function comparisonSuppliers(){return suppliers.filter(s=>rfqSupplierPool.has(s.
 function comparisonItems(){return items.filter(it=>[...getSet(it.id)].some(sid=>rfqSupplierPool.has(sid)))}
 function quoteMetaFor(it,sup,i=0,si=0){
   if(!getSet(it.id).has(sup.id))return null;
-  const saved=latestConfirmedQuoteLine(it.lineId,sup.id);
+  const saved=latestConfirmedQuoteLine(it.lineId,sup.id),subs=supplierSubmissions(sup.id);
   if(saved){const eff=effectivePriceForLine(saved,it.qty);return eff==null?null:{price:eff,lead:saved.lead,moq:saved.moq,roundNo:saved.roundNo,revisionNo:saved.revisionNo,source:saved.source,tiers:saved.tiers||[],rawLine:saved}}
+  if(subs.length)return null;
   if((i+si)%9===0)return null;
   return{price:80+((i*13+si*17)%70)+((si+1)*0.35),lead:3+((i+si)%18),moq:1+((i+si)%5)*5,roundNo:0,revisionNo:0,source:"demo",tiers:[]};
 }
