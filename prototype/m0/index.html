@@ -585,8 +585,9 @@ function parseItemRows(text){
 function setImportPreview(rows,source){
   pendingImportRows=rows;
   importPreview.style.display="block";
-  const bad=rows.filter(r=>r._errors?.length);
-  importPreview.innerHTML=`<div class="sline"><div><b>${esc(source)}</b> · ${rows.length} 行 · 错误 ${bad.length} 行</div><button class="btn primary" id="confirmImportRows" ${bad.length?"disabled":""}>确认加入本次询价</button></div><div class="tablewrap" style="max-height:220px;margin-top:8px"><table><thead><tr><th>物料编码</th><th>名称</th><th>分类</th><th>数量</th><th>单位</th><th>校验</th></tr></thead><tbody>${rows.slice(0,50).map(r=>`<tr><td>${esc(r.id)}</td><td>${esc(r.name)}</td><td>${esc(r.cat)}</td><td>${r.qty??"—"}</td><td>${esc(r.unit)}</td><td class="${r._errors?.length?"dangertext":"ok"}">${r._errors?.length?esc(r._errors.join("；")):"通过"}</td></tr>`).join("")}</tbody></table></div>`;
+  const bad=rows.filter(r=>r._errors?.length),counts=new Map();rows.forEach(r=>counts.set(r.id,(counts.get(r.id)||0)+1));
+  const warningCount=rows.filter(r=>(counts.get(r.id)||0)>1||items.some(x=>x.id===r.id)).length;
+  importPreview.innerHTML=`<div class="sline"><div><b>${esc(source)}</b> · ${rows.length} 行 · 错误 ${bad.length} 行 · 同编码提示 ${warningCount} 行</div><button class="btn primary" id="confirmImportRows" ${bad.length?"disabled":""}>确认加入本次询价</button></div><div class="tablewrap" style="max-height:220px;margin-top:8px"><table><thead><tr><th>RFQ Line ID</th><th>物料编码</th><th>名称</th><th>分类</th><th>数量</th><th>单位</th><th>校验</th></tr></thead><tbody>${rows.slice(0,50).map(r=>{const warn=(counts.get(r.id)||0)>1||items.some(x=>x.id===r.id);return `<tr><td>${esc(r.lineId||"")}</td><td>${esc(r.id)}</td><td>${esc(r.name)}</td><td>${esc(r.cat)}</td><td>${r.qty??"—"}</td><td>${esc(r.unit)}</td><td class="${r._errors?.length?"dangertext":warn?"warn":"ok"}">${r._errors?.length?esc(r._errors.join("；")):warn?"同物料编码已有/重复行；允许导入，以 RFQ Line ID 区分":"通过"}</td></tr>`}).join("")}</tbody></table></div>`;
   document.getElementById("confirmImportRows").onclick=()=>addRowsToRfq(pendingImportRows);
 }
 function addRowsToRfq(rows){
@@ -750,9 +751,9 @@ function validateQuotePreview(rows){
   const round=currentQuoteRound(),expected=new Set(expectedIdsForRound(round)),resolved=rows.map(r=>({...r,item:resolveQuoteItem(r.itemRef)})),seen=new Map();
   resolved.forEach(r=>{const key=r.item?.lineId||r.itemRef;seen.set(key,(seen.get(key)||0)+1)});
   return resolved.map(r=>{
-    const status=normalizeQuoteStatus(r.status),lineId=r.item?.lineId||r.itemRef,itemId=r.item?.id||"",duplicate=(seen.get(lineId)||0)>1,errors=[];if(!status)errors.push("报价状态无法识别");
+    const status=normalizeQuoteStatus(r.status),lineId=r.item?.lineId||r.itemRef,itemId=r.item?.id||"",duplicate=(seen.get(lineId)||0)>1,codeMatches=items.filter(x=>x.id===String(r.itemRef||"").trim()).length,ambiguous=!r.item&&codeMatches>1,errors=[];if(!status)errors.push("报价状态无法识别");if(ambiguous)errors.push("物料编码对应多条 RFQ 行，请使用 RFQ Line ID");
     let check="已报价";
-    if(duplicate)check="重复";else if(!r.item||!expected.has(lineId))check="多报";else if(status==="noquote")check="明确未报价";else if(status==="cannot")check="不供货";
+    if(ambiguous)check="数据错误";else if(duplicate)check="重复";else if(!r.item||!expected.has(lineId))check="多报";else if(status==="noquote")check="明确未报价";else if(status==="cannot")check="不供货";
     let parsed={price:null,tiers:[],errors:[]},lead={value:null,error:null},moq={value:null,error:null},effective=null;
     if(status==="quoted"){
       parsed=parseTierPrice(r.price);errors.push(...parsed.errors);
