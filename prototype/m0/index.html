@@ -326,7 +326,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
       <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small">导入后可点击“修改”逐行修正</span></div><div class="toolbar"><button class="btn" id="carryForwardMissing">将本轮未提交项标记为沿用上轮</button></div></div>
       <div class="cardbody">
         <div id="quoteRoundHint" class="small muted" style="margin-bottom:8px"></div>
-        <div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>价格</th><th>交期</th><th>MOQ</th><th>状态</th><th>来源</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
+        <div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>上轮价格</th><th>本轮价格</th><th>价格变化</th><th>交期</th><th>MOQ</th><th>状态</th><th>来源</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
       </div>
     </div>
   </section>
@@ -656,8 +656,14 @@ function renderQuoteRound(){
   quoteRoundHint.textContent=`该供应商当前分配 ${assigned.length} 项；本轮已记录 ${round.lines.length} 项。`;
   quoteRoundBody.innerHTML=round.lines.map((l,i)=>{
     const it=items.find(x=>x.id===l.itemId),src=l.source==="carry"?"沿用上轮（已确认）":l.source==="manual"?"手工输入":"导入";
-    return `<tr><td><b>${esc(l.itemId)}</b><br><span class="muted">${esc(it?.name||"")}</span></td><td>${l.price==null?"—":"¥"+Number(l.price).toFixed(2)}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(l.status)}</td><td>${src}</td><td><button class="btn" data-edit-quote="${i}">修改</button></td></tr>`
-  }).join("")||'<tr><td colspan="7" class="muted">当前轮次还没有报价记录。</td></tr>';
+    const prev=round.roundNo>1?previousEffectiveLine(round.supplierId,l.itemId,round.roundNo):null;
+    let change="—";
+    if(prev&&prev.price!=null&&l.price!=null){
+      const diff=Number(l.price)-Number(prev.price),pct=Number(prev.price)!==0?diff/Number(prev.price)*100:0;
+      change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%";
+    }
+    return `<tr><td><b>${esc(l.itemId)}</b><br><span class="muted">${esc(it?.name||"")}</span></td><td>${prev?.price==null?"—":"¥"+Number(prev.price).toFixed(2)}</td><td>${l.price==null?"—":"¥"+Number(l.price).toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(l.status)}</td><td>${src}</td><td><button class="btn" data-edit-quote="${i}">修改</button></td></tr>`
+  }).join("")||'<tr><td colspan="9" class="muted">当前轮次还没有报价记录。</td></tr>';
   document.querySelectorAll("[data-edit-quote]").forEach(b=>b.onclick=()=>editQuoteLine(Number(b.dataset.editQuote)));
   carryForwardMissing.disabled=round.roundNo===1;
   confirmQuoteRound.disabled=round.status==="confirmed";
@@ -688,7 +694,9 @@ newQuoteRound.onclick=()=>{
 confirmQuoteRound.onclick=()=>{
   const round=currentQuoteRound();if(!round)return;
   if(!round.lines.length){alert("当前轮次没有报价记录。");return}
-  round.status="confirmed";renderQuoteRound();renderQuoteRoundSelector();
+  round.status="confirmed";
+  awards.clear();awardReasons.clear();setDefaultLowestAwards();
+  renderQuoteRound();renderQuoteRoundSelector();
 };
 quoteManualAdd.onclick=()=>{
   const row={itemId:quoteManualItem.value.trim(),price:quoteManualPrice.value.trim(),lead:quoteManualLead.value.trim(),moq:quoteManualMoq.value.trim(),status:quoteManualStatus.value};
