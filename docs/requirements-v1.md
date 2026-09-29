@@ -58,7 +58,7 @@ Create RFQ
 → Assign suppliers to items
 → Run coverage check
 → Preview supplier RFQs
-→ Generate supplier-specific RFQ files
+→ Generate supplier-specific RFQ packages
 → Import returned quotations
 → Normalize quotation data
 → Compare quotations
@@ -155,13 +155,13 @@ Coverage is informational, not a blocking validation rule.
 
 Users may generate RFQ files even when coverage is below 100%. Only assigned items are included. Unassigned items remain in the RFQ for later assignment and supplemental generation.
 
-## 8. Supplier-specific RFQ generation
+## 8. Supplier-specific RFQ package generation
 
-Generate one RFQ file per supplier based on the assignment result.
+Generate one supplier-specific RFQ package based on the assignment result. The package includes the supplier RFQ file and, where applicable, the PDF drawings / technical documents associated with that supplier's assigned items.
 
 Before generation, provide a supplier-specific RFQ preview. The user must be able to switch between suppliers and inspect the exact item lines that each supplier will receive, including RFQ header information and supplier-response columns. A supplier-count summary alone is not sufficient.
 
-Generated RFQ files should include:
+The generated RFQ document should include:
 - RFQ number
 - supplier identifier/name
 - RFQ date
