@@ -52,6 +52,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 .pageNums{display:inline-flex;gap:4px;flex-wrap:wrap;align-items:center}.pageNum{min-width:32px;padding:6px 8px;border:1px solid var(--line);background:#fff;border-radius:7px}.pageNum.active{background:#111827;color:#fff}.selectionBar{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.settingsGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.7fr);gap:14px}@media(max-width:900px){.settingsGrid{grid-template-columns:1fr}}
 .roundBadge{display:inline-block;padding:3px 7px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:11px}.roundBadge.draft{background:#fff7ed;color:#9a3412}.roundBadge.confirmed{background:#ecfdf5;color:#047857}.quoteImportGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}@media(max-width:980px){.quoteImportGrid{grid-template-columns:1fr}}
 .coverageMini{display:grid;grid-template-columns:repeat(7,minmax(110px,1fr));gap:8px;margin-top:10px}@media(max-width:1100px){.coverageMini{grid-template-columns:repeat(3,1fr)}}@media(max-width:650px){.coverageMini{grid-template-columns:repeat(2,1fr)}}.coverageMini .stat b{font-size:18px}.coverageDetails{margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff}
+.pdfControls{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:10px}.pdfMeta{font-size:11px;color:var(--muted);margin-top:2px}.pdfPage{border:1px solid var(--line);background:#fff;border-radius:8px;padding:12px;min-height:520px;display:flex;justify-content:center;align-items:center;overflow:auto}.pdfPage svg{max-width:100%;height:auto}.scopeList{max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:8px}.scopeRow{display:flex;gap:8px;align-items:center;padding:5px;border-bottom:1px solid #edf0f4}.analysisTable{width:100%;border-collapse:collapse;font-size:12px}.analysisTable th,.analysisTable td{padding:6px 8px;border-bottom:1px solid #edf0f4;text-align:right}.analysisTable th:first-child,.analysisTable td:first-child{text-align:left}
 </style>
 </head>
 <body>
@@ -280,7 +281,16 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           <select id="quoteImportSupplier"></select>
           <select id="quoteRoundSelect"></select>
           <button class="btn soft" id="newQuoteRound">+ 新增下一轮</button>
-          <button class="btn primary" id="confirmQuoteRound">确认本轮报价</button>
+          <button class="btn soft" id="newQuoteRevision">+ 新增本轮修订</button>
+          <button class="btn" id="editRoundScope">设置本轮议价范围</button>
+          <select id="quoteEvidenceType">
+            <option value="email_attachment">邮件及原始附件</option>
+            <option value="chat_screenshot">聊天截图</option>
+            <option value="standalone_pdf">单独PDF/文件</option>
+            <option value="manual_other">其他凭证/手工录入</option>
+          </select>
+          <input id="quoteEvidenceNote" type="text" placeholder="证据文件/说明（M0）">
+          <button class="btn primary" id="confirmQuoteRound">确认本次提交</button>
         </div>
       </div>
       <div class="cardbody">
@@ -295,6 +305,10 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           <div class="stat"><small>重复</small><b id="qcDuplicate">0</b></div>
         </div>
         <div id="quoteCoverageDetails" class="coverageDetails small"></div>
+        <div id="quoteScopeEditor" class="coverageDetails" style="display:none">
+          <div class="sline"><b>本轮议价范围</b><div class="toolbar"><button class="btn" id="scopeSelectAll">全选</button><button class="btn" id="scopeClearAll">全不选</button><button class="btn primary" id="saveRoundScope">保存范围</button><button class="btn" id="closeRoundScope">关闭</button></div></div>
+          <div id="quoteScopeList" class="scopeList" style="margin-top:8px"></div>
+        </div>
       </div>
     </div>
 
@@ -349,7 +363,8 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
         <div class="toolbar"><button class="btn" id="resetAwards">清空选择</button></div>
       </div>
       <div class="cardbody">
-        <div class="notice">最低价仅作为提示；允许选择非最低价，但必须填写原因。V1 每项物料最终选择一家供应商。</div>
+        <div class="notice">最低价仅作为提示；允许选择非最低价，但必须填写原因。V1 每项物料最终选择一家供应商。总价分析仅在可比口径下计算；缺报价不会按 0 处理。</div>
+        <div id="quoteAnalysis" class="coverageDetails" style="margin-top:10px"></div>
         <div class="tablewrap" style="margin-top:10px">
           <table class="table" id="quoteTable"></table>
         </div>
@@ -384,14 +399,25 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 
   <div id="drawingModal" class="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modalCard">
-      <div class="modalHead"><div><b id="drawingTitle">物料图纸预览</b><div class="small muted">M0 使用虚构示意图验证预览交互</div></div><button class="btn" id="closeDrawing">关闭</button></div>
-      <div class="modalBody"><div id="drawingLarge" class="drawingLarge"></div></div>
+      <div class="modalHead"><div><b id="drawingTitle">PDF 图纸预览</b><div class="small muted">M0 使用虚构 PDF 页面验证多页/多文件预览交互</div></div><button class="btn" id="closeDrawing">关闭</button></div>
+      <div class="modalBody">
+        <div class="pdfControls">
+          <select id="drawingDocSelect"></select>
+          <button class="btn" id="drawingPrevPage">上一页</button>
+          <span id="drawingPageInfo" class="small"></span>
+          <button class="btn" id="drawingNextPage">下一页</button>
+          <button class="btn" id="drawingZoomOut">缩小</button>
+          <button class="btn" id="drawingZoomIn">放大</button>
+          <button class="btn" id="drawingFit">适应页面</button>
+        </div>
+        <div id="drawingLarge" class="pdfPage"></div>
+      </div>
     </div>
   </div>
 
   <div id="rfqPreviewModal" class="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modalCard" style="width:min(1180px,97vw)">
-      <div class="modalHead"><div><b>供应商询价单预览</b><div class="small muted">切换左侧供应商，查看该供应商实际将收到的询价内容。</div></div><button class="btn" id="closeRfqPreview">关闭</button></div>
+      <div class="modalHead"><div><b>供应商询价包预览</b><div class="small muted">切换左侧供应商，检查询价行及该供应商应附的 PDF 图纸。</div></div><button class="btn" id="closeRfqPreview">关闭</button></div>
       <div class="modalBody"><div id="rfqPreviewContent" class="rfqPreviewLayout"></div></div>
     </div>
   </div>
