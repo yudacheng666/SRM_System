@@ -46,3 +46,13 @@ This is not the production application. It does not persist data, import real fi
 - Item rows include a drawing thumbnail. Clicking it opens an in-page enlarged drawing preview using synthetic M0 drawings.
 - Shift range selection uses the first clicked item's ID as an anchor and applies the second checkbox's target state across the visible range.
 - The supplier-list search label is phrased as "Search current RFQ suppliers" rather than "Search added suppliers".
+
+
+## Latest M0 additions
+
+- RFQ items can now be added through three demo paths: single-item entry, clipboard bulk paste, and file import.
+- Clipboard batch format supports comma-separated fields and semicolon/newline-separated items.
+- CSV/TXT files can be parsed locally in M0; Excel selection uses synthetic preview rows to validate the import interaction without bundling an Excel parser yet.
+- All checkbox-style lists in M0 use one shared Shift-range-selection mechanism, including item selection, supplier-item relation selection, and supplier-pool selection.
+- The explanatory Coverage warning sentence was removed from the UI; Coverage remains visible through statistics and generation behavior.
+- "Preview RFQ" now opens a supplier-specific RFQ document preview with the exact assigned item rows and response columns before generation.
