@@ -100,7 +100,7 @@ In supplier-first mode, the checkbox is the relationship state itself:
 
 Toggling the checkbox changes the relationship directly. Do not use a separate temporary-selection checkbox followed by another "add selected items" action, because that creates a misleading second state.
 
-Long checkbox lists should support Shift range selection.
+Long checkbox lists should support reliable Shift range selection. The implementation must preserve a stable item anchor across re-rendering so that Shift selection does not depend on transient DOM checkbox indexes.
 
 To reduce repetitive assignment work while preserving supplier-specific differences, supplier-first mode should support:
 - copying another supplier's assigned-item scope as a starting point
@@ -114,6 +114,10 @@ Batch operations should report how many relationships were added or removed and 
 An RFQ should use a buyer-managed candidate supplier pool instead of forcing users to operate against the complete supplier master list.
 
 Supplier-first assignment must show only suppliers already added to the current RFQ. The buyer explicitly adds suppliers from supplier master data into the RFQ supplier pool.
+
+Supplier search should support fuzzy matching by supplier name and supplier code rather than requiring an exact string.
+
+The buyer must be able to remove a supplier from the current RFQ supplier pool. If that supplier already has item assignments, the system must clearly warn how many relationships will be removed and require confirmation before removing them.
 
 Candidate suppliers may be suggested from:
 - historical purchases for the item
@@ -346,3 +350,19 @@ In the assignment interface, the buyer should be able to select an item and open
 Initial browser-preview targets should prioritize formats that can be reliably displayed in an offline HTML application, such as PDF and common image formats. Native CAD formats may require later conversion or a dedicated viewer and should not block V1.
 
 The drawing-preview feature is a future enhancement and is not part of the current M0 acceptance scope.
+
+
+## 19. Current-RFQ item list interaction
+
+The RFQ item-list page represents the items already included in the current RFQ.
+
+Its primary purposes are:
+- review the RFQ item scope
+- search and filter long item lists
+- inspect quantity, unit, category, and assignment coverage
+- open item drawings / technical documents
+- navigate into supplier assignment
+
+Do not introduce an additional temporary checkbox-selection state unless there is a concrete action attached to it. Importing, adding, and removing items from an RFQ belong to the RFQ item-management workflow rather than a purposeless selection layer.
+
+Where a drawing or technical document is available, show a small preview thumbnail next to the item code. Clicking the thumbnail should open an enlarged in-page preview without navigating away from the assignment workflow.
