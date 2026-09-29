@@ -206,7 +206,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           <div class="toolbar"><input id="supplierSearch" type="text" placeholder="搜索供应商"><button class="btn" id="runSupplierSearch">搜索</button></div>
         </div>
         <div class="cardbody">
-          <div id="supplierList" class="supplierList"></div>
+          <div id="supplierList" class="supplierList"></div><div class="pager"><span id="supplierListCount"></span><div id="supplierListPager"></div></div>
         </div>
       </div>
     </div>
@@ -238,7 +238,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
             <div class="small muted" style="margin-bottom:8px">勾选清单支持 Shift 连选。</div>
             <div id="supplierPoolList" class="supplierList"></div><div class="pager"><span id="supplierPoolCount"></span><div id="supplierPoolPager"></div></div>
           </div>
-          <div id="supplierFirstList" class="supplierList"></div>
+          <div id="supplierFirstList" class="supplierList"></div><div class="pager"><span id="supplierFirstCount"></span><div id="supplierFirstPager"></div></div>
         </div>
       </div>
       <div class="card">
@@ -278,6 +278,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
         <div class="tablewrap" style="margin-top:10px">
           <table class="table" id="quoteTable"></table>
         </div>
+        <div class="pager"><span id="quoteCount"></span><div id="quotePager"></div></div>
       </div>
     </div>
   </section>
@@ -353,7 +354,7 @@ const customFields=[];
 const fieldFilters={id:"",name:"",cat:"",qty:"",unit:"",supplierCount:""};
 const rfqSupplierPool=new Set();
 items.forEach(it=>getSet(it.id).forEach(sid=>rfqSupplierPool.add(sid)));
-let itemPage=0, assignPage=0, sfPage=0, supplierPoolPage=0, assignMode="itemFirst", activeSupplier=null;
+let itemPage=0, assignPage=0, sfPage=0, supplierPoolPage=0, supplierListPage=0, supplierFirstPage=0, quotePage=0, assignMode="itemFirst", activeSupplier=null;
 const PAGE=50, SUPPLIER_PAGE=10;
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
 function compactText(s){return String(s).toLowerCase().replace(/[\s\-_.()（）]/g,"")}
@@ -587,7 +588,8 @@ clearAssignSelection.onclick=()=>{assignSel.clear();renderAssignAll()};
 
 function renderSuppliers(){
   const q=supplierSearch.value.trim(), selected=[...assignSel], total=selected.length;
-  supplierList.innerHTML=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&supplierMatches(s,q)).map(s=>{
+  const list=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&supplierMatches(s,q)),pages=Math.max(1,Math.ceil(list.length/SUPPLIER_PAGE));supplierListPage=Math.min(supplierListPage,pages-1);
+  supplierList.innerHTML=pageSlice(list,supplierListPage,SUPPLIER_PAGE).map(s=>{
     const count=selected.filter(i=>getSet(i).has(s.id)).length;
     const cls=total===0||count===0?"none":count===total?"full":"partial";
     const icon=total===0||count===0?"☐":count===total?"☑":"◩";
@@ -595,12 +597,15 @@ function renderSuppliers(){
   }).join("");
   document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{let n=0;assignSel.forEach(i=>{const set=getSet(i);if(!set.has(b.dataset.add)){set.add(b.dataset.add);n++}});flash(`已新增 ${n} 条物料—供应商关系；原有分配未改变。`);renderAssignAll()});
   document.querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>{let n=0;assignSel.forEach(i=>{const set=getSet(i);if(set.delete(b.dataset.rem))n++});flash(`已移除 ${n} 条关系。`);renderAssignAll()});
+  supplierListCount.textContent=`筛选结果 ${list.length} 家 · 第 ${supplierListPage+1}/${pages} 页`;
+  renderPageNav(supplierListPager,supplierListPage,list.length,SUPPLIER_PAGE,p=>{supplierListPage=p;renderSuppliers()});
 }
-runSupplierSearch.onclick=renderSuppliers;
+runSupplierSearch.onclick=()=>{supplierListPage=0;renderSuppliers()};
 
 function renderSupplierFirstList(){
   const q=supplierFirstSearch.value.trim();
-  supplierFirstList.innerHTML=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&supplierMatches(s,q)).map(s=>{
+  const list=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&supplierMatches(s,q)),pages=Math.max(1,Math.ceil(list.length/SUPPLIER_PAGE));supplierFirstPage=Math.min(supplierFirstPage,pages-1);
+  supplierFirstList.innerHTML=pageSlice(list,supplierFirstPage,SUPPLIER_PAGE).map(s=>{
     let count=0;items.forEach(it=>{if(getSet(it.id).has(s.id))count++});
     return `<div class="srow ${activeSupplier===s.id?"selected":""}" data-sf-s="${s.id}"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.id} · ${s.reason}</div></div><div class="toolbar"><span>${count} 项</span><button class="btn danger" data-pool-remove="${s.id}">移出本次询价</button></div></div></div>`
   }).join("")||'<div class="muted small">没有匹配的本次询价供应商。</div>';
@@ -615,6 +620,8 @@ function renderSupplierFirstList(){
     flash(`已将供应商移出本次询价，并取消 ${removed} 条物料关联。`);
     renderAssignAll();renderSupplierPoolPicker();
   });
+  supplierFirstCount.textContent=`筛选结果 ${list.length} 家 · 第 ${supplierFirstPage+1}/${pages} 页`;
+  renderPageNav(supplierFirstPager,supplierFirstPage,list.length,SUPPLIER_PAGE,p=>{supplierFirstPage=p;renderSupplierFirstList()});
   renderCopySources();
 }
 function supplierPoolFiltered(){
@@ -640,7 +647,7 @@ function renderCopySources(){
   copyFromSupplier.innerHTML='<option value="">复制其他供应商的物料范围…</option>'+suppliers.filter(s=>rfqSupplierPool.has(s.id)&&s.id!==activeSupplier).map(s=>`<option value="${s.id}">${s.name}</option>`).join("");
   if([...copyFromSupplier.options].some(o=>o.value===current))copyFromSupplier.value=current;
 }
-runSupplierFirstSearch.onclick=renderSupplierFirstList;
+runSupplierFirstSearch.onclick=()=>{supplierFirstPage=0;renderSupplierFirstList()};
 openSupplierPicker.onclick=()=>{supplierPicker.style.display="block";resetRange("supplier-picker");renderSupplierPoolPicker()};
 closeSupplierPicker.onclick=()=>{supplierPicker.style.display="none"};
 runSupplierPoolSearch.onclick=()=>{supplierPoolPage=0;resetRange("supplier-picker");renderSupplierPoolPicker()};
@@ -698,8 +705,10 @@ function setDefaultLowestAwards(){
   quoteItems.forEach((it,i)=>{const sid=lowestSupplierForItem(i);if(sid)awards.set(it.id,sid)});
 }
 function renderQuotes(){
+  const QUOTE_PAGE=10,pages=Math.max(1,Math.ceil(quoteItems.length/QUOTE_PAGE));quotePage=Math.min(quotePage,pages-1),start=quotePage*QUOTE_PAGE,slice=quoteItems.slice(start,start+QUOTE_PAGE);
   let h=`<thead><tr><th>物料</th><th>上次采购价</th>`+quoteSuppliers.map((s,si)=>`<th>${s.name}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`).join("")+`<th>最终选择</th></tr></thead><tbody>`;
-  quoteItems.forEach((it,i)=>{
+  slice.forEach((it,localIndex)=>{
+    const i=start+localIndex;
     const vals=quoteSuppliers.map((s,si)=>({sid:s.id,v:quoteFor(i,si)})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);
     const low=vals[0]?.sid, second=vals[1]?.sid, prev=(95+((i*11)%50)).toFixed(2);
     h+=`<tr><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>¥${prev}</td>`;
@@ -711,6 +720,8 @@ function renderQuotes(){
     h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:""):'<span class="muted">未选择</span>'}</td></tr>`;
   });
   h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();
+  quoteCount.textContent=`共 ${quoteItems.length} 项 · 第 ${quotePage+1}/${pages} 页`;
+  renderPageNav(quotePager,quotePage,quoteItems.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});
   document.querySelectorAll("[data-award]").forEach(b=>b.onclick=()=>{const [iid,sid]=b.dataset.award.split("|");chooseAward(iid,sid)});
   document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall;const nonLowest=quoteItems.filter((it,i)=>{const si=quoteSuppliers.findIndex(s=>s.id===sid);return quoteFor(i,si)!=null&&lowestSupplierForItem(i)!==sid});let reason="";if(nonLowest.length){reason=prompt(`其中 ${nonLowest.length} 项不是最低价，请填写本次批量选择原因：`,"")||"";if(!reason.trim())return}quoteItems.forEach((it,i)=>{const si=quoteSuppliers.findIndex(s=>s.id===sid);if(quoteFor(i,si)!=null){awards.set(it.id,sid);if(lowestSupplierForItem(i)!==sid)awardReasons.set(it.id,reason.trim());else awardReasons.delete(it.id)}});renderQuotes()});
 }
