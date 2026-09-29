@@ -50,6 +50,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 .rfqDoc{border:1px solid var(--line);border-radius:10px;background:white;padding:16px}.rfqDocHead{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px}.rfqDoc table{width:100%;border-collapse:collapse;font-size:12px}.rfqDoc th,.rfqDoc td{border:1px solid #dfe4ec;padding:6px;text-align:left}
 .colFilter{width:100%;min-width:84px;padding:5px 6px!important;font-size:11px!important}.fieldTools{margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fafbfc}
 .pageNums{display:inline-flex;gap:4px;flex-wrap:wrap;align-items:center}.pageNum{min-width:32px;padding:6px 8px;border:1px solid var(--line);background:#fff;border-radius:7px}.pageNum.active{background:#111827;color:#fff}.selectionBar{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.settingsGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.7fr);gap:14px}@media(max-width:900px){.settingsGrid{grid-template-columns:1fr}}
+.roundBadge{display:inline-block;padding:3px 7px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:11px}.roundBadge.draft{background:#fff7ed;color:#9a3412}.roundBadge.confirmed{background:#ecfdf5;color:#047857}.quoteImportGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}@media(max-width:980px){.quoteImportGrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -65,8 +66,9 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
   <div class="tabs">
     <button class="tab active" data-tab="items">1. 本次询价物料</button>
     <button class="tab" data-tab="assign">2. 询价分配中心</button>
-    <button class="tab" data-tab="quotes">3. 报价比较</button>
-    <button class="tab" data-tab="settings">4. 系统设置</button>
+    <button class="tab" data-tab="quoteImport">3. 报价回收导入</button>
+    <button class="tab" data-tab="quotes">4. 报价比较</button>
+    <button class="tab" data-tab="settings">5. 系统设置</button>
   </div>
 
   <section id="items" class="panel active">
@@ -269,6 +271,66 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
     </div>
   </section>
 
+  <section id="quoteImport" class="panel">
+    <div class="card" style="margin-bottom:14px">
+      <div class="cardhead">
+        <div><b>报价回收导入</b> <span class="muted small">M0 验证多种导入方式、轮次、修改与异常处理</span></div>
+        <div class="toolbar">
+          <select id="quoteImportSupplier"></select>
+          <select id="quoteRoundSelect"></select>
+          <button class="btn soft" id="newQuoteRound">+ 新增下一轮</button>
+          <button class="btn primary" id="confirmQuoteRound">确认本轮报价</button>
+        </div>
+      </div>
+      <div class="cardbody">
+        <div id="quoteRoundSummary" class="notice"></div>
+      </div>
+    </div>
+
+    <div class="quoteImportGrid">
+      <div class="intakeBox">
+        <h3>单条输入</h3>
+        <div class="toolbar">
+          <input id="quoteManualItem" type="text" placeholder="物料编码">
+          <input id="quoteManualPrice" type="text" placeholder="单价">
+          <input id="quoteManualLead" type="text" placeholder="交期(天)">
+          <input id="quoteManualMoq" type="text" placeholder="MOQ">
+          <select id="quoteManualStatus"><option value="quoted">正常报价</option><option value="noquote">未报价</option><option value="cannot">不供货</option></select>
+          <button class="btn soft" id="quoteManualAdd">加入预览</button>
+        </div>
+      </div>
+      <div class="intakeBox">
+        <h3>剪贴板批量粘贴</h3>
+        <textarea id="quotePaste" placeholder="字段：物料编码,单价,交期天数,MOQ,状态；记录用分号/换行分隔。支持中文/英文逗号和 Tab，不用空格分字段。"></textarea>
+        <div class="toolbar">
+          <button class="btn" id="quoteReadClipboard">读取剪贴板</button>
+          <button class="btn soft" id="quoteParsePaste">解析预览</button>
+          <button class="btn danger" id="quoteClearInput">清空输入</button>
+          <button class="btn danger" id="quoteClearPreview">清空预览</button>
+        </div>
+      </div>
+      <div class="intakeBox">
+        <h3>文件导入</h3>
+        <input id="quoteImportFile" type="file" accept=".csv,.txt,.xlsx,.xls">
+        <div class="small muted" style="margin:7px 0">CSV/TXT 可直接解析；Excel 在 M0 使用虚构行演示映射后的导入结果。</div>
+        <button class="btn soft" id="demoQuoteExcel">演示 Excel 报价导入</button>
+      </div>
+    </div>
+
+    <div id="quoteImportPreview" class="card" style="margin-top:14px;display:none">
+      <div class="cardhead"><b>导入预览</b><div class="toolbar"><button class="btn primary" id="commitQuoteImport">写入当前报价轮次</button><button class="btn danger" id="clearQuotePreview2">清空预览</button></div></div>
+      <div class="cardbody"><div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>单价</th><th>交期</th><th>MOQ</th><th>状态</th><th>匹配结果</th></tr></thead><tbody id="quoteImportPreviewBody"></tbody></table></div></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small">导入后可点击“修改”逐行修正</span></div><div class="toolbar"><button class="btn" id="carryForwardMissing">将本轮未提交项标记为沿用上轮</button></div></div>
+      <div class="cardbody">
+        <div id="quoteRoundHint" class="small muted" style="margin-bottom:8px"></div>
+        <div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>价格</th><th>交期</th><th>MOQ</th><th>状态</th><th>来源</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
   <section id="quotes" class="panel">
     <div class="card">
       <div class="cardhead">
@@ -343,6 +405,8 @@ const suppliers=Array.from({length:24},(_,i)=>({
   reason:i<6?"历史采购":i<12?"历史报价":i<18?"同类物料":"人工候选"
 }));
 const assignments=new Map();
+const quoteRounds=[];
+let quoteImportPreviewRows=[];
 function getSet(itemId){if(!assignments.has(itemId)) assignments.set(itemId,new Set());return assignments.get(itemId)}
 for(let i=0;i<180;i++){getSet(items[i].id).add(suppliers[i%6].id);if(i%3===0)getSet(items[i].id).add(suppliers[(i+2)%8].id)}
 for(let i=180;i<300;i++){getSet(items[i].id).add(suppliers[i%10].id)}
@@ -519,10 +583,148 @@ deleteSelectedItems.onclick=()=>{
   if(typeof quoteItems!=="undefined"){for(let i=quoteItems.length-1;i>=0;i--){if(ids.has(quoteItems[i].id))quoteItems.splice(i,1)}}
   resetRange("item-manage");renderItemList();renderAssignAll();renderQuotes();
 };
+function quoteSupplierOptions(){
+  const ids=[...rfqSupplierPool];
+  quoteImportSupplier.innerHTML=ids.map(id=>{const s=suppliers.find(x=>x.id===id);return s?`<option value="${id}">${esc(s.name)} (${id})</option>`:""}).join("");
+}
+function supplierRounds(sid){return quoteRounds.filter(r=>r.supplierId===sid).sort((a,b)=>a.roundNo-b.roundNo)}
+function currentQuoteRound(){
+  const sid=quoteImportSupplier.value,rn=Number(quoteRoundSelect.value);
+  return quoteRounds.find(r=>r.supplierId===sid&&r.roundNo===rn)||null;
+}
+function ensureFirstRound(){
+  const sid=quoteImportSupplier.value;if(!sid)return null;
+  let rounds=supplierRounds(sid);
+  if(!rounds.length){quoteRounds.push({supplierId:sid,roundNo:1,status:"draft",lines:[],createdAt:new Date().toISOString()});rounds=supplierRounds(sid)}
+  return rounds[rounds.length-1];
+}
+function renderQuoteRoundSelector(selectLatest=false){
+  const sid=quoteImportSupplier.value;if(!sid)return;
+  ensureFirstRound();
+  const rounds=supplierRounds(sid);
+  quoteRoundSelect.innerHTML=rounds.map(r=>`<option value="${r.roundNo}">第 ${r.roundNo} 轮 · ${r.status==="confirmed"?"已确认":"草稿"}</option>`).join("");
+  if(selectLatest||!quoteRoundSelect.value)quoteRoundSelect.value=String(rounds[rounds.length-1].roundNo);
+  renderQuoteRound();
+}
+function assignedItemsForSupplier(sid){return items.filter(it=>getSet(it.id).has(sid))}
+function parseQuoteRows(text){
+  return String(text||"").split(/[;；\n\r]+/).map(x=>x.trim()).filter(Boolean).map(row=>{
+    const p=row.split(/[，,\t]+/).map(x=>x.trim());
+    return {itemId:p[0]||"",price:p[1]||"",lead:p[2]||"",moq:p[3]||"",status:(p[4]||"quoted").toLowerCase()};
+  });
+}
+function normalizeQuoteStatus(v){
+  const s=String(v||"quoted").toLowerCase();
+  if(["未报价","noquote","no quote"].includes(s))return"noquote";
+  if(["不供货","不能供货","cannot","cannot supply"].includes(s))return"cannot";
+  return"quoted";
+}
+function validateQuotePreview(rows){
+  const sid=quoteImportSupplier.value,allowed=new Set(assignedItemsForSupplier(sid).map(x=>x.id));
+  return rows.map(r=>({...r,status:normalizeQuoteStatus(r.status),match:!items.some(x=>x.id===r.itemId)?"物料不存在":!allowed.has(r.itemId)?"未分配给该供应商":"匹配"}));
+}
+function showQuotePreview(rows){
+  quoteImportPreviewRows=validateQuotePreview(rows);
+  quoteImportPreview.style.display="block";
+  quoteImportPreviewBody.innerHTML=quoteImportPreviewRows.map(r=>`<tr><td>${esc(r.itemId)}</td><td>${esc(r.price)}</td><td>${esc(r.lead)}</td><td>${esc(r.moq)}</td><td>${esc(r.status)}</td><td class="${r.match==="匹配"?"ok":"dangertext"}">${esc(r.match)}</td></tr>`).join("");
+}
+function clearQuoteImportPreview(){quoteImportPreviewRows=[];quoteImportPreviewBody.innerHTML="";quoteImportPreview.style.display="none"}
+function upsertRoundLine(round,row,source="import"){
+  const existing=round.lines.find(x=>x.itemId===row.itemId);
+  const line={itemId:row.itemId,price:row.status==="quoted"?Number(row.price)||0:null,lead:row.status==="quoted"?Number(row.lead)||0:null,moq:row.status==="quoted"?Number(row.moq)||0:null,status:row.status,source,updatedAt:new Date().toISOString()};
+  if(existing)Object.assign(existing,line);else round.lines.push(line);
+}
+function previousEffectiveLine(sid,itemId,roundNo){
+  const rounds=supplierRounds(sid).filter(r=>r.roundNo<roundNo&&r.status==="confirmed").sort((a,b)=>b.roundNo-a.roundNo);
+  for(const r of rounds){const line=r.lines.find(x=>x.itemId===itemId&&x.status==="quoted");if(line)return{...line,roundNo:r.roundNo}}
+  return null;
+}
+function latestConfirmedQuoteLine(itemId,sid){
+  const rounds=supplierRounds(sid).filter(r=>r.status==="confirmed").sort((a,b)=>b.roundNo-a.roundNo);
+  for(const r of rounds){
+    const line=r.lines.find(x=>x.itemId===itemId);
+    if(!line)continue;
+    if(line.status==="quoted")return{...line,roundNo:r.roundNo};
+    if(line.status==="cannot"||line.status==="noquote")return null;
+  }
+  return null;
+}
+function renderQuoteRound(){
+  const round=currentQuoteRound();if(!round)return;
+  const sup=suppliers.find(s=>s.id===round.supplierId),assigned=assignedItemsForSupplier(round.supplierId);
+  quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认":"草稿"}</span><div class="small" style="margin-top:5px">本轮独立保存，不覆盖前一轮。第 2 轮及以后允许只更新部分物料。</div>`;
+  quoteRoundHint.textContent=`该供应商当前分配 ${assigned.length} 项；本轮已记录 ${round.lines.length} 项。`;
+  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{
+    const it=items.find(x=>x.id===l.itemId),src=l.source==="carry"?"沿用上轮（已确认）":l.source==="manual"?"手工输入":"导入";
+    return `<tr><td><b>${esc(l.itemId)}</b><br><span class="muted">${esc(it?.name||"")}</span></td><td>${l.price==null?"—":"¥"+Number(l.price).toFixed(2)}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(l.status)}</td><td>${src}</td><td><button class="btn" data-edit-quote="${i}">修改</button></td></tr>`
+  }).join("")||'<tr><td colspan="7" class="muted">当前轮次还没有报价记录。</td></tr>';
+  document.querySelectorAll("[data-edit-quote]").forEach(b=>b.onclick=()=>editQuoteLine(Number(b.dataset.editQuote)));
+  carryForwardMissing.disabled=round.roundNo===1;
+  confirmQuoteRound.disabled=round.status==="confirmed";
+  renderQuotes();
+}
+function editQuoteLine(index){
+  const round=currentQuoteRound(),l=round?.lines[index];if(!l)return;
+  const price=prompt("单价：",l.price??"");if(price===null)return;
+  const lead=prompt("交期（天）：",l.lead??"");if(lead===null)return;
+  const moq=prompt("MOQ：",l.moq??"");if(moq===null)return;
+  const status=prompt("状态：quoted / noquote / cannot",l.status);if(status===null)return;
+  upsertRoundLine(round,{itemId:l.itemId,price,lead,moq,status:normalizeQuoteStatus(status)}, "manual");
+  renderQuoteRound();
+}
 function fillCats(){["assignCatFilter","sfCatFilter"].forEach(id=>{const el=document.getElementById(id);categories.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o)})})}
 fillCats();
+quoteSupplierOptions();
+if(quoteImportSupplier.value)renderQuoteRoundSelector(true);
 
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active");if(b.dataset.tab==="assign")renderAssignAll();if(b.dataset.tab==="quotes")renderQuotes()});
+quoteImportSupplier.onchange=()=>{clearQuoteImportPreview();renderQuoteRoundSelector(true)};
+quoteRoundSelect.onchange=renderQuoteRound;
+newQuoteRound.onclick=()=>{
+  const sid=quoteImportSupplier.value;if(!sid)return;
+  const rounds=supplierRounds(sid),last=rounds[rounds.length-1];
+  if(last&&last.status!=="confirmed"&&!confirm("上一轮仍是草稿，仍要新建下一轮吗？"))return;
+  const next=(last?.roundNo||0)+1;quoteRounds.push({supplierId:sid,roundNo:next,status:"draft",lines:[],createdAt:new Date().toISOString()});renderQuoteRoundSelector(true);
+};
+confirmQuoteRound.onclick=()=>{
+  const round=currentQuoteRound();if(!round)return;
+  if(!round.lines.length){alert("当前轮次没有报价记录。");return}
+  round.status="confirmed";renderQuoteRound();renderQuoteRoundSelector();
+};
+quoteManualAdd.onclick=()=>{
+  const row={itemId:quoteManualItem.value.trim(),price:quoteManualPrice.value.trim(),lead:quoteManualLead.value.trim(),moq:quoteManualMoq.value.trim(),status:quoteManualStatus.value};
+  showQuotePreview([row]);
+};
+quoteParsePaste.onclick=()=>{const rows=parseQuoteRows(quotePaste.value);if(!rows.length){alert("没有识别到报价记录。");return}showQuotePreview(rows)};
+quoteReadClipboard.onclick=async()=>{try{quotePaste.value=await navigator.clipboard.readText();quoteParsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请按 Ctrl+V 粘贴。")}};
+quoteClearInput.onclick=()=>{quotePaste.value=""};
+quoteClearPreview.onclick=clearQuoteImportPreview;
+clearQuotePreview2.onclick=clearQuoteImportPreview;
+demoQuoteExcel.onclick=()=>showQuotePreview([
+  {itemId:assignedItemsForSupplier(quoteImportSupplier.value)[0]?.id||items[0].id,price:"108.50",lead:"7",moq:"10",status:"quoted"},
+  {itemId:assignedItemsForSupplier(quoteImportSupplier.value)[1]?.id||items[1].id,price:"108.50",lead:"10",moq:"5",status:"quoted"}
+]);
+quoteImportFile.onchange=()=>{
+  const file=quoteImportFile.files?.[0];if(!file)return;const ext=(file.name.split(".").pop()||"").toLowerCase();
+  if(ext==="csv"||ext==="txt"){const r=new FileReader();r.onload=()=>showQuotePreview(parseQuoteRows(r.result));r.readAsText(file)}
+  else demoQuoteExcel.click();
+};
+commitQuoteImport.onclick=()=>{
+  const round=currentQuoteRound();if(!round)return;
+  const valid=quoteImportPreviewRows.filter(r=>r.match==="匹配");if(!valid.length){alert("没有可写入的匹配报价。");return}
+  valid.forEach(r=>upsertRoundLine(round,r,"import"));clearQuoteImportPreview();renderQuoteRound();
+};
+carryForwardMissing.onclick=()=>{
+  const round=currentQuoteRound();if(!round||round.roundNo===1)return;
+  const existing=new Set(round.lines.map(x=>x.itemId));let n=0;
+  assignedItemsForSupplier(round.supplierId).forEach(it=>{
+    if(existing.has(it.id))return;
+    const prev=previousEffectiveLine(round.supplierId,it.id,round.roundNo);if(!prev)return;
+    round.lines.push({itemId:it.id,price:prev.price,lead:prev.lead,moq:prev.moq,status:"quoted",source:"carry",updatedAt:new Date().toISOString()});n++;
+  });
+  alert(`已将 ${n} 项明确记录为“沿用上轮价格”。`);renderQuoteRound();
+};
+
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active");if(b.dataset.tab==="assign")renderAssignAll();if(b.dataset.tab==="quoteImport"){quoteSupplierOptions();renderQuoteRoundSelector()}if(b.dataset.tab==="quotes")renderQuotes()});
 document.querySelectorAll(".modebtn").forEach(b=>b.onclick=()=>{assignMode=b.dataset.mode;document.querySelectorAll(".modebtn").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("itemFirstView").style.display=assignMode==="itemFirst"?"grid":"none";document.getElementById("supplierFirstView").style.display=assignMode==="supplierFirst"?"grid":"none";renderAssignAll()});
 
 function filteredItems(searchId,catId,stateId){
@@ -701,7 +903,13 @@ generateBtn.onclick=()=>{const c=coverage();alert(`原型动作：允许生成�
 const quoteSuppliers=suppliers.slice(0,4);
 const quoteItems=items.slice(0,24);
 const awards=new Map(), awardReasons=new Map();
-function quoteFor(i,s){if((i+s)%9===0)return null;return 80+((i*13+s*17)%70)+((s+1)*0.35)}
+function quoteMetaFor(i,s){
+  const it=quoteItems[i],sup=quoteSuppliers[s],saved=latestConfirmedQuoteLine(it.id,sup.id);
+  if(saved)return{price:saved.price,lead:saved.lead,moq:saved.moq,roundNo:saved.roundNo,source:saved.source};
+  if((i+s)%9===0)return null;
+  return{price:80+((i*13+s*17)%70)+((s+1)*0.35),lead:3+((i+s)%18),moq:1+((i+s)%5)*5,roundNo:0,source:"demo"};
+}
+function quoteFor(i,s){return quoteMetaFor(i,s)?.price??null}
 function lowestSupplierForItem(i){
   return quoteSuppliers.map((s,si)=>({sid:s.id,v:quoteFor(i,si)})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v)[0]?.sid||null;
 }
@@ -717,8 +925,9 @@ function renderQuotes(){
     const low=vals[0]?.sid, second=vals[1]?.sid, prev=(95+((i*11)%50)).toFixed(2);
     h+=`<tr><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>¥${prev}</td>`;
     quoteSuppliers.forEach((s,si)=>{
-      const v=quoteFor(i,si), cls=s.id===low?"low":s.id===second?"second":"", selected=awards.get(it.id)===s.id;
-      h+=`<td class="${selected?"selectedCell":""}">${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}" data-award="${it.id}|${s.id}">¥${v.toFixed(2)}</button><br><span class="small muted">交期 ${3+((i+si)%18)} 天 · MOQ ${1+((i+si)%5)*5}</span>`}</td>`
+      const meta=quoteMetaFor(i,si),v=meta?.price??null, cls=s.id===low?"low":s.id===second?"second":"", selected=awards.get(it.id)===s.id;
+      const roundInfo=meta?.roundNo? ` · 第${meta.roundNo}轮${meta.source==="carry"?"(沿用)":""}`:"";
+      h+=`<td class="${selected?"selectedCell":""}">${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}" data-award="${it.id}|${s.id}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">交期 ${meta.lead} 天 · MOQ ${meta.moq}${roundInfo}</span>`}</td>`
     });
     const win=awards.get(it.id), r=awardReasons.get(it.id);
     h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:""):'<span class="muted">未选择</span>'}</td></tr>`;
