@@ -452,7 +452,8 @@ The parser should support mixed delimiters where practical:
 - Chinese semicolon
 - tab
 - line break
-- whitespace / space-separated fields for simple pasted rows
+
+Ordinary spaces must not be treated as field delimiters. Values such as `304 不锈钢` must remain intact in one field.
 
 The import preview remains mandatory before records are committed so users can detect ambiguous parsing. Production parsing should prefer tabular structure when clipboard data originates from Excel and should avoid silently corrupting field boundaries.
 
