@@ -75,3 +75,12 @@ This is not the production application. It does not persist data, import real fi
 - Paginated lists show clickable numeric page navigation in addition to previous/next controls.
 - Field values can be batch-updated either by assigning one value to selected records or by importing a two-column update table and matching records by a selected key field.
 - Field-definition maintenance has been moved out of the RFQ business screen into the System Settings prototype page. Business screens update field values; System Settings changes field structure.
+
+
+## Quotation return import scope
+
+M0 should also validate the quotation-return import interaction before M5 implementation. The M0 version is interaction-only with synthetic data and should cover RFQ / supplier / line identification, field mapping, import preview, exception handling, and quotation-round selection.
+
+Real Excel parsing, reusable mapping templates, normalization, persistence, and production quotation import remain M5 responsibilities.
+
+Clipboard inquiry-item input now provides separate **Clear input** and **Clear preview** actions so users can reset either side independently.
