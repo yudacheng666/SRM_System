@@ -60,7 +60,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
   <div class="top">
     <div>
       <h1>Lightweight SRM V1 · M0 交互原型</h1>
-      <div class="sub">仅用于验证“长清单 → 多对多分配 → Coverage → 报价比较”的产品交互。全部为浏览器内生成的虚构数据。</div>
+      <div class="sub">验证“物料导入 → 多对多分配 → PDF/附件 → 报价回收/修订 → Coverage → 比价/总价”的 M0 交互。全部为虚构数据。</div>
     </div>
     <span class="badge">Prototype / No real data</span>
   </div>
@@ -106,7 +106,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
             <div class="intakeBox">
               <h3>单条输入（演示字段）</h3>
               <div class="toolbar">
-                <input id="manualCode" type="text" placeholder="物料编码">
+                <input id="manualCode" type="text" placeholder="RFQ Line ID / 物料编码">
                 <input id="manualName" type="text" placeholder="物料名称">
                 <input id="manualQty" type="text" placeholder="数量">
                 <input id="manualUnit" type="text" placeholder="单位">
@@ -326,7 +326,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
       </div>
       <div class="intakeBox">
         <h3>剪贴板批量粘贴</h3>
-        <textarea id="quotePaste" placeholder="字段：物料编码,单价或阶梯价,交期天数,MOQ,状态；阶梯价示例 1-99:100|100-499:90|500+:80。记录用分号/换行分隔。"></textarea>
+        <textarea id="quotePaste" placeholder="字段：RFQ Line ID（优先）或物料编码,单价或阶梯价,交期天数,MOQ,状态；阶梯价示例 1-99:100|100-499:90|500+:80。记录用分号/换行分隔。"></textarea>
         <div class="toolbar">
           <button class="btn" id="quoteReadClipboard">读取剪贴板</button>
           <button class="btn soft" id="quoteParsePaste">解析预览</button>
@@ -831,8 +831,9 @@ carryForwardMissing.onclick=()=>{const r=currentQuoteRound();if(!r||r.roundNo===
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active");if(b.dataset.tab==="assign")renderAssignAll();if(b.dataset.tab==="quoteImport"){quoteSupplierOptions();renderQuoteRoundSelector()}if(b.dataset.tab==="quotes")renderQuotes()});
 document.querySelectorAll(".modebtn").forEach(b=>b.onclick=()=>{assignMode=b.dataset.mode;document.querySelectorAll(".modebtn").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("itemFirstView").style.display=assignMode==="itemFirst"?"grid":"none";document.getElementById("supplierFirstView").style.display=assignMode==="supplierFirst"?"grid":"none";renderAssignAll()});
 
+function appliedValue(id){const m={assignItem:"assignItemSearch",assignCat:"assignCatFilter",assignState:"assignStateFilter",supplier:"supplierSearch",supplierFirst:"supplierFirstSearch",supplierPool:"supplierPoolSearch",sfItem:"sfItemSearch",sfCat:"sfCatFilter"};const key=Object.keys(m).find(k=>m[k]===id);return key?appliedSearch[key]:""}
 function filteredItems(searchId,catId,stateId){
-  const q=(document.getElementById(searchId)?.value||"").trim(), cat=document.getElementById(catId)?.value||"", state=document.getElementById(stateId)?.value||"";
+  const q=appliedValue(searchId),cat=appliedValue(catId),state=appliedValue(stateId);
   return items.filter(it=>{
     const n=getSet(it.id).size;
     const stateOk=!state||(state==="none"&&n===0)||(state==="single"&&n===1)||(state==="multi"&&n>=2);
@@ -889,7 +890,7 @@ function renderAssignItems(){
   assignItemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${assignPage+1}/${pages} 页`;
   renderPageNav(assignPager,assignPage,list.length,PAGE,p=>{assignPage=p;resetRange("assign-items");renderAssignItems()});
 }
-runAssignSearch.onclick=()=>{assignPage=0;resetRange("assign-items");renderAssignItems();renderSuppliers()};
+runAssignSearch.onclick=()=>{appliedSearch.assignItem=assignItemSearch.value.trim();appliedSearch.assignCat=assignCatFilter.value;appliedSearch.assignState=assignStateFilter.value;assignPage=0;resetRange("assign-items");renderAssignItems();renderSuppliers()};
 selectAssignAll.onclick=()=>{selectAllIds(assignSel,filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"));renderAssignAll()};
 selectAssignPage.onclick=()=>{selectAllIds(assignSel,pageSlice(filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"),assignPage));renderAssignAll()};
 invertAssignAll.onclick=()=>{invertIds(assignSel,filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"));renderAssignAll()};
@@ -897,7 +898,7 @@ invertAssignPage.onclick=()=>{invertIds(assignSel,pageSlice(filteredItems("assig
 clearAssignSelection.onclick=()=>{assignSel.clear();renderAssignAll()};
 
 function renderSuppliers(){
-  const q=supplierSearch.value.trim(), selected=[...assignSel], total=selected.length;
+  const q=appliedSearch.supplier, selected=[...assignSel], total=selected.length;
   const list=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&supplierMatches(s,q)),pages=Math.max(1,Math.ceil(list.length/SUPPLIER_PAGE));supplierListPage=Math.min(supplierListPage,pages-1);
   supplierList.innerHTML=pageSlice(list,supplierListPage,SUPPLIER_PAGE).map(s=>{
     const count=selected.filter(i=>getSet(i).has(s.id)).length;
@@ -910,10 +911,10 @@ function renderSuppliers(){
   supplierListCount.textContent=`筛选结果 ${list.length} 家 · 第 ${supplierListPage+1}/${pages} 页`;
   renderPageNav(supplierListPager,supplierListPage,list.length,SUPPLIER_PAGE,p=>{supplierListPage=p;renderSuppliers()});
 }
-runSupplierSearch.onclick=()=>{supplierListPage=0;renderSuppliers()};
+runSupplierSearch.onclick=()=>{appliedSearch.supplier=supplierSearch.value.trim();supplierListPage=0;renderSuppliers()};
 
 function renderSupplierFirstList(){
-  const q=supplierFirstSearch.value.trim();
+  const q=appliedSearch.supplierFirst;
   const list=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&supplierMatches(s,q)),pages=Math.max(1,Math.ceil(list.length/SUPPLIER_PAGE));supplierFirstPage=Math.min(supplierFirstPage,pages-1);
   supplierFirstList.innerHTML=pageSlice(list,supplierFirstPage,SUPPLIER_PAGE).map(s=>{
     let count=0;items.forEach(it=>{if(getSet(it.id).has(s.id))count++});
@@ -936,7 +937,7 @@ function renderSupplierFirstList(){
   renderCopySources();
 }
 function supplierPoolFiltered(){
-  const q=supplierPoolSearch.value.trim();
+  const q=appliedSearch.supplierPool;
   return suppliers.filter(s=>!rfqSupplierPool.has(s.id)&&supplierMatches(s,q));
 }
 function renderSupplierPoolPicker(){
@@ -958,12 +959,12 @@ function renderCopySources(){
   copyFromSupplier.innerHTML='<option value="">复制其他供应商的物料范围…</option>'+suppliers.filter(s=>rfqSupplierPool.has(s.id)&&s.id!==activeSupplier).map(s=>`<option value="${s.id}">${s.name}</option>`).join("");
   if([...copyFromSupplier.options].some(o=>o.value===current))copyFromSupplier.value=current;
 }
-runSupplierFirstSearch.onclick=()=>{supplierFirstPage=0;renderSupplierFirstList()};
+runSupplierFirstSearch.onclick=()=>{appliedSearch.supplierFirst=supplierFirstSearch.value.trim();supplierFirstPage=0;renderSupplierFirstList()};
 openSupplierPicker.onclick=()=>{supplierPicker.style.display="block";resetRange("supplier-picker");renderSupplierPoolPicker()};
 closeSupplierPicker.onclick=()=>{supplierPicker.style.display="none"};
-runSupplierPoolSearch.onclick=()=>{supplierPoolPage=0;resetRange("supplier-picker");renderSupplierPoolPicker()};
+runSupplierPoolSearch.onclick=()=>{appliedSearch.supplierPool=supplierPoolSearch.value.trim();supplierPoolPage=0;resetRange("supplier-picker");renderSupplierPoolPicker()};
 function filteredSfItems(){
-  const q=sfItemSearch.value.trim(), cat=sfCatFilter.value;
+  const q=appliedSearch.sfItem,cat=appliedSearch.sfCat;
   return items.filter(it=>(!q||[it.id,it.name,it.cat,it.qty,it.unit,getSet(it.id).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))&&(!cat||it.cat===cat))
 }
 function renderSfItems(){
@@ -978,7 +979,7 @@ function renderSfItems(){
   sfItemCount.textContent=`筛选结果 ${list.length} 项 · 当前供应商已关联 ${related} 项 · 第 ${sfPage+1}/${pages} 页 · 勾选框即关联状态，支持 Shift 连选`;
   renderPageNav(sfPager,sfPage,list.length,PAGE,p=>{sfPage=p;resetRange("supplier-items");renderSfItems()});
 }
-runSfSearch.onclick=()=>{sfPage=0;resetRange("supplier-items");renderSfItems()};
+runSfSearch.onclick=()=>{appliedSearch.sfItem=sfItemSearch.value.trim();appliedSearch.sfCat=sfCatFilter.value;sfPage=0;resetRange("supplier-items");renderSfItems()};
 sfLinkFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>getSet(it.id).add(activeSupplier));renderAssignAll()};
 sfLinkPage.onclick=()=>{if(!activeSupplier)return;pageSlice(filteredSfItems(),sfPage).forEach(it=>getSet(it.id).add(activeSupplier));renderAssignAll()};
 sfInvertFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>{const set=getSet(it.id);set.has(activeSupplier)?set.delete(activeSupplier):set.add(activeSupplier)});renderAssignAll()};
