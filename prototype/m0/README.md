@@ -1,163 +1,83 @@
-# M0 Interaction Prototype
+# SRM M0 交互原型
+# SRM M0 Interaction Prototype
 
-This prototype validates only the highest-risk V1 interactions:
+## 用途
+## Purpose
 
-1. Long inquiry-item lists
-2. Many-to-many item/supplier assignment
-3. Three-state assignment visibility
-4. Additive assignment without overwriting existing relationships
-5. Direct relation checkboxes in supplier-first mode
-6. Shift-range selection for long lists
-7. RFQ-specific supplier pool managed by the buyer
-8. Copy-another-supplier's item scope as a starting point, then adjust differences
-9. Coverage inspection that does not block RFQ generation
-10. Supplier-first and item-first assignment views
-11. Quotation comparison with lowest price selected by default and non-lowest-price reason capture
+M0 用虚构数据验证轻量 SRM 的物料导入、供应商分配、PDF 式预览、报价轮次与比价交互，不是正式持久化系统。
+M0 uses synthetic data to validate lightweight SRM item imports, supplier assignment, PDF-style previews, quotation rounds and comparisons; it is not the persistent production application.
 
+## 启动
 ## Run
 
-Open `index.html` directly in a modern browser.
+直接在现代浏览器打开 `prototype/m0/index.html`，无需联网或安装依赖。
+Open `prototype/m0/index.html` in a modern browser; no internet connection or dependencies are required.
 
-No server, network connection, build step, or external dependency is required.
+如需浏览器自动化，可由 Codex 使用本地 HTTP 服务运行，但本页面仍不保存修改后的业务数据。
+Codex may serve the file over a local HTTP server for browser automation, but this page still does not persist edited business data.
 
-## Data safety
+## 当前入口
+## Current views
 
-All data is generated in the browser and is fictional. Do not replace the fixtures with real organization, supplier, person, product, price, quantity, system/vendor, project, or internal operating data in this public repository.
+本次询价物料：单条录入、首行标题粘贴、CSV/TXT、Excel 模拟、搜索、排序、选择、批量更新与来源合并。
+Inquiry items: manual entry, header-mapped paste, CSV/TXT, simulated Excel, search, sort, selection, batch update and source-row consolidation.
 
-## Non-goals
+询价分配中心：物料—供应商多对多关系、两种视角、Coverage 及供应商询价包/附件预览。
+Assignment center: many-to-many item-supplier relations, both perspectives, coverage and supplier RFQ package/attachment preview.
 
-This is not the production application. It does not persist data, import real files, generate Excel workbooks, or implement IndexedDB. Those belong to later milestones after interaction validation.
+报价回收导入：按供应商/轮次/版本导入报价，识别状态、阶梯价、覆盖异常及漏报清单 CSV。
+Quotation return: import per supplier/round/version, validate statuses, tiers and coverage exceptions, and export missing lines as CSV.
 
+报价比较：当前 RFQ 全部已分配范围的逐项比较、自身范围总额、共同物料总额、理论最低与最终选择总额。
+Quote comparison: line-by-line and aggregate analyses for all assigned RFQ lines, including quoted-scope totals, common-scope totals, theoretical lowest and selected totals.
 
-## Current interaction notes
+## 剪贴板规则（2026-10-08）
+## Clipboard rules (2026-10-08)
 
-- In supplier-first mode, a checked item means the item is already assigned to the active supplier. Toggling the checkbox changes the relationship immediately; there is no second "add selected items" confirmation step.
-- The supplier list is RFQ-specific. Buyers add suppliers into the current RFQ supplier pool instead of browsing the full supplier master list.
-- To reduce repetitive work, buyers can copy another supplier's assigned item scope as a starting point and then add/remove only the differences.
-- Long checkbox lists support Shift range selection.
-- Quotation comparison starts with the lowest valid quotation selected for each item by default.
+第一行是列标题，第二行才是数据；物料导入必须精确包含“物料编码”列标题。
+The first row contains column headers; data begins on row two; item imports require the exact “物料编码” header.
 
+示例（物料）：`物料编码,物料名称,数量,单位` / `P-001,304 不锈钢,3,pcs`。
+Example (items): `物料编码,物料名称,数量,单位` / `P-001,304 不锈钢,3,pcs`.
 
-## Interaction clarifications after review
+报价导入第一行必须精确包含“RFQ Line ID”或“物料编码”；有 Line ID 优先使用，否则只有唯一代码才可匹配。
+Quote imports require “RFQ Line ID” or “物料编码”; prefer Line ID, and fall back to item code only for unique matches.
 
-- The first page is now a read/review view of the items already included in the current RFQ. It no longer creates a second, meaningless selection state in M0.
-- Supplier search in the RFQ supplier pool supports fuzzy matching across supplier name, code, and source/reason text.
-- Buyers can remove a previously added supplier from the current RFQ. Removing it also removes that supplier's current item relationships after confirmation.
-- Item rows include a drawing thumbnail. Clicking it opens an in-page enlarged drawing preview using synthetic M0 drawings.
-- Shift range selection uses the first clicked item's ID as an anchor and applies the second checkbox's target state across the visible range.
-- The supplier-list search label is phrased as "Search current RFQ suppliers" rather than "Search added suppliers".
+示例（报价）：`RFQ Line ID,单价,交期,MOQ,状态` / `RFQ-L00001,100,7,10,正常报价`。
+Example (quotation): `RFQ Line ID,单价,交期,MOQ,状态` / `RFQ-L00001,100,7,10,正常报价`.
 
+Tab 和 CSV 都保留空列，支持引号内逗号；普通空格不会拆列，缺主键表头会被拒绝。
+Tab and CSV parsing preserve empty fields and quoted commas; ordinary spaces never split columns and missing key headers are rejected.
 
-## Latest M0 additions
+## 同编码合并
+## Same-code consolidation
 
-- RFQ items can now be added through three demo paths: single-item entry, clipboard bulk paste, and file import.
-- Clipboard batch format supports comma-separated fields and semicolon/newline-separated items.
-- CSV/TXT files can be parsed locally in M0; Excel selection uses synthetic preview rows to validate the import interaction without bundling an Excel parser yet.
-- All checkbox-style lists in M0 use one shared Shift-range-selection mechanism, including item selection, supplier-item relation selection, and supplier-pool selection.
-- The explanatory Coverage warning sentence was removed from the UI; Coverage remains visible through statistics and generation behavior.
-- "Preview RFQ" now opens a supplier-specific RFQ document preview with the exact assigned item rows and response columns before generation.
+编码相同且名称、单位、分类、技术/交付属性兼容时可合并数量，同时保留每条来源需求行。
+Quantity may be consolidated when codes, names, units, categories and technical/delivery attributes are compatible, while preserving source-demand lines.
 
+已分配、已报价或属性冲突不能静默合并，采购员可取消整个批次或确认独立保留冲突行。
+Allocated, quoted or incompatible items are never silently merged; the buyer may cancel the batch or explicitly keep conflicting lines separate.
 
-## Field and delete behavior
+## PDF 与报价
+## PDF and quotations
 
-- The current RFQ item list supports selecting and deleting inquiry items. Deleting an inquiry item also removes its supplier-assignment relationships.
-- As a general interaction rule, user-created membership or configuration should not expose an add action without an understandable corresponding remove/delete action.
-- M0 base item columns are demonstration fields only. The production item schema will be aligned with ERP fields and import mapping requirements.
-- M0 demonstrates extensible custom fields: add field, delete field, and batch-update a selected set of inquiry items.
-- The item list supports both a global fuzzy search and independent fuzzy search inputs for every displayed field, including added custom fields.
+PDF 页面和多文件切换目前仍为虚构示意交互，正式 PDF 渲染及实际打包留待后续阶段。
+PDF page and multi-document switching remain synthetic M0 interactions; actual PDF rendering and attachment packaging are later-milestone tasks.
 
+已确认报价版本不能直接覆盖；下一轮的漏报不会自动沿用上轮，阶梯价不适用时不能猜测价格。
+Confirmed quotation versions cannot be overwritten; missing later-round quotes are not auto-carried and an unmatched tier must not be guessed.
 
-## List, search, paste, and field-management conventions
+界面统一显示“第N轮 · 第M版”，报价状态使用中文业务名称，不显示内部 null。
+The UI shows “Round N · Version M” with readable Chinese business statuses, never internal null values.
 
-- Clipboard item paste accepts mixed Chinese/English commas and semicolons, line breaks, tabs, and spaces as demo delimiters.
-- Fuzzy-search inputs do not execute while the user is typing. Users may fill multiple search/filter boxes first and explicitly click Search to run the combined conditions.
-- Multi-select lists provide four standard operations: Select all (current filtered result), Select current page, Invert all (current filtered result), and Invert current page.
-- Paginated lists show clickable numeric page navigation in addition to previous/next controls.
-- Field values can be batch-updated either by assigning one value to selected records or by importing a two-column update table and matching records by a selected key field.
-- Field-definition maintenance has been moved out of the RFQ business screen into the System Settings prototype page. Business screens update field values; System Settings changes field structure.
+## 正式需求与测试记录
+## Canonical requirements and test records
 
+产品需求：`docs/01_产品需求PRD.md`；业务规则：`docs/02_业务规则.md`。
+Product requirements: `docs/01_产品需求PRD.md`; business rules: `docs/02_业务规则.md`.
 
-## Quotation return import scope
+本次回归结果：`docs/05_20261008_M0体验修改回归.md`。
+Current regression report: `docs/05_20261008_M0体验修改回归.md`.
 
-M0 should also validate the quotation-return import interaction before M5 implementation. The M0 version is interaction-only with synthetic data and should cover RFQ / supplier / line identification, field mapping, import preview, exception handling, and quotation-round selection.
-
-Real Excel parsing, reusable mapping templates, normalization, persistence, and production quotation import remain M5 responsibilities.
-
-Clipboard inquiry-item input now provides separate **Clear input** and **Clear preview** actions so users can reset either side independently.
-
-
-## Quotation import and rounds in M0
-
-The M0 prototype now includes quotation-return import through manual entry, clipboard paste, CSV/TXT import, and a simulated Excel-import flow.
-
-Imported rows are written into a supplier-specific quotation round and can be manually corrected afterward.
-
-Quotation rounds follow these rules:
-- rounds belong to one RFQ + one supplier;
-- a new round never overwrites an earlier round;
-- later rounds may contain only changed items;
-- missing lines in a later round are not automatically treated as unchanged;
-- buyers can explicitly mark missing lines as confirmed carry-forward from the prior round;
-- a repeated same price is still stored in the new round and shows 0 price change;
-- only confirmed rounds become effective in quotation comparison.
-
-M0 displays the previous-round price and current-round price side by side to validate the negotiation-history workflow.
-
-
-## Quotation return coverage check
-
-M0 now compares each quotation return against the expected item scope of the selected supplier and quotation round.
-
-The coverage summary distinguishes quoted, explicit no-quote, cannot-supply, missing/omitted, extra, and duplicate lines. Missing, extra, and duplicate item IDs are listed for buyer review.
-
-A quotation round keeps its own expected-scope snapshot so a partial second negotiation is not incorrectly judged against the entire original RFQ.
-
-
-## Tiered pricing
-
-M0 supports optional tiered pricing on a quotation line without introducing a second quotation workflow.
-
-A line may contain either one unit price or several quantity-price tiers. Comparison uses the RFQ requested quantity to calculate the applicable tier price, while the complete tier structure is preserved.
-
-The demo compact format is similar to:
-
-`1-99:100|100-499:90|500+:80`
-
-This is only an M0 interaction format. M5 will normalize tier prices from different Excel layouts into the same underlying tier structure.
-
-
-## Newly integrated V1 planning decisions
-
-The V1 roadmap now treats PDF drawings as part of the core RFQ workflow rather than a future enhancement.
-
-Planned production behavior includes:
-- multi-page PDF preview and multiple PDF documents per item;
-- supplier RFQ packages containing the supplier-specific RFQ file plus only the relevant PDF drawings;
-- attachment completeness checks before package generation;
-- RFQ-time attachment snapshots for historical traceability;
-- aggregate quotation analysis such as supplier quoted-scope totals, common-item-scope totals, selected-scope totals, theoretical-lowest total, and final-selected total;
-- permanent quotation history retention beginning in M5;
-- pre-go-live legacy purchase-order / inquiry / quotation migration without inventing unsupported historical events.
-
-These items are roadmap/data-model decisions. The current M0 HTML has not yet implemented the full multi-page PDF viewer, attachment-package generator, or aggregate-total analysis UI.
-
-
-## M0 correction pass after acceptance review
-
-The prototype was revised after a formal M0 acceptance review. The correction pass adds or changes:
-- strict numeric validation with no silent 0/1 fallback;
-- empty-column preservation in pasted/imported rows;
-- Draft vs Applied search state;
-- RFQ Line ID;
-- quotation Round + Revision/Submission separation;
-- locked confirmed submissions;
-- editable later-round negotiation scope;
-- no silent fallback from a missing later-round quotation to an earlier price;
-- strict tier validation and no nearest-tier guessing;
-- PDF-style multi-page / multi-document preview;
-- supplier attachment coverage preview;
-- dynamic quotation comparison without fixed first-N item/supplier limits;
-- quoted-scope and common-scope totals plus theoretical-lowest/final-selected totals;
-- history-safe item/supplier removal guards.
-
-The canonical product requirement is now `docs/01_产品需求PRD.md`; long-term rules are in `docs/02_业务规则.md`.
+测试数据与代码注释都必须匿名/虚构；所有修改保持在草稿分支，用户确认之前不合并 main。
+Test data and comments must remain synthetic/anonymous; all work stays on the draft branch until the user approves merging to main.
