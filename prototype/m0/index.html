@@ -694,7 +694,7 @@ function addRowsToRfq(rows){
 }
 toggleItemIntake.onclick=()=>{itemIntake.style.display=itemIntake.style.display==="none"?"block":"none"};
 manualAdd.onclick=()=>{const code=manualCode.value.trim(),name=manualName.value.trim(),qty=parsePositiveNumber(manualQty.value,"数量"),unit=manualUnit.value.trim();if(!code||qty.error||!unit){alert([!code?"物料编码不能为空":"",qty.error||"",!unit?"单位不能为空":""].filter(Boolean).join("；"));return}const row={id:code,lineId:nextLineId(),name,cat:"",qty:qty.value,unit,sources:[{source:"单条录入",qty:qty.value}],_errors:[]};setImportPreview([row],"单条输入预览");manualCode.value=manualName.value=manualQty.value=manualUnit.value=""};
-parsePaste.onclick=()=>{const rows=parseItemRows(pasteItems.value);if(!rows.length){alert("没有识别到物料。");return}setImportPreview(rows,"剪贴板批量粘贴预览")};
+parsePaste.onclick=()=>{const rows=parseItemRows(pasteItems.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到物料。");return}setImportPreview(rows,"剪贴板批量粘贴预览")};
 clearPasteInput.onclick=()=>{pasteItems.value=""};
 clearPastePreview.onclick=()=>{pendingImportRows=[];importPreview.innerHTML="";importPreview.style.display="none"};
 readClipboard.onclick=async()=>{try{pasteItems.value=await navigator.clipboard.readText();parsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请在文本框中按 Ctrl+V 粘贴。")}};
@@ -787,23 +787,46 @@ function ensureFirstRound(){
 function renderQuoteRoundSelector(selectLatest=false){
   const sid=quoteImportSupplier.value;if(!sid)return;
   ensureFirstRound();const subs=supplierSubmissions(sid),current=quoteRoundSelect.value;
-  quoteRoundSelect.innerHTML=subs.map(r=>`<option value="${r.roundNo}|${r.revisionNo}">第 ${r.roundNo} 轮 · 修订 ${r.revisionNo} · ${r.status==="confirmed"?"已确认":"草稿"}</option>`).join("");
+  quoteRoundSelect.innerHTML=subs.map(r=>`<option value="${r.roundNo}|${r.revisionNo}">第 ${r.roundNo} 轮 · 第${r.revisionNo}版 · ${r.status==="confirmed"?"已确认":"草稿"}</option>`).join("");
   if(selectLatest||![...quoteRoundSelect.options].some(o=>o.value===current))quoteRoundSelect.value=`${subs[subs.length-1].roundNo}|${subs[subs.length-1].revisionNo}`;else quoteRoundSelect.value=current;
   renderQuoteRound();
 }
 function resolveQuoteItem(ref){const x=String(ref||"").trim(),byLine=items.find(it=>it.lineId===x);if(byLine)return byLine;const byCode=items.filter(it=>it.id===x);return byCode.length===1?byCode[0]:null}
+/**
+ * 报价使用表头定位字段，优先 RFQ Line ID，缺失时才用唯一物料编码。
+ * Quote fields are mapped by headers; prefer RFQ Line ID, and use a uniquely matched item code only as fallback.
+ */
 function parseQuoteRows(text){
-  return String(text||"").split(/[;；\n\r]+/).map(x=>x.trim()).filter(Boolean).map(row=>{
-    const p=row.split(/[，,\t]/).map(x=>x.trim());
-    return {itemRef:p[0]||"",price:p[1]||"",lead:p[2]||"",moq:p[3]||"",status:(p[4]||"quoted").toLowerCase()};
+  const table=parseHeaderTable(text,["RFQ Line ID","物料编码"]);
+  if(table.errors.length){const rows=[];rows._headerErrors=table.errors;return rows}
+  const result=table.rows.map(({data,rowNo})=>{
+    const line=String(data["RFQ Line ID"]||"").trim(),
+      code=String(data["物料编码"]||"").trim(),
+      price=findHeaderValue(data,["单价","阶梯价","价格","报价"]),
+      lead=findHeaderValue(data,["交期","交期天数"]),
+      moq=findHeaderValue(data,["MOQ","最小起订量"]),
+      rawStatus=findHeaderValue(data,["状态","报价状态"]);
+    const status=rawStatus|| (price?"quoted":"review"),errors=[];
+    if(!line&&!code)errors.push("第 "+rowNo+" 行缺少报价行身份");
+    if(line&&code){
+      const obj=items.find(it=>it.lineId===line);
+      if(obj&&obj.id!==code)errors.push("第 "+rowNo+" 行 RFQ Line ID 与物料编码不匹配");
+    }
+    return{itemRef:line||code,price,lead,moq,status,_rowNo:rowNo,_errors:errors};
   });
+  result._headers=table.headers;return result;
 }
 function normalizeQuoteStatus(v){
   const s=String(v||"quoted").trim().toLowerCase();
   if(["未报价","noquote","no quote"].includes(s))return"noquote";
   if(["不供货","不能供货","cannot","cannot supply"].includes(s))return"cannot";
   if(["quoted","报价","正常报价"].includes(s))return"quoted";
+  if(["review","待检查"].includes(s))return"review";
   return null;
+}
+/** 显示中文业务状态而非内部 null/英文码。 / Display readable Chinese business statuses, never null codes. */
+function quoteStatusLabel(status){
+  return{quoted:"正常报价",noquote:"明确未报价",cannot:"不供货",review:"待检查"}[status]||"待检查";
 }
 function parseTierPrice(raw){
   const s=String(raw??"").trim(),errors=[];
@@ -845,9 +868,9 @@ function validateQuotePreview(rows){
   const round=currentQuoteRound(),expected=new Set(expectedIdsForRound(round)),resolved=rows.map(r=>({...r,item:resolveQuoteItem(r.itemRef)})),seen=new Map();
   resolved.forEach(r=>{const key=r.item?.lineId||r.itemRef;seen.set(key,(seen.get(key)||0)+1)});
   return resolved.map(r=>{
-    const status=normalizeQuoteStatus(r.status),lineId=r.item?.lineId||r.itemRef,itemId=r.item?.id||"",duplicate=(seen.get(lineId)||0)>1,codeMatches=items.filter(x=>x.id===String(r.itemRef||"").trim()).length,ambiguous=!r.item&&codeMatches>1,errors=[];if(!status)errors.push("报价状态无法识别");if(ambiguous)errors.push("物料编码对应多条 RFQ 行，请使用 RFQ Line ID");
+    const status=normalizeQuoteStatus(r.status),lineId=r.item?.lineId||r.itemRef,itemId=r.item?.id||"",duplicate=(seen.get(lineId)||0)>1,codeMatches=items.filter(x=>x.id===String(r.itemRef||"").trim()).length,ambiguous=!r.item&&codeMatches>1,errors=[];if(!status)errors.push("报价状态无法识别");if(status==="review")errors.push("价格和状态均为空，请核对");if(r._errors?.length)errors.push(...r._errors);if(ambiguous)errors.push("物料编码对应多条 RFQ 行，请使用 RFQ Line ID");
     let check="已报价";
-    if(ambiguous)check="数据错误";else if(duplicate)check="重复";else if(!r.item||!expected.has(lineId))check="多报";else if(status==="noquote")check="明确未报价";else if(status==="cannot")check="不供货";
+    if(status==="review")check="待检查";else if(ambiguous)check="数据错误";else if(duplicate)check="重复";else if(!r.item||!expected.has(lineId))check="多报";else if(status==="noquote")check="明确未报价";else if(status==="cannot")check="不供货";
     let parsed={price:null,tiers:[],errors:[]},lead={value:null,error:null},moq={value:null,error:null},effective=null;
     if(status==="quoted"){
       parsed=parseTierPrice(r.price);errors.push(...parsed.errors);
@@ -870,13 +893,31 @@ function coverageFromRows(round,rows){
 function quoteLineLabel(lineId){const it=items.find(x=>x.lineId===lineId);return it?`${it.id}(${lineId})`:lineId}
 function renderCoverageResult(result){
   qcExpected.textContent=result.expected;qcQuoted.textContent=result.quoted;qcNoquote.textContent=result.noquote;qcCannot.textContent=result.cannot;qcMissing.textContent=result.missing.length;qcExtra.textContent=result.extras.length;qcDuplicate.textContent=result.duplicates.length;
-  const fmt=(label,ids,cls="")=>ids.length?`<div class="${cls}"><b>${label}：</b>${ids.map(id=>esc(quoteLineLabel(id))).join("、")}</div>`:`<div class="muted"><b>${label}：</b>无</div>`;
+  const fmt=(label,ids,cls="")=>ids.length?`<div class="${cls}"><b>${label}：</b>${ids.slice(0,12).map(id=>esc(quoteLineLabel(id))).join("、")+(ids.length>12?" ……（共 "+ids.length+" 项，点击下方导出 CSV）":"")}</div>`:`<div class="muted"><b>${label}：</b>无</div>`;
   quoteCoverageDetails.innerHTML=fmt("漏报项目",result.missing,"dangertext")+fmt("多报项目",result.extras,"warn")+fmt("重复项目",result.duplicates,"warn");
 }
+/**
+ * 按供应商/报价轮次导出漏报 CSV，Excel 可直接打开。
+ * Export per-supplier, per-round missing lines as an Excel-readable CSV.
+ */
+function exportMissingCsv(round){
+  const missing=coverageFromRows(round,round.lines).missing;
+  if(!missing.length){alert("本轮没有漏报项目。");return}
+  const csvCell=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+  const lines=[["RFQ编号","供应商","报价轮次","报价版本","RFQ Line ID","物料编码","物料名称","数量","单位"]];
+  missing.forEach(id=>{const it=items.find(x=>x.lineId===id);
+    lines.push(["RFQ-DEMO-001",round.supplierId,round.roundNo,round.revisionNo,id,it?.id||"",it?.name||"",it?.qty??"",it?.unit||""]);
+  });
+  const payload="\uFEFF"+lines.map(row=>row.map(csvCell).join(",")).join("\r\n");
+  const url=URL.createObjectURL(new Blob([payload],{type:"text/csv;charset=utf-8"}));
+  const a=document.createElement("a");a.href=url;a.download="RFQ-DEMO-001_"+round.supplierId+"_R"+round.roundNo+"_漏报.csv";
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+exportQuoteMissing.onclick=()=>{const r=currentQuoteRound();if(r)exportMissingCsv(r)};
 function showQuotePreview(rows){
-  const round=currentQuoteRound();if(!round||round.status==="confirmed"){alert("已确认提交不可再导入；请新增本轮修订。");return}
+  const round=currentQuoteRound();if(!round||round.status==="confirmed"){alert("已确认提交不可再导入；请新增本轮新版本。");return}
   quoteImportPreviewRows=validateQuotePreview(rows);quoteImportPreview.style.display="block";
-  quoteImportPreviewBody.innerHTML=quoteImportPreviewRows.map(r=>`<tr><td>${esc(r.itemId||r.itemRef)}<br><span class="muted">${esc(r.lineId||"")}</span></td><td>${esc(r.price)}</td><td>${r.effectivePrice==null?"—":"¥"+r.effectivePrice.toFixed(2)}</td><td>${esc(r.lead)}</td><td>${esc(r.moq)}</td><td>${esc(r.status)}</td><td class="${["已报价","明确未报价","不供货"].includes(r.coverageCheck)?"ok":"dangertext"}">${esc(r.coverageCheck)}${r.errors.length?" · "+esc(r.errors.join("；")):""}</td></tr>`).join("");
+  quoteImportPreviewBody.innerHTML=quoteImportPreviewRows.map(r=>`<tr><td>${esc(r.itemId||r.itemRef)}<br><span class="muted">${esc(r.lineId||"")}</span></td><td>${esc(r.price)}</td><td>${r.effectivePrice==null?"—":"¥"+r.effectivePrice.toFixed(2)}</td><td>${esc(r.lead)}</td><td>${esc(r.moq)}</td><td>${esc(quoteStatusLabel(r.status))}</td><td class="${["已报价","明确未报价","不供货"].includes(r.coverageCheck)?"ok":"dangertext"}">${esc(r.coverageCheck)}${r.errors.length?" · "+esc(r.errors.join("；")):""}</td></tr>`).join("");
   renderCoverageResult(coverageFromRows(round,quoteImportPreviewRows));
 }
 function clearQuoteImportPreview(){quoteImportPreviewRows=[];quoteImportPreviewBody.innerHTML="";quoteImportPreview.style.display="none";const round=currentQuoteRound();if(round)renderCoverageResult(coverageFromRows(round,round.lines))}
@@ -902,9 +943,9 @@ function latestConfirmedQuoteLine(lineId,sid){
 function renderQuoteRound(){
   const round=currentQuoteRound();if(!round)return;const sup=suppliers.find(s=>s.id===round.supplierId),expected=expectedIdsForRound(round);
   quoteEvidenceType.value=round.evidenceType||"email_attachment";quoteEvidenceNote.value=round.evidenceNote||"";
-  quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮 · 修订 ${round.revisionNo}</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认/锁定":"草稿"}</span><div class="small" style="margin-top:5px">轮次表示议价阶段；修订表示同一轮报价的更正提交。已确认提交不可覆盖修改。</div>`;
+  quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮 · 第${round.revisionNo}版</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认/锁定":"草稿"}</span><div class="small" style="margin-top:5px">轮次表示议价阶段；修订表示同一轮报价的更正提交。已确认提交不可覆盖修改。</div>`;
   quoteRoundHint.textContent=`本轮应报价范围 ${expected.length} 项；当前提交已记录 ${round.lines.length} 项。`;renderCoverageResult(coverageFromRows(round,round.lines));
-  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=l.source==="carry"?"明确沿用上轮":l.source==="manual"?"手工修正":l.source==="revision-copy"?"复制自上一修订":"导入",prev=round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(l.status)}</td><td>${src}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="11" class="muted">当前提交还没有报价记录。</td></tr>';
+  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=l.source==="carry"?"明确沿用上轮":l.source==="manual"?"手工修正":l.source==="revision-copy"?"复制自上一修订":"导入",prev=round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="11" class="muted">当前提交还没有报价记录。</td></tr>';
   document.querySelectorAll("[data-edit-quote]").forEach(b=>b.onclick=()=>editQuoteLine(Number(b.dataset.editQuote)));
   carryForwardMissing.disabled=round.roundNo===1||round.status==="confirmed";editRoundScope.disabled=round.roundNo===1||round.status==="confirmed";confirmQuoteRound.disabled=round.status==="confirmed";commitQuoteImport.disabled=round.status==="confirmed";renderQuotes();
 }
@@ -931,13 +972,13 @@ closeRoundScope.onclick=()=>quoteScopeEditor.style.display="none";
 saveRoundScope.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;r.expectedLineIds=[...quoteScopeList.querySelectorAll("[data-scope-line]:checked")].map(x=>x.dataset.scopeLine);r.lines=r.lines.filter(x=>r.expectedLineIds.includes(x.lineId));quoteScopeEditor.style.display="none";renderQuoteRound()};
 confirmQuoteRound.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;if(!r.lines.length){alert("当前提交没有报价记录。");return}r.evidenceType=quoteEvidenceType.value;r.evidenceNote=quoteEvidenceNote.value.trim();const cov=coverageFromRows(r,r.lines);if((cov.missing.length||cov.extras.length||cov.duplicates.length)&&!confirm(`覆盖检查仍有异常：漏报 ${cov.missing.length} 项，多报 ${cov.extras.length} 项，重复 ${cov.duplicates.length} 项。仍要确认并锁定本次提交吗？`))return;r.status="confirmed";r.confirmedAt=new Date().toISOString();awards.clear();awardReasons.clear();setDefaultLowestAwards();renderQuoteRoundSelector()};
 quoteManualAdd.onclick=()=>showQuotePreview([{itemRef:quoteManualItem.value.trim(),price:quoteManualPrice.value.trim(),lead:quoteManualLead.value.trim(),moq:quoteManualMoq.value.trim(),status:quoteManualStatus.value}]);
-quoteParsePaste.onclick=()=>{const rows=parseQuoteRows(quotePaste.value);if(!rows.length){alert("没有识别到报价记录。");return}showQuotePreview(rows)};
+quoteParsePaste.onclick=()=>{const rows=parseQuoteRows(quotePaste.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到报价记录，请检查表头和数据。");return}showQuotePreview(rows)};
 quoteReadClipboard.onclick=async()=>{try{quotePaste.value=await navigator.clipboard.readText();quoteParsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请按 Ctrl+V 粘贴。")}};
 quoteClearInput.onclick=()=>{quotePaste.value=""};quoteClearPreview.onclick=clearQuoteImportPreview;clearQuotePreview2.onclick=clearQuoteImportPreview;
 toggleQuoteMapping.onclick=()=>{quoteMappingBox.style.display=quoteMappingBox.style.display==="none"?"block":"none"};
 saveQuoteMapping.onclick=()=>{quoteMappingHint.textContent="已保存 M0 映射演示："+[mapItemRef.value,mapPrice.value,mapLead.value,mapMoq.value,mapStatus.value].join(" → ")};
 demoQuoteExcel.onclick=()=>{const a=assignedItemsForSupplier(quoteImportSupplier.value);showQuotePreview([{itemRef:a[0]?.lineId||items[0].lineId,price:"1-9:118|10-49:108.5|50+:98",lead:"7",moq:"1",status:"quoted"},{itemRef:a[1]?.lineId||items[1].lineId,price:"108.50",lead:"10",moq:"5",status:"quoted"}])};
-quoteImportFile.onchange=()=>{const file=quoteImportFile.files?.[0];if(!file)return;const ext=(file.name.split(".").pop()||"").toLowerCase();if(ext==="csv"||ext==="txt"){const r=new FileReader();r.onload=()=>showQuotePreview(parseQuoteRows(r.result));r.readAsText(file)}else demoQuoteExcel.click()};
+quoteImportFile.onchange=()=>{const file=quoteImportFile.files?.[0];if(!file)return;const ext=(file.name.split(".").pop()||"").toLowerCase();if(ext==="csv"||ext==="txt"){const r=new FileReader();r.onload=()=>{const rows=parseQuoteRows(r.result);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}showQuotePreview(rows)};r.readAsText(file)}else demoQuoteExcel.click()};
 commitQuoteImport.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed"){alert("已确认提交不可覆盖，请新增本轮修订。");return}const valid=quoteImportPreviewRows.filter(x=>["已报价","明确未报价","不供货"].includes(x.coverageCheck)&&!x.errors.length);if(!valid.length){alert("没有可写入的有效报价。");return}const seen=new Set();valid.filter(x=>{if(seen.has(x.lineId))return false;seen.add(x.lineId);return true}).forEach(x=>upsertRoundLine(r,x,"import"));clearQuoteImportPreview();renderQuoteRound()};
 carryForwardMissing.onclick=()=>{const r=currentQuoteRound();if(!r||r.roundNo===1||r.status==="confirmed")return;const existing=new Set(r.lines.map(x=>x.lineId));let n=0;expectedIdsForRound(r).forEach(lineId=>{if(existing.has(lineId))return;const prev=priorApplicableLine(r.supplierId,lineId,r.roundNo);if(!prev)return;const it=items.find(x=>x.lineId===lineId);r.lines.push({lineId,itemId:it?.id||prev.itemId,price:prev.price,tiers:(prev.tiers||[]).map(t=>({...t})),lead:prev.lead,moq:prev.moq,status:"quoted",source:"carry",original:{carryFromRound:prev.roundNo,carryFromRevision:prev.revisionNo},updatedAt:new Date().toISOString()});n++});alert(`已对本轮范围内 ${n} 项明确记录“沿用上轮”。未进入本轮范围的项目不会被处理。`);renderQuoteRound()};
 
@@ -1195,7 +1236,7 @@ function renderQuoteAnalysis(){
 function renderQuotes(){
   const sups=comparisonSuppliers(),its=comparisonItems(),QUOTE_PAGE=10,pages=Math.max(1,Math.ceil(its.length/QUOTE_PAGE));quotePage=Math.min(quotePage,pages-1);const start=quotePage*QUOTE_PAGE,slice=its.slice(start,start+QUOTE_PAGE);
   let h=`<thead><tr><th>物料</th><th>上次采购价</th>`+sups.map(s=>`<th>${esc(s.name)}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`).join("")+`<th>最终选择</th></tr></thead><tbody>`;
-  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>¥${prev}</td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=s.id===low?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/修订${meta.revisionNo}${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell":""}">${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}" data-award="${it.lineId}|${s.id}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId);h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("[data-award]").forEach(b=>b.onclick=()=>{const [lineId,sid]=b.dataset.award.split("|");chooseAward(lineId,sid)});document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter((it,i)=>lowestSupplierForItem(it,its.indexOf(it))!==sid);let reason="";if(nonLowest.length){reason=prompt(`其中 ${nonLowest.length} 项不是最低价，请填写本次批量选择原因：`,"")||"";if(!reason.trim())return}eligible.forEach(it=>{const i=its.indexOf(it);awards.set(it.lineId,sid);if(lowestSupplierForItem(it,i)!==sid)awardReasons.set(it.lineId,reason.trim());else awardReasons.delete(it.lineId)});renderQuotes()});renderQuoteAnalysis();
+  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>¥${prev}</td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=s.id===low?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell":""}">${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}" data-award="${it.lineId}|${s.id}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId);h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("[data-award]").forEach(b=>b.onclick=()=>{const [lineId,sid]=b.dataset.award.split("|");chooseAward(lineId,sid)});document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter((it,i)=>lowestSupplierForItem(it,its.indexOf(it))!==sid);let reason="";if(nonLowest.length){reason=prompt(`其中 ${nonLowest.length} 项不是最低价，请填写本次批量选择原因：`,"")||"";if(!reason.trim())return}eligible.forEach(it=>{const i=its.indexOf(it);awards.set(it.lineId,sid);if(lowestSupplierForItem(it,i)!==sid)awardReasons.set(it.lineId,reason.trim());else awardReasons.delete(it.lineId)});renderQuotes()});renderQuoteAnalysis();
 }
 function chooseAward(lineId,sid){const its=comparisonItems(),sups=comparisonSuppliers(),it=its.find(x=>x.lineId===lineId),i=its.indexOf(it),vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);if(vals[0]?.sid!==sid){const reason=prompt("选择的不是最低报价，请填写原因：","");if(reason===null||!reason.trim())return;awardReasons.set(lineId,reason.trim())}else awardReasons.delete(lineId);awards.set(lineId,sid);renderQuotes()}
 resetAwards.textContent="恢复默认最低价";resetAwards.onclick=()=>{awards.clear();awardReasons.clear();setDefaultLowestAwards();renderQuotes()};
