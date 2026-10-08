@@ -648,6 +648,8 @@ function itemMergeCheck(a,b){
   if(quoteRounds.some(r=>r.lines.some(l=>l.lineId===a.lineId)||r.status==="confirmed"&&r.expectedLineIds?.includes(a.lineId)))diffs.push("已有报价历史");
   return{kind:diffs.length?"conflict":"merge",reasons:diffs};
 }
+/** 用虚拟状态制定合并决策，不预先改写原始物料表。
+ * Build merge decisions on a virtual copy before mutating actual RFQ items. */
 function planItemImport(rows){
   const shadow=items.map(it=>({...it,custom:{...(it.custom||{})}})),actions=[];
   for(const row of rows){
@@ -662,6 +664,8 @@ function planItemImport(rows){
   return actions;
 }
 function setImportPreview(rows,source){
+  // M0 Excel 模拟行也需要稳定行号。 / Demo Excel rows also require a stable RFQ Line ID.
+  rows.forEach(row=>{if(!row.lineId)row.lineId=nextLineId()});
   if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}
   pendingImportRows=rows;importPreview.style.display="block";
   const actions=planItemImport(rows),bad=rows.filter(x=>x._errors?.length);
@@ -669,7 +673,10 @@ function setImportPreview(rows,source){
   importPreview.innerHTML=`<div class="sline"><div><b>${esc(source)}</b> · ${rows.length} 行 · 自动合并 ${merged} 行 · 待人工确认 ${conflicts} 行 · 错误 ${bad.length} 行</div><button class="btn primary" id="confirmImportRows" ${bad.length?"disabled":""}>确认加入本次询价</button></div><div class="tablewrap" style="max-height:230px;margin-top:8px"><table><thead><tr><th>物料编码</th><th>名称</th><th>数量</th><th>单位</th><th>处理方案</th></tr></thead><tbody>${actions.slice(0,50).map(x=>`<tr><td>${esc(x.row.id)}</td><td>${esc(x.row.name)}</td><td>${x.row.qty??"—"}</td><td>${esc(x.row.unit)}</td><td class="${x.row._errors?.length||x.kind==="conflict"?"dangertext":"ok"}">${esc(x.row._errors?.join("、")|| (x.kind==="merge"?"合并至 "+x.target.lineId : x.kind==="conflict"?"冲突："+x.reasons.join("、"):"新建询价行"))}</td></tr>`).join("")}</tbody></table></div>`;
   document.getElementById("confirmImportRows").onclick=()=>addRowsToRfq(pendingImportRows);
 }
+/** 确认后应用合并/新增，保留来源行，冲突由采购员确认。
+ * Apply merges/additions after confirmation and keep source rows traceable. */
 function addRowsToRfq(rows){
+  rows.forEach(row=>{if(!row.lineId)row.lineId=nextLineId()});
   if(rows.some(r=>r._errors?.length)){alert("有错误数据，不允许写入");return}
   const actions=planItemImport(rows);
   const conflicts=actions.filter(x=>x.kind==="conflict");
@@ -864,6 +871,8 @@ function expectedIdsForRound(round){
   if(!Array.isArray(round.expectedLineIds))round.expectedLineIds=assignedItemsForSupplier(round.supplierId).map(x=>x.lineId);
   return round.expectedLineIds;
 }
+/** 校验报价身份、状态、价格和本轮范围，禁止静默写入错误行。
+ * Validate quote identity, status, price and round scope before committing. */
 function validateQuotePreview(rows){
   const round=currentQuoteRound(),expected=new Set(expectedIdsForRound(round)),resolved=rows.map(r=>({...r,item:resolveQuoteItem(r.itemRef)})),seen=new Map();
   resolved.forEach(r=>{const key=r.item?.lineId||r.itemRef;seen.set(key,(seen.get(key)||0)+1)});
@@ -882,6 +891,8 @@ function validateQuotePreview(rows){
     return {...r,status,lineId,itemId,priceParsed:parsed,leadValue:lead.value,moqValue:moq.value,effectivePrice:effective,errors,coverageCheck:check};
   });
 }
+/** 区分已报价、明确未报价、不供货、漏报、多报与重复。
+ * Distinguish quoted, no-quote, cannot-supply, missing, extra and duplicate rows. */
 function coverageFromRows(round,rows){
   const expected=expectedIdsForRound(round),expectedSet=new Set(expected),byId=new Map(),duplicates=[];
   rows.forEach(r=>{const id=r.lineId||r.itemRef||r.itemId;if(byId.has(id))duplicates.push(id);else byId.set(id,r)});
@@ -935,6 +946,8 @@ function priorApplicableLine(sid,lineId,beforeRoundNo){
   for(const rn of rounds){const sub=latestConfirmedSubmissionForRound(sid,rn);if(!sub||!expectedIdsForRound(sub).includes(lineId))continue;const line=sub.lines.find(x=>x.lineId===lineId);if(!line||line.status!=="quoted")return null;return{...line,roundNo:rn,revisionNo:sub.revisionNo}}
   return null;
 }
+/** 只从本轮真实有效状态追溯，不跨越未报价/不供货。
+ * Resolve effective confirmed quotations without bypassing no-quote/cannot-supply states. */
 function latestConfirmedQuoteLine(lineId,sid){
   const rounds=[...new Set(supplierSubmissions(sid).filter(r=>r.status==="confirmed").map(r=>r.roundNo))].sort((a,b)=>b-a);
   for(const rn of rounds){const sub=latestConfirmedSubmissionForRound(sid,rn);if(!sub||!expectedIdsForRound(sub).includes(lineId))continue;const line=sub.lines.find(x=>x.lineId===lineId);if(!line)return null;if(line.status==="quoted")return{...line,roundNo:rn,revisionNo:sub.revisionNo};return null}
