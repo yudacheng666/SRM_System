@@ -954,32 +954,72 @@ function filteredItems(searchId,catId,stateId){
     return searchOk&&(!cat||it.cat===cat)&&stateOk
   })
 }
+/**
+ * 列表排序以已应用的过滤结果为基础，保证分页、选择、排序一致。
+ * Sort the applied-filter result before pagination and selection.
+ */
+const itemSortRules=[{key:"_createdOrder",direction:"desc"}];
+function sortItemList(list){
+  return list.map((it,i)=>({it,i})).sort((a,b)=>{
+    for(const rule of itemSortRules){
+      const av=rule.key==="supplierCount"?getSet(a.it.lineId).size:a.it[rule.key]??a.it.custom?.[rule.key]??"",
+            bv=rule.key==="supplierCount"?getSet(b.it.lineId).size:b.it[rule.key]??b.it.custom?.[rule.key]??"";
+      const cmp=typeof av==="number"&&typeof bv==="number"?av-bv:String(av).localeCompare(String(bv),"zh-CN",{numeric:true});
+      if(cmp)return rule.direction==="asc"?cmp:-cmp;
+    }
+    return a.i-b.i;
+  }).map(x=>x.it);
+}
 function currentItemList(){
   const q=appliedSearch.item;
-  return items.filter(it=>{
+  return sortItemList(items.filter(it=>{
     if(q&&![it.lineId,it.id,it.name,it.cat,it.qty,it.unit,getSet(it.lineId).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))return false;
     const keys=["lineId","id","name","cat","qty","unit","supplierCount",...customFields.map(f=>f.key)];
     return keys.every(k=>!fieldFilters[k]||fuzzyIncludes(itemFieldValue(it,k),fieldFilters[k]));
-  });
+  }));
+}
+function itemCodeCell(it){return `<b>${esc(it.id)}</b><div class="small muted">${esc(it.name)}</div>`}
+function itemDrawingCell(it){
+  const docs=drawingDocsForItem(it);
+  if(!docs.length)return '<span class="dangertext">缺图纸</span>';
+  return `<button class="drawingThumb" data-drawing="${it.lineId}" title="PDF ${docs[0].pages}页">${drawingSvg(it,docs[0],1,.18)}</button><div class="pdfMeta">PDF ${docs[0].pages}页</div>`;
 }
 function renderItemList(){
   const fields=[
-    {key:"lineId",label:"RFQ Line ID"},
-    {key:"id",label:"物料编码 / 图纸"},
-    {key:"name",label:"名称"},
-    {key:"cat",label:"分类"},
-    {key:"qty",label:"数量"},
-    {key:"unit",label:"单位"},
-    {key:"supplierCount",label:"已分配供应商"},
+    {key:"lineId",label:"RFQ Line ID"},{key:"id",label:"物料编码"},
+    {key:"drawing",label:"图纸"},{key:"name",label:"名称"},
+    {key:"cat",label:"分类"},{key:"qty",label:"数量"},
+    {key:"unit",label:"单位"},{key:"supplierCount",label:"已分配供应商"},
     ...customFields.map(f=>({key:f.key,label:f.label}))
   ];
-  itemHead.innerHTML=`<tr><th></th>${fields.map(f=>`<th>${esc(f.label)}</th>`).join("")}</tr><tr><th></th>${fields.map(f=>`<th><input class="colFilter" type="text" data-field-filter="${f.key}" value="${esc(fieldFilterDraft[f.key]||"")}" placeholder="模糊搜索"></th>`).join("")}</tr>`;
-  document.querySelectorAll("[data-field-filter]").forEach(x=>x.oninput=()=>{fieldFilterDraft[x.dataset.fieldFilter]=x.value});
-  const list=currentItemList(),pages=Math.max(1,Math.ceil(list.length/PAGE));itemPage=Math.min(itemPage,pages-1),slice=list.slice(itemPage*PAGE,itemPage*PAGE+PAGE);
-  itemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-im="${it.lineId}" ${itemManageSel.has(it.lineId)?"checked":""}></td><td>${itemCell(it)}</td><td>${esc(it.name)}</td><td>${esc(it.cat)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td>${getSet(it.lineId).size}</td>${customFields.map(f=>`<td>${esc(itemFieldValue(it,f.key))}</td>`).join("")}</tr>`).join("");
+  const order=key=>{const i=itemSortRules.findIndex(r=>r.key===key);return i<0?"":` ${i+1}${itemSortRules[i].direction==="asc"?"↑":"↓"}`};
+  itemHead.innerHTML=`<tr><th>选择</th>${fields.map(f=>`<th>${f.key==="drawing"?"图纸":`<button class="btn" data-item-sort="${f.key}" title="点击排序，Shift+点击添加排序字段">${esc(f.label)}${order(f.key)}</button>`}</th>`).join("")}</tr><tr><th><button class="btn" id="applyColumnSearch">搜索</button><button class="btn" id="clearColumnSearch">清空</button></th>${fields.map(f=>`<th>${f.key==="drawing"?"":`<input class="colFilter" type="text" data-field-filter="${f.key}" value="${esc(fieldFilterDraft[f.key]||"")}" placeholder="模糊搜索">`}</th>`).join("")}</tr>`;
+  document.querySelectorAll("[data-field-filter]").forEach(x=>{
+    x.oninput=()=>{fieldFilterDraft[x.dataset.fieldFilter]=x.value};
+    x.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();runItemSearch.click()}};
+  });
+  applyColumnSearch.onclick=()=>runItemSearch.click();
+  clearColumnSearch.onclick=()=>clearItemSearch.click();
+  document.querySelectorAll("[data-item-sort]").forEach(b=>b.onclick=e=>{
+    const key=b.dataset.itemSort,existing=itemSortRules.find(x=>x.key===key);
+    const next={key,direction:existing?.direction==="asc"?"desc":"asc"};
+    if(e.shiftKey){const idx=itemSortRules.findIndex(x=>x.key===key);if(idx>=0)itemSortRules.splice(idx,1);itemSortRules.push(next)}
+    else itemSortRules.splice(0,itemSortRules.length,next);
+    itemPage=0;renderItemList();
+  });
+  const list=currentItemList(),pages=Math.max(1,Math.ceil(list.length/PAGE));
+  itemPage=Math.min(itemPage,pages-1);const slice=pageSlice(list,itemPage);
+  itemBody.innerHTML=slice.map(it=>`<tr>
+    <td><input type="checkbox" data-im="${it.lineId}" ${itemManageSel.has(it.lineId)?"checked":""}></td>
+    <td>${esc(it.lineId)}</td><td>${esc(it.id)}</td><td>${itemDrawingCell(it)}</td>
+    <td>${esc(it.name)}</td><td>${esc(it.cat)}</td><td>${it.qty}</td>
+    <td>${esc(it.unit)}</td><td>${getSet(it.lineId).size}</td>
+    ${customFields.map(f=>`<td>${esc(itemFieldValue(it,f.key))}</td>`).join("")}
+  </tr>`).join("");
   bindDrawingThumbs();
   bindShiftRange("#itemBody input[data-im]","item-manage","im",(id,checked)=>checked?itemManageSel.add(id):itemManageSel.delete(id),renderItemList);
   itemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${itemPage+1}/${pages} 页 · 已选择 ${itemManageSel.size} 项`;
+  itemSortHint.textContent="当前排序："+itemSortRules.map((r,i)=>`${i+1}.${fields.find(f=>f.key===r.key)?.label||"新增顺序"}${r.direction==="asc"?"升序":"降序"}`).join(" → ")+"；Shift+点击列标题叠加字段排序";
   renderPageNav(itemPager,itemPage,list.length,PAGE,p=>{itemPage=p;resetRange("item-manage");renderItemList()});
 }
 runItemSearch.onclick=()=>{appliedSearch.item=itemSearch.value.trim();Object.keys(fieldFilterDraft).forEach(k=>fieldFilters[k]=fieldFilterDraft[k]);itemPage=0;resetRange("item-manage");renderItemList()};
@@ -987,6 +1027,9 @@ itemSelectAll.onclick=()=>{selectAllIds(itemManageSel,currentItemList());renderI
 itemSelectPage.onclick=()=>{selectAllIds(itemManageSel,pageSlice(currentItemList(),itemPage));renderItemList()};
 itemInvertAll.onclick=()=>{invertIds(itemManageSel,currentItemList());renderItemList()};
 itemInvertPage.onclick=()=>{invertIds(itemManageSel,pageSlice(currentItemList(),itemPage));renderItemList()};
+clearItemSelection.onclick=()=>{itemManageSel.clear();renderItemList()};
+clearItemSearch.onclick=()=>{itemSearch.value="";appliedSearch.item="";Object.keys(fieldFilterDraft).forEach(k=>{fieldFilterDraft[k]="";fieldFilters[k]=""});itemPage=0;renderItemList()};
+itemSearch.onkeydown=e=>{if(e.key==="Enter")runItemSearch.click()};
 
 function coverage(){
   let covered=0,single=0,none=0;
@@ -1005,6 +1048,7 @@ function renderAssignItems(){
   renderPageNav(assignPager,assignPage,list.length,PAGE,p=>{assignPage=p;resetRange("assign-items");renderAssignItems()});
 }
 runAssignSearch.onclick=()=>{appliedSearch.assignItem=assignItemSearch.value.trim();appliedSearch.assignCat=assignCatFilter.value;appliedSearch.assignState=assignStateFilter.value;assignPage=0;resetRange("assign-items");renderAssignItems();renderSuppliers()};
+clearAssignSearch.onclick=()=>{assignItemSearch.value="";assignCatFilter.value="";assignStateFilter.value="";runAssignSearch.click()};
 selectAssignAll.onclick=()=>{selectAllIds(assignSel,filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"));renderAssignAll()};
 selectAssignPage.onclick=()=>{selectAllIds(assignSel,pageSlice(filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"),assignPage));renderAssignAll()};
 invertAssignAll.onclick=()=>{invertIds(assignSel,filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"));renderAssignAll()};
@@ -1026,6 +1070,7 @@ function renderSuppliers(){
   renderPageNav(supplierListPager,supplierListPage,list.length,SUPPLIER_PAGE,p=>{supplierListPage=p;renderSuppliers()});
 }
 runSupplierSearch.onclick=()=>{appliedSearch.supplier=supplierSearch.value.trim();supplierListPage=0;renderSuppliers()};
+clearSupplierSearch.onclick=()=>{supplierSearch.value="";runSupplierSearch.click()};
 
 function renderSupplierFirstList(){
   const q=appliedSearch.supplierFirst;
@@ -1075,9 +1120,11 @@ function renderCopySources(){
   if([...copyFromSupplier.options].some(o=>o.value===current))copyFromSupplier.value=current;
 }
 runSupplierFirstSearch.onclick=()=>{appliedSearch.supplierFirst=supplierFirstSearch.value.trim();supplierFirstPage=0;renderSupplierFirstList()};
+clearSupplierFirstSearch.onclick=()=>{supplierFirstSearch.value="";runSupplierFirstSearch.click()};
 openSupplierPicker.onclick=()=>{supplierPicker.style.display="block";resetRange("supplier-picker");renderSupplierPoolPicker()};
 closeSupplierPicker.onclick=()=>{supplierPicker.style.display="none"};
 runSupplierPoolSearch.onclick=()=>{appliedSearch.supplierPool=supplierPoolSearch.value.trim();supplierPoolPage=0;resetRange("supplier-picker");renderSupplierPoolPicker()};
+clearSupplierPoolSearch.onclick=()=>{supplierPoolSearch.value="";runSupplierPoolSearch.click()};
 function filteredSfItems(){
   const q=appliedSearch.sfItem,cat=appliedSearch.sfCat;
   return items.filter(it=>(!q||[it.lineId,it.id,it.name,it.cat,it.qty,it.unit,getSet(it.lineId).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))&&(!cat||it.cat===cat))
@@ -1095,6 +1142,7 @@ function renderSfItems(){
   renderPageNav(sfPager,sfPage,list.length,PAGE,p=>{sfPage=p;resetRange("supplier-items");renderSfItems()});
 }
 runSfSearch.onclick=()=>{appliedSearch.sfItem=sfItemSearch.value.trim();appliedSearch.sfCat=sfCatFilter.value;sfPage=0;resetRange("supplier-items");renderSfItems()};
+clearSfSearch.onclick=()=>{sfItemSearch.value="";sfCatFilter.value="";runSfSearch.click()};
 sfLinkFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>getSet(it.lineId).add(activeSupplier));renderAssignAll()};
 sfLinkPage.onclick=()=>{if(!activeSupplier)return;pageSlice(filteredSfItems(),sfPage).forEach(it=>getSet(it.lineId).add(activeSupplier));renderAssignAll()};
 sfInvertFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>{const set=getSet(it.lineId);set.has(activeSupplier)?set.delete(activeSupplier):set.add(activeSupplier)});renderAssignAll()};
@@ -1102,6 +1150,7 @@ sfInvertPage.onclick=()=>{if(!activeSupplier)return;pageSlice(filteredSfItems(),
 sfUnlinkFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>getSet(it.lineId).delete(activeSupplier));renderAssignAll()};
 sfCopyRange.onclick=()=>{if(!activeSupplier||!copyFromSupplier.value)return;const source=copyFromSupplier.value;let n=0;items.forEach(it=>{if(getSet(it.lineId).has(source)&&!getSet(it.lineId).has(activeSupplier)){getSet(it.lineId).add(activeSupplier);n++}});flash(`已复制物料范围作为起点：新增 ${n} 条关系。可继续直接勾选/取消差异物料。`);renderAssignAll()};
 
+for(const [id,button] of [["assignItemSearch",runAssignSearch],["supplierSearch",runSupplierSearch],["supplierFirstSearch",runSupplierFirstSearch],["supplierPoolSearch",runSupplierPoolSearch],["sfItemSearch",runSfSearch]])document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")button.click()});
 function renderAssignAll(){renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
 function flash(msg){document.getElementById("previewBox").style.display="block";document.getElementById("previewBox").textContent=msg}
 let previewSupplierId=null;
