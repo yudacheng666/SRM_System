@@ -664,9 +664,14 @@ function planItemImport(rows){
   return actions;
 }
 function setImportPreview(rows,source){
-  // M0 Excel 模拟行也需要稳定行号。 / Demo Excel rows also require a stable RFQ Line ID.
-  rows.forEach(row=>{if(!row.lineId)row.lineId=nextLineId()});
   if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}
+  if(!rows.length){alert("只有表头，没有可导入的数据行。");return}
+  // 给每批来源增加标识并为 M0 Excel 模拟行生成稳定行号。
+  // Label each source batch and assign stable IDs to simulated Excel rows.
+  rows.forEach(row=>{
+    if(!row.lineId)row.lineId=nextLineId();
+    if(row._rowNo)row.sources=[{source:source+" · 第"+row._rowNo+"行",qty:row.qty}];
+  });
   pendingImportRows=rows;importPreview.style.display="block";
   const actions=planItemImport(rows),bad=rows.filter(x=>x._errors?.length);
   const merged=actions.filter(x=>x.kind==="merge").length,conflicts=actions.filter(x=>x.kind==="conflict").length;
