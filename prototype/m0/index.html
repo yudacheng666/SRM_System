@@ -914,7 +914,12 @@ function renderCoverageResult(result){
 function exportMissingCsv(round){
   const missing=coverageFromRows(round,round.lines).missing;
   if(!missing.length){alert("本轮没有漏报项目。");return}
-  const csvCell=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+  // 防止 Excel 把物料编码/名称当作公式。 / Prevent spreadsheet formula injection in exported cells.
+  const csvCell=v=>{
+    const raw=String(v??"");
+    const safe=/^[=+@-]/.test(raw.trimStart())?"'"+raw:raw;
+    return '"'+safe.replace(/"/g,'""')+'"';
+  };
   const lines=[["RFQ编号","供应商","报价轮次","报价版本","RFQ Line ID","物料编码","物料名称","数量","单位"]];
   missing.forEach(id=>{const it=items.find(x=>x.lineId===id);
     lines.push(["RFQ-DEMO-001",round.supplierId,round.roundNo,round.revisionNo,id,it?.id||"",it?.name||"",it?.qty??"",it?.unit||""]);
