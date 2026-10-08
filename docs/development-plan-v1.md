@@ -522,3 +522,39 @@ M6 比价报告同时展示：
 - 已有报价历史时删除/移除不得产生孤儿数据
 
 M0 代码回归通过后，还必须由真实采购员完成一次端到端模拟操作，才可最终标记 M0 Pass。
+
+## 16. M0 第三轮体验修改与后续阶段安排（2026-10-08）
+## 16. M0 third-round UX corrections and subsequent phase allocation (2026-10-08)
+
+本轮按已确认批注先更新 PRD 和业务规则，再修改 M0，并执行代码与业务函数回归；M0 最终通过仍须采购员真实体验。
+This round updates PRD and business rules before M0 changes and runs code/business-function regression; final M0 acceptance still requires actual buyer hands-on testing.
+
+M0 本轮完成：表头映射剪贴板、兼容同编码合并和来源留存、冲突人工确认、RFQ Line ID/编码/图纸分列、最新在前及多字段排序。
+M0 now implements header-mapped paste, compatible same-code consolidation with source traceability, explicit conflict handling, separate Line ID/code/drawing columns, newest-first and multi-field sorting.
+
+M0 本轮完成：搜索按钮/清空条件、取消选择、轮次“第N版”文案、中文报价状态以及供应商漏报 CSV 导出。
+M0 also implements explicit search/clear controls, clear-selection, “Version N” labels, readable quotation statuses and supplier missing-line CSV export.
+
+M0 的 PDF 仍是虚构示意，Excel 导入仍是模拟流程，不能将它们当成真实 PDF/Excel 生产实现。
+M0 still uses synthetic PDF-like views and a simulated Excel import path; neither should be described as a production PDF/Excel implementation.
+
+M1：确定主数据键、字段字典、属性来源、数量合并的审计数据模型以及可靠持久化方案。
+M1: define master-data keys, field dictionaries, attribute sources, auditable consolidation models and reliable persistence.
+
+M2/M3：在物料、供应商及其他相关录入界面按唯一关键字段自动补齐，不覆盖采购员已经修改的交易属性。
+M2/M3: implement unique-key autofill in item, supplier and other relevant entry forms without overwriting buyer-edited transaction attributes.
+
+M4：使用合并后的 RFQ 行及对应图纸生成供应商询价包，保留需求来源和历史修订快照。
+M4: generate supplier RFQ packages from consolidated lines and drawings while retaining source-demand and revision snapshots.
+
+M5：正式 Excel 表头/模板映射、原始报价证据及报价状态标准化、缺失项目导出复用。
+M5: implement production Excel header/template mapping, original-evidence links, normalized quote statuses and reusable omission exports.
+
+M6：按合并后的询价数量计算有效阶梯价和整体金额，防止重复计价。
+M6: calculate applicable tiers and aggregate amounts from consolidated RFQ quantities without double counting.
+
+文档新写/实质更新一律中文一行、英文一行；重要代码逻辑采用中英双语注释。
+All newly written or materially updated documentation uses paired Chinese/English lines; critical code logic uses bilingual comments.
+
+本轮测试记录：`docs/05_20261008_M0体验修改回归.md`。
+This round's regression report: `docs/05_20261008_M0体验修改回归.md`.
