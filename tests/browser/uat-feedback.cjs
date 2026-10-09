@@ -33,7 +33,7 @@ const entry=pathToFileURL(path.resolve(__dirname,'../../prototype/m0/index.html'
   await page.locator('#itemEditSave').click();
   assert.equal(await page.evaluate(()=>items.find(x=>x.lineId==='RFQ-L01200')?.id),'UAT-EDIT-01200');
   assert.equal(await page.evaluate(()=>items.find(x=>x.lineId==='RFQ-L01200')?.qty),12);
-  assert.equal(await page.evaluate(()=>items.find(x=>x.lineId==='RFQ-L01200')?.unit),'件');
+  assert.equal(await page.evaluate(()=>items.find(x=>x.lineId==='RFQ-L01200')?.unit),'个');
   check('double-click edit validates quantity, preserves RFQ Line ID and original other fields');
 
   await tab('quotes');
