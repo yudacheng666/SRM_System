@@ -1,0 +1,21 @@
+# 中文：使用 GitHub 自动运行 M0 第一批 P0 业务函数回归，不调用 Codex。
+# English: Run M0 first-batch P0 regression on GitHub without Codex.
+name: M0 P0 Regression
+on:
+  push:
+    branches:
+      - draft/20261009-m0-p0-fixes
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  m0-p0:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Node version
+        run: node --version
+      - name: Run real M0 business-function checks
+        run: node tests/m0-p0-regression.cjs
