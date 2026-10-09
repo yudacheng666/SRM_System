@@ -148,6 +148,28 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           </table>
         </div>
         <div class="pager"><span id="itemCount"></span><div id="itemPager"></div></div>
+        <div class="small muted" style="margin-top:6px">双击物料行可编辑编码、数量和属性；已有报价记录的行只能查看。</div>
+      </div>
+    </div>
+    <div id="itemEditModal" class="modalBackdrop" aria-hidden="true">
+      <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="itemEditTitle" style="width:min(620px,96vw)">
+        <div class="modalHead"><b id="itemEditTitle">编辑本次询价物料</b><button class="btn" id="itemEditClose" type="button">关闭</button></div>
+        <div class="modalBody">
+          <div id="itemEditIdentity" class="small muted" style="margin-bottom:10px"></div>
+          <div class="intakeGrid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+            <label>存货编码（物料编码）<input id="itemEditCode" type="text" style="width:100%"></label>
+            <label>数量<input id="itemEditQty" type="number" step="any" min="0.000001" style="width:100%"></label>
+            <label>物料名称<input id="itemEditName" type="text" style="width:100%"></label>
+            <label>分类<input id="itemEditCat" type="text" style="width:100%"></label>
+            <label>单位<input id="itemEditUnit" type="text" style="width:100%"></label>
+          </div>
+          <div class="small muted" id="itemEditHint" style="margin:10px 0"></div>
+          <div id="itemEditError" class="dangertext small"></div>
+          <div class="toolbar" style="justify-content:flex-end;margin-top:12px">
+            <button id="itemEditCancel" class="btn" type="button">取消</button>
+            <button id="itemEditSave" class="btn primary" type="button">保存修改</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -319,17 +341,17 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
       <div class="intakeBox">
         <h3>单条输入</h3>
         <div class="toolbar">
-          <input id="quoteManualItem" type="text" placeholder="RFQ Line ID / 物料编码">
-          <input id="quoteManualPrice" type="text" placeholder="单价 / 阶梯价，如 1-99:100|100-499:90|500+:80">
-          <input id="quoteManualLead" type="text" placeholder="交期(天)">
-          <input id="quoteManualMoq" type="text" placeholder="MOQ">
-          <select id="quoteManualStatus"><option value="quoted">正常报价</option><option value="noquote">未报价</option><option value="cannot">不供货</option></select>
+          <label class="small">物料编码 / RFQ Line ID<input id="quoteManualItem" type="text" placeholder="唯一物料编码 / RFQ Line ID" style="display:block;max-width:220px"></label>
+          <label class="small">单价 / 阶梯价（元/物料单位）<input id="quoteManualPrice" type="text" placeholder="如 100 或 1-99:100|100+:90" style="display:block;max-width:230px"></label>
+          <label class="small">交期（天）<input id="quoteManualLead" type="text" placeholder="天" style="display:block;width:95px"></label>
+          <label class="small">MOQ（最小起订量，物料单位）<input id="quoteManualMoq" type="text" placeholder="数量" style="display:block;width:100px"></label>
+          <label class="small">报价状态<select id="quoteManualStatus" style="display:block"><option value="quoted">正常报价</option><option value="noquote">未报价</option><option value="cannot">不供货</option></select></label>
           <button class="btn soft" id="quoteManualAdd">加入预览</button>
-        </div>
+        </div><div class="small muted" style="margin-top:7px">M0 现按人民币（元/物料单位）、天和物料数量显示。正式币种、税口径、采购单位后续以 ERP / 询价字段为准。</div>
       </div>
       <div class="intakeBox">
         <h3>剪贴板批量粘贴</h3>
-        <textarea id="quotePaste" placeholder="第一行为表头；必须有精确列标题“RFQ Line ID”或“物料编码”。同码多条询价行优先使用 RFQ Line ID。&#10;物料编码,单价,交期,MOQ,状态&#10;RFQ-L00001,100,7,10,正常报价&#10;RFQ-L00002,,,,不供货&#10;单价也可为阶梯 1-99:100|100+:90"></textarea>
+        <textarea id="quotePaste" placeholder="第一行为表头；必须有精确列标题“RFQ Line ID”或“物料编码”。同码多条询价行优先使用 RFQ Line ID。&#10;物料编码,单价,交期,MOQ,报价状态&#10;ITEM-00001,100,7,10,正常报价&#10;ITEM-00002,,,,不供货&#10;单价也可为阶梯 1-99:100|100+:90"></textarea>
         <div class="toolbar">
           <button class="btn" id="quoteReadClipboard">读取剪贴板</button>
           <button class="btn soft" id="quoteParsePaste">解析预览</button>
@@ -360,7 +382,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 
     <div id="quoteImportPreview" class="card" style="margin-top:14px;display:none">
       <div class="cardhead"><b>导入预览</b><div class="toolbar"><button class="btn primary" id="commitQuoteImport">写入当前报价轮次</button><button class="btn danger" id="clearQuotePreview2">清空预览</button></div></div>
-      <div class="cardbody"><div id="quoteImportFeedback" class="small muted" style="margin-bottom:8px"></div><div class="tablewrap"><table class="table"><thead><tr><th>物料编码</th><th>RFQ Line ID</th><th>物料名称</th><th>单价 / 阶梯价</th><th>RFQ数量适用价</th><th>交期</th><th>MOQ</th><th>报价状态</th><th>覆盖检查</th></tr></thead><tbody id="quoteImportPreviewBody"></tbody></table></div></div>
+      <div class="cardbody"><div id="quoteImportFeedback" class="small muted" style="margin-bottom:8px"></div><div class="tablewrap"><table class="table"><thead><tr><th>物料编码</th><th>RFQ Line ID</th><th>物料名称</th><th>单价 / 阶梯价（元/单位）</th><th>RFQ 数量适用单价（元/单位）</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>覆盖检查</th></tr></thead><tbody id="quoteImportPreviewBody"></tbody></table></div></div>
     </div>
 
     <div class="card" style="margin-top:14px">
@@ -368,7 +390,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
       <div class="cardbody">
         <div id="quoteRoundHint" class="small muted" style="margin-bottom:8px"></div>
         <div id="carryForwardPreview" class="coverageDetails" style="display:none"></div>
-        <div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>RFQ数量</th><th>上轮适用价</th><th>本轮报价</th><th>本轮适用价</th><th>价格变化</th><th>交期</th><th>MOQ</th><th>状态</th><th>来源</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
+        <div class="tablewrap"><table class="table"><thead><tr><th>物料编码 / RFQ Line ID / 名称</th><th>RFQ 数量（物料单位）</th><th>上轮单价（元/单位）</th><th>本轮单价 / 阶梯价（元/单位）</th><th>本轮适用单价（元/单位）</th><th>单价变化</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>报价来源</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
       </div>
     </div>
   </section>
@@ -602,6 +624,39 @@ function itemCell(it){
   return `<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="${it.lineId}" title="预览 PDF">${drawingSvg(it,d,1,.18)}</button><div><b>${it.id}</b><div class="pdfMeta">${it.lineId} · PDF ${d.pages}页${docs.length>1?" · "+docs.length+"个文件":""}</div></div></div>`;
 }
 function bindDrawingThumbs(){document.querySelectorAll("[data-drawing]").forEach(b=>b.onclick=e=>{e.stopPropagation();openDrawing(b.dataset.drawing)})}
+/** 中文：物料双击编辑只以稳定 RFQ Line ID 定位；已有任何报价行或确认范围时禁止覆盖。
+ * English: Edit via stable RFQ Line ID; block mutation of quoted lines or confirmed scope. */
+let editingItemLineId=null;
+function itemHasAnyQuoteHistory(lineId){
+  return quoteRounds.some(r=>r.lines.some(x=>x.lineId===lineId)||(r.status==="confirmed"&&(r.expectedLineIds||[]).includes(lineId)));
+}
+function openItemEditor(lineId){
+  const it=items.find(x=>x.lineId===lineId);if(!it)return;
+  editingItemLineId=it.lineId;const locked=itemHasAnyQuoteHistory(lineId);
+  itemEditIdentity.textContent="RFQ Line ID："+it.lineId+"（保持不变）";
+  itemEditCode.value=it.id;itemEditQty.value=it.qty;itemEditName.value=it.name;itemEditCat.value=it.cat;itemEditUnit.value=it.unit;
+  itemEditHint.textContent=locked?"此询价行已有报价历史，当前只允许查看；请在后续正式修订流程中变更。":"当前属性带出该行原值。M0 尚未接入 ERP 主数据，修改存货编码不会自动更新其他 ERP 属性，也不会合并其他相同编码询价行。";
+  for(const input of [itemEditCode,itemEditQty,itemEditName,itemEditCat,itemEditUnit])input.disabled=locked;
+  itemEditSave.disabled=locked;itemEditError.textContent="";
+  itemEditModal.classList.add("open");itemEditModal.setAttribute("aria-hidden","false");
+  if(!locked)itemEditCode.focus();
+}
+function closeItemEditor(){editingItemLineId=null;itemEditModal.classList.remove("open");itemEditModal.setAttribute("aria-hidden","true")}
+function saveItemEdit(){
+  const it=items.find(x=>x.lineId===editingItemLineId);if(!it)return;
+  if(itemHasAnyQuoteHistory(it.lineId)){itemEditError.textContent="该行已有报价历史，不能原位修改。";return}
+  const code=itemEditCode.value.trim(),unit=itemEditUnit.value.trim(),qty=parsePositiveNumber(itemEditQty.value,"数量");
+  if(!code||!unit||qty.error){itemEditError.textContent=[!code?"物料编码不能为空":"",!unit?"单位不能为空":"",qty.error||""].filter(Boolean).join("；");return}
+  if(!confirm("保存此询价行修改？RFQ Line ID 和已分配供应商保持不变。"))return;
+  // 中文：改码不自动修改或合并其他行；记录编辑来源但不冒充 ERP 数据。
+  // English: Code edits never silently merge RFQ lines or claim ERP master autofill.
+  it.id=code;it.qty=qty.value;it.name=itemEditName.value.trim();it.cat=itemEditCat.value.trim();it.unit=unit;
+  it.sources=it.sources||[];it.sources.push({source:"人工编辑（原位修改）",qty:it.qty});
+  closeItemEditor();renderItemList();renderAssignAll();renderQuotes();
+}
+itemEditClose.onclick=closeItemEditor;itemEditCancel.onclick=closeItemEditor;itemEditSave.onclick=saveItemEdit;
+itemEditModal.onclick=e=>{if(e.target===itemEditModal)closeItemEditor()};
+
 let drawingState={itemId:null,docIndex:0,page:1,scale:1};
 function renderDrawingPdf(){
   const it=items.find(x=>x.lineId===drawingState.itemId);if(!it)return;
@@ -923,7 +978,7 @@ deleteSelectedItems.onclick=()=>{
   resetRange("item-manage");renderItemList();renderAssignAll();renderQuotes();
 };
 function quoteSupplierOptions(){
-  const current=quoteImportSupplier.value,ids=[...rfqSupplierPool];
+  const current=quoteImportSupplier.value,ids=[...rfqSupplierPool].sort((a,b)=>String(a).localeCompare(String(b),"zh-CN",{numeric:true}));
   quoteImportSupplier.innerHTML=ids.map(id=>{const s=suppliers.find(x=>x.id===id);return s?`<option value="${id}">${esc(s.name)} (${id})</option>`:""}).join("");
   if(ids.includes(current))quoteImportSupplier.value=current;
 }
@@ -1319,7 +1374,7 @@ function renderItemList(){
   });
   const list=currentItemList(),pages=Math.max(1,Math.ceil(list.length/PAGE));
   itemPage=Math.min(itemPage,pages-1);const slice=pageSlice(list,itemPage);
-  itemBody.innerHTML=slice.map(it=>`<tr>
+  itemBody.innerHTML=slice.map(it=>`<tr data-edit-line="${esc(it.lineId)}" title="双击编辑此询价行">
     <td><input type="checkbox" data-im="${it.lineId}" ${itemManageSel.has(it.lineId)?"checked":""}></td>
     <td>${esc(it.lineId)}</td><td>${esc(it.id)}</td><td>${itemDrawingCell(it)}</td>
     <td>${esc(it.name)}</td><td>${esc(it.cat)}</td><td>${it.qty}</td>
@@ -1327,6 +1382,7 @@ function renderItemList(){
     ${customFields.map(f=>`<td>${esc(itemFieldValue(it,f.key))}</td>`).join("")}
   </tr>`).join("");
   bindDrawingThumbs();
+  document.querySelectorAll("#itemBody tr[data-edit-line]").forEach(tr=>tr.ondblclick=e=>{if(e.target.closest("input,button"))return;openItemEditor(tr.dataset.editLine)});
   bindShiftRange("#itemBody input[data-im]","item-manage","im",(id,checked)=>checked?itemManageSel.add(id):itemManageSel.delete(id),renderItemList);
   itemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${itemPage+1}/${pages} 页 · 已选择 ${itemManageSel.size} 项`;
   itemSortHint.textContent="当前排序："+itemSortRules.map((r,i)=>`${i+1}.${fields.find(f=>f.key===r.key)?.label||"新增顺序"}${r.direction==="asc"?"升序":"降序"}`).join(" → ")+"；Shift+点击列标题叠加字段排序";
