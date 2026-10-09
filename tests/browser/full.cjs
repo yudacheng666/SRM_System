@@ -125,7 +125,7 @@ const assigned=(sid)=>Array.from({length:100},(_,i)=>i).filter(i=>new Set([sid%5
     assert.equal(details.supplierCount,10);
     assert.equal(details.rounds,20);
     assert.ok(details.withPrices>=80);
-    const count=details.items,pages=Math.ceil(count/10);
+    const finalItemCount=details.items,pages=Math.ceil(finalItemCount/10);
     await page.locator('#quotePager [data-pg="'+(pages-1)+'"]').click();
     const manualChoice=await page.evaluate(()=>{
       const its=comparisonItems(),sups=comparisonSuppliers();
