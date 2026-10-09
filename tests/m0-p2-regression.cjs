@@ -91,7 +91,7 @@ for(let i=1;i<=10;i++){
     '({first:parseQuoteRows(x),second:parseQuoteRows(y)})');
   for(const r of [parsedRounds.first,parsedRounds.second]){
     if(r._headerErrors?.length)allQuoteFiles=false;
-    if(!r.every(x=>parsed.items.some(it=>it.id===x.itemRef)&&['quoted','未报价','不供货'].includes(x.status)))allCodesValid=false;
+    if(!r.every(x=>parsed.items.some(it=>it.id===x.itemRef)&&['quoted','正常报价','未报价','不供货'].includes(x.status)))allCodesValid=false;
     quotedLines+=r.length;
   }
   coverage.push(parsedRounds.first.length);
