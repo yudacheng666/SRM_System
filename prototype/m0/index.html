@@ -362,9 +362,10 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
     </div>
 
     <div class="card" style="margin-top:14px">
-      <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small">导入后可点击“修改”逐行修正</span></div><div class="toolbar"><button class="btn" id="carryForwardMissing">将本轮未提交项标记为沿用上轮</button></div></div>
+      <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small">导入后可点击“修改”逐行修正</span></div><div class="toolbar"><button class="btn" id="carryForwardMissing">选择沿用上轮项目…</button></div></div>
       <div class="cardbody">
         <div id="quoteRoundHint" class="small muted" style="margin-bottom:8px"></div>
+        <div id="carryForwardPreview" class="coverageDetails" style="display:none"></div>
         <div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>RFQ数量</th><th>上轮适用价</th><th>本轮报价</th><th>本轮适用价</th><th>价格变化</th><th>交期</th><th>MOQ</th><th>状态</th><th>来源</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
       </div>
     </div>
@@ -617,14 +618,16 @@ function parseOptionalNumber(raw,label){
  */
 function parseHeaderTable(text,keyHeaders){
   const raw=String(text||"").replace(/\r\n?/g,"\n").replace(/^\uFEFF/,"");
+  // 中文：优先按 Tab 分列，否则允许中英文逗号在一张表内混合，保留双引号内分隔符。
+  // English: Prefer Tab where present; otherwise accept mixed Chinese/ASCII commas outside quoted cells.
   const first=raw.split("\n")[0]||"";
-  const delimiter=first.includes("\t")?"\t":first.includes("，")&&!first.includes(",")?"，":",";
+  const tabDelimited=first.includes("\t");
   const records=[];let row=[],field="",inside=false;
   for(let i=0;i<raw.length;i++){
     const ch=raw[i];
     if(ch==='"'){
       if(inside&&raw[i+1]==='"'){field+='"';i++;}else inside=!inside;
-    }else if(!inside&&(ch===delimiter)){row.push(field.trim());field="";}
+    }else if(!inside&&(tabDelimited?ch==="\t":ch===","||ch==="，")){row.push(field.trim());field="";}
     else if(!inside&&(ch==="\n"||ch==="；"||ch===";")){
       row.push(field.trim());field="";
       if(row.some(v=>v!==""))records.push(row);
@@ -640,7 +643,9 @@ function parseHeaderTable(text,keyHeaders){
   if(headers.some(h=>!h))errors.push("表头存在空列名");
   if(!keyHeaders.some(k=>headers.includes(k)))errors.push("缺少必需主键标题："+keyHeaders.join(" 或 "));
   const rows=records.slice(1).map((cells,i)=>{
-    if(cells.length!==headers.length)errors.push("第 "+(i+2)+" 行列数 "+cells.length+" 与表头 "+headers.length+" 不一致");
+    // 中文：允许省略尾部可选单元格，主键和数量/单位等必填值由各业务解析器校验。
+    // English: Pad missing trailing cells; business parsers still validate required keys and values.
+    if(cells.length>headers.length)errors.push("第 "+(i+2)+" 行数据列数 "+cells.length+" 超过表头 "+headers.length+"，请检查是否错位");
     const data={};headers.forEach((h,j)=>data[h]=cells[j]??"");
     return{data,rowNo:i+2};
   });
@@ -1084,7 +1089,7 @@ scopeSelectAll.onclick=()=>quoteScopeList.querySelectorAll("[data-scope-line]").
 scopeClearAll.onclick=()=>quoteScopeList.querySelectorAll("[data-scope-line]").forEach(x=>x.checked=false);
 closeRoundScope.onclick=()=>quoteScopeEditor.style.display="none";
 saveRoundScope.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;r.expectedLineIds=[...quoteScopeList.querySelectorAll("[data-scope-line]:checked")].map(x=>x.dataset.scopeLine);r.lines=r.lines.filter(x=>r.expectedLineIds.includes(x.lineId));quoteScopeEditor.style.display="none";renderQuoteRound()};
-confirmQuoteRound.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;if(!r.lines.length){alert("当前提交没有报价记录。");return}r.evidenceType=quoteEvidenceType.value;r.evidenceNote=quoteEvidenceNote.value.trim();const cov=coverageFromRows(r,r.lines);if((cov.missing.length||cov.extras.length||cov.duplicates.length)&&!confirm(`覆盖检查仍有异常：漏报 ${cov.missing.length} 项，多报 ${cov.extras.length} 项，重复 ${cov.duplicates.length} 项。仍要确认并锁定本次提交吗？`))return;r.status="confirmed";r.confirmedAt=new Date().toISOString();awards.clear();awardReasons.clear();setDefaultLowestAwards();renderQuoteRoundSelector()};
+confirmQuoteRound.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;if(!r.lines.length){alert("当前提交没有报价记录。");return}r.evidenceType=quoteEvidenceType.value;r.evidenceNote=quoteEvidenceNote.value.trim();const cov=coverageFromRows(r,r.lines);if((cov.missing.length||cov.extras.length||cov.duplicates.length)&&!confirm(`覆盖检查仍有异常：漏报 ${cov.missing.length} 项，多报 ${cov.extras.length} 项，重复 ${cov.duplicates.length} 项。仍要确认并锁定本次提交吗？`))return;r.status="confirmed";r.confirmedAt=new Date().toISOString();reconcileAwardsAfterQuote();renderQuoteRoundSelector()};
 quoteManualAdd.onclick=()=>showQuotePreview([{itemRef:quoteManualItem.value.trim(),price:quoteManualPrice.value.trim(),lead:quoteManualLead.value.trim(),moq:quoteManualMoq.value.trim(),status:quoteManualStatus.value}]);
 quoteParsePaste.onclick=()=>{const rows=parseQuoteRows(quotePaste.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到报价记录，请检查表头和数据。");return}showQuotePreview(rows)};
 quoteReadClipboard.onclick=async()=>{try{quotePaste.value=await navigator.clipboard.readText();quoteParsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请按 Ctrl+V 粘贴。")}};
@@ -1326,14 +1331,14 @@ closeRfqPreview.onclick=()=>{rfqPreviewModal.classList.remove("open");rfqPreview
 rfqPreviewModal.onclick=e=>{if(e.target===rfqPreviewModal)closeRfqPreview.click()};
 generateBtn.onclick=()=>{const c=coverage();alert(`原型动作：允许生成。\n已覆盖 ${c.covered}/${items.length} 项，未覆盖 ${c.none} 项将保留在当前 RFQ 中。\n正式 M4 再实现 Excel 文件生成。`)};
 
-const awards=new Map(), awardReasons=new Map();
+const awards=new Map(), awardReasons=new Map(),manualAwards=new Set(),awardReviewIds=new Set();
 /** 中文：浏览器演示报价与实际报价回收互斥，避免假价格影响真实比价。
  * English: Synthetic demo prices and returned quotes are mutually exclusive. */
 let quoteComparisonMode="demo";
 function enterReturnedQuoteMode(){
   if(quoteComparisonMode==="returned")return;
   quoteComparisonMode="returned";
-  awards.clear();awardReasons.clear();renderQuotes();
+  awards.clear();awardReasons.clear();manualAwards.clear();awardReviewIds.clear();renderQuotes();
 }
 function comparisonSuppliers(){return suppliers.filter(s=>rfqSupplierPool.has(s.id)&&items.some(it=>getSet(it.lineId).has(s.id)))}
 function comparisonItems(){return items.filter(it=>[...getSet(it.lineId)].some(sid=>rfqSupplierPool.has(sid)))}
@@ -1348,22 +1353,44 @@ function quoteMetaFor(it,sup,i=0,si=0){
 function lowestSupplierForItem(it,i=0){
   return comparisonSuppliers().map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v)[0]?.sid||null;
 }
-function setDefaultLowestAwards(){comparisonItems().forEach((it,i)=>{const sid=lowestSupplierForItem(it,i);if(sid)awards.set(it.lineId,sid)})}
+/** 中文：报价确认后保留人工选择及原因，自动选择只针对未手动指定的行重算。
+ * English: Preserve manual awards and reasons; recalculate only automatic defaults. */
+function setDefaultLowestAwards(){
+  comparisonItems().forEach((it,i)=>{
+    if(manualAwards.has(it.lineId))return;
+    const sid=lowestSupplierForItem(it,i);
+    if(sid)awards.set(it.lineId,sid);else awards.delete(it.lineId);
+  });
+}
+/** 中文：若新报价影响人工选择的最低价资格或有效性，只标记待复核，不清除选择。
+ * English: Mark affected manual choices for review after new confirmed prices without erasing decisions. */
+function reconcileAwardsAfterQuote(){
+  setDefaultLowestAwards();
+  const its=comparisonItems(),sups=comparisonSuppliers();
+  manualAwards.forEach(lineId=>{
+    const it=its.find(x=>x.lineId===lineId);
+    if(!it){awardReviewIds.add(lineId);return}
+    const i=its.indexOf(it),sid=awards.get(lineId),sup=sups.find(x=>x.id===sid),si=sups.indexOf(sup);
+    const price=sup?quoteMetaFor(it,sup,i,si)?.price:null;
+    if(price==null||lowestSupplierForItem(it,i)!==sid)awardReviewIds.add(lineId);
+    else awardReviewIds.delete(lineId);
+  });
+}
 function renderQuoteAnalysis(){
   quoteModeNotice.textContent=quoteComparisonMode==="demo"?"纯模拟展示：当前所有报价及上次采购价均为虚构演示值，不可用于实际选择。":"报价回收验证：仅已确认的真实回收记录参与比价；未报价不自动补价。上次采购价仍是 M0 虚构示例。";
   const sups=comparisonSuppliers(),its=comparisonItems(),common=its.filter((it,i)=>sups.length&&sups.every((s,si)=>quoteMetaFor(it,s,i,si)?.price!=null));
   let theoretical=0,theoreticalCount=0,finalTotal=0,finalCount=0;
-  its.forEach((it,i)=>{const vals=sups.map((s,si)=>quoteMetaFor(it,s,i,si)?.price).filter(v=>v!=null);if(vals.length){theoretical+=Math.min(...vals)*it.qty;theoreticalCount++}const sid=awards.get(it.lineId),sup=sups.find(s=>s.id===sid);if(sup){const si=sups.indexOf(sup),m=quoteMetaFor(it,sup,i,si);if(m?.price!=null){finalTotal+=m.price*it.qty;finalCount++}}});
+  its.forEach((it,i)=>{const vals=sups.map((s,si)=>quoteMetaFor(it,s,i,si)?.price).filter(v=>v!=null);if(vals.length){theoretical+=Math.min(...vals)*it.qty;theoreticalCount++}const sid=awards.get(it.lineId),sup=sups.find(s=>s.id===sid);if(sup){const si=sups.indexOf(sup),m=quoteMetaFor(it,sup,i,si);if(m?.price!=null&&!awardReviewIds.has(it.lineId)){finalTotal+=m.price*it.qty;finalCount++}}});
   const rows=sups.map((s,si)=>{let own=0,ownCount=0,commonTotal=0;its.forEach((it,i)=>{const m=quoteMetaFor(it,s,i,si);if(m?.price!=null){own+=m.price*it.qty;ownCount++}});common.forEach(it=>{const i=its.indexOf(it),m=quoteMetaFor(it,s,i,si);commonTotal+=m.price*it.qty});return `<tr><td>${esc(s.name)}</td><td>${ownCount}</td><td>¥${own.toFixed(2)}</td><td>${common.length}</td><td>¥${commonTotal.toFixed(2)}</td></tr>`}).join("");
-  quoteAnalysis.innerHTML=`<div class="sline"><div><b>总价分析（M0）</b><div class="small muted">同币种/同税口径演示；缺报价不按0。</div></div><div><b>理论最低：</b>¥${theoretical.toFixed(2)}（${theoreticalCount}项）　<b>最终选择：</b>¥${finalTotal.toFixed(2)}（${finalCount}项）</div></div><table class="analysisTable"><thead><tr><th>供应商</th><th>自身已报价项</th><th>自身报价范围总额</th><th>共同报价项</th><th>同物料范围总额</th></tr></thead><tbody>${rows}</tbody></table>`;
+  quoteAnalysis.innerHTML=`<div class="sline"><div><b>总价分析（M0）</b><div class="small muted">同币种/同税口径演示；缺报价不按0。</div></div><div><b>理论最低：</b>¥${theoretical.toFixed(2)}（${theoreticalCount}项）　<b>最终选择：</b>¥${finalTotal.toFixed(2)}（${finalCount}项，待复核 ${awardReviewIds.size} 项不计入）</div></div><table class="analysisTable"><thead><tr><th>供应商</th><th>自身已报价项</th><th>自身报价范围总额</th><th>共同报价项</th><th>同物料范围总额</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 function renderQuotes(){
   const sups=comparisonSuppliers(),its=comparisonItems(),QUOTE_PAGE=10,pages=Math.max(1,Math.ceil(its.length/QUOTE_PAGE));quotePage=Math.min(quotePage,pages-1);const start=quotePage*QUOTE_PAGE,slice=its.slice(start,start+QUOTE_PAGE);
   let h=`<thead><tr><th>物料</th><th>上次采购价</th>`+sups.map(s=>`<th>${esc(s.name)}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`).join("")+`<th>最终选择</th></tr></thead><tbody>`;
-  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>¥${prev}</td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=s.id===low?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell":""}">${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}" data-award="${it.lineId}|${s.id}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId);h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("[data-award]").forEach(b=>b.onclick=()=>{const [lineId,sid]=b.dataset.award.split("|");chooseAward(lineId,sid)});document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter((it,i)=>lowestSupplierForItem(it,its.indexOf(it))!==sid);let reason="";if(nonLowest.length){reason=prompt(`其中 ${nonLowest.length} 项不是最低价，请填写本次批量选择原因：`,"")||"";if(!reason.trim())return}eligible.forEach(it=>{const i=its.indexOf(it);awards.set(it.lineId,sid);if(lowestSupplierForItem(it,i)!==sid)awardReasons.set(it.lineId,reason.trim());else awardReasons.delete(it.lineId)});renderQuotes()});renderQuoteAnalysis();
+  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>¥${prev}</td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=s.id===low?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell":""}">${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}" data-award="${it.lineId}|${s.id}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("[data-award]").forEach(b=>b.onclick=()=>{const [lineId,sid]=b.dataset.award.split("|");chooseAward(lineId,sid)});document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter((it,i)=>lowestSupplierForItem(it,its.indexOf(it))!==sid);let reason="";if(nonLowest.length){reason=prompt(`其中 ${nonLowest.length} 项不是最低价，请填写本次批量选择原因：`,"")||"";if(!reason.trim())return}eligible.forEach(it=>{const i=its.indexOf(it);awards.set(it.lineId,sid);manualAwards.add(it.lineId);awardReviewIds.delete(it.lineId);if(lowestSupplierForItem(it,i)!==sid)awardReasons.set(it.lineId,reason.trim());else awardReasons.delete(it.lineId)});renderQuotes()});renderQuoteAnalysis();
 }
-function chooseAward(lineId,sid){const its=comparisonItems(),sups=comparisonSuppliers(),it=its.find(x=>x.lineId===lineId),i=its.indexOf(it),vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);if(vals[0]?.sid!==sid){const reason=prompt("选择的不是最低报价，请填写原因：","");if(reason===null||!reason.trim())return;awardReasons.set(lineId,reason.trim())}else awardReasons.delete(lineId);awards.set(lineId,sid);renderQuotes()}
-resetAwards.textContent="恢复默认最低价";resetAwards.onclick=()=>{awards.clear();awardReasons.clear();setDefaultLowestAwards();renderQuotes()};
+function chooseAward(lineId,sid){const its=comparisonItems(),sups=comparisonSuppliers(),it=its.find(x=>x.lineId===lineId),i=its.indexOf(it),vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);if(vals[0]?.sid!==sid){const reason=prompt("选择的不是最低报价，请填写原因：","");if(reason===null||!reason.trim())return;awardReasons.set(lineId,reason.trim())}else awardReasons.delete(lineId);awards.set(lineId,sid);manualAwards.add(lineId);awardReviewIds.delete(lineId);renderQuotes()}
+resetAwards.textContent="恢复默认最低价";resetAwards.onclick=()=>{awards.clear();awardReasons.clear();manualAwards.clear();awardReviewIds.clear();setDefaultLowestAwards();renderQuotes()};
 
 refreshFieldControls();
 setDefaultLowestAwards();
