@@ -1656,7 +1656,7 @@ function exportSelectedCommonScopeCsv(plan){
   };
   const headers=["RFQ Line ID","物料编码","物料名称","RFQ 数量","单位"];
   plan.selected.forEach(s=>headers.push(s.name+" 适用单价（元/单位）",s.name+" 同范围金额（元）"));
-  const rows=[headers,...plan.items.map(({it,values})=>[it.lineId,it.id,it.name,it.qty,it.unit,...values.flatMap(v=>[v.price.toFixed(2),(v.amountCents/100).toFixed(2)])])];
+  const rows=[headers,...plan.items.map(({it,values})=>[it.lineId,it.id,it.name,it.qty,it.unit,...values.flatMap(v=>[String(v.price),(v.amountCents/100).toFixed(2)])])];
   rows.push(["同范围合计","","",plan.items.length,"项",...plan.selected.flatMap(s=>["",(plan.totals.get(s.id)/100).toFixed(2)])]);
   const csv="\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
   const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
@@ -1699,7 +1699,7 @@ function renderQuoteAnalysis(){
     const totalsRows=shared.selected.map(s=>'<tr><td>'+esc(s.name)+'</td><td>'+shared.items.length+'</td><td>¥'+(shared.totals.get(s.id)/100).toFixed(2)+'</td></tr>').join("");
     const detailRows=shared.items.slice(0,40).map(({it,values})=>
       '<tr><td>'+esc(it.id)+'<div class="small muted">'+esc(it.lineId)+'</div></td><td>'+it.qty+' '+esc(it.unit)+'</td>'+
-      values.map(v=>'<td>¥'+v.price.toFixed(2)+' / ¥'+(v.amountCents/100).toFixed(2)+'</td>').join('')+'</tr>').join("");
+      values.map(v=>'<td>¥'+esc(String(v.price))+' / ¥'+(v.amountCents/100).toFixed(2)+'</td>').join('')+'</tr>').join("");
     sharedBody='<div style="margin-top:10px"><b>比较组 '+shared.selected.length+' 家 · 共同有效报价 '+shared.items.length+' 项</b>'+
       '<div class="small muted">各家均使用相同 RFQ 数量，按适用单价 × 数量逐行取整到分后累计；组内金额才允许直接比较。</div>'+
       '<table class="analysisTable"><thead><tr><th>本比较组供应商</th><th>共同有效报价项数</th><th>同范围报价总额（元）</th></tr></thead><tbody>'+totalsRows+'</tbody></table>'+
