@@ -140,6 +140,9 @@ const assigned=(sid)=>Array.from({length:100},(_,i)=>i).filter(i=>new Set([sid%5
     });
     assert.ok(manualChoice,'need two distinct comparable supplier offers on the final page');
     await page.locator('[data-award="'+manualChoice.lineId+'|'+manualChoice.sid+'"]').click();
+    await page.locator('#awardReasonModal.open').waitFor();
+    await page.locator('#awardReasonInput').fill('虚构验收：交期稳定及质量保证');
+    await page.locator('#awardReasonConfirm').click();
     const awarded=await page.evaluate(id=>({id:awards.get(id),reason:awardReasons.get(id),manual:manualAwards.has(id)}),manualChoice.lineId);
     assert.equal(awarded.id,manualChoice.sid);
     assert.ok(awarded.reason&&awarded.manual);
