@@ -358,7 +358,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 
     <div id="quoteImportPreview" class="card" style="margin-top:14px;display:none">
       <div class="cardhead"><b>导入预览</b><div class="toolbar"><button class="btn primary" id="commitQuoteImport">写入当前报价轮次</button><button class="btn danger" id="clearQuotePreview2">清空预览</button></div></div>
-      <div class="cardbody"><div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>单价 / 阶梯价</th><th>RFQ数量适用价</th><th>交期</th><th>MOQ</th><th>状态</th><th>覆盖检查</th></tr></thead><tbody id="quoteImportPreviewBody"></tbody></table></div></div>
+      <div class="cardbody"><div id="quoteImportFeedback" class="small muted" style="margin-bottom:8px"></div><div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>单价 / 阶梯价</th><th>RFQ数量适用价</th><th>交期</th><th>MOQ</th><th>状态</th><th>覆盖检查</th></tr></thead><tbody id="quoteImportPreviewBody"></tbody></table></div></div>
     </div>
 
     <div class="card" style="margin-top:14px">
@@ -1033,11 +1033,16 @@ function exportMissingCsv(round){
 exportQuoteMissing.onclick=()=>{const r=currentQuoteRound();if(r)exportMissingCsv(r)};
 function showQuotePreview(rows){
   const round=currentQuoteRound();if(!round||round.status==="confirmed"){alert("已确认提交不可再导入；请新增本轮新版本。");return}
-  quoteImportPreviewRows=validateQuotePreview(rows);quoteImportPreview.style.display="block";
-  quoteImportPreviewBody.innerHTML=quoteImportPreviewRows.map(r=>`<tr><td>${esc(r.itemId||r.itemRef)}<br><span class="muted">${esc(r.lineId||"")}</span></td><td>${esc(r.price)}</td><td>${r.effectivePrice==null?"—":"¥"+r.effectivePrice.toFixed(2)}</td><td>${esc(r.lead)}</td><td>${esc(r.moq)}</td><td>${esc(quoteStatusLabel(r.status))}</td><td class="${["已报价","明确未报价","不供货"].includes(r.coverageCheck)?"ok":"dangertext"}">${esc(r.coverageCheck)}${r.errors.length?" · "+esc(r.errors.join("；")):""}</td></tr>`).join("");
+  quoteImportPreviewRows=validateQuotePreview(rows).map((validated,i)=>({...validated,_rawInput:rows[i]}));quoteImportFeedback.textContent="以下为待确认数据，请检查每行错误。";quoteImportPreview.style.display="block";
+  renderQuotePreviewTable();
   renderCoverageResult(coverageFromRows(round,quoteImportPreviewRows));
 }
-function clearQuoteImportPreview(){quoteImportPreviewRows=[];quoteImportPreviewBody.innerHTML="";quoteImportPreview.style.display="none";const round=currentQuoteRound();if(round)renderCoverageResult(coverageFromRows(round,round.lines))}
+/** 中文：每一条预览行都保留有效性与原始输入，不因部分提交丢失异常明细。
+ * English: Retain raw records and per-row validity in preview, including after partial commits. */
+function renderQuotePreviewTable(){
+  quoteImportPreviewBody.innerHTML=quoteImportPreviewRows.map(r=>`<tr><td>${esc(r.itemId||r.itemRef)}<br><span class="muted">${esc(r.lineId||"")}</span></td><td>${esc(r.price)}</td><td>${r.effectivePrice==null?"—":"¥"+r.effectivePrice.toFixed(2)}</td><td>${esc(r.lead)}</td><td>${esc(r.moq)}</td><td>${esc(quoteStatusLabel(r.status))}</td><td class="${["已报价","明确未报价","不供货"].includes(r.coverageCheck)?"ok":"dangertext"}">${esc(r.coverageCheck)}${r.errors.length?" · "+esc(r.errors.join("；")):""}</td></tr>`).join("");
+}
+function clearQuoteImportPreview(){quoteImportPreviewRows=[];quoteImportPreviewBody.innerHTML="";quoteImportFeedback.textContent="";quoteImportPreview.style.display="none";const round=currentQuoteRound();if(round)renderCoverageResult(coverageFromRows(round,round.lines))}
 function upsertRoundLine(round,row,source="import"){
   if(round.status==="confirmed")return false;
   const existing=round.lines.find(x=>x.lineId===row.lineId),parsed=row.priceParsed||parseTierPrice(row.price);
@@ -1060,6 +1065,7 @@ function latestConfirmedQuoteLine(lineId,sid){
   return null;
 }
 function renderQuoteRound(){
+  carryForwardPreview.style.display="none";carryForwardPreview.innerHTML="";
   const round=currentQuoteRound();if(!round)return;const sup=suppliers.find(s=>s.id===round.supplierId),expected=expectedIdsForRound(round);
   quoteEvidenceType.value=round.evidenceType||"email_attachment";quoteEvidenceNote.value=round.evidenceNote||"";
   quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮 · 第${round.revisionNo}版</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认/锁定":"草稿"}</span><div class="small" style="margin-top:5px">轮次表示议价阶段；版本表示同一轮报价的更正提交。已确认提交不可覆盖修改。</div>`;
@@ -1098,8 +1104,85 @@ toggleQuoteMapping.onclick=()=>{quoteMappingBox.style.display=quoteMappingBox.st
 saveQuoteMapping.onclick=()=>{quoteMappingHint.textContent="已保存 M0 映射演示："+[mapItemRef.value,mapPrice.value,mapLead.value,mapMoq.value,mapStatus.value].join(" → ")};
 demoQuoteExcel.onclick=()=>{const a=assignedItemsForSupplier(quoteImportSupplier.value);showQuotePreview([{itemRef:a[0]?.lineId||items[0].lineId,price:"1-9:118|10-49:108.5|50+:98",lead:"7",moq:"1",status:"quoted"},{itemRef:a[1]?.lineId||items[1].lineId,price:"108.50",lead:"10",moq:"5",status:"quoted"}])};
 quoteImportFile.onchange=()=>{const file=quoteImportFile.files?.[0];if(!file)return;const ext=(file.name.split(".").pop()||"").toLowerCase();if(ext==="csv"||ext==="txt"){const r=new FileReader();r.onload=()=>{const rows=parseQuoteRows(r.result);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}showQuotePreview(rows)};r.readAsText(file)}else demoQuoteExcel.click()};
-commitQuoteImport.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed"){alert("已确认提交不可覆盖，请新增本轮新版本。");return}const valid=quoteImportPreviewRows.filter(x=>["已报价","明确未报价","不供货"].includes(x.coverageCheck)&&!x.errors.length);if(!valid.length){alert("没有可写入的有效报价。");return}const seen=new Set();valid.filter(x=>{if(seen.has(x.lineId))return false;seen.add(x.lineId);return true}).forEach(x=>upsertRoundLine(r,x,"import"));clearQuoteImportPreview();renderQuoteRound()};
-carryForwardMissing.onclick=()=>{const r=currentQuoteRound();if(!r||r.roundNo===1||r.status==="confirmed")return;const existing=new Set(r.lines.map(x=>x.lineId));let n=0;expectedIdsForRound(r).forEach(lineId=>{if(existing.has(lineId))return;const prev=priorApplicableLine(r.supplierId,lineId,r.roundNo);if(!prev)return;const it=items.find(x=>x.lineId===lineId);r.lines.push({lineId,itemId:it?.id||prev.itemId,price:prev.price,tiers:(prev.tiers||[]).map(t=>({...t})),lead:prev.lead,moq:prev.moq,status:"quoted",source:"carry",original:{carryFromRound:prev.roundNo,carryFromRevision:prev.revisionNo},updatedAt:new Date().toISOString()});n++});alert(`已对本轮范围内 ${n} 项明确记录“沿用上轮”。未进入本轮范围的项目不会被处理。`);renderQuoteRound()};
+/** 中文：仅提交明确校验通过的报价，部分提交必须告知全部拒绝行并由采购员确认。
+ * English: Commit valid quote rows only; partial submissions require explicit buyer acknowledgement. */
+function planQuoteImportCommit(rows){
+  const checked=validateQuotePreview(rows.map(r=>r._rawInput||r));
+  const valid=[],skipped=[];
+  checked.forEach((r,i)=>{
+    if(["已报价","明确未报价","不供货"].includes(r.coverageCheck)&&!r.errors.length)valid.push({...r,_rawInput:rows[i]._rawInput||rows[i]});
+    else skipped.push({...r,_rawInput:rows[i]._rawInput||rows[i]});
+  });
+  return{valid,skipped,total:checked.length};
+}
+commitQuoteImport.onclick=()=>{
+  const r=currentQuoteRound();
+  if(!r||r.status==="confirmed"){alert("已确认提交不可覆盖，请新增本轮新版本。");return}
+  if(!quoteImportPreviewRows.length){alert("请先导入并预览报价。");return}
+  const plan=planQuoteImportCommit(quoteImportPreviewRows);
+  if(!plan.valid.length){alert("没有可写入的有效报价；全部 "+plan.skipped.length+" 行仍在预览中供修改。");return}
+  if(plan.skipped.length){
+    const details=plan.skipped.slice(0,8).map(x=>String(x._rowNo||"手工")+" 行 "+String(x.itemRef||"") + "：" + (x.errors.join("；")||x.coverageCheck)).join("\n");
+    if(!confirm("本次共 "+plan.total+" 行，可提交 "+plan.valid.length+" 行，拒绝/待检查 "+plan.skipped.length+" 行。\n以下错误行不会保存，完整清单留在预览中：\n"+details+(plan.skipped.length>8?"\n……剩余 "+(plan.skipped.length-8)+" 行见预览":"")+"\n是否只提交 "+plan.valid.length+" 行？"))return;
+  }
+  plan.valid.forEach(x=>upsertRoundLine(r,x,"import"));
+  renderQuoteRound();
+  if(plan.skipped.length){
+    quoteImportPreviewRows=plan.skipped;quoteImportPreview.style.display="block";
+    quoteImportFeedback.textContent="已明确提交 "+plan.valid.length+" 行；剩余 "+plan.skipped.length+" 行未写入，全部保留在下方预览中。请修正原输入后重新解析。";
+    renderQuotePreviewTable();
+    renderCoverageResult(coverageFromRows(r,r.lines));
+  }else clearQuoteImportPreview();
+};
+/** 中文：仅候选原轮次已确认、现轮确实漏报且当前数量有适用价格的项目可沿用。
+ * English: Carry-forward candidates require confirmed prior terms, a current missing line, and an applicable tier. */
+function planCarryForward(round){
+  if(!round||round.roundNo<=1||round.status==="confirmed")return[];
+  const existing=new Set(round.lines.map(l=>l.lineId));
+  return expectedIdsForRound(round).filter(lineId=>!existing.has(lineId)).map(lineId=>{
+    const it=items.find(x=>x.lineId===lineId),prev=priorApplicableLine(round.supplierId,lineId,round.roundNo);
+    if(!it||!prev||effectivePriceForLine(prev,it.qty)==null)return null;
+    return{lineId,it,prev,price:effectivePriceForLine(prev,it.qty)};
+  }).filter(Boolean);
+}
+/** 中文：沿用记录完整保存原轮次、原版本和采购员证据说明。
+ * English: Carry records preserve the original round/version plus explicit buyer evidence. */
+function buildCarryForwardLine(candidate,evidenceNote){
+  const {lineId,it,prev}=candidate;
+  return{lineId,itemId:it.id,price:prev.price,tiers:(prev.tiers||[]).map(t=>({...t})),lead:prev.lead,moq:prev.moq,status:"quoted",source:"carry",
+    original:{carryFromRound:prev.roundNo,carryFromRevision:prev.revisionNo,confirmationNote:evidenceNote},updatedAt:new Date().toISOString()};
+}
+/** 中文：先预览并选择本轮确需沿用的行，不能点一次直接沿用所有漏报。
+ * English: Preview and select carry-forward rows; a single click must never copy all missing prices. */
+function openCarryForwardPreview(){
+  const round=currentQuoteRound();if(!round||round.roundNo===1||round.status==="confirmed")return;
+  const candidates=planCarryForward(round);
+  if(!candidates.length){alert("当前没有可安全沿用的漏报项目（原轮价格缺失或当前数量无适用档位时不允许沿用）。");return}
+  const signature=[round.supplierId,round.roundNo,round.revisionNo].join("|");
+  carryForwardPreview.style.display="block";
+  carryForwardPreview.innerHTML='<div class="sline"><b>沿用上轮预览 · '+candidates.length+' 项可选（默认不勾选）</b><button class="btn" id="cancelCarryPreview">取消</button></div>'+
+    '<div class="small muted" style="margin:8px 0">仅对供应商明确确认维持原报价条件的项目勾选；无适用阶梯价和被拒绝/不供货的历史报价不在可选范围。</div>'+
+    '<div class="scopeList">'+candidates.map(c=>'<label class="scopeRow"><input type="checkbox" data-carry-line="'+esc(c.lineId)+'"><span>'+esc(c.it.id)+' ('+esc(c.lineId)+') · 第 '+c.prev.roundNo+' 轮第 '+c.prev.revisionNo+' 版 · 当前适用价 '+c.price.toFixed(2)+' · '+esc(tierText(c.prev))+' · 交期 '+(c.prev.lead??"—")+' 天 · MOQ '+(c.prev.moq??"—")+'</span></label>').join("")+'</div>'+
+    '<div class="toolbar" style="margin-top:8px"><input type="text" id="carryEvidenceNote" style="flex:1;min-width:260px" placeholder="供应商确认沿用的原始来源/日期/说明（必填）"></div>'+
+    '<label class="scopeRow"><input type="checkbox" id="carryConfirmSource"><span>我已核实供应商明确维持上述选中项目的原报价条件</span></label>'+
+    '<button class="btn primary" id="confirmCarrySelection">确认沿用选中的项目</button>';
+  document.getElementById("cancelCarryPreview").onclick=()=>{carryForwardPreview.style.display="none";carryForwardPreview.innerHTML=""};
+  document.getElementById("confirmCarrySelection").onclick=()=>{
+    const current=currentQuoteRound(),key=current&&[current.supplierId,current.roundNo,current.revisionNo].join("|");
+    if(key!==signature||!current||current.status==="confirmed"){alert("报价轮次/版本已变化，请重新选择。");return}
+    const ids=[...carryForwardPreview.querySelectorAll("[data-carry-line]:checked")].map(x=>x.dataset.carryLine);
+    const note=document.getElementById("carryEvidenceNote").value.trim();
+    if(!ids.length){alert("请至少选择一个项目。");return}
+    if(!note||!document.getElementById("carryConfirmSource").checked){alert("请填写供应商确认依据并勾选已核实声明。");return}
+    const refreshed=new Map(planCarryForward(current).map(c=>[c.lineId,c]));
+    if(ids.some(id=>!refreshed.has(id))){alert("候选报价已变化，请重新预览。");return}
+    if(!confirm("确定按原轮次和原条件沿用这 "+ids.length+" 项吗？其余漏报项保持漏报状态。"))return;
+    ids.forEach(id=>current.lines.push(buildCarryForwardLine(refreshed.get(id),note)));
+    renderQuoteRound();
+    alert("已按供应商确认依据沿用 "+ids.length+" 项，其余漏报项目不变。");
+  };
+}
+carryForwardMissing.onclick=openCarryForwardPreview;
 
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active");if(b.dataset.tab==="assign")renderAssignAll();if(b.dataset.tab==="quoteImport"){enterReturnedQuoteMode();quoteSupplierOptions();renderQuoteRoundSelector()}if(b.dataset.tab==="quotes")renderQuotes()});
 document.querySelectorAll(".modebtn").forEach(b=>b.onclick=()=>{assignMode=b.dataset.mode;document.querySelectorAll(".modebtn").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("itemFirstView").style.display=assignMode==="itemFirst"?"grid":"none";document.getElementById("supplierFirstView").style.display=assignMode==="supplierFirst"?"grid":"none";renderAssignAll()});
