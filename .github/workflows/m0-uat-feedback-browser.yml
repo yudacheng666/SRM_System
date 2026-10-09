@@ -1,0 +1,44 @@
+# 中文：人工 UAT 修复草稿分支在 GitHub 云端执行 Chromium 实际交互并保留失败证据。
+# English: Real Chromium regressions for buyer-UAT fixes, with cloud evidence and no main-branch changes.
+name: M0 Buyer UAT Feedback Browser Regression
+on:
+  push:
+    branches:
+      - draft/20261009-m0-uat-feedback
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium Playwright
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Build anonymous multi-round quote CSV samples
+        run: node tests/generate-m0-fixtures.cjs
+      - name: Re-run P0, P1, P2 source regressions
+        run: |
+          node tests/m0-p0-regression.cjs
+          node tests/m0-p1-regression.cjs
+          node tests/m0-p2-regression.cjs
+      - name: Real-browser baseline
+        run: node tests/browser/basic.cjs
+      - name: Real-browser buyer UAT feedback
+        run: node tests/browser/uat-feedback.cjs
+      - name: Complete 100-item 10-supplier two-round workflow
+        run: node tests/browser/full.cjs
+      - name: Upload screenshots and test details
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m0-uat-feedback-browser-evidence
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 30
