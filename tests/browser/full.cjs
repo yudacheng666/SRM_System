@@ -126,6 +126,40 @@ const assigned=(sid)=>Array.from({length:100},(_,i)=>i).filter(i=>new Set([sid%5
     assert.equal(details.supplierCount,10);
     assert.equal(details.rounds,20);
     assert.ok(details.withPrices>=80);
+    // 中文：实际勾选两家比较，第三家没有共同物料时显示不可比较，不能把空范围算作 0 元。
+    // English: Select actual supplier checkboxes; a third supplier can shrink the shared scope to zero without inventing zero prices.
+    const summary=page.locator('#comparisonGroupSummary');
+    assert.match(await summary.innerText(),/至少勾选 2 家/);
+    assert.equal(await page.locator('[data-compare-supplier]:checked').count(),0);
+    await page.locator('[data-compare-supplier="SUP-001"]').check();
+    assert.match(await summary.innerText(),/至少勾选 2 家/);
+    await page.locator('[data-compare-supplier="SUP-002"]').check();
+    assert.match(await summary.innerText(),/共同有效报价物料/);
+    const firstPair=await page.evaluate(()=>{
+      const r=computeSelectedGroupComparison(selectedComparisonSuppliers);
+      return{count:r.common.length,a:r.groupTotals.get('SUP-001'),b:r.groupTotals.get('SUP-002'),own:r.own[0].total};
+    });
+    assert.ok(firstPair.count>0&&firstPair.a>0&&firstPair.b>0);
+    assert.match(await page.locator('#quoteAnalysis').innerText(),/比较组同范围总额/);
+    await page.locator('[data-compare-supplier="SUP-003"]').check();
+    const three=await page.evaluate(()=>{
+      const r=computeSelectedGroupComparison(selectedComparisonSuppliers);
+      return{count:r.common.length,group:r.group.length,own:r.own[0].total};
+    });
+    assert.equal(three.group,3);
+    assert.equal(three.count,0);
+    assert.equal(three.own,firstPair.own);
+    assert.match(await summary.innerText(),/不可比较/);
+    const totals=await page.locator('#quoteAnalysis .analysisTable tbody tr').allInnerTexts();
+    assert.ok(totals.slice(0,3).every(text=>text.includes('—')));
+    await page.locator('[data-compare-supplier="SUP-003"]').uncheck();
+    assert.equal(await page.evaluate(()=>computeSelectedGroupComparison(selectedComparisonSuppliers).common.length),firstPair.count);
+    await tab('quoteImport');await tab('quotes');
+    assert.equal(await page.locator('[data-compare-supplier]:checked').count(),2);
+    await page.locator('#clearGroupComparison').click();
+    assert.equal(await page.locator('[data-compare-supplier]:checked').count(),0);
+    assert.match(await summary.innerText(),/至少勾选 2 家/);
+    log('buyer-selected like-for-like supplier group totals and zero-common exclusion','2 suppliers -> '+firstPair.count+' shared lines, 3 suppliers -> none');
     const finalItemCount=details.items,pages=Math.ceil(finalItemCount/10);
     await page.locator('#quotePager [data-pg="'+(pages-1)+'"]').click();
     const manualChoice=await page.evaluate(()=>{
