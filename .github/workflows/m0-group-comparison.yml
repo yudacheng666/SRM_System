@@ -1,0 +1,46 @@
+# 中文：同物料范围比较新功能必须通过 50 项基础回归、18 项专项计算及三层真实 Chromium 验收。
+# English: Selected-group comparison must pass 50 baseline checks, 18 formula checks and three Chromium flows.
+name: M0 Selected Supplier Group Browser Acceptance
+on:
+  push:
+    branches:
+      - draft/20261009-m0-group-compare
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Generate anonymous multi-round CSV data
+        run: node tests/generate-m0-fixtures.cjs
+      - name: Baseline P0/P1/P2 regressions
+        run: |
+          node tests/m0-p0-regression.cjs
+          node tests/m0-p1-regression.cjs
+          node tests/m0-p2-regression.cjs
+      - name: Selected group comparison 18 logic checks
+        run: node tests/m0-group-comparison.cjs
+      - name: M0 basic browser regression
+        run: node tests/browser/basic.cjs
+      - name: Previous user feedback browser regression
+        run: node tests/browser/uat-feedback.cjs
+      - name: Full 100 item 10 supplier two round browser acceptance including supplier group UI
+        run: node tests/browser/full.cjs
+      - name: Upload screenshots logs and test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m0-selected-group-browser-evidence
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 30
