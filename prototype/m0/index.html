@@ -501,6 +501,9 @@ const assignSel=new Set();
 const supplierPickerSel=new Set();
 const rangeAnchors=new Map();
 let pendingImportRows=[];
+/** 中文：询价导入预览可分页、单独查看全部错误及冲突，不隐藏第 51 行之后的异常。
+ * English: Import previews paginate and expose all conflicts/errors, including those beyond row 50. */
+const itemImportPreviewState={page:0,onlyProblems:false};
 let pendingMatchedUpdatePlan=null;
 const customFields=[];
 const fieldFilterDraft={lineId:"",id:"",name:"",cat:"",qty:"",unit:"",supplierCount:""};
@@ -704,20 +707,45 @@ function planItemImport(rows){
   }
   return actions;
 }
+/** 中文：返回全部异常处理计划，供预览分页和错误筛选复用。
+ * English: Compute all import decisions for paginated preview and exception filtering. */
+function itemImportPreviewPlan(rows){
+  const actions=planItemImport(rows);
+  return{actions,problems:actions.filter(a=>(a.row._errors||[]).length>0||a.kind==="conflict")};
+}
+/** 中文：分页只改变屏幕显示，最终提交仍以全部原始输入为准。
+ * English: Pagination changes display only; commit still uses every imported row. */
+function renderItemImportPreview(source){
+  const {actions,problems}=itemImportPreviewPlan(pendingImportRows);
+  const bad=pendingImportRows.filter(x=>x._errors?.length).length;
+  const merged=actions.filter(x=>x.kind==="merge").length,conflicts=actions.filter(x=>x.kind==="conflict").length;
+  const list=itemImportPreviewState.onlyProblems?problems:actions,perPage=50;
+  const totalPages=Math.max(1,Math.ceil(list.length/perPage));
+  itemImportPreviewState.page=Math.min(itemImportPreviewState.page,totalPages-1);
+  const from=itemImportPreviewState.page*perPage;
+  const visible=list.slice(from,from+perPage);
+  importPreview.innerHTML=`<div class="sline"><div><b>${esc(source)}</b> · ${actions.length} 行 · 自动合并 ${merged} 行 · 冲突 ${conflicts} 行 · 错误 ${bad} 行</div><button class="btn primary" id="confirmImportRows" ${bad?"disabled":""}>确认加入本次询价（全部 ${actions.length} 行）</button></div>
+    <div class="toolbar" style="margin-top:8px"><button class="btn" id="toggleImportProblems">${itemImportPreviewState.onlyProblems?"显示全部行":"仅看全部错误/冲突（"+problems.length+"）"}</button><span class="small muted">当前显示 ${list.length?from+1:0}–${Math.min(from+perPage,list.length)} / ${list.length}；可查看所有异常，提交不受分页限制。</span></div>
+    <div class="tablewrap" style="max-height:230px;margin-top:8px"><table><thead><tr><th>原始行号</th><th>物料编码</th><th>名称</th><th>数量</th><th>单位</th><th>处理方案</th></tr></thead><tbody>${visible.map(x=>`<tr><td>${esc(x.row._rowNo??"单条")}</td><td>${esc(x.row.id)}</td><td>${esc(x.row.name)}</td><td>${x.row.qty??"—"}</td><td>${esc(x.row.unit)}</td><td class="${x.row._errors?.length||x.kind==="conflict"?"dangertext":"ok"}">${esc(x.row._errors?.join("、")|| (x.kind==="merge"?"合并至 "+x.target.lineId:x.kind==="conflict"?"冲突："+x.reasons.join("、"):"新建询价行"))}</td></tr>`).join("")}</tbody></table></div>
+    <div id="itemImportPager" class="pager"></div>`;
+  document.getElementById("confirmImportRows").onclick=()=>addRowsToRfq(pendingImportRows);
+  document.getElementById("toggleImportProblems").onclick=()=>{
+    itemImportPreviewState.onlyProblems=!itemImportPreviewState.onlyProblems;
+    itemImportPreviewState.page=0;renderItemImportPreview(source);
+  };
+  renderPageNav(document.getElementById("itemImportPager"),itemImportPreviewState.page,list.length,perPage,p=>{itemImportPreviewState.page=p;renderItemImportPreview(source)});
+}
 function setImportPreview(rows,source){
   if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}
   if(!rows.length){alert("只有表头，没有可导入的数据行。");return}
-  // 给每批来源增加标识并为 M0 Excel 模拟行生成稳定行号。
-  // Label each source batch and assign stable IDs to simulated Excel rows.
+  // 中文：保留导入来源，所有输入先进入统一的完整预览。
+  // English: Keep import origins and route all inputs through complete preview.
   rows.forEach(row=>{
     if(!row.lineId)row.lineId=nextLineId();
     if(row._rowNo)row.sources=[{source:source+" · 第"+row._rowNo+"行",qty:row.qty}];
   });
-  pendingImportRows=rows;importPreview.style.display="block";
-  const actions=planItemImport(rows),bad=rows.filter(x=>x._errors?.length);
-  const merged=actions.filter(x=>x.kind==="merge").length,conflicts=actions.filter(x=>x.kind==="conflict").length;
-  importPreview.innerHTML=`<div class="sline"><div><b>${esc(source)}</b> · ${rows.length} 行 · 自动合并 ${merged} 行 · 待人工确认 ${conflicts} 行 · 错误 ${bad.length} 行</div><button class="btn primary" id="confirmImportRows" ${bad.length?"disabled":""}>确认加入本次询价</button></div><div class="tablewrap" style="max-height:230px;margin-top:8px"><table><thead><tr><th>物料编码</th><th>名称</th><th>数量</th><th>单位</th><th>处理方案</th></tr></thead><tbody>${actions.slice(0,50).map(x=>`<tr><td>${esc(x.row.id)}</td><td>${esc(x.row.name)}</td><td>${x.row.qty??"—"}</td><td>${esc(x.row.unit)}</td><td class="${x.row._errors?.length||x.kind==="conflict"?"dangertext":"ok"}">${esc(x.row._errors?.join("、")|| (x.kind==="merge"?"合并至 "+x.target.lineId : x.kind==="conflict"?"冲突："+x.reasons.join("、"):"新建询价行"))}</td></tr>`).join("")}</tbody></table></div>`;
-  document.getElementById("confirmImportRows").onclick=()=>addRowsToRfq(pendingImportRows);
+  pendingImportRows=rows;itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;
+  importPreview.style.display="block";renderItemImportPreview(source);
 }
 /** 确认后应用合并/新增，保留来源行，冲突由采购员确认。
  * Apply merges/additions after confirmation and keep source rows traceable. */
@@ -741,7 +769,7 @@ function addRowsToRfq(rows){
       added++;if(a.kind==="conflict")separated++;
     }
   });
-  pendingImportRows=[];importPreview.style.display="none";
+  pendingImportRows=[];itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;importPreview.style.display="none";
   renderItemList();renderAssignAll();renderQuotes();
   alert(`新增 ${added} 行；自动合并 ${merged} 行；冲突确认分行 ${separated} 行。合并前原始需求行已留存。`);
 }
@@ -749,7 +777,7 @@ toggleItemIntake.onclick=()=>{itemIntake.style.display=itemIntake.style.display=
 manualAdd.onclick=()=>{const code=manualCode.value.trim(),name=manualName.value.trim(),qty=parsePositiveNumber(manualQty.value,"数量"),unit=manualUnit.value.trim();if(!code||qty.error||!unit){alert([!code?"物料编码不能为空":"",qty.error||"",!unit?"单位不能为空":""].filter(Boolean).join("；"));return}const row={id:code,lineId:nextLineId(),name,cat:"",qty:qty.value,unit,sources:[{source:"单条录入",qty:qty.value}],_errors:[]};setImportPreview([row],"单条输入预览");manualCode.value=manualName.value=manualQty.value=manualUnit.value=""};
 parsePaste.onclick=()=>{const rows=parseItemRows(pasteItems.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到物料。");return}setImportPreview(rows,"剪贴板批量粘贴预览")};
 clearPasteInput.onclick=()=>{pasteItems.value=""};
-clearPastePreview.onclick=()=>{pendingImportRows=[];importPreview.innerHTML="";importPreview.style.display="none"};
+clearPastePreview.onclick=()=>{pendingImportRows=[];itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;importPreview.innerHTML="";importPreview.style.display="none"};
 readClipboard.onclick=async()=>{try{pasteItems.value=await navigator.clipboard.readText();parsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请在文本框中按 Ctrl+V 粘贴。")}};
 demoExcelImport.onclick=()=>setImportPreview([
   {id:"XLS-DEMO-001",name:"导入示例物料 A",cat:"类别A",qty:3,unit:"件"},
