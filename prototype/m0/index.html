@@ -327,7 +327,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
       </div>
       <div class="intakeBox">
         <h3>剪贴板批量粘贴</h3>
-        <textarea id="quotePaste" placeholder="第一行为表头；RFQ Line ID 或物料编码必须精确存在。&#10;RFQ Line ID,单价,交期,MOQ,状态&#10;RFQ-L00001,100,7,10,正常报价&#10;RFQ-L00002,,,,不供货&#10;单价也可为阶梯 1-99:100|100+:90"></textarea>
+        <textarea id="quotePaste" placeholder="第一行为表头；必须有精确列标题“RFQ Line ID”或“物料编码”。同码多条询价行优先使用 RFQ Line ID。&#10;物料编码,单价,交期,MOQ,状态&#10;RFQ-L00001,100,7,10,正常报价&#10;RFQ-L00002,,,,不供货&#10;单价也可为阶梯 1-99:100|100+:90"></textarea>
         <div class="toolbar">
           <button class="btn" id="quoteReadClipboard">读取剪贴板</button>
           <button class="btn soft" id="quoteParsePaste">解析预览</button>
@@ -358,7 +358,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 
     <div id="quoteImportPreview" class="card" style="margin-top:14px;display:none">
       <div class="cardhead"><b>导入预览</b><div class="toolbar"><button class="btn primary" id="commitQuoteImport">写入当前报价轮次</button><button class="btn danger" id="clearQuotePreview2">清空预览</button></div></div>
-      <div class="cardbody"><div id="quoteImportFeedback" class="small muted" style="margin-bottom:8px"></div><div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>单价 / 阶梯价</th><th>RFQ数量适用价</th><th>交期</th><th>MOQ</th><th>状态</th><th>覆盖检查</th></tr></thead><tbody id="quoteImportPreviewBody"></tbody></table></div></div>
+      <div class="cardbody"><div id="quoteImportFeedback" class="small muted" style="margin-bottom:8px"></div><div class="tablewrap"><table class="table"><thead><tr><th>物料编码</th><th>RFQ Line ID</th><th>物料名称</th><th>单价 / 阶梯价</th><th>RFQ数量适用价</th><th>交期</th><th>MOQ</th><th>报价状态</th><th>覆盖检查</th></tr></thead><tbody id="quoteImportPreviewBody"></tbody></table></div></div>
     </div>
 
     <div class="card" style="margin-top:14px">
@@ -918,6 +918,10 @@ function ensureFirstRound(){
   const sid=quoteImportSupplier.value;if(!sid)return null;
   let subs=supplierSubmissions(sid);
   if(!subs.length){quoteRounds.push({supplierId:sid,roundNo:1,revisionNo:1,status:"draft",lines:[],expectedLineIds:assignedItemsForSupplier(sid).map(x=>x.lineId),evidenceType:"email_attachment",evidenceNote:"",createdAt:new Date().toISOString()});subs=supplierSubmissions(sid)}
+  // 中文：第一轮还未写入报价时，分配中心变动应同步至应报价范围；有报价后则冻结范围，避免默默改变历史。
+  // English: Refresh first-round scope after assignment changes only before its first quote is saved.
+  const first=subs.find(r=>r.roundNo===1&&r.revisionNo===1);
+  if(first?.status==="draft"&&!first.lines.length)first.expectedLineIds=assignedItemsForSupplier(sid).map(x=>x.lineId);
   return subs[subs.length-1];
 }
 function renderQuoteRoundSelector(selectLatest=false){
@@ -1003,6 +1007,9 @@ function expectedIdsForRound(round){
 /** 校验报价身份、状态、价格和本轮范围，禁止静默写入错误行。
  * Validate quote identity, status, price and round scope before committing. */
 function validateQuotePreview(rows){
+  // 中文：防止采购员先打开报价页、后又增加供应商分配，而第一轮尚无报价时错误显示“多报”。
+  // English: Refresh empty first-round draft scope even if the buyer revisited assignments after opening quotation import.
+  ensureFirstRound();
   const round=currentQuoteRound(),expected=new Set(expectedIdsForRound(round)),resolved=rows.map(r=>({...r,item:resolveQuoteItem(r.itemRef)})),seen=new Map();
   resolved.forEach(r=>{const key=r.item?.lineId||r.itemRef;seen.set(key,(seen.get(key)||0)+1)});
   return resolved.map(r=>{
@@ -1017,7 +1024,13 @@ function validateQuotePreview(rows){
       if(!parsed.errors.length&&effective==null)errors.push("RFQ数量没有适用的阶梯价格");
     }
     if(errors.length&&["已报价"].includes(check))check="数据错误";if(!status)check="数据错误";
-    return {...r,status,lineId,itemId,priceParsed:parsed,leadValue:lead.value,moqValue:moq.value,effectivePrice:effective,errors,coverageCheck:check};
+    // 中文：明确区分未知物料、未分配供应商和不在本轮范围，避免所有情况只显示“多报”。
+    // English: Distinguish unknown items, missing supplier assignment and lines outside the current round scope.
+    const scopeReason=check==="多报"?
+      !r.item?"找不到对应物料或 RFQ Line ID":
+      !getSet(lineId).has(round.supplierId)?"该物料尚未分配给当前供应商":
+      "该物料未纳入本轮应报价范围":"";
+    return {...r,status,lineId,itemId,priceParsed:parsed,leadValue:lead.value,moqValue:moq.value,effectivePrice:effective,errors,coverageCheck:check,scopeReason};
   });
 }
 /** 区分已报价、明确未报价、不供货、漏报、多报与重复。
@@ -1067,8 +1080,15 @@ function showQuotePreview(rows){
 }
 /** 中文：每一条预览行都保留有效性与原始输入，不因部分提交丢失异常明细。
  * English: Retain raw records and per-row validity in preview, including after partial commits. */
+/** 中文：报价预览按正式导入列名分开显示物料编码、RFQ Line ID 和物料名称。
+ * English: Preview uses explicit item code, RFQ line ID and item name headers consistently with import rules. */
 function renderQuotePreviewTable(){
-  quoteImportPreviewBody.innerHTML=quoteImportPreviewRows.map(r=>`<tr><td>${esc(r.itemId||r.itemRef)}<br><span class="muted">${esc(r.lineId||"")}</span></td><td>${esc(r.price)}</td><td>${r.effectivePrice==null?"—":"¥"+r.effectivePrice.toFixed(2)}</td><td>${esc(r.lead)}</td><td>${esc(r.moq)}</td><td>${esc(quoteStatusLabel(r.status))}</td><td class="${["已报价","明确未报价","不供货"].includes(r.coverageCheck)?"ok":"dangertext"}">${esc(r.coverageCheck)}${r.errors.length?" · "+esc(r.errors.join("；")):""}</td></tr>`).join("");
+  quoteImportPreviewBody.innerHTML=quoteImportPreviewRows.map(r=>{
+    const it=items.find(x=>x.lineId===r.lineId);
+    const code=it?.id||r.itemId||r.itemRef;
+    const label=r.coverageCheck+(r.scopeReason?" · "+r.scopeReason:"")+(r.errors.length?" · "+r.errors.join("；"):"");
+    return `<tr><td>${esc(code||"—")}</td><td>${esc(it?.lineId||r.lineId||"—")}</td><td>${esc(it?.name||"—")}</td><td>${esc(r.price)}</td><td>${r.effectivePrice==null?"—":"¥"+r.effectivePrice.toFixed(2)}</td><td>${esc(r.lead)}</td><td>${esc(r.moq)}</td><td>${esc(quoteStatusLabel(r.status))}</td><td class="${["已报价","明确未报价","不供货"].includes(r.coverageCheck)?"ok":"dangertext"}">${esc(label)}</td></tr>`;
+  }).join("");
 }
 function clearQuoteImportPreview(){quoteImportPreviewRows=[];quoteImportPreviewBody.innerHTML="";quoteImportFeedback.textContent="";quoteImportPreview.style.display="none";const round=currentQuoteRound();if(round)renderCoverageResult(coverageFromRows(round,round.lines))}
 function upsertRoundLine(round,row,source="import"){
