@@ -113,6 +113,7 @@ const assigned=(sid)=>Array.from({length:100},(_,i)=>i).filter(i=>new Set([sid%5
       const second=await page.evaluate(id=>quoteRounds.find(r=>r.supplierId===id&&r.roundNo===2&&r.status==='confirmed')?.lines.length||0,supplierId);
       assert.ok(second>0&&second<=group.length);
     }
+    await page.screenshot({path:path.join(results,'full-round-two.png'),fullPage:true});
     const secondCount=await page.evaluate(()=>quoteRounds.filter(r=>r.roundNo===2&&r.status==='confirmed').length);
     assert.equal(secondCount,10);
     log('actual second-round partial scope editing and quotation returns','10 confirmed second rounds');
@@ -142,6 +143,7 @@ const assigned=(sid)=>Array.from({length:100},(_,i)=>i).filter(i=>new Set([sid%5
     const awarded=await page.evaluate(id=>({id:awards.get(id),reason:awardReasons.get(id),manual:manualAwards.has(id)}),manualChoice.lineId);
     assert.equal(awarded.id,manualChoice.sid);
     assert.ok(awarded.reason&&awarded.manual);
+    await page.screenshot({path:path.join(results,'full-comparison.png'),fullPage:true});
     log('comparison total and justified non-lowest supplier decision','20 confirmed rounds');
 
     assert.deepEqual(errors,[]);
