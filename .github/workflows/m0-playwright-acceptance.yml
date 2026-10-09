@@ -1,0 +1,75 @@
+# 中文：云端真实 Chromium 验收，必须先通过基本操作才执行完整采购流程。
+# English: Real cloud Chromium acceptance. Complete workflow runs only after basic UI passes.
+name: M0 Playwright Browser Acceptance
+on:
+  push:
+    branches:
+      - draft/20261009-m0-playwright-acceptance
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  basic:
+    name: Basic real-browser interactions
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Generate reproducible synthetic fixture files
+        run: node tests/generate-m0-fixtures.cjs
+      - name: Re-run P0, P1, P2 source-logic regressions
+        run: |
+          node tests/m0-p0-regression.cjs
+          node tests/m0-p1-regression.cjs
+          node tests/m0-p2-regression.cjs
+      - name: Run BASIC real Chromium browser acceptance
+        run: node tests/browser/basic.cjs
+      - name: Upload basic failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m0-basic-browser-evidence
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 30
+  full:
+    name: Full synthetic procurement workflow 100x10
+    runs-on: ubuntu-latest
+    needs: basic
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Generate reproducible synthetic fixture files
+        run: node tests/generate-m0-fixtures.cjs
+      - name: Run FULL real Chromium procurement workflow
+        run: node tests/browser/full.cjs
+      - name: Upload full workflow evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m0-full-browser-evidence
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 30
+      - name: Upload reusable synthetic procurement CSVs
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m0-100x10-browser-verified-csv
+          path: tests/fixtures/generated/*.csv
+          if-no-files-found: error
+          retention-days: 30

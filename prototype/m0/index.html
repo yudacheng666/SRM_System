@@ -1,0 +1,1794 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lightweight SRM V1 - M0 Prototype</title>
+<style>
+:root{--bg:#f5f7fb;--panel:#fff;--line:#dfe4ec;--text:#1f2937;--muted:#6b7280;--primary:#2563eb;--soft:#eff6ff;--warn:#b45309;--danger:#b91c1c;--ok:#047857}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit} button{cursor:pointer}
+.app{max-width:1500px;margin:auto;padding:18px}
+.top{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+h1{font-size:22px;margin:0 0 5px}.sub{color:var(--muted);font-size:13px}
+.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px;font-weight:600}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.tab{border:1px solid var(--line);background:#fff;padding:9px 14px;border-radius:10px;font-weight:650}.tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.panel{display:none}.panel.active{display:block}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;box-shadow:0 3px 16px rgba(0,0,0,.03)}
+.cardhead{padding:13px 15px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.cardbody{padding:14px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 10px;background:#fff}
+.btn{border:1px solid var(--line);background:#fff;padding:8px 11px;border-radius:8px;font-weight:600}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}.btn.soft{background:var(--soft);border-color:#bfdbfe;color:#1d4ed8}.btn.danger{color:var(--danger)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(360px,.9fr);gap:14px}
+@media(max-width:980px){.grid2{grid-template-columns:1fr}}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:10px;margin:0 0 14px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:#fff;border:1px solid var(--line);border-radius:11px;padding:12px}.stat b{display:block;font-size:22px}.stat small{color:var(--muted)}
+.tablewrap{overflow:auto;max-height:620px}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{padding:8px 9px;border-bottom:1px solid #edf0f4;text-align:left;white-space:nowrap}.table th{position:sticky;top:0;background:#f9fafb;z-index:2}.table tr:hover td{background:#fafcff}
+.muted{color:var(--muted)}.small{font-size:12px}.warn{color:var(--warn)}.ok{color:var(--ok)}.dangertext{color:var(--danger)}
+.pager{display:flex;justify-content:space-between;align-items:center;padding:10px 0 0;gap:8px}
+.modebar{display:flex;gap:8px}.modebtn{padding:7px 10px;border:1px solid var(--line);background:#fff;border-radius:8px}.modebtn.active{background:#111827;color:#fff}
+.supplierList{display:flex;flex-direction:column;gap:8px;max-height:620px;overflow:auto}
+.srow{border:1px solid var(--line);border-radius:10px;padding:10px}.srow.selected{border-color:#93c5fd;background:#f8fbff}
+.sline{display:flex;justify-content:space-between;gap:10px;align-items:center}.reason{font-size:12px;color:var(--muted);margin-top:3px}
+.tri{font-weight:700}.tri.full{color:var(--ok)}.tri.partial{color:var(--warn)}.tri.none{color:var(--muted)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:999px;padding:3px 7px;font-size:12px}
+.notice{padding:10px 12px;background:#fffbeb;border:1px solid #fde68a;border-radius:9px;font-size:13px}
+.preview{margin-top:10px;padding:10px;border:1px dashed #93c5fd;background:#eff6ff;border-radius:9px;display:none}
+.quotePrice.low{font-weight:800;color:var(--ok)}.quotePrice.second{font-weight:700;color:#1d4ed8}.selectedCell{outline:2px solid #60a5fa;outline-offset:-2px;background:#eff6ff!important}
+.headerPick{font-size:11px;padding:3px 6px}.reasonTag{font-size:11px;color:#7c2d12;background:#ffedd5;padding:2px 5px;border-radius:5px}
+.awardSelectable{cursor:pointer}.awardSelectable:hover,.awardSelectable:focus-within{background:#edf6ff!important;outline:2px solid #93c5fd;outline-offset:-2px}
+#awardReasonInput{width:100%;min-height:85px;padding:9px;border:1px solid #cfd6e1;border-radius:8px;font:inherit;resize:vertical}
+.footerNote{margin-top:14px;color:var(--muted);font-size:12px}
+.itemWithDrawing{display:flex;align-items:center;gap:8px}.drawingThumb{width:42px;height:32px;border:1px solid #cfd6e1;border-radius:6px;background:#fff;padding:2px;display:inline-flex;align-items:center;justify-content:center}.drawingThumb:hover{border-color:#60a5fa;background:#eff6ff}.drawingThumb svg{width:100%;height:100%}
+.modalBackdrop{position:fixed;inset:0;background:rgba(15,23,42,.48);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}.modalBackdrop.open{display:flex}.modalCard{width:min(980px,96vw);max-height:92vh;background:#fff;border-radius:14px;border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.22);overflow:hidden}.modalHead{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.modalBody{padding:16px;overflow:auto;max-height:calc(92vh - 60px)}.drawingLarge{width:100%;min-height:560px;border:1px solid var(--line);background:#fafafa;border-radius:10px;display:flex;align-items:center;justify-content:center}.drawingLarge svg{width:92%;height:auto;max-height:72vh}
+.intakeGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}@media(max-width:980px){.intakeGrid{grid-template-columns:1fr}}
+.intakeBox{border:1px solid var(--line);border-radius:10px;padding:11px;background:#fafbfc}.intakeBox h3{font-size:14px;margin:0 0 8px}.intakeBox textarea{width:100%;min-height:112px;border:1px solid #cfd6e1;border-radius:8px;padding:8px;resize:vertical;font:inherit}.intakeBox input{max-width:100%}
+.importPreview{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px}.importPreview table{width:100%;border-collapse:collapse;font-size:12px}.importPreview td,.importPreview th{border-bottom:1px solid #edf0f4;padding:5px 6px;text-align:left}
+.rfqPreviewLayout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:14px}@media(max-width:820px){.rfqPreviewLayout{grid-template-columns:1fr}}
+.rfqSupplierNav{display:flex;flex-direction:column;gap:7px;max-height:65vh;overflow:auto}.rfqSupplierNav button{text-align:left}
+.rfqDoc{border:1px solid var(--line);border-radius:10px;background:white;padding:16px}.rfqDocHead{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px}.rfqDoc table{width:100%;border-collapse:collapse;font-size:12px}.rfqDoc th,.rfqDoc td{border:1px solid #dfe4ec;padding:6px;text-align:left}
+.colFilter{width:100%;min-width:84px;padding:5px 6px!important;font-size:11px!important}.fieldTools{margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fafbfc}
+.pageNums{display:inline-flex;gap:4px;flex-wrap:wrap;align-items:center}.pageNum{min-width:32px;padding:6px 8px;border:1px solid var(--line);background:#fff;border-radius:7px}.pageNum.active{background:#111827;color:#fff}.selectionBar{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.settingsGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.7fr);gap:14px}@media(max-width:900px){.settingsGrid{grid-template-columns:1fr}}
+.roundBadge{display:inline-block;padding:3px 7px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:11px}.roundBadge.draft{background:#fff7ed;color:#9a3412}.roundBadge.confirmed{background:#ecfdf5;color:#047857}.quoteImportGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}@media(max-width:980px){.quoteImportGrid{grid-template-columns:1fr}}
+.coverageMini{display:grid;grid-template-columns:repeat(7,minmax(110px,1fr));gap:8px;margin-top:10px}@media(max-width:1100px){.coverageMini{grid-template-columns:repeat(3,1fr)}}@media(max-width:650px){.coverageMini{grid-template-columns:repeat(2,1fr)}}.coverageMini .stat b{font-size:18px}.coverageDetails{margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff}
+.pdfControls{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:10px}.pdfMeta{font-size:11px;color:var(--muted);margin-top:2px}.pdfPage{border:1px solid var(--line);background:#fff;border-radius:8px;padding:12px;min-height:520px;display:flex;justify-content:center;align-items:center;overflow:auto}.pdfPage svg{max-width:100%;height:auto}.scopeList{max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:8px}.scopeRow{display:flex;gap:8px;align-items:center;padding:5px;border-bottom:1px solid #edf0f4}.analysisTable{width:100%;border-collapse:collapse;font-size:12px}.analysisTable th,.analysisTable td{padding:6px 8px;border-bottom:1px solid #edf0f4;text-align:right}.analysisTable th:first-child,.analysisTable td:first-child{text-align:left}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div>
+      <h1>Lightweight SRM V1 · M0 交互原型</h1>
+      <div class="sub">验证“物料导入 → 多对多分配 → PDF/附件 → 报价回收/版本 → Coverage → 比价/总价”的 M0 交互。全部为虚构数据。</div>
+    </div>
+    <span class="badge">Prototype / No real data</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="items">1. 本次询价物料</button>
+    <button class="tab" data-tab="assign">2. 询价分配中心</button>
+    <button class="tab" data-tab="quoteImport">3. 报价回收导入</button>
+    <button class="tab" data-tab="quotes">4. 报价比较</button>
+    <button class="tab" data-tab="settings">5. 系统设置</button>
+  </div>
+
+  <section id="items" class="panel active">
+    <div class="card">
+      <div class="cardhead">
+        <div><b>RFQ-DEMO-001</b> <span class="muted small">本次询价物料（演示 1,200 行）</span></div>
+        <div class="toolbar">
+          <input id="itemSearch" type="text" placeholder="全字段模糊搜索">
+          <button class="btn" id="runItemSearch">搜索</button><button class="btn" id="clearItemSearch">清空搜索</button>
+          <button class="btn soft" id="toggleItemIntake">+ 添加询价物料</button>
+          <button class="btn danger" id="deleteSelectedItems">删除选中物料</button>
+          <button class="btn" id="toggleFieldTools">批量更新字段值</button>
+        </div>
+      </div>
+      <div class="cardbody">
+        <div id="fieldTools" class="fieldTools" style="display:none">
+          <div class="toolbar">
+            <select id="bulkFieldSelect"><option value="">选择批量更新字段</option></select>
+            <input id="bulkFieldValue" type="text" placeholder="批量写入值">
+            <button class="btn" id="bulkUpdateField">更新选中物料</button>
+          </div>
+          <div class="toolbar" style="margin-top:10px">
+            <select id="matchKeyField"><option value="">匹配关键字段</option></select>
+            <select id="matchUpdateField"><option value="">要更新的字段</option></select>
+            <input id="matchUpdateFile" type="file" accept=".csv,.txt,.xlsx,.xls">
+            <button class="btn soft" id="demoMatchUpdate">演示表格匹配更新</button>
+          </div>
+          <div class="small muted" style="margin-top:7px">字段结构在“系统设置”维护；这里仅处理字段值。批量导入更新通过关键字段匹配目标记录。</div>
+          <div id="matchedUpdatePreview" class="importPreview" style="display:none"></div>
+        </div>
+
+        <div id="itemIntake" style="display:none">
+          <div class="intakeGrid">
+            <div class="intakeBox">
+              <h3>单条输入（演示字段）</h3>
+              <div class="toolbar">
+                <input id="manualCode" type="text" placeholder="物料编码">
+                <input id="manualName" type="text" placeholder="物料名称">
+                <input id="manualQty" type="text" placeholder="数量">
+                <input id="manualUnit" type="text" placeholder="单位">
+                <button class="btn soft" id="manualAdd">加入本次询价</button>
+              </div>
+            </div>
+            <div class="intakeBox">
+              <h3>剪贴板批量粘贴</h3>
+              <textarea id="pasteItems" placeholder="第一行必须是列标题，精确包含“物料编码”；从第二行起是数据。&#10;物料编码,物料名称,分类,数量,单位&#10;P-001,示例轴,类别A,2,件&#10;P-002,304 不锈钢,类别B,4,个"></textarea>
+              <div class="toolbar">
+                <button class="btn" id="readClipboard">读取剪贴板</button>
+                <button class="btn soft" id="parsePaste">解析预览</button>
+                <button class="btn danger" id="clearPasteInput">清空输入</button>
+                <button class="btn danger" id="clearPastePreview">清空预览</button>
+              </div>
+            </div>
+            <div class="intakeBox">
+              <h3>文件导入</h3>
+              <input id="importFile" type="file" accept=".csv,.txt,.xlsx,.xls">
+              <div class="small muted" style="margin:7px 0">CSV/TXT 可直接解析；Excel 在 M0 用内置示例行演示“选择文件 → 预览 → 导入”的流程。</div>
+              <button class="btn soft" id="demoExcelImport">演示 Excel 导入</button>
+            </div>
+          </div>
+          <div id="importPreview" class="importPreview" style="display:none"></div>
+        </div>
+        <div class="small muted" id="itemSortHint">默认按新增先后倒序（最新在前）。点击列标题排序；Shift+点击追加多字段排序。</div><div class="selectionBar">
+          <button class="btn" id="itemSelectAll">全选</button>
+          <button class="btn" id="itemSelectPage">本页全选</button>
+          <button class="btn" id="itemInvertAll">反选</button>
+          <button class="btn" id="itemInvertPage">本页反选</button><button class="btn danger" id="clearItemSelection">取消选择</button>
+        </div>
+        <div class="tablewrap" style="margin-top:10px">
+          <table class="table">
+            <thead id="itemHead"></thead>
+            <tbody id="itemBody"></tbody>
+          </table>
+        </div>
+        <div class="pager"><span id="itemCount"></span><div id="itemPager"></div></div>
+        <div class="small muted" style="margin-top:6px">双击物料行可编辑编码、数量和属性；已有报价记录的行只能查看。</div>
+      </div>
+    </div>
+    <div id="itemEditModal" class="modalBackdrop" aria-hidden="true">
+      <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="itemEditTitle" style="width:min(620px,96vw)">
+        <div class="modalHead"><b id="itemEditTitle">编辑本次询价物料</b><button class="btn" id="itemEditClose" type="button">关闭</button></div>
+        <div class="modalBody">
+          <div id="itemEditIdentity" class="small muted" style="margin-bottom:10px"></div>
+          <div class="intakeGrid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+            <label>存货编码（物料编码）<input id="itemEditCode" type="text" style="width:100%"></label>
+            <label>数量<input id="itemEditQty" type="number" step="any" min="0.000001" style="width:100%"></label>
+            <label>物料名称<input id="itemEditName" type="text" style="width:100%"></label>
+            <label>分类<input id="itemEditCat" type="text" style="width:100%"></label>
+            <label>单位<input id="itemEditUnit" type="text" style="width:100%"></label>
+          </div>
+          <div class="small muted" id="itemEditHint" style="margin:10px 0"></div>
+          <div id="itemEditError" class="dangertext small"></div>
+          <div class="toolbar" style="justify-content:flex-end;margin-top:12px">
+            <button id="itemEditCancel" class="btn" type="button">取消</button>
+            <button id="itemEditSave" class="btn primary" type="button">保存修改</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="assign" class="panel">
+    <div class="stats">
+      <div class="stat"><small>拟询价物料</small><b id="stTotal">0</b></div>
+      <div class="stat"><small>已分配 ≥1 家</small><b id="stCovered">0</b></div>
+      <div class="stat"><small>仅 1 家</small><b id="stSingle">0</b></div>
+      <div class="stat"><small>未分配</small><b id="stNone">0</b></div>
+    </div>
+
+    <div class="card" style="margin-bottom:14px">
+      <div class="cardhead">
+        <div class="modebar">
+          <button class="modebtn active" data-mode="itemFirst">按物料分配供应商</button>
+          <button class="modebtn" data-mode="supplierFirst">按供应商分配物料</button>
+        </div>
+        <div class="toolbar">
+          <button class="btn soft" id="previewBtn">预览询价单</button>
+          <button class="btn primary" id="generateBtn">生成已分配询价单</button>
+        </div>
+      </div>
+      <div class="cardbody">
+        <div id="previewBox" class="preview"></div>
+      </div>
+    </div>
+
+    <div id="itemFirstView" class="grid2">
+      <div class="card">
+        <div class="cardhead">
+          <b>选择物料</b>
+          <div class="toolbar">
+            <input id="assignItemSearch" type="text" placeholder="全字段模糊搜索">
+            <select id="assignCatFilter"><option value="">全部分类</option></select>
+            <select id="assignStateFilter">
+              <option value="">全部状态</option>
+              <option value="none">未分配</option>
+              <option value="single">仅1家</option>
+              <option value="multi">2家及以上</option>
+            </select>
+            <button class="btn" id="runAssignSearch">搜索</button><button class="btn" id="clearAssignSearch">清空条件</button>
+            <button class="btn" id="selectAssignAll">全选</button>
+            <button class="btn" id="selectAssignPage">本页全选</button>
+            <button class="btn" id="invertAssignAll">反选</button>
+            <button class="btn" id="invertAssignPage">本页反选</button>
+            <button class="btn danger" id="clearAssignSelection">清空选择</button>
+          </div>
+        </div>
+        <div class="cardbody">
+          <div class="small muted" style="margin-bottom:8px">已选 <b id="assignSelectedCount">0</b> 项。选择供应商时默认“追加关系”，不会覆盖已有供应商。</div>
+          <div class="tablewrap">
+            <table class="table">
+              <thead><tr><th></th><th>物料</th><th>分类</th><th>当前供应商</th></tr></thead>
+              <tbody id="assignItemBody"></tbody>
+            </table>
+          </div>
+          <div class="pager"><span id="assignItemCount"></span><div id="assignPager"></div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardhead">
+          <div><b>本次候选供应商池</b> <span class="muted small">三态显示</span></div>
+          <div class="toolbar"><input id="supplierSearch" type="text" placeholder="搜索供应商"><button class="btn" id="runSupplierSearch">搜索</button><button class="btn" id="clearSupplierSearch">清空条件</button></div>
+        </div>
+        <div class="cardbody">
+          <div id="supplierList" class="supplierList"></div><div class="pager"><span id="supplierListCount"></span><div id="supplierListPager"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="supplierFirstView" class="grid2" style="display:none">
+      <div class="card">
+        <div class="cardhead">
+          <b>本次询价供应商</b>
+          <div class="toolbar">
+            <input id="supplierFirstSearch" type="text" placeholder="搜索本次供应商（名称/编码）">
+            <button class="btn" id="runSupplierFirstSearch">搜索</button><button class="btn" id="clearSupplierFirstSearch">清空条件</button>
+            <button class="btn soft" id="openSupplierPicker">+ 添加供应商到本次询价</button>
+          </div>
+        </div>
+        <div class="cardbody">
+          <div class="small muted" style="margin-bottom:8px">这里只显示采购员已经加入本次 RFQ 的供应商，不展示完整供应商主数据。</div>
+          <div id="supplierPicker" class="preview">
+            <div class="toolbar" style="margin-bottom:8px">
+              <input id="supplierPoolSearch" type="text" placeholder="搜索供应商（支持模糊搜索）">
+              <button class="btn" id="runSupplierPoolSearch">搜索</button><button class="btn" id="clearSupplierPoolSearch">清空条件</button>
+              <button class="btn" id="supplierPickAll">全选</button>
+              <button class="btn" id="supplierPickPage">本页全选</button>
+              <button class="btn" id="supplierInvertAll">反选</button>
+              <button class="btn" id="supplierInvertPage">本页反选</button>
+              <button class="btn soft" id="addPickedSuppliers">加入勾选供应商</button>
+              <button class="btn danger" id="clearPickedSuppliers">清空勾选</button>
+              <button class="btn" id="closeSupplierPicker">关闭</button>
+            </div>
+            <div class="small muted" style="margin-bottom:8px">勾选清单支持 Shift 连选。</div>
+            <div id="supplierPoolList" class="supplierList"></div><div class="pager"><span id="supplierPoolCount"></span><div id="supplierPoolPager"></div></div>
+          </div>
+          <div id="supplierFirstList" class="supplierList"></div><div class="pager"><span id="supplierFirstCount"></span><div id="supplierFirstPager"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cardhead">
+          <div><b id="supplierFirstTitle">选择左侧供应商</b></div>
+          <div class="toolbar">
+            <input id="sfItemSearch" type="text" placeholder="全字段模糊搜索">
+            <select id="sfCatFilter"><option value="">全部分类</option></select>
+            <button class="btn" id="runSfSearch">搜索</button><button class="btn" id="clearSfSearch">清空条件</button>
+            <select id="copyFromSupplier"><option value="">复制其他供应商的物料范围…</option></select>
+            <button class="btn soft" id="sfCopyRange">复制为起点</button>
+            <button class="btn" id="sfLinkFiltered">关联全部筛选物料</button>
+            <button class="btn" id="sfLinkPage">关联本页物料</button>
+            <button class="btn" id="sfInvertFiltered">反转筛选范围关联</button>
+            <button class="btn" id="sfInvertPage">反转本页关联</button>
+            <button class="btn danger" id="sfUnlinkFiltered">取消全部筛选关联</button>
+          </div>
+        </div>
+        <div class="cardbody">
+          <div class="tablewrap">
+            <table class="table"><thead><tr><th>已关联（勾选即生效）</th><th>物料</th><th>分类</th></tr></thead><tbody id="sfItemBody"></tbody></table>
+          </div>
+          <div class="pager"><span id="sfItemCount"></span><div id="sfPager"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quoteImport" class="panel">
+    <div class="card" style="margin-bottom:14px">
+      <div class="cardhead">
+        <div><b>报价回收导入</b> <span class="muted small">M0 验证多种导入方式、轮次、修改与异常处理</span></div>
+        <div class="toolbar">
+          <select id="quoteImportSupplier"></select>
+          <select id="quoteRoundSelect"></select>
+          <button class="btn soft" id="newQuoteRound">+ 新增下一轮</button>
+          <button class="btn soft" id="newQuoteRevision">+ 新增本轮新版本</button>
+          <button class="btn" id="editRoundScope">设置本轮议价范围</button>
+          <select id="quoteEvidenceType">
+            <option value="email_attachment">邮件及原始附件</option>
+            <option value="chat_screenshot">聊天截图</option>
+            <option value="standalone_pdf">单独PDF/文件</option>
+            <option value="manual_other">其他凭证/手工录入</option>
+          </select>
+          <input id="quoteEvidenceNote" type="text" placeholder="证据文件/说明（M0）">
+          <button class="btn primary" id="confirmQuoteRound">确认本次提交</button>
+        </div>
+      </div>
+      <div class="cardbody">
+        <div id="quoteRoundSummary" class="notice"></div>
+        <div id="quoteCoverageSummary" class="coverageMini">
+          <div class="stat"><small>本轮应报价</small><b id="qcExpected">0</b></div>
+          <div class="stat"><small>已报价</small><b id="qcQuoted">0</b></div>
+          <div class="stat"><small>明确未报价</small><b id="qcNoquote">0</b></div>
+          <div class="stat"><small>不供货</small><b id="qcCannot">0</b></div>
+          <div class="stat"><small>漏报</small><b id="qcMissing">0</b></div>
+          <div class="stat"><small>多报</small><b id="qcExtra">0</b></div>
+          <div class="stat"><small>重复</small><b id="qcDuplicate">0</b></div>
+        </div>
+        <div id="quoteCoverageDetails" class="coverageDetails small"></div><button class="btn soft" id="exportQuoteMissing">导出本供应商本轮漏报 CSV</button>
+        <div id="quoteScopeEditor" class="coverageDetails" style="display:none">
+          <div class="sline"><b>本轮议价范围</b><div class="toolbar"><button class="btn" id="scopeSelectAll">全选</button><button class="btn" id="scopeClearAll">全不选</button><button class="btn primary" id="saveRoundScope">保存范围</button><button class="btn" id="closeRoundScope">关闭</button></div></div>
+          <div id="quoteScopeList" class="scopeList" style="margin-top:8px"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quoteImportGrid">
+      <div class="intakeBox">
+        <h3>单条输入</h3>
+        <div class="toolbar">
+          <label class="small">物料编码 / RFQ Line ID<input id="quoteManualItem" type="text" placeholder="唯一物料编码 / RFQ Line ID" style="display:block;max-width:220px"></label>
+          <label class="small">单价 / 阶梯价（元/物料单位）<input id="quoteManualPrice" type="text" placeholder="如 100 或 1-99:100|100+:90" style="display:block;max-width:230px"></label>
+          <label class="small">交期（天）<input id="quoteManualLead" type="text" placeholder="天" style="display:block;width:95px"></label>
+          <label class="small">MOQ（最小起订量，物料单位）<input id="quoteManualMoq" type="text" placeholder="数量" style="display:block;width:100px"></label>
+          <label class="small">报价状态<select id="quoteManualStatus" style="display:block"><option value="quoted">正常报价</option><option value="noquote">未报价</option><option value="cannot">不供货</option></select></label>
+          <button class="btn soft" id="quoteManualAdd">加入预览</button>
+        </div><div class="small muted" style="margin-top:7px">M0 现按人民币（元/物料单位）、天和物料数量显示。正式币种、税口径、采购单位后续以 ERP / 询价字段为准。</div>
+      </div>
+      <div class="intakeBox">
+        <h3>剪贴板批量粘贴</h3>
+        <textarea id="quotePaste" placeholder="第一行为表头；必须有精确列标题“RFQ Line ID”或“物料编码”。同码多条询价行优先使用 RFQ Line ID。&#10;物料编码,单价,交期,MOQ,报价状态&#10;ITEM-00001,100,7,10,正常报价&#10;ITEM-00002,,,,不供货&#10;单价也可为阶梯 1-99:100|100+:90"></textarea>
+        <div class="toolbar">
+          <button class="btn" id="quoteReadClipboard">读取剪贴板</button>
+          <button class="btn soft" id="quoteParsePaste">解析预览</button>
+          <button class="btn danger" id="quoteClearInput">清空输入</button>
+          <button class="btn danger" id="quoteClearPreview">清空预览</button>
+        </div>
+      </div>
+      <div class="intakeBox">
+        <h3>文件导入</h3>
+        <input id="quoteImportFile" type="file" accept=".csv,.txt,.xlsx,.xls">
+        <div class="small muted" style="margin:7px 0">CSV/TXT 可直接解析；Excel 在 M0 使用虚构行演示映射后的导入结果。</div>
+        <button class="btn" id="toggleQuoteMapping">字段映射</button>
+        <button class="btn soft" id="demoQuoteExcel">演示 Excel 报价导入</button>
+        <div id="quoteMappingBox" class="coverageDetails small" style="display:none;margin-top:8px">
+          <div><b>本供应商报价模板映射（M0）</b></div>
+          <div class="toolbar" style="margin-top:6px">
+            <input id="mapItemRef" type="text" value="RFQ Line ID / 物料编码">
+            <input id="mapPrice" type="text" value="报价/单价">
+            <input id="mapLead" type="text" value="交期">
+            <input id="mapMoq" type="text" value="MOQ">
+            <input id="mapStatus" type="text" value="状态">
+            <button class="btn primary" id="saveQuoteMapping">保存映射</button>
+          </div>
+          <div id="quoteMappingHint" class="muted" style="margin-top:5px">M0 只验证映射交互；M5 实现真实 Excel 列读取和模板持久化。</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="quoteImportPreview" class="card" style="margin-top:14px;display:none">
+      <div class="cardhead"><b>导入预览</b><div class="toolbar"><button class="btn primary" id="commitQuoteImport">写入当前报价轮次</button><button class="btn danger" id="clearQuotePreview2">清空预览</button></div></div>
+      <div class="cardbody"><div id="quoteImportFeedback" class="small muted" style="margin-bottom:8px"></div><div class="tablewrap"><table class="table"><thead><tr><th>物料编码</th><th>RFQ Line ID</th><th>物料名称</th><th>单价 / 阶梯价（元/单位）</th><th>RFQ 数量适用单价（元/单位）</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>覆盖检查</th></tr></thead><tbody id="quoteImportPreviewBody"></tbody></table></div></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small">导入后可点击“修改”逐行修正</span></div><div class="toolbar"><button class="btn" id="carryForwardMissing">选择沿用上轮项目…</button></div></div>
+      <div class="cardbody">
+        <div id="quoteRoundHint" class="small muted" style="margin-bottom:8px"></div>
+        <div id="carryForwardPreview" class="coverageDetails" style="display:none"></div>
+        <div class="tablewrap"><table class="table"><thead><tr><th>物料编码 / RFQ Line ID / 名称</th><th>RFQ 数量（物料单位）</th><th>上轮单价（元/单位）</th><th>本轮单价 / 阶梯价（元/单位）</th><th>本轮适用单价（元/单位）</th><th>单价变化</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>报价来源</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quotes" class="panel">
+    <div class="card">
+      <div class="cardhead">
+        <div><b>报价比较</b> <span class="muted small">M0 模拟/报价回收验证；上次采购价均为虚构示例</span></div>
+        <div class="toolbar"><button class="btn" id="resetAwards">清空选择</button></div>
+      </div>
+      <div class="cardbody">
+        <div class="notice">最低价仅作为提示；允许选择非最低价，但必须填写原因。V1 每项物料最终选择一家供应商。总价分析仅在可比口径下计算；缺报价不会按 0 处理。</div>
+        <div id="quoteModeNotice" class="small muted" style="margin-top:8px"></div>
+        <!-- 中文：比较组不预选全体供应商；只有采购员勾选至少两家才生成同范围金额。
+             English: The buyer must explicitly select two or more suppliers for shared-scope totals. -->
+        <div id="commonScopePicker" class="coverageDetails" style="margin-top:10px"></div>
+        <div id="quoteAnalysis" class="coverageDetails" style="margin-top:10px"></div>
+        <div class="tablewrap" style="margin-top:10px">
+          <table class="table" id="quoteTable"></table>
+        </div>
+        <div class="pager"><span id="quoteCount"></span><div id="quotePager"></div></div>
+      </div>
+    </div>
+    <!-- 中文：使用页面内窗口代替可能被本地浏览器拦截的原生 prompt。
+         English: Use an in-page dialog instead of native prompt which may be suppressed in file-mode browsers. -->
+    <div id="awardReasonModal" class="modalBackdrop" aria-hidden="true">
+      <div class="modalCard" style="width:min(520px,95vw)" role="dialog" aria-modal="true" aria-labelledby="awardReasonTitle">
+        <div class="modalHead"><b id="awardReasonTitle">选择非最低价供应商</b><button class="btn" id="awardReasonClose" type="button">关闭</button></div>
+        <div class="modalBody">
+          <div id="awardReasonContext" class="small muted" style="margin-bottom:12px"></div>
+          <label for="awardReasonInput" style="font-weight:600">非最低价选择原因（必填）</label>
+          <textarea id="awardReasonInput" placeholder="例如：交期、质量、付款条件、产能、技术方案等；请记录实际决策依据"></textarea>
+          <div class="dangertext small" id="awardReasonValidation" style="margin:6px 0"></div>
+          <div class="toolbar" style="justify-content:flex-end;margin-top:10px">
+            <button class="btn" type="button" id="awardReasonCancel">取消，保留原选择</button>
+            <button class="btn primary" type="button" id="awardReasonConfirm">确认选择供应商</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="settings" class="panel">
+    <div class="settingsGrid">
+      <div class="card">
+        <div class="cardhead"><b>字段维护</b><span class="muted small">正式版本按 ERP 字段与映射方案配置</span></div>
+        <div class="cardbody">
+          <div class="toolbar">
+            <button class="btn soft" id="addCustomField">+ 添加字段</button>
+            <select id="deleteFieldSelect"><option value="">选择要删除的自定义字段</option></select>
+            <button class="btn danger" id="deleteCustomField">删除字段</button>
+          </div>
+          <div class="notice" style="margin-top:10px">这里维护“字段结构”；日常询价页面只修改字段值，不修改字段定义。</div>
+          <div id="fieldDefinitionList" style="margin-top:10px"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cardhead"><b>字段规划说明</b></div>
+        <div class="cardbody small">
+          <p>当前物料编码、名称、分类、数量、单位均为 M0 演示字段。</p>
+          <p>正式字段由 ERP 字段、采购询价字段、报价字段、图纸/技术资料字段共同确定，并通过映射配置接入。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="drawingModal" class="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modalCard">
+      <div class="modalHead"><div><b id="drawingTitle">PDF 图纸预览</b><div class="small muted">M0 使用虚构 PDF 页面验证多页/多文件预览交互</div></div><button class="btn" id="closeDrawing">关闭</button></div>
+      <div class="modalBody">
+        <div class="pdfControls">
+          <select id="drawingDocSelect"></select>
+          <button class="btn" id="drawingPrevPage">上一页</button>
+          <span id="drawingPageInfo" class="small"></span>
+          <button class="btn" id="drawingNextPage">下一页</button>
+          <button class="btn" id="drawingZoomOut">缩小</button>
+          <button class="btn" id="drawingZoomIn">放大</button>
+          <button class="btn" id="drawingFit">适应页面</button>
+        </div>
+        <div id="drawingLarge" class="pdfPage"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="rfqPreviewModal" class="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modalCard" style="width:min(1180px,97vw)">
+      <div class="modalHead"><div><b>供应商询价包预览</b><div class="small muted">切换左侧供应商，检查询价行及该供应商应附的 PDF 图纸。</div></div><button class="btn" id="closeRfqPreview">关闭</button></div>
+      <div class="modalBody"><div id="rfqPreviewContent" class="rfqPreviewLayout"></div></div>
+    </div>
+  </div>
+
+  <div class="footerNote">M0 原型不保存数据、不连接网络；CSV/TXT 可做本地导入演示，Excel 使用内置示例模拟解析结果。正式持久化数据层从 M1 开始。</div>
+</div>
+
+<script>
+const categories=["类别A","类别B","类别C","类别D","类别E","类别F"];
+const units=["件","套","个"];
+const items=Array.from({length:1200},(_,i)=>({
+  id:"ITEM-"+String(i+1).padStart(5,"0"),
+  lineId:"RFQ-L"+String(i+1).padStart(5,"0"),
+  name:"示例物料 "+String(i+1).padStart(4,"0"),
+  cat:categories[i%categories.length],
+  qty:(i%17)+1,
+  unit:units[i%units.length],
+  custom:{},_createdOrder:i+1,sources:[{source:"演示初始行",qty:(i%17)+1}]
+}));
+let lineSeq=1200,createdSeq=1200;function nextLineId(){lineSeq++;return "RFQ-L"+String(lineSeq).padStart(5,"0")}
+const suppliers=Array.from({length:24},(_,i)=>({
+  id:"SUP-"+String(i+1).padStart(3,"0"),
+  name:"示例供应商 "+String(i+1).padStart(2,"0"),
+  reason:i<6?"历史采购":i<12?"历史报价":i<18?"同类物料":"人工候选"
+}));
+const assignments=new Map();
+const quoteRounds=[];
+let quoteImportPreviewRows=[];
+function getSet(itemId){if(!assignments.has(itemId)) assignments.set(itemId,new Set());return assignments.get(itemId)}
+/** 中文：已确认报价覆盖的物料禁止原位更改业务范围和数量。
+ * English: Protect lines covered by a confirmed quotation from in-place scope or quantity edits. */
+function hasConfirmedItemHistory(lineId){
+  return quoteRounds.some(r=>r.status==="confirmed"&&((r.expectedLineIds||[]).includes(lineId)||r.lines.some(l=>l.lineId===lineId)));
+}
+/** 中文：操作前校验完整影响集合，任一受保护项目存在就拒绝整批操作。
+ * English: Preflight the full affected set; reject an entire operation if any line is protected. */
+function guardMutableLines(lineIds,action){
+  const blocked=[...new Set(lineIds)].filter(hasConfirmedItemHistory);
+  if(!blocked.length)return true;
+  alert(action+"被阻止：其中 "+blocked.length+" 条询价行已有已确认报价。请通过正式业务修订处理，M0 不允许覆盖历史。示例："+blocked.slice(0,3).join("、"));
+  return false;
+}
+/** 中文：统一处理分配增删和反转，避免某个视角绕过已确认报价保护。
+ * English: Route assignment changes through one atomic history-aware function. */
+function changeSupplierRelations(lineIds,supplierId,mode){
+  const affected=[...new Set(lineIds)].filter(id=>{
+    const linked=getSet(id).has(supplierId);
+    return mode==="add"?!linked:mode==="remove"?linked:true;
+  });
+  if(!guardMutableLines(affected,"修改物料—供应商关系"))return -1;
+  affected.forEach(id=>{
+    const set=getSet(id);
+    if(mode==="add")set.add(supplierId);
+    else if(mode==="remove")set.delete(supplierId);
+    else if(set.has(supplierId))set.delete(supplierId);
+    else set.add(supplierId);
+  });
+  return affected.length;
+}
+for(let i=0;i<180;i++){getSet(items[i].lineId).add(suppliers[i%6].id);if(i%3===0)getSet(items[i].lineId).add(suppliers[(i+2)%8].id)}
+for(let i=180;i<300;i++){getSet(items[i].lineId).add(suppliers[i%10].id)}
+
+const itemManageSel=new Set();
+const assignSel=new Set();
+const supplierPickerSel=new Set();
+const rangeAnchors=new Map();
+let pendingImportRows=[];
+/** 中文：询价导入预览可分页、单独查看全部错误及冲突，不隐藏第 51 行之后的异常。
+ * English: Import previews paginate and expose all conflicts/errors, including those beyond row 50. */
+const itemImportPreviewState={page:0,onlyProblems:false};
+let pendingMatchedUpdatePlan=null;
+const customFields=[];
+const fieldFilterDraft={lineId:"",id:"",name:"",cat:"",qty:"",unit:"",supplierCount:""};
+const fieldFilters={lineId:"",id:"",name:"",cat:"",qty:"",unit:"",supplierCount:""};
+const appliedSearch={item:"",assignItem:"",assignCat:"",assignState:"",supplier:"",supplierFirst:"",supplierPool:"",sfItem:"",sfCat:""};
+const rfqSupplierPool=new Set();
+items.forEach(it=>getSet(it.lineId).forEach(sid=>rfqSupplierPool.add(sid)));
+let itemPage=0, assignPage=0, sfPage=0, supplierPoolPage=0, supplierListPage=0, supplierFirstPage=0, quotePage=0, assignMode="itemFirst", activeSupplier=null;
+const PAGE=50, SUPPLIER_PAGE=10;
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
+function compactText(s){return String(s).toLowerCase().replace(/[\s\-_.()（）]/g,"")}
+function isSubsequence(needle,hay){needle=compactText(needle);hay=compactText(hay);let i=0;for(const ch of hay){if(ch===needle[i])i++;if(i===needle.length)return true}return needle.length===0}
+function fuzzyIncludes(value,q){
+  const needle=compactText(q);
+  if(!needle)return true;
+  const hay=compactText(value);
+  return hay.includes(needle)||isSubsequence(needle,hay);
+}
+function itemFieldValue(it,key){
+  if(key==="supplierCount")return getSet(it.lineId).size;
+  if(["id","lineId","name","cat","qty","unit"].includes(key))return it[key];
+  return it.custom?.[key]??"";
+}
+function supplierMatches(s,q){
+  const tokens=String(q||"").trim().toLowerCase().split(/\s+/).filter(Boolean);
+  if(!tokens.length)return true;
+  const fields=[s.id,s.name,s.reason].map(x=>String(x||"").toLowerCase());
+  const joined=fields.join(" ");
+  return tokens.every(t=>joined.includes(t)||fields.some(v=>compactText(v).includes(compactText(t))||isSubsequence(t,v)));
+}
+function bindShiftRange(selector,group,idAttr,apply,after,beforeApply){
+  const boxes=[...document.querySelectorAll(selector)], ids=boxes.map(b=>b.dataset[idAttr]);
+  boxes.forEach(b=>b.onclick=e=>{
+    const id=b.dataset[idAttr],checked=b.checked,anchor=rangeAnchors.get(group);
+    let targets=[id];
+    if(e.shiftKey&&anchor&&ids.includes(anchor)){
+      const a=ids.indexOf(anchor),z=ids.indexOf(id),lo=Math.min(a,z),hi=Math.max(a,z);
+      targets=ids.slice(lo,hi+1);
+    }
+    // 中文：修改真实分配关系前整批核验，避免 Shift 连选发生部分变更。
+    // English: Check the entire range before changing live assignments; never partially commit a Shift range.
+    if(beforeApply&&!beforeApply(targets,checked)){if(after)after();else b.checked=!checked;return}
+    targets.forEach(x=>apply(x,checked));
+    rangeAnchors.set(group,id);
+    if(after)after();
+  });
+}
+function resetRange(group){rangeAnchors.delete(group)}
+function pageSlice(list,page,size=PAGE){return list.slice(page*size,page*size+size)}
+function renderPageNav(el,page,total,size,onPage){
+  const pages=Math.max(1,Math.ceil(total/size));page=Math.min(page,pages-1);
+  let nums=[];for(let i=0;i<pages;i++){if(i===0||i===pages-1||Math.abs(i-page)<=2)nums.push(i)}
+  nums=[...new Set(nums)];
+  let html='<div class="pageNums"><button class="btn" data-pg="prev">上一页</button>';
+  let last=-2;nums.forEach(i=>{if(i-last>1)html+='<span>…</span>';html+=`<button class="pageNum ${i===page?"active":""}" data-pg="${i}">${i+1}</button>`;last=i});
+  html+='<button class="btn" data-pg="next">下一页</button></div>';el.innerHTML=html;
+  el.querySelectorAll("[data-pg]").forEach(b=>b.onclick=()=>{let p=page;if(b.dataset.pg==="prev")p=Math.max(0,page-1);else if(b.dataset.pg==="next")p=Math.min(pages-1,page+1);else p=Number(b.dataset.pg);onPage(p)});
+}
+function selectAllIds(set,list){list.forEach(x=>set.add(x.lineId||x.id))}
+function invertIds(set,list){list.forEach(x=>{const id=x.lineId||x.id;set.has(id)?set.delete(id):set.add(id)})}
+function drawingDocsForItem(it){
+  const n=parseInt(it.id.replace(/\D/g,""),10)||1;
+  if(n%11===0)return[];
+  const docs=[{id:"D1",name:it.id+"_零件图.pdf",pages:1+(n%4),revision:"A"}];
+  if(n%7===0)docs.push({id:"D2",name:it.id+"_技术要求.pdf",pages:2+(n%3),revision:"1"});
+  return docs;
+}
+function drawingSvg(it,doc,page,scale=1){
+  const n=parseInt(it.id.replace(/\D/g,""),10)||1,holes=2+((n+page)%4);
+  let hs="";for(let i=0;i<holes;i++){const x=120+i*(520/Math.max(1,holes-1));hs+=`<circle cx="${x}" cy="250" r="${22+(n%3)*4}" fill="none" stroke="#475569" stroke-width="6"/>`}
+  return `<svg viewBox="0 0 760 500" style="width:${Math.round(760*scale)}px" xmlns="http://www.w3.org/2000/svg" aria-label="${esc(it.id)} PDF page ${page}"><rect x="70" y="110" width="620" height="280" rx="28" fill="none" stroke="#334155" stroke-width="8"/>${hs}<path d="M110 165 H650 M110 335 H650" stroke="#94a3b8" stroke-width="4" stroke-dasharray="12 10"/><path d="M380 80 V420" stroke="#94a3b8" stroke-width="3" stroke-dasharray="10 9"/><text x="90" y="70" font-size="30" fill="#0f172a">${esc(it.id)} · PDF</text><text x="90" y="455" font-size="23" fill="#64748b">${esc(doc.name)} · 第 ${page}/${doc.pages} 页 · Rev ${esc(doc.revision)}</text></svg>`;
+}
+function itemCell(it){
+  const docs=drawingDocsForItem(it);
+  if(!docs.length)return `<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="${it.lineId}" title="无图纸">PDF?</button><div><b>${it.id}</b><div class="pdfMeta">${it.lineId} · 缺图纸</div></div></div>`;
+  const d=docs[0];
+  return `<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="${it.lineId}" title="预览 PDF">${drawingSvg(it,d,1,.18)}</button><div><b>${it.id}</b><div class="pdfMeta">${it.lineId} · PDF ${d.pages}页${docs.length>1?" · "+docs.length+"个文件":""}</div></div></div>`;
+}
+function bindDrawingThumbs(){document.querySelectorAll("[data-drawing]").forEach(b=>b.onclick=e=>{e.stopPropagation();openDrawing(b.dataset.drawing)})}
+/** 中文：物料双击编辑只以稳定 RFQ Line ID 定位；已有任何报价行或确认范围时禁止覆盖。
+ * English: Edit via stable RFQ Line ID; block mutation of quoted lines or confirmed scope. */
+let editingItemLineId=null;
+function itemHasAnyQuoteHistory(lineId){
+  return quoteRounds.some(r=>r.lines.some(x=>x.lineId===lineId)||(r.status==="confirmed"&&(r.expectedLineIds||[]).includes(lineId)));
+}
+function openItemEditor(lineId){
+  const it=items.find(x=>x.lineId===lineId);if(!it)return;
+  editingItemLineId=it.lineId;const locked=itemHasAnyQuoteHistory(lineId);
+  itemEditIdentity.textContent="RFQ Line ID："+it.lineId+"（保持不变）";
+  itemEditCode.value=it.id;itemEditQty.value=it.qty;itemEditName.value=it.name;itemEditCat.value=it.cat;itemEditUnit.value=it.unit;
+  itemEditHint.textContent=locked?"此询价行已有报价历史，当前只允许查看；请在后续正式修订流程中变更。":"当前属性带出该行原值。M0 尚未接入 ERP 主数据，修改存货编码不会自动更新其他 ERP 属性，也不会合并其他相同编码询价行。";
+  for(const input of [itemEditCode,itemEditQty,itemEditName,itemEditCat,itemEditUnit])input.disabled=locked;
+  itemEditSave.disabled=locked;itemEditError.textContent="";
+  itemEditModal.classList.add("open");itemEditModal.setAttribute("aria-hidden","false");
+  if(!locked)itemEditCode.focus();
+}
+function closeItemEditor(){editingItemLineId=null;itemEditModal.classList.remove("open");itemEditModal.setAttribute("aria-hidden","true")}
+function saveItemEdit(){
+  const it=items.find(x=>x.lineId===editingItemLineId);if(!it)return;
+  if(itemHasAnyQuoteHistory(it.lineId)){itemEditError.textContent="该行已有报价历史，不能原位修改。";return}
+  const code=itemEditCode.value.trim(),unit=itemEditUnit.value.trim(),qty=parsePositiveNumber(itemEditQty.value,"数量");
+  if(!code||!unit||qty.error){itemEditError.textContent=[!code?"物料编码不能为空":"",!unit?"单位不能为空":"",qty.error||""].filter(Boolean).join("；");return}
+  if(!confirm("保存此询价行修改？RFQ Line ID 和已分配供应商保持不变。"))return;
+  // 中文：改码不自动修改或合并其他行；记录编辑来源但不冒充 ERP 数据。
+  // English: Code edits never silently merge RFQ lines or claim ERP master autofill.
+  it.id=code;it.qty=qty.value;it.name=itemEditName.value.trim();it.cat=itemEditCat.value.trim();it.unit=unit;
+  it.sources=it.sources||[];it.sources.push({source:"人工编辑（原位修改）",qty:it.qty});
+  closeItemEditor();renderItemList();renderAssignAll();renderQuotes();
+}
+itemEditClose.onclick=closeItemEditor;itemEditCancel.onclick=closeItemEditor;itemEditSave.onclick=saveItemEdit;
+itemEditModal.onclick=e=>{if(e.target===itemEditModal)closeItemEditor()};
+
+let drawingState={itemId:null,docIndex:0,page:1,scale:1};
+function renderDrawingPdf(){
+  const it=items.find(x=>x.lineId===drawingState.itemId);if(!it)return;
+  const docs=drawingDocsForItem(it);
+  if(!docs.length){drawingDocSelect.innerHTML="";drawingPageInfo.textContent="无关联 PDF";drawingLarge.innerHTML='<div class="dangertext">该物料当前没有关联 PDF 图纸。</div>';return}
+  drawingState.docIndex=Math.min(drawingState.docIndex,docs.length-1);
+  const doc=docs[drawingState.docIndex];drawingState.page=Math.max(1,Math.min(drawingState.page,doc.pages));
+  drawingDocSelect.innerHTML=docs.map((d,i)=>`<option value="${i}" ${i===drawingState.docIndex?"selected":""}>${esc(d.name)} · ${d.pages}页 · Rev ${esc(d.revision)}</option>`).join("");
+  drawingPageInfo.textContent=`第 ${drawingState.page} / ${doc.pages} 页`;
+  drawingLarge.innerHTML=drawingSvg(it,doc,drawingState.page,drawingState.scale);
+  drawingPrevPage.disabled=drawingState.page<=1;drawingNextPage.disabled=drawingState.page>=doc.pages;
+}
+function openDrawing(lineId){
+  const it=items.find(x=>x.lineId===lineId);if(!it)return;
+  drawingState={itemId:lineId,docIndex:0,page:1,scale:1};drawingTitle.textContent=it.id+" · "+it.name+" · PDF 图纸";
+  drawingModal.classList.add("open");drawingModal.setAttribute("aria-hidden","false");renderDrawingPdf();
+}
+drawingDocSelect.onchange=()=>{drawingState.docIndex=Number(drawingDocSelect.value)||0;drawingState.page=1;renderDrawingPdf()};
+drawingPrevPage.onclick=()=>{drawingState.page--;renderDrawingPdf()};drawingNextPage.onclick=()=>{drawingState.page++;renderDrawingPdf()};
+drawingZoomOut.onclick=()=>{drawingState.scale=Math.max(.5,drawingState.scale-.15);renderDrawingPdf()};drawingZoomIn.onclick=()=>{drawingState.scale=Math.min(2,drawingState.scale+.15);renderDrawingPdf()};
+drawingFit.onclick=()=>{drawingState.scale=1;renderDrawingPdf()};
+function closeDrawingModal(){drawingModal.classList.remove("open");drawingModal.setAttribute("aria-hidden","true")}
+closeDrawing.onclick=closeDrawingModal;drawingModal.onclick=e=>{if(e.target===drawingModal)closeDrawingModal()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeDrawingModal();if(document.getElementById("rfqPreviewModal")?.classList.contains("open"))closeRfqPreview.click()}});
+function parsePositiveNumber(raw,label){
+  const s=String(raw??"").trim();if(!s)return{value:null,error:label+"不能为空"};
+  const n=Number(s);if(!Number.isFinite(n)||n<=0)return{value:null,error:label+"必须是大于0的数字"};return{value:n,error:null};
+}
+function parseOptionalNumber(raw,label){
+  const s=String(raw??"").trim();if(!s)return{value:null,error:null};
+  const n=Number(s);if(!Number.isFinite(n)||n<0)return{value:null,error:label+"格式错误"};return{value:n,error:null};
+}
+/**
+ * 按表头解析剪贴板/CSV，支持 Tab、逗号和引号转义。
+ * Parse header-based clipboard/CSV, including tabs, commas and quoted values.
+ */
+function parseHeaderTable(text,keyHeaders){
+  const raw=String(text||"").replace(/\r\n?/g,"\n").replace(/^\uFEFF/,"");
+  // 中文：优先按 Tab 分列，否则允许中英文逗号在一张表内混合，保留双引号内分隔符。
+  // English: Prefer Tab where present; otherwise accept mixed Chinese/ASCII commas outside quoted cells.
+  const first=raw.split("\n")[0]||"";
+  const tabDelimited=first.includes("\t");
+  const records=[];let row=[],field="",inside=false;
+  for(let i=0;i<raw.length;i++){
+    const ch=raw[i];
+    if(ch==='"'){
+      if(inside&&raw[i+1]==='"'){field+='"';i++;}else inside=!inside;
+    }else if(!inside&&(tabDelimited?ch==="\t":ch===","||ch==="，")){row.push(field.trim());field="";}
+    else if(!inside&&(ch==="\n"||ch==="；"||ch===";")){
+      row.push(field.trim());field="";
+      if(row.some(v=>v!==""))records.push(row);
+      row=[];
+    }else field+=ch;
+  }
+  if(inside)return{headers:[],rows:[],errors:["CSV 双引号未闭合"],warnings:[]};
+  row.push(field.trim());if(row.some(v=>v!==""))records.push(row);
+  if(!records.length)return{headers:[],rows:[],errors:["第一行必须是表头"],warnings:[]};
+  const headers=records[0],errors=[],warnings=[];
+  const duplicate=headers.filter((h,i)=>h&&headers.indexOf(h)!==i);
+  if(duplicate.length)errors.push("重复列标题："+[...new Set(duplicate)].join("、"));
+  if(headers.some(h=>!h))errors.push("表头存在空列名");
+  if(!keyHeaders.some(k=>headers.includes(k)))errors.push("缺少必需主键标题："+keyHeaders.join(" 或 "));
+  const rows=records.slice(1).map((cells,i)=>{
+    // 中文：允许省略尾部可选单元格，主键和数量/单位等必填值由各业务解析器校验。
+    // English: Pad missing trailing cells; business parsers still validate required keys and values.
+    if(cells.length>headers.length)errors.push("第 "+(i+2)+" 行数据列数 "+cells.length+" 超过表头 "+headers.length+"，请检查是否错位");
+    const data={};headers.forEach((h,j)=>data[h]=cells[j]??"");
+    return{data,rowNo:i+2};
+  });
+  return{headers,rows,errors,warnings};
+}
+function findHeaderValue(row,headers){
+  for(const h of headers){if(Object.prototype.hasOwnProperty.call(row,h))return row[h]}
+  return"";
+}
+/** 物料导入按首行标题映射，保持 CSV 引号与空值。\n * Map imported items by the first-row headers, preserving CSV quotes and empty cells. */
+function parseItemRows(text){
+  const table=parseHeaderTable(text,["物料编码"]);
+  if(table.errors.length){const rows=[];rows._headerErrors=table.errors;return rows}
+  const result=table.rows.map(({data,rowNo})=>{
+    const id=data["物料编码"]||"",name=findHeaderValue(data,["物料名称","名称"]),
+      cat=findHeaderValue(data,["分类","物料分类"]),
+      qtyRaw=findHeaderValue(data,["数量"]),unit=findHeaderValue(data,["单位"]),
+      qty=parsePositiveNumber(qtyRaw,"数量"),errors=[];
+    if(!id)errors.push("第 "+rowNo+" 行物料编码为空");
+    if(qty.error)errors.push("第 "+rowNo+" 行："+qty.error);
+    if(!unit)errors.push("第 "+rowNo+" 行单位不能为空");
+    return{id,lineId:nextLineId(),name,cat,qty:qty.value,unit,_rowNo:rowNo,
+      sources:[{source:"导入第 "+rowNo+" 行",qty:qty.value}],_errors:errors};
+  });
+  result._headers=table.headers;return result;
+}
+/**
+ * 只有兼容的、未形成报价历史且尚未分配的同编码物料才能自动合并。
+ * Merge same-code items only when compatible, unquoted and not yet assigned.
+ */
+function itemMergeCheck(a,b){
+  if(a.id!==b.id)return{kind:"different",reasons:[]};
+  const diffs=[];
+  for(const [k,label] of [["name","名称"],["cat","分类"],["unit","单位"],["technicalRevision","技术版本"],["deliveryTerm","交货条件"]]){
+    const x=String(a[k]??"").trim(),y=String(b[k]??"").trim();
+    if(x!==y)diffs.push(label+"不一致");
+  }
+  const keys=new Set([...Object.keys(a.custom||{}),...Object.keys(b.custom||{})]);
+  for(const k of keys)if(String(a.custom?.[k]??"")!==String(b.custom?.[k]??""))diffs.push("自定义属性 "+k+" 不一致");
+  if(getSet(a.lineId).size)diffs.push("已有供应商分配");
+  if(quoteRounds.some(r=>r.lines.some(l=>l.lineId===a.lineId)||r.status==="confirmed"&&r.expectedLineIds?.includes(a.lineId)))diffs.push("已有报价历史");
+  return{kind:diffs.length?"conflict":"merge",reasons:diffs};
+}
+/** 用虚拟状态制定合并决策，不预先改写原始物料表。
+ * Build merge decisions on a virtual copy before mutating actual RFQ items. */
+function planItemImport(rows){
+  const shadow=items.map(it=>({...it,custom:{...(it.custom||{})}})),actions=[];
+  for(const row of rows){
+    const same=shadow.filter(it=>it.id===row.id);
+    if(!same.length){const target={...row};shadow.push(target);actions.push({kind:"add",row,target});continue}
+    if(same.length>1){actions.push({kind:"conflict",row,reasons:["已有多条同编码询价行，无法唯一决定合并目标"]});continue}
+    const check=itemMergeCheck(same[0],row);
+    actions.push({kind:check.kind,row,target:same[0],reasons:check.reasons});
+    if(check.kind==="merge")same[0].qty+=row.qty;
+    if(check.kind==="conflict")shadow.push({...row});
+  }
+  return actions;
+}
+/** 中文：返回全部异常处理计划，供预览分页和错误筛选复用。
+ * English: Compute all import decisions for paginated preview and exception filtering. */
+function itemImportPreviewPlan(rows){
+  const actions=planItemImport(rows);
+  return{actions,problems:actions.filter(a=>(a.row._errors||[]).length>0||a.kind==="conflict")};
+}
+/** 中文：分页只改变屏幕显示，最终提交仍以全部原始输入为准。
+ * English: Pagination changes display only; commit still uses every imported row. */
+function renderItemImportPreview(source){
+  const {actions,problems}=itemImportPreviewPlan(pendingImportRows);
+  const bad=pendingImportRows.filter(x=>x._errors?.length).length;
+  const merged=actions.filter(x=>x.kind==="merge").length,conflicts=actions.filter(x=>x.kind==="conflict").length;
+  const list=itemImportPreviewState.onlyProblems?problems:actions,perPage=50;
+  const totalPages=Math.max(1,Math.ceil(list.length/perPage));
+  itemImportPreviewState.page=Math.min(itemImportPreviewState.page,totalPages-1);
+  const from=itemImportPreviewState.page*perPage;
+  const visible=list.slice(from,from+perPage);
+  importPreview.innerHTML=`<div class="sline"><div><b>${esc(source)}</b> · ${actions.length} 行 · 自动合并 ${merged} 行 · 冲突 ${conflicts} 行 · 错误 ${bad} 行</div><button class="btn primary" id="confirmImportRows" ${bad?"disabled":""}>确认加入本次询价（全部 ${actions.length} 行）</button></div>
+    <div class="toolbar" style="margin-top:8px"><button class="btn" id="toggleImportProblems">${itemImportPreviewState.onlyProblems?"显示全部行":"仅看全部错误/冲突（"+problems.length+"）"}</button><span class="small muted">当前显示 ${list.length?from+1:0}–${Math.min(from+perPage,list.length)} / ${list.length}；可查看所有异常，提交不受分页限制。</span></div>
+    <div class="tablewrap" style="max-height:230px;margin-top:8px"><table><thead><tr><th>原始行号</th><th>物料编码</th><th>名称</th><th>数量</th><th>单位</th><th>处理方案</th></tr></thead><tbody>${visible.map(x=>`<tr><td>${esc(x.row._rowNo??"单条")}</td><td>${esc(x.row.id)}</td><td>${esc(x.row.name)}</td><td>${x.row.qty??"—"}</td><td>${esc(x.row.unit)}</td><td class="${x.row._errors?.length||x.kind==="conflict"?"dangertext":"ok"}">${esc(x.row._errors?.join("、")|| (x.kind==="merge"?"合并至 "+x.target.lineId:x.kind==="conflict"?"冲突："+x.reasons.join("、"):"新建询价行"))}</td></tr>`).join("")}</tbody></table></div>
+    <div id="itemImportPager" class="pager"></div>`;
+  document.getElementById("confirmImportRows").onclick=()=>addRowsToRfq(pendingImportRows);
+  document.getElementById("toggleImportProblems").onclick=()=>{
+    itemImportPreviewState.onlyProblems=!itemImportPreviewState.onlyProblems;
+    itemImportPreviewState.page=0;renderItemImportPreview(source);
+  };
+  renderPageNav(document.getElementById("itemImportPager"),itemImportPreviewState.page,list.length,perPage,p=>{itemImportPreviewState.page=p;renderItemImportPreview(source)});
+}
+function setImportPreview(rows,source){
+  if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}
+  if(!rows.length){alert("只有表头，没有可导入的数据行。");return}
+  // 中文：保留导入来源，所有输入先进入统一的完整预览。
+  // English: Keep import origins and route all inputs through complete preview.
+  rows.forEach(row=>{
+    if(!row.lineId)row.lineId=nextLineId();
+    if(row._rowNo)row.sources=[{source:source+" · 第"+row._rowNo+"行",qty:row.qty}];
+  });
+  pendingImportRows=rows;itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;
+  importPreview.style.display="block";renderItemImportPreview(source);
+}
+/** 确认后应用合并/新增，保留来源行，冲突由采购员确认。
+ * Apply merges/additions after confirmation and keep source rows traceable. */
+function addRowsToRfq(rows){
+  rows.forEach(row=>{if(!row.lineId)row.lineId=nextLineId()});
+  if(rows.some(r=>r._errors?.length)){alert("有错误数据，不允许写入");return}
+  const actions=planItemImport(rows);
+  const conflicts=actions.filter(x=>x.kind==="conflict");
+  if(conflicts.length&&!confirm("有 "+conflicts.length+" 条相同编码存在属性或业务冲突，不能自动合并。是否明确保留为独立 RFQ 询价行？取消则本批次不导入。"))return;
+  let added=0,merged=0,separated=0;
+  // 先按预览决策写入；整个流程由单次确认提交。 / Apply the previewed decisions after one explicit confirmation.
+  actions.forEach(a=>{
+    if(a.kind==="merge"){
+      const target=items.find(x=>x.lineId===a.target.lineId);if(!target)return;
+      target.sources=target.sources||[{source:"原始行",qty:target.qty}];
+      target.sources.push(...(a.row.sources||[{source:"新导入",qty:a.row.qty}]));
+      target.qty+=a.row.qty;merged++;
+    }else{
+      const source=a.row;
+      items.push({...source,custom:{...(source.custom||{})},_createdOrder:++createdSeq,sources:source.sources||[{source:"录入",qty:source.qty}]});
+      added++;if(a.kind==="conflict")separated++;
+    }
+  });
+  pendingImportRows=[];itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;importPreview.style.display="none";
+  renderItemList();renderAssignAll();renderQuotes();
+  alert(`新增 ${added} 行；自动合并 ${merged} 行；冲突确认分行 ${separated} 行。合并前原始需求行已留存。`);
+}
+toggleItemIntake.onclick=()=>{itemIntake.style.display=itemIntake.style.display==="none"?"block":"none"};
+manualAdd.onclick=()=>{const code=manualCode.value.trim(),name=manualName.value.trim(),qty=parsePositiveNumber(manualQty.value,"数量"),unit=manualUnit.value.trim();if(!code||qty.error||!unit){alert([!code?"物料编码不能为空":"",qty.error||"",!unit?"单位不能为空":""].filter(Boolean).join("；"));return}const row={id:code,lineId:nextLineId(),name,cat:"",qty:qty.value,unit,sources:[{source:"单条录入",qty:qty.value}],_errors:[]};setImportPreview([row],"单条输入预览");manualCode.value=manualName.value=manualQty.value=manualUnit.value=""};
+parsePaste.onclick=()=>{const rows=parseItemRows(pasteItems.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到物料。");return}setImportPreview(rows,"剪贴板批量粘贴预览")};
+clearPasteInput.onclick=()=>{pasteItems.value=""};
+clearPastePreview.onclick=()=>{pendingImportRows=[];itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;importPreview.innerHTML="";importPreview.style.display="none"};
+readClipboard.onclick=async()=>{try{pasteItems.value=await navigator.clipboard.readText();parsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请在文本框中按 Ctrl+V 粘贴。")}};
+demoExcelImport.onclick=()=>setImportPreview([
+  {id:"XLS-DEMO-001",name:"导入示例物料 A",cat:"类别A",qty:3,unit:"件"},
+  {id:"XLS-DEMO-002",name:"导入示例物料 B",cat:"类别B",qty:5,unit:"个"},
+  {id:"XLS-DEMO-003",name:"导入示例物料 C",cat:"类别C",qty:1,unit:"套"}
+],"Excel 导入演示预览（M0 内置示例）");
+importFile.onchange=()=>{
+  const file=importFile.files?.[0];if(!file)return;
+  const ext=(file.name.split(".").pop()||"").toLowerCase();
+  if(ext==="csv"||ext==="txt"){
+    const reader=new FileReader();reader.onload=()=>{const rows=parseItemRows(reader.result);setImportPreview(rows,file.name+" 导入预览")};reader.readAsText(file);
+  }else{
+    setImportPreview([
+      {id:"XLS-DEMO-101",name:"Excel 示例行 1",cat:"类别A",qty:2,unit:"件"},
+      {id:"XLS-DEMO-102",name:"Excel 示例行 2",cat:"类别B",qty:6,unit:"个"}
+    ],file.name+" · M0 Excel 流程演示");
+  }
+};
+function refreshFieldControls(){
+  const base=[["lineId","RFQ Line ID"],["id","物料编码"],["name","名称"],["cat","分类"],["qty","数量"],["unit","单位"]];
+  const editable=[["name","名称"],["cat","分类"],["qty","数量"],["unit","单位"],...customFields.map(f=>[f.key,f.label])];
+  bulkFieldSelect.innerHTML='<option value="">选择批量更新字段</option>'+editable.map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("");
+  matchKeyField.innerHTML='<option value="">匹配关键字段</option>'+base.concat(customFields.map(f=>[f.key,f.label])).map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("");
+  matchUpdateField.innerHTML='<option value="">要更新的字段</option>'+editable.map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("");
+  deleteFieldSelect.innerHTML='<option value="">选择要删除的自定义字段</option>'+customFields.map(f=>`<option value="${f.key}">${esc(f.label)}</option>`).join("");
+  fieldDefinitionList.innerHTML='<table class="table"><thead><tr><th>字段</th><th>类型</th><th>来源</th></tr></thead><tbody>'+base.map(x=>`<tr><td>${x[1]}</td><td>演示</td><td>基础字段</td></tr>`).join("")+customFields.map(f=>`<tr><td>${esc(f.label)}</td><td>文本</td><td>自定义</td></tr>`).join("")+'</tbody></table>';
+}
+toggleFieldTools.onclick=()=>{fieldTools.style.display=fieldTools.style.display==="none"?"block":"none";refreshFieldControls()};
+addCustomField.onclick=()=>{
+  const label=prompt("请输入新字段名称：","");if(!label||!label.trim())return;
+  const clean=label.trim();if(customFields.some(f=>f.label===clean)){alert("字段已存在。");return}
+  const key="cf_"+Date.now();customFields.push({key,label:clean});fieldFilters[key]="";fieldFilterDraft[key]="";items.forEach(it=>{it.custom=it.custom||{};it.custom[key]=""});
+  refreshFieldControls();renderItemList();
+};
+deleteCustomField.onclick=()=>{
+  const key=deleteFieldSelect.value;if(!key)return;
+  const f=customFields.find(x=>x.key===key);if(!confirm(`删除字段“${f?.label||key}”？该字段当前值也会从本次演示数据中移除。`))return;
+  const idx=customFields.findIndex(x=>x.key===key);if(idx>=0)customFields.splice(idx,1);
+  delete fieldFilters[key];delete fieldFilterDraft[key];items.forEach(it=>{if(it.custom)delete it.custom[key]});
+  refreshFieldControls();renderItemList();
+};
+bulkUpdateField.onclick=()=>{
+  const key=bulkFieldSelect.value;if(!key){alert("请选择字段。");return}
+  if(!itemManageSel.size){alert("请先勾选要更新的物料。");return}
+  const value=bulkFieldValue.value;let n=0;
+  if(key==="qty"){const pv=parsePositiveNumber(value,"数量");if(pv.error){alert(pv.error);return}}
+  if(key==="unit"&&!value.trim()){alert("单位不能为空");return}
+  if(!guardMutableLines([...itemManageSel],"批量更新物料属性"))return;
+  itemManageSel.forEach(id=>{const it=items.find(x=>x.lineId===id);if(!it)return;if(["name","cat","qty","unit"].includes(key)){it[key]=key==="qty"?Number(value):value}else{it.custom=it.custom||{};it.custom[key]=value}n++});
+  renderItemList();renderAssignAll();alert(`已更新 ${n} 项。`);
+};
+/** 中文：匹配更新必须先统计命中情况，重复键或已确认历史不允许自动更新。
+ * English: Plan matching updates first; reject ambiguous keys and protected history. */
+function planMatchedUpdates(rows){
+  const key=matchKeyField.value,target=matchUpdateField.value,seen=new Set();
+  if(!key||!target)return{rows,entries:[],blocking:true,message:"请选择匹配关键字段和更新字段。"};
+  const entries=rows.map((pair,i)=>{
+    const matchVal=String(pair[0]??"").trim(),newVal=String(pair[1]??"");
+    const matches=items.filter(it=>String(itemFieldValue(it,key)).trim()===matchVal);
+    let issue="",lineId=null,ready=false;
+    if(!matchVal)issue="匹配键为空";
+    else if(matches.length===0)issue="未匹配（跳过）";
+    else if(matches.length>1)issue="非唯一匹配："+matches.map(it=>it.lineId).join("、");
+    else{
+      lineId=matches[0].lineId;
+      if(target==="qty"){const parsed=parsePositiveNumber(newVal,"数量");if(parsed.error)issue=parsed.error}
+      if(target==="unit"&&!newVal.trim())issue="单位不能为空";
+      if(!issue&&hasConfirmedItemHistory(lineId))issue="已有已确认报价，禁止覆盖";
+      if(!issue)ready=true;
+    }
+    if(seen.has(matchVal)&&matchVal)issue="本批输入重复匹配键（禁止重复覆盖）";
+    seen.add(matchVal);
+    return{rowNo:i+1,matchVal,newVal,lineId,matches:matches.length,issue,ready:ready&&!issue};
+  });
+  const repeated=new Set();
+  rows.forEach(pair=>{const k=String(pair[0]??"").trim();if(k&&rows.filter(p=>String(p[0]??"").trim()===k).length>1)repeated.add(k)});
+  entries.forEach(e=>{if(repeated.has(e.matchVal)){e.issue="本批输入重复匹配键（禁止重复覆盖）";e.ready=false}});
+  const blocking=entries.some(e=>e.issue&&e.issue!=="未匹配（跳过）");
+  return{rows,key,target,entries,blocking,message:""};
+}
+/** 中文：导入只生成预览；必须重新核验且经过采购员确认才写入。
+ * English: Preview imports without mutation; revalidate before buyer-confirmed commit. */
+function applyMatchedUpdates(rows){
+  const plan=planMatchedUpdates(rows);
+  if(plan.message){alert(plan.message);return}
+  pendingMatchedUpdatePlan=plan;
+  const accepted=plan.entries.filter(e=>e.ready).length,missed=plan.entries.filter(e=>e.issue==="未匹配（跳过）").length,blocked=plan.entries.length-accepted-missed;
+  matchedUpdatePreview.style.display="block";
+  matchedUpdatePreview.innerHTML='<div class="sline"><b>批量更新预览：可更新 '+accepted+' 行，未匹配 '+missed+' 行，错误/冲突 '+blocked+' 行</b><div class="toolbar"><button class="btn primary" id="confirmMatchedUpdate" '+(plan.blocking||!accepted?'disabled':'')+'>确认更新</button><button class="btn" id="cancelMatchedUpdate">取消预览</button></div></div>'+
+    '<div class="tablewrap" style="max-height:230px"><table class="table"><thead><tr><th>行号</th><th>匹配值</th><th>目标 RFQ Line ID</th><th>新值</th><th>处理结果</th></tr></thead><tbody>'+
+    plan.entries.map(e=>'<tr><td>'+e.rowNo+'</td><td>'+esc(e.matchVal)+'</td><td>'+esc(e.lineId||"—")+'</td><td>'+esc(e.newVal)+'</td><td class="'+(e.ready?"ok":"dangertext")+'">'+esc(e.ready?"唯一匹配，可更新":e.issue)+'</td></tr>').join("")+'</tbody></table></div>';
+  document.getElementById("cancelMatchedUpdate").onclick=()=>{pendingMatchedUpdatePlan=null;matchedUpdatePreview.innerHTML="";matchedUpdatePreview.style.display="none"};
+  document.getElementById("confirmMatchedUpdate").onclick=()=>{
+    if(!pendingMatchedUpdatePlan)return;
+    const fresh=planMatchedUpdates(pendingMatchedUpdatePlan.rows);
+    const changed= fresh.key!==plan.key||fresh.target!==plan.target||fresh.blocking||fresh.entries.some((e,i)=>e.ready!==plan.entries[i].ready||e.lineId!==plan.entries[i].lineId);
+    if(changed){alert("匹配条件、数据或历史状态已变化，请重新预览后再确认。");applyMatchedUpdates(plan.rows);return}
+    const applicable=fresh.entries.filter(e=>e.ready);
+    if(!confirm("确认更新 "+applicable.length+" 条唯一匹配记录？未匹配 "+missed+" 条将跳过。"))return;
+    applicable.forEach(e=>{
+      const it=items.find(x=>x.lineId===e.lineId);
+      if(fresh.target==="qty")it.qty=Number(e.newVal);
+      else if(["name","cat","unit"].includes(fresh.target))it[fresh.target]=e.newVal;
+      else{it.custom=it.custom||{};it.custom[fresh.target]=e.newVal}
+    });
+    pendingMatchedUpdatePlan=null;matchedUpdatePreview.innerHTML="";matchedUpdatePreview.style.display="none";
+    renderItemList();renderAssignAll();renderQuotes();alert("已更新 "+applicable.length+" 条；未匹配 "+missed+" 条已跳过。");
+  };
+}
+demoMatchUpdate.onclick=()=>{applyMatchedUpdates([["ITEM-00001","批量更新示例A"],["ITEM-00002","批量更新示例B"],["ITEM-99999","无匹配示例"]])};
+matchUpdateFile.onchange=()=>{
+  const file=matchUpdateFile.files?.[0];if(!file)return;const ext=(file.name.split(".").pop()||"").toLowerCase();
+  if(ext==="csv"||ext==="txt"){const r=new FileReader();r.onload=()=>{const rows=String(r.result).split(/[;；\n\r]+/).map(x=>x.trim()).filter(Boolean).map(x=>x.split(/[，,\t]/).slice(0,2));applyMatchedUpdates(rows)};r.readAsText(file)}
+  else alert("M0 对 Excel 仅演示流程；正式版本由 Excel 解析器按关键字段匹配更新。可点击“演示表格匹配更新”。");
+};
+deleteSelectedItems.onclick=()=>{
+  if(!itemManageSel.size){alert("请先勾选要删除的询价物料。");return}
+  const count=itemManageSel.size,lineIds=new Set(itemManageSel),ids=new Set(items.filter(x=>lineIds.has(x.lineId)).map(x=>x.id));
+  if(quoteRounds.some(r=>r.lines.some(l=>lineIds.has(l.lineId))||(r.status==="confirmed"&&(r.expectedLineIds||[]).some(x=>lineIds.has(x))))){alert("选中物料已形成报价历史，M0 不允许物理删除。正式版应使用作废/取消并保留历史。");return}
+  if(!confirm(`从本次 RFQ 删除选中的 ${count} 项物料？\n相关供应商分配关系也会同时删除。`))return;
+  for(let i=items.length-1;i>=0;i--){if(lineIds.has(items[i].lineId))items.splice(i,1)}
+  lineIds.forEach(lineId=>{assignments.delete(lineId);assignSel.delete(lineId);itemManageSel.delete(lineId)});
+  quoteRounds.filter(r=>r.status!=="confirmed").forEach(r=>{r.expectedLineIds=(r.expectedLineIds||[]).filter(x=>!lineIds.has(x));r.lines=r.lines.filter(l=>!lineIds.has(l.lineId))});
+  resetRange("item-manage");renderItemList();renderAssignAll();renderQuotes();
+};
+function quoteSupplierOptions(){
+  const current=quoteImportSupplier.value,ids=[...rfqSupplierPool].sort((a,b)=>String(a).localeCompare(String(b),"zh-CN",{numeric:true}));
+  quoteImportSupplier.innerHTML=ids.map(id=>{const s=suppliers.find(x=>x.id===id);return s?`<option value="${id}">${esc(s.name)} (${id})</option>`:""}).join("");
+  if(ids.includes(current))quoteImportSupplier.value=current;
+}
+function supplierSubmissions(sid){return quoteRounds.filter(r=>r.supplierId===sid).sort((a,b)=>a.roundNo-b.roundNo||a.revisionNo-b.revisionNo)}
+function currentQuoteRound(){
+  const sid=quoteImportSupplier.value,[rn,rv]=String(quoteRoundSelect.value||"").split("|").map(Number);
+  return quoteRounds.find(r=>r.supplierId===sid&&r.roundNo===rn&&r.revisionNo===rv)||null;
+}
+function assignedItemsForSupplier(sid){return items.filter(it=>getSet(it.lineId).has(sid))}
+function ensureFirstRound(){
+  const sid=quoteImportSupplier.value;if(!sid)return null;
+  let subs=supplierSubmissions(sid);
+  if(!subs.length){quoteRounds.push({supplierId:sid,roundNo:1,revisionNo:1,status:"draft",lines:[],expectedLineIds:assignedItemsForSupplier(sid).map(x=>x.lineId),evidenceType:"email_attachment",evidenceNote:"",createdAt:new Date().toISOString()});subs=supplierSubmissions(sid)}
+  // 中文：第一轮还未写入报价时，分配中心变动应同步至应报价范围；有报价后则冻结范围，避免默默改变历史。
+  // English: Refresh first-round scope after assignment changes only before its first quote is saved.
+  const first=subs.find(r=>r.roundNo===1&&r.revisionNo===1);
+  if(first?.status==="draft"&&!first.lines.length)first.expectedLineIds=assignedItemsForSupplier(sid).map(x=>x.lineId);
+  return subs[subs.length-1];
+}
+function renderQuoteRoundSelector(selectLatest=false){
+  const sid=quoteImportSupplier.value;if(!sid)return;
+  ensureFirstRound();const subs=supplierSubmissions(sid),current=quoteRoundSelect.value;
+  quoteRoundSelect.innerHTML=subs.map(r=>`<option value="${r.roundNo}|${r.revisionNo}">第 ${r.roundNo} 轮 · 第${r.revisionNo}版 · ${r.status==="confirmed"?"已确认":"草稿"}</option>`).join("");
+  if(selectLatest||![...quoteRoundSelect.options].some(o=>o.value===current))quoteRoundSelect.value=`${subs[subs.length-1].roundNo}|${subs[subs.length-1].revisionNo}`;else quoteRoundSelect.value=current;
+  renderQuoteRound();
+}
+function resolveQuoteItem(ref){const x=String(ref||"").trim(),byLine=items.find(it=>it.lineId===x);if(byLine)return byLine;const byCode=items.filter(it=>it.id===x);return byCode.length===1?byCode[0]:null}
+/**
+ * 报价使用表头定位字段，优先 RFQ Line ID，缺失时才用唯一物料编码。
+ * Quote fields are mapped by headers; prefer RFQ Line ID, and use a uniquely matched item code only as fallback.
+ */
+function parseQuoteRows(text){
+  const table=parseHeaderTable(text,["RFQ Line ID","物料编码"]);
+  if(table.errors.length){const rows=[];rows._headerErrors=table.errors;return rows}
+  const result=table.rows.map(({data,rowNo})=>{
+    const line=String(data["RFQ Line ID"]||"").trim(),
+      code=String(data["物料编码"]||"").trim(),
+      price=findHeaderValue(data,["单价","阶梯价","价格","报价"]),
+      lead=findHeaderValue(data,["交期","交期天数"]),
+      moq=findHeaderValue(data,["MOQ","最小起订量"]),
+      rawStatus=findHeaderValue(data,["状态","报价状态"]);
+    const status=rawStatus|| (price?"quoted":"review"),errors=[];
+    if(!line&&!code)errors.push("第 "+rowNo+" 行缺少报价行身份");
+    if(line&&code){
+      const obj=items.find(it=>it.lineId===line);
+      if(obj&&obj.id!==code)errors.push("第 "+rowNo+" 行 RFQ Line ID 与物料编码不匹配");
+    }
+    return{itemRef:line||code,price,lead,moq,status,_rowNo:rowNo,_errors:errors};
+  });
+  result._headers=table.headers;return result;
+}
+function normalizeQuoteStatus(v){
+  const s=String(v||"quoted").trim().toLowerCase();
+  if(["未报价","noquote","no quote"].includes(s))return"noquote";
+  if(["不供货","不能供货","cannot","cannot supply"].includes(s))return"cannot";
+  if(["quoted","报价","正常报价"].includes(s))return"quoted";
+  if(["review","待检查"].includes(s))return"review";
+  return null;
+}
+/** 显示中文业务状态而非内部 null/英文码。 / Display readable Chinese business statuses, never null codes. */
+function quoteStatusLabel(status){
+  return{quoted:"正常报价",noquote:"明确未报价",cannot:"不供货",review:"待检查"}[status]||"待检查";
+}
+function parseTierPrice(raw){
+  const s=String(raw??"").trim(),errors=[];
+  if(!s)return{price:null,tiers:[],errors:["价格不能为空"]};
+  if(!s.includes(":")){const n=Number(s);return Number.isFinite(n)&&n>=0?{price:n,tiers:[],errors:[]}:{price:null,tiers:[],errors:["单价格式错误"]}}
+  const tiers=[];
+  s.split(/[|｜]/).map(x=>x.trim()).filter(Boolean).forEach(part=>{
+    const pos=part.lastIndexOf(":");if(pos<=0){errors.push("阶梯格式错误："+part);return}
+    const range=part.slice(0,pos).trim(),priceRaw=part.slice(pos+1).trim(),price=Number(priceRaw);
+    if(!Number.isFinite(price)||price<0){errors.push("阶梯价格错误："+part);return}
+    let min,max=null;
+    if(/^\d+(?:\.\d+)?\+$/.test(range))min=Number(range.slice(0,-1));
+    else if(/^\d+(?:\.\d+)?-\d+(?:\.\d+)?$/.test(range)){const p=range.split("-").map(Number);min=p[0];max=p[1]}
+    else {errors.push("阶梯区间错误："+range);return}
+    if(!(min>0)||max!==null&&max<min){errors.push("阶梯区间反向或非法："+range);return}
+    tiers.push({min,max,price});
+  });
+  tiers.sort((a,b)=>a.min-b.min);
+  for(let i=1;i<tiers.length;i++){const prev=tiers[i-1],cur=tiers[i];if(prev.max===null||cur.min<=prev.max)errors.push("阶梯区间重叠")}
+  return{price:null,tiers,errors};
+}
+function tierText(line){
+  if(!line?.tiers?.length)return line?.price==null?"—":"¥"+Number(line.price).toFixed(2);
+  return line.tiers.map(t=>`${t.min}${t.max==null?"+":"-"+t.max}:¥${Number(t.price).toFixed(2)}`).join(" | ");
+}
+function effectivePriceForLine(line,qty){
+  if(!line||line.status!=="quoted")return null;
+  if(!line.tiers?.length)return line.price==null||!Number.isFinite(Number(line.price))?null:Number(line.price);
+  const q=Number(qty);if(!Number.isFinite(q)||q<=0)return null;
+  const hit=line.tiers.find(t=>q>=t.min&&(t.max==null||q<=t.max));
+  return hit?Number(hit.price):null;
+}
+function expectedIdsForRound(round){
+  if(!round)return[];
+  if(!Array.isArray(round.expectedLineIds))round.expectedLineIds=assignedItemsForSupplier(round.supplierId).map(x=>x.lineId);
+  return round.expectedLineIds;
+}
+/** 校验报价身份、状态、价格和本轮范围，禁止静默写入错误行。
+ * Validate quote identity, status, price and round scope before committing. */
+function validateQuotePreview(rows){
+  // 中文：防止采购员先打开报价页、后又增加供应商分配，而第一轮尚无报价时错误显示“多报”。
+  // English: Refresh empty first-round draft scope even if the buyer revisited assignments after opening quotation import.
+  ensureFirstRound();
+  const round=currentQuoteRound(),expected=new Set(expectedIdsForRound(round)),resolved=rows.map(r=>({...r,item:resolveQuoteItem(r.itemRef)})),seen=new Map();
+  resolved.forEach(r=>{const key=r.item?.lineId||r.itemRef;seen.set(key,(seen.get(key)||0)+1)});
+  return resolved.map(r=>{
+    const status=normalizeQuoteStatus(r.status),lineId=r.item?.lineId||r.itemRef,itemId=r.item?.id||"",duplicate=(seen.get(lineId)||0)>1,codeMatches=items.filter(x=>x.id===String(r.itemRef||"").trim()).length,ambiguous=!r.item&&codeMatches>1,errors=[];if(!status)errors.push("报价状态无法识别");if(status==="review")errors.push("价格和状态均为空，请核对");if(r._errors?.length)errors.push(...r._errors);if(ambiguous)errors.push("物料编码对应多条 RFQ 行，请使用 RFQ Line ID");
+    let check="已报价";
+    if(status==="review")check="待检查";else if(ambiguous)check="数据错误";else if(duplicate)check="重复";else if(!r.item||!expected.has(lineId))check="多报";else if(status==="noquote")check="明确未报价";else if(status==="cannot")check="不供货";
+    let parsed={price:null,tiers:[],errors:[]},lead={value:null,error:null},moq={value:null,error:null},effective=null;
+    if(status==="quoted"){
+      parsed=parseTierPrice(r.price);errors.push(...parsed.errors);
+      lead=parseOptionalNumber(r.lead,"交期");moq=parseOptionalNumber(r.moq,"MOQ");if(lead.error)errors.push(lead.error);if(moq.error)errors.push(moq.error);
+      effective=effectivePriceForLine({status,price:parsed.price,tiers:parsed.tiers},r.item?.qty);
+      if(!parsed.errors.length&&effective==null)errors.push("RFQ数量没有适用的阶梯价格");
+    }
+    if(errors.length&&["已报价"].includes(check))check="数据错误";if(!status)check="数据错误";
+    // 中文：明确区分未知物料、未分配供应商和不在本轮范围，避免所有情况只显示“多报”。
+    // English: Distinguish unknown items, missing supplier assignment and lines outside the current round scope.
+    const scopeReason=check==="多报"?
+      !r.item?"找不到对应物料或 RFQ Line ID":
+      !getSet(lineId).has(round.supplierId)?"该物料尚未分配给当前供应商":
+      "该物料未纳入本轮应报价范围":"";
+    return {...r,status,lineId,itemId,priceParsed:parsed,leadValue:lead.value,moqValue:moq.value,effectivePrice:effective,errors,coverageCheck:check,scopeReason};
+  });
+}
+/** 区分已报价、明确未报价、不供货、漏报、多报与重复。
+ * Distinguish quoted, no-quote, cannot-supply, missing, extra and duplicate rows. */
+function coverageFromRows(round,rows){
+  const expected=expectedIdsForRound(round),expectedSet=new Set(expected),byId=new Map(),duplicates=[];
+  rows.forEach(r=>{const id=r.lineId||r.itemRef||r.itemId;if(byId.has(id))duplicates.push(id);else byId.set(id,r)});
+  let quoted=0,noquote=0,cannot=0;
+  byId.forEach((r,id)=>{if(!expectedSet.has(id))return;const st=normalizeQuoteStatus(r.status);if(st==="noquote")noquote++;else if(st==="cannot")cannot++;else if(!r.errors?.length)quoted++});
+  const presentExpected=new Set([...byId.keys()].filter(id=>expectedSet.has(id)));
+  return{expected:expected.length,quoted,noquote,cannot,missing:expected.filter(id=>!presentExpected.has(id)),extras:[...byId.keys()].filter(id=>!expectedSet.has(id)),duplicates:[...new Set(duplicates)]};
+}
+function quoteLineLabel(lineId){const it=items.find(x=>x.lineId===lineId);return it?`${it.id}(${lineId})`:lineId}
+function renderCoverageResult(result){
+  qcExpected.textContent=result.expected;qcQuoted.textContent=result.quoted;qcNoquote.textContent=result.noquote;qcCannot.textContent=result.cannot;qcMissing.textContent=result.missing.length;qcExtra.textContent=result.extras.length;qcDuplicate.textContent=result.duplicates.length;
+  const fmt=(label,ids,cls="")=>ids.length?`<div class="${cls}"><b>${label}：</b>${ids.slice(0,12).map(id=>esc(quoteLineLabel(id))).join("、")+(ids.length>12?" ……（共 "+ids.length+" 项，点击下方导出 CSV）":"")}</div>`:`<div class="muted"><b>${label}：</b>无</div>`;
+  quoteCoverageDetails.innerHTML=fmt("漏报项目",result.missing,"dangertext")+fmt("多报项目",result.extras,"warn")+fmt("重复项目",result.duplicates,"warn");
+}
+/**
+ * 按供应商/报价轮次导出漏报 CSV，Excel 可直接打开。
+ * Export per-supplier, per-round missing lines as an Excel-readable CSV.
+ */
+function exportMissingCsv(round){
+  const missing=coverageFromRows(round,round.lines).missing;
+  if(!missing.length){alert("本轮没有漏报项目。");return}
+  // 防止 Excel 把物料编码/名称当作公式。 / Prevent spreadsheet formula injection in exported cells.
+  const csvCell=v=>{
+    const raw=String(v??"");
+    const safe=/^[=+@-]/.test(raw.trimStart())?"'"+raw:raw;
+    return '"'+safe.replace(/"/g,'""')+'"';
+  };
+  const lines=[["RFQ编号","供应商","报价轮次","报价版本","RFQ Line ID","物料编码","物料名称","数量","单位"]];
+  missing.forEach(id=>{const it=items.find(x=>x.lineId===id);
+    lines.push(["RFQ-DEMO-001",round.supplierId,round.roundNo,round.revisionNo,id,it?.id||"",it?.name||"",it?.qty??"",it?.unit||""]);
+  });
+  const payload="\uFEFF"+lines.map(row=>row.map(csvCell).join(",")).join("\r\n");
+  const url=URL.createObjectURL(new Blob([payload],{type:"text/csv;charset=utf-8"}));
+  const a=document.createElement("a");a.href=url;a.download="RFQ-DEMO-001_"+round.supplierId+"_R"+round.roundNo+"_漏报.csv";
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+exportQuoteMissing.onclick=()=>{const r=currentQuoteRound();if(r)exportMissingCsv(r)};
+function showQuotePreview(rows){
+  const round=currentQuoteRound();if(!round||round.status==="confirmed"){alert("已确认提交不可再导入；请新增本轮新版本。");return}
+  quoteImportPreviewRows=validateQuotePreview(rows).map((validated,i)=>({...validated,_rawInput:rows[i]}));quoteImportFeedback.textContent="以下为待确认数据，请检查每行错误。";quoteImportPreview.style.display="block";
+  renderQuotePreviewTable();
+  renderCoverageResult(coverageFromRows(round,quoteImportPreviewRows));
+}
+/** 中文：每一条预览行都保留有效性与原始输入，不因部分提交丢失异常明细。
+ * English: Retain raw records and per-row validity in preview, including after partial commits. */
+/** 中文：报价预览按正式导入列名分开显示物料编码、RFQ Line ID 和物料名称。
+ * English: Preview uses explicit item code, RFQ line ID and item name headers consistently with import rules. */
+function renderQuotePreviewTable(){
+  quoteImportPreviewBody.innerHTML=quoteImportPreviewRows.map(r=>{
+    const it=items.find(x=>x.lineId===r.lineId);
+    const code=it?.id||r.itemId||r.itemRef;
+    const label=r.coverageCheck+(r.scopeReason?" · "+r.scopeReason:"")+(r.errors.length?" · "+r.errors.join("；"):"");
+    return `<tr><td>${esc(code||"—")}</td><td>${esc(it?.lineId||r.lineId||"—")}</td><td>${esc(it?.name||"—")}</td><td>${esc(r.price)}</td><td>${r.effectivePrice==null?"—":"¥"+r.effectivePrice.toFixed(2)}</td><td>${esc(r.lead)}</td><td>${esc(r.moq)}</td><td>${esc(quoteStatusLabel(r.status))}</td><td class="${["已报价","明确未报价","不供货"].includes(r.coverageCheck)?"ok":"dangertext"}">${esc(label)}</td></tr>`;
+  }).join("");
+}
+function clearQuoteImportPreview(){quoteImportPreviewRows=[];quoteImportPreviewBody.innerHTML="";quoteImportFeedback.textContent="";quoteImportPreview.style.display="none";const round=currentQuoteRound();if(round)renderCoverageResult(coverageFromRows(round,round.lines))}
+function upsertRoundLine(round,row,source="import"){
+  if(round.status==="confirmed")return false;
+  const existing=round.lines.find(x=>x.lineId===row.lineId),parsed=row.priceParsed||parseTierPrice(row.price);
+  const line={lineId:row.lineId,itemId:row.itemId,price:row.status==="quoted"?parsed.price:null,tiers:row.status==="quoted"?parsed.tiers:[],lead:row.status==="quoted"?(row.leadValue??parseOptionalNumber(row.lead,"交期").value):null,moq:row.status==="quoted"?(row.moqValue??parseOptionalNumber(row.moq,"MOQ").value):null,status:row.status,source,original:existing?.original||{price:row.price,lead:row.lead,moq:row.moq,status:row.status},updatedAt:new Date().toISOString()};
+  if(existing)Object.assign(existing,line);else round.lines.push(line);return true;
+}
+function latestConfirmedSubmissionForRound(sid,roundNo){
+  return supplierSubmissions(sid).filter(r=>r.roundNo===roundNo&&r.status==="confirmed").sort((a,b)=>b.revisionNo-a.revisionNo)[0]||null;
+}
+function priorApplicableLine(sid,lineId,beforeRoundNo){
+  const rounds=[...new Set(supplierSubmissions(sid).filter(r=>r.roundNo<beforeRoundNo&&r.status==="confirmed").map(r=>r.roundNo))].sort((a,b)=>b-a);
+  for(const rn of rounds){const sub=latestConfirmedSubmissionForRound(sid,rn);if(!sub||!expectedIdsForRound(sub).includes(lineId))continue;const line=sub.lines.find(x=>x.lineId===lineId);if(!line||line.status!=="quoted")return null;return{...line,roundNo:rn,revisionNo:sub.revisionNo}}
+  return null;
+}
+/** 只从本轮真实有效状态追溯，不跨越未报价/不供货。
+ * Resolve effective confirmed quotations without bypassing no-quote/cannot-supply states. */
+function latestConfirmedQuoteLine(lineId,sid){
+  const rounds=[...new Set(supplierSubmissions(sid).filter(r=>r.status==="confirmed").map(r=>r.roundNo))].sort((a,b)=>b-a);
+  for(const rn of rounds){const sub=latestConfirmedSubmissionForRound(sid,rn);if(!sub||!expectedIdsForRound(sub).includes(lineId))continue;const line=sub.lines.find(x=>x.lineId===lineId);if(!line)return null;if(line.status==="quoted")return{...line,roundNo:rn,revisionNo:sub.revisionNo};return null}
+  return null;
+}
+function renderQuoteRound(){
+  carryForwardPreview.style.display="none";carryForwardPreview.innerHTML="";
+  const round=currentQuoteRound();if(!round)return;const sup=suppliers.find(s=>s.id===round.supplierId),expected=expectedIdsForRound(round);
+  quoteEvidenceType.value=round.evidenceType||"email_attachment";quoteEvidenceNote.value=round.evidenceNote||"";
+  quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮 · 第${round.revisionNo}版</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认/锁定":"草稿"}</span><div class="small" style="margin-top:5px">轮次表示议价阶段；版本表示同一轮报价的更正提交。已确认提交不可覆盖修改。</div>`;
+  quoteRoundHint.textContent=`本轮应报价范围 ${expected.length} 项；当前提交已记录 ${round.lines.length} 项。`;renderCoverageResult(coverageFromRows(round,round.lines));
+  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=l.source==="carry"?"明确沿用上轮":l.source==="manual"?"手工修正":l.source==="revision-copy"?"复制自上一版":"导入",prev=round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="11" class="muted">当前提交还没有报价记录。</td></tr>';
+  document.querySelectorAll("[data-edit-quote]").forEach(b=>b.onclick=()=>editQuoteLine(Number(b.dataset.editQuote)));
+  carryForwardMissing.disabled=round.roundNo===1||round.status==="confirmed";editRoundScope.disabled=round.roundNo===1||round.status==="confirmed";confirmQuoteRound.disabled=round.status==="confirmed";commitQuoteImport.disabled=round.status==="confirmed";renderQuotes();
+}
+function editQuoteLine(index){
+  const round=currentQuoteRound(),l=round?.lines[index];if(!round||round.status==="confirmed"){alert("已确认提交不可直接修改，请新增本轮新版本。");return}if(!l)return;
+  const price=prompt("单价 / 阶梯价：",l.tiers?.length?l.tiers.map(t=>t.min+(t.max==null?"+":"-"+t.max)+":"+t.price).join("|"):(l.price??""));if(price===null)return;
+  const lead=prompt("交期（天，可空）：",l.lead??"");if(lead===null)return;const moq=prompt("MOQ（可空）：",l.moq??"");if(moq===null)return;const rawStatus=prompt("状态：quoted / noquote / cannot",l.status);if(rawStatus===null)return;
+  const row=validateQuotePreview([{itemRef:l.lineId,price,lead,moq,status:rawStatus}])[0];if(row.errors.length){alert(row.errors.join("；"));return}upsertRoundLine(round,row,"manual");renderQuoteRound();
+}
+function fillCats(){["assignCatFilter","sfCatFilter"].forEach(id=>{const el=document.getElementById(id);categories.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o)})})}
+fillCats();
+
+quoteImportSupplier.onchange=()=>{clearQuoteImportPreview();renderQuoteRoundSelector(true)};
+quoteRoundSelect.onchange=()=>{clearQuoteImportPreview();renderQuoteRound()};
+quoteEvidenceType.onchange=()=>{const r=currentQuoteRound();if(r&&r.status!=="confirmed")r.evidenceType=quoteEvidenceType.value};
+quoteEvidenceNote.onchange=()=>{const r=currentQuoteRound();if(r&&r.status!=="confirmed")r.evidenceNote=quoteEvidenceNote.value.trim()};
+newQuoteRound.onclick=()=>{const sid=quoteImportSupplier.value;if(!sid)return;const subs=supplierSubmissions(sid),last=subs[subs.length-1];if(last&&last.status!=="confirmed"){alert("请先确认当前草稿，或继续修改当前草稿。");return}const next=(last?.roundNo||0)+1,expected=(last?.expectedLineIds?.length?last.expectedLineIds:assignedItemsForSupplier(sid).map(x=>x.lineId)).slice();quoteRounds.push({supplierId:sid,roundNo:next,revisionNo:1,status:"draft",lines:[],expectedLineIds:expected,evidenceType:"email_attachment",evidenceNote:"",createdAt:new Date().toISOString()});renderQuoteRoundSelector(true)};
+newQuoteRevision.onclick=()=>{const cur=currentQuoteRound();if(!cur)return;if(cur.status!=="confirmed"){alert("当前提交仍是草稿，直接修改即可，无需创建新版本。");return}const revisions=supplierSubmissions(cur.supplierId).filter(x=>x.roundNo===cur.roundNo).sort((a,b)=>b.revisionNo-a.revisionNo),base=revisions[0];if(cur.revisionNo!==base.revisionNo){alert("只能从本轮最新版本创建下一版，请先切换到最新版。");return}const next=base.revisionNo+1;quoteRounds.push({supplierId:base.supplierId,roundNo:base.roundNo,revisionNo:next,status:"draft",lines:base.lines.map(x=>({...x,tiers:(x.tiers||[]).map(t=>({...t})),source:"revision-copy"})),expectedLineIds:[...expectedIdsForRound(base)],evidenceType:base.evidenceType,evidenceNote:"",createdAt:new Date().toISOString()});renderQuoteRoundSelector(true)};
+function renderScopeEditor(){const r=currentQuoteRound();if(!r)return;const expected=new Set(expectedIdsForRound(r));quoteScopeList.innerHTML=assignedItemsForSupplier(r.supplierId).map(it=>`<label class="scopeRow"><input type="checkbox" data-scope-line="${it.lineId}" ${expected.has(it.lineId)?"checked":""}><span><b>${esc(it.id)}</b> · ${esc(it.name)} <span class="muted">${it.lineId}</span></span></label>`).join("");quoteScopeEditor.style.display="block"}
+editRoundScope.onclick=()=>{const r=currentQuoteRound();if(!r||r.roundNo===1||r.status==="confirmed")return;renderScopeEditor()};
+scopeSelectAll.onclick=()=>quoteScopeList.querySelectorAll("[data-scope-line]").forEach(x=>x.checked=true);
+scopeClearAll.onclick=()=>quoteScopeList.querySelectorAll("[data-scope-line]").forEach(x=>x.checked=false);
+closeRoundScope.onclick=()=>quoteScopeEditor.style.display="none";
+saveRoundScope.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;r.expectedLineIds=[...quoteScopeList.querySelectorAll("[data-scope-line]:checked")].map(x=>x.dataset.scopeLine);r.lines=r.lines.filter(x=>r.expectedLineIds.includes(x.lineId));quoteScopeEditor.style.display="none";renderQuoteRound()};
+confirmQuoteRound.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;if(!r.lines.length){alert("当前提交没有报价记录。");return}r.evidenceType=quoteEvidenceType.value;r.evidenceNote=quoteEvidenceNote.value.trim();const cov=coverageFromRows(r,r.lines);if((cov.missing.length||cov.extras.length||cov.duplicates.length)&&!confirm(`覆盖检查仍有异常：漏报 ${cov.missing.length} 项，多报 ${cov.extras.length} 项，重复 ${cov.duplicates.length} 项。仍要确认并锁定本次提交吗？`))return;r.status="confirmed";r.confirmedAt=new Date().toISOString();reconcileAwardsAfterQuote();renderQuoteRoundSelector()};
+quoteManualAdd.onclick=()=>showQuotePreview([{itemRef:quoteManualItem.value.trim(),price:quoteManualPrice.value.trim(),lead:quoteManualLead.value.trim(),moq:quoteManualMoq.value.trim(),status:quoteManualStatus.value}]);
+quoteParsePaste.onclick=()=>{const rows=parseQuoteRows(quotePaste.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到报价记录，请检查表头和数据。");return}showQuotePreview(rows)};
+quoteReadClipboard.onclick=async()=>{try{quotePaste.value=await navigator.clipboard.readText();quoteParsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请按 Ctrl+V 粘贴。")}};
+quoteClearInput.onclick=()=>{quotePaste.value=""};quoteClearPreview.onclick=clearQuoteImportPreview;clearQuotePreview2.onclick=clearQuoteImportPreview;
+toggleQuoteMapping.onclick=()=>{quoteMappingBox.style.display=quoteMappingBox.style.display==="none"?"block":"none"};
+saveQuoteMapping.onclick=()=>{quoteMappingHint.textContent="已保存 M0 映射演示："+[mapItemRef.value,mapPrice.value,mapLead.value,mapMoq.value,mapStatus.value].join(" → ")};
+demoQuoteExcel.onclick=()=>{const a=assignedItemsForSupplier(quoteImportSupplier.value);showQuotePreview([{itemRef:a[0]?.lineId||items[0].lineId,price:"1-9:118|10-49:108.5|50+:98",lead:"7",moq:"1",status:"quoted"},{itemRef:a[1]?.lineId||items[1].lineId,price:"108.50",lead:"10",moq:"5",status:"quoted"}])};
+quoteImportFile.onchange=()=>{const file=quoteImportFile.files?.[0];if(!file)return;const ext=(file.name.split(".").pop()||"").toLowerCase();if(ext==="csv"||ext==="txt"){const r=new FileReader();r.onload=()=>{const rows=parseQuoteRows(r.result);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}showQuotePreview(rows)};r.readAsText(file)}else demoQuoteExcel.click()};
+/** 中文：仅提交明确校验通过的报价，部分提交必须告知全部拒绝行并由采购员确认。
+ * English: Commit valid quote rows only; partial submissions require explicit buyer acknowledgement. */
+function planQuoteImportCommit(rows){
+  const checked=validateQuotePreview(rows.map(r=>r._rawInput||r));
+  const valid=[],skipped=[];
+  checked.forEach((r,i)=>{
+    if(["已报价","明确未报价","不供货"].includes(r.coverageCheck)&&!r.errors.length)valid.push({...r,_rawInput:rows[i]._rawInput||rows[i]});
+    else skipped.push({...r,_rawInput:rows[i]._rawInput||rows[i]});
+  });
+  return{valid,skipped,total:checked.length};
+}
+commitQuoteImport.onclick=()=>{
+  const r=currentQuoteRound();
+  if(!r||r.status==="confirmed"){alert("已确认提交不可覆盖，请新增本轮新版本。");return}
+  if(!quoteImportPreviewRows.length){alert("请先导入并预览报价。");return}
+  const plan=planQuoteImportCommit(quoteImportPreviewRows);
+  if(!plan.valid.length){alert("没有可写入的有效报价；全部 "+plan.skipped.length+" 行仍在预览中供修改。");return}
+  if(plan.skipped.length){
+    const details=plan.skipped.slice(0,8).map(x=>String(x._rowNo||"手工")+" 行 "+String(x.itemRef||"") + "：" + (x.errors.join("；")||x.coverageCheck)).join("\n");
+    if(!confirm("本次共 "+plan.total+" 行，可提交 "+plan.valid.length+" 行，拒绝/待检查 "+plan.skipped.length+" 行。\n以下错误行不会保存，完整清单留在预览中：\n"+details+(plan.skipped.length>8?"\n……剩余 "+(plan.skipped.length-8)+" 行见预览":"")+"\n是否只提交 "+plan.valid.length+" 行？"))return;
+  }
+  plan.valid.forEach(x=>upsertRoundLine(r,x,"import"));
+  renderQuoteRound();
+  if(plan.skipped.length){
+    quoteImportPreviewRows=plan.skipped;quoteImportPreview.style.display="block";
+    quoteImportFeedback.textContent="已明确提交 "+plan.valid.length+" 行；剩余 "+plan.skipped.length+" 行未写入，全部保留在下方预览中。请修正原输入后重新解析。";
+    renderQuotePreviewTable();
+    renderCoverageResult(coverageFromRows(r,r.lines));
+  }else clearQuoteImportPreview();
+};
+/** 中文：仅候选原轮次已确认、现轮确实漏报且当前数量有适用价格的项目可沿用。
+ * English: Carry-forward candidates require confirmed prior terms, a current missing line, and an applicable tier. */
+function planCarryForward(round){
+  if(!round||round.roundNo<=1||round.status==="confirmed")return[];
+  const existing=new Set(round.lines.map(l=>l.lineId));
+  return expectedIdsForRound(round).filter(lineId=>!existing.has(lineId)).map(lineId=>{
+    const it=items.find(x=>x.lineId===lineId),prev=priorApplicableLine(round.supplierId,lineId,round.roundNo);
+    if(!it||!prev||effectivePriceForLine(prev,it.qty)==null)return null;
+    return{lineId,it,prev,price:effectivePriceForLine(prev,it.qty)};
+  }).filter(Boolean);
+}
+/** 中文：沿用记录完整保存原轮次、原版本和采购员证据说明。
+ * English: Carry records preserve the original round/version plus explicit buyer evidence. */
+function buildCarryForwardLine(candidate,evidenceNote){
+  const {lineId,it,prev}=candidate;
+  return{lineId,itemId:it.id,price:prev.price,tiers:(prev.tiers||[]).map(t=>({...t})),lead:prev.lead,moq:prev.moq,status:"quoted",source:"carry",
+    original:{carryFromRound:prev.roundNo,carryFromRevision:prev.revisionNo,confirmationNote:evidenceNote},updatedAt:new Date().toISOString()};
+}
+/** 中文：先预览并选择本轮确需沿用的行，不能点一次直接沿用所有漏报。
+ * English: Preview and select carry-forward rows; a single click must never copy all missing prices. */
+function openCarryForwardPreview(){
+  const round=currentQuoteRound();if(!round||round.roundNo===1||round.status==="confirmed")return;
+  const candidates=planCarryForward(round);
+  if(!candidates.length){alert("当前没有可安全沿用的漏报项目（原轮价格缺失或当前数量无适用档位时不允许沿用）。");return}
+  const signature=[round.supplierId,round.roundNo,round.revisionNo].join("|");
+  carryForwardPreview.style.display="block";
+  carryForwardPreview.innerHTML='<div class="sline"><b>沿用上轮预览 · '+candidates.length+' 项可选（默认不勾选）</b><button class="btn" id="cancelCarryPreview">取消</button></div>'+
+    '<div class="small muted" style="margin:8px 0">仅对供应商明确确认维持原报价条件的项目勾选；无适用阶梯价和被拒绝/不供货的历史报价不在可选范围。</div>'+
+    '<div class="scopeList">'+candidates.map(c=>'<label class="scopeRow"><input type="checkbox" data-carry-line="'+esc(c.lineId)+'"><span>'+esc(c.it.id)+' ('+esc(c.lineId)+') · 第 '+c.prev.roundNo+' 轮第 '+c.prev.revisionNo+' 版 · 当前适用价 '+c.price.toFixed(2)+' · '+esc(tierText(c.prev))+' · 交期 '+(c.prev.lead??"—")+' 天 · MOQ '+(c.prev.moq??"—")+'</span></label>').join("")+'</div>'+
+    '<div class="toolbar" style="margin-top:8px"><input type="text" id="carryEvidenceNote" style="flex:1;min-width:260px" placeholder="供应商确认沿用的原始来源/日期/说明（必填）"></div>'+
+    '<label class="scopeRow"><input type="checkbox" id="carryConfirmSource"><span>我已核实供应商明确维持上述选中项目的原报价条件</span></label>'+
+    '<button class="btn primary" id="confirmCarrySelection">确认沿用选中的项目</button>';
+  document.getElementById("cancelCarryPreview").onclick=()=>{carryForwardPreview.style.display="none";carryForwardPreview.innerHTML=""};
+  document.getElementById("confirmCarrySelection").onclick=()=>{
+    const current=currentQuoteRound(),key=current&&[current.supplierId,current.roundNo,current.revisionNo].join("|");
+    if(key!==signature||!current||current.status==="confirmed"){alert("报价轮次/版本已变化，请重新选择。");return}
+    const ids=[...carryForwardPreview.querySelectorAll("[data-carry-line]:checked")].map(x=>x.dataset.carryLine);
+    const note=document.getElementById("carryEvidenceNote").value.trim();
+    if(!ids.length){alert("请至少选择一个项目。");return}
+    if(!note||!document.getElementById("carryConfirmSource").checked){alert("请填写供应商确认依据并勾选已核实声明。");return}
+    const refreshed=new Map(planCarryForward(current).map(c=>[c.lineId,c]));
+    if(ids.some(id=>!refreshed.has(id))){alert("候选报价已变化，请重新预览。");return}
+    if(!confirm("确定按原轮次和原条件沿用这 "+ids.length+" 项吗？其余漏报项保持漏报状态。"))return;
+    ids.forEach(id=>current.lines.push(buildCarryForwardLine(refreshed.get(id),note)));
+    renderQuoteRound();
+    alert("已按供应商确认依据沿用 "+ids.length+" 项，其余漏报项目不变。");
+  };
+}
+carryForwardMissing.onclick=openCarryForwardPreview;
+
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active");if(b.dataset.tab==="assign")renderAssignAll();if(b.dataset.tab==="quoteImport"){enterReturnedQuoteMode();quoteSupplierOptions();renderQuoteRoundSelector()}if(b.dataset.tab==="quotes")renderQuotes()});
+document.querySelectorAll(".modebtn").forEach(b=>b.onclick=()=>{assignMode=b.dataset.mode;document.querySelectorAll(".modebtn").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("itemFirstView").style.display=assignMode==="itemFirst"?"grid":"none";document.getElementById("supplierFirstView").style.display=assignMode==="supplierFirst"?"grid":"none";renderAssignAll()});
+
+function appliedValue(id){const m={assignItem:"assignItemSearch",assignCat:"assignCatFilter",assignState:"assignStateFilter",supplier:"supplierSearch",supplierFirst:"supplierFirstSearch",supplierPool:"supplierPoolSearch",sfItem:"sfItemSearch",sfCat:"sfCatFilter"};const key=Object.keys(m).find(k=>m[k]===id);return key?appliedSearch[key]:""}
+function filteredItems(searchId,catId,stateId){
+  const q=appliedValue(searchId),cat=appliedValue(catId),state=appliedValue(stateId);
+  return items.filter(it=>{
+    const n=getSet(it.lineId).size;
+    const stateOk=!state||(state==="none"&&n===0)||(state==="single"&&n===1)||(state==="multi"&&n>=2);
+    const searchOk=!q||[it.lineId,it.id,it.name,it.cat,it.qty,it.unit,n,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q));
+    return searchOk&&(!cat||it.cat===cat)&&stateOk
+  })
+}
+/**
+ * 列表排序以已应用的过滤结果为基础，保证分页、选择、排序一致。
+ * Sort the applied-filter result before pagination and selection.
+ */
+const itemSortRules=[{key:"_createdOrder",direction:"desc"}];
+function sortItemList(list){
+  return list.map((it,i)=>({it,i})).sort((a,b)=>{
+    for(const rule of itemSortRules){
+      const av=rule.key==="supplierCount"?getSet(a.it.lineId).size:a.it[rule.key]??a.it.custom?.[rule.key]??"",
+            bv=rule.key==="supplierCount"?getSet(b.it.lineId).size:b.it[rule.key]??b.it.custom?.[rule.key]??"";
+      const cmp=typeof av==="number"&&typeof bv==="number"?av-bv:String(av).localeCompare(String(bv),"zh-CN",{numeric:true});
+      if(cmp)return rule.direction==="asc"?cmp:-cmp;
+    }
+    return a.i-b.i;
+  }).map(x=>x.it);
+}
+function currentItemList(){
+  const q=appliedSearch.item;
+  return sortItemList(items.filter(it=>{
+    if(q&&![it.lineId,it.id,it.name,it.cat,it.qty,it.unit,getSet(it.lineId).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))return false;
+    const keys=["lineId","id","name","cat","qty","unit","supplierCount",...customFields.map(f=>f.key)];
+    return keys.every(k=>!fieldFilters[k]||fuzzyIncludes(itemFieldValue(it,k),fieldFilters[k]));
+  }));
+}
+function itemCodeCell(it){return `<b>${esc(it.id)}</b><div class="small muted">${esc(it.name)}</div>`}
+function itemDrawingCell(it){
+  const docs=drawingDocsForItem(it);
+  if(!docs.length)return '<span class="dangertext">缺图纸</span>';
+  return `<button class="drawingThumb" data-drawing="${it.lineId}" title="PDF ${docs[0].pages}页">${drawingSvg(it,docs[0],1,.18)}</button><div class="pdfMeta">PDF ${docs[0].pages}页</div>`;
+}
+function renderItemList(){
+  const fields=[
+    {key:"lineId",label:"RFQ Line ID"},{key:"id",label:"物料编码"},
+    {key:"drawing",label:"图纸"},{key:"name",label:"名称"},
+    {key:"cat",label:"分类"},{key:"qty",label:"数量"},
+    {key:"unit",label:"单位"},{key:"supplierCount",label:"已分配供应商"},
+    ...customFields.map(f=>({key:f.key,label:f.label}))
+  ];
+  const order=key=>{const i=itemSortRules.findIndex(r=>r.key===key);return i<0?"":` ${i+1}${itemSortRules[i].direction==="asc"?"↑":"↓"}`};
+  itemHead.innerHTML=`<tr><th>选择</th>${fields.map(f=>`<th>${f.key==="drawing"?"图纸":`<button class="btn" data-item-sort="${f.key}" title="点击排序，Shift+点击添加排序字段">${esc(f.label)}${order(f.key)}</button>`}</th>`).join("")}</tr><tr><th><button class="btn" id="applyColumnSearch">搜索</button><button class="btn" id="clearColumnSearch">清空</button></th>${fields.map(f=>`<th>${f.key==="drawing"?"":`<input class="colFilter" type="text" data-field-filter="${f.key}" value="${esc(fieldFilterDraft[f.key]||"")}" placeholder="模糊搜索">`}</th>`).join("")}</tr>`;
+  document.querySelectorAll("[data-field-filter]").forEach(x=>{
+    x.oninput=()=>{fieldFilterDraft[x.dataset.fieldFilter]=x.value};
+    x.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();runItemSearch.click()}};
+  });
+  applyColumnSearch.onclick=()=>runItemSearch.click();
+  clearColumnSearch.onclick=()=>clearItemSearch.click();
+  document.querySelectorAll("[data-item-sort]").forEach(b=>b.onclick=e=>{
+    const key=b.dataset.itemSort,existing=itemSortRules.find(x=>x.key===key);
+    const next={key,direction:existing?.direction==="asc"?"desc":"asc"};
+    if(e.shiftKey){if(itemSortRules.length===1&&itemSortRules[0].key==="_createdOrder")itemSortRules.length=0;const idx=itemSortRules.findIndex(x=>x.key===key);if(idx>=0)itemSortRules.splice(idx,1);itemSortRules.push(next)}
+    else itemSortRules.splice(0,itemSortRules.length,next);
+    itemPage=0;renderItemList();
+  });
+  const list=currentItemList(),pages=Math.max(1,Math.ceil(list.length/PAGE));
+  itemPage=Math.min(itemPage,pages-1);const slice=pageSlice(list,itemPage);
+  itemBody.innerHTML=slice.map(it=>`<tr data-edit-line="${esc(it.lineId)}" title="双击编辑此询价行">
+    <td><input type="checkbox" data-im="${it.lineId}" ${itemManageSel.has(it.lineId)?"checked":""}></td>
+    <td>${esc(it.lineId)}</td><td>${esc(it.id)}</td><td>${itemDrawingCell(it)}</td>
+    <td>${esc(it.name)}</td><td>${esc(it.cat)}</td><td>${it.qty}</td>
+    <td>${esc(it.unit)}</td><td>${getSet(it.lineId).size}</td>
+    ${customFields.map(f=>`<td>${esc(itemFieldValue(it,f.key))}</td>`).join("")}
+  </tr>`).join("");
+  bindDrawingThumbs();
+  document.querySelectorAll("#itemBody tr[data-edit-line]").forEach(tr=>tr.ondblclick=e=>{if(e.target.closest("input,button"))return;openItemEditor(tr.dataset.editLine)});
+  bindShiftRange("#itemBody input[data-im]","item-manage","im",(id,checked)=>checked?itemManageSel.add(id):itemManageSel.delete(id),renderItemList);
+  itemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${itemPage+1}/${pages} 页 · 已选择 ${itemManageSel.size} 项`;
+  itemSortHint.textContent="当前排序："+itemSortRules.map((r,i)=>`${i+1}.${fields.find(f=>f.key===r.key)?.label||"新增顺序"}${r.direction==="asc"?"升序":"降序"}`).join(" → ")+"；Shift+点击列标题叠加字段排序";
+  renderPageNav(itemPager,itemPage,list.length,PAGE,p=>{itemPage=p;resetRange("item-manage");renderItemList()});
+}
+runItemSearch.onclick=()=>{appliedSearch.item=itemSearch.value.trim();Object.keys(fieldFilterDraft).forEach(k=>fieldFilters[k]=fieldFilterDraft[k]);itemPage=0;resetRange("item-manage");renderItemList()};
+itemSelectAll.onclick=()=>{selectAllIds(itemManageSel,currentItemList());renderItemList()};
+itemSelectPage.onclick=()=>{selectAllIds(itemManageSel,pageSlice(currentItemList(),itemPage));renderItemList()};
+itemInvertAll.onclick=()=>{invertIds(itemManageSel,currentItemList());renderItemList()};
+itemInvertPage.onclick=()=>{invertIds(itemManageSel,pageSlice(currentItemList(),itemPage));renderItemList()};
+clearItemSelection.onclick=()=>{itemManageSel.clear();renderItemList()};
+clearItemSearch.onclick=()=>{itemSearch.value="";appliedSearch.item="";Object.keys(fieldFilterDraft).forEach(k=>{fieldFilterDraft[k]="";fieldFilters[k]=""});itemPage=0;renderItemList()};
+itemSearch.onkeydown=e=>{if(e.key==="Enter")runItemSearch.click()};
+
+function coverage(){
+  let covered=0,single=0,none=0;
+  items.forEach(it=>{const n=getSet(it.lineId).size;if(n===0)none++;else{covered++;if(n===1)single++}});
+  return {covered,single,none}
+}
+function renderStats(){const c=coverage();stTotal.textContent=items.length;stCovered.textContent=c.covered;stSingle.textContent=c.single;stNone.textContent=c.none}
+function renderAssignItems(){
+  const list=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"), pages=Math.max(1,Math.ceil(list.length/PAGE));assignPage=Math.min(assignPage,pages-1);
+  const slice=list.slice(assignPage*PAGE,assignPage*PAGE+PAGE);
+  assignItemBody.innerHTML=slice.map(it=>{const names=[...getSet(it.lineId)].slice(0,3).map(sid=>suppliers.find(s=>s.id===sid)?.name).filter(Boolean);return `<tr><td><input type="checkbox" data-ai="${it.lineId}" ${assignSel.has(it.lineId)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td><td>${names.length?names.map(n=>`<span class="chip">${n}</span>`).join(" "):'<span class="dangertext">未分配</span>'}</td></tr>`}).join("");
+  bindDrawingThumbs();
+  bindShiftRange("#assignItemBody input[data-ai]","assign-items","ai",(id,checked)=>checked?assignSel.add(id):assignSel.delete(id),()=>{renderAssignItems();renderSuppliers()});
+  assignSelectedCount.textContent=assignSel.size;
+  assignItemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${assignPage+1}/${pages} 页`;
+  renderPageNav(assignPager,assignPage,list.length,PAGE,p=>{assignPage=p;resetRange("assign-items");renderAssignItems()});
+}
+runAssignSearch.onclick=()=>{appliedSearch.assignItem=assignItemSearch.value.trim();appliedSearch.assignCat=assignCatFilter.value;appliedSearch.assignState=assignStateFilter.value;assignPage=0;resetRange("assign-items");renderAssignItems();renderSuppliers()};
+clearAssignSearch.onclick=()=>{assignItemSearch.value="";assignCatFilter.value="";assignStateFilter.value="";runAssignSearch.click()};
+selectAssignAll.onclick=()=>{selectAllIds(assignSel,filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"));renderAssignAll()};
+selectAssignPage.onclick=()=>{selectAllIds(assignSel,pageSlice(filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"),assignPage));renderAssignAll()};
+invertAssignAll.onclick=()=>{invertIds(assignSel,filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"));renderAssignAll()};
+invertAssignPage.onclick=()=>{invertIds(assignSel,pageSlice(filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"),assignPage));renderAssignAll()};
+clearAssignSelection.onclick=()=>{assignSel.clear();renderAssignAll()};
+
+function renderSuppliers(){
+  const q=appliedSearch.supplier, selected=[...assignSel], total=selected.length;
+  const list=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&supplierMatches(s,q)),pages=Math.max(1,Math.ceil(list.length/SUPPLIER_PAGE));supplierListPage=Math.min(supplierListPage,pages-1);
+  supplierList.innerHTML=pageSlice(list,supplierListPage,SUPPLIER_PAGE).map(s=>{
+    const count=selected.filter(i=>getSet(i).has(s.id)).length;
+    const cls=total===0||count===0?"none":count===total?"full":"partial";
+    const icon=total===0||count===0?"☐":count===total?"☑":"◩";
+    return `<div class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><div class="tri ${cls}">${icon} ${count}/${total}</div></div><div class="toolbar" style="margin-top:8px"><button class="btn soft" data-add="${s.id}" ${total===0?"disabled":""}>给所选物料添加此供应商</button><button class="btn danger" data-rem="${s.id}" ${count===0?"disabled":""}>从所选物料移除此供应商</button></div></div>`
+  }).join("");
+  document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>applySupplierBulkChange([...assignSel],b.dataset.add,"add","为选中物料添加供应商"));
+  document.querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>applySupplierBulkChange([...assignSel],b.dataset.rem,"remove","从选中物料移除供应商"));
+  supplierListCount.textContent=`筛选结果 ${list.length} 家 · 第 ${supplierListPage+1}/${pages} 页`;
+  renderPageNav(supplierListPager,supplierListPage,list.length,SUPPLIER_PAGE,p=>{supplierListPage=p;renderSuppliers()});
+}
+runSupplierSearch.onclick=()=>{appliedSearch.supplier=supplierSearch.value.trim();supplierListPage=0;renderSuppliers()};
+clearSupplierSearch.onclick=()=>{supplierSearch.value="";runSupplierSearch.click()};
+
+function renderSupplierFirstList(){
+  const q=appliedSearch.supplierFirst;
+  const list=suppliers.filter(s=>rfqSupplierPool.has(s.id)&&supplierMatches(s,q)),pages=Math.max(1,Math.ceil(list.length/SUPPLIER_PAGE));supplierFirstPage=Math.min(supplierFirstPage,pages-1);
+  supplierFirstList.innerHTML=pageSlice(list,supplierFirstPage,SUPPLIER_PAGE).map(s=>{
+    let count=0;items.forEach(it=>{if(getSet(it.lineId).has(s.id))count++});
+    return `<div class="srow ${activeSupplier===s.id?"selected":""}" data-sf-s="${s.id}"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.id} · ${s.reason}</div></div><div class="toolbar"><span>${count} 项</span><button class="btn danger" data-pool-remove="${s.id}">移出本次询价</button></div></div></div>`
+  }).join("")||'<div class="muted small">没有匹配的本次询价供应商。</div>';
+  document.querySelectorAll("[data-sf-s]").forEach(x=>x.onclick=()=>{activeSupplier=x.dataset.sfS;sfPage=0;resetRange("supplier-items");renderSupplierFirstList();renderSfItems()});
+  document.querySelectorAll("[data-pool-remove]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation();
+    const sid=b.dataset.poolRemove, sup=suppliers.find(s=>s.id===sid);
+    let count=0;items.forEach(it=>{if(getSet(it.lineId).has(sid))count++});
+    if(quoteRounds.some(r=>r.supplierId===sid&&(r.status==="confirmed"||r.lines.length))){alert("该供应商已有报价/版本历史，M0 不允许直接移出并破坏历史。正式版应使用取消参与/作废状态。");return}
+    if(!guardMutableLines(items.filter(it=>getSet(it.lineId).has(sid)).map(it=>it.lineId),"移出供应商"))return;
+    if(!confirm(`将“${sup?.name||sid}”移出本次询价？\n同时会取消它当前关联的 ${count} 个物料。`))return;
+    let removed=0;items.forEach(it=>{if(getSet(it.lineId).delete(sid))removed++});
+    for(let i=quoteRounds.length-1;i>=0;i--){if(quoteRounds[i].supplierId===sid&&quoteRounds[i].status==="draft"&&!quoteRounds[i].lines.length)quoteRounds.splice(i,1)}
+    rfqSupplierPool.delete(sid);if(activeSupplier===sid)activeSupplier=null;
+    flash(`已将供应商移出本次询价，并取消 ${removed} 条物料关联。`);
+    renderAssignAll();renderSupplierPoolPicker();
+  });
+  supplierFirstCount.textContent=`筛选结果 ${list.length} 家 · 第 ${supplierFirstPage+1}/${pages} 页`;
+  renderPageNav(supplierFirstPager,supplierFirstPage,list.length,SUPPLIER_PAGE,p=>{supplierFirstPage=p;renderSupplierFirstList()});
+  renderCopySources();
+}
+function supplierPoolFiltered(){
+  const q=appliedSearch.supplierPool;
+  return suppliers.filter(s=>!rfqSupplierPool.has(s.id)&&supplierMatches(s,q));
+}
+function renderSupplierPoolPicker(){
+  const list=supplierPoolFiltered(),pages=Math.max(1,Math.ceil(list.length/SUPPLIER_PAGE));supplierPoolPage=Math.min(supplierPoolPage,pages-1),slice=pageSlice(list,supplierPoolPage,SUPPLIER_PAGE);
+  supplierPoolList.innerHTML=slice.map(s=>`<label class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.id} · ${s.reason}</div></div><input type="checkbox" data-spick="${s.id}" ${supplierPickerSel.has(s.id)?"checked":""}></div></label>`).join("")||'<div class="muted small">没有更多可添加供应商。</div>';
+  bindShiftRange("#supplierPoolList input[data-spick]","supplier-picker","spick",(id,checked)=>checked?supplierPickerSel.add(id):supplierPickerSel.delete(id),renderSupplierPoolPicker);
+  supplierPoolCount.textContent=`筛选结果 ${list.length} 家 · 第 ${supplierPoolPage+1}/${pages} 页 · 已选择 ${supplierPickerSel.size} 家`;
+  renderPageNav(supplierPoolPager,supplierPoolPage,list.length,SUPPLIER_PAGE,p=>{supplierPoolPage=p;resetRange("supplier-picker");renderSupplierPoolPicker()});
+}
+addPickedSuppliers.onclick=()=>{let n=0;supplierPickerSel.forEach(id=>{if(!rfqSupplierPool.has(id)){rfqSupplierPool.add(id);n++}});supplierPickerSel.clear();resetRange("supplier-picker");flash(`已加入 ${n} 家供应商。`);renderSupplierPoolPicker();renderAssignAll()};
+clearPickedSuppliers.onclick=()=>{supplierPickerSel.clear();resetRange("supplier-picker");renderSupplierPoolPicker()};
+supplierPickAll.onclick=()=>{selectAllIds(supplierPickerSel,supplierPoolFiltered());renderSupplierPoolPicker()};
+supplierPickPage.onclick=()=>{selectAllIds(supplierPickerSel,pageSlice(supplierPoolFiltered(),supplierPoolPage,SUPPLIER_PAGE));renderSupplierPoolPicker()};
+supplierInvertAll.onclick=()=>{invertIds(supplierPickerSel,supplierPoolFiltered());renderSupplierPoolPicker()};
+supplierInvertPage.onclick=()=>{invertIds(supplierPickerSel,pageSlice(supplierPoolFiltered(),supplierPoolPage,SUPPLIER_PAGE));renderSupplierPoolPicker()};
+function renderCopySources(){
+  if(!document.getElementById("copyFromSupplier"))return;
+  const current=copyFromSupplier.value;
+  copyFromSupplier.innerHTML='<option value="">复制其他供应商的物料范围…</option>'+suppliers.filter(s=>rfqSupplierPool.has(s.id)&&s.id!==activeSupplier).map(s=>`<option value="${s.id}">${s.name}</option>`).join("");
+  if([...copyFromSupplier.options].some(o=>o.value===current))copyFromSupplier.value=current;
+}
+runSupplierFirstSearch.onclick=()=>{appliedSearch.supplierFirst=supplierFirstSearch.value.trim();supplierFirstPage=0;renderSupplierFirstList()};
+clearSupplierFirstSearch.onclick=()=>{supplierFirstSearch.value="";runSupplierFirstSearch.click()};
+openSupplierPicker.onclick=()=>{supplierPicker.style.display="block";resetRange("supplier-picker");renderSupplierPoolPicker()};
+closeSupplierPicker.onclick=()=>{supplierPicker.style.display="none"};
+runSupplierPoolSearch.onclick=()=>{appliedSearch.supplierPool=supplierPoolSearch.value.trim();supplierPoolPage=0;resetRange("supplier-picker");renderSupplierPoolPicker()};
+clearSupplierPoolSearch.onclick=()=>{supplierPoolSearch.value="";runSupplierPoolSearch.click()};
+function filteredSfItems(){
+  const q=appliedSearch.sfItem,cat=appliedSearch.sfCat;
+  return items.filter(it=>(!q||[it.lineId,it.id,it.name,it.cat,it.qty,it.unit,getSet(it.lineId).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))&&(!cat||it.cat===cat))
+}
+function renderSfItems(){
+  if(!activeSupplier){supplierFirstTitle.textContent="选择左侧供应商";sfItemBody.innerHTML="";sfItemCount.textContent="";return}
+  const sup=suppliers.find(s=>s.id===activeSupplier);supplierFirstTitle.textContent=sup.name+"：选择物料";
+  const list=filteredSfItems(),pages=Math.max(1,Math.ceil(list.length/PAGE));sfPage=Math.min(sfPage,pages-1);
+  const slice=list.slice(sfPage*PAGE,sfPage*PAGE+PAGE);
+  sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.lineId}" ${getSet(it.lineId).has(activeSupplier)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td></tr>`).join("");
+  bindDrawingThumbs();
+  bindShiftRange("#sfItemBody input[data-sfi]","supplier-items","sfi",(id,checked)=>{const set=getSet(id);checked?set.add(activeSupplier):set.delete(activeSupplier)},renderAssignAll,(ids,checked)=>guardMutableLines(ids.filter(id=>getSet(id).has(activeSupplier)!==checked),"修改供应商物料关联"));
+  const related=list.filter(it=>getSet(it.lineId).has(activeSupplier)).length;
+  sfItemCount.textContent=`筛选结果 ${list.length} 项 · 当前供应商已关联 ${related} 项 · 第 ${sfPage+1}/${pages} 页 · 勾选框即关联状态，支持 Shift 连选`;
+  renderPageNav(sfPager,sfPage,list.length,PAGE,p=>{sfPage=p;resetRange("supplier-items");renderSfItems()});
+}
+runSfSearch.onclick=()=>{appliedSearch.sfItem=sfItemSearch.value.trim();appliedSearch.sfCat=sfCatFilter.value;sfPage=0;resetRange("supplier-items");renderSfItems()};
+clearSfSearch.onclick=()=>{sfItemSearch.value="";sfCatFilter.value="";runSfSearch.click()};
+/** 中文：批量关联属于真实关系变更，先核对并展示受影响条数，再由采购员确认。
+ * English: Supplier bulk actions mutate committed links, so preflight and confirm all affected lines. */
+function applySupplierBulkChange(lineIds,sid,mode,label){
+  if(!sid)return;
+  const affected=[...new Set(lineIds)].filter(id=>{
+    const linked=getSet(id).has(sid);
+    return mode==="add"?!linked:mode==="remove"?linked:true;
+  });
+  if(!affected.length){flash("没有需要修改的关联。");return}
+  if(!guardMutableLines(affected,label))return;
+  const supplier=suppliers.find(x=>x.id===sid);
+  if(!confirm(label+"：即将变更 "+affected.length+" 条物料与“"+(supplier?.name||sid)+"”的实际关联。\n此操作不是临时勾选，确认后立即生效，是否继续？"))return;
+  const n=changeSupplierRelations(affected,sid,mode);
+  if(n<0)return;
+  flash(label+"：成功变更 "+n+" 条实际关联。");
+  renderAssignAll();
+}
+sfLinkFiltered.onclick=()=>applySupplierBulkChange(filteredSfItems().map(it=>it.lineId),activeSupplier,"add","关联全部筛选物料");
+sfLinkPage.onclick=()=>applySupplierBulkChange(pageSlice(filteredSfItems(),sfPage).map(it=>it.lineId),activeSupplier,"add","关联本页物料");
+sfInvertFiltered.onclick=()=>applySupplierBulkChange(filteredSfItems().map(it=>it.lineId),activeSupplier,"toggle","反转筛选范围关联");
+sfInvertPage.onclick=()=>applySupplierBulkChange(pageSlice(filteredSfItems(),sfPage).map(it=>it.lineId),activeSupplier,"toggle","反转本页关联");
+sfUnlinkFiltered.onclick=()=>applySupplierBulkChange(filteredSfItems().map(it=>it.lineId),activeSupplier,"remove","取消全部筛选关联");
+sfCopyRange.onclick=()=>{
+  if(!activeSupplier||!copyFromSupplier.value)return;
+  const source=copyFromSupplier.value,ids=items.filter(it=>getSet(it.lineId).has(source)).map(it=>it.lineId);
+  applySupplierBulkChange(ids,activeSupplier,"add","复制供应商物料关联");
+};
+
+for(const [id,button] of [["assignItemSearch",runAssignSearch],["supplierSearch",runSupplierSearch],["supplierFirstSearch",runSupplierFirstSearch],["supplierPoolSearch",runSupplierPoolSearch],["sfItemSearch",runSfSearch]])document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")button.click()});
+function renderAssignAll(){renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
+function flash(msg){document.getElementById("previewBox").style.display="block";document.getElementById("previewBox").textContent=msg}
+let previewSupplierId=null;
+function rfqPreviewSuppliers(){
+  return suppliers.filter(s=>items.some(it=>getSet(it.lineId).has(s.id)));
+}
+function renderRfqPreview(){
+  const list=rfqPreviewSuppliers();if(!list.length){rfqPreviewContent.innerHTML='<div class="muted">当前还没有任何已分配的供应商询价内容。</div>';return}
+  if(!previewSupplierId||!list.some(s=>s.id===previewSupplierId))previewSupplierId=list[0].id;
+  const sup=list.find(s=>s.id===previewSupplierId),rows=items.filter(it=>getSet(it.lineId).has(previewSupplierId));
+  const docs=[],missing=[];rows.forEach(it=>{const ds=drawingDocsForItem(it);if(!ds.length)missing.push(it);ds.forEach(d=>{if(!docs.some(x=>x.name===d.name))docs.push({...d,itemId:it.id})})});
+  rfqPreviewContent.innerHTML=`<div class="rfqSupplierNav">${list.map(s=>{const n=items.filter(it=>getSet(it.lineId).has(s.id)).length;return `<button class="btn ${s.id===previewSupplierId?"soft":""}" data-rfq-supplier="${s.id}">${esc(s.name)} · ${n} 项</button>`}).join("")}</div><div class="rfqDoc"><div class="rfqDocHead"><div><b>询价包 RFQ-DEMO-001 · Rev.0</b><div class="small muted">供应商：${esc(sup.name)}</div></div><div class="small">物料 ${rows.length} 项 · PDF ${docs.length} 个 · 缺图纸 ${missing.length} 项</div></div><div class="notice" style="margin-bottom:10px"><b>附件检查：</b>应按物料范围附带 PDF 图纸；当前找到 ${docs.length} 个唯一 PDF。${missing.length?` <span class="dangertext">缺图纸：${missing.map(x=>esc(x.id)).join("、")}</span>`:" 无缺失。"}</div><table><thead><tr><th>序号</th><th>RFQ Line ID</th><th>物料编码</th><th>名称</th><th>数量</th><th>单位</th><th>单价</th><th>交期</th><th>MOQ</th></tr></thead><tbody>${rows.map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.lineId)}</td><td>${esc(it.id)}</td><td>${esc(it.name)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td></td><td></td><td></td></tr>`).join("")}</tbody></table><div class="coverageDetails"><b>将打包的 PDF：</b><div class="small">${docs.length?docs.map(d=>esc(d.name)).join("、"):"无"} </div></div></div>`;
+  document.querySelectorAll("[data-rfq-supplier]").forEach(b=>b.onclick=()=>{previewSupplierId=b.dataset.rfqSupplier;renderRfqPreview()});
+}
+previewBtn.onclick=()=>{rfqPreviewModal.classList.add("open");rfqPreviewModal.setAttribute("aria-hidden","false");renderRfqPreview()};
+closeRfqPreview.onclick=()=>{rfqPreviewModal.classList.remove("open");rfqPreviewModal.setAttribute("aria-hidden","true")};
+rfqPreviewModal.onclick=e=>{if(e.target===rfqPreviewModal)closeRfqPreview.click()};
+generateBtn.onclick=()=>{const c=coverage();alert(`原型动作：允许生成。\n已覆盖 ${c.covered}/${items.length} 项，未覆盖 ${c.none} 项将保留在当前 RFQ 中。\n正式 M4 再实现 Excel 文件生成。`)};
+
+const awards=new Map(), awardReasons=new Map(),manualAwards=new Set(),awardReviewIds=new Set();
+/** 中文：浏览器演示报价与实际报价回收互斥，避免假价格影响真实比价。
+ * English: Synthetic demo prices and returned quotes are mutually exclusive. */
+let quoteComparisonMode="demo";
+function enterReturnedQuoteMode(){
+  if(quoteComparisonMode==="returned")return;
+  quoteComparisonMode="returned";
+  awards.clear();awardReasons.clear();manualAwards.clear();awardReviewIds.clear();renderQuotes();
+}
+function comparisonSuppliers(){return suppliers.filter(s=>rfqSupplierPool.has(s.id)&&items.some(it=>getSet(it.lineId).has(s.id)))}
+function comparisonItems(){return items.filter(it=>[...getSet(it.lineId)].some(sid=>rfqSupplierPool.has(sid)))}
+function quoteMetaFor(it,sup,i=0,si=0){
+  if(!getSet(it.lineId).has(sup.id))return null;
+  const saved=latestConfirmedQuoteLine(it.lineId,sup.id),subs=supplierSubmissions(sup.id);
+  if(saved){const eff=effectivePriceForLine(saved,it.qty);return eff==null?null:{price:eff,lead:saved.lead,moq:saved.moq,roundNo:saved.roundNo,revisionNo:saved.revisionNo,source:saved.source,tiers:saved.tiers||[],rawLine:saved}}
+  if(quoteComparisonMode==="returned"||subs.length)return null;
+  if((i+si)%9===0)return null;
+  return{price:80+((i*13+si*17)%70)+((si+1)*0.35),lead:3+((i+si)%18),moq:1+((i+si)%5)*5,roundNo:0,revisionNo:0,source:"demo",tiers:[]};
+}
+function lowestSupplierForItem(it,i=0){
+  return comparisonSuppliers().map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v)[0]?.sid||null;
+}
+/** 中文：报价确认后保留人工选择及原因，自动选择只针对未手动指定的行重算。
+ * English: Preserve manual awards and reasons; recalculate only automatic defaults. */
+function setDefaultLowestAwards(){
+  comparisonItems().forEach((it,i)=>{
+    if(manualAwards.has(it.lineId))return;
+    const sid=lowestSupplierForItem(it,i);
+    if(sid)awards.set(it.lineId,sid);else awards.delete(it.lineId);
+  });
+}
+/** 中文：若新报价影响人工选择的最低价资格或有效性，只标记待复核，不清除选择。
+ * English: Mark affected manual choices for review after new confirmed prices without erasing decisions. */
+function reconcileAwardsAfterQuote(){
+  setDefaultLowestAwards();
+  const its=comparisonItems(),sups=comparisonSuppliers();
+  manualAwards.forEach(lineId=>{
+    const it=its.find(x=>x.lineId===lineId);
+    if(!it){awardReviewIds.add(lineId);return}
+    const i=its.indexOf(it),sid=awards.get(lineId),sup=sups.find(x=>x.id===sid),si=sups.indexOf(sup);
+    const price=sup?quoteMetaFor(it,sup,i,si)?.price:null;
+    if(price==null||lowestSupplierForItem(it,i)!==sid)awardReviewIds.add(lineId);
+    else awardReviewIds.delete(lineId);
+  });
+}
+/** 中文：采购员显式选定的同物料范围比价组；初始为空，不擅自用所有供应商求交集。
+ * English: Explicit buyer-selected supplier comparison group; default is empty, never all suppliers. */
+const selectedCompareSuppliers=new Set();
+/** 中文：按照同一 RFQ Line ID、同一 RFQ 数量，只纳入每家选定供应商均有有效适用价的项目。
+ * English: Use a stable line ID and identical RFQ quantity; all selected suppliers must have a valid applicable unit price. */
+function planSelectedCommonScope(ids=[...selectedCompareSuppliers]){
+  const all=comparisonSuppliers(),its=comparisonItems();
+  const selected=[...new Set(ids)].map(id=>all.find(s=>s.id===id)).filter(Boolean);
+  if(selected.length<2)return{valid:false,selected,items:[],totals:new Map(),reason:"请先勾选至少两家供应商，再计算同范围报价。"};
+  const totals=new Map(selected.map(s=>[s.id,0]));
+  const matched=[];
+  its.forEach((it,i)=>{
+    const values=selected.map(s=>{
+      const index=all.findIndex(a=>a.id===s.id);
+      const meta=quoteMetaFor(it,s,i,index),price=meta?.price;
+      return !Number.isFinite(price)||price<0?null:{supplierId:s.id,price,amountCents:Math.round(price*it.qty*100)};
+    });
+    // 中文：某家漏报/明确不报/没有适用阶梯价则整行不属于这组共同范围，绝不填零。
+    // English: Missing, declined or inapplicable tier means no shared line; never impute zero prices.
+    if(values.some(v=>v===null))return;
+    matched.push({it,values});
+    values.forEach(v=>totals.set(v.supplierId,totals.get(v.supplierId)+v.amountCents));
+  });
+  return{valid:true,selected,items:matched,totals,reason:matched.length?"":"本比较组无共同有效报价项目；可尝试缩小供应商比较组。"};
+}
+function renderCommonScopePicker(){
+  const available=comparisonSuppliers();
+  for(const id of [...selectedCompareSuppliers])if(!available.some(s=>s.id===id))selectedCompareSuppliers.delete(id);
+  commonScopePicker.innerHTML='<div class="sline"><b>指定供应商组 · 同范围比价</b><span class="small muted">已选 '+selectedCompareSuppliers.size+' 家（至少 2 家）</span></div>'+
+    '<div class="small muted" style="margin:6px 0">按采购员勾选的供应商交集计算，不要求全部供应商参与。未报价、不供货、无适用阶梯价均不计入。</div>'+
+    '<div class="toolbar" style="margin-top:7px">'+available.map(s=>'<label class="chip"><input type="checkbox" data-common-supplier="'+esc(s.id)+'" '+(selectedCompareSuppliers.has(s.id)?'checked':'')+'> '+esc(s.name)+' ('+esc(s.id)+')</label>').join('')+
+    '<button type="button" class="btn" id="clearCommonSupplierGroup">清空比较组</button></div>';
+  commonScopePicker.querySelectorAll('[data-common-supplier]').forEach(box=>box.onchange=()=>{
+    if(box.checked)selectedCompareSuppliers.add(box.dataset.commonSupplier);
+    else selectedCompareSuppliers.delete(box.dataset.commonSupplier);
+    renderQuoteAnalysis();
+  });
+  document.getElementById("clearCommonSupplierGroup").onclick=()=>{selectedCompareSuppliers.clear();renderQuoteAnalysis()};
+}
+/** 中文：同范围明细 CSV 的每个价格单元都有真实报价来源，导出使用 Excel 安全转义。
+ * English: Export only genuinely comparable lines with spreadsheet-safe CSV encoding. */
+function exportSelectedCommonScopeCsv(plan){
+  if(!plan.valid||!plan.items.length)return;
+  const csvCell=value=>{
+    const raw=String(value??"");
+    const safe=/^[=+@-]/.test(raw.trimStart())?"'"+raw:raw;
+    return '"'+safe.replace(/"/g,'""')+'"';
+  };
+  const headers=["RFQ Line ID","物料编码","物料名称","RFQ 数量","单位"];
+  plan.selected.forEach(s=>headers.push(s.name+" 适用单价（元/单位）",s.name+" 同范围金额（元）"));
+  const rows=[headers,...plan.items.map(({it,values})=>[it.lineId,it.id,it.name,it.qty,it.unit,...values.flatMap(v=>[String(v.price),(v.amountCents/100).toFixed(2)])])];
+  rows.push(["同范围合计","","",plan.items.length,"项",...plan.selected.flatMap(s=>["",(plan.totals.get(s.id)/100).toFixed(2)])]);
+  const csv="\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
+  const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+  const link=document.createElement("a");link.href=url;link.download="RFQ-DEMO-001_指定供应商组同范围报价.csv";
+  document.body.appendChild(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function renderQuoteAnalysis(){
+  quoteModeNotice.textContent=quoteComparisonMode==="demo"?
+    "纯模拟展示：当前所有报价及上次采购价均为虚构演示值，不可用于实际选择。":
+    "报价回收验证：仅已确认的报价记录参与比较；未报价不自动补价。上次采购价仍是 M0 虚构示例。";
+  renderCommonScopePicker();
+  const sups=comparisonSuppliers(),its=comparisonItems(),shared=planSelectedCommonScope();
+  let theoretical=0,theoreticalCount=0,finalTotal=0,finalCount=0;
+  its.forEach((it,i)=>{
+    const values=sups.map((s,si)=>quoteMetaFor(it,s,i,si)?.price).filter(v=>v!=null);
+    if(values.length){theoretical+=Math.min(...values)*it.qty;theoreticalCount++}
+    const sid=awards.get(it.lineId),sup=sups.find(s=>s.id===sid);
+    if(sup){
+      const meta=quoteMetaFor(it,sup,i,sups.indexOf(sup));
+      if(meta?.price!=null&&!awardReviewIds.has(it.lineId)){finalTotal+=meta.price*it.qty;finalCount++}
+    }
+  });
+  // 中文：自身报价总额的物料范围可能不同，禁止把这一列当作同范围排名。
+  // English: Own-scope totals cover different items and must not be ranked as comparable bids.
+  const ownRows=sups.map((s,si)=>{
+    let own=0,count=0;
+    its.forEach((it,i)=>{
+      const meta=quoteMetaFor(it,s,i,si);
+      if(meta?.price!=null){own+=meta.price*it.qty;count++}
+    });
+    return '<tr><td>'+esc(s.name)+'</td><td>'+count+'</td><td>¥'+own.toFixed(2)+'</td></tr>';
+  }).join("");
+  let sharedBody="";
+  if(!shared.valid){
+    sharedBody='<div class="notice" style="margin-top:10px">'+esc(shared.reason)+'</div>';
+  }else if(!shared.items.length){
+    sharedBody='<div class="notice" style="margin-top:10px">比较组 '+shared.selected.length+' 家；<b>共同有效报价 0 项</b>。'+esc(shared.reason)+'不显示 ¥0.00，以免误认作供应商报价。</div>';
+  }else{
+    const totalsRows=shared.selected.map(s=>'<tr><td>'+esc(s.name)+'</td><td>'+shared.items.length+'</td><td>¥'+(shared.totals.get(s.id)/100).toFixed(2)+'</td></tr>').join("");
+    const detailRows=shared.items.slice(0,40).map(({it,values})=>
+      '<tr><td>'+esc(it.id)+'<div class="small muted">'+esc(it.lineId)+'</div></td><td>'+it.qty+' '+esc(it.unit)+'</td>'+
+      values.map(v=>'<td>¥'+esc(String(v.price))+' / ¥'+(v.amountCents/100).toFixed(2)+'</td>').join('')+'</tr>').join("");
+    sharedBody='<div style="margin-top:10px"><b>比较组 '+shared.selected.length+' 家 · 共同有效报价 '+shared.items.length+' 项</b>'+
+      '<div class="small muted">各家均使用相同 RFQ 数量，按适用单价 × 数量逐行取整到分后累计；组内金额才允许直接比较。</div>'+
+      '<table class="analysisTable"><thead><tr><th>本比较组供应商</th><th>共同有效报价项数</th><th>同范围报价总额（元）</th></tr></thead><tbody>'+totalsRows+'</tbody></table>'+
+      '<button class="btn soft" id="exportSelectedCommonScope" style="margin:8px 0">导出本比较组全部共同项目 CSV</button>'+
+      '<details><summary>查看共同物料计算明细（前 '+Math.min(40,shared.items.length)+' / '+shared.items.length+' 项）</summary>'+
+      '<div class="tablewrap" style="max-height:280px"><table class="analysisTable"><thead><tr><th>物料编码 / RFQ Line ID</th><th>RFQ 数量</th>'+
+      shared.selected.map(s=>'<th>'+esc(s.name)+'<div class="small muted">单价 / 行金额</div></th>').join('')+
+      '</tr></thead><tbody>'+detailRows+'</tbody></table></div></details></div>';
+  }
+  quoteAnalysis.innerHTML='<div class="sline"><div><b>报价金额分析（M0）</b>'+
+    '<div class="small muted">三种口径分别统计：自身报价范围、指定供应商组共同范围、逐物料最低价组合。仅演示同币种同税口径。</div></div>'+
+    '<div><b>逐物料理论最低价组合：</b>¥'+theoretical.toFixed(2)+'（'+theoreticalCount+' 项）　<b>已选择金额：</b>¥'+finalTotal.toFixed(2)+'（'+finalCount+' 项；待复核 '+awardReviewIds.size+' 项不计入）</div></div>'+
+    '<div style="margin-top:10px"><b>A. 各供应商自身报价金额（不同范围，不可直接排名）</b></div>'+
+    '<table class="analysisTable"><thead><tr><th>供应商</th><th>自身有效报价项数</th><th>自身报价范围金额（元）</th></tr></thead><tbody>'+ownRows+'</tbody></table>'+
+    '<div style="margin-top:12px"><b>B. 采购员指定供应商组的同范围金额</b></div>'+sharedBody+
+    '<div class="small muted" style="margin-top:10px">C. 逐物料最低价组合及采购员已选择金额仅供 RFQ 整体规划，不代表某一家供应商的整单报价。缺报价不作为零元处理。</div>';
+  const exporter=document.getElementById("exportSelectedCommonScope");
+  if(exporter)exporter.onclick=()=>exportSelectedCommonScopeCsv(shared);
+}
+
+function renderQuotes(){
+  const sups=comparisonSuppliers(),its=comparisonItems(),QUOTE_PAGE=10,pages=Math.max(1,Math.ceil(its.length/QUOTE_PAGE));quotePage=Math.min(quotePage,pages-1);const start=quotePage*QUOTE_PAGE,slice=its.slice(start,start+QUOTE_PAGE);
+  let h=`<thead><tr><th>物料</th><th>模拟上次采购价（虚构）</th>`+sups.map(s=>`<th>${esc(s.name)}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`).join("")+`<th>最终选择</th></tr></thead><tbody>`;
+  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>¥${prev}<span class="small muted">（虚构）</span></td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=s.id===low?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell ":""}${v!=null?"awardSelectable":""}" ${v!=null?`data-award="${esc(it.lineId+"|"+s.id)}" tabindex="0" role="button" aria-label="选择此供应商报价"`:""}>${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("#quoteTable td[data-award]").forEach(cell=>{
+    cell.onclick=()=>{const [lineId,sid]=cell.dataset.award.split("|");chooseAward(lineId,sid)};
+    cell.onkeydown=e=>{if(e.target===cell&&(e.key==="Enter"||e.key===" ")){e.preventDefault();cell.click()}};
+  });document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter((it,i)=>lowestSupplierForItem(it,its.indexOf(it))!==sid);requestAwardSelection(eligible.map(it=>it.lineId),sid)});renderQuoteAnalysis();
+}
+/** 中文：统一单条与批量比价选择，非最低报价必经页面内原因确认，不依赖浏览器原生 prompt。
+ * English: Route single and bulk award selections through an in-page reason dialog. */
+let pendingAwardSelection=null;
+function applyAwardSelection(lineIds,sid,reason=""){
+  const its=comparisonItems(),sups=comparisonSuppliers(),sup=sups.find(s=>s.id===sid);
+  if(!sup)return false;
+  const eligible=[...new Set(lineIds)].map(id=>its.find(it=>it.lineId===id)).filter(Boolean);
+  if(!eligible.length)return false;
+  // 中文：若没有有效报价，禁止把供应商当作“已选择”。
+  // English: Never award a supplier that lacks a valid applicable quote.
+  if(eligible.some(it=>quoteMetaFor(it,sup,its.indexOf(it),sups.indexOf(sup))?.price==null))return false;
+  if(eligible.some(it=>lowestSupplierForItem(it,its.indexOf(it))!==sid)&&!reason.trim())return false;
+  eligible.forEach(it=>{
+    awards.set(it.lineId,sid);manualAwards.add(it.lineId);awardReviewIds.delete(it.lineId);
+    if(lowestSupplierForItem(it,its.indexOf(it))!==sid)awardReasons.set(it.lineId,reason.trim());
+    else awardReasons.delete(it.lineId);
+  });
+  renderQuotes();return true;
+}
+function closeAwardReasonModal(){
+  pendingAwardSelection=null;
+  awardReasonModal.classList.remove("open");awardReasonModal.setAttribute("aria-hidden","true");
+  awardReasonInput.value="";awardReasonValidation.textContent="";
+}
+function requestAwardSelection(lineIds,sid){
+  const its=comparisonItems(),nonLowest=lineIds.filter(id=>{
+    const it=its.find(x=>x.lineId===id);return it&&lowestSupplierForItem(it,its.indexOf(it))!==sid;
+  });
+  if(!nonLowest.length){applyAwardSelection(lineIds,sid);return}
+  const supplier=suppliers.find(x=>x.id===sid);
+  pendingAwardSelection={lineIds:[...lineIds],sid};
+  awardReasonContext.textContent="供应商："+(supplier?.name||sid)+"；选中 "+lineIds.length+" 条，其中 "+nonLowest.length+" 条并非最低报价。填写原因后才会保存选择。";
+  awardReasonTitle.textContent="选择非最低价供应商 · 需要原因";
+  awardReasonInput.value="";awardReasonValidation.textContent="";
+  awardReasonModal.classList.add("open");awardReasonModal.setAttribute("aria-hidden","false");
+  awardReasonInput.focus();
+}
+function chooseAward(lineId,sid){requestAwardSelection([lineId],sid)}
+awardReasonClose.onclick=closeAwardReasonModal;
+awardReasonCancel.onclick=closeAwardReasonModal;
+awardReasonConfirm.onclick=()=>{
+  const selection=pendingAwardSelection;
+  if(!selection)return;
+  const reason=awardReasonInput.value.trim();
+  if(!reason){awardReasonValidation.textContent="请填写非最低价选择的具体原因；未保存任何更改。";awardReasonInput.focus();return}
+  if(!applyAwardSelection(selection.lineIds,selection.sid,reason)){
+    awardReasonValidation.textContent="当前供应商报价或物料范围已变化，请关闭窗口重新选择。";return;
+  }
+  closeAwardReasonModal();
+};
+awardReasonModal.onclick=e=>{if(e.target===awardReasonModal)closeAwardReasonModal()};
+awardReasonInput.onkeydown=e=>{if(e.key==="Escape")closeAwardReasonModal()};
+
+resetAwards.textContent="恢复默认最低价";resetAwards.onclick=()=>{awards.clear();awardReasons.clear();manualAwards.clear();awardReviewIds.clear();setDefaultLowestAwards();renderQuotes()};
+
+refreshFieldControls();
+setDefaultLowestAwards();
+quoteSupplierOptions();
+// 中文：首次报价范围应在采购员分配供应商之后确定，不应在网页加载时锁定旧范围。
+// English: Initialize the first quote scope after buyer assignment, not at initial page load.
+renderItemList();renderAssignAll();renderQuotes();
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+# 中文：先运行原有采购流程，再验收指定供应商组同范围比价的真实浏览器选择及下载。
+# English: Recheck existing procurement workflow before real-browser acceptance of selected supplier comparison.
+name: M0 Selected Supplier Common Scope Acceptance
+on:
+  push:
+    branches:
+      - draft/20261009-m0-selected-common-scope
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Generate anonymous 100-item 10-supplier samples
+        run: node tests/generate-m0-fixtures.cjs
+      - name: Validate prior P0 P1 P2 regressions
+        run: |
+          node tests/m0-p0-regression.cjs
+          node tests/m0-p1-regression.cjs
+          node tests/m0-p2-regression.cjs
+      - name: Validate selected supplier common-scope logic
+        run: node tests/m0-common-scope-regression.cjs
+      - name: Run prior browser basic regression
+        run: node tests/browser/basic.cjs
+      - name: Run buyer feedback browser regression
+        run: node tests/browser/uat-feedback.cjs
+      - name: Run complete 100x10 multi-round procurement workflow
+        run: node tests/browser/full.cjs
+      - name: Run selected supplier group scope and CSV browser checks
+        run: node tests/browser/common-scope.cjs
+      - name: Upload acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m0-selected-common-scope-browser-evidence
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 30
