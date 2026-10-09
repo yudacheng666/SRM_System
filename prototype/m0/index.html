@@ -257,16 +257,16 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
             <button class="btn" id="runSfSearch">搜索</button><button class="btn" id="clearSfSearch">清空条件</button>
             <select id="copyFromSupplier"><option value="">复制其他供应商的物料范围…</option></select>
             <button class="btn soft" id="sfCopyRange">复制为起点</button>
-            <button class="btn" id="sfLinkFiltered">全选</button>
-            <button class="btn" id="sfLinkPage">本页全选</button>
-            <button class="btn" id="sfInvertFiltered">反选</button>
-            <button class="btn" id="sfInvertPage">本页反选</button>
-            <button class="btn danger" id="sfUnlinkFiltered">全部取消</button>
+            <button class="btn" id="sfLinkFiltered">关联全部筛选物料</button>
+            <button class="btn" id="sfLinkPage">关联本页物料</button>
+            <button class="btn" id="sfInvertFiltered">反转筛选范围关联</button>
+            <button class="btn" id="sfInvertPage">反转本页关联</button>
+            <button class="btn danger" id="sfUnlinkFiltered">取消全部筛选关联</button>
           </div>
         </div>
         <div class="cardbody">
           <div class="tablewrap">
-            <table class="table"><thead><tr><th>已关联</th><th>物料</th><th>分类</th></tr></thead><tbody id="sfItemBody"></tbody></table>
+            <table class="table"><thead><tr><th>已关联（勾选即生效）</th><th>物料</th><th>分类</th></tr></thead><tbody id="sfItemBody"></tbody></table>
           </div>
           <div class="pager"><span id="sfItemCount"></span><div id="sfPager"></div></div>
         </div>
@@ -374,7 +374,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
   <section id="quotes" class="panel">
     <div class="card">
       <div class="cardhead">
-        <div><b>报价比较</b> <span class="muted small">虚构报价，仅验证交互</span></div>
+        <div><b>报价比较</b> <span class="muted small">M0 模拟/报价回收验证；上次采购价均为虚构示例</span></div>
         <div class="toolbar"><button class="btn" id="resetAwards">清空选择</button></div>
       </div>
       <div class="cardbody">
@@ -1335,8 +1335,8 @@ function renderSuppliers(){
     const icon=total===0||count===0?"☐":count===total?"☑":"◩";
     return `<div class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><div class="tri ${cls}">${icon} ${count}/${total}</div></div><div class="toolbar" style="margin-top:8px"><button class="btn soft" data-add="${s.id}" ${total===0?"disabled":""}>给所选物料添加此供应商</button><button class="btn danger" data-rem="${s.id}" ${count===0?"disabled":""}>从所选物料移除此供应商</button></div></div>`
   }).join("");
-  document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{const n=changeSupplierRelations([...assignSel],b.dataset.add,"add");if(n<0)return;flash("已新增 "+n+" 条物料—供应商关系；原有分配未改变。");renderAssignAll()});
-  document.querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>{const n=changeSupplierRelations([...assignSel],b.dataset.rem,"remove");if(n<0)return;flash("已移除 "+n+" 条关系。");renderAssignAll()});
+  document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>applySupplierBulkChange([...assignSel],b.dataset.add,"add","为选中物料添加供应商"));
+  document.querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>applySupplierBulkChange([...assignSel],b.dataset.rem,"remove","从选中物料移除供应商"));
   supplierListCount.textContent=`筛选结果 ${list.length} 家 · 第 ${supplierListPage+1}/${pages} 页`;
   renderPageNav(supplierListPager,supplierListPage,list.length,SUPPLIER_PAGE,p=>{supplierListPage=p;renderSuppliers()});
 }
@@ -1415,12 +1415,33 @@ function renderSfItems(){
 }
 runSfSearch.onclick=()=>{appliedSearch.sfItem=sfItemSearch.value.trim();appliedSearch.sfCat=sfCatFilter.value;sfPage=0;resetRange("supplier-items");renderSfItems()};
 clearSfSearch.onclick=()=>{sfItemSearch.value="";sfCatFilter.value="";runSfSearch.click()};
-sfLinkFiltered.onclick=()=>{if(!activeSupplier)return;const n=changeSupplierRelations(filteredSfItems().map(it=>it.lineId),activeSupplier,"add");if(n>=0)renderAssignAll()};
-sfLinkPage.onclick=()=>{if(!activeSupplier)return;const n=changeSupplierRelations(pageSlice(filteredSfItems(),sfPage).map(it=>it.lineId),activeSupplier,"add");if(n>=0)renderAssignAll()};
-sfInvertFiltered.onclick=()=>{if(!activeSupplier)return;const n=changeSupplierRelations(filteredSfItems().map(it=>it.lineId),activeSupplier,"toggle");if(n>=0)renderAssignAll()};
-sfInvertPage.onclick=()=>{if(!activeSupplier)return;const n=changeSupplierRelations(pageSlice(filteredSfItems(),sfPage).map(it=>it.lineId),activeSupplier,"toggle");if(n>=0)renderAssignAll()};
-sfUnlinkFiltered.onclick=()=>{if(!activeSupplier)return;const n=changeSupplierRelations(filteredSfItems().map(it=>it.lineId),activeSupplier,"remove");if(n>=0)renderAssignAll()};
-sfCopyRange.onclick=()=>{if(!activeSupplier||!copyFromSupplier.value)return;const source=copyFromSupplier.value,ids=items.filter(it=>getSet(it.lineId).has(source)).map(it=>it.lineId),n=changeSupplierRelations(ids,activeSupplier,"add");if(n<0)return;flash("已复制物料范围作为起点：新增 "+n+" 条关系。可继续直接勾选/取消差异物料。");renderAssignAll()};
+/** 中文：批量关联属于真实关系变更，先核对并展示受影响条数，再由采购员确认。
+ * English: Supplier bulk actions mutate committed links, so preflight and confirm all affected lines. */
+function applySupplierBulkChange(lineIds,sid,mode,label){
+  if(!sid)return;
+  const affected=[...new Set(lineIds)].filter(id=>{
+    const linked=getSet(id).has(sid);
+    return mode==="add"?!linked:mode==="remove"?linked:true;
+  });
+  if(!affected.length){flash("没有需要修改的关联。");return}
+  if(!guardMutableLines(affected,label))return;
+  const supplier=suppliers.find(x=>x.id===sid);
+  if(!confirm(label+"：即将变更 "+affected.length+" 条物料与“"+(supplier?.name||sid)+"”的实际关联。\n此操作不是临时勾选，确认后立即生效，是否继续？"))return;
+  const n=changeSupplierRelations(affected,sid,mode);
+  if(n<0)return;
+  flash(label+"：成功变更 "+n+" 条实际关联。");
+  renderAssignAll();
+}
+sfLinkFiltered.onclick=()=>applySupplierBulkChange(filteredSfItems().map(it=>it.lineId),activeSupplier,"add","关联全部筛选物料");
+sfLinkPage.onclick=()=>applySupplierBulkChange(pageSlice(filteredSfItems(),sfPage).map(it=>it.lineId),activeSupplier,"add","关联本页物料");
+sfInvertFiltered.onclick=()=>applySupplierBulkChange(filteredSfItems().map(it=>it.lineId),activeSupplier,"toggle","反转筛选范围关联");
+sfInvertPage.onclick=()=>applySupplierBulkChange(pageSlice(filteredSfItems(),sfPage).map(it=>it.lineId),activeSupplier,"toggle","反转本页关联");
+sfUnlinkFiltered.onclick=()=>applySupplierBulkChange(filteredSfItems().map(it=>it.lineId),activeSupplier,"remove","取消全部筛选关联");
+sfCopyRange.onclick=()=>{
+  if(!activeSupplier||!copyFromSupplier.value)return;
+  const source=copyFromSupplier.value,ids=items.filter(it=>getSet(it.lineId).has(source)).map(it=>it.lineId);
+  applySupplierBulkChange(ids,activeSupplier,"add","复制供应商物料关联");
+};
 
 for(const [id,button] of [["assignItemSearch",runAssignSearch],["supplierSearch",runSupplierSearch],["supplierFirstSearch",runSupplierFirstSearch],["supplierPoolSearch",runSupplierPoolSearch],["sfItemSearch",runSfSearch]])document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")button.click()});
 function renderAssignAll(){renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
@@ -1497,8 +1518,8 @@ function renderQuoteAnalysis(){
 }
 function renderQuotes(){
   const sups=comparisonSuppliers(),its=comparisonItems(),QUOTE_PAGE=10,pages=Math.max(1,Math.ceil(its.length/QUOTE_PAGE));quotePage=Math.min(quotePage,pages-1);const start=quotePage*QUOTE_PAGE,slice=its.slice(start,start+QUOTE_PAGE);
-  let h=`<thead><tr><th>物料</th><th>上次采购价</th>`+sups.map(s=>`<th>${esc(s.name)}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`).join("")+`<th>最终选择</th></tr></thead><tbody>`;
-  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>¥${prev}</td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=s.id===low?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell":""}">${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}" data-award="${it.lineId}|${s.id}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("[data-award]").forEach(b=>b.onclick=()=>{const [lineId,sid]=b.dataset.award.split("|");chooseAward(lineId,sid)});document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter((it,i)=>lowestSupplierForItem(it,its.indexOf(it))!==sid);let reason="";if(nonLowest.length){reason=prompt(`其中 ${nonLowest.length} 项不是最低价，请填写本次批量选择原因：`,"")||"";if(!reason.trim())return}eligible.forEach(it=>{const i=its.indexOf(it);awards.set(it.lineId,sid);manualAwards.add(it.lineId);awardReviewIds.delete(it.lineId);if(lowestSupplierForItem(it,i)!==sid)awardReasons.set(it.lineId,reason.trim());else awardReasons.delete(it.lineId)});renderQuotes()});renderQuoteAnalysis();
+  let h=`<thead><tr><th>物料</th><th>模拟上次采购价（虚构）</th>`+sups.map(s=>`<th>${esc(s.name)}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`).join("")+`<th>最终选择</th></tr></thead><tbody>`;
+  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>¥${prev}<span class="small muted">（虚构）</span></td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=s.id===low?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell":""}">${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}" data-award="${it.lineId}|${s.id}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("[data-award]").forEach(b=>b.onclick=()=>{const [lineId,sid]=b.dataset.award.split("|");chooseAward(lineId,sid)});document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter((it,i)=>lowestSupplierForItem(it,its.indexOf(it))!==sid);let reason="";if(nonLowest.length){reason=prompt(`其中 ${nonLowest.length} 项不是最低价，请填写本次批量选择原因：`,"")||"";if(!reason.trim())return}eligible.forEach(it=>{const i=its.indexOf(it);awards.set(it.lineId,sid);manualAwards.add(it.lineId);awardReviewIds.delete(it.lineId);if(lowestSupplierForItem(it,i)!==sid)awardReasons.set(it.lineId,reason.trim());else awardReasons.delete(it.lineId)});renderQuotes()});renderQuoteAnalysis();
 }
 function chooseAward(lineId,sid){const its=comparisonItems(),sups=comparisonSuppliers(),it=its.find(x=>x.lineId===lineId),i=its.indexOf(it),vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);if(vals[0]?.sid!==sid){const reason=prompt("选择的不是最低报价，请填写原因：","");if(reason===null||!reason.trim())return;awardReasons.set(lineId,reason.trim())}else awardReasons.delete(lineId);awards.set(lineId,sid);manualAwards.add(lineId);awardReviewIds.delete(lineId);renderQuotes()}
 resetAwards.textContent="恢复默认最低价";resetAwards.onclick=()=>{awards.clear();awardReasons.clear();manualAwards.clear();awardReviewIds.clear();setDefaultLowestAwards();renderQuotes()};
