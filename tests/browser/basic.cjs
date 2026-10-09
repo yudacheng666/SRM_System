@@ -13,6 +13,9 @@ const note=(msg)=>process.stdout.write('PASS browser basic: '+msg+'\n');
 (async()=>{
  const browser=await chromium.launch({headless:true});
  const page=await browser.newPage({acceptDownloads:true,viewport:{width:1440,height:950}});
+ // 中文：为浏览器验收保留可重播的鼠标操作追踪。
+ // English: Record replayable Playwright UI traces for the acceptance evidence.
+ await page.context().tracing.start({screenshots:true,snapshots:true,sources:true});
  const pageErrors=[],dialogs=[];
  let acceptDialog=true;
  page.on('pageerror',e=>pageErrors.push(e.message));
@@ -99,7 +102,8 @@ const note=(msg)=>process.stdout.write('PASS browser basic: '+msg+'\n');
    note('protects confirmed quotation relationships via actual UI action');
 
    assert.deepEqual(pageErrors,[]);
+   await page.screenshot({path:path.join(shots,'basic-passed.png'),fullPage:true});
    note('no uncaught page JavaScript exceptions');
  }catch(e){await page.screenshot({path:path.join(shots,'basic-failure.png'),fullPage:true}).catch(()=>{});console.error('BASIC FAILED',e.stack||e);console.error('dialogs:',JSON.stringify(dialogs.slice(-8)));console.error('page errors:',pageErrors);process.exitCode=1}
- finally{await browser.close()}
+ finally{await page.context().tracing.stop({path:path.join(shots,'basic-trace.zip')}).catch(e=>console.error('Trace capture:',e.message));await browser.close()}
 })().catch(e=>{console.error(e);process.exitCode=1});
