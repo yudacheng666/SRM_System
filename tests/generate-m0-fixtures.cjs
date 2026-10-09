@@ -32,7 +32,10 @@ write('m0_10_供应商参考.csv',[
 const manifest=[['供应商编码','报价轮次','物料编码','期望分配','是否出现在报价文件']];
 let quoteLines=0;
 for(const sup of suppliers){
-  const assigned=items.filter((x,i)=>(i+sup.idx*3)%10<6);
+  // 中文：每家供应商分配三个物料类别，可通过 M0 分类筛选 + 批量关联真实完成。
+  // English: Assign three categories per supplier to enable full UI-driven assignment in M0.
+  const selectedCats=new Set([sup.idx%5,(sup.idx+1)%5,(sup.idx+3)%5]);
+  const assigned=items.filter((x,i)=>selectedCats.has(i%5));
   const second=assigned.filter((x,i)=>i%3===0);
   for(const roundNo of [1,2]){
     const scope=roundNo===1?assigned:second;
