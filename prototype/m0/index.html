@@ -1603,13 +1603,77 @@ function reconcileAwardsAfterQuote(){
     else awardReviewIds.delete(lineId);
   });
 }
+/** 中文：指定比较组至少两家，单独计算共同物料，不把漏报算作 0。
+ * English: Buyer group requires at least two suppliers, and missing quotes never count as zero. */
+const selectedComparisonSuppliers=new Set();
+function computeSelectedGroupComparison(selectedIds,sups=comparisonSuppliers(),its=comparisonItems(),lookup=quoteMetaFor){
+  // 中文：仅对采购员选中的供应商求交集；其他供应商无法缩小比较范围。
+  // English: Only buyer-selected suppliers determine the like-for-like intersection.
+  const group=sups.filter(sp=>selectedIds.has(sp.id)),ready=group.length>=2;
+  const own=sups.map((sp,si)=>{
+    let count=0,total=0;
+    its.forEach((it,i)=>{const v=lookup(it,sp,i,si)?.price;if(v!=null&&Number.isFinite(v)){count++;total+=v*it.qty}});
+    return{sid:sp.id,count,total};
+  });
+  const common=ready?its.filter((it,i)=>group.every(sp=>{
+    const si=sups.indexOf(sp),v=lookup(it,sp,i,si)?.price;
+    return v!=null&&Number.isFinite(v);
+  })):[];
+  const groupTotals=new Map();
+  if(ready&&common.length)group.forEach(sp=>{
+    const si=sups.indexOf(sp);
+    groupTotals.set(sp.id,common.reduce((sum,it)=>sum+lookup(it,sp,its.indexOf(it),si).price*it.qty,0));
+  });
+  return{ready,group,own,common,groupTotals};
+}
 function renderQuoteAnalysis(){
-  quoteModeNotice.textContent=quoteComparisonMode==="demo"?"纯模拟展示：当前所有报价及上次采购价均为虚构演示值，不可用于实际选择。":"报价回收验证：仅已确认的真实回收记录参与比价；未报价不自动补价。上次采购价仍是 M0 虚构示例。";
-  const sups=comparisonSuppliers(),its=comparisonItems(),common=its.filter((it,i)=>sups.length&&sups.every((s,si)=>quoteMetaFor(it,s,i,si)?.price!=null));
+  quoteModeNotice.textContent=quoteComparisonMode==="demo"?
+    "纯模拟展示：报价及上次采购价均为虚构演示值，不可用于实际采购决策。":
+    "报价回收验证：仅已确认的报价参与分析；未报价、不供货、漏报不填 0 元，也不会推测阶梯价。上次采购价仍为虚构示例。";
+  const sups=comparisonSuppliers(),its=comparisonItems();
+  [...selectedComparisonSuppliers].forEach(id=>{
+    if(!sups.some(sp=>sp.id===id))selectedComparisonSuppliers.delete(id);
+  });
+  const calc=computeSelectedGroupComparison(selectedComparisonSuppliers,sups,its);
   let theoretical=0,theoreticalCount=0,finalTotal=0,finalCount=0;
-  its.forEach((it,i)=>{const vals=sups.map((s,si)=>quoteMetaFor(it,s,i,si)?.price).filter(v=>v!=null);if(vals.length){theoretical+=Math.min(...vals)*it.qty;theoreticalCount++}const sid=awards.get(it.lineId),sup=sups.find(s=>s.id===sid);if(sup){const si=sups.indexOf(sup),m=quoteMetaFor(it,sup,i,si);if(m?.price!=null&&!awardReviewIds.has(it.lineId)){finalTotal+=m.price*it.qty;finalCount++}}});
-  const rows=sups.map((s,si)=>{let own=0,ownCount=0,commonTotal=0;its.forEach((it,i)=>{const m=quoteMetaFor(it,s,i,si);if(m?.price!=null){own+=m.price*it.qty;ownCount++}});common.forEach(it=>{const i=its.indexOf(it),m=quoteMetaFor(it,s,i,si);commonTotal+=m.price*it.qty});return `<tr><td>${esc(s.name)}</td><td>${ownCount}</td><td>¥${own.toFixed(2)}</td><td>${common.length}</td><td>¥${commonTotal.toFixed(2)}</td></tr>`}).join("");
-  quoteAnalysis.innerHTML=`<div class="sline"><div><b>总价分析（M0）</b><div class="small muted">同币种/同税口径演示；缺报价不按0。</div></div><div><b>理论最低：</b>¥${theoretical.toFixed(2)}（${theoreticalCount}项）　<b>最终选择：</b>¥${finalTotal.toFixed(2)}（${finalCount}项，待复核 ${awardReviewIds.size} 项不计入）</div></div><table class="analysisTable"><thead><tr><th>供应商</th><th>自身已报价项</th><th>自身报价范围总额</th><th>共同报价项</th><th>同物料范围总额</th></tr></thead><tbody>${rows}</tbody></table>`;
+  its.forEach((it,i)=>{
+    const vals=sups.map((sp,si)=>quoteMetaFor(it,sp,i,si)?.price).filter(v=>v!=null&&Number.isFinite(v));
+    if(vals.length){theoretical+=Math.min(...vals)*it.qty;theoreticalCount++}
+    const sid=awards.get(it.lineId),sp=sups.find(x=>x.id===sid);
+    if(sp){
+      const meta=quoteMetaFor(it,sp,i,sups.indexOf(sp));
+      if(meta?.price!=null&&Number.isFinite(meta.price)&&!awardReviewIds.has(it.lineId)){finalTotal+=meta.price*it.qty;finalCount++}
+    }
+  });
+  const summary=calc.ready?
+    calc.common.length?`已选择 ${calc.group.length} 家供应商，共同有效报价物料 ${calc.common.length} 项；未参与比较的供应商不影响本组。`:
+      `已选择 ${calc.group.length} 家，但共同有效报价物料为 0 项：不可比较，不能理解为 ¥0.00。`:
+    `已选择 ${calc.group.length} 家；请至少勾选 2 家供应商才能计算同范围总额。`;
+  const options=sups.map(sp=>`<label class="scopeRow" style="display:inline-flex;align-items:center;gap:5px;margin:3px 10px 3px 0;white-space:nowrap">
+    <input type="checkbox" data-compare-supplier="${esc(sp.id)}" ${selectedComparisonSuppliers.has(sp.id)?"checked":""}>
+    <span>${esc(sp.name)}（${esc(sp.id)}）</span></label>`).join("");
+  const groupPreview=calc.ready&&calc.common.length?`<div id="groupCommonItems" class="small muted">本组共同物料：${calc.common.slice(0,12).map(it=>esc(it.id)+"（"+esc(it.lineId)+"）").join("、")}${calc.common.length>12?" 等，共 "+calc.common.length+" 项":""}</div>`:"";
+  const rows=sups.map((sp,si)=>{
+    const own=calc.own[si],selected=selectedComparisonSuppliers.has(sp.id),money=calc.groupTotals.get(sp.id);
+    return `<tr><td>${esc(sp.name)}${selected?' <span class="reasonTag">比较组</span>':""}</td><td>${own.count}</td><td>${own.count?"¥"+own.total.toFixed(2):"—"}</td>
+      <td>${selected&&calc.ready&&calc.common.length?calc.common.length:"—"}</td>
+      <td>${selected&&calc.ready&&calc.common.length?"¥"+money.toFixed(2):"—"}</td></tr>`;
+  }).join("");
+  quoteAnalysis.innerHTML=`<div class="sline"><div><b>报价范围与金额分析（M0）</b>
+    <div class="small muted">示例假设同币种、同税口径和同物料单位；自身报价范围不同，合计金额不可直接横比。</div></div>
+    <div><b>逐项理论最低价组合：</b>¥${theoretical.toFixed(2)}（${theoreticalCount}项）　<b>最终选定组合：</b>¥${finalTotal.toFixed(2)}（${finalCount}项，待复核 ${awardReviewIds.size} 项不计入）</div></div>
+    <div style="margin-top:8px"><div class="sline"><b>采购员指定供应商组同范围比较（至少 2 家）</b><button class="btn" id="clearGroupComparison">清空比较组</button></div>
+    <div id="compareGroupOptions" style="margin:6px 0">${options||'<span class="muted">请先分配询价供应商。</span>'}</div>
+    <div id="comparisonGroupSummary" class="small ${calc.ready&&!calc.common.length?"dangertext":"muted"}">${summary}</div>${groupPreview}</div>
+    <table class="analysisTable"><thead><tr><th>供应商</th><th>自身有效报价项数</th><th>自身报价范围总额（不同范围不可横比）</th><th>比较组共同物料项数</th><th>比较组同范围总额</th></tr></thead><tbody>${rows}</tbody></table>`;
+  document.querySelectorAll("[data-compare-supplier]").forEach(el=>el.onchange=()=>{
+    if(el.checked)selectedComparisonSuppliers.add(el.dataset.compareSupplier);
+    else selectedComparisonSuppliers.delete(el.dataset.compareSupplier);
+    renderQuoteAnalysis();
+  });
+  document.getElementById("clearGroupComparison").onclick=()=>{
+    selectedComparisonSuppliers.clear();renderQuoteAnalysis();
+  };
 }
 function renderQuotes(){
   const sups=comparisonSuppliers(),its=comparisonItems(),QUOTE_PAGE=10,pages=Math.max(1,Math.ceil(its.length/QUOTE_PAGE));quotePage=Math.min(quotePage,pages-1);const start=quotePage*QUOTE_PAGE,slice=its.slice(start,start+QUOTE_PAGE);
