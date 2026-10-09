@@ -404,6 +404,9 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
       <div class="cardbody">
         <div class="notice">最低价仅作为提示；允许选择非最低价，但必须填写原因。V1 每项物料最终选择一家供应商。总价分析仅在可比口径下计算；缺报价不会按 0 处理。</div>
         <div id="quoteModeNotice" class="small muted" style="margin-top:8px"></div>
+        <!-- 中文：比较组不预选全体供应商；只有采购员勾选至少两家才生成同范围金额。
+             English: The buyer must explicitly select two or more suppliers for shared-scope totals. -->
+        <div id="commonScopePicker" class="coverageDetails" style="margin-top:10px"></div>
         <div id="quoteAnalysis" class="coverageDetails" style="margin-top:10px"></div>
         <div class="tablewrap" style="margin-top:10px">
           <table class="table" id="quoteTable"></table>
@@ -1603,14 +1606,120 @@ function reconcileAwardsAfterQuote(){
     else awardReviewIds.delete(lineId);
   });
 }
-function renderQuoteAnalysis(){
-  quoteModeNotice.textContent=quoteComparisonMode==="demo"?"纯模拟展示：当前所有报价及上次采购价均为虚构演示值，不可用于实际选择。":"报价回收验证：仅已确认的真实回收记录参与比价；未报价不自动补价。上次采购价仍是 M0 虚构示例。";
-  const sups=comparisonSuppliers(),its=comparisonItems(),common=its.filter((it,i)=>sups.length&&sups.every((s,si)=>quoteMetaFor(it,s,i,si)?.price!=null));
-  let theoretical=0,theoreticalCount=0,finalTotal=0,finalCount=0;
-  its.forEach((it,i)=>{const vals=sups.map((s,si)=>quoteMetaFor(it,s,i,si)?.price).filter(v=>v!=null);if(vals.length){theoretical+=Math.min(...vals)*it.qty;theoreticalCount++}const sid=awards.get(it.lineId),sup=sups.find(s=>s.id===sid);if(sup){const si=sups.indexOf(sup),m=quoteMetaFor(it,sup,i,si);if(m?.price!=null&&!awardReviewIds.has(it.lineId)){finalTotal+=m.price*it.qty;finalCount++}}});
-  const rows=sups.map((s,si)=>{let own=0,ownCount=0,commonTotal=0;its.forEach((it,i)=>{const m=quoteMetaFor(it,s,i,si);if(m?.price!=null){own+=m.price*it.qty;ownCount++}});common.forEach(it=>{const i=its.indexOf(it),m=quoteMetaFor(it,s,i,si);commonTotal+=m.price*it.qty});return `<tr><td>${esc(s.name)}</td><td>${ownCount}</td><td>¥${own.toFixed(2)}</td><td>${common.length}</td><td>¥${commonTotal.toFixed(2)}</td></tr>`}).join("");
-  quoteAnalysis.innerHTML=`<div class="sline"><div><b>总价分析（M0）</b><div class="small muted">同币种/同税口径演示；缺报价不按0。</div></div><div><b>理论最低：</b>¥${theoretical.toFixed(2)}（${theoreticalCount}项）　<b>最终选择：</b>¥${finalTotal.toFixed(2)}（${finalCount}项，待复核 ${awardReviewIds.size} 项不计入）</div></div><table class="analysisTable"><thead><tr><th>供应商</th><th>自身已报价项</th><th>自身报价范围总额</th><th>共同报价项</th><th>同物料范围总额</th></tr></thead><tbody>${rows}</tbody></table>`;
+/** 中文：采购员显式选定的同物料范围比价组；初始为空，不擅自用所有供应商求交集。
+ * English: Explicit buyer-selected supplier comparison group; default is empty, never all suppliers. */
+const selectedCompareSuppliers=new Set();
+/** 中文：按照同一 RFQ Line ID、同一 RFQ 数量，只纳入每家选定供应商均有有效适用价的项目。
+ * English: Use a stable line ID and identical RFQ quantity; all selected suppliers must have a valid applicable unit price. */
+function planSelectedCommonScope(ids=[...selectedCompareSuppliers]){
+  const all=comparisonSuppliers(),its=comparisonItems();
+  const selected=[...new Set(ids)].map(id=>all.find(s=>s.id===id)).filter(Boolean);
+  if(selected.length<2)return{valid:false,selected,items:[],totals:new Map(),reason:"请先勾选至少两家供应商，再计算同范围报价。"};
+  const totals=new Map(selected.map(s=>[s.id,0]));
+  const matched=[];
+  its.forEach((it,i)=>{
+    const values=selected.map(s=>{
+      const index=all.findIndex(a=>a.id===s.id);
+      const meta=quoteMetaFor(it,s,i,index),price=meta?.price;
+      return !Number.isFinite(price)||price<0?null:{supplierId:s.id,price,amountCents:Math.round(price*it.qty*100)};
+    });
+    // 中文：某家漏报/明确不报/没有适用阶梯价则整行不属于这组共同范围，绝不填零。
+    // English: Missing, declined or inapplicable tier means no shared line; never impute zero prices.
+    if(values.some(v=>v===null))return;
+    matched.push({it,values});
+    values.forEach(v=>totals.set(v.supplierId,totals.get(v.supplierId)+v.amountCents));
+  });
+  return{valid:true,selected,items:matched,totals,reason:matched.length?"":"本比较组无共同有效报价项目；可尝试缩小供应商比较组。"};
 }
+function renderCommonScopePicker(){
+  const available=comparisonSuppliers();
+  for(const id of [...selectedCompareSuppliers])if(!available.some(s=>s.id===id))selectedCompareSuppliers.delete(id);
+  commonScopePicker.innerHTML='<div class="sline"><b>指定供应商组 · 同范围比价</b><span class="small muted">已选 '+selectedCompareSuppliers.size+' 家（至少 2 家）</span></div>'+
+    '<div class="small muted" style="margin:6px 0">按采购员勾选的供应商交集计算，不要求全部供应商参与。未报价、不供货、无适用阶梯价均不计入。</div>'+
+    '<div class="toolbar" style="margin-top:7px">'+available.map(s=>'<label class="chip"><input type="checkbox" data-common-supplier="'+esc(s.id)+'" '+(selectedCompareSuppliers.has(s.id)?'checked':'')+'> '+esc(s.name)+' ('+esc(s.id)+')</label>').join('')+
+    '<button type="button" class="btn" id="clearCommonSupplierGroup">清空比较组</button></div>';
+  commonScopePicker.querySelectorAll('[data-common-supplier]').forEach(box=>box.onchange=()=>{
+    if(box.checked)selectedCompareSuppliers.add(box.dataset.commonSupplier);
+    else selectedCompareSuppliers.delete(box.dataset.commonSupplier);
+    renderQuoteAnalysis();
+  });
+  document.getElementById("clearCommonSupplierGroup").onclick=()=>{selectedCompareSuppliers.clear();renderQuoteAnalysis()};
+}
+/** 中文：同范围明细 CSV 的每个价格单元都有真实报价来源，导出使用 Excel 安全转义。
+ * English: Export only genuinely comparable lines with spreadsheet-safe CSV encoding. */
+function exportSelectedCommonScopeCsv(plan){
+  if(!plan.valid||!plan.items.length)return;
+  const csvCell=value=>{
+    const raw=String(value??"");
+    const safe=/^[=+@-]/.test(raw.trimStart())?"'"+raw:raw;
+    return '"'+safe.replace(/"/g,'""')+'"';
+  };
+  const headers=["RFQ Line ID","物料编码","物料名称","RFQ 数量","单位"];
+  plan.selected.forEach(s=>headers.push(s.name+" 适用单价（元/单位）",s.name+" 同范围金额（元）"));
+  const rows=[headers,...plan.items.map(({it,values})=>[it.lineId,it.id,it.name,it.qty,it.unit,...values.flatMap(v=>[v.price.toFixed(2),(v.amountCents/100).toFixed(2)])])];
+  rows.push(["同范围合计","","",plan.items.length,"项",...plan.selected.flatMap(s=>["",(plan.totals.get(s.id)/100).toFixed(2)])]);
+  const csv="\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
+  const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+  const link=document.createElement("a");link.href=url;link.download="RFQ-DEMO-001_指定供应商组同范围报价.csv";
+  document.body.appendChild(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function renderQuoteAnalysis(){
+  quoteModeNotice.textContent=quoteComparisonMode==="demo"?
+    "纯模拟展示：当前所有报价及上次采购价均为虚构演示值，不可用于实际选择。":
+    "报价回收验证：仅已确认的报价记录参与比较；未报价不自动补价。上次采购价仍是 M0 虚构示例。";
+  renderCommonScopePicker();
+  const sups=comparisonSuppliers(),its=comparisonItems(),shared=planSelectedCommonScope();
+  let theoretical=0,theoreticalCount=0,finalTotal=0,finalCount=0;
+  its.forEach((it,i)=>{
+    const values=sups.map((s,si)=>quoteMetaFor(it,s,i,si)?.price).filter(v=>v!=null);
+    if(values.length){theoretical+=Math.min(...values)*it.qty;theoreticalCount++}
+    const sid=awards.get(it.lineId),sup=sups.find(s=>s.id===sid);
+    if(sup){
+      const meta=quoteMetaFor(it,sup,i,sups.indexOf(sup));
+      if(meta?.price!=null&&!awardReviewIds.has(it.lineId)){finalTotal+=meta.price*it.qty;finalCount++}
+    }
+  });
+  // 中文：自身报价总额的物料范围可能不同，禁止把这一列当作同范围排名。
+  // English: Own-scope totals cover different items and must not be ranked as comparable bids.
+  const ownRows=sups.map((s,si)=>{
+    let own=0,count=0;
+    its.forEach((it,i)=>{
+      const meta=quoteMetaFor(it,s,i,si);
+      if(meta?.price!=null){own+=meta.price*it.qty;count++}
+    });
+    return '<tr><td>'+esc(s.name)+'</td><td>'+count+'</td><td>¥'+own.toFixed(2)+'</td></tr>';
+  }).join("");
+  let sharedBody="";
+  if(!shared.valid){
+    sharedBody='<div class="notice" style="margin-top:10px">'+esc(shared.reason)+'</div>';
+  }else if(!shared.items.length){
+    sharedBody='<div class="notice" style="margin-top:10px">比较组 '+shared.selected.length+' 家；<b>共同有效报价 0 项</b>。'+esc(shared.reason)+'不显示 ¥0.00，以免误认作供应商报价。</div>';
+  }else{
+    const totalsRows=shared.selected.map(s=>'<tr><td>'+esc(s.name)+'</td><td>'+shared.items.length+'</td><td>¥'+(shared.totals.get(s.id)/100).toFixed(2)+'</td></tr>').join("");
+    const detailRows=shared.items.slice(0,40).map(({it,values})=>
+      '<tr><td>'+esc(it.id)+'<div class="small muted">'+esc(it.lineId)+'</div></td><td>'+it.qty+' '+esc(it.unit)+'</td>'+
+      values.map(v=>'<td>¥'+v.price.toFixed(2)+' / ¥'+(v.amountCents/100).toFixed(2)+'</td>').join('')+'</tr>').join("");
+    sharedBody='<div style="margin-top:10px"><b>比较组 '+shared.selected.length+' 家 · 共同有效报价 '+shared.items.length+' 项</b>'+
+      '<div class="small muted">各家均使用相同 RFQ 数量，按适用单价 × 数量逐行取整到分后累计；组内金额才允许直接比较。</div>'+
+      '<table class="analysisTable"><thead><tr><th>本比较组供应商</th><th>共同有效报价项数</th><th>同范围报价总额（元）</th></tr></thead><tbody>'+totalsRows+'</tbody></table>'+
+      '<button class="btn soft" id="exportSelectedCommonScope" style="margin:8px 0">导出本比较组全部共同项目 CSV</button>'+
+      '<details><summary>查看共同物料计算明细（前 '+Math.min(40,shared.items.length)+' / '+shared.items.length+' 项）</summary>'+
+      '<div class="tablewrap" style="max-height:280px"><table class="analysisTable"><thead><tr><th>物料编码 / RFQ Line ID</th><th>RFQ 数量</th>'+
+      shared.selected.map(s=>'<th>'+esc(s.name)+'<div class="small muted">单价 / 行金额</div></th>').join('')+
+      '</tr></thead><tbody>'+detailRows+'</tbody></table></div></details></div>';
+  }
+  quoteAnalysis.innerHTML='<div class="sline"><div><b>报价金额分析（M0）</b>'+
+    '<div class="small muted">三种口径分别统计：自身报价范围、指定供应商组共同范围、逐物料最低价组合。仅演示同币种同税口径。</div></div>'+
+    '<div><b>逐物料理论最低价组合：</b>¥'+theoretical.toFixed(2)+'（'+theoreticalCount+' 项）　<b>已选择金额：</b>¥'+finalTotal.toFixed(2)+'（'+finalCount+' 项；待复核 '+awardReviewIds.size+' 项不计入）</div></div>'+
+    '<div style="margin-top:10px"><b>A. 各供应商自身报价金额（不同范围，不可直接排名）</b></div>'+
+    '<table class="analysisTable"><thead><tr><th>供应商</th><th>自身有效报价项数</th><th>自身报价范围金额（元）</th></tr></thead><tbody>'+ownRows+'</tbody></table>'+
+    '<div style="margin-top:12px"><b>B. 采购员指定供应商组的同范围金额</b></div>'+sharedBody+
+    '<div class="small muted" style="margin-top:10px">C. 逐物料最低价组合及采购员已选择金额仅供 RFQ 整体规划，不代表某一家供应商的整单报价。缺报价不作为零元处理。</div>';
+  const exporter=document.getElementById("exportSelectedCommonScope");
+  if(exporter)exporter.onclick=()=>exportSelectedCommonScopeCsv(shared);
+}
+
 function renderQuotes(){
   const sups=comparisonSuppliers(),its=comparisonItems(),QUOTE_PAGE=10,pages=Math.max(1,Math.ceil(its.length/QUOTE_PAGE));quotePage=Math.min(quotePage,pages-1);const start=quotePage*QUOTE_PAGE,slice=its.slice(start,start+QUOTE_PAGE);
   let h=`<thead><tr><th>物料</th><th>模拟上次采购价（虚构）</th>`+sups.map(s=>`<th>${esc(s.name)}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`).join("")+`<th>最终选择</th></tr></thead><tbody>`;
