@@ -1527,7 +1527,8 @@ resetAwards.textContent="恢复默认最低价";resetAwards.onclick=()=>{awards.
 refreshFieldControls();
 setDefaultLowestAwards();
 quoteSupplierOptions();
-if(quoteImportSupplier.value)renderQuoteRoundSelector(true);
+// 中文：首次报价范围应在采购员分配供应商之后确定，不应在网页加载时锁定旧范围。
+// English: Initialize the first quote scope after buyer assignment, not at initial page load.
 renderItemList();renderAssignAll();renderQuotes();
 </script>
 </body>
