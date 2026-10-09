@@ -72,7 +72,7 @@ check('AUD10 protected history blocks without an approval prompt',
 check('AUD10 supplier-view buttons identify true relationship mutations',
   ['关联全部筛选物料','关联本页物料','反转筛选范围关联','反转本页关联','取消全部筛选关联'].every(x=>source.includes(x)));
 check('AUD11 synthetic purchase history is prominently labelled',
-  source.includes('模拟上次采购价（虚构）')&&source.includes('（虚构）</span>')&&source.includes('上次采购价仍是 M0 虚构示例'));
+  source.includes('模拟上次采购价（虚构）')&&source.includes('（虚构）</span>')&&source.includes('上次采购价仍为虚构示例'));
 check('P2 whole HTML JavaScript parses',(()=>{new Function(source.split('<script>')[1].split('</script>')[0]);return true})());
 check('P2 HTML IDs remain unique',(()=>{const ids=[...source.matchAll(/\bid=["']([^"']+)["']/g)].map(m=>m[1]);return new Set(ids).size===ids.length})());
 const itemCsv=fs.readFileSync(path.join(fixtureDir,'m0_100_物料.csv'),'utf8');
