@@ -26,7 +26,7 @@ const env=[
 'const quoteMetaFor=(it,s,i,si)=>prices[it.id][s.id]==null?null:{price:prices[it.id][s.id]};',
 'const selectedCompareSuppliers=new Set();'
 ].join('\n');
-const getPlan=new Function(env+'\n'+extract('planSelectedCommonScope')+'\nreturn planSelectedCommonScope;')();
+const {plan:getPlan,prices}=new Function(env+'\n'+extract('planSelectedCommonScope')+'\nreturn {plan:planSelectedCommonScope,prices};')();
 const money=(p,id)=>p.totals.get(id)/100;
 let passes=0;
 function check(name,value){assert.equal(value,true,name);passes++;process.stdout.write('PASS shared-scope: '+name+'\n')}
