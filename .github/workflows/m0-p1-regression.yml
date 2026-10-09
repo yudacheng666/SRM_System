@@ -1,0 +1,23 @@
+# 中文：新 P1 分支上同时复验上一批 P0 与第二批 P1。
+# English: Re-run both existing P0 and new P1 regressions on the P1 draft branch.
+name: M0 P0 P1 Regression
+on:
+  push:
+    branches:
+      - draft/20261009-m0-p1-fixes
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  m0-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Node version
+        run: node --version
+      - name: P0 regression
+        run: node tests/m0-p0-regression.cjs
+      - name: P1 regression
+        run: node tests/m0-p1-regression.cjs
