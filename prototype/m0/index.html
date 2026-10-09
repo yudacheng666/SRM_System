@@ -39,6 +39,8 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 .preview{margin-top:10px;padding:10px;border:1px dashed #93c5fd;background:#eff6ff;border-radius:9px;display:none}
 .quotePrice.low{font-weight:800;color:var(--ok)}.quotePrice.second{font-weight:700;color:#1d4ed8}.selectedCell{outline:2px solid #60a5fa;outline-offset:-2px;background:#eff6ff!important}
 .headerPick{font-size:11px;padding:3px 6px}.reasonTag{font-size:11px;color:#7c2d12;background:#ffedd5;padding:2px 5px;border-radius:5px}
+.awardSelectable{cursor:pointer}.awardSelectable:hover,.awardSelectable:focus-within{background:#edf6ff!important;outline:2px solid #93c5fd;outline-offset:-2px}
+#awardReasonInput{width:100%;min-height:85px;padding:9px;border:1px solid #cfd6e1;border-radius:8px;font:inherit;resize:vertical}
 .footerNote{margin-top:14px;color:var(--muted);font-size:12px}
 .itemWithDrawing{display:flex;align-items:center;gap:8px}.drawingThumb{width:42px;height:32px;border:1px solid #cfd6e1;border-radius:6px;background:#fff;padding:2px;display:inline-flex;align-items:center;justify-content:center}.drawingThumb:hover{border-color:#60a5fa;background:#eff6ff}.drawingThumb svg{width:100%;height:100%}
 .modalBackdrop{position:fixed;inset:0;background:rgba(15,23,42,.48);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}.modalBackdrop.open{display:flex}.modalCard{width:min(980px,96vw);max-height:92vh;background:#fff;border-radius:14px;border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.22);overflow:hidden}.modalHead{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.modalBody{padding:16px;overflow:auto;max-height:calc(92vh - 60px)}.drawingLarge{width:100%;min-height:560px;border:1px solid var(--line);background:#fafafa;border-radius:10px;display:flex;align-items:center;justify-content:center}.drawingLarge svg{width:92%;height:auto;max-height:72vh}
@@ -385,6 +387,23 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           <table class="table" id="quoteTable"></table>
         </div>
         <div class="pager"><span id="quoteCount"></span><div id="quotePager"></div></div>
+      </div>
+    </div>
+    <!-- 中文：使用页面内窗口代替可能被本地浏览器拦截的原生 prompt。
+         English: Use an in-page dialog instead of native prompt which may be suppressed in file-mode browsers. -->
+    <div id="awardReasonModal" class="modalBackdrop" aria-hidden="true">
+      <div class="modalCard" style="width:min(520px,95vw)" role="dialog" aria-modal="true" aria-labelledby="awardReasonTitle">
+        <div class="modalHead"><b id="awardReasonTitle">选择非最低价供应商</b><button class="btn" id="awardReasonClose" type="button">关闭</button></div>
+        <div class="modalBody">
+          <div id="awardReasonContext" class="small muted" style="margin-bottom:12px"></div>
+          <label for="awardReasonInput" style="font-weight:600">非最低价选择原因（必填）</label>
+          <textarea id="awardReasonInput" placeholder="例如：交期、质量、付款条件、产能、技术方案等；请记录实际决策依据"></textarea>
+          <div class="dangertext small" id="awardReasonValidation" style="margin:6px 0"></div>
+          <div class="toolbar" style="justify-content:flex-end;margin-top:10px">
+            <button class="btn" type="button" id="awardReasonCancel">取消，保留原选择</button>
+            <button class="btn primary" type="button" id="awardReasonConfirm">确认选择供应商</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1539,9 +1558,64 @@ function renderQuoteAnalysis(){
 function renderQuotes(){
   const sups=comparisonSuppliers(),its=comparisonItems(),QUOTE_PAGE=10,pages=Math.max(1,Math.ceil(its.length/QUOTE_PAGE));quotePage=Math.min(quotePage,pages-1);const start=quotePage*QUOTE_PAGE,slice=its.slice(start,start+QUOTE_PAGE);
   let h=`<thead><tr><th>物料</th><th>模拟上次采购价（虚构）</th>`+sups.map(s=>`<th>${esc(s.name)}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`).join("")+`<th>最终选择</th></tr></thead><tbody>`;
-  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>¥${prev}<span class="small muted">（虚构）</span></td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=s.id===low?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell":""}">${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}" data-award="${it.lineId}|${s.id}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("[data-award]").forEach(b=>b.onclick=()=>{const [lineId,sid]=b.dataset.award.split("|");chooseAward(lineId,sid)});document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter((it,i)=>lowestSupplierForItem(it,its.indexOf(it))!==sid);let reason="";if(nonLowest.length){reason=prompt(`其中 ${nonLowest.length} 项不是最低价，请填写本次批量选择原因：`,"")||"";if(!reason.trim())return}eligible.forEach(it=>{const i=its.indexOf(it);awards.set(it.lineId,sid);manualAwards.add(it.lineId);awardReviewIds.delete(it.lineId);if(lowestSupplierForItem(it,i)!==sid)awardReasons.set(it.lineId,reason.trim());else awardReasons.delete(it.lineId)});renderQuotes()});renderQuoteAnalysis();
+  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>¥${prev}<span class="small muted">（虚构）</span></td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=s.id===low?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell ":""}${v!=null?"awardSelectable":""}" ${v!=null?`data-award="${esc(it.lineId+"|"+s.id)}" tabindex="0" role="button" aria-label="选择此供应商报价"`:""}>${v==null?'<span class="muted">未报价</span>':`<button class="btn quotePrice ${cls}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("#quoteTable td[data-award]").forEach(cell=>{
+    cell.onclick=()=>{const [lineId,sid]=cell.dataset.award.split("|");chooseAward(lineId,sid)};
+    cell.onkeydown=e=>{if(e.target===cell&&(e.key==="Enter"||e.key===" ")){e.preventDefault();cell.click()}};
+  });document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter((it,i)=>lowestSupplierForItem(it,its.indexOf(it))!==sid);requestAwardSelection(eligible.map(it=>it.lineId),sid)});renderQuoteAnalysis();
 }
-function chooseAward(lineId,sid){const its=comparisonItems(),sups=comparisonSuppliers(),it=its.find(x=>x.lineId===lineId),i=its.indexOf(it),vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);if(vals[0]?.sid!==sid){const reason=prompt("选择的不是最低报价，请填写原因：","");if(reason===null||!reason.trim())return;awardReasons.set(lineId,reason.trim())}else awardReasons.delete(lineId);awards.set(lineId,sid);manualAwards.add(lineId);awardReviewIds.delete(lineId);renderQuotes()}
+/** 中文：统一单条与批量比价选择，非最低报价必经页面内原因确认，不依赖浏览器原生 prompt。
+ * English: Route single and bulk award selections through an in-page reason dialog. */
+let pendingAwardSelection=null;
+function applyAwardSelection(lineIds,sid,reason=""){
+  const its=comparisonItems(),sups=comparisonSuppliers(),sup=sups.find(s=>s.id===sid);
+  if(!sup)return false;
+  const eligible=[...new Set(lineIds)].map(id=>its.find(it=>it.lineId===id)).filter(Boolean);
+  if(!eligible.length)return false;
+  // 中文：若没有有效报价，禁止把供应商当作“已选择”。
+  // English: Never award a supplier that lacks a valid applicable quote.
+  if(eligible.some(it=>quoteMetaFor(it,sup,its.indexOf(it),sups.indexOf(sup))?.price==null))return false;
+  if(eligible.some(it=>lowestSupplierForItem(it,its.indexOf(it))!==sid)&&!reason.trim())return false;
+  eligible.forEach(it=>{
+    awards.set(it.lineId,sid);manualAwards.add(it.lineId);awardReviewIds.delete(it.lineId);
+    if(lowestSupplierForItem(it,its.indexOf(it))!==sid)awardReasons.set(it.lineId,reason.trim());
+    else awardReasons.delete(it.lineId);
+  });
+  renderQuotes();return true;
+}
+function closeAwardReasonModal(){
+  pendingAwardSelection=null;
+  awardReasonModal.classList.remove("open");awardReasonModal.setAttribute("aria-hidden","true");
+  awardReasonInput.value="";awardReasonValidation.textContent="";
+}
+function requestAwardSelection(lineIds,sid){
+  const its=comparisonItems(),nonLowest=lineIds.filter(id=>{
+    const it=its.find(x=>x.lineId===id);return it&&lowestSupplierForItem(it,its.indexOf(it))!==sid;
+  });
+  if(!nonLowest.length){applyAwardSelection(lineIds,sid);return}
+  const supplier=suppliers.find(x=>x.id===sid);
+  pendingAwardSelection={lineIds:[...lineIds],sid};
+  awardReasonContext.textContent="供应商："+(supplier?.name||sid)+"；选中 "+lineIds.length+" 条，其中 "+nonLowest.length+" 条并非最低报价。填写原因后才会保存选择。";
+  awardReasonTitle.textContent="选择非最低价供应商 · 需要原因";
+  awardReasonInput.value="";awardReasonValidation.textContent="";
+  awardReasonModal.classList.add("open");awardReasonModal.setAttribute("aria-hidden","false");
+  awardReasonInput.focus();
+}
+function chooseAward(lineId,sid){requestAwardSelection([lineId],sid)}
+awardReasonClose.onclick=closeAwardReasonModal;
+awardReasonCancel.onclick=closeAwardReasonModal;
+awardReasonConfirm.onclick=()=>{
+  const selection=pendingAwardSelection;
+  if(!selection)return;
+  const reason=awardReasonInput.value.trim();
+  if(!reason){awardReasonValidation.textContent="请填写非最低价选择的具体原因；未保存任何更改。";awardReasonInput.focus();return}
+  if(!applyAwardSelection(selection.lineIds,selection.sid,reason)){
+    awardReasonValidation.textContent="当前供应商报价或物料范围已变化，请关闭窗口重新选择。";return;
+  }
+  closeAwardReasonModal();
+};
+awardReasonModal.onclick=e=>{if(e.target===awardReasonModal)closeAwardReasonModal()};
+awardReasonInput.onkeydown=e=>{if(e.key==="Escape")closeAwardReasonModal()};
+
 resetAwards.textContent="恢复默认最低价";resetAwards.onclick=()=>{awards.clear();awardReasons.clear();manualAwards.clear();awardReviewIds.clear();setDefaultLowestAwards();renderQuotes()};
 
 refreshFieldControls();
