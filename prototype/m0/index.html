@@ -99,6 +99,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
             <button class="btn soft" id="demoMatchUpdate">演示表格匹配更新</button>
           </div>
           <div class="small muted" style="margin-top:7px">字段结构在“系统设置”维护；这里仅处理字段值。批量导入更新通过关键字段匹配目标记录。</div>
+          <div id="matchedUpdatePreview" class="importPreview" style="display:none"></div>
         </div>
 
         <div id="itemIntake" style="display:none">
@@ -377,6 +378,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
       </div>
       <div class="cardbody">
         <div class="notice">最低价仅作为提示；允许选择非最低价，但必须填写原因。V1 每项物料最终选择一家供应商。总价分析仅在可比口径下计算；缺报价不会按 0 处理。</div>
+        <div id="quoteModeNotice" class="small muted" style="margin-top:8px"></div>
         <div id="quoteAnalysis" class="coverageDetails" style="margin-top:10px"></div>
         <div class="tablewrap" style="margin-top:10px">
           <table class="table" id="quoteTable"></table>
@@ -460,6 +462,36 @@ const assignments=new Map();
 const quoteRounds=[];
 let quoteImportPreviewRows=[];
 function getSet(itemId){if(!assignments.has(itemId)) assignments.set(itemId,new Set());return assignments.get(itemId)}
+/** 中文：已确认报价覆盖的物料禁止原位更改业务范围和数量。
+ * English: Protect lines covered by a confirmed quotation from in-place scope or quantity edits. */
+function hasConfirmedItemHistory(lineId){
+  return quoteRounds.some(r=>r.status==="confirmed"&&((r.expectedLineIds||[]).includes(lineId)||r.lines.some(l=>l.lineId===lineId)));
+}
+/** 中文：操作前校验完整影响集合，任一受保护项目存在就拒绝整批操作。
+ * English: Preflight the full affected set; reject an entire operation if any line is protected. */
+function guardMutableLines(lineIds,action){
+  const blocked=[...new Set(lineIds)].filter(hasConfirmedItemHistory);
+  if(!blocked.length)return true;
+  alert(action+"被阻止：其中 "+blocked.length+" 条询价行已有已确认报价。请通过正式业务修订处理，M0 不允许覆盖历史。示例："+blocked.slice(0,3).join("、"));
+  return false;
+}
+/** 中文：统一处理分配增删和反转，避免某个视角绕过已确认报价保护。
+ * English: Route assignment changes through one atomic history-aware function. */
+function changeSupplierRelations(lineIds,supplierId,mode){
+  const affected=[...new Set(lineIds)].filter(id=>{
+    const linked=getSet(id).has(supplierId);
+    return mode==="add"?!linked:mode==="remove"?linked:true;
+  });
+  if(!guardMutableLines(affected,"修改物料—供应商关系"))return -1;
+  affected.forEach(id=>{
+    const set=getSet(id);
+    if(mode==="add")set.add(supplierId);
+    else if(mode==="remove")set.delete(supplierId);
+    else if(set.has(supplierId))set.delete(supplierId);
+    else set.add(supplierId);
+  });
+  return affected.length;
+}
 for(let i=0;i<180;i++){getSet(items[i].lineId).add(suppliers[i%6].id);if(i%3===0)getSet(items[i].lineId).add(suppliers[(i+2)%8].id)}
 for(let i=180;i<300;i++){getSet(items[i].lineId).add(suppliers[i%10].id)}
 
@@ -468,6 +500,7 @@ const assignSel=new Set();
 const supplierPickerSel=new Set();
 const rangeAnchors=new Map();
 let pendingImportRows=[];
+let pendingMatchedUpdatePlan=null;
 const customFields=[];
 const fieldFilterDraft={lineId:"",id:"",name:"",cat:"",qty:"",unit:"",supplierCount:""};
 const fieldFilters={lineId:"",id:"",name:"",cat:"",qty:"",unit:"",supplierCount:""};
@@ -497,7 +530,7 @@ function supplierMatches(s,q){
   const joined=fields.join(" ");
   return tokens.every(t=>joined.includes(t)||fields.some(v=>compactText(v).includes(compactText(t))||isSubsequence(t,v)));
 }
-function bindShiftRange(selector,group,idAttr,apply,after){
+function bindShiftRange(selector,group,idAttr,apply,after,beforeApply){
   const boxes=[...document.querySelectorAll(selector)], ids=boxes.map(b=>b.dataset[idAttr]);
   boxes.forEach(b=>b.onclick=e=>{
     const id=b.dataset[idAttr],checked=b.checked,anchor=rangeAnchors.get(group);
@@ -506,6 +539,9 @@ function bindShiftRange(selector,group,idAttr,apply,after){
       const a=ids.indexOf(anchor),z=ids.indexOf(id),lo=Math.min(a,z),hi=Math.max(a,z);
       targets=ids.slice(lo,hi+1);
     }
+    // 中文：修改真实分配关系前整批核验，避免 Shift 连选发生部分变更。
+    // English: Check the entire range before changing live assignments; never partially commit a Shift range.
+    if(beforeApply&&!beforeApply(targets,checked)){if(after)after();else b.checked=!checked;return}
     targets.forEach(x=>apply(x,checked));
     rangeAnchors.set(group,id);
     if(after)after();
@@ -755,13 +791,68 @@ bulkUpdateField.onclick=()=>{
   if(!itemManageSel.size){alert("请先勾选要更新的物料。");return}
   const value=bulkFieldValue.value;let n=0;
   if(key==="qty"){const pv=parsePositiveNumber(value,"数量");if(pv.error){alert(pv.error);return}}
+  if(key==="unit"&&!value.trim()){alert("单位不能为空");return}
+  if(!guardMutableLines([...itemManageSel],"批量更新物料属性"))return;
   itemManageSel.forEach(id=>{const it=items.find(x=>x.lineId===id);if(!it)return;if(["name","cat","qty","unit"].includes(key)){it[key]=key==="qty"?Number(value):value}else{it.custom=it.custom||{};it.custom[key]=value}n++});
   renderItemList();renderAssignAll();alert(`已更新 ${n} 项。`);
 };
+/** 中文：匹配更新必须先统计命中情况，重复键或已确认历史不允许自动更新。
+ * English: Plan matching updates first; reject ambiguous keys and protected history. */
+function planMatchedUpdates(rows){
+  const key=matchKeyField.value,target=matchUpdateField.value,seen=new Set();
+  if(!key||!target)return{rows,entries:[],blocking:true,message:"请选择匹配关键字段和更新字段。"};
+  const entries=rows.map((pair,i)=>{
+    const matchVal=String(pair[0]??"").trim(),newVal=String(pair[1]??"");
+    const matches=items.filter(it=>String(itemFieldValue(it,key)).trim()===matchVal);
+    let issue="",lineId=null,ready=false;
+    if(!matchVal)issue="匹配键为空";
+    else if(matches.length===0)issue="未匹配（跳过）";
+    else if(matches.length>1)issue="非唯一匹配："+matches.map(it=>it.lineId).join("、");
+    else{
+      lineId=matches[0].lineId;
+      if(target==="qty"){const parsed=parsePositiveNumber(newVal,"数量");if(parsed.error)issue=parsed.error}
+      if(target==="unit"&&!newVal.trim())issue="单位不能为空";
+      if(!issue&&hasConfirmedItemHistory(lineId))issue="已有已确认报价，禁止覆盖";
+      if(!issue)ready=true;
+    }
+    if(seen.has(matchVal)&&matchVal)issue="本批输入重复匹配键（禁止重复覆盖）";
+    seen.add(matchVal);
+    return{rowNo:i+1,matchVal,newVal,lineId,matches:matches.length,issue,ready:ready&&!issue};
+  });
+  const repeated=new Set();
+  rows.forEach(pair=>{const k=String(pair[0]??"").trim();if(k&&rows.filter(p=>String(p[0]??"").trim()===k).length>1)repeated.add(k)});
+  entries.forEach(e=>{if(repeated.has(e.matchVal)){e.issue="本批输入重复匹配键（禁止重复覆盖）";e.ready=false}});
+  const blocking=entries.some(e=>e.issue&&e.issue!=="未匹配（跳过）");
+  return{rows,key,target,entries,blocking,message:""};
+}
+/** 中文：导入只生成预览；必须重新核验且经过采购员确认才写入。
+ * English: Preview imports without mutation; revalidate before buyer-confirmed commit. */
 function applyMatchedUpdates(rows){
-  const key=matchKeyField.value,target=matchUpdateField.value;if(!key||!target){alert("请选择匹配关键字段和更新字段。");return}
-  let hit=0,miss=0,invalid=0;rows.forEach(([matchVal,newVal])=>{const it=items.find(x=>String(itemFieldValue(x,key)).trim()===String(matchVal).trim());if(!it){miss++;return}if(target==="qty"){const pv=parsePositiveNumber(newVal,"数量");if(pv.error){invalid++;return}it.qty=pv.value}else if(["name","cat","unit"].includes(target))it[target]=newVal;else{it.custom=it.custom||{};it.custom[target]=newVal}hit++});
-  renderItemList();renderAssignAll();alert(`匹配更新完成：成功 ${hit} 项，未匹配 ${miss} 项，格式错误 ${invalid} 项。`);
+  const plan=planMatchedUpdates(rows);
+  if(plan.message){alert(plan.message);return}
+  pendingMatchedUpdatePlan=plan;
+  const accepted=plan.entries.filter(e=>e.ready).length,missed=plan.entries.filter(e=>e.issue==="未匹配（跳过）").length,blocked=plan.entries.length-accepted-missed;
+  matchedUpdatePreview.style.display="block";
+  matchedUpdatePreview.innerHTML='<div class="sline"><b>批量更新预览：可更新 '+accepted+' 行，未匹配 '+missed+' 行，错误/冲突 '+blocked+' 行</b><div class="toolbar"><button class="btn primary" id="confirmMatchedUpdate" '+(plan.blocking||!accepted?'disabled':'')+'>确认更新</button><button class="btn" id="cancelMatchedUpdate">取消预览</button></div></div>'+
+    '<div class="tablewrap" style="max-height:230px"><table class="table"><thead><tr><th>行号</th><th>匹配值</th><th>目标 RFQ Line ID</th><th>新值</th><th>处理结果</th></tr></thead><tbody>'+
+    plan.entries.map(e=>'<tr><td>'+e.rowNo+'</td><td>'+esc(e.matchVal)+'</td><td>'+esc(e.lineId||"—")+'</td><td>'+esc(e.newVal)+'</td><td class="'+(e.ready?"ok":"dangertext")+'">'+esc(e.ready?"唯一匹配，可更新":e.issue)+'</td></tr>').join("")+'</tbody></table></div>';
+  document.getElementById("cancelMatchedUpdate").onclick=()=>{pendingMatchedUpdatePlan=null;matchedUpdatePreview.innerHTML="";matchedUpdatePreview.style.display="none"};
+  document.getElementById("confirmMatchedUpdate").onclick=()=>{
+    if(!pendingMatchedUpdatePlan)return;
+    const fresh=planMatchedUpdates(pendingMatchedUpdatePlan.rows);
+    const changed= fresh.key!==plan.key||fresh.target!==plan.target||fresh.blocking||fresh.entries.some((e,i)=>e.ready!==plan.entries[i].ready||e.lineId!==plan.entries[i].lineId);
+    if(changed){alert("匹配条件、数据或历史状态已变化，请重新预览后再确认。");applyMatchedUpdates(plan.rows);return}
+    const applicable=fresh.entries.filter(e=>e.ready);
+    if(!confirm("确认更新 "+applicable.length+" 条唯一匹配记录？未匹配 "+missed+" 条将跳过。"))return;
+    applicable.forEach(e=>{
+      const it=items.find(x=>x.lineId===e.lineId);
+      if(fresh.target==="qty")it.qty=Number(e.newVal);
+      else if(["name","cat","unit"].includes(fresh.target))it[fresh.target]=e.newVal;
+      else{it.custom=it.custom||{};it.custom[fresh.target]=e.newVal}
+    });
+    pendingMatchedUpdatePlan=null;matchedUpdatePreview.innerHTML="";matchedUpdatePreview.style.display="none";
+    renderItemList();renderAssignAll();renderQuotes();alert("已更新 "+applicable.length+" 条；未匹配 "+missed+" 条已跳过。");
+  };
 }
 demoMatchUpdate.onclick=()=>{applyMatchedUpdates([["ITEM-00001","批量更新示例A"],["ITEM-00002","批量更新示例B"],["ITEM-99999","无匹配示例"]])};
 matchUpdateFile.onchange=()=>{
@@ -1005,7 +1096,7 @@ quoteImportFile.onchange=()=>{const file=quoteImportFile.files?.[0];if(!file)ret
 commitQuoteImport.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed"){alert("已确认提交不可覆盖，请新增本轮新版本。");return}const valid=quoteImportPreviewRows.filter(x=>["已报价","明确未报价","不供货"].includes(x.coverageCheck)&&!x.errors.length);if(!valid.length){alert("没有可写入的有效报价。");return}const seen=new Set();valid.filter(x=>{if(seen.has(x.lineId))return false;seen.add(x.lineId);return true}).forEach(x=>upsertRoundLine(r,x,"import"));clearQuoteImportPreview();renderQuoteRound()};
 carryForwardMissing.onclick=()=>{const r=currentQuoteRound();if(!r||r.roundNo===1||r.status==="confirmed")return;const existing=new Set(r.lines.map(x=>x.lineId));let n=0;expectedIdsForRound(r).forEach(lineId=>{if(existing.has(lineId))return;const prev=priorApplicableLine(r.supplierId,lineId,r.roundNo);if(!prev)return;const it=items.find(x=>x.lineId===lineId);r.lines.push({lineId,itemId:it?.id||prev.itemId,price:prev.price,tiers:(prev.tiers||[]).map(t=>({...t})),lead:prev.lead,moq:prev.moq,status:"quoted",source:"carry",original:{carryFromRound:prev.roundNo,carryFromRevision:prev.revisionNo},updatedAt:new Date().toISOString()});n++});alert(`已对本轮范围内 ${n} 项明确记录“沿用上轮”。未进入本轮范围的项目不会被处理。`);renderQuoteRound()};
 
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active");if(b.dataset.tab==="assign")renderAssignAll();if(b.dataset.tab==="quoteImport"){quoteSupplierOptions();renderQuoteRoundSelector()}if(b.dataset.tab==="quotes")renderQuotes()});
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active");if(b.dataset.tab==="assign")renderAssignAll();if(b.dataset.tab==="quoteImport"){enterReturnedQuoteMode();quoteSupplierOptions();renderQuoteRoundSelector()}if(b.dataset.tab==="quotes")renderQuotes()});
 document.querySelectorAll(".modebtn").forEach(b=>b.onclick=()=>{assignMode=b.dataset.mode;document.querySelectorAll(".modebtn").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("itemFirstView").style.display=assignMode==="itemFirst"?"grid":"none";document.getElementById("supplierFirstView").style.display=assignMode==="supplierFirst"?"grid":"none";renderAssignAll()});
 
 function appliedValue(id){const m={assignItem:"assignItemSearch",assignCat:"assignCatFilter",assignState:"assignStateFilter",supplier:"supplierSearch",supplierFirst:"supplierFirstSearch",supplierPool:"supplierPoolSearch",sfItem:"sfItemSearch",sfCat:"sfCatFilter"};const key=Object.keys(m).find(k=>m[k]===id);return key?appliedSearch[key]:""}
@@ -1128,8 +1219,8 @@ function renderSuppliers(){
     const icon=total===0||count===0?"☐":count===total?"☑":"◩";
     return `<div class="srow"><div class="sline"><div><b>${s.name}</b><div class="reason">${s.reason}</div></div><div class="tri ${cls}">${icon} ${count}/${total}</div></div><div class="toolbar" style="margin-top:8px"><button class="btn soft" data-add="${s.id}" ${total===0?"disabled":""}>给所选物料添加此供应商</button><button class="btn danger" data-rem="${s.id}" ${count===0?"disabled":""}>从所选物料移除此供应商</button></div></div>`
   }).join("");
-  document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{let n=0;assignSel.forEach(i=>{const set=getSet(i);if(!set.has(b.dataset.add)){set.add(b.dataset.add);n++}});flash(`已新增 ${n} 条物料—供应商关系；原有分配未改变。`);renderAssignAll()});
-  document.querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>{let n=0;assignSel.forEach(i=>{const set=getSet(i);if(set.delete(b.dataset.rem))n++});flash(`已移除 ${n} 条关系。`);renderAssignAll()});
+  document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{const n=changeSupplierRelations([...assignSel],b.dataset.add,"add");if(n<0)return;flash("已新增 "+n+" 条物料—供应商关系；原有分配未改变。");renderAssignAll()});
+  document.querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>{const n=changeSupplierRelations([...assignSel],b.dataset.rem,"remove");if(n<0)return;flash("已移除 "+n+" 条关系。");renderAssignAll()});
   supplierListCount.textContent=`筛选结果 ${list.length} 家 · 第 ${supplierListPage+1}/${pages} 页`;
   renderPageNav(supplierListPager,supplierListPage,list.length,SUPPLIER_PAGE,p=>{supplierListPage=p;renderSuppliers()});
 }
@@ -1149,6 +1240,7 @@ function renderSupplierFirstList(){
     const sid=b.dataset.poolRemove, sup=suppliers.find(s=>s.id===sid);
     let count=0;items.forEach(it=>{if(getSet(it.lineId).has(sid))count++});
     if(quoteRounds.some(r=>r.supplierId===sid&&(r.status==="confirmed"||r.lines.length))){alert("该供应商已有报价/版本历史，M0 不允许直接移出并破坏历史。正式版应使用取消参与/作废状态。");return}
+    if(!guardMutableLines(items.filter(it=>getSet(it.lineId).has(sid)).map(it=>it.lineId),"移出供应商"))return;
     if(!confirm(`将“${sup?.name||sid}”移出本次询价？\n同时会取消它当前关联的 ${count} 个物料。`))return;
     let removed=0;items.forEach(it=>{if(getSet(it.lineId).delete(sid))removed++});
     for(let i=quoteRounds.length-1;i>=0;i--){if(quoteRounds[i].supplierId===sid&&quoteRounds[i].status==="draft"&&!quoteRounds[i].lines.length)quoteRounds.splice(i,1)}
@@ -1200,19 +1292,19 @@ function renderSfItems(){
   const slice=list.slice(sfPage*PAGE,sfPage*PAGE+PAGE);
   sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.lineId}" ${getSet(it.lineId).has(activeSupplier)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td></tr>`).join("");
   bindDrawingThumbs();
-  bindShiftRange("#sfItemBody input[data-sfi]","supplier-items","sfi",(id,checked)=>{const set=getSet(id);checked?set.add(activeSupplier):set.delete(activeSupplier)},renderAssignAll);
+  bindShiftRange("#sfItemBody input[data-sfi]","supplier-items","sfi",(id,checked)=>{const set=getSet(id);checked?set.add(activeSupplier):set.delete(activeSupplier)},renderAssignAll,(ids,checked)=>guardMutableLines(ids.filter(id=>getSet(id).has(activeSupplier)!==checked),"修改供应商物料关联"));
   const related=list.filter(it=>getSet(it.lineId).has(activeSupplier)).length;
   sfItemCount.textContent=`筛选结果 ${list.length} 项 · 当前供应商已关联 ${related} 项 · 第 ${sfPage+1}/${pages} 页 · 勾选框即关联状态，支持 Shift 连选`;
   renderPageNav(sfPager,sfPage,list.length,PAGE,p=>{sfPage=p;resetRange("supplier-items");renderSfItems()});
 }
 runSfSearch.onclick=()=>{appliedSearch.sfItem=sfItemSearch.value.trim();appliedSearch.sfCat=sfCatFilter.value;sfPage=0;resetRange("supplier-items");renderSfItems()};
 clearSfSearch.onclick=()=>{sfItemSearch.value="";sfCatFilter.value="";runSfSearch.click()};
-sfLinkFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>getSet(it.lineId).add(activeSupplier));renderAssignAll()};
-sfLinkPage.onclick=()=>{if(!activeSupplier)return;pageSlice(filteredSfItems(),sfPage).forEach(it=>getSet(it.lineId).add(activeSupplier));renderAssignAll()};
-sfInvertFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>{const set=getSet(it.lineId);set.has(activeSupplier)?set.delete(activeSupplier):set.add(activeSupplier)});renderAssignAll()};
-sfInvertPage.onclick=()=>{if(!activeSupplier)return;pageSlice(filteredSfItems(),sfPage).forEach(it=>{const set=getSet(it.lineId);set.has(activeSupplier)?set.delete(activeSupplier):set.add(activeSupplier)});renderAssignAll()};
-sfUnlinkFiltered.onclick=()=>{if(!activeSupplier)return;filteredSfItems().forEach(it=>getSet(it.lineId).delete(activeSupplier));renderAssignAll()};
-sfCopyRange.onclick=()=>{if(!activeSupplier||!copyFromSupplier.value)return;const source=copyFromSupplier.value;let n=0;items.forEach(it=>{if(getSet(it.lineId).has(source)&&!getSet(it.lineId).has(activeSupplier)){getSet(it.lineId).add(activeSupplier);n++}});flash(`已复制物料范围作为起点：新增 ${n} 条关系。可继续直接勾选/取消差异物料。`);renderAssignAll()};
+sfLinkFiltered.onclick=()=>{if(!activeSupplier)return;const n=changeSupplierRelations(filteredSfItems().map(it=>it.lineId),activeSupplier,"add");if(n>=0)renderAssignAll()};
+sfLinkPage.onclick=()=>{if(!activeSupplier)return;const n=changeSupplierRelations(pageSlice(filteredSfItems(),sfPage).map(it=>it.lineId),activeSupplier,"add");if(n>=0)renderAssignAll()};
+sfInvertFiltered.onclick=()=>{if(!activeSupplier)return;const n=changeSupplierRelations(filteredSfItems().map(it=>it.lineId),activeSupplier,"toggle");if(n>=0)renderAssignAll()};
+sfInvertPage.onclick=()=>{if(!activeSupplier)return;const n=changeSupplierRelations(pageSlice(filteredSfItems(),sfPage).map(it=>it.lineId),activeSupplier,"toggle");if(n>=0)renderAssignAll()};
+sfUnlinkFiltered.onclick=()=>{if(!activeSupplier)return;const n=changeSupplierRelations(filteredSfItems().map(it=>it.lineId),activeSupplier,"remove");if(n>=0)renderAssignAll()};
+sfCopyRange.onclick=()=>{if(!activeSupplier||!copyFromSupplier.value)return;const source=copyFromSupplier.value,ids=items.filter(it=>getSet(it.lineId).has(source)).map(it=>it.lineId),n=changeSupplierRelations(ids,activeSupplier,"add");if(n<0)return;flash("已复制物料范围作为起点：新增 "+n+" 条关系。可继续直接勾选/取消差异物料。");renderAssignAll()};
 
 for(const [id,button] of [["assignItemSearch",runAssignSearch],["supplierSearch",runSupplierSearch],["supplierFirstSearch",runSupplierFirstSearch],["supplierPoolSearch",runSupplierPoolSearch],["sfItemSearch",runSfSearch]])document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")button.click()});
 function renderAssignAll(){renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
@@ -1235,13 +1327,21 @@ rfqPreviewModal.onclick=e=>{if(e.target===rfqPreviewModal)closeRfqPreview.click(
 generateBtn.onclick=()=>{const c=coverage();alert(`原型动作：允许生成。\n已覆盖 ${c.covered}/${items.length} 项，未覆盖 ${c.none} 项将保留在当前 RFQ 中。\n正式 M4 再实现 Excel 文件生成。`)};
 
 const awards=new Map(), awardReasons=new Map();
+/** 中文：浏览器演示报价与实际报价回收互斥，避免假价格影响真实比价。
+ * English: Synthetic demo prices and returned quotes are mutually exclusive. */
+let quoteComparisonMode="demo";
+function enterReturnedQuoteMode(){
+  if(quoteComparisonMode==="returned")return;
+  quoteComparisonMode="returned";
+  awards.clear();awardReasons.clear();renderQuotes();
+}
 function comparisonSuppliers(){return suppliers.filter(s=>rfqSupplierPool.has(s.id)&&items.some(it=>getSet(it.lineId).has(s.id)))}
 function comparisonItems(){return items.filter(it=>[...getSet(it.lineId)].some(sid=>rfqSupplierPool.has(sid)))}
 function quoteMetaFor(it,sup,i=0,si=0){
   if(!getSet(it.lineId).has(sup.id))return null;
   const saved=latestConfirmedQuoteLine(it.lineId,sup.id),subs=supplierSubmissions(sup.id);
   if(saved){const eff=effectivePriceForLine(saved,it.qty);return eff==null?null:{price:eff,lead:saved.lead,moq:saved.moq,roundNo:saved.roundNo,revisionNo:saved.revisionNo,source:saved.source,tiers:saved.tiers||[],rawLine:saved}}
-  if(subs.length)return null;
+  if(quoteComparisonMode==="returned"||subs.length)return null;
   if((i+si)%9===0)return null;
   return{price:80+((i*13+si*17)%70)+((si+1)*0.35),lead:3+((i+si)%18),moq:1+((i+si)%5)*5,roundNo:0,revisionNo:0,source:"demo",tiers:[]};
 }
@@ -1250,6 +1350,7 @@ function lowestSupplierForItem(it,i=0){
 }
 function setDefaultLowestAwards(){comparisonItems().forEach((it,i)=>{const sid=lowestSupplierForItem(it,i);if(sid)awards.set(it.lineId,sid)})}
 function renderQuoteAnalysis(){
+  quoteModeNotice.textContent=quoteComparisonMode==="demo"?"纯模拟展示：当前所有报价及上次采购价均为虚构演示值，不可用于实际选择。":"报价回收验证：仅已确认的真实回收记录参与比价；未报价不自动补价。上次采购价仍是 M0 虚构示例。";
   const sups=comparisonSuppliers(),its=comparisonItems(),common=its.filter((it,i)=>sups.length&&sups.every((s,si)=>quoteMetaFor(it,s,i,si)?.price!=null));
   let theoretical=0,theoreticalCount=0,finalTotal=0,finalCount=0;
   its.forEach((it,i)=>{const vals=sups.map((s,si)=>quoteMetaFor(it,s,i,si)?.price).filter(v=>v!=null);if(vals.length){theoretical+=Math.min(...vals)*it.qty;theoreticalCount++}const sid=awards.get(it.lineId),sup=sups.find(s=>s.id===sid);if(sup){const si=sups.indexOf(sup),m=quoteMetaFor(it,sup,i,si);if(m?.price!=null){finalTotal+=m.price*it.qty;finalCount++}}});
