@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SRM M1-B0 离线存储环境检测</title>
+<style>
+:root{font-family:"Microsoft YaHei",system-ui,sans-serif;color-scheme:light}
+body{margin:0;background:#f6f8fb;color:#263346}
+main{max-width:780px;margin:48px auto;padding:0 18px}
+.panel{background:#fff;border:1px solid #e1e6ee;border-radius:12px;padding:24px;margin-bottom:16px}
+h1{font-size:25px;margin:0 0 8px}h2{font-size:17px;margin:0 0 12px}
+p{line-height:1.65}.muted{color:#687487}.hint{background:#f2f5fa;border-radius:8px;padding:13px}
+button{border:0;border-radius:7px;background:#2457b6;color:white;padding:10px 18px;font-size:15px;cursor:pointer}
+button:disabled{opacity:.65;cursor:wait}
+.status{padding:12px;margin-top:12px;border-radius:7px;white-space:pre-wrap}
+.idle{background:#f3f5f8;color:#495668}.supported{background:#eaf5ef;color:#236343}
+.failed,.unsupported{background:#fff0ed;color:#a33f2a}
+code{word-break:break-all}
+</style>
+</head>
+<body>
+<main>
+ <section class="panel">
+  <h1>SRM M1-B0 · 离线环境检测</h1>
+  <p class="muted">这只是存储技术验证页面，<b>不是已可投入采购使用的 M1 系统</b>。</p>
+  <p class="hint">采购业务目标：沿用已验收 M0，尽快实现询价 → 报价 → 比价 → 保存和备份；未来员工通过公司服务器网址进入同一业务界面。</p>
+ </section>
+ <section class="panel">
+  <h2>本地存储能力</h2>
+  <p>检测浏览器能否写入一条虚构测试数据、关闭数据库、重新打开读取，然后清理测试数据。不会读取或保存采购数据。</p>
+  <button id="checkStorage" type="button">检测本地存储</button>
+  <div role="status" aria-live="polite" id="probeStatus" class="status idle">尚未检测。本页不提供自动保存功能。</div>
+  <p class="muted">当前打开方式：<code id="currentProtocol"></code></p>
+  <p class="muted">即使本次通过，也不等于长期存储或备份可靠。需要另做 Windows Edge/Chrome 固定路径重启测试。</p>
+ </section>
+ <section class="panel">
+  <h2>当前范围</h2>
+  <p>只验证技术条件，不重构 M0、不引入完整 ERP 数据库、账号系统、复杂报表、第三方 UI 框架或真实供应商附件。</p>
+  <p class="muted">未来服务器部署采用独立数据读写接口；本地 HTML 和公司服务器 Web 版共享业务字段及核心流程。</p>
+ </section>
+</main>
+<!-- INLINE_B0_STORAGE_PROBE -->
+<script>
+(function(){
+  "use strict";
+  const status=document.getElementById("probeStatus");
+  const button=document.getElementById("checkStorage");
+  document.getElementById("currentProtocol").textContent=location.protocol;
+  button.addEventListener("click",async()=>{
+    button.disabled=true;
+    status.className="status idle";status.textContent="正在检测虚构测试数据的写入与读取……";
+    try{
+      const result=await window.M1StorageProbe.check({databaseName:"srm-m1-b0-capability"});
+      status.className="status "+result.status;
+      status.textContent=(result.status==="supported"?"技术检测通过；尚未启用 SRM 自动保存。":"技术检测未通过；不得启用 SRM 自动保存。")+
+        "\n"+result.detail+"\n检查代码："+result.code;
+    }catch(e){
+      status.className="status failed";status.textContent="检测发生异常，当前不支持自动保存："+String(e.message||e);
+    }finally{button.disabled=false;}
+  });
+})();
+</script>
+</body>
+</html>
