@@ -28,6 +28,8 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Real Chromium test using file URL
         run: node tests/browser/m1-b0.cjs
+      - name: Generate anonymous M0 test fixtures before any M0 checks
+        run: node tests/generate-m0-fixtures.cjs
       - name: Preserve existing M0 logic regressions
         run: |
           node tests/m0-p0-regression.cjs
@@ -36,7 +38,6 @@ jobs:
           node tests/m0-common-scope-regression.cjs
       - name: Preserve existing M0 full browser flow
         run: |
-          node tests/generate-m0-fixtures.cjs
           node tests/browser/basic.cjs
           node tests/browser/uat-feedback.cjs
           node tests/browser/full.cjs
