@@ -39,10 +39,11 @@ const {chromium}=require("playwright");
         supplierPool:rfqSupplierPool,selectedCompareSuppliers,customFields,lineSeq,createdSeq,quoteComparisonMode}
     });
     const hydrated=m.hydrate(m.parse(m.stringify(captured)));
-    return{links:hydrated.state.assignments.size,supplierPool:hydrated.state.supplierPool.size,first:hydrated.state.items[0].id,
+    return{links:hydrated.state.assignments.size,nonempty:[...hydrated.state.assignments.values()].filter(x=>x.size>0).length,supplierPool:hydrated.state.supplierPool.size,first:hydrated.state.items[0].id,
       map:hydrated.state.assignments.get("RFQ-L00001") instanceof Set};
   });
-  assert.equal(count.links,300);
+  assert.ok(count.links>=300); // Existing M0 rendering also materializes empty assignment Sets.
+  assert.equal(count.nonempty,300);
   assert.ok(count.supplierPool>0);
   assert.equal(count.first,"ITEM-00001");
   assert.equal(count.map,true);
