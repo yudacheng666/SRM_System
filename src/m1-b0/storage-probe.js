@@ -47,25 +47,28 @@
     const name=opts.databaseName||"srm-m1-b0-capability";
     if(!factory||typeof factory.open!=="function"||typeof factory.deleteDatabase!=="function")
       return result("unsupported","NO_INDEXEDDB","当前环境没有可用的 IndexedDB；不得启用自动保存。");
-    let db=null,closeChecked=false,verified=false,cleanupFailed=false;
+    let db=null,opened=false,verified=false,cleanupFailed=false,failure=null;
     try{
-      db=await openDb(factory,name);
+      db=await openDb(factory,name);opened=true;
       const value={kind:"synthetic-probe",n:17};
       await transactionValue(db,"readwrite","put","diagnostic",value);
-      db.close();db=null;closeChecked=true;
+      db.close();db=null;
       db=await openDb(factory,name);
       const read=await transactionValue(db,"readonly","get","diagnostic");
       if(!read||read.kind!==value.kind||read.n!==17)throw new Error("IDB_REOPEN_VERIFY_FAILED");
       verified=true;
     }catch(e){
-      return result("failed","PROBE_FAILED",e&&e.message||"IndexedDB 测试失败");
+      failure=e&&e.message||"IndexedDB 测试失败";
     }finally{
       if(db){db.close();db=null;}
-      if(closeChecked){
+      // 中文：只要实际打开过数据库，即使读写失败也尝试删除虚构探测数据。
+      // English: Clean up the synthetic probe even if a read/write error occurred after opening.
+      if(opened){
         try{await deleteDb(factory,name)}catch(_){cleanupFailed=true}
       }
     }
-    if(cleanupFailed)return result("failed","CLEANUP_FAILED","检测数据库无法清理，不能将结果视为通过。");
+    if(cleanupFailed)return result("failed","CLEANUP_FAILED","检测数据库清理失败；不能认为自动保存可用。"+(failure||""));
+    if(failure)return result("failed","PROBE_FAILED",failure);
     return verified?result("supported","WRITE_REOPEN_READ_DELETE_OK","已验证虚构检测数据写入、关闭重开读取与清理；尚未验证长期保存或真实业务数据。"):
       result("failed","PROBE_INCOMPLETE","存储检测未完成");
   }
