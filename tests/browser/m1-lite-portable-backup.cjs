@@ -51,6 +51,7 @@ const itemCsv="物料编码,物料名称,分类,数量,单位\nTEST-001,虚构�
   assert.equal(bundle.workspace.state.quoteRounds[0].status,"confirmed");
   assert.equal(bundle.workspace.state.quoteRounds[0].lines[0].price,18.75);
   console.log("PASS RESTORE01: actual JSON download contains complete committed RFQ/supplier/confirmed quote and excludes evidence files");
+  await page.locator('[data-tab="items"]').click();
   await page.locator("#manualCode").fill("PENDING-UNSAVED");
   await page.locator("#pilotExportBackup").click();
   assert.match(await page.locator("#pilotSaveStatus").innerText(),/未保存修改/);
