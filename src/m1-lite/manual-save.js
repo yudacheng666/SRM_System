@@ -29,6 +29,14 @@
     supplierBox.style.display=buyerMode?"flex":"none";
     badge.textContent=buyerMode?"正式工作（本机手动保存）":"演示模式（不保存）";
     rfqHead.textContent=buyerMode?workspaceId:"RFQ-DEMO-001";
+    document.getElementById("pilotSubtitle").textContent=buyerMode?
+      "正式工作区：沿用 M0 的询价、供应商分配、报价与比价操作；需要手动保存。":"演示模式：包含虚构物料及价格，不能作为正式采购资料。";
+    document.getElementById("pilotNotice").textContent=buyerMode?
+      "正式工作：操作后请点击“保存到本机”。本机保存不是云端同步或独立备份；同一路径、同浏览器可恢复。":
+      "当前是演示模式，所有操作刷新后会丢失。点击“新建空白正式工作”后才能录入并保存实际资料。";
+    document.getElementById("pilotFooter").textContent=buyerMode?
+      "正式工作采用本机手动保存，未提供独立文件备份或服务器同步；原始邮件/PDF 请另行保管。":
+      "演示模式不保存，所有展示价格均为虚构数据。";
     document.getElementById("demoExcelImport").disabled=buyerMode;
     document.getElementById("demoQuoteExcel").disabled=buyerMode;
     document.getElementById("demoMatchUpdate").disabled=buyerMode;
