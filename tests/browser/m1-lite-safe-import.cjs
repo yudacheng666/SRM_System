@@ -13,7 +13,7 @@ const {chromium}=require("playwright");
   page.on("pageerror",e=>errors.push(e.message));
   try{
     await page.goto(pathToFileURL(path.resolve(__dirname,"../../prototype/m1-lite/index.html")).href);
-    assert.match(await page.title(),/未实现保存/);
+    assert.match(await page.title(),/导入安全测试版|本机手动保存候选版/);
     assert.match(await page.locator(".notice").first().innerText(),/刷新后会丢失/);
     assert.equal(await page.locator("#importFile").getAttribute("accept"),".csv,.txt");
     assert.equal(await page.locator("#quoteImportFile").getAttribute("accept"),".csv,.txt");
@@ -42,7 +42,7 @@ const {chromium}=require("playwright");
     assert.ok(messages.some(x=>x.includes("没有导入任何报价")));
     console.log("PASS SAFE05 XLSX quote upload rejected, no fake quote preview or imported price");
     await page.reload();
-    assert.match(await page.locator(".notice").first().innerText(),/尚待下一步/);
+    assert.match(await page.locator(".notice").first().innerText(),/演示模式|手动保存/);
     assert.deepEqual(errors,[]);
     console.log("PASS SAFE06 refresh remains explicit about data loss, no page exceptions");
   }finally{await browser.close()}
