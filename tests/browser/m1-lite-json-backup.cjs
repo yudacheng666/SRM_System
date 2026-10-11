@@ -66,7 +66,7 @@ const {pathToFileURL}=require("node:url"),{chromium}=require("playwright");
    await b.locator("#pilotRestoreFile").setInputFiles({name:"archive.json",mimeType:"application/json",buffer:Buffer.from(exported)});
    await b.locator("#pilotRestorePreview").waitFor({state:"visible"});
    assert.match(await b.locator("#pilotRestoreDetail").innerText(),/待恢复工作/);
-   assert.match(await b.locator("#pilotRestoreDetail").innerText(),/附件/);
+   assert.match(await b.locator("#pilotRestoreDetail").innerText(),/不含邮件、聊天截图、PDF/);
    assert.equal(await b.evaluate(()=>SRMPilot.isBuyer()),false);
    console.log("PASS BACKUP03: backup preview in separate empty browser does not mutate its database");
    await b.locator("#pilotConfirmRestore").click();
