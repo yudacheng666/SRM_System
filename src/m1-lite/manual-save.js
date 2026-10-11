@@ -35,11 +35,12 @@
       "正式工作：操作后请点击“保存到本机”。本机保存不是云端同步或独立备份；同一路径、同浏览器可恢复。":
       "当前是演示模式，所有操作刷新后会丢失。点击“新建空白正式工作”后才能录入并保存实际资料。";
     document.getElementById("pilotFooter").textContent=buyerMode?
-      "正式工作采用本机手动保存，未提供独立文件备份或服务器同步；原始邮件/PDF 请另行保管。":
+      "正式工作可手动保存并下载结构化 JSON 备份；原始邮件/PDF 仍须独立保管，不会同步到服务器。":
       "演示模式不保存，所有展示价格均为虚构数据。";
     document.getElementById("demoExcelImport").disabled=buyerMode;
     document.getElementById("demoQuoteExcel").disabled=buyerMode;
     document.getElementById("demoMatchUpdate").disabled=buyerMode;
+    updateBackupButtons();
   }
   function openDB(){
     return new Promise((resolve,reject)=>{
@@ -137,7 +138,7 @@
     busy=true;buttons();
     readSaved().then(existing=>{
       if(existing){blocked=false;status("本机已有保存记录；请点击“恢复本机记录”，不能用新工作覆盖。",true);return}
-      if(!confirm("开始空白正式工作？演示数据将从本页清除。注意：本批只有手动“保存到本机”，尚无独立备份。"))return;
+      if(!confirm("开始空白正式工作？演示数据将从本页清除。请在操作后先保存到本机，再下载 JSON 备份。"))return;
       applyWorkspace(model.createEmptyWorkspace("RFQ-"+Date.now()));
       dirty=true;status("已开始空白正式工作，当前尚未保存。请先添加物料和供应商，操作后点击“保存到本机”。");
     }).catch(e=>status("不能开始正式工作："+e.message,true)).finally(()=>{busy=false;buttons()});
