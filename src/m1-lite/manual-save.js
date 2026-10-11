@@ -128,7 +128,7 @@
     customFields.splice(0,customFields.length,...s.customFields);
     lineSeq=s.lineSeq;createdSeq=s.createdSeq;quoteComparisonMode="returned";
     workspaceId=data.workspaceId;revision=data.revision;buyerMode=true;dirty=false;
-    buttons();resetUI();
+    buttons();resetUI();dirty=false; // 内部重绘不应使已恢复的工作变为未保存。
   }
   function beginBuyer(){
     if(!localReady){status("浏览器数据库不可用，不能创建需要保存的工作。",true);return}
