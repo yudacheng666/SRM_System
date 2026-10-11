@@ -73,6 +73,9 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
   <button type="button" class="btn primary" id="pilotNewWorkspace" disabled>新建空白正式工作</button>
   <button type="button" class="btn soft" id="pilotSaveWorkspace" disabled>保存到本机</button>
   <button type="button" class="btn" id="pilotResumeWorkspace" disabled>恢复本机记录</button>
+  <button type="button" class="btn soft" id="pilotExportBackup" disabled>导出 JSON 备份</button>
+  <label class="btn" for="pilotRestoreFile">选择 JSON 文件恢复</label><input type="file" id="pilotRestoreFile" accept=".json,application/json" disabled style="max-width:235px">
+  <button type="button" class="btn" id="pilotUndoRestore" disabled>撤销最近一次恢复</button>
  </div>
  <div class="toolbar" id="pilotSupplierFields" style="display:none;gap:7px;margin-bottom:8px">
   <input type="text" id="pilotCounterpartyCode" placeholder="往来单位编码">
@@ -81,7 +84,15 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
   <button type="button" class="btn soft" id="pilotAddSupplier">添加到本次询价</button>
  </div>
  <div id="pilotSaveStatus" class="small muted" role="status" aria-live="polite">正在检测本机存储能力……</div>
- <div class="small muted" style="margin-top:6px">只支持手动保存，尚无独立备份文件；不要把本机保存视为跨电脑同步。</div>
+ <div id="pilotRestorePreview" style="display:none;margin-top:12px;padding:10px;border:1px solid #bfdbfe;border-radius:8px;background:#eff6ff">
+ <div style="font-weight:600;margin-bottom:7px">备份文件恢复预览（还没有恢复）</div>
+ <div id="pilotRestoreDetail" style="white-space:pre-wrap;font-size:13px;line-height:1.65"></div>
+ <div class="toolbar" style="margin-top:8px">
+ <button type="button" class="btn primary" id="pilotConfirmRestore" disabled>确认恢复</button>
+ <button type="button" class="btn" id="pilotCancelRestore">取消恢复</button>
+ </div>
+</div>
+<div class="small muted" style="margin-top:6px">“保存到本机”与“下载备份”是两件事。JSON 只含结构化询报价记录，不含原始邮件、PDF 或截图。</div>
 </div></div>
 
   <div class="tabs">
@@ -666,6 +677,51 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.M1WorkspaceCo
 })(typeof window!=="undefined"?window:globalThis);
 
 /* END M1_LITE_CORE */
+</script>
+<script>
+/* BEGIN M1_LITE_PORTABLE_BACKUP */
+/* 中文：只负责结构化业务数据的 JSON 备份格式和读取校验，不保存邮件/PDF 原件。
+ * English: Portable structured-data backup format and strict reader; original evidence binaries excluded. */
+(function(root){
+"use strict";
+const FORMAT="srm-lite-json-backup",VERSION=1,MAX_BYTES=20*1024*1024;
+function fail(message){throw new Error("备份文件无效："+message)}
+function create(saved,exportedAt){
+  root.M1WorkspaceCore.validate(saved);
+  if(saved.origin!=="buyer")fail("不能备份虚构演示数据");
+  const date=exportedAt||new Date().toISOString();
+  if(typeof date!=="string"||!Number.isFinite(Date.parse(date)))fail("导出时间无效");
+  return {format:FORMAT,backupVersion:VERSION,exportedAt:date,
+    attachmentsIncluded:false,workspace:JSON.parse(root.M1WorkspaceCore.stringify(saved))};
+}
+function parse(text){
+  if(typeof text!=="string"||!text.length)fail("内容为空");
+  if(new TextEncoder().encode(text).length>MAX_BYTES)fail("文件超过 20 MB，无法安全预览");
+  let payload;
+  try{payload=JSON.parse(text)}catch(_){fail("不是有效 JSON 文件")}
+  if(!payload||typeof payload!=="object"||Array.isArray(payload))fail("缺少备份内容");
+  if(payload.format!==FORMAT||payload.backupVersion!==VERSION)fail("格式或版本不受支持");
+  if(payload.attachmentsIncluded!==false)fail("附件范围标识异常");
+  if(typeof payload.exportedAt!=="string"||!Number.isFinite(Date.parse(payload.exportedAt)))fail("导出时间无效");
+  try{root.M1WorkspaceCore.validate(payload.workspace)}catch(e){fail("业务数据校验不通过："+String(e.message||e))}
+  if(payload.workspace.origin!=="buyer")fail("演示数据不能作为正式工作恢复");
+  // 中文：生成独立拷贝，不让上传文件对象的引用影响后续内存。
+  // English: Return a validated independent snapshot to prevent aliasing.
+  return {format:FORMAT,backupVersion:VERSION,exportedAt:payload.exportedAt,
+    attachmentsIncluded:false,workspace:JSON.parse(root.M1WorkspaceCore.stringify(payload.workspace))};
+}
+function summarize(pack){
+  const s=pack.workspace.state;
+  return {workspaceId:pack.workspace.workspaceId,revision:pack.workspace.revision,
+    exportedAt:pack.exportedAt,items:s.items.length,suppliers:s.suppliers.length,
+    quoteRounds:s.quoteRounds.length,confirmed:s.quoteRounds.filter(x=>x.status==="confirmed").length};
+}
+const api=Object.freeze({FORMAT,VERSION,MAX_BYTES,create,parse,summarize});
+root.SRMPortableBackup=api;
+if(typeof module!=="undefined"&&module.exports)module.exports=api;
+})(typeof window!=="undefined"?window:globalThis);
+
+/* END M1_LITE_PORTABLE_BACKUP */
 </script>
 <script>
 const categories=["类别A","类别B","类别C","类别D","类别E","类别F"];
@@ -2028,11 +2084,12 @@ renderItemList();renderAssignAll();renderQuotes();
       "正式工作：操作后请点击“保存到本机”。本机保存不是云端同步或独立备份；同一路径、同浏览器可恢复。":
       "当前是演示模式，所有操作刷新后会丢失。点击“新建空白正式工作”后才能录入并保存实际资料。";
     document.getElementById("pilotFooter").textContent=buyerMode?
-      "正式工作采用本机手动保存，未提供独立文件备份或服务器同步；原始邮件/PDF 请另行保管。":
+      "正式工作可手动保存并下载结构化 JSON 备份；原始邮件/PDF 仍须独立保管，不会同步到服务器。":
       "演示模式不保存，所有展示价格均为虚构数据。";
     document.getElementById("demoExcelImport").disabled=buyerMode;
     document.getElementById("demoQuoteExcel").disabled=buyerMode;
     document.getElementById("demoMatchUpdate").disabled=buyerMode;
+    updateBackupButtons();
   }
   function openDB(){
     return new Promise((resolve,reject)=>{
@@ -2130,7 +2187,7 @@ renderItemList();renderAssignAll();renderQuotes();
     busy=true;buttons();
     readSaved().then(existing=>{
       if(existing){blocked=false;status("本机已有保存记录；请点击“恢复本机记录”，不能用新工作覆盖。",true);return}
-      if(!confirm("开始空白正式工作？演示数据将从本页清除。注意：本批只有手动“保存到本机”，尚无独立备份。"))return;
+      if(!confirm("开始空白正式工作？演示数据将从本页清除。请在操作后先保存到本机，再下载 JSON 备份。"))return;
       applyWorkspace(model.createEmptyWorkspace("RFQ-"+Date.now()));
       dirty=true;status("已开始空白正式工作，当前尚未保存。请先添加物料和供应商，操作后点击“保存到本机”。");
     }).catch(e=>status("不能开始正式工作："+e.message,true)).finally(()=>{busy=false;buttons()});
@@ -2189,6 +2246,158 @@ renderItemList();renderAssignAll();renderQuotes();
   saveBtn.addEventListener("click",save);
   resumeBtn.addEventListener("click",recover);
   supplierBtn.addEventListener("click",addSupplier);
+  /* 中文：仅手动备份已经保存的结构化业务数据；恢复前严格预览校验。
+   * English: Manual saved-data export and validated preview before any restore. */
+  const exportBackupBtn=document.getElementById("pilotExportBackup");
+  const restoreFile=document.getElementById("pilotRestoreFile");
+  const restorePreview=document.getElementById("pilotRestorePreview");
+  const restoreDetail=document.getElementById("pilotRestoreDetail");
+  const confirmRestoreBtn=document.getElementById("pilotConfirmRestore");
+  const cancelRestoreBtn=document.getElementById("pilotCancelRestore");
+  const undoRestoreBtn=document.getElementById("pilotUndoRestore");
+  let previewPack=null,previewBaseline=null;
+  function updateBackupButtons(){
+    exportBackupBtn.disabled=busy||!buyerMode||!localReady;
+    restoreFile.disabled=busy||!localReady||blocked;
+    confirmRestoreBtn.disabled=busy||!previewPack;
+    undoRestoreBtn.disabled=busy||!localReady;
+  }
+  function clearRestorePreview(){
+    previewPack=null;previewBaseline=null;
+    restoreDetail.textContent="";restorePreview.style.display="none";
+    restoreFile.value="";updateBackupButtons();
+  }
+  async function downloadBackup(){
+    if(busy||!buyerMode||!localReady)return;
+    if(dirty){status("当前有未保存修改，请先点击“保存到本机”，再导出备份。",true);return}
+    busy=true;buttons();updateBackupButtons();
+    try{
+      const saved=await readSaved();
+      if(!saved||saved.workspaceId!==workspaceId||saved.revision!==revision)
+        throw Error("本机保存版本已变化，请先恢复最新记录再导出。");
+      const pack=window.SRMPortableBackup.create(saved);
+      const output=JSON.stringify(pack,null,2);
+      const date=pack.exportedAt.slice(0,10).replace(/-/g,"");
+      const name=date+"_SRM_"+pack.workspace.workspaceId.replace(/[^a-zA-Z0-9_-]/g,"_")+"_v"+pack.workspace.revision+".json";
+      const blob=new Blob([output],{type:"application/json;charset=utf-8"});
+      const url=URL.createObjectURL(blob),a=document.createElement("a");
+      a.href=url;a.download=name;a.style.display="none";
+      document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+      status("已发起备份文件下载："+name+"。请核对文件已存入安全位置；原始邮件/PDF 不包含在内。");
+    }catch(e){status("备份失败，未生成有效文件："+e.message,true)}
+    finally{busy=false;buttons();updateBackupButtons()}
+  }
+  function sameBaseline(actual,expected){
+    return (!actual&&!expected)||!!(actual&&expected&&actual.workspaceId===expected.workspaceId&&actual.revision===expected.revision);
+  }
+  restoreFile.addEventListener("change",async()=>{
+    const file=restoreFile.files?.[0];
+    previewPack=null;previewBaseline=null;restoreDetail.textContent="";restorePreview.style.display="none";updateBackupButtons();
+    if(!file)return;
+    if(busy||blocked||!localReady){status("本机保存不可用，无法恢复文件。",true);restoreFile.value="";return}
+    if(buyerMode&&dirty){status("当前工作有未保存修改。请先保存，再预览恢复。",true);restoreFile.value="";return}
+    try{
+      if(file.size>window.SRMPortableBackup.MAX_BYTES)throw Error("文件超过 20MB");
+      const pack=window.SRMPortableBackup.parse(await file.text());
+      const current=await readSaved();
+      if(current){model.validate(current);if(current.origin!=="buyer")throw Error("已有非正式记录，不允许覆盖")}
+      previewPack=pack;
+      previewBaseline=current?{workspaceId:current.workspaceId,revision:current.revision}:null;
+      const v=window.SRMPortableBackup.summarize(pack);
+      restoreDetail.textContent="待恢复工作："+v.workspaceId+"（版本 "+v.revision+"）\n"+
+        "导出时间："+v.exportedAt+"\n"+
+        "物料："+v.items+" 行；供应商："+v.suppliers+" 家；报价版本："+v.quoteRounds+" 个（已确认 "+v.confirmed+" 个）\n"+
+        (current?"当前本机："+current.workspaceId+"（版本 "+current.revision+"）。确认后将替换并保留一次本机撤销记录。\n":
+          "本机尚无保存的正式工作，确认后将新建。\n")+
+        "注意：只含结构化业务数据，不含邮件、聊天截图、PDF、图纸等原始文件！";
+      restorePreview.style.display="block";
+      updateBackupButtons();
+      status("文件已通过格式和业务关联检查，尚未恢复。请先核对预览信息。");
+    }catch(e){clearRestorePreview();status("恢复预览失败，本机记录没有改变："+e.message,true)}
+  });
+  async function commitRestore(){
+    if(busy||!previewPack||!localReady)return;
+    if(buyerMode&&dirty){status("有未保存的修改，禁止直接覆盖。",true);return}
+    const incoming=previewPack.workspace,baseline=previewBaseline;
+    const warning=baseline?
+      "即将用备份替换本机 "+baseline.workspaceId+"（版本 "+baseline.revision+"）。\n"+
+      "来源文件："+incoming.workspaceId+"（版本 "+incoming.revision+"）。\n"+
+      "建议先把当前本机记录另行导出。恢复时将保留一次本机撤销记录。是否继续？":
+      "将文件中的 "+incoming.workspaceId+" 恢复为本机正式工作。附件文件本体不会恢复。是否继续？";
+    if(!confirm(warning))return;
+    if(baseline&&!confirm("再次确认：即将替换本机当前询报价记录。确定继续？"))return;
+    busy=true;buttons();updateBackupButtons();
+    try{
+      const db=await openDB();
+      try{
+        await new Promise((resolve,reject)=>{
+          const tx=db.transaction(STORE,"readwrite"),store=tx.objectStore(STORE);
+          let reason=null;
+          const req=store.get(KEY);
+          req.onsuccess=()=>{
+            try{
+              const actual=req.result||null;
+              if(!sameBaseline(actual,baseline))throw Error("预览后本机记录已发生变化，请重新选择备份。");
+              if(actual){
+                store.put(actual,"restore-rollback");
+                store.put({workspaceId:incoming.workspaceId,revision:incoming.revision},"restore-undo-target");
+              }else{
+                store.delete("restore-rollback");store.delete("restore-undo-target");
+              }
+              store.put(incoming,KEY);
+            }catch(e){reason=e;tx.abort()}
+          };
+          tx.oncomplete=()=>resolve();
+          tx.onerror=()=>reject(reason||tx.error||Error("恢复失败"));
+          tx.onabort=()=>reject(reason||tx.error||Error("恢复中止"));
+        });
+      }finally{db.close()}
+      applyWorkspace(incoming);clearRestorePreview();
+      status("已从文件恢复："+workspaceId+"（版本 "+revision+"）。附件原件不包含在备份中，建议再导出独立文件。");
+    }catch(e){status("恢复失败，本机原记录未改变："+e.message,true);clearRestorePreview()}
+    finally{busy=false;buttons();updateBackupButtons()}
+  }
+  async function undoLastRestore(){
+    if(busy||!localReady||blocked)return;
+    if(buyerMode&&dirty){status("当前有未保存的修改，请先处理后再撤销恢复。",true);return}
+    if(!confirm("撤销最近一次文件恢复？将把本机记录恢复到文件导入之前。请确保需要保留的文件已另行备份。"))return;
+    busy=true;buttons();updateBackupButtons();
+    try{
+      const db=await openDB();let previous=null;
+      try{
+        await new Promise((resolve,reject)=>{
+          const tx=db.transaction(STORE,"readwrite"),store=tx.objectStore(STORE);
+          let live=null,old=null,meta=null,reason=null;
+          const a=store.get(KEY),b=store.get("restore-rollback"),c=store.get("restore-undo-target");
+          a.onsuccess=()=>{live=a.result||null};
+          b.onsuccess=()=>{old=b.result||null};
+          c.onsuccess=()=>{meta=c.result||null};
+          const decision=store.get("restore-undo-target");
+          decision.onsuccess=()=>{
+            try{
+              if(!old||!meta||!live||!sameBaseline(live,meta))
+                throw Error("没有可撤销记录，或其他窗口已经保存了更新的内容。");
+              model.validate(old);previous=old;
+              store.put(old,KEY);store.delete("restore-rollback");store.delete("restore-undo-target");
+            }catch(e){reason=e;tx.abort()}
+          };
+          tx.oncomplete=()=>resolve();
+          tx.onerror=()=>reject(reason||tx.error||Error("撤销失败"));
+          tx.onabort=()=>reject(reason||tx.error||Error("撤销中止"));
+        });
+      }finally{db.close()}
+      applyWorkspace(previous);
+      status("已撤销最近一次文件恢复，找回恢复前的本机工作。建议立即下载独立备份。");
+    }catch(e){status("撤销失败，本机记录保持原样："+e.message,true)}
+    finally{busy=false;buttons();updateBackupButtons()}
+  }
+  exportBackupBtn.addEventListener("click",downloadBackup);
+  confirmRestoreBtn.addEventListener("click",commitRestore);
+  cancelRestoreBtn.addEventListener("click",clearRestorePreview);
+  undoRestoreBtn.addEventListener("click",undoLastRestore);
+  updateBackupButtons();
+
   buttons();
   // 中文：页面每次打开检查本机已有工作；有就恢复，没记录则保留 M0 演示视图。
   // English: Restore a saved buyer workspace on open, otherwise leave the demo clearly labeled.
