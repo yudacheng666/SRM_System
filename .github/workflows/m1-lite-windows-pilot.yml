@@ -1,0 +1,36 @@
+# 中文：GitHub Windows 虚拟机测试，使用完全虚构数据；这是机房环境验证而非采购员电脑验收。
+# English: Isolated Windows hosted runner tests with synthetic data; not a replacement for buyer-PC UAT.
+name: SRM Lite Windows Browser Pilot Validation
+on:
+  push:
+    branches:
+      - draft/20261011-windows-pilot-validation
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows-file-persistence:
+    name: Windows ${{ matrix.browser }} file and backup
+    runs-on: windows-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, msedge]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright test client
+        run: npm install --no-save playwright@1.56.1
+      - name: Smoke test in installed Windows browser
+        run: node tests/browser/m1-lite-windows-smoke.cjs ${{ matrix.browser }}
+      - name: Upload one candidate HTML for manual Windows testing
+        if: matrix.browser == 'chrome'
+        uses: actions/upload-artifact@v4
+        with:
+          name: SRM-Lite-Windows-试用候选版
+          path: prototype/m1-lite/index.html
+          if-no-files-found: error
+          retention-days: 30
