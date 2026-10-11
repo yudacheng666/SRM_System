@@ -85,6 +85,8 @@ const {pathToFileURL}=require("node:url"),{chromium}=require("playwright");
 
    await b.locator("#pilotRestoreFile").setInputFiles({name:"broken.json",mimeType:"application/json",
      buffer:Buffer.from('{"not":"valid"')});
+   await b.waitForTimeout(300);
+   console.log("DEBUG invalid backup",JSON.stringify({status:await b.locator("#pilotSaveStatus").innerText(),enabled:await b.locator("#pilotRestoreFile").isEnabled(),errors:errors.slice(-3)}));
    await wait(b,"恢复预览失败");
    assert.equal(await b.locator("#pilotRestorePreview").isVisible(),false);
    assert.equal(await b.evaluate(()=>quoteRounds[0].lines[0].price),15.75);
