@@ -77,6 +77,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
  <div class="toolbar" style="margin-bottom:8px;gap:8px">
   <button type="button" class="btn soft" id="pilotExportBackup" disabled>下载结构化备份</button>
   <button type="button" class="btn soft" id="pilotExportExcel" disabled>导出业务数据 Excel（3 Sheet）</button>
+  <button type="button" class="btn primary" id="pilotReportOpen" disabled>导出询价单 / 比价议价单</button>
   <label class="btn" style="cursor:pointer">选择备份 JSON <input type="file" id="pilotImportBackup" accept=".json,application/json" disabled style="max-width:185px"></label>
   <button type="button" class="btn" id="pilotRestoreBackup" disabled>恢复到空白本机</button>
  </div>
@@ -93,6 +94,27 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
  </div>
  <pre id="pilotSupplierExcelPreview" class="small" style="display:none;white-space:pre-wrap;padding:10px;border:1px solid #bfdbfe"></pre>
  <div id="pilotSupplierExcelStatus" role="status" class="small muted">供应商 Excel 必须包含往来单位编码、往来单位名称；供应商编码可选。导入后先确认，再保存本机记录。</div>
+ <div id="pilotReportPanel" style="display:none;padding:12px;border:1px solid #cbd5e1;border-radius:8px;margin:10px 0;background:#f8fafc">
+  <div class="toolbar" style="align-items:center;gap:10px">
+   <b>业务单据 Excel 导出</b>
+   <label class="small">单据类型
+    <select id="pilotReportType"><option value="rfq">供应商询价单</option><option value="comparison">内部比价议价单</option></select>
+   </label>
+  </div>
+  <div id="pilotReportSinglePicker" class="toolbar" style="margin:10px 0">
+   <label class="small">询价供应商 <select id="pilotReportSupplier"></select></label>
+  </div>
+  <div id="pilotReportMultiPicker" style="display:none;margin:10px 0">
+   <b class="small">选择参与同范围比较的供应商（2–10 家）</b>
+   <div id="pilotReportSupplierGroup" class="toolbar" style="gap:6px;flex-wrap:wrap"></div>
+  </div>
+  <div class="small muted" style="margin-bottom:5px">勾选本次需要导出的字段；* 为确保报价可回收和历史可追溯而保留的必要字段。</div>
+  <div id="pilotReportFields" style="display:flex;flex-wrap:wrap;gap:10px"></div>
+  <div class="toolbar" style="margin-top:11px">
+   <button type="button" id="pilotReportDownload" class="btn primary">下载所选字段的 Excel</button>
+  </div>
+  <div id="pilotReportHint" role="status" class="small muted" style="margin-top:8px"></div>
+ </div>
  <div id="pilotSaveStatus" class="small muted" role="status" aria-live="polite">正在检测本机存储能力……</div>
  <div class="small muted" style="margin-top:6px">必须先保存到本机，再下载 JSON 文件备份；文件不含原始邮件、PDF 等附件。已有正式工作不允许被导入文件覆盖。</div>
 </div></div>
@@ -973,6 +995,248 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMExcel;
 })(typeof window!=="undefined"?window:globalThis);
 
 /* END M1_LITE_NATIVE_XLSX */
+</script>
+<script>
+/* BEGIN M1_LITE_REPORT_MODEL */
+/* 中文：SRM-Lite 独立业务单据生成器，仅从明确已保存的正式询价快照生成。
+ * English: Pure RFQ and comparison workbooks from a validated, committed buyer snapshot.
+ * 对外 RFQ 不得包括任何报价历史、其他供应商名单、最终选定结果或内部原因。
+ */
+(function(root){
+"use strict";
+const mandatoryRfq=[
+ {key:"lineId",name:"RFQ Line ID",required:true},
+ {key:"code",name:"存货编码",required:true},
+ {key:"name",name:"存货名称",required:true},
+ {key:"quantity",name:"询价数量",required:true},
+ {key:"unit",name:"询价单位",required:true},
+ {key:"price",name:"报价单价",required:true},
+ {key:"status",name:"报价状态",required:true}
+];
+const rfqExtras=[
+ {key:"category",name:"所属类别"},
+ {key:"lead",name:"交期"},
+ {key:"moq",name:"MOQ"},
+ {key:"remark",name:"物料备注"}
+];
+const summaryRequired=[
+ {key:"lineId",name:"RFQ Line ID",required:true},
+ {key:"code",name:"存货编码",required:true},
+ {key:"quantity",name:"询价数量",required:true},
+ {key:"unit",name:"询价单位",required:true}
+];
+const summaryOptional=[
+ {key:"name",name:"存货名称"},
+ {key:"category",name:"所属类别"},
+ {key:"common",name:"是否共同有效报价"},
+ {key:"lowest",name:"最低适用单价"},
+ {key:"award",name:"最终选择供应商"},
+ {key:"awardPrice",name:"选择供应商适用单价"},
+ {key:"awardReason",name:"非最低价选择原因"},
+ {key:"review",name:"选择待复核"}
+];
+const historyRequired=[
+ {key:"supplierCode",name:"供应商编码",required:true},
+ {key:"round",name:"报价轮次",required:true},
+ {key:"revision",name:"报价版本",required:true},
+ {key:"confirmed",name:"确认状态",required:true},
+ {key:"lineId",name:"RFQ Line ID",required:true},
+ {key:"code",name:"存货编码",required:true},
+ {key:"status",name:"报价状态",required:true}
+];
+const historyOptional=[
+ {key:"supplierName",name:"往来单位名称"},
+ {key:"name",name:"存货名称"},
+ {key:"qty",name:"询价数量"},
+ {key:"unit",name:"询价单位"},
+ {key:"price",name:"报价单价"},
+ {key:"applicable",name:"当次数量适用单价"},
+ {key:"tiers",name:"阶梯报价"},
+ {key:"lead",name:"交期"},
+ {key:"moq",name:"MOQ"},
+ {key:"terms",name:"整轮商务备注"},
+ {key:"note",name:"物料备注"},
+ {key:"evidenceType",name:"原始报价凭证类型"},
+ {key:"evidence",name:"报价凭证说明"},
+ {key:"source",name:"报价来源说明"},
+ {key:"confirmedAt",name:"确认时间"}
+];
+const fields={
+ rfq:[...mandatoryRfq,...rfqExtras],
+ summary:[...summaryRequired,...summaryOptional],
+ history:[...historyRequired,...historyOptional]
+};
+function fail(message){throw new Error("EXPORT: "+message)}
+function checkedWorkspace(ws){
+ if(!root.M1WorkspaceCore)fail("数据校验组件未加载");
+ root.M1WorkspaceCore.validate(ws);
+ if(ws.origin!=="buyer"||ws.state.quoteComparisonMode!=="returned")fail("只允许从正式工作空间导出，不能导出演示报价");
+ return ws.state;
+}
+function supplierMap(st){return new Map(st.suppliers.map(s=>[s.id,s]))}
+function pairs(st,key){return new Map((st[key]||[]).map(p=>[p.key,p.value]))}
+function allocations(st){return new Map(st.assignments.map(a=>[a.key,new Set(a.values)]))}
+function fieldSelection(kind,selected){
+ const specs=fields[kind];if(!specs)fail("不支持的单据类别");
+ const ids=new Set(specs.map(f=>f.key));
+ const requested=selected===undefined?new Set(specs.map(f=>f.key)):new Set(selected);
+ for(const key of requested)if(!ids.has(key))fail("不属于此单据的导出字段："+key);
+ // Mandatory fields always included even if caller passes an empty optional selection.
+ return specs.filter(f=>f.required||requested.has(f.key));
+}
+function safeFilename(str){return String(str||"").replace(/[\\/:*?"<>|]/g,"_").slice(0,48)}
+function roundName(r){return "第"+r.roundNo+"轮/第"+r.revisionNo+"版"}
+function tierText(line){
+ if(!line?.tiers?.length)return"";
+ return line.tiers.map(t=>t.min+(t.max==null?"+":"-"+t.max)+":"+t.price).join("|");
+}
+function effectivePrice(line,quantity){
+ if(!line||line.status!=="quoted")return null;
+ const q=Number(quantity);
+ if(!Number.isFinite(q)||q<=0)return null;
+ if(line.tiers?.length){
+  const t=line.tiers.find(x=>q>=x.min&&(x.max==null||q<=x.max));
+  return t&&Number.isFinite(Number(t.price))?Number(t.price):null;
+ }
+ return line.price==null||!Number.isFinite(Number(line.price))?null:Number(line.price);
+}
+// The latest CONFIRMED revision per round is authoritative; never use draft revisions for prices.
+function latestConfirmedQuote(st,sid,lineId){
+ const rounds=st.quoteRounds.filter(r=>r.supplierId===sid&&r.status==="confirmed")
+  .sort((a,b)=>b.roundNo-a.roundNo||b.revisionNo-a.revisionNo);
+ const seen=new Set();
+ for(const r of rounds){
+  if(seen.has(r.roundNo))continue;
+  seen.add(r.roundNo);
+  if(!(r.expectedLineIds||[]).includes(lineId))continue;
+  const line=r.lines.find(q=>q.lineId===lineId);
+  return line?{line,round:r}:null; // An explicit declined quote must not fallback to old price.
+ }
+ return null;
+}
+function amountCents(qty,price){return Math.round(Number(qty)*price*100)}
+function excelColumn(n){let result="";for(let x=n;x>=0;x=Math.floor(x/26)-1)result=String.fromCharCode(65+x%26)+result;return result}
+function rfq(ws,supplierId,chosen){
+ const st=checkedWorkspace(ws),sup=supplierMap(st).get(supplierId);
+ if(!sup)fail("供应商不存在");
+ const alloc=allocations(st);
+ const lines=st.items.filter(it=>alloc.get(it.lineId)?.has(supplierId));
+ if(!lines.length)fail("未为该供应商分配任何询价物料");
+ const cols=fieldSelection("rfq",chosen);
+ const cells={
+  lineId:it=>it.lineId,code:it=>String(it.id),name:it=>it.name,quantity:it=>it.qty,
+  unit:it=>it.unit,price:()=>"",status:()=>"",category:it=>it.cat||"",
+  lead:()=>"",moq:()=>"",remark:()=>""
+ };
+ const rows=[cols.map(f=>f.name),...lines.map(it=>cols.map(f=>cells[f.key](it)))];
+ return{
+  kind:"rfq",supplierId,items:lines.length,
+  filename:"SRM_询价单_"+safeFilename(supplierId)+"_"+safeFilename(sup.name)+".xlsx",
+  sheets:[{name:"供应商报价填写",rows}],
+  fields:cols.map(x=>x.key)
+ };
+}
+function comparison(ws,selectedSuppliers,selectSummary,selectHistory){
+ const st=checkedWorkspace(ws),supMap=supplierMap(st);
+ const ids=[...new Set(selectedSuppliers||[])];
+ if(ids.length<2)fail("请明确选择至少两家供应商");
+ if(ids.length>10)fail("一次最多比较 10 家供应商，避免横向表过宽");
+ for(const id of ids)if(!supMap.has(id))fail("比较组包含不存在的供应商："+id);
+ const allocation=allocations(st);
+ const activeItems=st.items.filter(it=>ids.some(id=>allocation.get(it.lineId)?.has(id)));
+ if(!activeItems.length)fail("选定供应商没有分配任何询价物料");
+ const award=pairs(st,"awards"),reasons=pairs(st,"awardReasons"),reviews=new Set(st.awardReviewIds);
+ const chosen=fieldSelection("summary",selectSummary),historyCols=fieldSelection("history",selectHistory);
+ const hdr=chosen.map(f=>f.name);
+ const supplierLabels=ids.map(id=>supMap.get(id).name+" ("+id+")");
+ // Each supplier gets price, row amount and provenance; never fabricate prices.
+ for(const label of supplierLabels)hdr.push(label+" 适用单价",label+" 行金额",label+" 报价轮次");
+ const body=[],commonAmounts=new Map(ids.map(id=>[id,0]));
+ let commonCount=0;
+ const sourceValues={
+  lineId:it=>it.lineId,code:it=>it.id,name:it=>it.name,category:it=>it.cat||"",
+  quantity:it=>it.qty,unit:it=>it.unit
+ };
+ for(const it of activeItems){
+  const quotes=ids.map(id=>latestConfirmedQuote(st,id,it.lineId));
+  const prices=quotes.map(x=>effectivePrice(x?.line,it.qty));
+  const common=prices.every(x=>Number.isFinite(x)&&x>=0);
+  if(common){
+   commonCount++;
+   ids.forEach((id,i)=>commonAmounts.set(id,commonAmounts.get(id)+amountCents(it.qty,prices[i])));
+  }
+  const valid=prices.filter(x=>Number.isFinite(x)&&x>=0);
+  const low=valid.length?Math.min(...valid):null;
+  const selected=award.get(it.lineId)||"",aprice=ids.includes(selected)?prices[ids.indexOf(selected)]:null;
+  const context={
+   common:common?"是":"否",lowest:low,award:selected?supMap.get(selected)?.name||selected:"",
+   awardPrice:aprice,awardReason:reasons.get(it.lineId)||"",
+   review:reviews.has(it.lineId)?"待复核":""
+  };
+  const row=chosen.map(f=>sourceValues[f.key]?sourceValues[f.key](it):context[f.key]??"");
+  // Generate per-supplier amounts as trusted Excel formulas for manual post-export analysis.
+  const sheetRow=body.length+2;
+  const qtyPos=chosen.findIndex(c=>c.key==="quantity");
+  const qtyRef=excelColumn(qtyPos)+sheetRow;
+  ids.forEach((id,i)=>{
+   const idx=chosen.length+3*i,price=prices[i],ref=excelColumn(idx)+sheetRow,round=quotes[i]?.round;
+   row.push(price==null?"":price,
+    price==null?"":{formula:"=ROUND("+ref+"*"+qtyRef+",2)"},
+    round?roundName(round):"");
+  });
+  body.push(row);
+ }
+ const rows=[hdr,...body];
+ // The common-scope totals must never include partial supplier scopes.
+ const commonFieldIdx=chosen.findIndex(x=>x.key==="common");
+ const grand=["同范围合计（仅共同有效报价）",...Array(hdr.length-1).fill("")];
+ const lastRow=body.length+1;
+ ids.forEach((id,i)=>{
+  const amountCol=chosen.length+3*i+1;
+  if(commonCount===0){grand[amountCol]="";return}
+  const amountRef=excelColumn(amountCol),from=amountRef+"2",to=amountRef+lastRow;
+  if(commonFieldIdx>=0){
+   const commonRef=excelColumn(commonFieldIdx);
+   grand[amountCol]={formula:"=SUMIF("+commonRef+"2:"+commonRef+lastRow+',\"是\",'+from+":"+to+")"};
+  }else{
+   // Without a visible common flag, calculate the totals from validated common-scope members.
+   grand[amountCol]=commonAmounts.get(id)/100;
+  }
+ });
+ rows.push(grand);
+ const historyRows=[historyCols.map(f=>f.name)];
+ // Show all confirmed revisions and drafts explicitly; only confirmed history drives the matrix.
+ const rounds=st.quoteRounds.filter(r=>ids.includes(r.supplierId))
+  .sort((a,b)=>a.supplierId.localeCompare(b.supplierId)||a.roundNo-b.roundNo||a.revisionNo-b.revisionNo);
+ for(const r of rounds){
+  for(const line of r.lines){
+   const it=st.items.find(x=>x.lineId===line.lineId);
+   const val={
+    supplierCode:r.supplierId,supplierName:supMap.get(r.supplierId)?.name||"",
+    round:r.roundNo,revision:r.revisionNo,confirmed:r.status==="confirmed"?"已确认":"草稿（不可用作比价）",
+    lineId:line.lineId,code:it?.id||line.itemId||"",name:it?.name||"",qty:it?.qty??"",unit:it?.unit||"",
+    status:line.status==="quoted"?"正常报价":line.status==="noquote"?"未报价":line.status==="cannot"?"不供货":line.status,
+    price:line.price??"",applicable:effectivePrice(line,it?.qty)??"",tiers:tierText(line),
+    lead:line.lead??"",moq:line.moq??"",terms:r.termsNote||"",note:line.remark||"",
+    evidenceType:r.evidenceType||"",evidence:r.evidenceNote||"",source:line.source||"",
+    confirmedAt:r.confirmedAt||""
+   };
+   historyRows.push(historyCols.map(f=>val[f.key]??""));
+  }
+ }
+ if(historyRows.length===1)historyRows.push(historyCols.map(()=> ""));
+ return{
+  kind:"comparison",supplierIds:ids,commonCount,totalItems:activeItems.length,
+  filename:"SRM_比价议价单_"+safeFilename(ws.workspaceId)+".xlsx",
+  sheets:[{name:"比价汇总",rows},{name:"报价议价明细",rows:historyRows}],
+  fields:{summary:chosen.map(f=>f.key),history:historyCols.map(f=>f.key)}
+ };
+}
+root.SRMReports=Object.freeze({fields,rfq,comparison,latestConfirmedQuote,effectivePrice});
+if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMReports;
+})(typeof window!=="undefined"?window:globalThis);
+
+/* END M1_LITE_REPORT_MODEL */
 </script>
 <script>
 const categories=["类别A","类别B","类别C","类别D","类别E","类别F"];
@@ -2345,6 +2609,7 @@ renderItemList();renderAssignAll();renderQuotes();
     supplierBtn.disabled=!buyerMode||busy;
     exportBtn.disabled=!buyerMode||busy||!localReady;
     document.getElementById("pilotExportExcel").disabled=!buyerMode||busy||!localReady;
+    document.getElementById("pilotReportOpen").disabled=!buyerMode||busy||!localReady;
     importInput.disabled=busy||!localReady;
     restoreBtn.disabled=!pendingRestore||busy||!localReady||buyerMode;
     newBtn.disabled=busy||blocked||!localReady||buyerMode;
@@ -2556,6 +2821,18 @@ renderItemList();renderAssignAll();renderQuotes();
     }catch(e){status("Excel 导出失败："+e.message,true)}
     finally{busy=false;buttons()}
   }
+  // 中文：业务单据只从已保存的正式版本导出，不读取尚未提交的报价草稿。
+  // English: Supplier reports read committed buyer snapshots only.
+  async function committedWorkspaceForReport(){
+    if(!buyerMode||!localReady||busy)throw Error("请先进入可用的正式工作区");
+    if(dirty)throw Error("有未保存的修改，请先点击“保存到本机”，成功后再导出单据");
+    const saved=await readSaved();
+    if(!saved||saved.workspaceId!==workspaceId||saved.revision!==revision)
+      throw Error("本机保存版本与当前页面不同，请先恢复最新版本");
+    model.validate(saved);
+    if(saved.origin!=="buyer")throw Error("禁止导出演示工作数据");
+    return saved;
+  }
   document.addEventListener("click",e=>{
     if(!buyerMode||busy)return;
     // 中文：保守提示“尚未保存”，不自动写数据库；过滤工具按钮不代表业务已写入。
@@ -2675,7 +2952,7 @@ renderItemList();renderAssignAll();renderQuotes();
   })();
   window.SRMPilot=Object.freeze({snapshot:()=>buyerMode?readState():null,
     isBuyer:()=>buyerMode,revision:()=>revision,dirty:()=>dirty,
-    save,recover,beginBuyer,exportBackup,restorePortable,importSupplierRows,exportBusinessExcel});
+    save,recover,beginBuyer,exportBackup,restorePortable,importSupplierRows,exportBusinessExcel,committedWorkspaceForReport,reportMessage:status});
 }
 /* END M1_LITE_MANUAL_SAVE */
 /* BEGIN M1_LITE_EXCEL_BRIDGE */
@@ -2768,6 +3045,92 @@ renderItemList();renderAssignAll();renderQuotes();
  };
 }
 /* END M1_LITE_EXCEL_BRIDGE */
+/* BEGIN M1_LITE_REPORT_UI */
+/* 中文：为采购员提供单一业务单据导出入口，导出前选择供应商及字段。
+ * English: Compact buyer-facing export picker for confidential supplier RFQs and internal two-sheet comparison. */
+{
+ const reportCore=window.SRMReports,reportOpen=document.getElementById("pilotReportOpen");
+ const box=document.getElementById("pilotReportPanel");
+ const type=document.getElementById("pilotReportType");
+ const supplierEl=document.getElementById("pilotReportSupplier");
+ const group=document.getElementById("pilotReportSupplierGroup");
+ const fieldsBox=document.getElementById("pilotReportFields");
+ const exportBtn=document.getElementById("pilotReportDownload");
+ const warning=document.getElementById("pilotReportHint");
+ function getParticipating(){
+  const ws=window.SRMPilot?.snapshot();
+  if(!ws)return[];
+  const relations=new Map(ws.state.assignments.map(x=>[x.key,new Set(x.values)]));
+  return ws.state.suppliers.filter(s=>ws.state.items.some(it=>relations.get(it.lineId)?.has(s.id)));
+ }
+ function fieldGroup(name,kind){
+  const allowed=reportCore.fields[kind];
+  return '<fieldset style="border:1px solid #e5e7eb;border-radius:6px;padding:9px;min-width:210px">'+
+   '<legend class="small"><b>'+name+'</b></legend>'+
+   allowed.map(f=>'<label style="display:inline-flex;align-items:center;gap:4px;min-width:145px;margin:4px 8px 4px 0">'+
+    '<input type="checkbox" data-report-group="'+kind+'" data-report-field="'+f.key+'" checked '+
+     (f.required?'disabled title="必要的身份/追溯字段，不可取消"':'')+'> '+
+    f.name+(f.required?' *':'')+'</label>').join("")+'</fieldset>';
+ }
+ function render(){
+  if(box.style.display==="none")return;
+  const candidates=getParticipating();
+  const previous=supplierEl.value;
+  supplierEl.innerHTML=candidates.map(s=>'<option value="'+escapeHtml(s.id)+'">'+escapeHtml(s.name)+' ('+escapeHtml(s.id)+')</option>').join("");
+  if(candidates.some(x=>x.id===previous))supplierEl.value=previous;
+  const isComparison=type.value==="comparison";
+  document.getElementById("pilotReportSinglePicker").style.display=isComparison?"none":"flex";
+  document.getElementById("pilotReportMultiPicker").style.display=isComparison?"block":"none";
+  const selected=new Set([...group.querySelectorAll("[data-report-supplier]:checked")].map(x=>x.value));
+  group.innerHTML=candidates.map(s=>'<label class="chip" style="margin:4px">'+
+   '<input type="checkbox" data-report-supplier value="'+escapeHtml(s.id)+'" '+
+    (selected.has(s.id)?'checked':'')+'> '+escapeHtml(s.name)+' ('+escapeHtml(s.id)+')</label>').join("");
+  fieldsBox.innerHTML=isComparison?
+   fieldGroup("比价汇总列","summary")+fieldGroup("报价议价明细列","history"):
+   fieldGroup("供应商询价单列","rfq");
+  warning.textContent=isComparison?
+   "仅内部使用：先勾选至少两家供应商。金额只对共同有效报价行比较；草稿不会参与比价，但会在议价明细中清楚标注。":
+   "供应商专用：仅导出分配给这家供应商的物料与空白报价列，不含其他供应商报价、内部选择和比价信息。";
+ }
+ function escapeHtml(x){return String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+ function selected(kind){return [...fieldsBox.querySelectorAll('[data-report-group="'+kind+'"]:checked')].map(x=>x.dataset.reportField)}
+ reportOpen.addEventListener("click",()=>{
+  if(!window.SRMPilot?.isBuyer())return;
+  const showing=box.style.display!=="none";
+  box.style.display=showing?"none":"block";
+  if(!showing)render();
+ });
+ type.addEventListener("change",render);
+ exportBtn.addEventListener("click",async()=>{
+  if(exportBtn.disabled)return;
+  exportBtn.disabled=true;warning.textContent="正在核查已保存的询报价记录，并生成 Excel……";
+  try{
+   const snapshot=await window.SRMPilot.committedWorkspaceForReport();
+   let plan;
+   if(type.value==="rfq"){
+    plan=reportCore.rfq(snapshot,supplierEl.value,selected("rfq"));
+   }else{
+    const ids=[...group.querySelectorAll("[data-report-supplier]:checked")].map(x=>x.value);
+    plan=reportCore.comparison(snapshot,ids,selected("summary"),selected("history"));
+   }
+   const blob=window.SRMExcel.create(plan.sheets);
+   const url=URL.createObjectURL(blob),link=document.createElement("a");
+   link.href=url;link.download=plan.filename;
+   document.body.appendChild(link);
+   try{link.click()}finally{link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
+   const msg=plan.kind==="rfq"?
+     "已发起供应商询价 Excel 下载："+plan.items+" 条分配物料；请核查下载目录。":
+     "已发起内部比价议价 Excel 下载："+plan.totalItems+" 项、共同有效报价 "+plan.commonCount+
+      " 项；非共同范围不作供应商整单排名。";
+   warning.textContent=msg;
+   window.SRMPilot.reportMessage(msg);
+  }catch(e){
+   const msg="不能导出："+e.message;
+   warning.textContent=msg;window.SRMPilot.reportMessage(msg,true);
+  }finally{exportBtn.disabled=false}
+ });
+}
+/* END M1_LITE_REPORT_UI */
 </script>
 </body>
 </html>
