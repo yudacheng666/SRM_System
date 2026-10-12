@@ -114,6 +114,10 @@ function validate(ws){
       Number.isSafeInteger(r.revisionNo)&&r.revisionNo>0&&["draft","confirmed"].includes(r.status)&&
       Array.isArray(r.lines)&&Array.isArray(r.expectedLineIds),"ROUND");
     validSupplier(r.supplierId,"ROUND");
+    // 中文：商务条款与证据说明分离；旧版备份没有备注时仍可兼容。
+    // English: Optional supplier terms are distinct from evidence provenance, including for older backups.
+    ensure(r.termsNote==null||(typeof r.termsNote==="string"&&r.termsNote.length<=4000),"ROUND_TERMS_NOTE");
+    ensure(r.evidenceNote==null||(typeof r.evidenceNote==="string"&&r.evidenceNote.length<=4000),"EVIDENCE_NOTE");
     roundKeys.push([r.supplierId,r.roundNo,r.revisionNo].join("|"));
     r.expectedLineIds.forEach(x=>validLine(x,"EXPECTED"));unique(r.expectedLineIds,"EXPECTED");
     const quoted=[];
@@ -121,6 +125,7 @@ function validate(ws){
       ensure(isObj(q)&&id(q.lineId),"QUOTE_LINE");validLine(q.lineId,"QUOTE");
       quoted.push(q.lineId);
       ensure(q.price==null||Number.isFinite(q.price),"PRICE");
+      ensure(q.remark==null||(typeof q.remark==="string"&&q.remark.length<=2000),"QUOTE_REMARK");
       ensure(q.tiers==null||Array.isArray(q.tiers),"TIERS");
     }
     unique(quoted,"QUOTE");
