@@ -94,3 +94,4 @@ assert.equal(reports.comparison(legacy,["SUP-A","SUP-B"]).commonCount,1);
 assert.equal(reports.effectivePrice(legacy.state.quoteRounds[0].lines[0],10),22);
 console.log("PASS REPORT08: tiered prices select the actual RFQ quantity and preserve quotation lineage");
 console.log("PASS 8/8 M1-Lite selectable RFQ and comparison report checks");
+module.exports={fixture};
