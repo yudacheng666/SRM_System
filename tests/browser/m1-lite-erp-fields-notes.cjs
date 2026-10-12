@@ -63,6 +63,7 @@ const {chromium}=require("playwright");
   await wait("已保存到本机");
   await page.reload();
   await wait("已自动恢复本机正式工作");
+  assert.equal(await page.evaluate(()=>SRMPilot.dirty()),false,"restoring a committed workspace must not flag unsaved edits");
   assert.equal(await page.evaluate(()=>quoteRounds[0].termsNote),"报价有效期15天，运费另计；付款方式需确认");
   assert.equal(await page.evaluate(()=>quoteRounds[0].lines[0].remark),"可用替代品牌");
   console.log("PASS NOTES05: round and line notes survive save and browser reload");
