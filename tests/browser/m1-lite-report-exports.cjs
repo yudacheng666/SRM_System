@@ -39,7 +39,16 @@ const backup=require("../../src/m1-lite/portable-backup.js");
   await page.locator("#pilotReportType").selectOption("comparison");
   await page.locator('[data-report-supplier="SUP-A"]').check();
   await page.locator("#pilotReportDownload").click();
-  await page.waitForFunction(()=>document.querySelector("#pilotReportHint").textContent.includes("至少两家"));
+  await page.waitForTimeout(350);
+  const detail=await page.evaluate(()=>({
+    hint:document.querySelector("#pilotReportHint").textContent,
+    count:document.querySelectorAll('[data-report-supplier]:checked').length,
+    type:document.querySelector("#pilotReportType").value,
+    dirty:window.SRMPilot.dirty(),
+    actionDisabled:document.querySelector("#pilotReportDownload").disabled
+  }));
+  console.log("REPORT PICKER CHECK",JSON.stringify(detail));
+  assert.match(detail.hint,/至少两家/,JSON.stringify(detail));
   console.log("PASS DOC03: single-supplier internal comparison is blocked with actionable message");
   await page.locator('[data-report-supplier="SUP-B"]').check();
   await page.locator('[data-report-group="summary"][data-report-field="name"]').uncheck();
