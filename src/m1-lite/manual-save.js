@@ -32,6 +32,7 @@
     supplierBtn.disabled=!buyerMode||busy;
     exportBtn.disabled=!buyerMode||busy||!localReady;
     document.getElementById("pilotExportExcel").disabled=!buyerMode||busy||!localReady;
+    document.getElementById("pilotReportOpen").disabled=!buyerMode||busy||!localReady;
     importInput.disabled=busy||!localReady;
     restoreBtn.disabled=!pendingRestore||busy||!localReady||buyerMode;
     newBtn.disabled=busy||blocked||!localReady||buyerMode;
@@ -243,6 +244,18 @@
     }catch(e){status("Excel 导出失败："+e.message,true)}
     finally{busy=false;buttons()}
   }
+  // 中文：业务单据只从已保存的正式版本导出，不读取尚未提交的报价草稿。
+  // English: Supplier reports read committed buyer snapshots only.
+  async function committedWorkspaceForReport(){
+    if(!buyerMode||!localReady||busy)throw Error("请先进入可用的正式工作区");
+    if(dirty)throw Error("有未保存的修改，请先点击“保存到本机”，成功后再导出单据");
+    const saved=await readSaved();
+    if(!saved||saved.workspaceId!==workspaceId||saved.revision!==revision)
+      throw Error("本机保存版本与当前页面不同，请先恢复最新版本");
+    model.validate(saved);
+    if(saved.origin!=="buyer")throw Error("禁止导出演示工作数据");
+    return saved;
+  }
   document.addEventListener("click",e=>{
     if(!buyerMode||busy)return;
     // 中文：保守提示“尚未保存”，不自动写数据库；过滤工具按钮不代表业务已写入。
@@ -362,5 +375,5 @@
   })();
   window.SRMPilot=Object.freeze({snapshot:()=>buyerMode?readState():null,
     isBuyer:()=>buyerMode,revision:()=>revision,dirty:()=>dirty,
-    save,recover,beginBuyer,exportBackup,restorePortable,importSupplierRows,exportBusinessExcel});
+    save,recover,beginBuyer,exportBackup,restorePortable,importSupplierRows,exportBusinessExcel,committedWorkspaceForReport,reportMessage:status});
 }
