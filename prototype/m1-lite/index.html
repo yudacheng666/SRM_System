@@ -959,6 +959,12 @@ function worksheet(rows){
    if(raw===null||raw===undefined||raw==="")return"";
    const pos=colLabel(j)+(i+1);
    if(typeof raw==="number"&&Number.isFinite(raw))return'<c r="'+pos+'"><v>'+raw+'</v></c>';
+   // Trusted report formula descriptors only; raw supplier text stays literal.
+   if(raw&&typeof raw==="object"&&typeof raw.formula==="string"){
+     if(!/^=(ROUND\([A-Z]+\d+\*[A-Z]+\d+,2\)|SUMIF\([A-Z]+\d+:[A-Z]+\d+,"是",[A-Z]+\d+:[A-Z]+\d+\))$/.test(raw.formula))
+       err("导出计算公式无效");
+     return'<c r="'+pos+'"><f>'+esc(raw.formula.slice(1))+'</f></c>';
+   }
    // Always inline string: protects inventory IDs with leading zeros and formula injection.
    return'<c r="'+pos+'" t="inlineStr"><is><t xml:space="preserve">'+esc(raw)+'</t></is></c>';
   }).join("");
@@ -966,7 +972,8 @@ function worksheet(rows){
  }).join("");
  return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
  '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'+
- '<sheetData>'+lines+'</sheetData></worksheet>';
+ '<sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><sheetData>'+lines+'</sheetData>'+
+ (rows.length>1?'<autoFilter ref="A1:'+colLabel(Math.max(0,rows[0].length-1))+rows.length+'"/>':"")+'</worksheet>';
 }
 function create(sheets){
  if(!Array.isArray(sheets)||!sheets.length||sheets.length>8)err("导出工作表数量无效");
