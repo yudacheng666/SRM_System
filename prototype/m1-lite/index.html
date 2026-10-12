@@ -2224,6 +2224,9 @@ renderItemList();renderAssignAll();renderQuotes();
     lineSeq=s.lineSeq;createdSeq=s.createdSeq;quoteComparisonMode="returned";
     workspaceId=data.workspaceId;revision=data.revision;buyerMode=true;dirty=false;
     buttons();resetUI();
+    // 中文：重绘内部会触发旧页面的清空预览 click；加载快照本身不应视为用户修改。
+    // English: UI reset can emit synthetic clicks, but hydration itself is not an unsaved user edit.
+    dirty=false;
   }
   function beginBuyer(){
     if(!localReady){status("浏览器数据库不可用，不能创建需要保存的工作。",true);return}
