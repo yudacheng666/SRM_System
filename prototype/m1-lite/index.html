@@ -999,16 +999,16 @@ function findHeaderValue(row,headers){
 }
 /** 物料导入按首行标题映射，保持 CSV 引号与空值。\n * Map imported items by the first-row headers, preserving CSV quotes and empty cells. */
 function parseItemRows(text){
-  const table=parseHeaderTable(text,["物料编码"]);
+  const table=parseHeaderTable(text,["存货编码","物料编码"]);
   if(table.errors.length){const rows=[];rows._headerErrors=table.errors;return rows}
   const result=table.rows.map(({data,rowNo})=>{
-    const id=data["物料编码"]||"",name=findHeaderValue(data,["物料名称","名称"]),
-      cat=findHeaderValue(data,["分类","物料分类"]),
-      qtyRaw=findHeaderValue(data,["数量"]),unit=findHeaderValue(data,["单位"]),
-      qty=parsePositiveNumber(qtyRaw,"数量"),errors=[];
-    if(!id)errors.push("第 "+rowNo+" 行物料编码为空");
+    const id=findHeaderValue(data,["存货编码","物料编码"]),name=findHeaderValue(data,["存货名称","物料名称","名称"]),
+      cat=findHeaderValue(data,["所属类别","分类","物料分类"]),
+      qtyRaw=findHeaderValue(data,["询价数量","数量"]),unit=findHeaderValue(data,["询价单位","单位"]),
+      qty=parsePositiveNumber(qtyRaw,"询价数量"),errors=[];
+    if(!id)errors.push("第 "+rowNo+" 行存货编码为空");
     if(qty.error)errors.push("第 "+rowNo+" 行："+qty.error);
-    if(!unit)errors.push("第 "+rowNo+" 行单位不能为空");
+    if(!unit)errors.push("第 "+rowNo+" 行询价单位不能为空");
     return{id,lineId:nextLineId(),name,cat,qty:qty.value,unit,_rowNo:rowNo,
       sources:[{source:"导入第 "+rowNo+" 行",qty:qty.value}],_errors:errors};
   });
@@ -1280,22 +1280,23 @@ function resolveQuoteItem(ref){const x=String(ref||"").trim(),byLine=items.find(
  * Quote fields are mapped by headers; prefer RFQ Line ID, and use a uniquely matched item code only as fallback.
  */
 function parseQuoteRows(text){
-  const table=parseHeaderTable(text,["RFQ Line ID","物料编码"]);
+  const table=parseHeaderTable(text,["RFQ Line ID","存货编码","物料编码"]);
   if(table.errors.length){const rows=[];rows._headerErrors=table.errors;return rows}
   const result=table.rows.map(({data,rowNo})=>{
     const line=String(data["RFQ Line ID"]||"").trim(),
-      code=String(data["物料编码"]||"").trim(),
-      price=findHeaderValue(data,["单价","阶梯价","价格","报价"]),
+      code=String(findHeaderValue(data,["存货编码","物料编码"])||"").trim(),
+      price=findHeaderValue(data,["报价单价","单价","阶梯价","价格","报价"]),
       lead=findHeaderValue(data,["交期","交期天数"]),
       moq=findHeaderValue(data,["MOQ","最小起订量"]),
-      rawStatus=findHeaderValue(data,["状态","报价状态"]);
+      rawStatus=findHeaderValue(data,["报价状态","状态"]),
+       remark=findHeaderValue(data,["物料备注","报价备注","备注"]);
     const status=rawStatus|| (price?"quoted":"review"),errors=[];
     if(!line&&!code)errors.push("第 "+rowNo+" 行缺少报价行身份");
     if(line&&code){
       const obj=items.find(it=>it.lineId===line);
-      if(obj&&obj.id!==code)errors.push("第 "+rowNo+" 行 RFQ Line ID 与物料编码不匹配");
+      if(obj&&obj.id!==code)errors.push("第 "+rowNo+" 行 RFQ Line ID 与存货编码不匹配");
     }
-    return{itemRef:line||code,price,lead,moq,status,_rowNo:rowNo,_errors:errors};
+    return{itemRef:line||code,price,lead,moq,status,remark,_rowNo:rowNo,_errors:errors};
   });
   result._headers=table.headers;return result;
 }
