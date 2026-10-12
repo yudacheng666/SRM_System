@@ -31,6 +31,7 @@
     saveBtn.disabled=!buyerMode||busy||!localReady;
     supplierBtn.disabled=!buyerMode||busy;
     exportBtn.disabled=!buyerMode||busy||!localReady;
+    document.getElementById("pilotExportExcel").disabled=!buyerMode||busy||!localReady;
     importInput.disabled=busy||!localReady;
     restoreBtn.disabled=!pendingRestore||busy||!localReady||buyerMode;
     newBtn.disabled=busy||blocked||!localReady||buyerMode;
@@ -193,6 +194,55 @@
     dirty=true;status("已添加供应商："+name+"；尚未保存到本机。");
     quoteSupplierOptions();renderAssignAll();renderQuotes();
   }
+  // 中文：供应商 Excel 先在预览中完整校验，再一次性写入本次候选供应商。
+  // English: Validate every supplier row before making any in-memory changes.
+  function importSupplierRows(rows){
+    if(!buyerMode||busy)throw Error("仅正式工作空间可导入供应商");
+    if(!Array.isArray(rows)||!rows.length||rows.length>1000)throw Error("供应商行数必须为 1–1000");
+    const seenCodes=new Set(),seenCP=new Set();
+    const fresh=rows.map(row=>{
+      const cp=String(row.counterpartyCode||"").trim(),code=String(row.supplierCode||cp).trim(),name=String(row.name||"").trim();
+      if(!cp||!code||!name||cp.length>100||code.length>100||name.length>200)
+        throw Error("往来单位编码、供应商编码及往来单位名称必须完整且长度合理");
+      if(seenCodes.has(code)||seenCP.has(cp)||suppliers.some(s=>s.id===code||s.counterpartyCode===cp))
+        throw Error("文件内或已有工作中存在重复往来单位/供应商编码："+code);
+      seenCodes.add(code);seenCP.add(cp);
+      return{id:code,counterpartyCode:cp,supplierCode:code,name,roles:["supplier"],reason:"本次 Excel 导入"};
+    });
+    suppliers.push(...fresh);
+    fresh.forEach(s=>rfqSupplierPool.add(s.id));
+    dirty=true;
+    quoteSupplierOptions();renderAssignAll();renderQuotes();
+    status("已导入 "+fresh.length+" 家供应商，尚未保存到本机。");
+    return fresh.length;
+  }
+  async function exportBusinessExcel(){
+    if(!buyerMode||busy||!localReady)return;
+    if(dirty){status("有尚未保存的内容，请先“保存到本机”再下载 Excel。",true);return}
+    busy=true;buttons();
+    try{
+      const ws=await readSaved();
+      if(!ws||ws.workspaceId!==workspaceId||ws.revision!==revision)throw Error("本机记录版本不一致，请先恢复或保存");
+      model.validate(ws);
+      const st=ws.state;
+      const quoted=st.quoteRounds.flatMap(r=>(r.lines||[]).map(q=>{
+        const item=st.items.find(it=>it.lineId===q.lineId);
+        const tiers=(q.tiers||[]).map(t=>t.min+(t.max==null?"+":"-"+t.max)+":"+t.price).join("|");
+        return[r.supplierId,r.roundNo,r.revisionNo,r.status,r.termsNote||"",r.evidenceType||"",r.evidenceNote||"",q.lineId,item?.id||q.itemId||"",q.price,q.lead,q.moq,q.status,q.remark||"",tiers];
+      }));
+      const excel=window.SRMExcel.create([
+        {name:"询价物料",rows:[["RFQ Line ID","存货编码","存货名称","所属类别","询价数量","询价单位"],...st.items.map(it=>[it.lineId,it.id,it.name,it.cat||"",it.qty,it.unit])]},
+        {name:"供应商",rows:[["往来单位编码","供应商编码","往来单位名称"],...st.suppliers.map(s=>[s.counterpartyCode||s.id,s.supplierCode||s.id,s.name])]},
+        {name:"报价明细",rows:[["供应商编码","报价轮次","报价版本","确认状态","整轮商务备注","报价凭证类型","凭证说明","RFQ Line ID","存货编码","报价单价","交期天数","MOQ","报价状态","物料备注","阶梯报价"],...quoted]}
+      ]);
+      const url=URL.createObjectURL(excel),link=document.createElement("a");
+      link.href=url;link.download="SRM_询比价_业务明细_"+new Date().toISOString().slice(0,10)+".xlsx";
+      document.body.appendChild(link);link.click();link.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),30000);
+      status("已发起真实 Excel .xlsx 下载（3 个数据表）；请检查下载目录。此文件不是 JSON 完整备份，不包含原始邮件/PDF。");
+    }catch(e){status("Excel 导出失败："+e.message,true)}
+    finally{busy=false;buttons()}
+  }
   document.addEventListener("click",e=>{
     if(!buyerMode||busy)return;
     // 中文：保守提示“尚未保存”，不自动写数据库；过滤工具按钮不代表业务已写入。
@@ -290,6 +340,7 @@
   }
 
   exportBtn.addEventListener("click",exportBackup);
+  document.getElementById("pilotExportExcel").addEventListener("click",exportBusinessExcel);
   importInput.addEventListener("change",stageBackupFile);
   restoreBtn.addEventListener("click",restorePortable);
   newBtn.addEventListener("click",beginBuyer);
@@ -311,5 +362,5 @@
   })();
   window.SRMPilot=Object.freeze({snapshot:()=>buyerMode?readState():null,
     isBuyer:()=>buyerMode,revision:()=>revision,dirty:()=>dirty,
-    save,recover,beginBuyer,exportBackup,restorePortable});
+    save,recover,beginBuyer,exportBackup,restorePortable,importSupplierRows,exportBusinessExcel});
 }
