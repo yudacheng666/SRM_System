@@ -43,20 +43,20 @@ const {chromium}=require("playwright");
   await page.locator("#quoteEvidenceNote").fill("邮件附件:测试-001.pdf");
   await page.locator("#quoteTermsNote").fill("报价有效期15天，运费另计；付款方式需确认");
   await page.locator("#quoteImportFile").setInputFiles({name:"quote.csv",mimeType:"text/csv",
-   buffer:Buffer.from("存货编码,报价单价,交期,MOQ,报价状态,物料备注\nERP-001,18.75,5,1,正常报价,可用替代品牌\n")});
+   buffer:Buffer.from("存货编码,报价单价,交期,MOQ,报价状态,物料备注\nERP-001,18.75,5,1,正常报价,可用替代品牌；需复核，限单次采购\n")});
   await page.locator("#quoteImportPreviewBody tr").first().waitFor();
-  assert.match(await page.locator("#quoteImportPreviewBody").innerText(),/可用替代品牌/);
+  assert.match(await page.locator("#quoteImportPreviewBody").innerText(),/可用替代品牌；需复核，限单次采购/);
   await page.locator("#commitQuoteImport").click();
-  assert.equal(await page.evaluate(()=>quoteRounds[0].lines[0].remark),"可用替代品牌");
+  assert.equal(await page.evaluate(()=>quoteRounds[0].lines[0].remark),"可用替代品牌；需复核，限单次采购");
   await page.locator("#confirmQuoteRound").click();
   assert.deepEqual(await page.evaluate(()=>({
    terms:quoteRounds[0].termsNote,evidence:quoteRounds[0].evidenceNote,
    note:quoteRounds[0].lines[0].remark,status:quoteRounds[0].status
-  })),{terms:"报价有效期15天，运费另计；付款方式需确认",evidence:"邮件附件:测试-001.pdf",note:"可用替代品牌",status:"confirmed"});
+  })),{terms:"报价有效期15天，运费另计；付款方式需确认",evidence:"邮件附件:测试-001.pdf",note:"可用替代品牌；需复核，限单次采购",status:"confirmed"});
   assert.equal(await page.locator("#quoteTermsNote").isDisabled(),true);
   console.log("PASS NOTES03: imported line note, round terms and evidence remain distinct and locked");
   await page.locator('[data-tab="quotes"]').click();
-  assert.match(await page.locator("#quoteTable").innerText(),/可用替代品牌/);
+  assert.match(await page.locator("#quoteTable").innerText(),/可用替代品牌；需复核，限单次采购/);
   assert.match(await page.locator("#quoteTable").innerText(),/运费另计/);
   console.log("PASS NOTES04: buyer sees both levels of notes while comparing supplier prices");
   await page.locator("#pilotSaveWorkspace").click();
@@ -65,19 +65,19 @@ const {chromium}=require("playwright");
   await wait("已自动恢复本机正式工作");
   assert.equal(await page.evaluate(()=>SRMPilot.dirty()),false,"restoring a committed workspace must not flag unsaved edits");
   assert.equal(await page.evaluate(()=>quoteRounds[0].termsNote),"报价有效期15天，运费另计；付款方式需确认");
-  assert.equal(await page.evaluate(()=>quoteRounds[0].lines[0].remark),"可用替代品牌");
+  assert.equal(await page.evaluate(()=>quoteRounds[0].lines[0].remark),"可用替代品牌；需复核，限单次采购");
   console.log("PASS NOTES05: round and line notes survive save and browser reload");
   const dl=page.waitForEvent("download");
   await page.locator("#pilotExportBackup").click();
   const file=await dl, backup=JSON.parse(fs.readFileSync(await file.path(),"utf8"));
   assert.equal(backup.workspace.state.quoteRounds[0].termsNote,"报价有效期15天，运费另计；付款方式需确认");
-  assert.equal(backup.workspace.state.quoteRounds[0].lines[0].remark,"可用替代品牌");
+  assert.equal(backup.workspace.state.quoteRounds[0].lines[0].remark,"可用替代品牌；需复核，限单次采购");
   console.log("PASS NOTES06: portable JSON backup includes both note types and evidence reference");
   await page.locator('[data-tab="quoteImport"]').click();
   await page.locator("#newQuoteRevision").click();
   const curr=await page.evaluate(()=>quoteRounds.filter(r=>r.revisionNo===2)[0]);
   assert.equal(curr.termsNote,"报价有效期15天，运费另计；付款方式需确认");
-  assert.equal(curr.lines[0].remark,"可用替代品牌");
+  assert.equal(curr.lines[0].remark,"可用替代品牌；需复核，限单次采购");
   await page.locator("#quoteTermsNote").fill("新版条款：含运费");
   await page.locator("#confirmQuoteRound").click();
   assert.equal(await page.evaluate(()=>quoteRounds.find(r=>r.revisionNo===1).termsNote),"报价有效期15天，运费另计；付款方式需确认");
