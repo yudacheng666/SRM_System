@@ -309,7 +309,11 @@
     }catch(e){blocked=true;localReady=false;status("本机保存不可用或记录异常："+e.message+"。不要使用真实采购资料。",true)}
     finally{buttons()}
   })();
-  window.SRMPilot=Object.freeze({snapshot:()=>buyerMode?readState():null,
+  function markDirty(message){
+    if(!buyerMode||busy)return;
+    dirty=true;status(message||"本次 Excel 导入尚未保存，请点击“保存到本机”。");
+  }
+  window.SRMPilot=Object.freeze({markDirty,snapshot:()=>buyerMode?readState():null,
     isBuyer:()=>buyerMode,revision:()=>revision,dirty:()=>dirty,
     save,recover,beginBuyer,exportBackup,restorePortable});
 }
