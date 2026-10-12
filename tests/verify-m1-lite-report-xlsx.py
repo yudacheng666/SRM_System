@@ -28,7 +28,7 @@ assert "存货名称" not in h,h
 assert "RFQ Line ID" in h and "是否共同有效报价" in h,h
 assert len(s.merged_cells.ranges)==0
 assert s.freeze_panes=="A2"
-prices=[i+1 for i,c in enumerate(s[1]) if "适用单价" in (c.value or "")]
+prices=[i+1 for i,c in enumerate(s[1]) if "适用单价" in (c.value or "") and " (SUP-" in (c.value or "")]
 amounts=[i+1 for i,c in enumerate(s[1]) if "行金额" in (c.value or "")]
 assert len(prices)==2 and len(amounts)==2,(h,prices,amounts)
 assert s.cell(2,prices[0]).value==18
