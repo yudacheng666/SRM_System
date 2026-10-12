@@ -3083,7 +3083,7 @@ renderItemList();renderAssignAll();renderQuotes();
   document.getElementById("pilotReportMultiPicker").style.display=isComparison?"block":"none";
   const selected=new Set([...group.querySelectorAll("[data-report-supplier]:checked")].map(x=>x.value));
   group.innerHTML=candidates.map(s=>'<label class="chip" style="margin:4px">'+
-   '<input type="checkbox" data-report-supplier value="'+escapeHtml(s.id)+'" '+
+   '<input type="checkbox" data-report-supplier="'+escapeHtml(s.id)+'" value="'+escapeHtml(s.id)+'" '+
     (selected.has(s.id)?'checked':'')+'> '+escapeHtml(s.name)+' ('+escapeHtml(s.id)+')</label>').join("");
   fieldsBox.innerHTML=isComparison?
    fieldGroup("比价汇总列","summary")+fieldGroup("报价议价明细列","history"):
