@@ -969,13 +969,16 @@ function parseHeaderTable(text,keyHeaders){
   // English: Prefer Tab where present; otherwise accept mixed Chinese/ASCII commas outside quoted cells.
   const first=raw.split("\n")[0]||"";
   const tabDelimited=first.includes("\t");
+  // 中文：报价含“备注”列时，中文逗号及分号是正文而不是分隔符，避免条款被拆成多行。
+  // English: Preserve Chinese punctuation and semicolons in quotation remark columns.
+  const hasRemarkColumn=/物料备注|报价备注|备注/.test(first);
   const records=[];let row=[],field="",inside=false;
   for(let i=0;i<raw.length;i++){
     const ch=raw[i];
     if(ch==='"'){
       if(inside&&raw[i+1]==='"'){field+='"';i++;}else inside=!inside;
-    }else if(!inside&&(tabDelimited?ch==="\t":ch===","||ch==="，")){row.push(field.trim());field="";}
-    else if(!inside&&(ch==="\n"||ch==="；"||ch===";")){
+    }else if(!inside&&(tabDelimited?ch==="\t":ch===","||(!hasRemarkColumn&&ch==="，"))){row.push(field.trim());field="";}
+    else if(!inside&&(ch==="\n"||(!hasRemarkColumn&&(ch==="；"||ch===";")))){
       row.push(field.trim());field="";
       if(row.some(v=>v!==""))records.push(row);
       row=[];
