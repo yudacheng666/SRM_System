@@ -7,7 +7,8 @@ rfq=load_workbook(root/"supplier-rfq-report.xlsx",read_only=False,data_only=Fals
 assert rfq.sheetnames==["供应商报价填写"],rfq.sheetnames
 rs=rfq.active
 headers=[x.value for x in rs[1]]
-assert headers==["RFQ Line ID","存货编码","存货名称","询价数量","询价单位","报价单价","报价状态","交期"],headers
+assert headers[:7]==["RFQ Line ID","存货编码","存货名称","询价数量","询价单位","报价单价","报价状态"],headers
+assert "所属类别" not in headers and "交期" in headers and "MOQ" in headers and "物料备注" in headers,headers
 assert rs.max_row==3,rs.max_row
 assert rs.cell(2,2).value=="0001",rs.cell(2,2).value
 assert rs.cell(2,6).value is None and rs.cell(3,6).value is None
