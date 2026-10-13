@@ -71,6 +71,55 @@ class LocalApiTests(unittest.TestCase):
         self.assertEqual(self.request("PUT", "/api/workspaces/RFQ-DEMO-001", {"workspace": ws},
                                       {"Origin": ""})[0], 403)
 
+    def test_s3_active_rfqs_and_pdf_disk(self):
+        """中文：真实 HTTP PDF 写入后重新读取。English: HTTP PDF survives disk read."""
+        import hashlib
+        from urllib.parse import quote
+        first = make_workspace()
+        second = make_workspace()
+        second["workspaceId"] = "RFQ-DEMO-002"
+        self.assertEqual(self.request("PUT", "/api/workspaces/RFQ-DEMO-001",
+                                      {"workspace": first, "expectedRevision": None})[0], 200)
+        self.assertEqual(self.request("GET", "/api/active")[1]["activeId"], "RFQ-DEMO-001")
+        self.assertEqual(self.request("PUT", "/api/workspaces/RFQ-DEMO-002",
+                                      {"workspace": second, "expectedRevision": None})[0], 200)
+        code, switched = self.request("POST", "/api/active/select",
+                                      {"workspaceId": "RFQ-DEMO-001", "expectedActive": "RFQ-DEMO-002"})
+        self.assertEqual(code, 200)
+        self.assertEqual(switched["activeId"], "RFQ-DEMO-001")
+        raw = b"%PDF-1.4\n1 0 obj <<>> endobj\n%%EOF"
+        sha = hashlib.sha256(raw).hexdigest()
+        route = f"/api/assets/RFQ-DEMO-001/{sha}"
+        # 中文：校验 HTTP 请求中的原件字节与磁盘存储。
+        # English: Check actual file bytes and disk persistence.
+        connection = http.client.HTTPConnection("127.0.0.1", self.port, timeout=5)
+        connection.request("PUT", route, raw, {"Host": f"127.0.0.1:{self.port}",
+                           "Origin": f"http://127.0.0.1:{self.port}",
+                           "Content-Type": "application/pdf",
+                           "X-SRM-Filename": quote("DEMO-001.pdf")})
+        response = connection.getresponse()
+        self.assertEqual(response.status, 200)
+        response.read()
+        connection.close()
+        code, downloaded = self.request("GET", route)
+        self.assertEqual(code, 200)
+        self.assertEqual(downloaded, raw)
+        self.assertEqual(self.request("GET", f"/api/assets/RFQ-DEMO-002/{sha}")[0], 404)
+
+    def test_s3_checksum_mismatch_rejected(self):
+        """中文：图纸错误哈希不得落盘。English: Reject mismatched asset hashes."""
+        ws = make_workspace()
+        self.request("PUT", "/api/workspaces/RFQ-DEMO-001", {"workspace": ws, "expectedRevision": None})
+        route = "/api/assets/RFQ-DEMO-001/" + "0" * 64
+        conn = http.client.HTTPConnection("127.0.0.1", self.port, timeout=5)
+        conn.request("PUT", route, b"%PDF-1.4\n%%EOF", {"Host": f"127.0.0.1:{self.port}",
+                     "Origin": f"http://127.0.0.1:{self.port}", "Content-Type": "application/pdf",
+                     "X-SRM-Filename": "DEMO.pdf"})
+        response = conn.getresponse()
+        self.assertEqual(response.status, 400)
+        response.read()
+        conn.close()
+
     def test_db_only_backup(self):
         ws = make_workspace()
         self.request("PUT", "/api/workspaces/RFQ-DEMO-001", {"workspace": ws, "expectedRevision": None})
