@@ -1623,7 +1623,7 @@ function renderPageNav(el,page,total,size,onPage){
 function selectAllIds(set,list){list.forEach(x=>set.add(x.lineId||x.id))}
 function invertIds(set,list){list.forEach(x=>{const id=x.lineId||x.id;set.has(id)?set.delete(id):set.add(id)})}
 function drawingDocsForItem(it){
- if(window.SRMPilot?.isBuyer())return []; // 正式工作不应生成不存在的演示 PDF。
+ if(window.SRMPilot?.isBuyer())return window.SRMDrawings.docsForItem(it); // 仅真实上传的 PDF。
   const n=parseInt(it.id.replace(/\D/g,""),10)||1;
   if(n%11===0)return[];
   const docs=[{id:"D1",name:it.id+"_零件图.pdf",pages:1+(n%4),revision:"A"}];
@@ -1637,6 +1637,10 @@ function drawingSvg(it,doc,page,scale=1){
 }
 function itemCell(it){
   const docs=drawingDocsForItem(it);
+  if(window.SRMPilot?.isBuyer()){
+   const state=it.drawingStatus==="not_required"?"无需图纸":it.drawingStatus==="pending"?"版本待确认":docs.length?docs.length+"份真实 PDF":"缺图纸";
+   return '<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="'+esc(it.lineId)+'" title="打开真实 PDF">PDF</button><div><b>'+esc(it.id)+'</b><div class="pdfMeta">'+esc(it.lineId)+' · '+state+'</div></div></div>';
+  }
   if(!docs.length)return `<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="${it.lineId}" title="无图纸">PDF?</button><div><b>${it.id}</b><div class="pdfMeta">${it.lineId} · 缺图纸</div></div></div>`;
   const d=docs[0];
   return `<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="${it.lineId}" title="预览 PDF">${drawingSvg(it,d,1,.18)}</button><div><b>${it.id}</b><div class="pdfMeta">${it.lineId} · PDF ${d.pages}页${docs.length>1?" · "+docs.length+"个文件":""}</div></div></div>`;
@@ -1676,16 +1680,51 @@ itemEditClose.onclick=closeItemEditor;itemEditCancel.onclick=closeItemEditor;ite
 itemEditModal.onclick=e=>{if(e.target===itemEditModal)closeItemEditor()};
 
 let drawingState={itemId:null,docIndex:0,page:1,scale:1};
-function renderDrawingPdf(){
-  const it=items.find(x=>x.lineId===drawingState.itemId);if(!it)return;
-  const docs=drawingDocsForItem(it);
-  if(!docs.length){drawingDocSelect.innerHTML="";drawingPageInfo.textContent="无关联 PDF";drawingLarge.innerHTML='<div class="dangertext">该物料当前没有关联 PDF 图纸。</div>';return}
-  drawingState.docIndex=Math.min(drawingState.docIndex,docs.length-1);
-  const doc=docs[drawingState.docIndex];drawingState.page=Math.max(1,Math.min(drawingState.page,doc.pages));
-  drawingDocSelect.innerHTML=docs.map((d,i)=>`<option value="${i}" ${i===drawingState.docIndex?"selected":""}>${esc(d.name)} · ${d.pages}页 · Rev ${esc(d.revision)}</option>`).join("");
-  drawingPageInfo.textContent=`第 ${drawingState.page} / ${doc.pages} 页`;
+let realPdfUrl=null,realPdfRenderSeq=0;
+function revokeRealPdf(){
+ if(realPdfUrl){URL.revokeObjectURL(realPdfUrl);realPdfUrl=null}
+}
+async function renderDrawingPdf(){
+ const it=items.find(x=>x.lineId===drawingState.itemId);if(!it)return;
+ const docs=drawingDocsForItem(it),seq=++realPdfRenderSeq;
+ if(!docs.length){
+  revokeRealPdf();drawingDocSelect.innerHTML="";
+  drawingPageInfo.textContent=it.drawingStatus==="not_required"?"本行无需图纸":"无关联 PDF";
+  drawingLarge.innerHTML='<div class="dangertext">本行没有关联真实 PDF 图纸。</div>';
+  drawingPrevPage.disabled=true;drawingNextPage.disabled=true;return;
+ }
+ drawingState.docIndex=Math.min(drawingState.docIndex,docs.length-1);
+ const doc=docs[drawingState.docIndex];
+ drawingDocSelect.innerHTML=docs.map((d,i)=>`<option value="${i}" ${i===drawingState.docIndex?"selected":""}>${esc(d.name)} · Rev ${esc(d.revision)}</option>`).join("");
+ if(window.SRMPilot?.isBuyer()){
+  drawingState.page=Math.max(1,drawingState.page);
+  drawingPageInfo.textContent="请求第 "+drawingState.page+" 页；总页数请看 PDF 查看器";
+  drawingPrevPage.disabled=drawingState.page<=1;drawingNextPage.disabled=false;
+  drawingLarge.textContent="正在从本机打开 PDF 原件……";
+  try{
+   const ws=window.SRMPilot.snapshot();
+   const blob=await window.SRMDrawings.get(ws.workspaceId,doc.sha256);
+   if(seq!==realPdfRenderSeq)return;
+   if(!blob)throw Error("图纸原件不在本机，请使用完整资料 ZIP 备份恢复");
+   if(await window.SRMDrawings.digest(await blob.arrayBuffer())!==doc.sha256)
+     throw Error("本机 PDF 校验失败，请勿使用这份文件");
+   if(seq!==realPdfRenderSeq)return;
+   revokeRealPdf();
+   realPdfUrl=URL.createObjectURL(blob);
+   const frame=document.createElement("iframe");
+   frame.setAttribute("title",doc.name+" · 真正 PDF 浏览器查看器");
+   frame.style.cssText="width:100%;height:68vh;min-height:480px;border:0;background:white";
+   frame.src=realPdfUrl+"#page="+drawingState.page+"&zoom="+Math.round(drawingState.scale*100);
+   drawingLarge.replaceChildren(frame);
+  }catch(e){
+   if(seq===realPdfRenderSeq)drawingLarge.textContent="无法预览真实 PDF："+e.message;
+  }
+ }else{
+  drawingState.page=Math.min(drawingState.page,doc.pages);
+  drawingPageInfo.textContent=`第 ${drawingState.page} / ${doc.pages} 页（演示）`;
   drawingLarge.innerHTML=drawingSvg(it,doc,drawingState.page,drawingState.scale);
   drawingPrevPage.disabled=drawingState.page<=1;drawingNextPage.disabled=drawingState.page>=doc.pages;
+ }
 }
 function openDrawing(lineId){
   const it=items.find(x=>x.lineId===lineId);if(!it)return;
@@ -1696,7 +1735,7 @@ drawingDocSelect.onchange=()=>{drawingState.docIndex=Number(drawingDocSelect.val
 drawingPrevPage.onclick=()=>{drawingState.page--;renderDrawingPdf()};drawingNextPage.onclick=()=>{drawingState.page++;renderDrawingPdf()};
 drawingZoomOut.onclick=()=>{drawingState.scale=Math.max(.5,drawingState.scale-.15);renderDrawingPdf()};drawingZoomIn.onclick=()=>{drawingState.scale=Math.min(2,drawingState.scale+.15);renderDrawingPdf()};
 drawingFit.onclick=()=>{drawingState.scale=1;renderDrawingPdf()};
-function closeDrawingModal(){drawingModal.classList.remove("open");drawingModal.setAttribute("aria-hidden","true")}
+function closeDrawingModal(){realPdfRenderSeq++;revokeRealPdf();drawingModal.classList.remove("open");drawingModal.setAttribute("aria-hidden","true")}
 closeDrawing.onclick=closeDrawingModal;drawingModal.onclick=e=>{if(e.target===drawingModal)closeDrawingModal()};
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeDrawingModal();if(document.getElementById("rfqPreviewModal")?.classList.contains("open"))closeRfqPreview.click()}});
 function parsePositiveNumber(raw,label){
@@ -2390,6 +2429,10 @@ function currentItemList(){
 function itemCodeCell(it){return `<b>${esc(it.id)}</b><div class="small muted">${esc(it.name)}</div>`}
 function itemDrawingCell(it){
   const docs=drawingDocsForItem(it);
+  if(window.SRMPilot?.isBuyer()){
+   const state=it.drawingStatus==="not_required"?"无需图纸":it.drawingStatus==="pending"?"版本待确认":docs.length?docs.length+"份 PDF":"缺图纸";
+   return '<button class="drawingThumb" data-drawing="'+esc(it.lineId)+'" title="浏览 PDF 原件">PDF</button><div class="pdfMeta">'+state+'</div>';
+  }
   if(!docs.length)return '<span class="dangertext">缺图纸</span>';
   return `<button class="drawingThumb" data-drawing="${it.lineId}" title="PDF ${docs[0].pages}页">${drawingSvg(it,docs[0],1,.18)}</button><div class="pdfMeta">PDF ${docs[0].pages}页</div>`;
 }
@@ -2593,8 +2636,8 @@ function renderRfqPreview(){
   const list=rfqPreviewSuppliers();if(!list.length){rfqPreviewContent.innerHTML='<div class="muted">当前还没有任何已分配的供应商询价内容。</div>';return}
   if(!previewSupplierId||!list.some(s=>s.id===previewSupplierId))previewSupplierId=list[0].id;
   const sup=list.find(s=>s.id===previewSupplierId),rows=items.filter(it=>getSet(it.lineId).has(previewSupplierId));
-  const docs=[],missing=[];rows.forEach(it=>{const ds=drawingDocsForItem(it);if(!ds.length)missing.push(it);ds.forEach(d=>{if(!docs.some(x=>x.name===d.name))docs.push({...d,itemId:it.id})})});
-  rfqPreviewContent.innerHTML=`<div class="rfqSupplierNav">${list.map(s=>{const n=items.filter(it=>getSet(it.lineId).has(s.id)).length;return `<button class="btn ${s.id===previewSupplierId?"soft":""}" data-rfq-supplier="${s.id}">${esc(s.name)} · ${n} 项</button>`}).join("")}</div><div class="rfqDoc"><div class="rfqDocHead"><div><b>询价包 RFQ-DEMO-001 · Rev.0</b><div class="small muted">供应商：${esc(sup.name)}</div></div><div class="small">物料 ${rows.length} 项 · PDF ${docs.length} 个 · 缺图纸 ${missing.length} 项</div></div><div class="notice" style="margin-bottom:10px"><b>附件检查：</b>应按物料范围附带 PDF 图纸；当前找到 ${docs.length} 个唯一 PDF。${missing.length?` <span class="dangertext">缺图纸：${missing.map(x=>esc(x.id)).join("、")}</span>`:" 无缺失。"}</div><table><thead><tr><th>序号</th><th>RFQ Line ID</th><th>物料编码</th><th>名称</th><th>数量</th><th>单位</th><th>单价</th><th>交期</th><th>MOQ</th></tr></thead><tbody>${rows.map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.lineId)}</td><td>${esc(it.id)}</td><td>${esc(it.name)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td></td><td></td><td></td></tr>`).join("")}</tbody></table><div class="coverageDetails"><b>将打包的 PDF：</b><div class="small">${docs.length?docs.map(d=>esc(d.name)).join("、"):"无"} </div></div></div>`;
+  const docs=[],missing=[];rows.forEach(it=>{const ds=drawingDocsForItem(it);if(!ds.length&&it.drawingStatus!=="not_required")missing.push(it);ds.forEach(d=>{if(!docs.some(x=>(x.sha256||x.name)===(d.sha256||d.name)))docs.push({...d,itemId:it.id})})});
+  rfqPreviewContent.innerHTML=`<div class="rfqSupplierNav">${list.map(s=>{const n=items.filter(it=>getSet(it.lineId).has(s.id)).length;return `<button class="btn ${s.id===previewSupplierId?"soft":""}" data-rfq-supplier="${s.id}">${esc(s.name)} · ${n} 项</button>`}).join("")}</div><div class="rfqDoc"><div class="rfqDocHead"><div><b>询价包 ${window.SRMPilot?.isBuyer()?esc(window.SRMPilot.snapshot().workspaceId)+" · 第"+window.SRMPilot.revision()+"版":"RFQ-DEMO-001 · Rev.0"}</b><div class="small muted">供应商：${esc(sup.name)}</div></div><div class="small">物料 ${rows.length} 项 · PDF ${docs.length} 个 · 缺图纸 ${missing.length} 项</div></div><div class="notice" style="margin-bottom:10px"><b>附件检查：</b>应按物料范围附带 PDF 图纸；当前找到 ${docs.length} 个唯一 PDF。${missing.length?` <span class="dangertext">缺图纸：${missing.map(x=>esc(x.id)).join("、")}</span>`:" 无缺失。"}</div><table><thead><tr><th>序号</th><th>RFQ Line ID</th><th>物料编码</th><th>名称</th><th>数量</th><th>单位</th><th>单价</th><th>交期</th><th>MOQ</th></tr></thead><tbody>${rows.map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.lineId)}</td><td>${esc(it.id)}</td><td>${esc(it.name)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td></td><td></td><td></td></tr>`).join("")}</tbody></table><div class="coverageDetails"><b>将打包的 PDF：</b><div class="small">${docs.length?docs.map(d=>esc(d.name)).join("、"):"无"} </div></div></div>`;
   document.querySelectorAll("[data-rfq-supplier]").forEach(b=>b.onclick=()=>{previewSupplierId=b.dataset.rfqSupplier;renderRfqPreview()});
 }
 previewBtn.onclick=()=>{rfqPreviewModal.classList.add("open");rfqPreviewModal.setAttribute("aria-hidden","false");renderRfqPreview()};
