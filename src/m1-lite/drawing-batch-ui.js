@@ -86,8 +86,8 @@
  }
  async function preview(){
   if(busy||!isBuyer())return;
-  reset();
   const files=[...input.files];
+  reset();
   if(!files.length){tell("请选择需要匹配的 PDF 文件",true);return}
   if(!items.length){tell("请先导入本次询价的物料清单",true);return}
   if(files.length>MAX_FILES||files.reduce((sum,f)=>sum+f.size,0)>MAX_TOTAL){
