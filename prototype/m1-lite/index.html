@@ -139,6 +139,24 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
       <div class="cardbody">
        <h3>真实 PDF 图纸管理（仅当前询价）</h3>
        <div class="small muted">按 RFQ Line ID 明确关联，支持多个 PDF、共用图纸、版本保留；图纸原件单独持久化，修改关联后仍需保存正式工作。</div>
+       <div style="margin:12px 0;padding:12px;border:1px solid #cbd5e1;border-radius:10px;background:#fafcff">
+        <h4 style="margin:0 0 6px">批量图纸匹配（先预览，后确认）</h4>
+        <div class="small muted">根据 PDF 文件名与物料编码 / 图号生成候选。不会读取 PDF 内文字，也不会自动建立正式关系；重复编码、多候选、无匹配必须人工指定 RFQ Line ID。先确认关联，之后仍要“保存到本机”。</div>
+        <div class="toolbar" style="gap:8px;margin:8px 0">
+         <input type="file" id="pilotBatchDrawingFiles" accept=".pdf,application/pdf" multiple>
+         <label class="small">无法识别版本时采用 <input id="pilotBatchDrawingVersion" type="text" value="A" maxlength="80" style="width:70px"></label>
+         <button type="button" class="btn soft" id="pilotBatchDrawingAnalyze">执行匹配预览</button>
+         <button type="button" class="btn" id="pilotBatchDrawingClear">清空预览</button>
+        </div>
+        <div class="toolbar" style="gap:8px;margin:8px 0">
+         <span class="small muted" id="pilotBatchDrawingFocus">未选择待人工指定的 PDF</span>
+         <label class="small">手工指定到 <select id="pilotBatchDrawingManualLine"></select></label>
+         <button type="button" class="btn" id="pilotBatchDrawingManualAssign" disabled>指定给选中文件</button>
+         <button type="button" class="btn primary" id="pilotBatchDrawingConfirm" disabled>确认建立选中关联</button>
+        </div>
+        <div id="pilotBatchDrawingSummary" class="small muted" aria-live="polite">请选择 PDF 并执行匹配预览。每行的匹配对象与版本可修改。</div>
+        <div style="overflow:auto;max-height:340px"><table id="pilotBatchDrawingPreview" style="width:100%"></table></div>
+       </div>
        <div class="toolbar" style="gap:8px;margin:8px 0">
         <label class="small">选择 RFQ 物料行 <select id="pilotDrawingLine"></select></label>
         <label class="small">图纸版本 <input type="text" id="pilotDrawingVersion" maxlength="80" value="A" style="width:85px"></label>
@@ -205,6 +223,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
               <h3>单条输入（演示字段）</h3>
               <div class="toolbar">
                 <input id="manualCode" type="text" placeholder="存货编码">
+                <input id="manualDrawingNo" type="text" placeholder="图号（可选）">
                 <input id="manualName" type="text" placeholder="存货名称">
                 <input id="manualQty" type="text" placeholder="询价数量">
                 <input id="manualUnit" type="text" placeholder="询价单位">
@@ -254,6 +273,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           <div id="itemEditIdentity" class="small muted" style="margin-bottom:10px"></div>
           <div class="intakeGrid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
             <label>存货编码（物料编码）<input id="itemEditCode" type="text" style="width:100%"></label>
+            <label>图号 / 图纸编号（可选）<input id="itemEditDrawingNo" type="text" style="width:100%"></label>
             <label>询价数量<input id="itemEditQty" type="number" step="any" min="0.000001" style="width:100%"></label>
             <label>存货名称<input id="itemEditName" type="text" style="width:100%"></label>
             <label>所属类别<input id="itemEditCat" type="text" style="width:100%"></label>
@@ -738,6 +758,77 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMDrawings;
 })(typeof window!=="undefined"?window:globalThis);
 
 /* END M1_LITE_REAL_PDF_STORE */
+/* BEGIN M1_LITE_DRAWING_MATCHER */
+/* 中文：按 PDF 文件名匹配 RFQ 物料编码和图号，仅提示候选，永不直接建立关系。
+ * English: Conservative PDF filename matching against item and drawing numbers; review required. */
+(function(root){
+"use strict";
+const valid=x=>typeof x==="string"&&x.trim().length>=3;
+const norm=x=>String(x??"").normalize("NFKC").trim().toUpperCase();
+const stem=x=>norm(String(x||"").replace(/\.pdf$/i,""));
+function escapeRegex(value){return value.replace(/[.*+?^{}()|[\]\\$]/g,"\\/* END M1_LITE_REAL_PDF_STORE */")}
+function hasDelimitedToken(name,token){
+ if(!valid(token))return false;
+ const pattern="(^|[^\\p{L}\\p{N}])"+escapeRegex(token)+"($|[^\\p{L}\\p{N}])";
+ return new RegExp(pattern,"u").test(name);
+}
+function readDrawingNumbers(it){
+ const values=[it.drawingNo,it.drawingNumber,it.drawingCode,it.drawingId,it.图号,it.图纸编号];
+ const customs=it.custom&&typeof it.custom==="object"?it.custom:{};
+ for(const [key,val] of Object.entries(customs)){
+  if(/(?:^|[^a-z])(drawing\s*(?:no|number|code)|dwg\s*(?:no|number))(?:$|[^a-z])|图号|图纸编号|图样代号/i.test(key))
+   values.push(val);
+ }
+ return [...new Set(values.filter(x=>typeof x==="string"&&valid(x)).map(norm))];
+}
+function tokens(it){
+ const map=new Map();
+ if(valid(it.id))map.set(norm(it.id),"物料编码");
+ for(const drawing of readDrawingNumbers(it))if(!map.has(drawing))map.set(drawing,"图号");
+ return map;
+}
+function revisionHint(filename){
+ const name=stem(filename);
+ let found=name.match(/(?:^|[_\s.\-])(?:REV(?:ISION)?|版本|V)[_\s.\-]?([A-Z0-9]{1,5})$/u);
+ if(!found)found=name.match(/(?:^|[_\s.\-])([A-Z0-9]{1,4})版$/u);
+ if(!found)found=name.match(/(?:^|[_\s.\-])([A-Z])$/u);
+ return found?found[1]:"";
+}
+function unsafeSuffix(name,token){
+ if(!name.startsWith(token))return false;
+ const rest=name.slice(token.length);
+ return /^[-_.]\d+(?=$|[-_.])/u.test(rest);
+}
+function propose(filename,items){
+ const name=stem(filename),matches=[];
+ if(!/\.pdf$/i.test(filename))return{status:"invalid",reason:"文件不是 PDF",candidates:[],selectedLineId:"",revision:""};
+ for(const it of items||[]){
+  if(!it||typeof it.lineId!=="string")continue;
+  for(const [token,source] of tokens(it)){
+   if(!hasDelimitedToken(name,token))continue;
+   const level=name===token?"exact":unsafeSuffix(name,token)?"review":"bounded";
+   matches.push({lineId:it.lineId,code:it.id,source,token,level});
+  }
+ }
+ const byLine=new Map();
+ for(const x of matches){
+  const rank=x.level==="exact"?3:x.level==="bounded"?2:1;
+  const prev=byLine.get(x.lineId);
+  if(!prev||rank>(prev.level==="exact"?3:prev.level==="bounded"?2:1))
+   byLine.set(x.lineId,x);
+ }
+ const candidates=[...byLine.values()],revision=revisionHint(filename);
+ if(!candidates.length)return{status:"missing",reason:"未找到物料编码或图号的完整匹配",candidates:[],selectedLineId:"",revision};
+ if(candidates.length>1)return{status:"multiple",reason:"存在多个可能的询价行，须手工选择",candidates,selectedLineId:"",revision};
+ const c=candidates[0];
+ if(c.level==="review")return{status:"review",reason:"数字后缀可能是另一物料编码，需人工核对",candidates,selectedLineId:c.lineId,revision};
+ return{status:"unique",reason:c.source+"完整匹配；仍需采购员最终确认",candidates,selectedLineId:c.lineId,revision};
+}
+root.SRMDrawingMatcher=Object.freeze({propose,revisionHint,readDrawingNumbers,stem});
+if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMDrawingMatcher;
+})(typeof window!=="undefined"?window:globalThis);
+
+/* END M1_LITE_DRAWING_MATCHER */
 /* BEGIN M1_LITE_CORE */
 /* 中文：轻量 M1-B1 业务状态模型，只管规范化/校验/序列化，不读写任何数据库或文件。
  * English: Lean pure domain model; no storage, file or network side effects. */
@@ -1657,9 +1748,9 @@ function openItemEditor(lineId){
   const it=items.find(x=>x.lineId===lineId);if(!it)return;
   editingItemLineId=it.lineId;const locked=itemHasAnyQuoteHistory(lineId);
   itemEditIdentity.textContent="RFQ Line ID："+it.lineId+"（保持不变）";
-  itemEditCode.value=it.id;itemEditQty.value=it.qty;itemEditName.value=it.name;itemEditCat.value=it.cat;itemEditUnit.value=it.unit;
+  itemEditCode.value=it.id;itemEditDrawingNo.value=it.drawingNo||"";itemEditQty.value=it.qty;itemEditName.value=it.name;itemEditCat.value=it.cat;itemEditUnit.value=it.unit;
   itemEditHint.textContent=locked?"此询价行已有报价历史，当前只允许查看；请在后续正式修订流程中变更。":"当前属性带出该行原值。M0 尚未接入 ERP 主数据，修改存货编码不会自动更新其他 ERP 属性，也不会合并其他相同编码询价行。";
-  for(const input of [itemEditCode,itemEditQty,itemEditName,itemEditCat,itemEditUnit])input.disabled=locked;
+  for(const input of [itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditCat,itemEditUnit])input.disabled=locked;
   itemEditSave.disabled=locked;itemEditError.textContent="";
   itemEditModal.classList.add("open");itemEditModal.setAttribute("aria-hidden","false");
   if(!locked)itemEditCode.focus();
@@ -1673,7 +1764,7 @@ function saveItemEdit(){
   if(!confirm("保存此询价行修改？RFQ Line ID 和已分配供应商保持不变。"))return;
   // 中文：改码不自动修改或合并其他行；记录编辑来源但不冒充 ERP 数据。
   // English: Code edits never silently merge RFQ lines or claim ERP master autofill.
-  it.id=code;it.qty=qty.value;it.name=itemEditName.value.trim();it.cat=itemEditCat.value.trim();it.unit=unit;
+  it.id=code;it.drawingNo=itemEditDrawingNo.value.trim();it.qty=qty.value;it.name=itemEditName.value.trim();it.cat=itemEditCat.value.trim();it.unit=unit;
   it.sources=it.sources||[];it.sources.push({source:"人工编辑（原位修改）",qty:it.qty});
   closeItemEditor();renderItemList();renderAssignAll();renderQuotes();
 }
@@ -1801,11 +1892,12 @@ function parseItemRows(text){
     const id=findHeaderValue(data,["存货编码","物料编码"]),name=findHeaderValue(data,["存货名称","物料名称","名称"]),
       cat=findHeaderValue(data,["所属类别","分类","物料分类"]),
       qtyRaw=findHeaderValue(data,["询价数量","数量"]),unit=findHeaderValue(data,["询价单位","单位"]),
+      drawingNo=findHeaderValue(data,["图号","图纸编号","图样代号","Drawing No","Drawing Number"]),
       qty=parsePositiveNumber(qtyRaw,"询价数量"),errors=[];
     if(!id)errors.push("第 "+rowNo+" 行存货编码为空");
     if(qty.error)errors.push("第 "+rowNo+" 行："+qty.error);
     if(!unit)errors.push("第 "+rowNo+" 行询价单位不能为空");
-    return{id,lineId:nextLineId(),name,cat,qty:qty.value,unit,_rowNo:rowNo,
+    return{id,lineId:nextLineId(),name,cat,qty:qty.value,unit,drawingNo,_rowNo:rowNo,
       sources:[{source:"导入第 "+rowNo+" 行",qty:qty.value}],_errors:errors};
   });
   result._headers=table.headers;return result;
@@ -1817,7 +1909,7 @@ function parseItemRows(text){
 function itemMergeCheck(a,b){
   if(a.id!==b.id)return{kind:"different",reasons:[]};
   const diffs=[];
-  for(const [k,label] of [["name","名称"],["cat","分类"],["unit","单位"],["technicalRevision","技术版本"],["deliveryTerm","交货条件"]]){
+  for(const [k,label] of [["name","名称"],["cat","分类"],["unit","单位"],["drawingNo","图号"],["technicalRevision","技术版本"],["deliveryTerm","交货条件"]]){
     const x=String(a[k]??"").trim(),y=String(b[k]??"").trim();
     if(x!==y)diffs.push(label+"不一致");
   }
@@ -1909,7 +2001,7 @@ function addRowsToRfq(rows){
   alert(`新增 ${added} 行；自动合并 ${merged} 行；冲突确认分行 ${separated} 行。合并前原始需求行已留存。`);
 }
 toggleItemIntake.onclick=()=>{itemIntake.style.display=itemIntake.style.display==="none"?"block":"none"};
-manualAdd.onclick=()=>{const code=manualCode.value.trim(),name=manualName.value.trim(),qty=parsePositiveNumber(manualQty.value,"数量"),unit=manualUnit.value.trim();if(!code||qty.error||!unit){alert([!code?"物料编码不能为空":"",qty.error||"",!unit?"单位不能为空":""].filter(Boolean).join("；"));return}const row={id:code,lineId:nextLineId(),name,cat:"",qty:qty.value,unit,sources:[{source:"单条录入",qty:qty.value}],_errors:[]};setImportPreview([row],"单条输入预览");manualCode.value=manualName.value=manualQty.value=manualUnit.value=""};
+manualAdd.onclick=()=>{const code=manualCode.value.trim(),name=manualName.value.trim(),qty=parsePositiveNumber(manualQty.value,"数量"),unit=manualUnit.value.trim();if(!code||qty.error||!unit){alert([!code?"物料编码不能为空":"",qty.error||"",!unit?"单位不能为空":""].filter(Boolean).join("；"));return}const row={id:code,lineId:nextLineId(),name,cat:"",qty:qty.value,unit,drawingNo:manualDrawingNo.value.trim(),sources:[{source:"单条录入",qty:qty.value}],_errors:[]};setImportPreview([row],"单条输入预览");manualCode.value=manualName.value=manualQty.value=manualUnit.value=manualDrawingNo.value=""};
 parsePaste.onclick=()=>{const rows=parseItemRows(pasteItems.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到物料。");return}setImportPreview(rows,"剪贴板批量粘贴预览")};
 clearPasteInput.onclick=()=>{pasteItems.value=""};
 clearPastePreview.onclick=()=>{pendingImportRows=[];itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;importPreview.innerHTML="";importPreview.style.display="none"};
@@ -2977,11 +3069,217 @@ renderItemList();renderAssignAll();renderQuotes();
   it.drawingStatus=statusChoice.value;window.SRMPilot.noteDrawingChange();
   renderItemList();sync();tell("已更新本行图纸状态，请保存工作。");
  };
- const refresh=()=>sync();
+ const refresh=()=>{sync();window.SRMBatchDrawUI?.reset()};
  window.SRMDrawUI=Object.freeze({refresh});
 }
 
 /* END M1_LITE_DRAWING_UI */
+/* BEGIN M1_LITE_DRAWING_BATCH_UI */
+/* 中文：批量 PDF 文件名匹配预览；所有对应关系仅在采购员确认后落入当前 RFQ。
+ * English: Review-first bulk drawing matcher; never silently attach tentative candidates. */
+{
+ const service=window.SRMDrawings,matcher=window.SRMDrawingMatcher;
+ const input=document.getElementById("pilotBatchDrawingFiles");
+ const analyze=document.getElementById("pilotBatchDrawingAnalyze");
+ const accept=document.getElementById("pilotBatchDrawingConfirm");
+ const clear=document.getElementById("pilotBatchDrawingClear");
+ const table=document.getElementById("pilotBatchDrawingPreview");
+ const summary=document.getElementById("pilotBatchDrawingSummary");
+ const defaultVersion=document.getElementById("pilotBatchDrawingVersion");
+ const manualLine=document.getElementById("pilotBatchDrawingManualLine");
+ const manualSet=document.getElementById("pilotBatchDrawingManualAssign");
+ const manualFocus=document.getElementById("pilotBatchDrawingFocus");
+ const MAX_FILES=100,MAX_TOTAL=64*1024*1024;
+ let staged=[],baseline=null,focused=-1,busy=false;
+ const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const isBuyer=()=>!!window.SRMPilot?.isBuyer();
+ const model=()=>window.SRMPilot?.snapshot();
+ const sig=()=>JSON.stringify(items.map(it=>({
+  lineId:it.lineId,id:it.id,drawingNo:it.drawingNo,drawingNumber:it.drawingNumber,
+  drawingCode:it.drawingCode,custom:it.custom,drawings:it.drawings,
+  drawingStatus:it.drawingStatus,locked:itemHasAnyQuoteHistory(it.lineId)
+ })));
+ function lineName(it){return it.id+" · "+(it.drawingNo?"图号 "+it.drawingNo+" · ":"")+it.lineId}
+ function tell(message,bad=false){
+  summary.textContent=message;
+  summary.className=bad?"small dangertext":"small muted";
+ }
+ function render(){
+  table.replaceChildren();
+  if(!staged.length){accept.disabled=true;manualSet.disabled=true;return}
+  const labels={unique:"单候选匹配",multiple:"多个候选·需确认",review:"编码后缀需确认",missing:"未匹配·手工指定",
+   invalid:"文件校验失败",duplicate:"重复内容"};
+  const head='<thead><tr><th>选中</th><th>PDF 文件／检测结果</th><th>关联的物料行</th><th>图纸版本</th><th>人工复核</th></tr></thead>';
+  const body=staged.map((r,i)=>{
+   const options=['<option value="">— 尚未指定 —</option>'];
+   for(const candidate of r.match.candidates){
+    const item=items.find(x=>x.lineId===candidate.lineId);
+    if(item)options.push('<option value="'+esc(item.lineId)+'" '+
+      (r.lineId===item.lineId?'selected':'')+'>'+esc(lineName(item))+' ['+esc(candidate.source)+']</option>');
+   }
+   // 中文：手动指定的行不一定原属于文件名候选，需要显示完整且可追溯的目标。
+   // English: Explicit manual override may refer to a non-candidate RFQ line.
+   if(r.lineId&&!r.match.candidates.some(c=>c.lineId===r.lineId)){
+    const target=items.find(x=>x.lineId===r.lineId);
+    if(target)options.push('<option value="'+esc(target.lineId)+'" selected>'+esc(lineName(target))+' [人工指定]</option>');
+   }
+   const selectable=!!r.data&&!r.duplicate;
+   return '<tr data-batch-row="'+i+'">'+
+    '<td><input type="checkbox" data-batch-check="'+i+'" '+(r.checked?'checked':'')+
+      (selectable?'':' disabled')+'></td>'+
+    '<td><b>'+esc(r.file.name)+'</b><div class="pdfMeta">'+esc(labels[r.duplicate?'duplicate':r.status]||r.status)+
+    ' · '+esc(r.reason)+'</div></td>'+
+    '<td><select data-batch-target="'+i+'" '+(selectable?'':'disabled')+'>'+options.join("")+'</select></td>'+
+    '<td><input type="text" data-batch-version="'+i+'" maxlength="80" style="width:90px" value="'+esc(r.version)+'" '+(selectable?'':'disabled')+'></td>'+
+    '<td><button type="button" class="btn '+(focused===i?'soft':'')+'" data-batch-focus="'+i+'">指定此文件</button></td>'+
+    '</tr>';
+  }).join("");
+  table.innerHTML=head+'<tbody>'+body+'</tbody>';
+  accept.disabled=!staged.some(x=>x.checked&&x.data&&!x.duplicate);
+  manualSet.disabled=focused<0||!staged[focused]?.data||!!staged[focused]?.duplicate;
+  const selected=staged.filter(x=>x.checked&&x.data&&!x.duplicate).length;
+  const unique=staged.filter(x=>x.status==="unique").length;
+  const multiple=staged.filter(x=>x.status==="multiple").length;
+  const unresolved=staged.filter(x=>["missing","review"].includes(x.status)).length;
+  const invalid=staged.filter(x=>!x.data||x.duplicate).length;
+  tell("批量匹配预览："+staged.length+" 个文件；唯一候选 "+unique+
+   "；多候选 "+multiple+"；未匹配/待核对 "+unresolved+
+   "；无效/重复 "+invalid+"；当前选中待确认 "+selected+
+   "。此时尚未写入 PDF 原件或关联关系。");
+ }
+ function loadManualOptions(){
+  const old=manualLine.value;
+  manualLine.replaceChildren();
+  for(const it of items){
+   const opt=document.createElement("option");opt.value=it.lineId;opt.textContent=lineName(it);
+   manualLine.appendChild(opt);
+  }
+  if(items.some(it=>it.lineId===old))manualLine.value=old;
+ }
+ function reset(){
+  staged=[];baseline=null;focused=-1;input.value="";table.replaceChildren();
+  manualFocus.textContent="未选择待人工指定的 PDF";accept.disabled=true;manualSet.disabled=true;
+  tell("请选择一组真实 PDF 并执行匹配预览；所有候选均需核对确认，未自动关联。");
+ }
+ async function preview(){
+  if(busy||!isBuyer())return;
+  const files=[...input.files];
+  reset();
+  if(!files.length){tell("请选择需要匹配的 PDF 文件",true);return}
+  if(!items.length){tell("请先导入本次询价的物料清单",true);return}
+  if(files.length>MAX_FILES||files.reduce((sum,f)=>sum+f.size,0)>MAX_TOTAL){
+   tell("单批最多 100 份 PDF、合计不超过 64MB；请分批导入。",true);return;
+  }
+  busy=true;analyze.disabled=true;accept.disabled=true;
+  try{
+   const ws=model();baseline={workspaceId:ws.workspaceId,revision:ws.revision,items:sig()};
+   loadManualOptions();staged=[];const seen=new Set();
+   for(let i=0;i<files.length;i++){
+    const file=files[i],match=matcher.propose(file.name,items);
+    let data=null,reason=match.reason,status=match.status,duplicate=false;
+    try{
+     data=await service.verify(file);
+     if(seen.has(data.sha256)){duplicate=true;status="duplicate";reason="本批次已有相同内容；请仅保留一份"}
+     seen.add(data.sha256);
+    }catch(e){reason=e.message;status="invalid"}
+    const lineId=status==="unique"?match.selectedLineId:"";
+    const version=match.revision||defaultVersion.value.trim();
+    staged.push({file,data,match,status,reason,lineId,version,duplicate,checked:status==="unique"&&!!data});
+   }
+   render();
+  }catch(e){reset();tell("匹配预览失败："+e.message,true)}
+  finally{busy=false;analyze.disabled=false}
+ }
+ async function confirmBatch(){
+  if(busy||!staged.length||!baseline||!isBuyer())return;
+  const ws=model();
+  if(ws.workspaceId!==baseline.workspaceId||ws.revision!==baseline.revision||sig()!==baseline.items){
+   tell("询价物料、报价历史或图纸关联已变化；请重新执行匹配预览。",true);return;
+  }
+  const chosen=staged.filter(r=>r.checked&&r.data&&!r.duplicate);
+  if(!chosen.length){tell("请至少勾选一份要关联的有效图纸",true);return}
+  const edits=new Map(),written=new Set(),checks=[];
+  try{
+   for(const r of chosen){
+    const it=items.find(x=>x.lineId===r.lineId);
+    if(!it)throw Error("文件 "+r.file.name+" 尚未选择有效的物料行");
+    if(itemHasAnyQuoteHistory(it.lineId))throw Error("物料 "+it.id+" 已有报价历史，不能修改图纸");
+    if(it.drawingStatus==="not_required")throw Error("物料 "+it.id+" 已设置无需图纸，请先更正其图纸要求");
+    const revision=r.version.trim();
+    if(!revision||revision.length>80)throw Error("文件 "+r.file.name+" 的图纸版本不能为空或超过80字符");
+    const before=edits.has(it.lineId)?edits.get(it.lineId):[...service.docsForItem(it)];
+    if(before.some(d=>d.sha256===r.data.sha256)){
+     throw Error("文件 "+r.file.name+" 已关联到物料 "+it.id+"，请取消勾选重复记录");
+    }
+    if(before.some(d=>d.name===r.file.name&&d.revision===revision&&d.sha256!==r.data.sha256))
+     throw Error("文件 "+r.file.name+" 与已有同名同版本 PDF 内容不同，请先核对版本");
+    const known=items.flatMap(x=>service.docsForItem(x)).find(d=>d.sha256===r.data.sha256);
+    if(known&&(known.name!==r.file.name||known.revision!==revision))
+     throw Error("相同 PDF 内容已有不同名称或版本，请核对 "+r.file.name);
+    before.push({id:r.data.sha256.slice(0,16),sha256:r.data.sha256,
+      name:r.file.name,revision,size:r.data.size,createdAt:new Date().toISOString()});
+    edits.set(it.lineId,before);checks.push(r);
+   }
+  }catch(e){tell("不能确认关联："+e.message,true);return}
+  if(!window.confirm("确认将 "+checks.length+" 份 PDF 关联到 "+edits.size+
+      " 条 RFQ 物料？请先核对编码、图号、行号和版本。保存后再用于供应商询价包。"))return;
+  busy=true;analyze.disabled=true;accept.disabled=true;manualSet.disabled=true;
+  try{
+   if(sig()!==baseline.items||model().workspaceId!==baseline.workspaceId)
+    throw Error("业务数据发生变化，需重新预览");
+   for(const r of checks){
+    const stored=await service.store(baseline.workspaceId,r.file,r.version.trim());
+    if(stored.sha256!==r.data.sha256)throw Error("PDF 在预览后发生内容变化，已拒绝建立关系");
+    written.add(stored.sha256);
+   }
+   if(sig()!==baseline.items||model().workspaceId!==baseline.workspaceId)
+    throw Error("写入原件期间业务数据发生变化，未建立关联");
+   for(const [id,docs]of edits){
+    const item=items.find(x=>x.lineId===id);
+    if(!item)throw Error("目标物料已改变");
+    item.drawings=docs;
+   }
+   window.SRMPilot.noteDrawingChange();
+   renderItemList();renderAssignAll();window.SRMDrawUI?.refresh();
+   const done=checks.length,affected=edits.size;
+   reset();
+   tell("已确认 "+done+" 份 PDF 与 "+affected+" 条物料行的关联；原件保存在本机。请点击“保存到本机”提交业务关系，并另外备份完整资料 ZIP。");
+  }catch(e){
+   tell("批量导入未完成："+e.message+"。未完成业务关联，原件可能留有未引用副本。",true);
+  }finally{busy=false;analyze.disabled=false;render()}
+ }
+ input.addEventListener("change",()=>{staged=[];baseline=null;focused=-1;table.replaceChildren();accept.disabled=true;
+  tell("PDF 文件已选择；请点击“执行匹配预览”，不会自动建立关联。")});
+ analyze.addEventListener("click",preview);
+ accept.addEventListener("click",confirmBatch);
+ clear.addEventListener("click",reset);
+ table.addEventListener("change",e=>{
+  const el=e.target,i=Number(el.dataset.batchCheck??el.dataset.batchTarget??el.dataset.batchVersion);
+  if(!Number.isSafeInteger(i)||i<0||i>=staged.length)return;
+  if(el.hasAttribute("data-batch-check"))staged[i].checked=el.checked;
+  else if(el.hasAttribute("data-batch-target"))staged[i].lineId=el.value;
+  else if(el.hasAttribute("data-batch-version"))staged[i].version=el.value;
+  render();
+ });
+ table.addEventListener("click",e=>{
+  const btn=e.target.closest("[data-batch-focus]");if(!btn)return;
+  focused=Number(btn.dataset.batchFocus);
+  const row=staged[focused];manualFocus.textContent=row?"待指定："+row.file.name:"未选择";
+  if(row?.lineId)manualLine.value=row.lineId;
+  render();
+ });
+ manualSet.addEventListener("click",()=>{
+  const row=staged[focused];
+  if(!row?.data||row.duplicate)return;
+  if(!items.some(it=>it.lineId===manualLine.value))return;
+  row.lineId=manualLine.value;row.checked=true;
+  row.reason="采购员手工指定 RFQ 行（非自动匹配）";
+  row.status="manual";render();
+ });
+ window.SRMBatchDrawUI=Object.freeze({reset,preview});
+}
+
+/* END M1_LITE_DRAWING_BATCH_UI */
 /* BEGIN M1_LITE_MANUAL_SAVE */
 /* 中文：M1-Lite 首批正式工作空间、供应商维护、手动保存与自动重新载入。
  * English: Minimal buyer workspace, supplier entry, explicit local save and on-load recovery.
