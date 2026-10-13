@@ -1,88 +1,93 @@
-# SRM S2 本机离线数据服务 / SRM S2 Local Offline Data Service
+# SRM S3 离线 SQLite 原型 / SRM S3 Offline SQLite Prototype
 
-## 当前开发状态 / Current Stage
+## 已实现范围 / Implemented Scope
 
-- S1 SQLite 快照和历史版本已实现；S2 环回 HTTP API、Windows 启动入口、数据库备份与检查页已实现。
-- S1 SQLite snapshots/versioning are implemented; S2 loopback API, Windows launcher, database backup and status page are implemented.
-- **原业务页面仍使用 IndexedDB 手动保存，尚未改为 SQLite。**
-- **The existing business UI still saves manually to IndexedDB; it is not connected to SQLite yet.**
-- **不要用于真实采购数据；本阶段只做虚构数据及接口验证。**
-- **Do not use real procurement data at this stage; only synthetic integration tests are supported.**
-- 不修改 `main`，也不将真实业务数据库、备份和附件写入 Git 仓库。
-- Do not change `main` or commit real databases, backups or attachments to Git.
+- 在单台 Windows 电脑离线运行，浏览器通过本机 `http://127.0.0.1:8765` 打开完整 M1-Lite 业务页面。
+- Run the complete M1-Lite business UI offline on one Windows PC at `http://127.0.0.1:8765`.
+- 询价数据不再写入浏览器 IndexedDB；通过本机 HTTP API 读写 SQLite，支持多笔询价、历史切换及版本冲突保护。
+- Business data no longer uses browser IndexedDB; loopback API persists SQLite workspaces, RFQ selection and revision checks.
+- PDF 图纸原件写入本机独立目录，并用 SHA-256 校验；关联关系存入业务快照。
+- PDF originals persist in a separate local directory with SHA-256 validation; their relationships remain in workspace snapshots.
+- 仍采用 **手动点击“保存到本机”**，尚未开发自动保存。
+- **Manual “Save to this computer” is still required**; autosave has not been implemented.
+- 报价邮件、截图等非图纸凭证，完整备份恢复，以及新 UI 设计仍在后续阶段。
+- Non-drawing evidence files, verified full backup/restore, and redesigned UI remain future work.
+- 旧 IndexedDB、JSON、ZIP 全部是可丢弃的测试数据；本版直接创建空白 SQLite，无迁移程序。
+- Old browser records, JSON and ZIP contain disposable tests; start fresh in SQLite without migration.
+- 所有源代码、示例和测试文件均为虚构信息，真实业务数据切勿提交 GitHub。
+- Source code, samples and tests use synthetic information; never commit real business data to GitHub.
 
-## Windows 本地启动 / Windows Local Launch
+## Windows 本机启动 / Windows Launch
 
-1. 在 GitHub 切换到 `draft/20261013-m1-storage-ui-audit` 分支，下载该分支 ZIP 并解压。
-1. Switch to `draft/20261013-m1-storage-ui-audit` on GitHub, download the branch ZIP and extract it.
-2. 安装 Python 3.10 或更新版本，无需联网安装第三方 Python 包。
-2. Install Python 3.10+; no external Python dependencies are required.
-3. 双击 `prototype/m1-lite/run_local.bat`，保持启动窗口开启。
-3. Double-click `prototype/m1-lite/run_local.bat` and leave the terminal open.
-4. 浏览器会打开 `http://127.0.0.1:8765/storage-check`，点击“检查本机服务”和“读取 SQLite 询价索引”。
-4. The browser opens `http://127.0.0.1:8765/storage-check`; click “Check service” and “Read SQLite index”.
-5. 如需退出，请关闭启动窗口或在终端按 `Ctrl+C`。
-5. To stop the server, close its terminal or press `Ctrl+C`.
+1. 下载 `draft/20261013-m1-storage-ui-audit` 分支的 ZIP 并解压。
+1. Download and extract the ZIP from branch `draft/20261013-m1-storage-ui-audit`.
+2. 安装 Python 3.10+（如果电脑尚未安装），无需另外安装 Python 第三方库或 SQLite 软件。
+2. Install Python 3.10+ if missing; no third-party Python libraries or separate SQLite install are needed.
+3. 双击 `prototype/m1-lite/run_local.bat`，保持启动的命令行窗口开启。
+3. Double-click `prototype/m1-lite/run_local.bat`; leave the terminal open.
+4. 浏览器打开 `http://127.0.0.1:8765/`；若未自动打开，请手动输入网址。
+4. Open `http://127.0.0.1:8765/` in the browser if not launched automatically.
+5. 点击“新建空白正式工作” → 导入虚构物料和供应商 → 点击“保存到本机” → 再上传 PDF。
+5. Create a fresh buyer workspace, add synthetic items/suppliers, save first, then upload PDFs.
+6. 关闭浏览器再打开，或重启程序，验证已保存的询价及 PDF 是否可恢复。
+6. Reopen the browser or restart the service to verify workspace and PDF persistence.
+7. 如需停止程序，在命令行按 `Ctrl+C`；退出后 SQLite 数据仍保留。
+7. Stop with `Ctrl+C`; SQLite data persists across service restarts.
 
-- 若浏览器没有自动打开，请手动输入 `http://127.0.0.1:8765/storage-check`。
-- If the browser does not open, navigate manually to `http://127.0.0.1:8765/storage-check`.
-- 本机地址只对当前电脑有效，不是公司服务器地址。
-- The loopback URL works only on the current PC; it is not an intranet server address.
-- 如 8765 端口已被占用，服务不会在另一个端口悄悄启动，应检查终端错误。
-- If port 8765 is occupied, the server does not silently move to another port; inspect the terminal error.
-- **已确认现有 JSON/ZIP 与 IndexedDB 均仅为虚构测试数据，无需迁移到新的 SQLite；新数据库从空白开始。**
-- **Confirmed: existing JSON/ZIP and IndexedDB are synthetic tests only; no SQLite migration is required. Start clean.**
-- 当前旧 `file://` 页面与新的本机 HTTP 页面仍是不同浏览器存储来源；S3 接入之前不得把旧 HTML 误认为已经使用 SQLite。
-- The old `file://` page and local HTTP page still use separate browser origins; do not assume the old HTML uses SQLite before S3.
+## 硬盘位置 / Disk Location
 
-## 数据保存位置 / Data Location
+- SQLite 数据库：`%LOCALAPPDATA%\SRM-Lite\srm.sqlite3`
+- SQLite database: `%LOCALAPPDATA%\SRM-Lite\srm.sqlite3`
+- PDF 图纸原件：`%LOCALAPPDATA%\SRM-Lite\assets\`
+- PDF originals: `%LOCALAPPDATA%\SRM-Lite\assets\`
+- 单独数据库备份：`%LOCALAPPDATA%\SRM-Lite\backups\`
+- Database-only backups: `%LOCALAPPDATA%\SRM-Lite\backups\`
+- 代码目录与数据库目录互相分离；重新下载代码不会自动删除已写入数据库。
+- Source files and runtime data are separate; refreshing code does not erase the database.
+- API 的 SQLite 单独备份不包含 PDF；页面中“导出询价及 PDF 原件 ZIP”是数据导出，**当前尚无与之对应的 SQLite 恢复功能**。
+- API SQLite backups exclude PDFs; the UI’s PDF ZIP is an export, **not yet a complete SQLite restore solution**.
 
-- Windows：`%LOCALAPPDATA%\SRM-Lite\srm.sqlite3`。
-- Windows: `%LOCALAPPDATA%\SRM-Lite\srm.sqlite3`.
-- S2 数据库备份：`%LOCALAPPDATA%\SRM-Lite\backups\`。
-- S2 DB-only backups: `%LOCALAPPDATA%\SRM-Lite\backups\`.
-- 当前尚未开发完整附件存储，数据库备份不包含 PDF、邮件、截图等文件。
-- Attachment storage is not implemented yet; database backups do not include PDFs, emails or screenshots.
-- 这是开发阶段的数据服务目录，不代表完整业务备份或生产安全方案。
-- This is a development data location, not a complete business backup or production security policy.
+## 验收边界 / Acceptance Boundary
 
-## API 契约 / API Contract
+- 当前 S3 是候选开发版，尚未完成完整 Windows 浏览器端到端验收，不用于正式采购记录。
+- S3 is a development candidate, not yet fully acceptance-tested on Windows and not ready for official purchasing data.
+- 测试数据使用虚构物料编码、供应商和报价，不需要迁移既有样例。
+- Use synthetic item IDs, suppliers, and quotes; no legacy fixture migration is required.
+- 旧版 HTML 直接双击 `file://` 已不再支持业务持久化；必须通过本机启动服务访问。
+- Direct `file://` use no longer supports business persistence; access through the local server.
+- 断开或停止本机服务，业务操作必须报错，不能假装已保存，更不能退回浏览器数据库。
+- If the local API stops, writes must fail visibly rather than pretend to save or fall back to browser storage.
+- 新询价需先成功保存一次，之后才允许将图纸 PDF 存入硬盘。
+- A new workspace must be saved once before original PDFs can be uploaded.
 
-| 方法 / Method | 路径 / Path | 功能 / Purpose |
+## API / API Routes
+
+| Method | Route | Purpose |
 |---|---|---|
-| GET | `/api/health` | 服务状态 / Health check |
-| GET | `/api/workspaces` | 仅工作区摘要 / Workspace metadata only |
-| GET | `/api/workspaces/{id}` | 当前工作区快照 / Current workspace snapshot |
-| GET | `/api/workspaces/{id}?revision=N` | 指定历史版 / Historical snapshot |
-| PUT | `/api/workspaces/{id}` | 按期望修订号保存 / Compare-and-swap save |
-| POST | `/api/backups/database` | 一致性数据库备份 / Verified DB-only backup |
+| GET | `/api/health` | 本机服务状态 / Service health |
+| GET | `/api/active` | 活动询价 / Active RFQ |
+| GET | `/api/workspaces` | 询价列表 / Workspace index |
+| GET | `/api/workspaces/{id}` | 工作区快照 / Snapshot |
+| GET | `/api/workspaces/{id}?revision=N` | 历史版本 / Historical revision |
+| PUT | `/api/workspaces/{id}` | 版本化保存 / Conditional save |
+| POST | `/api/active/select` | 切换活动询价 / Switch active RFQ |
+| PUT | `/api/assets/{workspaceId}/{sha256}` | 写入 PDF 原件 / Store PDF |
+| GET | `/api/assets/{workspaceId}/{sha256}` | 校验读取 PDF / Read PDF |
+| POST | `/api/backups/database` | SQLite 单独备份 / DB-only backup |
 
-- PUT 请求格式：`{"workspace": <完整的 M1WorkspaceCore 快照>, "expectedRevision": null 或整数}`。
-- PUT body: `{"workspace": <full M1WorkspaceCore snapshot>, "expectedRevision": null or integer}`.
-- 新工作区第 1 版传 `null`，已存在工作区更新必须提供实际现存版本；冲突返回 HTTP 409。
-- First save sends `null`; updates require the current stored revision and return HTTP 409 on conflict.
-- 为阻止跨站网页驱动本机数据接口，修改操作要求同源 `Origin`，API 不启用 CORS。
-- To prevent cross-site drives of local APIs, mutations require a same-origin `Origin`; CORS is disabled.
-- **服务端目前只有外围状态验证和已确认报价版本保护，深层业务模型验证仍待迁移。**
-- **The server currently validates the snapshot envelope and confirmed-quote preservation only; full domain validation is pending.**
+- 修改类接口要求合法的同源 `Origin`，服务仅监听 `127.0.0.1`，不提供公司内网共享。
+- Mutation APIs require a same-origin `Origin`; listener binds only to `127.0.0.1`, not the company LAN.
+- 深层服务端业务规则校验仍需补足；现阶段保留原页面的 `M1WorkspaceCore` 校验和后端已确认报价保护。
+- Full server-side domain validation remains future work; existing `M1WorkspaceCore` checks and confirmed quote protection apply.
 
-## 自动化测试 / Automated Tests
+## 单元/接口测试 / Unit and API Tests
 
 ```powershell
 cd prototype\m1-lite\backend
 py -3 -m unittest -v test_store test_server
 ```
 
-- 测试检查本机数据库持久化、重新打开、历史版、并发修订冲突、报价历史不可改、无效状态拒绝、HTTP 同源限制、路径安全与数据库备份。
-- Tests cover database durability, reopen, historical revisions, revision conflicts, confirmed quote immutability, invalid states, HTTP origin checks, path restrictions and backup.
-- 在 Linux/Python 3.13 隔离测试环境中执行 10 项测试通过；Windows 打包安装、真实浏览器和既有 HTML 与 API 接入仍未完成验收。
-- Ten tests were previously reported as passing in an isolated environment; Windows packaging and the actual business UI integration remain unverified.
-
-## 接下来的工作 / Next Deliverables
-
-- S3：直接把新版业务页面接入 SQLite API，默认从空白数据库开始；**不开发旧 JSON/ZIP/IndexedDB 测试数据迁移**。
-- S3: Wire the new business UI directly to SQLite API and begin with an empty database; **do not build legacy JSON/ZIP/IndexedDB test-data migration**.
-- S4：原始图纸、报价邮件、截图等附件按哈希管理，并完成可校验的全量备份与恢复。
-- S4: Hash-manage drawings, quote emails and screenshots with verified full backup/restore.
-- S5：重新设计 UI 导航、页面布局与交互，确保采购员可直接上手。
-- S5: Redesign navigation, page layout and buyer-facing interaction.
+- 测试文件包含 SQLite 读写、冲突保护、已确认报价不可变、历史切换、HTTP 同源控制、PDF 真正落盘以及校验值错误拒绝。
+- Tests cover SQLite durability, conflicts, confirmed quotes, active selection, HTTP origin restrictions, PDF disk persistence, and bad-checksum rejection.
+- 下一阶段将继续补齐本机 Windows 浏览器操作验收、自动保存、原始报价附件、完整备份恢复和统一 UI 设计。
+- Next tasks are Windows browser acceptance, autosave, original quote evidence, full backup/restore, and unified UI design.
