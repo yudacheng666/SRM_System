@@ -2,7 +2,7 @@
  * English: Small offline ZIP archive with CRC32 and UTF-8 names; no network dependencies. */
 (function(root){
 "use strict";
-const MAX_ENTRY_BYTES=12*1024*1024,MAX_TOTAL_BYTES=64*1024*1024,MAX_ENTRIES=200;
+const MAX_ENTRY_BYTES=16*1024*1024,MAX_TOTAL_BYTES=80*1024*1024,MAX_ENTRIES=200;
 const table=new Uint32Array(256);
 for(let n=0;n<256;n++){let c=n;for(let j=0;j<8;j++)c=(c&1)?0xedb88320^(c>>>1):c>>>1;table[n]=c>>>0}
 function crc32(bytes){let c=0xffffffff;for(const x of bytes)c=(c>>>8)^table[(c^x)&255];return (c^0xffffffff)>>>0}
@@ -16,7 +16,7 @@ async function create(entries){
  for(const entry of entries){
   if(!entry||typeof entry.name!=="string"||!(entry.blob instanceof Blob))fail("文件格式错误");
   const name=entry.name.trim();
-  if(!name||name.includes("/")||name.includes("\\")||name.includes("..")||!name.toLowerCase().endsWith(".xlsx")||seen.has(name))
+  if(!name||name.includes("/")||name.includes("\\")||name.includes("..")||!/\.(xlsx|pdf|json|zip)$/i.test(name)||seen.has(name))
    fail("文件名冲突或无效");
   seen.add(name);
   const data=new Uint8Array(await entry.blob.arrayBuffer()),nameBytes=enc.encode(name);
@@ -42,6 +42,45 @@ async function create(entries){
  u32(end,12,centerSize);u32(end,16,offset);
  return new Blob([...local,...central,end],{type:"application/zip"});
 }
-root.SRMZip=Object.freeze({create,MAX_ENTRIES,MAX_TOTAL_BYTES});
+
+/* 中文：只接受本项目生成的无压缩 Store ZIP；对文件名、CRC、大小和结构严格校验。
+ * English: Read only bounded uncompressed ZIPs produced by this app; reject malformed, encrypted or traversing entries. */
+async function read(blob){
+ if(!(blob instanceof Blob)||blob.size>MAX_TOTAL_BYTES+2000000)fail("ZIP 太大或格式无效");
+ const bytes=new Uint8Array(await blob.arrayBuffer()),dv=new DataView(bytes.buffer),dec=new TextDecoder("utf-8",{fatal:true});
+ const u16=p=>dv.getUint16(p,true),u32=p=>dv.getUint32(p,true);
+ const end=bytes.length-22;
+ if(end<0||u32(end)!==0x06054b50||u16(end+20)!==0)fail("ZIP 结尾结构不正确");
+ const count=u16(end+10),start=u32(end+16),size=u32(end+12);
+ if(count<1||count>MAX_ENTRIES||u16(end+8)!==count||start+size!==end)fail("ZIP 目录结构不完整");
+ let pos=start,localEnds=0,total=0;
+ const records=[],seen=new Set();
+ for(let i=0;i<count;i++){
+  if(pos+46>end||u32(pos)!==0x02014b50)fail("ZIP 中央目录损坏");
+  const flags=u16(pos+8),method=u16(pos+10),expectedCRC=u32(pos+16);
+  const compressed=u32(pos+20),length=u32(pos+24),nameLength=u16(pos+28);
+  const extra=u16(pos+30),comment=u16(pos+32),offset=u32(pos+42);
+  if((flags&0x0800)===0||(flags&1)||method!==0||compressed!==length||
+     length>MAX_ENTRY_BYTES||nameLength<1||pos+46+nameLength+extra+comment>end)fail("ZIP 条目不支持");
+  const name=dec.decode(bytes.slice(pos+46,pos+46+nameLength));
+  if(name.includes("/")||name.includes("\\")||name.includes("..")||
+     !/\.(xlsx|pdf|json|zip)$/i.test(name)||seen.has(name))fail("ZIP 文件名不安全或重复");
+  seen.add(name);total+=length;if(total>MAX_TOTAL_BYTES)fail("ZIP 解压内容超出限额");
+  if(offset+30+nameLength>start||u32(offset)!==0x04034b50||
+     u16(offset+8)!==0||u32(offset+14)!==expectedCRC||
+     u32(offset+18)!==length||u32(offset+22)!==length||
+     u16(offset+26)!==nameLength||u16(offset+28)!==0)fail("ZIP 本地条目与目录不一致");
+  const dataStart=offset+30+nameLength;
+  if(dataStart+length>start||dec.decode(bytes.slice(offset+30,dataStart))!==name)fail("ZIP 文件范围冲突");
+  const data=bytes.slice(dataStart,dataStart+length);
+  if(crc32(data)!==expectedCRC)fail("ZIP 文件 CRC 校验失败");
+  localEnds=Math.max(localEnds,dataStart+length);
+  records.push({name,blob:new Blob([data],{type:name.endsWith(".pdf")?"application/pdf":"application/octet-stream"})});
+  pos+=46+nameLength+extra+comment;
+ }
+ if(pos!==end||localEnds!==start)fail("ZIP 数据和目录范围不吻合");
+ return records;
+}
+root.SRMZip=Object.freeze({create,read,MAX_ENTRIES,MAX_TOTAL_BYTES});
 if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
 })(typeof window!=="undefined"?window:globalThis);
