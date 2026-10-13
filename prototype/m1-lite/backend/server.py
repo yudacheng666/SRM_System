@@ -96,7 +96,7 @@ def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PO
             path = parsed.path
             if path == "/api/health":
                 self._json(200, {"status": "ok", "mode": "offline", "backend": "sqlite",
-                                 "stage": "S2", "uiPersistence": "IndexedDB (not yet migrated)"})
+                                 "stage": "S2", "uiPersistence": "IndexedDB (SQLite integration pending)"})
                 return
             if path == "/api/workspaces":
                 self._json(200, {"workspaces": store.list_workspaces()})
@@ -191,10 +191,10 @@ def main() -> None:
     server = create_server()
     url = f"http://{HOST}:{server.server_port}/"
     print(f"SRM local prototype: {url}", flush=True)
-    print("NOTICE: current business UI still saves to IndexedDB until S3 migration.", flush=True)
+    print("NOTICE: current business UI still uses IndexedDB; new S3 UI will start with an empty SQLite database.", flush=True)
     print("SQLite API check: " + url + "storage-check", flush=True)
-    # 中文：默认打开存储检查页，避免旧 file:// 用户误以为 IndexedDB 已迁移。
-    # English: Start on the status page to avoid confusing file-origin and HTTP-origin data.
+    # 中文：默认打开存储检查页；业务 UI 尚未接入 SQLite。
+    # English: Open the storage check first; business UI is not connected to SQLite.
     threading.Timer(0.8, lambda: webbrowser.open(url + "storage-check")).start()
     try:
         server.serve_forever(poll_interval=0.2)
