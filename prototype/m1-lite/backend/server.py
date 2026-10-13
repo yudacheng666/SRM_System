@@ -182,7 +182,8 @@ def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PO
                     raise ValueError("INVALID_EXPECTED_REVISION")
                 if not isinstance(snapshot, dict) or snapshot.get("workspaceId") != wid:
                     raise ValueError("WORKSPACE_ID_MISMATCH")
-                revision = store.save(snapshot, expected_revision=expected)
+                kwargs = {"expected_active": body.get("expectedActive")} if "expectedActive" in body else {}
+                revision = store.save(snapshot, expected_revision=expected, **kwargs)
                 self._json(200, {"saved": True, "workspaceId": wid, "revision": revision})
             except RevisionConflict as exc:
                 self._json(409, {"error": "REVISION_CONFLICT", "message": str(exc)})
