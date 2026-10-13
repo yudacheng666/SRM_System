@@ -3003,6 +3003,7 @@ renderItemList();renderAssignAll();renderQuotes();
     historyPicker.disabled=busy||!localReady||historyPicker.options.length===0;
     historyBtn.disabled=busy||!localReady||!historyPicker.value;
     supplierBox.style.display=buyerMode?"flex":"none";
+    document.getElementById("pilotDrawingPanel").style.display=buyerMode?"block":"none";
     badge.textContent=buyerMode?"正式工作（本机手动保存）":"演示模式（不保存）";
     newBtn.textContent=buyerMode?"新建另一笔空白询价":"新建空白正式工作";
     rfqHead.textContent=buyerMode?workspaceId:"RFQ-DEMO-001";
