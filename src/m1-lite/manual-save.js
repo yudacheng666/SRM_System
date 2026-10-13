@@ -31,7 +31,7 @@
   let buyerMode=false,workspaceId=null,revision=0,busy=false,dirty=false,localReady=false,blocked=false;
   // 中文：新询价尚未保存时，记录旧活动询价的版本，防止并发窗口静默覆盖。
   // English: Capture the original active revision until an independent RFQ is first saved.
-  let launchBaseline=null;
+  let launchBaseline=null,committedActive=false;
   function status(message,isError=false){
     pilotStatus.textContent=message;
     pilotStatus.className=isError?"small dangertext":"small muted";
@@ -223,7 +223,7 @@
     selectedCompareSuppliers.clear();for(const x of s.selectedCompareSuppliers)selectedCompareSuppliers.add(x);
     customFields.splice(0,customFields.length,...s.customFields);
     lineSeq=s.lineSeq;createdSeq=s.createdSeq;quoteComparisonMode="returned";
-    workspaceId=data.workspaceId;revision=data.revision;buyerMode=true;dirty=false;launchBaseline=null;
+    workspaceId=data.workspaceId;revision=data.revision;buyerMode=true;dirty=false;launchBaseline=null;committedActive=true;
     buttons();resetUI();
     // 中文：重绘内部会触发旧页面的清空预览 click；加载快照本身不应视为用户修改。
     // English: UI reset can emit synthetic clicks, but hydration itself is not an unsaved user edit.
@@ -240,12 +240,13 @@
     if(!confirm(warning))return;
     busy=true;buttons();
     readSaved().then(existing=>{
-      const expected=launchBaseline||(buyerMode&&revision>0?{workspaceId,revision}:null);
+      const expected=launchBaseline||(buyerMode&&committedActive?{workspaceId,revision}:null);
       if(buyerMode&&!sameBaseline(existing,expected))
         throw Error("本机保存已被其他窗口修改。请先点击“恢复本机记录”，防止记录混乱");
       if(existing){model.validate(existing);if(existing.origin!=="buyer")throw Error("活动记录不是正式询价")}
       const fresh=model.createEmptyWorkspace("RFQ-"+Date.now()+"-"+Math.random().toString(36).slice(2,8).toUpperCase());
       applyWorkspace(fresh);
+      committedActive=false;
       launchBaseline=existing?{workspaceId:existing.workspaceId,revision:existing.revision}:null;
       dirty=true;
       status("已开始空白正式工作（另一笔独立询价），尚未保存。首次保存后，上一笔已保存的询价将进入“历史询价”；请另备份 JSON。");
@@ -271,7 +272,7 @@
     const targetId=historyPicker.value;
     if(!targetId||busy||!localReady)return;
     if(buyerMode&&dirty&&!confirm("当前有未保存更改，切换历史询价会放弃这些更改。仍要切换？"))return;
-    const expected=launchBaseline||(buyerMode&&revision>0?{workspaceId,revision}:null);
+    const expected=launchBaseline||(buyerMode&&committedActive?{workspaceId,revision}:null);
     busy=true;buttons();
     try{
       const db=await openDB();
@@ -333,7 +334,7 @@
       const next={...current,revision:revision+1};
       model.validate(next);
       const newRev=await writeSaved(next);
-      revision=newRev;dirty=false;launchBaseline=null;
+      revision=newRev;dirty=false;launchBaseline=null;committedActive=true;
       await refreshHistory();
       status("已保存到本机（版本 "+revision+"）。这不等于文件备份；建议另点“下载结构化备份”并核实下载文件。");
     }catch(e){dirty=true;status("保存失败，当前更改未确认写入："+e.message,true)}
