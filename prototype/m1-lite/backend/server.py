@@ -193,7 +193,9 @@ def main() -> None:
     print(f"SRM local prototype: {url}", flush=True)
     print("NOTICE: current business UI still saves to IndexedDB until S3 migration.", flush=True)
     print("SQLite API check: " + url + "storage-check", flush=True)
-    threading.Timer(0.8, lambda: webbrowser.open(url)).start()
+    # 中文：默认打开存储检查页，避免旧 file:// 用户误以为 IndexedDB 已迁移。
+    # English: Start on the status page to avoid confusing file-origin and HTTP-origin data.
+    threading.Timer(0.8, lambda: webbrowser.open(url + "storage-check")).start()
     try:
         server.serve_forever(poll_interval=0.2)
     except KeyboardInterrupt:
