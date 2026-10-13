@@ -118,7 +118,7 @@ async function completeBackup(workspaces){
   if(allDocs.has(id))continue;
   allDocs.add(id);
   files.push({workspaceId:ws.workspaceId,sha256:doc.sha256,name:doc.name,size:doc.size,
-    file:"pdf_"+String(pdfIndex++ + 1).padStart(4,"0")+".pdf"});
+    file:"pdf_"+String(pdfIndex++).padStart(4,"0")+".pdf"});
  }
  entries.push({name:"图纸文件索引.json",blob:new Blob([JSON.stringify({format:"srm-pdf-files",version:1,files},null,2)],{type:"application/json"})});
  return root.SRMZip.create(entries);
