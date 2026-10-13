@@ -23,7 +23,7 @@ check("UNRELATED.pdf","missing");
 check("P-001.pdf.exe","invalid");
 assert.equal(m.propose("P-001.pdf",[{lineId:"L1",id:"P-001"},{lineId:"L2",id:"P-001"}]).status,"multiple");
 assert.equal(m.propose("P-001_G-333.pdf",rows).status,"multiple");
-assert.equal(m.propose("Ｐ－００１．PDF",rows).status,"missing","Only actual .pdf extension recognized, not a filename guess");
+assert.equal(m.propose("Ｐ－００１．PDF",rows).status,"invalid","Only an explicit .pdf extension is accepted, not a filename guess");
 assert.equal(m.revisionHint("D-818_RevB.pdf"),"B");
 assert.equal(m.revisionHint("P-001_A.pdf"),"A");
 assert.equal(m.revisionHint("P-001_技术要求.pdf"),"");
