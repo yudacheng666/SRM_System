@@ -655,24 +655,25 @@ function scoped(ws,supplierId){
  const assigned=new Map(ws.state.assignments.map(x=>[x.key,new Set(x.values)]));
  const items=ws.state.items.filter(x=>assigned.get(x.lineId)?.has(supplierId));
  if(!items.length)fail("供应商没有获分配物料");
- const uniq=new Map(),missing=[];
+ const uniq=new Map(),missing=[],pending=[];
  for(const it of items){
   const docs=docsForItem(it);
+  if(it.drawingStatus==="pending"){pending.push(it.lineId);continue}
   if(!docs.length){if(it.drawingStatus!=="not_required")missing.push(it.lineId);continue}
   for(const doc of docs){
    if(!doc.sha256||!doc.name||!doc.revision)fail("图纸关联记录缺失必要信息");
    uniq.set(doc.sha256,doc);
   }
  }
- return{items,docs:[...uniq.values()],missing};
+ return{items,docs:[...uniq.values()],missing,pending};
 }
 async function packageFor(ws,supplierId,excel,name){
  const scope=scoped(ws,supplierId),entries=[{name,blob:excel}];
  const manifest={format:"srm-supplier-drawing-manifest",version:1,workspaceId:ws.workspaceId,
   supplierId,items:scope.items.map(it=>({lineId:it.lineId,itemCode:it.id,
    drawingStatus:it.drawingStatus||"required",
-   drawings:docsForItem(it).map(d=>({sha256:d.sha256,name:d.name,revision:d.revision}))})),
-  missingLineIds:scope.missing,documents:[]};
+   drawings:it.drawingStatus==="pending"?[]:docsForItem(it).map(d=>({sha256:d.sha256,name:d.name,revision:d.revision}))})),
+  missingLineIds:scope.missing,pendingRevisionLineIds:scope.pending,documents:[]};
  let n=0;
  for(const doc of scope.docs){
   const blob=await get(ws.workspaceId,doc.sha256);
@@ -684,7 +685,7 @@ async function packageFor(ws,supplierId,excel,name){
  }
  entries.push({name:"图纸关联清单.json",blob:new Blob([JSON.stringify(manifest,null,2)],{type:"application/json"})});
  const zipped=await root.SRMZip.create(entries);
- return{zip:zipped,missing:scope.missing,docCount:scope.docs.length,manifest};
+ return{zip:zipped,missing:scope.missing,pending:scope.pending,docCount:scope.docs.length,manifest};
 }
 async function completeBackup(workspaces){
  const json=root.M1Backup.createAll(workspaces);
@@ -4000,17 +4001,17 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
      throw Error("参与供应商数量超过单次 ZIP 限制，请分批导出");
    const chosen=selected("rfq"),entries=[];
    const hasRealDrawing=snapshot.state.items.some(it=>it.drawings?.length);
-   let missingCount=0;
+   let missingCount=0,pendingCount=0;
    for(const supplier of participants){
     const plan=reportCore.rfq(snapshot,supplier.id,chosen);
     const excel=window.SRMExcel.create(plan.sheets);
     if(hasRealDrawing){
       const packaged=await window.SRMDrawings.packageFor(snapshot,supplier.id,excel,plan.filename);
-      missingCount+=packaged.missing.length;
+      missingCount+=packaged.missing.length;pendingCount+=packaged.pending.length;
       entries.push({name:"RFQ_"+String(supplier.id).replace(/[^a-zA-Z0-9_-]/g,"_")+".zip",blob:packaged.zip});
     }else entries.push({name:plan.filename,blob:excel});
    }
-   if(missingCount&&!confirm("有 "+missingCount+" 条供应商物料分配缺少 PDF 图纸，仍导出已完成部分的独立资料包吗？"))return;
+   if((missingCount||pendingCount)&&!confirm("本批次缺图 "+missingCount+" 条、版本待确认 "+pendingCount+" 条。待确认版本的 PDF 不会打包。仍导出已完成部分吗？"))return;
    if(!hasRealDrawing)warning.textContent="尚未关联任何真实 PDF，当前只能导出 XLSX；不得误称为完整图纸询价资料包。";
    const zip=await window.SRMZip.create(entries);
    const safeId=String(snapshot.workspaceId).replace(/[^a-zA-Z0-9_-]/g,"_").slice(0,56);
@@ -4019,7 +4020,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
    document.body.appendChild(a);
    try{a.click()}finally{a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
    const msg="已发起 "+participants.length+" 家供应商独立 "+(hasRealDrawing?"Excel+PDF 资料包":"Excel")+" 的 ZIP 下载"+
-     (missingCount?"（缺图分配 "+missingCount+" 条）":"")+"；整包只供内部使用，解压后逐家发送。";
+     (missingCount||pendingCount?"（缺图 "+missingCount+" 条；版本待确认 "+pendingCount+" 条）":"")+"；整包只供内部使用，解压后逐家发送。";
    warning.textContent=msg;window.SRMPilot.reportMessage(msg);
   }catch(e){
    const msg="全部供应商询价单导出失败："+e.message;
@@ -4041,11 +4042,11 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
    }
    const excel=window.SRMExcel.create(plan.sheets);
    const withDrawing=plan.kind==="rfq"&&snapshot.state.items.some(it=>it.drawings?.length);
-   let blob=excel,filename=plan.filename,missingCount=0;
+   let blob=excel,filename=plan.filename,missingCount=0,pendingCount=0;
    if(withDrawing){
      const pack=await window.SRMDrawings.packageFor(snapshot,supplierEl.value,excel,plan.filename);
-     missingCount=pack.missing.length;
-     if(missingCount&&!confirm("这家供应商有 "+missingCount+" 条物料缺少 PDF，是否仍导出已完成部分？"))return;
+     missingCount=pack.missing.length;pendingCount=pack.pending.length;
+     if((missingCount||pendingCount)&&!confirm("这家供应商缺图 "+missingCount+" 条、版本待确认 "+pendingCount+" 条（这些 PDF 暂不打包），是否导出已完成部分？"))return;
      blob=pack.zip;filename=plan.filename.replace(/\.xlsx$/i,"_含图纸.zip");
    }
    const url=URL.createObjectURL(blob),link=document.createElement("a");
@@ -4054,7 +4055,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
    try{link.click()}finally{link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
    const msg=plan.kind==="rfq"?
      "已发起供应商询价 "+(withDrawing?"Excel+PDF ZIP":"Excel")+" 下载："+plan.items+" 条物料"+
-       (missingCount?"；缺图 "+missingCount+" 条，详见资料包关联清单":"")+
+       ((missingCount||pendingCount)?"；缺图 "+missingCount+" 条、版本待确认 "+pendingCount+" 条，详见关联清单":"")+
        (!withDrawing?"；尚未关联真实 PDF，此文件仅有 Excel":"")+"。":
      "已发起内部比价议价 Excel 下载："+plan.totalItems+" 项、共同有效报价 "+plan.commonCount+
       " 项；非共同范围不作供应商整单排名。";
