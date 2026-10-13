@@ -13,6 +13,11 @@
   const supplierBtn=document.getElementById("pilotAddSupplier");
   const exportBtn=document.getElementById("pilotExportBackup");
   const exportAllBtn=document.getElementById("pilotExportBackupAll");
+  const exportCompleteBtn=document.getElementById("pilotExportComplete");
+  const importCompleteInput=document.getElementById("pilotImportComplete");
+  const restoreCompleteBtn=document.getElementById("pilotRestoreComplete");
+  const completeInfo=document.getElementById("pilotCompleteStatus");
+  let pendingComplete=null;
   const restoreScope=document.getElementById("pilotBulkRestoreScope");
   const restoreSelection=document.getElementById("pilotBulkRestoreSelection");
   const restoreOptions=document.getElementById("pilotBulkRestoreOptions");
@@ -41,6 +46,9 @@
     supplierBtn.disabled=!buyerMode||busy;
     exportBtn.disabled=!buyerMode||busy||!localReady;
     exportAllBtn.disabled=busy||!localReady||!!(buyerMode&&dirty);
+    exportCompleteBtn.disabled=busy||!localReady||!!(buyerMode&&dirty);
+    importCompleteInput.disabled=busy||!localReady;
+    restoreCompleteBtn.disabled=busy||!localReady||!pendingComplete||!!(buyerMode&&dirty);
     document.getElementById("pilotExportExcel").disabled=!buyerMode||busy||!localReady;
     document.getElementById("pilotReportOpen").disabled=!buyerMode||busy||!localReady;
     importInput.disabled=busy||!localReady;
@@ -225,6 +233,7 @@
     lineSeq=s.lineSeq;createdSeq=s.createdSeq;quoteComparisonMode="returned";
     workspaceId=data.workspaceId;revision=data.revision;buyerMode=true;dirty=false;launchBaseline=null;committedActive=true;
     buttons();resetUI();
+    window.SRMDrawUI?.refresh();
     // 中文：重绘内部会触发旧页面的清空预览 click；加载快照本身不应视为用户修改。
     // English: UI reset can emit synthetic clicks, but hydration itself is not an unsaved user edit.
     dirty=false;
@@ -325,6 +334,13 @@
       status("已切换到历史询价："+workspaceId+"（保存版本 "+revision+"）。之前的活动询价仍保留在本机。");
     }catch(e){status("切换历史询价失败，原记录未覆盖："+e.message,true)}
     finally{busy=false;buttons()}
+  }
+  // 中文：PDF 原件已独立落盘，关联关系仍必须经过正式工作保存。
+  // English: Uploaded PDF bytes are durable, while links require an explicit workspace commit.
+  function noteDrawingChange(){
+    if(!buyerMode||busy)throw Error("当前不能编辑正式图纸");
+    dirty=true;status("图纸关联已修改，请点击“保存到本机”提交。");
+    buttons();
   }
   async function save(){
     if(!buyerMode||busy)return;
@@ -469,6 +485,90 @@
       try{link.click()}finally{link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
       status("已发起全部 "+records.length+" 笔已保存询价的 JSON 备份下载。请检查下载目录；原始邮件/PDF/截图不在备份中。");
     }catch(e){status("全部询价备份失败，未导出："+e.message,true)}
+    finally{busy=false;buttons()}
+  }
+  // 中文：附件级 ZIP 同时包含所有已提交 RFQ 与原 PDF；若任何 PDF 不可读，整包拒绝输出。
+  // English: Complete ZIP includes committed RFQs and verified PDF originals; never silently omit assets.
+  async function exportComplete(){
+    if(busy||!localReady)return;
+    if(buyerMode&&dirty){status("请先保存当前图纸关联和其他修改，再导出完整资料包。",true);return}
+    busy=true;buttons();
+    try{
+      const active=await readSaved();
+      if(buyerMode&&(!active||active.workspaceId!==workspaceId||active.revision!==revision))
+        throw Error("当前工作版本与已保存记录不一致");
+      const archives=await readArchived(),records=[...(active?[active]:[]),...archives];
+      if(!records.length)throw Error("本机没有已保存的正式询价");
+      const zip=await window.SRMDrawings.completeBackup(records);
+      const url=URL.createObjectURL(zip),link=document.createElement("a");
+      link.href=url;link.download=new Date().toISOString().slice(0,10).replace(/-/g,"")+"_SRM_全部询价和图纸_完整资料包.zip";
+      document.body.appendChild(link);
+      try{link.click()}finally{link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
+      status("已发起 "+records.length+" 笔询价及对应 PDF 原件的完整 ZIP 备份；报价邮件与截图仍需另存。");
+    }catch(e){status("完整图纸备份失败，未跳过缺失文件："+e.message,true)}
+    finally{busy=false;buttons()}
+  }
+  async function stageComplete(){
+    pendingComplete=null;restoreCompleteBtn.disabled=true;completeInfo.textContent="";
+    const file=importCompleteInput.files?.[0];if(!file)return;
+    busy=true;buttons();
+    try{
+      const parsed=await window.SRMDrawings.unpackComplete(file);
+      pendingComplete=parsed;
+      completeInfo.textContent="完整资料已校验："+parsed.records.length+" 笔询价、"+
+        parsed.assets.length+" 个真实 PDF 文件。恢复时若任何编号冲突则整批拒绝，不覆盖旧工作。";
+    }catch(e){completeInfo.textContent="完整备份文件校验失败："+e.message}
+    finally{busy=false;buttons();importCompleteInput.value=""}
+  }
+  // 中文：业务快照和 PDF Blob 统一在原工作库的同一事务写入，拒绝编号冲突。
+  // English: Import complete archives in a single transaction for both workspaces and PDF blobs.
+  async function restoreComplete(){
+    if(!pendingComplete||busy||!localReady||buyerMode&&dirty)return;
+    const batch=pendingComplete.records,assets=pendingComplete.assets;
+    if(!confirm("将原子恢复 "+batch.length+" 笔询价和 "+assets.length+" 份 PDF 原件；若编号重复则全部拒绝。是否继续？"))return;
+    busy=true;buttons();
+    try{
+      const db=await openDB();let hadActive=false;
+      try{
+        await new Promise((resolve,reject)=>{
+          const tx=db.transaction(STORE,"readwrite"),store=tx.objectStore(STORE);
+          let err=null;
+          const req=store.getAllKeys();
+          req.onsuccess=()=>{
+            const k=new Set(req.result),a=store.get(KEY);
+            a.onsuccess=()=>{
+              try{
+                const old=a.result||null;
+                if(buyerMode&&(!old||old.workspaceId!==workspaceId||old.revision!==revision))
+                  throw Error("另一窗口已修改活动询价");
+                const ids=new Set();
+                if(old)ids.add(old.workspaceId);
+                for(const v of k)if(typeof v==="string"&&v.startsWith("archive:"))ids.add(v.slice(8));
+                for(const ws of batch){
+                  model.validate(ws);
+                  if(ids.has(ws.workspaceId))throw Error("已有相同询价编号："+ws.workspaceId);
+                  ids.add(ws.workspaceId);
+                }
+                hadActive=!!old;
+                batch.forEach((ws,i)=>store.put(ws,!old&&i===0?KEY:"archive:"+ws.workspaceId));
+                for(const asset of assets){
+                  const key=window.SRMDrawings.key(asset.workspaceId,asset.sha256);
+                  if(k.has(key))throw Error("PDF 附件键已存在，拒绝覆盖");
+                  store.put(asset.blob,key);
+                }
+              }catch(e){err=e;tx.abort()}
+            };
+          };
+          tx.oncomplete=resolve;
+          tx.onerror=()=>reject(err||tx.error||Error("恢复数据库事务失败"));
+          tx.onabort=()=>reject(err||tx.error||Error("恢复已取消"));
+        });
+      }finally{db.close()}
+      if(!hadActive)applyWorkspace(batch[0]);
+      pendingComplete=null;completeInfo.textContent="";
+      await refreshHistory();
+      status("已原子恢复 "+batch.length+" 笔询价及 "+assets.length+" 个真实 PDF；原有询价没有覆盖。");
+    }catch(e){status("图纸完整恢复已拒绝，原数据未覆盖："+e.message,true)}
     finally{busy=false;buttons()}
   }
   function renderRestorePreview(){
@@ -627,6 +727,9 @@
 
   exportBtn.addEventListener("click",exportBackup);
   exportAllBtn.addEventListener("click",exportAllBackup);
+  exportCompleteBtn.addEventListener("click",exportComplete);
+  importCompleteInput.addEventListener("change",stageComplete);
+  restoreCompleteBtn.addEventListener("click",restoreComplete);
   restoreScope.addEventListener("change",()=>{
     restoreSelection.disabled=restoreScope.value!=="single";renderRestorePreview();
   });
@@ -656,5 +759,5 @@
   })();
   window.SRMPilot=Object.freeze({snapshot:()=>buyerMode?readState():null,
     isBuyer:()=>buyerMode,revision:()=>revision,dirty:()=>dirty,
-    save,recover,beginBuyer,switchArchived,exportBackup,exportAllBackup,restorePortable,importSupplierRows,exportBusinessExcel,committedWorkspaceForReport,reportMessage:status});
+    save,recover,beginBuyer,switchArchived,exportBackup,exportAllBackup,exportComplete,restoreComplete,noteDrawingChange,restorePortable,importSupplierRows,exportBusinessExcel,committedWorkspaceForReport,reportMessage:status});
 }
