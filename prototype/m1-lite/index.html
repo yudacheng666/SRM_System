@@ -3498,7 +3498,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
    fieldGroup("供应商询价单列","rfq");
   warning.textContent=isComparison?
    "仅内部使用：先勾选至少两家供应商。金额只对共同有效报价行比较；草稿不会参与比价，但会在议价明细中清楚标注。":
-   "供应商专用：仅导出分配给这家供应商的物料与空白报价列，不含其他供应商报价、内部选择和比价信息。";
+   "供应商专用：仅导出分配给这家供应商的物料与空白报价列，不含其他供应商报价、内部选择和比价信息。全部导出 ZIP 仅供采购员内部拆分，切勿直接发送整个压缩包给供应商。";
  }
  function escapeHtml(x){return String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
  function selected(kind){return [...fieldsBox.querySelectorAll('[data-report-group="'+kind+'"]:checked')].map(x=>x.dataset.reportField)}
@@ -3534,7 +3534,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
    a.href=url;a.download="SRM_全部供应商询价单_"+safeId+".zip";
    document.body.appendChild(a);
    try{a.click()}finally{a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
-   const msg="已发起 "+participants.length+" 家供应商独立 Excel 的 ZIP 下载；请在下载目录解压检查。";
+   const msg="已发起 "+participants.length+" 家供应商独立 Excel 的 ZIP 下载；仅供内部解压后分别发送，不得整包发给供应商。";
    warning.textContent=msg;window.SRMPilot.reportMessage(msg);
   }catch(e){
    const msg="全部供应商询价单导出失败："+e.message;
