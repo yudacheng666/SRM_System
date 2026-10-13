@@ -30,10 +30,10 @@
 - The loopback URL works only on the current PC; it is not an intranet server address.
 - 如 8765 端口已被占用，服务不会在另一个端口悄悄启动，应检查终端错误。
 - If port 8765 is occupied, the server does not silently move to another port; inspect the terminal error.
-- **重要：旧 `file://` 页面与新 `http://127.0.0.1` 地址的 IndexedDB 是不同存储来源。不要因为新地址未显示旧询价就删除原浏览器资料。**
-- **Important: `file://` and `http://127.0.0.1` use different browser storage origins. Do not delete legacy data if it is absent from the new URL.**
-- 后续 S3 迁移前，应先从原有页面导出完整 ZIP，并在隔离环境验证可恢复。
-- Before S3 migration, export a complete ZIP from the legacy page and verify recovery separately.
+- **已确认现有 JSON/ZIP 与 IndexedDB 均仅为虚构测试数据，无需迁移到新的 SQLite；新数据库从空白开始。**
+- **Confirmed: existing JSON/ZIP and IndexedDB are synthetic tests only; no SQLite migration is required. Start clean.**
+- 当前旧 `file://` 页面与新的本机 HTTP 页面仍是不同浏览器存储来源；S3 接入之前不得把旧 HTML 误认为已经使用 SQLite。
+- The old `file://` page and local HTTP page still use separate browser origins; do not assume the old HTML uses SQLite before S3.
 
 ## 数据保存位置 / Data Location
 
@@ -76,12 +76,12 @@ py -3 -m unittest -v test_store test_server
 - 测试检查本机数据库持久化、重新打开、历史版、并发修订冲突、报价历史不可改、无效状态拒绝、HTTP 同源限制、路径安全与数据库备份。
 - Tests cover database durability, reopen, historical revisions, revision conflicts, confirmed quote immutability, invalid states, HTTP origin checks, path restrictions and backup.
 - 在 Linux/Python 3.13 隔离测试环境中执行 10 项测试通过；Windows 打包安装、真实浏览器和既有 HTML 与 API 接入仍未完成验收。
-- Ten tests passed in an isolated Linux/Python 3.13 environment; Windows packaging, a real-browser walkthrough, and legacy HTML integration remain unverified.
+- Ten tests were previously reported as passing in an isolated environment; Windows packaging and the actual business UI integration remain unverified.
 
 ## 接下来的工作 / Next Deliverables
 
-- S3：现有页面通过 API 自动持久化，提供完整旧数据导入预览与冲突保护；旧浏览器数据先不清除。
-- S3: Persist the current UI through the API; preview and protect legacy migration; retain browser-origin data.
+- S3：直接把新版业务页面接入 SQLite API，默认从空白数据库开始；**不开发旧 JSON/ZIP/IndexedDB 测试数据迁移**。
+- S3: Wire the new business UI directly to SQLite API and begin with an empty database; **do not build legacy JSON/ZIP/IndexedDB test-data migration**.
 - S4：原始图纸、报价邮件、截图等附件按哈希管理，并完成可校验的全量备份与恢复。
 - S4: Hash-manage drawings, quote emails and screenshots with verified full backup/restore.
 - S5：重新设计 UI 导航、页面布局与交互，确保采购员可直接上手。
