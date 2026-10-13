@@ -12,6 +12,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlsplit
 
 from store import RevisionConflict, SnapshotStore, StoreError
+from assets import AssetStore, MAX_PDF_BYTES
 
 # 中文：仅监听本机，不暴露到局域网。
 # English: Bind only to loopback; never expose the development backend to the LAN.
@@ -30,8 +31,10 @@ def user_data_dir() -> Path:
 def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PORT):
     """中文：隔离单个服务实例便于测试。English: Independent request handler per server."""
 
+    assets = AssetStore(store)
+
     class Handler(BaseHTTPRequestHandler):
-        server_version = "SRM-Local-S2"
+        server_version = "SRM-Local-S3"
         sys_version = ""
 
         def _headers(self, code: int, media: str, size: int) -> None:
@@ -88,6 +91,13 @@ def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PO
                 return None
             return value
 
+        def _asset_route(self, path: str):
+            """中文：仅接受 /api/assets/询价ID/哈希。English: Exact asset URI validation."""
+            parts = unquote(path).split("/")
+            if len(parts) == 5 and parts[:3] == ["", "api", "assets"] and parts[3] and parts[4]:
+                return parts[3], parts[4]
+            return None
+
         def do_GET(self) -> None:
             """中文：获取前端页面和业务快照。English: Serve UI and read-only API."""
             if not self._guard():
@@ -96,7 +106,19 @@ def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PO
             path = parsed.path
             if path == "/api/health":
                 self._json(200, {"status": "ok", "mode": "offline", "backend": "sqlite",
-                                 "stage": "S2", "uiPersistence": "IndexedDB (SQLite integration pending)"})
+                                 "stage": "S3", "uiPersistence": "SQLite API"})
+                return
+            if path == "/api/active":
+                self._json(200, {"workspace": store.active(), "activeId": store.active_id()})
+                return
+            asset_route = self._asset_route(path)
+            if asset_route:
+                try:
+                    content = assets.read(*asset_route)
+                    self._headers(200, "application/pdf", len(content))
+                    self.wfile.write(content)
+                except StoreError as exc:
+                    self._json(404, {"error": str(exc)})
                 return
             if path == "/api/workspaces":
                 self._json(200, {"workspaces": store.list_workspaces()})
@@ -133,7 +155,22 @@ def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PO
             """中文：按旧版本条件写入，防止覆盖。English: Revision-based compare-and-swap."""
             if not self._guard(write=True):
                 return
-            wid = self._id(urlsplit(self.path).path)
+            path = urlsplit(self.path).path
+            asset_route = self._asset_route(path)
+            if asset_route:
+                try:
+                    raw_size = self.headers.get("Content-Length", "")
+                    if self.headers.get("Content-Type", "").split(";")[0].lower() != "application/pdf":
+                        raise ValueError("PDF_CONTENT_TYPE_REQUIRED")
+                    if not raw_size.isdecimal() or not 0 < int(raw_size) <= MAX_PDF_BYTES:
+                        raise ValueError("INVALID_PDF_SIZE")
+                    name = unquote(self.headers.get("X-SRM-Filename", ""))
+                    info = assets.write(asset_route[0], asset_route[1], name, self.rfile.read(int(raw_size)))
+                    self._json(200, {"saved": True, "document": info})
+                except (ValueError, StoreError) as exc:
+                    self._json(400, {"error": str(exc)})
+                return
+            wid = self._id(path)
             if wid is None:
                 self._json(404, {"error": "NOT_FOUND"})
                 return
@@ -155,6 +192,20 @@ def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PO
         def do_POST(self) -> None:
             """中文：此阶段仅提供数据库备份，不含附件。English: Database-only backup."""
             if not self._guard(write=True):
+                return
+            if urlsplit(self.path).path == "/api/active/select":
+                try:
+                    request = self._body()
+                    identity = request.get("workspaceId")
+                    expected = request.get("expectedActive")
+                    if not isinstance(identity, str) or not isinstance(expected, (str, type(None))):
+                        raise ValueError("INVALID_SELECTION")
+                    store.select(identity, expected)
+                    self._json(200, {"activeId": identity, "workspace": store.get(identity)})
+                except RevisionConflict as exc:
+                    self._json(409, {"error": "REVISION_CONFLICT", "message": str(exc)})
+                except (ValueError, StoreError) as exc:
+                    self._json(400, {"error": str(exc)})
                 return
             if urlsplit(self.path).path != "/api/backups/database":
                 self._json(404, {"error": "NOT_FOUND"})
@@ -191,11 +242,11 @@ def main() -> None:
     server = create_server()
     url = f"http://{HOST}:{server.server_port}/"
     print(f"SRM local prototype: {url}", flush=True)
-    print("NOTICE: current business UI still uses IndexedDB; new S3 UI will start with an empty SQLite database.", flush=True)
+    print("S3 SQLite API active. Run the SRM page through this local server, never file://.", flush=True)
     print("SQLite API check: " + url + "storage-check", flush=True)
-    # 中文：默认打开存储检查页；业务 UI 尚未接入 SQLite。
-    # English: Open the storage check first; business UI is not connected to SQLite.
-    threading.Timer(0.8, lambda: webbrowser.open(url + "storage-check")).start()
+    # 中文：本机服务直接打开业务原型；关闭服务后数据仍保存在 SQLite。
+    # English: Open the app; the local SQLite database persists after service shutdown.
+    threading.Timer(0.8, lambda: webbrowser.open(url)).start()
     try:
         server.serve_forever(poll_interval=0.2)
     except KeyboardInterrupt:
