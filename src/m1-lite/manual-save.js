@@ -8,6 +8,8 @@
   const newBtn=document.getElementById("pilotNewWorkspace");
   const saveBtn=document.getElementById("pilotSaveWorkspace");
   const resumeBtn=document.getElementById("pilotResumeWorkspace");
+  const historyPicker=document.getElementById("pilotHistoryWorkspace");
+  const historyBtn=document.getElementById("pilotSwitchWorkspace");
   const supplierBtn=document.getElementById("pilotAddSupplier");
   const exportBtn=document.getElementById("pilotExportBackup");
   const importInput=document.getElementById("pilotImportBackup");
@@ -23,6 +25,9 @@
   const rfqHead=document.getElementById("pilotRfqHead");
   const STORE="workspaces",DB="srm-lite-local-v1",KEY="single";
   let buyerMode=false,workspaceId=null,revision=0,busy=false,dirty=false,localReady=false,blocked=false;
+  // 中文：新询价尚未保存时，记录旧活动询价的版本，防止并发窗口静默覆盖。
+  // English: Capture the original active revision until an independent RFQ is first saved.
+  let launchBaseline=null;
   function status(message,isError=false){
     pilotStatus.textContent=message;
     pilotStatus.className=isError?"small dangertext":"small muted";
@@ -35,10 +40,15 @@
     document.getElementById("pilotReportOpen").disabled=!buyerMode||busy||!localReady;
     importInput.disabled=busy||!localReady;
     restoreBtn.disabled=!pendingRestore||busy||!localReady||buyerMode;
-    newBtn.disabled=busy||blocked||!localReady||buyerMode;
+    // 中文：正式工作也允许新建下一笔询价；旧记录将原子归档，绝不清空浏览器存储。
+    // English: New RFQs are available after the first one, without deleting browser data.
+    newBtn.disabled=busy||blocked||!localReady;
     resumeBtn.disabled=busy||!localReady;
+    historyPicker.disabled=busy||!localReady||historyPicker.options.length===0;
+    historyBtn.disabled=busy||!localReady||!historyPicker.value;
     supplierBox.style.display=buyerMode?"flex":"none";
     badge.textContent=buyerMode?"正式工作（本机手动保存）":"演示模式（不保存）";
+    newBtn.textContent=buyerMode?"新建另一笔空白询价":"新建空白正式工作";
     rfqHead.textContent=buyerMode?workspaceId:"RFQ-DEMO-001";
     document.getElementById("pilotSubtitle").textContent=buyerMode?
       "正式工作区：沿用 M0 的询价、供应商分配、报价与比价操作；需要手动保存。":"演示模式：包含虚构物料及价格，不能作为正式采购资料。";
@@ -75,6 +85,52 @@
       });
     }finally{db.close()}
   }
+  // 中文：沿用既有 single 活动记录；历史询价保存在同一对象库的 archive:<workspaceId>。
+  // English: Keep the legacy 'single' active record; retain older RFQs as archived key-value records.
+  function sameBaseline(current,base){
+    return base===null?!current:!!current&&current.workspaceId===base.workspaceId&&current.revision===base.revision;
+  }
+  async function readArchived(){
+    const db=await openDB();
+    try{
+      return await new Promise((resolve,reject)=>{
+        const tx=db.transaction(STORE,"readonly"),result=[];
+        const req=tx.objectStore(STORE).openCursor();
+        req.onsuccess=()=>{
+          const cursor=req.result;
+          if(!cursor)return;
+          if(typeof cursor.key==="string"&&cursor.key.startsWith("archive:")){
+            const ws=cursor.value;
+            model.validate(ws);
+            if(ws.origin!=="buyer"||cursor.key!=="archive:"+ws.workspaceId)
+              throw Error("历史询价索引异常");
+            result.push(ws);
+          }
+          cursor.continue();
+        };
+        req.onerror=()=>reject(req.error||Error("读取历史询价失败"));
+        tx.oncomplete=()=>resolve(result.sort((a,b)=>b.workspaceId.localeCompare(a.workspaceId)));
+        tx.onerror=()=>reject(tx.error||Error("读取历史询价失败"));
+        tx.onabort=()=>reject(tx.error||Error("历史询价读取中止"));
+      });
+    }finally{db.close()}
+  }
+  async function refreshHistory(){
+    if(!localReady)return;
+    const savedId=historyPicker.value,history=await readArchived();
+    historyPicker.replaceChildren();
+    const placeholder=document.createElement("option");
+    placeholder.value="";placeholder.textContent="选择已保存的历史询价";
+    historyPicker.appendChild(placeholder);
+    for(const ws of history){
+      const option=document.createElement("option");
+      option.value=ws.workspaceId;
+      option.textContent=ws.workspaceId+" · "+ws.state.items.length+" 项 · 第 "+ws.revision+" 版";
+      historyPicker.appendChild(option);
+    }
+    if(history.some(x=>x.workspaceId===savedId))historyPicker.value=savedId;
+    buttons();
+  }
   /* 中文：无自动保存；提交时检查本地修订号，防止另一标签页先保存后被覆盖。
    * English: No autosave. Optimistic revision check prevents stale tab overwrite. */
   async function writeSaved(next){
@@ -87,8 +143,31 @@
         req.onsuccess=()=>{
           try{
             const old=req.result||null;
+            if(old&&old.workspaceId!==next.workspaceId){
+              // 中文：新业务首次保存才切换活动记录；同一事务先归档旧记录，后保存新记录。
+              // English: Archive the old active RFQ atomically with the first save of the new RFQ.
+              if(revision!==0||!launchBaseline||!sameBaseline(old,launchBaseline))
+                throw Error("另一个窗口已修改活动询价，已拒绝覆盖。请恢复本机最新记录。");
+              model.validate(old);
+              const archiveReq=store.get("archive:"+old.workspaceId);
+              archiveReq.onsuccess=()=>{
+                try{
+                  const existing=archiveReq.result;
+                  if(existing&&existing.revision>old.revision)throw Error("历史记录比当前活动记录更新，禁止覆盖");
+                  const nextArchive=store.get("archive:"+next.workspaceId);
+                  nextArchive.onsuccess=()=>{
+                    try{
+                      if(nextArchive.result)throw Error("新询价编号与历史记录重复，未保存");
+                      store.put(old,"archive:"+old.workspaceId);
+                      store.put(next,KEY);
+                      result=next.revision;
+                    }catch(e){why=e;tx.abort()}
+                  };
+                }catch(e){why=e;tx.abort()}
+              };
+              return;
+            }
             if(old){
-              if(old.workspaceId!==next.workspaceId)throw Error("已存在另一份正式工作；为防止覆盖，不能直接保存。请先恢复原工作。");
               if(old.revision!==revision)throw Error("本机记录已在其他窗口更新。请先恢复，不要覆盖新记录。");
               // 中文：每个已确认轮次的全部结构内容必须与本机旧版一致。
               // English: Confirmed quotes in the saved baseline must remain byte-for-byte unchanged.
@@ -97,7 +176,7 @@
                 const current=next.state.quoteRounds.find(r=>key(r)===key(prior));
                 if(!current||JSON.stringify(current)!==JSON.stringify(prior))throw Error("已确认的报价历史发生变化，已拒绝覆盖原记录。");
               }
-            }else if(revision!==0)throw Error("存储状态发生变化，保存已取消。");
+            }else if(revision!==0||launchBaseline)throw Error("存储状态发生变化，保存已取消。");
             store.put(next,KEY);result=next.revision;
           }catch(e){why=e;tx.abort()}
         };
@@ -137,23 +216,32 @@
     selectedCompareSuppliers.clear();for(const x of s.selectedCompareSuppliers)selectedCompareSuppliers.add(x);
     customFields.splice(0,customFields.length,...s.customFields);
     lineSeq=s.lineSeq;createdSeq=s.createdSeq;quoteComparisonMode="returned";
-    workspaceId=data.workspaceId;revision=data.revision;buyerMode=true;dirty=false;
+    workspaceId=data.workspaceId;revision=data.revision;buyerMode=true;dirty=false;launchBaseline=null;
     buttons();resetUI();
     // 中文：重绘内部会触发旧页面的清空预览 click；加载快照本身不应视为用户修改。
     // English: UI reset can emit synthetic clicks, but hydration itself is not an unsaved user edit.
     dirty=false;
   }
   function beginBuyer(){
-    if(!localReady){status("浏览器数据库不可用，不能创建需要保存的工作。",true);return}
-    if(buyerMode){status("已经在正式工作区。",true);return}
-    // 中文：禁止覆盖已有正式工作，这一小批尚未提供完整备份。
-    // English: Until backup is available, starting a new workspace cannot replace an existing one.
+    if(!localReady||busy||blocked){status("本机存储不可用或正在处理，请先核对当前记录。",true);return}
+    // 中文：用户可以反复创建新 RFQ；先明确提示未保存内容会丢失，但旧已保存记录不删除。
+    // English: Explicitly warn about unsaved edits; never delete the previously committed RFQ.
+    const warning=buyerMode?
+      (dirty?"当前工作有未保存的更改，新建会放弃这些更改。已保存的询价会保留在本机。继续？":
+        "新建另一笔空白询价？当前已保存的询价会保留，可在“历史询价”中切换。"):
+      "开始空白正式工作？演示数据将从本页清除。请手动保存，并定期另行下载 JSON 结构化备份。";
+    if(!confirm(warning))return;
     busy=true;buttons();
     readSaved().then(existing=>{
-      if(existing){blocked=false;status("本机已有保存记录；请点击“恢复本机记录”，不能用新工作覆盖。",true);return}
-      if(!confirm("开始空白正式工作？演示数据将从本页清除。请手动保存，并定期另行下载 JSON 结构化备份。"))return;
-      applyWorkspace(model.createEmptyWorkspace("RFQ-"+Date.now()));
-      dirty=true;status("已开始空白正式工作，当前尚未保存。请先添加物料和供应商，操作后点击“保存到本机”。");
+      const expected=launchBaseline||(buyerMode&&revision>0?{workspaceId,revision}:null);
+      if(buyerMode&&!sameBaseline(existing,expected))
+        throw Error("本机保存已被其他窗口修改。请先点击“恢复本机记录”，防止记录混乱");
+      if(existing){model.validate(existing);if(existing.origin!=="buyer")throw Error("活动记录不是正式询价")}
+      const fresh=model.createEmptyWorkspace("RFQ-"+Date.now()+"-"+Math.random().toString(36).slice(2,8).toUpperCase());
+      applyWorkspace(fresh);
+      launchBaseline=existing?{workspaceId:existing.workspaceId,revision:existing.revision}:null;
+      dirty=true;
+      status("已开始另一笔空白正式询价，尚未保存。首次保存后，上一笔已保存的询价将进入“历史询价”；请另备份 JSON。");
     }).catch(e=>status("不能开始正式工作："+e.message,true)).finally(()=>{busy=false;buttons()});
   }
   async function recover(){
@@ -170,6 +258,66 @@
     }catch(e){blocked=true;status("恢复失败，已停止新建/覆盖。请保留当前浏览器数据："+e.message,true)}
     finally{busy=false;buttons()}
   }
+  // 中文：历史切换在单一读写事务中进行：前活动工作归档，目标历史工作变为活动工作。
+  // English: Atomically swap the active RFQ and a selected archived RFQ, preserving both.
+  async function switchArchived(){
+    const targetId=historyPicker.value;
+    if(!targetId||busy||!localReady)return;
+    if(buyerMode&&dirty&&!confirm("当前有未保存更改，切换历史询价会放弃这些更改。仍要切换？"))return;
+    const expected=launchBaseline||(buyerMode&&revision>0?{workspaceId,revision}:null);
+    busy=true;buttons();
+    try{
+      const db=await openDB();
+      let target;
+      try{
+        target=await new Promise((resolve,reject)=>{
+          const tx=db.transaction(STORE,"readwrite"),store=tx.objectStore(STORE),key="archive:"+targetId;
+          let problem=null,selected=null;
+          const abort=e=>{problem=e;tx.abort()};
+          const activeReq=store.get(KEY);
+          activeReq.onsuccess=()=>{
+            try{
+              const active=activeReq.result||null;
+              if(!sameBaseline(active,expected))throw Error("本机活动询价已被另一窗口更新，拒绝切换");
+              const historyReq=store.get(key);
+              historyReq.onsuccess=()=>{
+                try{
+                  selected=historyReq.result;
+                  if(!selected||selected.workspaceId!==targetId)throw Error("历史记录不存在或编号不一致");
+                  model.validate(selected);
+                  if(selected.origin!=="buyer")throw Error("历史记录不是正式工作");
+                  if(active){
+                    model.validate(active);
+                    if(active.workspaceId===targetId)throw Error("不可切换至当前询价");
+                    const oldReq=store.get("archive:"+active.workspaceId);
+                    oldReq.onsuccess=()=>{
+                      try{
+                        if(oldReq.result&&oldReq.result.revision>active.revision)
+                          throw Error("存在更新的历史记录，拒绝覆盖");
+                        store.put(active,"archive:"+active.workspaceId);
+                        store.put(selected,KEY);
+                        store.delete(key);
+                      }catch(e){abort(e)}
+                    };
+                  }else{
+                    store.put(selected,KEY);
+                    store.delete(key);
+                  }
+                }catch(e){abort(e)}
+              };
+            }catch(e){abort(e)}
+          };
+          tx.oncomplete=()=>resolve(selected);
+          tx.onerror=()=>reject(problem||tx.error||Error("历史切换失败"));
+          tx.onabort=()=>reject(problem||tx.error||Error("历史切换已取消"));
+        });
+      }finally{db.close()}
+      applyWorkspace(target);
+      await refreshHistory();
+      status("已切换到历史询价："+workspaceId+"（保存版本 "+revision+"）。之前的活动询价仍保留在本机。");
+    }catch(e){status("切换历史询价失败，原记录未覆盖："+e.message,true)}
+    finally{busy=false;buttons()}
+  }
   async function save(){
     if(!buyerMode||busy)return;
     busy=true;buttons();status("正在保存，请勿关闭页面……");
@@ -178,7 +326,8 @@
       const next={...current,revision:revision+1};
       model.validate(next);
       const newRev=await writeSaved(next);
-      revision=newRev;dirty=false;
+      revision=newRev;dirty=false;launchBaseline=null;
+      await refreshHistory();
       status("已保存到本机（版本 "+revision+"）。这不等于文件备份；建议另点“下载结构化备份”并核实下载文件。");
     }catch(e){dirty=true;status("保存失败，当前更改未确认写入："+e.message,true)}
     finally{busy=false;buttons()}
@@ -360,6 +509,8 @@
   newBtn.addEventListener("click",beginBuyer);
   saveBtn.addEventListener("click",save);
   resumeBtn.addEventListener("click",recover);
+  historyPicker.addEventListener("change",buttons);
+  historyBtn.addEventListener("click",switchArchived);
   supplierBtn.addEventListener("click",addSupplier);
   buttons();
   // 中文：页面每次打开检查本机已有工作；有就恢复，没记录则保留 M0 演示视图。
@@ -371,10 +522,11 @@
       const saved=await readSaved();
       if(saved){model.validate(saved);if(saved.origin!=="buyer")throw Error("本机记录不是正式工作");applyWorkspace(saved);status("已自动恢复本机正式工作："+workspaceId+"（版本 "+revision+"）。未进行独立备份。")}
       else status("目前为演示模式；点击“新建空白正式工作”才能开始真实工作。正式工作需主动点击保存。");
+      await refreshHistory();
     }catch(e){blocked=true;localReady=false;status("本机保存不可用或记录异常："+e.message+"。不要使用真实采购资料。",true)}
     finally{buttons()}
   })();
   window.SRMPilot=Object.freeze({snapshot:()=>buyerMode?readState():null,
     isBuyer:()=>buyerMode,revision:()=>revision,dirty:()=>dirty,
-    save,recover,beginBuyer,exportBackup,restorePortable,importSupplierRows,exportBusinessExcel,committedWorkspaceForReport,reportMessage:status});
+    save,recover,beginBuyer,switchArchived,exportBackup,restorePortable,importSupplierRows,exportBusinessExcel,committedWorkspaceForReport,reportMessage:status});
 }
