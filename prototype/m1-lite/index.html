@@ -77,11 +77,18 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
   <button type="button" class="btn soft" id="pilotSwitchWorkspace" disabled>打开所选历史询价</button>
  </div>
  <div class="toolbar" style="margin-bottom:8px;gap:8px">
-  <button type="button" class="btn soft" id="pilotExportBackup" disabled>下载结构化备份</button>
+  <button type="button" class="btn soft" id="pilotExportBackup" disabled>备份当前询价 JSON</button>
+  <button type="button" class="btn soft" id="pilotExportBackupAll" disabled>备份全部询价 JSON</button>
   <button type="button" class="btn soft" id="pilotExportExcel" disabled>导出业务数据 Excel（3 Sheet）</button>
   <button type="button" class="btn primary" id="pilotReportOpen" disabled>导出询价单 / 比价议价单</button>
   <label class="btn" style="cursor:pointer">选择备份 JSON <input type="file" id="pilotImportBackup" accept=".json,application/json" disabled style="max-width:185px"></label>
-  <button type="button" class="btn" id="pilotRestoreBackup" disabled>恢复到空白本机</button>
+  <button type="button" class="btn" id="pilotRestoreBackup" disabled>确认恢复所选询价</button>
+ </div>
+ <div class="toolbar" id="pilotBulkRestoreOptions" style="display:none;gap:8px;align-items:center;margin:8px 0">
+   <label class="small">恢复范围
+     <select id="pilotBulkRestoreScope"><option value="all">恢复备份中的全部询价</option><option value="single">仅恢复指定询价</option></select>
+   </label>
+   <label class="small">选择询价 <select id="pilotBulkRestoreSelection" disabled></select></label>
  </div>
  <pre id="pilotBackupPreview" class="small" style="display:none;white-space:pre-wrap;background:#eff6ff;padding:11px;border:1px solid #bfdbfe;border-radius:7px"></pre>
  <div class="toolbar" id="pilotSupplierFields" style="display:none;gap:7px;margin-bottom:8px">
@@ -113,7 +120,8 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
   <div class="small muted" style="margin-bottom:5px">勾选本次需要导出的字段；* 为确保报价可回收和历史可追溯而保留的必要字段。</div>
   <div id="pilotReportFields" style="display:flex;flex-wrap:wrap;gap:10px"></div>
   <div class="toolbar" style="margin-top:11px">
-   <button type="button" id="pilotReportDownload" class="btn primary">下载所选字段的 Excel</button>
+   <button type="button" id="pilotReportDownload" class="btn primary">下载当前供应商询价 Excel</button>
+    <button type="button" id="pilotReportDownloadAll" class="btn soft">全部参与供应商打包 ZIP</button>
   </div>
   <div id="pilotReportHint" role="status" class="small muted" style="margin-top:8px"></div>
  </div>
@@ -776,7 +784,65 @@ function preview(parsed){
     attachmentsIncluded:false
   };
 }
-root.M1Backup=Object.freeze({FORMAT,VERSION,MAX_BYTES,create,parse,preview});
+
+// 中文：完整备份以单独格式保存多笔已提交询价，旧版单笔 JSON 完全兼容。
+// English: Distinct bulk backup format preserves existing single-RFQ backup compatibility.
+const BULK_FORMAT="srm-lite-all-workspaces",BULK_VERSION=1,MAX_BULK_BYTES=64*1024*1024,MAX_WORKSPACES=2000;
+function createAll(workspaces,exportedAt){
+  if(!Array.isArray(workspaces)||!workspaces.length||workspaces.length>MAX_WORKSPACES)fail("BULK_WORKSPACE_COUNT");
+  const date=exportedAt||new Date().toISOString();
+  if(!Number.isFinite(Date.parse(date)))fail("INVALID_TIME");
+  const seen=new Set(),records=[];
+  for(const ws of workspaces){
+    validateWorkspace(ws);
+    if(seen.has(ws.workspaceId))fail("BULK_DUPLICATE_WORKSPACE");
+    seen.add(ws.workspaceId);
+    records.push({workspace:JSON.parse(JSON.stringify(ws)),recordCounts:counts(ws)});
+  }
+  const data={
+    format:BULK_FORMAT,backupFormatVersion:BULK_VERSION,exportedAt:date,
+    attachmentsIncluded:false,workspaceCount:records.length,
+    warning:"完整备份仅包含全部已保存询价的结构化数据，不包含未保存修改、原始邮件、PDF、截图等附件。",
+    workspaces:records
+  };
+  const text=JSON.stringify(data,null,2);
+  if(text.length>MAX_BULK_BYTES)fail("BULK_SIZE");
+  return text;
+}
+function parseAll(text){
+  if(typeof text!=="string"||!text.length||text.length>MAX_BULK_BYTES)fail("BULK_SIZE");
+  let data;
+  try{data=JSON.parse(text)}catch(_){fail("INVALID_JSON")}
+  if(!data||typeof data!=="object"||Array.isArray(data)||data.format!==BULK_FORMAT)fail("BULK_FORMAT");
+  if(data.backupFormatVersion!==BULK_VERSION)fail("BULK_VERSION");
+  if(data.attachmentsIncluded!==false)fail("BULK_ATTACHMENT_FLAG");
+  if(typeof data.exportedAt!=="string"||!Number.isFinite(Date.parse(data.exportedAt)))fail("BULK_EXPORT_TIME");
+  if(!Array.isArray(data.workspaces)||!data.workspaces.length||
+     data.workspaces.length>MAX_WORKSPACES||data.workspaceCount!==data.workspaces.length)fail("BULK_WORKSPACE_COUNT");
+  const seen=new Set(),workspaces=[];
+  for(const record of data.workspaces){
+    if(!record||typeof record!=="object"||Array.isArray(record))fail("BULK_RECORD");
+    const ws=record.workspace;
+    validateWorkspace(ws);
+    if(seen.has(ws.workspaceId))fail("BULK_DUPLICATE_WORKSPACE");
+    seen.add(ws.workspaceId);
+    const expected=counts(ws),supplied=record.recordCounts;
+    if(!supplied||typeof supplied!=="object"||Array.isArray(supplied))fail("BULK_COUNTS");
+    for(const [key,value] of Object.entries(expected))if(supplied[key]!==value)fail("BULK_COUNT_"+key);
+    workspaces.push(JSON.parse(JSON.stringify(ws)));
+  }
+  return {workspaces,exportedAt:data.exportedAt,attachmentsIncluded:false};
+}
+function previewAll(parsed){
+  if(!parsed||!Array.isArray(parsed.workspaces))fail("BULK_PREVIEW");
+  return parsed.workspaces.map(ws=>({
+    workspaceId:ws.workspaceId,revision:ws.revision,
+    itemCount:ws.state.items.length,supplierCount:ws.state.suppliers.length,
+    quoteRounds:ws.state.quoteRounds.length,
+    confirmedRounds:ws.state.quoteRounds.filter(r=>r.status==="confirmed").length
+  }));
+}
+root.M1Backup=Object.freeze({FORMAT,VERSION,MAX_BYTES,BULK_FORMAT,MAX_BULK_BYTES,create,parse,preview,createAll,parseAll,previewAll});
 if(typeof module!=="undefined"&&module.exports)module.exports=root.M1Backup;
 })(typeof window!=="undefined"?window:globalThis);
 
@@ -2598,6 +2664,10 @@ renderItemList();renderAssignAll();renderQuotes();
   const historyBtn=document.getElementById("pilotSwitchWorkspace");
   const supplierBtn=document.getElementById("pilotAddSupplier");
   const exportBtn=document.getElementById("pilotExportBackup");
+  const exportAllBtn=document.getElementById("pilotExportBackupAll");
+  const restoreScope=document.getElementById("pilotBulkRestoreScope");
+  const restoreSelection=document.getElementById("pilotBulkRestoreSelection");
+  const restoreOptions=document.getElementById("pilotBulkRestoreOptions");
   const importInput=document.getElementById("pilotImportBackup");
   const restoreBtn=document.getElementById("pilotRestoreBackup");
   const previewBox=document.getElementById("pilotBackupPreview");
@@ -2622,10 +2692,13 @@ renderItemList();renderAssignAll();renderQuotes();
     saveBtn.disabled=!buyerMode||busy||!localReady;
     supplierBtn.disabled=!buyerMode||busy;
     exportBtn.disabled=!buyerMode||busy||!localReady;
+    exportAllBtn.disabled=busy||!localReady||!!(buyerMode&&dirty);
     document.getElementById("pilotExportExcel").disabled=!buyerMode||busy||!localReady;
     document.getElementById("pilotReportOpen").disabled=!buyerMode||busy||!localReady;
     importInput.disabled=busy||!localReady;
-    restoreBtn.disabled=!pendingRestore||busy||!localReady||buyerMode;
+    restoreBtn.disabled=!pendingRestore||busy||!localReady||
+      (pendingRestore?.kind!=="bulk"&&buyerMode)||
+      (pendingRestore?.kind==="bulk"&&buyerMode&&dirty);
     // 中文：正式工作也允许新建下一笔询价；旧记录将原子归档，绝不清空浏览器存储。
     // English: New RFQs are available after the first one, without deleting browser data.
     newBtn.disabled=busy||blocked||!localReady;
@@ -3025,32 +3098,92 @@ renderItemList();renderAssignAll();renderQuotes();
     }catch(e){status("无法导出备份："+e.message,true)}
     finally{busy=false;buttons()}
   }
-  async function stageBackupFile(){
-    // 中文：每次换文件都清空旧预览，异常文件不能恢复上次通过预览的数据。
-    // English: Invalidate previous previews before parsing each selected file.
-    pendingRestore=null;previewBox.style.display="none";previewBox.textContent="";
-    restoreBtn.disabled=true;
-    const file=importInput.files?.[0];if(!file){buttons();return}
-    if(!/\.json$/i.test(file.name)||file.size>backup.MAX_BYTES||file.size===0){
-      status("仅接受不超过 16MB 的 SRM JSON 结构化备份文件，本次没有恢复任何数据。",true);
-      importInput.value="";buttons();return;
-    }
+  // 中文：所有询价只从 IndexedDB 已提交的活动和历史记录导出。
+  // English: All-RFQ backups include only committed active and archived records.
+  async function exportAllBackup(){
+    if(busy||!localReady)return;
+    if(buyerMode&&dirty){status("当前询价有尚未保存的更改，请先保存后再备份全部。",true);return}
     busy=true;buttons();
     try{
-      const text=await file.text(),parsed=backup.parse(text),info=backup.preview(parsed);
-      pendingRestore=parsed;
+      const active=await readSaved();
+      if(buyerMode&&(!active||active.workspaceId!==workspaceId||active.revision!==revision))
+        throw Error("本机活动询价与当前页面版本不一致，不能完整备份");
+      const history=await readArchived();
+      const records=[...(active?[active]:[]),...history];
+      if(!records.length)throw Error("没有已保存的正式询价记录");
+      const json=backup.createAll(records);
+      const blob=new Blob([json],{type:"application/json;charset=utf-8"});
+      const url=URL.createObjectURL(blob),link=document.createElement("a");
+      const stamp=new Date().toISOString().slice(0,10).replace(/-/g,"");
+      link.href=url;link.download=stamp+"_SRM_全部询价_结构化备份_v1.json";
+      document.body.appendChild(link);
+      try{link.click()}finally{link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
+      status("已发起全部 "+records.length+" 笔已保存询价的 JSON 备份下载。请检查下载目录；原始邮件/PDF/截图不在备份中。");
+    }catch(e){status("全部询价备份失败，未导出："+e.message,true)}
+    finally{busy=false;buttons()}
+  }
+  function renderRestorePreview(){
+    if(!pendingRestore)return;
+    if(pendingRestore.kind==="bulk"){
+      const ws=pendingRestore.workspaces;
+      const selected=restoreScope.value==="single"?[ws.find(x=>x.workspaceId===restoreSelection.value)].filter(Boolean):ws;
+      const infos=backup.previewAll({workspaces:selected});
+      previewBox.textContent="完整备份导出时间："+pendingRestore.exportedAt+
+        "\n备份内共有 "+ws.length+" 笔询价；准备恢复 "+selected.length+" 笔："+
+        "\n"+infos.slice(0,30).map(i=>i.workspaceId+" · 物料 "+i.itemCount+" · 供应商 "+i.supplierCount+" · 报价轮次 "+i.quoteRounds).join("\n")+
+        (infos.length>30?"\n…其余 "+(infos.length-30)+" 笔省略展示":"")+
+        "\n将先核对本机现有编号；任何编号冲突时整批拒绝，绝不覆盖旧记录。"+
+        "\n仅含结构化业务数据；不含原始邮件、PDF、截图等附件。";
+    }else{
+      const info=backup.preview(pendingRestore);
       previewBox.textContent="待恢复工作："+info.workspaceId+
         "\n备份版本："+info.revision+"；导出时间："+info.exportedAt+
         "\n物料行："+info.itemCount+"；供应商："+info.supplierCount+
         "；报价轮次："+info.quoteRounds+"（已确认："+info.confirmedRounds+"）"+
         "\n不包含原始邮件、PDF、聊天截图等附件文件。"+
-        "\n恢复规则：仅可恢复到没有正式记录的浏览器环境；不会替换现有询报价数据。";
-      previewBox.style.display="block";
-      status(buyerMode?
-        "文件通过结构校验，但当前已有正式工作。为保护现有数据，本版不允许覆盖；请在新的浏览器配置文件或另一台电脑恢复。":
-        "备份格式和数据关系校验通过。检查预览后，点击“恢复到空白本机”确认。");
+        "\n单笔旧版备份仍仅可恢复到没有正式记录的浏览器环境。";
+    }
+    previewBox.style.display="block";buttons();
+  }
+  // 中文：预览前辨识备份类型；严禁把未验证的文件静默写入本机。
+  // English: Distinguish validated single and all-RFQ formats before any local writes.
+  async function stageBackupFile(){
+    pendingRestore=null;previewBox.style.display="none";previewBox.textContent="";
+    restoreOptions.style.display="none";restoreBtn.disabled=true;
+    const file=importInput.files?.[0];if(!file){buttons();return}
+    if(!/\.json$/i.test(file.name)||file.size>backup.MAX_BULK_BYTES||file.size===0){
+      status("仅接受不超过 64MB 的 SRM JSON 结构化备份文件；未写入任何数据。",true);
+      importInput.value="";buttons();return;
+    }
+    busy=true;buttons();
+    try{
+      const text=await file.text();
+      let meta;
+      try{meta=JSON.parse(text)}catch(_){throw Error("JSON 文件格式错误")}
+      if(meta?.format===backup.BULK_FORMAT){
+        const parsed=backup.parseAll(text);
+        pendingRestore={...parsed,kind:"bulk"};
+        restoreOptions.style.display="flex";
+        restoreScope.value="all";
+        restoreSelection.replaceChildren();
+        for(const ws of parsed.workspaces){
+          const option=document.createElement("option");
+          option.value=ws.workspaceId;option.textContent=ws.workspaceId;
+          restoreSelection.appendChild(option);
+        }
+        restoreSelection.disabled=true;
+        status("已校验 "+parsed.workspaces.length+" 笔备份记录。可选择全部恢复或单笔恢复；已有编号不会被覆盖。");
+      }else{
+        if(file.size>backup.MAX_BYTES)throw Error("单笔旧版备份不能超过 16MB");
+        pendingRestore={...backup.parse(text),kind:"single"};
+        status(buyerMode?
+          "单笔旧版备份校验通过，但本机已有正式工作；不可覆盖。":
+          "单笔旧版备份已校验，请核对预览后恢复到空白本机。");
+      }
+      renderRestorePreview();
     }catch(e){
       pendingRestore=null;previewBox.textContent="";previewBox.style.display="none";
+      restoreOptions.style.display="none";
       status("备份文件校验失败，未写入任何数据："+e.message,true);
     }finally{busy=false;buttons();importInput.value=""}
   }
@@ -3071,24 +3204,84 @@ renderItemList();renderAssignAll();renderQuotes();
       });
     }finally{db.close()}
   }
+  // 中文：一次事务读取本机已存在的所有询价编号，发现任意冲突则整批中止。
+  // English: Check all RFQ identifiers inside one readwrite transaction; any collision aborts the whole import.
+  async function appendBulkIfUnique(records){
+    const db=await openDB();
+    try{
+      return await new Promise((resolve,reject)=>{
+        const tx=db.transaction(STORE,"readwrite"),store=tx.objectStore(STORE);
+        let failure=null,hadActive=false;
+        const req=store.getAllKeys();
+        req.onsuccess=()=>{
+          try{
+            const keys=new Set(req.result);
+            const activeReq=store.get(KEY);
+            activeReq.onsuccess=()=>{
+              try{
+                const active=activeReq.result||null;
+                if(buyerMode&&(!active||active.workspaceId!==workspaceId||active.revision!==revision))
+                  throw Error("本机活动记录已改变，请先恢复最新版本");
+                const ids=new Set();
+                if(active)ids.add(active.workspaceId);
+                for(const key of keys)if(typeof key==="string"&&key.startsWith("archive:"))ids.add(key.slice(8));
+                for(const ws of records){
+                  if(ids.has(ws.workspaceId))throw Error("询价编号冲突："+ws.workspaceId+"；本次全部取消，未覆盖现有数据");
+                  ids.add(ws.workspaceId);
+                }
+                hadActive=!!active;
+                records.forEach((ws,i)=>store.put(ws,!active&&i===0?KEY:"archive:"+ws.workspaceId));
+              }catch(e){failure=e;tx.abort()}
+            };
+          }catch(e){failure=e;tx.abort()}
+        };
+        tx.oncomplete=()=>resolve({hadActive});
+        tx.onerror=()=>reject(failure||tx.error||Error("恢复写入失败"));
+        tx.onabort=()=>reject(failure||tx.error||Error("恢复已取消"));
+      });
+    }finally{db.close()}
+  }
   async function restorePortable(){
-    if(!pendingRestore||buyerMode||busy||!localReady)return;
-    const ws=pendingRestore.workspace;
-    // 中文：用户显式确认文件与恢复目标；本地已有记录时原子拒绝恢复。
-    // English: Restore only after confirmation, and atomically reject any existing active record.
-    if(!confirm("将备份 "+ws.workspaceId+" 恢复到当前空白浏览器？不会覆盖已有记录。原始邮件/PDF 附件需要单独保管。确认继续？"))return;
+    if(!pendingRestore||busy||!localReady)return;
+    if(pendingRestore.kind==="single"&&buyerMode)return;
+    if(pendingRestore.kind==="bulk"&&buyerMode&&dirty){
+      status("当前有未保存的修改，不能恢复全部数据。请先保存本机记录。",true);return;
+    }
+    const isBulk=pendingRestore.kind==="bulk";
+    const ws=isBulk?null:pendingRestore.workspace;
+    const batch=isBulk?(restoreScope.value==="single"?
+      pendingRestore.workspaces.filter(x=>x.workspaceId===restoreSelection.value):
+      pendingRestore.workspaces):[ws];
+    if(!batch.length){status("请选定需要恢复的询价。",true);return}
+    if(!confirm("准备恢复 "+batch.length+" 笔询价。先检查编号冲突，任何冲突则全部拒绝，不会覆盖旧记录。原始邮件/PDF 需单独保管。确认继续？"))return;
     busy=true;buttons();
     try{
-      backup.parse(backup.create(ws,pendingRestore.exportedAt));
-      await writeImportedIfEmpty(ws);
-      applyWorkspace(ws);
-      pendingRestore=null;previewBox.style.display="none";previewBox.textContent="";
-      status("结构化数据已恢复到本机（版本 "+revision+"）。附件文件没有恢复；请另外核对原始邮件、PDF 和截图。");
+      if(isBulk){
+        backup.parseAll(backup.createAll(batch,pendingRestore.exportedAt));
+        const result=await appendBulkIfUnique(batch);
+        if(!result.hadActive)applyWorkspace(batch[0]);
+        pendingRestore=null;restoreOptions.style.display="none";
+        previewBox.style.display="none";previewBox.textContent="";
+        await refreshHistory();
+        status("已成功恢复 "+batch.length+" 笔询价。已有询价未覆盖；未自动恢复邮件/PDF/截图附件。");
+      }else{
+        backup.parse(backup.create(ws,pendingRestore.exportedAt));
+        await writeImportedIfEmpty(ws);
+        applyWorkspace(ws);
+        pendingRestore=null;previewBox.style.display="none";previewBox.textContent="";
+        await refreshHistory();
+        status("结构化数据已恢复到本机（版本 "+revision+"）。附件文件没有恢复；请另外核对原始邮件、PDF 和截图。");
+      }
     }catch(e){status("恢复失败，原有记录未覆盖："+e.message,true)}
     finally{busy=false;buttons()}
   }
 
   exportBtn.addEventListener("click",exportBackup);
+  exportAllBtn.addEventListener("click",exportAllBackup);
+  restoreScope.addEventListener("change",()=>{
+    restoreSelection.disabled=restoreScope.value!=="single";renderRestorePreview();
+  });
+  restoreSelection.addEventListener("change",renderRestorePreview);
   document.getElementById("pilotExportExcel").addEventListener("click",exportBusinessExcel);
   importInput.addEventListener("change",stageBackupFile);
   restoreBtn.addEventListener("click",restorePortable);
@@ -3114,7 +3307,7 @@ renderItemList();renderAssignAll();renderQuotes();
   })();
   window.SRMPilot=Object.freeze({snapshot:()=>buyerMode?readState():null,
     isBuyer:()=>buyerMode,revision:()=>revision,dirty:()=>dirty,
-    save,recover,beginBuyer,switchArchived,exportBackup,restorePortable,importSupplierRows,exportBusinessExcel,committedWorkspaceForReport,reportMessage:status});
+    save,recover,beginBuyer,switchArchived,exportBackup,exportAllBackup,restorePortable,importSupplierRows,exportBusinessExcel,committedWorkspaceForReport,reportMessage:status});
 }
 /* END M1_LITE_MANUAL_SAVE */
 /* BEGIN M1_LITE_EXCEL_BRIDGE */
@@ -3207,6 +3400,56 @@ renderItemList();renderAssignAll();renderQuotes();
  };
 }
 /* END M1_LITE_EXCEL_BRIDGE */
+/* BEGIN M1_LITE_ZIP_BATCH */
+/* 中文：离线 ZIP Store 格式打包多个供应商独立 XLSX，不引入网络依赖。
+ * English: Small offline ZIP archive with CRC32 and UTF-8 names; no network dependencies. */
+(function(root){
+"use strict";
+const MAX_ENTRY_BYTES=12*1024*1024,MAX_TOTAL_BYTES=64*1024*1024,MAX_ENTRIES=200;
+const table=new Uint32Array(256);
+for(let n=0;n<256;n++){let c=n;for(let j=0;j<8;j++)c=(c&1)?0xedb88320^(c>>>1):c>>>1;table[n]=c>>>0}
+function crc32(bytes){let c=0xffffffff;for(const x of bytes)c=(c>>>8)^table[(c^x)&255];return (c^0xffffffff)>>>0}
+function fail(message){throw Error("ZIP: "+message)}
+function u16(bytes,pos,n){bytes[pos]=n&255;bytes[pos+1]=(n>>>8)&255}
+function u32(bytes,pos,n){u16(bytes,pos,n);u16(bytes,pos+2,n>>>16)}
+async function create(entries){
+ if(!Array.isArray(entries)||!entries.length||entries.length>MAX_ENTRIES)fail("文件数量必须在 1 到 200 之间");
+ const enc=new TextEncoder(),seen=new Set(),local=[],central=[];
+ let offset=0,total=0;
+ for(const entry of entries){
+  if(!entry||typeof entry.name!=="string"||!(entry.blob instanceof Blob))fail("文件格式错误");
+  const name=entry.name.trim();
+  if(!name||name.includes("/")||name.includes("\\")||name.includes("..")||!name.toLowerCase().endsWith(".xlsx")||seen.has(name))
+   fail("文件名冲突或无效");
+  seen.add(name);
+  const data=new Uint8Array(await entry.blob.arrayBuffer()),nameBytes=enc.encode(name);
+  if(nameBytes.length>65535||data.length>MAX_ENTRY_BYTES)fail("单个文件过大");
+  total+=data.length;
+  if(total>MAX_TOTAL_BYTES)fail("打包文件总量超过安全限制");
+  const crc=crc32(data),header=new Uint8Array(30+nameBytes.length);
+  u32(header,0,0x04034b50);u16(header,4,20);u16(header,6,0x0800);
+  u16(header,8,0);u32(header,10,0);u32(header,14,crc);
+  u32(header,18,data.length);u32(header,22,data.length);
+  u16(header,26,nameBytes.length);header.set(nameBytes,30);
+  const c=new Uint8Array(46+nameBytes.length);
+  u32(c,0,0x02014b50);u16(c,4,20);u16(c,6,20);
+  u16(c,8,0x0800);u16(c,10,0);u32(c,12,0);
+  u32(c,16,crc);u32(c,20,data.length);u32(c,24,data.length);
+  u16(c,28,nameBytes.length);u32(c,42,offset);c.set(nameBytes,46);
+  local.push(header,data);central.push(c);
+  offset+=header.length+data.length;
+ }
+ const centerSize=central.reduce((n,x)=>n+x.length,0);
+ const end=new Uint8Array(22);
+ u32(end,0,0x06054b50);u16(end,8,entries.length);u16(end,10,entries.length);
+ u32(end,12,centerSize);u32(end,16,offset);
+ return new Blob([...local,...central,end],{type:"application/zip"});
+}
+root.SRMZip=Object.freeze({create,MAX_ENTRIES,MAX_TOTAL_BYTES});
+if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
+})(typeof window!=="undefined"?window:globalThis);
+
+/* END M1_LITE_ZIP_BATCH */
 /* BEGIN M1_LITE_REPORT_UI */
 /* 中文：为采购员提供单一业务单据导出入口，导出前选择供应商及字段。
  * English: Compact buyer-facing export picker for confidential supplier RFQs and internal two-sheet comparison. */
@@ -3218,6 +3461,7 @@ renderItemList();renderAssignAll();renderQuotes();
  const group=document.getElementById("pilotReportSupplierGroup");
  const fieldsBox=document.getElementById("pilotReportFields");
  const exportBtn=document.getElementById("pilotReportDownload");
+ const batchBtn=document.getElementById("pilotReportDownloadAll");
  const warning=document.getElementById("pilotReportHint");
  function getParticipating(){
   const ws=window.SRMPilot?.snapshot();
@@ -3241,6 +3485,7 @@ renderItemList();renderAssignAll();renderQuotes();
   supplierEl.innerHTML=candidates.map(s=>'<option value="'+escapeHtml(s.id)+'">'+escapeHtml(s.name)+' ('+escapeHtml(s.id)+')</option>').join("");
   if(candidates.some(x=>x.id===previous))supplierEl.value=previous;
   const isComparison=type.value==="comparison";
+  batchBtn.style.display=isComparison?"none":"inline-flex";
   document.getElementById("pilotReportSinglePicker").style.display=isComparison?"none":"flex";
   document.getElementById("pilotReportMultiPicker").style.display=isComparison?"block":"none";
   const selected=new Set([...group.querySelectorAll("[data-report-supplier]:checked")].map(x=>x.value));
@@ -3263,6 +3508,39 @@ renderItemList();renderAssignAll();renderQuotes();
   if(!showing)render();
  });
  type.addEventListener("change",render);
+ // 中文：参与供应商逐家产生独立询价表，再整体打包；不包含其他供方及内部比价字段。
+ // English: Each participating supplier receives its own confidential XLSX in one ZIP download.
+ batchBtn.addEventListener("click",async()=>{
+  if(batchBtn.disabled)return;
+  batchBtn.disabled=true;exportBtn.disabled=true;
+  warning.textContent="正在为本次全部参与供应商生成独立询价 Excel……";
+  try{
+   const snapshot=await window.SRMPilot.committedWorkspaceForReport();
+   const assignment=new Map(snapshot.state.assignments.map(x=>[x.key,new Set(x.values)]));
+   const participants=snapshot.state.suppliers.filter(s=>
+     snapshot.state.items.some(it=>assignment.get(it.lineId)?.has(s.id)));
+   if(!participants.length)throw Error("本次询价没有已分配物料的参与供应商");
+   if(participants.length>window.SRMZip.MAX_ENTRIES)
+     throw Error("参与供应商数量超过单次 ZIP 限制，请分批导出");
+   const chosen=selected("rfq"),entries=[];
+   for(const supplier of participants){
+    const plan=reportCore.rfq(snapshot,supplier.id,chosen);
+    entries.push({name:plan.filename,blob:window.SRMExcel.create(plan.sheets)});
+   }
+   const zip=await window.SRMZip.create(entries);
+   const safeId=String(snapshot.workspaceId).replace(/[^a-zA-Z0-9_-]/g,"_").slice(0,56);
+   const url=URL.createObjectURL(zip),a=document.createElement("a");
+   a.href=url;a.download="SRM_全部供应商询价单_"+safeId+".zip";
+   document.body.appendChild(a);
+   try{a.click()}finally{a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
+   const msg="已发起 "+participants.length+" 家供应商独立 Excel 的 ZIP 下载；请在下载目录解压检查。";
+   warning.textContent=msg;window.SRMPilot.reportMessage(msg);
+  }catch(e){
+   const msg="全部供应商询价单导出失败："+e.message;
+   warning.textContent=msg;window.SRMPilot.reportMessage(msg,true);
+  }finally{batchBtn.disabled=false;exportBtn.disabled=false}
+ });
+
  exportBtn.addEventListener("click",async()=>{
   if(exportBtn.disabled)return;
   exportBtn.disabled=true;warning.textContent="正在核查已保存的询报价记录，并生成 Excel……";
