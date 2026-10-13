@@ -28,7 +28,7 @@ with zipfile.ZipFile(archive) as z:
         price_ix=headers.index("报价单价")
         assert len(rows)-1==count,(supplier,len(rows))
         assert {str(r[code_ix]) for r in rows[1:]}==codes,(supplier,rows)
-        assert all(r[price_ix] in ("",None) for r in rows[1:]),"供应商询价单泄露已有报价"
+        assert all((r[price_ix] if len(r)>price_ix else None) in ("",None) for r in rows[1:]),"供应商询价单泄露已有报价"
         as_text="\n".join(str(x) for r in rows for x in r)
         if supplier=="SUP-A":
             assert "匿名供方乙" not in as_text and "乙报价含运费" not in as_text
