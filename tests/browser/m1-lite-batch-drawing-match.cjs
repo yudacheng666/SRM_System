@@ -90,6 +90,27 @@ function pdf(message){
   });
   assert.deepEqual(hashes,[true,true,true]);
   console.log("PASS BATCH-BROWSER03: confirmed links and original PDF bytes persist after save and browser reload");
+  const importedNumber=await page.evaluate(()=>
+    parseItemRows("存货编码,图号,询价数量,询价单位\nANON-NEW,G-007,2,件")[0].drawingNo);
+  assert.equal(importedNumber,"G-007");
+  await page.locator("#pilotBatchDrawingFiles").setInputFiles([
+    {name:"UNLISTED-NAME.pdf",mimeType:"application/pdf",buffer:pdf("MANUALLY-MAPPED")}]);
+  await page.locator("#pilotBatchDrawingAnalyze").click();
+  await page.waitForFunction(()=>document.querySelectorAll("[data-batch-row]").length===1);
+  assert.equal(await page.locator('[data-batch-check="0"]').isChecked(),false);
+  await page.locator('[data-batch-focus="0"]').click();
+  await page.locator("#pilotBatchDrawingManualLine").selectOption("BATCH-L4");
+  await page.locator("#pilotBatchDrawingManualAssign").click();
+  await page.locator("#pilotBatchDrawingConfirm").click();
+  await page.waitForFunction(()=>document.querySelector("#pilotBatchDrawingSummary").textContent.includes("已确认 1 份 PDF"));
+  assert.deepEqual(await page.evaluate(()=>items.map(x=>(x.drawings||[]).length)),[1,1,1,1]);
+  await page.locator("#pilotSaveWorkspace").click();
+  await page.waitForFunction(()=>document.querySelector("#pilotSaveStatus").textContent.includes("已保存到本机"));
+  await page.reload();
+  await page.waitForFunction(()=>document.querySelector("#pilotSaveStatus").textContent.includes("已自动恢复本机正式工作"));
+  assert.equal(await page.evaluate(()=>items[3].drawings.length),1);
+  console.log("PASS BATCH-BROWSER03B: optional imported drawing number survives parsing; unmatched PDF manually assigned and saved");
+
 
   await page.locator("#pilotBatchDrawingFiles").setInputFiles([
     {name:"P-001_RevB.pdf",mimeType:"application/pdf",buffer:pdf("DIFFERENT")}]);
