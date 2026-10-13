@@ -37,6 +37,8 @@ class AssetStore:
         """中文：校验、落盘、登记；文件不会被不相同内容覆盖。English: Verify, persist, and index."""
         if not self.store.get(workspace_id):
             raise StoreError("Save the RFQ before uploading PDF originals")
+        if self.store.active_id() != workspace_id:
+            raise StoreError("PDF upload requires the currently active RFQ")
         if not isinstance(filename, str) or not filename.lower().endswith(".pdf") or not 0 < len(filename) < 240:
             raise StoreError("Invalid PDF filename")
         if any(x in filename for x in ("/", "\\", "\0")):
