@@ -79,7 +79,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
  <div class="toolbar" style="margin-bottom:8px;gap:8px">
   <button type="button" class="btn soft" id="pilotExportBackup" disabled>备份当前询价 JSON</button>
   <button type="button" class="btn soft" id="pilotExportBackupAll" disabled>备份全部询价 JSON</button>
-  <button type="button" class="btn soft" id="pilotExportComplete" disabled>备份全部询价及 PDF 原件 ZIP</button>
+  <button type="button" class="btn soft" id="pilotExportComplete" disabled>导出询价及 PDF 原件 ZIP（S3）</button>
   <button type="button" class="btn soft" id="pilotExportExcel" disabled>导出业务数据 Excel（3 Sheet）</button>
   <button type="button" class="btn primary" id="pilotReportOpen" disabled>导出询价单 / 比价议价单</button>
   <label class="btn" style="cursor:pointer">选择备份 JSON <input type="file" id="pilotImportBackup" accept=".json,application/json" disabled style="max-width:185px"></label>
@@ -3000,6 +3000,7 @@ renderItemList();renderAssignAll();renderQuotes();
  line.addEventListener("focus",sync);
  upload.onclick=async()=>{
   const it=chosen(),ws=window.SRMPilot?.snapshot();
+  if(ws&&ws.revision===0){tell("请先点击“保存到本机”，然后再导入 PDF 图纸",true);return}
   if(!it||!ws||itemHasAnyQuoteHistory(it.lineId))return;
   const batch=[...files.files];
   if(!batch.length){tell("请先选择至少一个 PDF 文件",true);return}
@@ -3173,6 +3174,7 @@ renderItemList();renderAssignAll();renderQuotes();
  }
  async function confirmBatch(){
   if(busy||!staged.length||!baseline||!isBuyer())return;
+  if(model()?.revision===0){tell("请先保存当前空白询价，再进行批量图纸关联",true);return}
   const ws=model();
   if(ws.workspaceId!==baseline.workspaceId||ws.revision!==baseline.revision||sig()!==baseline.items){
    tell("询价物料、报价历史或图纸关联已变化；请重新执行匹配预览。",true);return;
@@ -3333,6 +3335,8 @@ renderItemList();renderAssignAll();renderQuotes();
     // English: Legacy fixture restore is disabled; S4 will provide full DB+asset restore.
     importInput.disabled=true;restoreBtn.disabled=true;
     importCompleteInput.disabled=true;restoreCompleteBtn.disabled=true;
+    for(const element of [importInput.closest("label"),restoreBtn,importCompleteInput.closest("label"),restoreCompleteBtn])
+      if(element)element.style.display="none";
     supplierBox.style.display=buyerMode?"flex":"none";
     document.getElementById("pilotDrawingPanel").style.display=buyerMode?"block":"none";
     badge.textContent=buyerMode?"SQLite 本机正式工作":"本机演示模式（不保存）";
