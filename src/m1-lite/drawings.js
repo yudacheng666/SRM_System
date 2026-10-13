@@ -68,24 +68,25 @@ function scoped(ws,supplierId){
  const assigned=new Map(ws.state.assignments.map(x=>[x.key,new Set(x.values)]));
  const items=ws.state.items.filter(x=>assigned.get(x.lineId)?.has(supplierId));
  if(!items.length)fail("供应商没有获分配物料");
- const uniq=new Map(),missing=[];
+ const uniq=new Map(),missing=[],pending=[];
  for(const it of items){
   const docs=docsForItem(it);
+  if(it.drawingStatus==="pending"){pending.push(it.lineId);continue}
   if(!docs.length){if(it.drawingStatus!=="not_required")missing.push(it.lineId);continue}
   for(const doc of docs){
    if(!doc.sha256||!doc.name||!doc.revision)fail("图纸关联记录缺失必要信息");
    uniq.set(doc.sha256,doc);
   }
  }
- return{items,docs:[...uniq.values()],missing};
+ return{items,docs:[...uniq.values()],missing,pending};
 }
 async function packageFor(ws,supplierId,excel,name){
  const scope=scoped(ws,supplierId),entries=[{name,blob:excel}];
  const manifest={format:"srm-supplier-drawing-manifest",version:1,workspaceId:ws.workspaceId,
   supplierId,items:scope.items.map(it=>({lineId:it.lineId,itemCode:it.id,
    drawingStatus:it.drawingStatus||"required",
-   drawings:docsForItem(it).map(d=>({sha256:d.sha256,name:d.name,revision:d.revision}))})),
-  missingLineIds:scope.missing,documents:[]};
+   drawings:it.drawingStatus==="pending"?[]:docsForItem(it).map(d=>({sha256:d.sha256,name:d.name,revision:d.revision}))})),
+  missingLineIds:scope.missing,pendingRevisionLineIds:scope.pending,documents:[]};
  let n=0;
  for(const doc of scope.docs){
   const blob=await get(ws.workspaceId,doc.sha256);
@@ -97,7 +98,7 @@ async function packageFor(ws,supplierId,excel,name){
  }
  entries.push({name:"图纸关联清单.json",blob:new Blob([JSON.stringify(manifest,null,2)],{type:"application/json"})});
  const zipped=await root.SRMZip.create(entries);
- return{zip:zipped,missing:scope.missing,docCount:scope.docs.length,manifest};
+ return{zip:zipped,missing:scope.missing,pending:scope.pending,docCount:scope.docs.length,manifest};
 }
 async function completeBackup(workspaces){
  const json=root.M1Backup.createAll(workspaces);
