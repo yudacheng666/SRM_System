@@ -32,7 +32,7 @@ const {chromium}=require("playwright");
   await page.goto(url);
   await page.waitForFunction(()=>!document.querySelector("#pilotNewWorkspace").disabled);
   await page.locator("#pilotNewWorkspace").click();
-  await wait("已开始另一笔空白正式询价");
+  await wait("已开始空白正式工作");
   await seed("A");
   const first=await snapshot();
   await page.reload();
@@ -42,7 +42,7 @@ const {chromium}=require("playwright");
   console.log("PASS MULTI01: saved legacy single workspace loads and new blank action remains enabled");
 
   await page.locator("#pilotNewWorkspace").click();
-  await wait("已开始另一笔空白正式询价");
+  await wait("已开始空白正式工作");
   assert.equal(await page.evaluate(()=>items.length),0);
   await page.reload();
   await wait("已自动恢复本机正式工作");
@@ -50,7 +50,7 @@ const {chromium}=require("playwright");
   console.log("PASS MULTI02: unsaved new workspace never destroys preceding committed RFQ");
 
   await page.locator("#pilotNewWorkspace").click();
-  await wait("已开始另一笔空白正式询价");
+  await wait("已开始空白正式工作");
   await seed("B");
   const second=await snapshot();
   assert.notEqual(second.id,first.id);
