@@ -241,7 +241,7 @@
       applyWorkspace(fresh);
       launchBaseline=existing?{workspaceId:existing.workspaceId,revision:existing.revision}:null;
       dirty=true;
-      status("已开始另一笔空白正式询价，尚未保存。首次保存后，上一笔已保存的询价将进入“历史询价”；请另备份 JSON。");
+      status("已开始空白正式工作（另一笔独立询价），尚未保存。首次保存后，上一笔已保存的询价将进入“历史询价”；请另备份 JSON。");
     }).catch(e=>status("不能开始正式工作："+e.message,true)).finally(()=>{busy=false;buttons()});
   }
   async function recover(){
