@@ -67,6 +67,19 @@ fs.mkdirSync(directory,{recursive:true});
   assert.equal(await partial.page.evaluate(()=>window.SRMPilot.snapshot().workspaceId),"RFQ-FAKE-TEST");
   assert.equal(await partial.page.locator("#pilotHistoryWorkspace option").count(),1);
   console.log("PASS BULK-BROWSER04: selecting one RFQ from a two-RFQ backup restores only that RFQ");
+  // 中文：现有询价不冲突时，单独选择另一笔导入为历史，不覆盖正在使用的询价。
+  // English: Selective nonconflicting import appends an archived RFQ without changing the active one.
+  const otherId=multi.workspaces.find(w=>w.workspaceId!=="RFQ-FAKE-TEST").workspaceId;
+  await partial.page.locator("#pilotImportBackup").setInputFiles({name:"all-again.json",mimeType:"application/json",buffer:Buffer.from(json)});
+  await partial.page.waitForFunction(()=>document.querySelector("#pilotBackupPreview").textContent.includes("2 笔询价"));
+  await partial.page.locator("#pilotBulkRestoreScope").selectOption("single");
+  await partial.page.locator("#pilotBulkRestoreSelection").selectOption(otherId);
+  await partial.page.locator("#pilotRestoreBackup").click();
+  await partial.page.waitForFunction(()=>document.querySelector("#pilotSaveStatus").textContent.includes("已成功恢复 1 笔询价"));
+  assert.equal(await partial.page.evaluate(()=>SRMPilot.snapshot().workspaceId),"RFQ-FAKE-TEST");
+  assert.equal(await partial.page.locator("#pilotHistoryWorkspace option").count(),2);
+  console.log("PASS BULK-BROWSER04B: append nonconflicting selected RFQ to existing browser without replacing current work");
+
 
   const complete=await newPage();
   await complete.page.locator("#pilotImportBackup").setInputFiles({name:"all.json",mimeType:"application/json",buffer:Buffer.from(json)});
