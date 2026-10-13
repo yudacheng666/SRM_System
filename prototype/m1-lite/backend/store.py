@@ -32,9 +32,15 @@ def _validate(snapshot: dict[str, Any]) -> str:
     state = snapshot.get("state")
     if not isinstance(state, dict):
         raise StoreError("Missing workspace state")
-    required = ("items", "suppliers", "assignments", "quoteRounds", "awards", "awardReasons")
+    required = ("items", "suppliers", "assignments", "quoteRounds", "awards",
+                "awardReasons", "manualAwards", "awardReviewIds", "supplierPool",
+                "selectedCompareSuppliers", "customFields")
     if any(not isinstance(state.get(field), list) for field in required):
         raise StoreError("Incomplete workspace state")
+    if any(type(state.get(key)) is not int or state[key] < 0 for key in ("lineSeq", "createdSeq")):
+        raise StoreError("Invalid workspace sequence")
+    if state.get("quoteComparisonMode") not in ("returned",):
+        raise StoreError("Invalid business quotation mode")
     return identity
 
 
@@ -87,10 +93,21 @@ class SnapshotStore:
         now = datetime.now(timezone.utc).isoformat()
         with self._connect() as connection:
             connection.execute("BEGIN IMMEDIATE")
-            row = connection.execute("SELECT revision FROM workspaces WHERE workspace_id = ?", (identity,)).fetchone()
+            row = connection.execute("SELECT revision, snapshot_json FROM workspaces WHERE workspace_id = ?", (identity,)).fetchone()
             current = row[0] if row else None
             if current != expected_revision or snapshot["revision"] != (current or 0) + 1:
                 raise RevisionConflict("Workspace revision changed; refusing overwrite")
+            if row is not None:
+                previous = json.loads(row[1])
+                # 中文：已确认报价不能通过新接口被静默改写或删除。
+                # English: Never overwrite or remove confirmed quote rounds without an explicit workflow.
+                old_rounds = (r for r in previous["state"]["quoteRounds"] if r.get("status") == "confirmed")
+                current_rounds = snapshot["state"]["quoteRounds"]
+                for old in old_rounds:
+                    key = (old.get("supplierId"), old.get("roundNo"), old.get("revisionNo"))
+                    if not any((r.get("supplierId"), r.get("roundNo"), r.get("revisionNo")) == key
+                               and r == old for r in current_rounds):
+                        raise StoreError("Confirmed quotation history cannot be modified")
             if current is None:
                 connection.execute(
                     "INSERT INTO workspaces VALUES (?, ?, ?, ?)",
