@@ -11,7 +11,10 @@ def make_workspace(revision=1, name="模拟物料"):
         "format": "srm-workspace", "schemaVersion": 1, "workspaceId": "RFQ-DEMO-001",
         "origin": "buyer", "revision": revision,
         "state": {"items": [{"id": "ITEM-001", "name": name}], "suppliers": [],
-                  "assignments": [], "quoteRounds": [], "awards": [], "awardReasons": []},
+                  "assignments": [], "quoteRounds": [], "awards": [], "awardReasons": [],
+                  "manualAwards": [], "awardReviewIds": [], "supplierPool": [],
+                  "selectedCompareSuppliers": [], "customFields": [],
+                  "lineSeq": 1, "createdSeq": 1, "quoteComparisonMode": "returned"},
     }
 
 
@@ -45,6 +48,16 @@ class SnapshotStoreTests(unittest.TestCase):
         with self.assertRaises(StoreError):
             self.store.save(data)
         self.assertIsNone(self.store.get("RFQ-DEMO-001"))
+
+    def test_confirmed_round_cannot_be_mutated(self):
+        ws = make_workspace()
+        ws["state"]["quoteRounds"] = [{"supplierId": "SUP-01", "roundNo": 1, "revisionNo": 1,
+                                        "status": "confirmed", "lines": [], "expectedLineIds": []}]
+        self.store.save(ws)
+        revised = make_workspace(revision=2)
+        with self.assertRaises(StoreError):
+            self.store.save(revised, expected_revision=1)
+        self.assertEqual(self.store.get("RFQ-DEMO-001")["revision"], 1)
 
     def test_verified_backup(self):
         self.store.save(make_workspace())
