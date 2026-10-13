@@ -21,8 +21,8 @@ small{color:#64748b}a{color:#1d4ed8}.ok{color:#047857}.bad{color:#b91c1c}
   <h1>SRM 本机存储服务 · S2</h1>
   <p class="sub">本页用于验证离线 HTTP 服务及 SQLite 基础模块，不是正式采购界面。</p>
   <section class="panel note">
-    <b>特别提醒：现有 M1-Lite 业务界面尚未迁移到 SQLite。</b>
-    <div>当前 <code>index.html</code> 仍使用浏览器 IndexedDB 手动保存。通过 <code>file://</code> 打开的原型与 <code>http://127.0.0.1:8765</code> 属于不同存储环境，旧数据不会自动出现。迁移前请先从原浏览器导出并核实完整 ZIP 备份。</div>
+    <b>特别提醒：现有 M1-Lite 业务界面尚未接入 SQLite。</b>
+    <div>当前 <code>index.html</code> 仍使用浏览器 IndexedDB 手动保存。通过 <code>file://</code> 打开的原型与 <code>http://127.0.0.1:8765</code> 属于不同存储环境，旧数据不会自动出现。原有数据已确认仅为测试数据，不需要迁移至新数据库。</div>
     <div>不要在本阶段输入真实采购资料，也不要清理原浏览器数据。</div>
   </section>
   <section class="panel">
@@ -39,7 +39,7 @@ small{color:#64748b}a{color:#1d4ed8}.ok{color:#047857}.bad{color:#b91c1c}
   </section>
   <section class="panel">
     <h2>3. 后续接入工作</h2>
-    <p>将在下一阶段完成旧 JSON/ZIP 数据迁移、当前业务按钮接入 SQLite API、文件附件独立落盘、真正完整的备份恢复以及 UI 改造。</p>
+    <p>将在下一阶段直接让业务按钮接入 SQLite API，从空白库开始测试；之后完成文件附件独立落盘、完整备份恢复以及 UI 改造。旧测试 JSON/ZIP 不迁移。</p>
     <small>本服务只在本机 127.0.0.1 监听，不提供公司局域网访问。</small>
   </section>
 </main>
