@@ -609,18 +609,12 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
  * English: Persist real PDF binaries alongside RFQ records under separate asset keys in the existing DB. */
 (function(root){
 "use strict";
-const DB="srm-lite-local-v1",STORE="workspaces",MAX_PDF_BYTES=12*1024*1024;
+const MAX_PDF_BYTES=12*1024*1024;
 const isPdfName=name=>/\.pdf$/i.test(name||"");
 const key=(ws,sha)=>"asset:"+ws+":"+sha;
 function fail(s){throw Error("图纸："+s)}
-function openDB(){
- return new Promise((resolve,reject)=>{
-  const r=indexedDB.open(DB,1);
-  r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(STORE))r.result.createObjectStore(STORE)};
-  r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error||Error("无法打开图纸存储"));
-  r.onblocked=()=>reject(Error("其他 SRM 页面阻止图纸数据库操作"));
- });
-}
+// 中文：PDF 原件通过本机 HTTP API 落盘，不使用 IndexedDB。
+// English: PDF originals persist through loopback API, never IndexedDB.
 async function digest(bytes){
  if(!root.crypto?.subtle)fail("当前离线环境无法进行 SHA-256 校验，拒绝接收原件");
  const data=await root.crypto.subtle.digest("SHA-256",bytes);
@@ -635,36 +629,23 @@ async function verify(file){
  if(!tail.includes("%%EOF"))fail("PDF 缺少文件结束标记，可能已损坏");
  return{sha256:await digest(bytes),size:bytes.byteLength,blob:new Blob([bytes],{type:"application/pdf"})};
 }
-async function write(workspaceId,hash,blob){
- const db=await openDB();
- try{
-  return await new Promise((resolve,reject)=>{
-   const tx=db.transaction(STORE,"readwrite"),st=tx.objectStore(STORE);
-   const r=st.get(key(workspaceId,hash));let error=null;
-   r.onsuccess=()=>{try{
-    if(r.result){if(r.result.size!==blob.size)throw Error("同校验值的原件大小冲突");}
-    else st.put(blob,key(workspaceId,hash));
-   }catch(e){error=e;tx.abort()}};
-   tx.oncomplete=()=>resolve();
-   tx.onerror=()=>reject(error||tx.error||Error("写入失败"));
-   tx.onabort=()=>reject(error||tx.error||Error("图纸写入取消"));
-  });
- }finally{db.close()}
+async function write(workspaceId,hash,blob,filename){
+ const url="/api/assets/"+encodeURIComponent(workspaceId)+"/"+hash;
+ const response=await fetch(url,{method:"PUT",headers:{"Content-Type":"application/pdf",
+  "X-SRM-Filename":encodeURIComponent(filename)},body:blob});
+ const body=await response.json().catch(()=>({}));
+ if(!response.ok)fail("写入本机 PDF 失败："+(body.message||body.error||response.status));
+ return body.document;
 }
 async function get(workspaceId,hash){
- const db=await openDB();
- try{
-  return await new Promise((resolve,reject)=>{
-   const tx=db.transaction(STORE,"readonly"),r=tx.objectStore(STORE).get(key(workspaceId,hash));
-   let result;
-   r.onsuccess=()=>{result=r.result||null};
-   tx.oncomplete=()=>resolve(result);
-   tx.onerror=()=>reject(tx.error||Error("读取图纸失败"));
-  });
- }finally{db.close()}
+ const url="/api/assets/"+encodeURIComponent(workspaceId)+"/"+hash;
+ const response=await fetch(url,{cache:"no-store"});
+ if(response.status===404)return null;
+ if(!response.ok)fail("读取本机 PDF 失败（HTTP "+response.status+"）");
+ return response.blob();
 }
 async function store(workspaceId,file,revision){
- const obj=await verify(file);await write(workspaceId,obj.sha256,obj.blob);
+ const obj=await verify(file);await write(workspaceId,obj.sha256,obj.blob,file.name);
  const version=String(revision||"A").trim().slice(0,80);
  if(!version)fail("必须指定版本");
  return{id:obj.sha256.slice(0,16),sha256:obj.sha256,name:file.name,revision:version,
@@ -753,7 +734,7 @@ async function unpackComplete(file){
  if(listed.size!==all.size)fail("完整备份缺少部分 PDF 原件");
  return{records,assets};
 }
-root.SRMDrawings=Object.freeze({MAX_PDF_BYTES,openDB,verify,store,get,digest,docsForItem,scoped,packageFor,completeBackup,unpackComplete,key});
+root.SRMDrawings=Object.freeze({MAX_PDF_BYTES,verify,store,get,digest,docsForItem,scoped,packageFor,completeBackup,unpackComplete,key});
 if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMDrawings;
 })(typeof window!=="undefined"?window:globalThis);
 
@@ -766,7 +747,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMDrawings;
 const valid=x=>typeof x==="string"&&x.trim().length>=3;
 const norm=x=>String(x??"").normalize("NFKC").trim().toUpperCase();
 const stem=x=>norm(String(x||"").replace(/\.pdf$/i,""));
-function escapeRegex(value){return value.replace(/[.*+?^{}()|[\]\\$]/g,"\\/* END M1_LITE_REAL_PDF_STORE */")}
+function escapeRegex(value){return value.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}
 function hasDelimitedToken(name,token){
  if(!valid(token))return false;
  const pattern="(^|[^\\p{L}\\p{N}])"+escapeRegex(token)+"($|[^\\p{L}\\p{N}])";
