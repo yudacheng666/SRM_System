@@ -3448,7 +3448,7 @@ renderItemList();renderAssignAll();renderQuotes();
       const next={...current,revision:revision+1};
       model.validate(next);
       const result=await api("/api/workspaces/"+encodeURIComponent(workspaceId),
-        jsonRequest("PUT",{workspace:next,expectedRevision:revision||null}));
+        jsonRequest("PUT",{workspace:next,expectedRevision:revision||null,expectedActive:serverActiveId}));
       revision=result.revision;serverActiveId=workspaceId;dirty=false;
       await refreshHistory();
       status("SQLite 已保存："+workspaceId+"（第 "+revision+" 版）。");
