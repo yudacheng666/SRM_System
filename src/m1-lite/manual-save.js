@@ -12,6 +12,10 @@
   const historyBtn=document.getElementById("pilotSwitchWorkspace");
   const supplierBtn=document.getElementById("pilotAddSupplier");
   const exportBtn=document.getElementById("pilotExportBackup");
+  const exportAllBtn=document.getElementById("pilotExportBackupAll");
+  const restoreScope=document.getElementById("pilotBulkRestoreScope");
+  const restoreSelection=document.getElementById("pilotBulkRestoreSelection");
+  const restoreOptions=document.getElementById("pilotBulkRestoreOptions");
   const importInput=document.getElementById("pilotImportBackup");
   const restoreBtn=document.getElementById("pilotRestoreBackup");
   const previewBox=document.getElementById("pilotBackupPreview");
@@ -36,10 +40,13 @@
     saveBtn.disabled=!buyerMode||busy||!localReady;
     supplierBtn.disabled=!buyerMode||busy;
     exportBtn.disabled=!buyerMode||busy||!localReady;
+    exportAllBtn.disabled=busy||!localReady||!!(buyerMode&&dirty);
     document.getElementById("pilotExportExcel").disabled=!buyerMode||busy||!localReady;
     document.getElementById("pilotReportOpen").disabled=!buyerMode||busy||!localReady;
     importInput.disabled=busy||!localReady;
-    restoreBtn.disabled=!pendingRestore||busy||!localReady||buyerMode;
+    restoreBtn.disabled=!pendingRestore||busy||!localReady||
+      (pendingRestore?.kind!=="bulk"&&buyerMode)||
+      (pendingRestore?.kind==="bulk"&&buyerMode&&dirty);
     // 中文：正式工作也允许新建下一笔询价；旧记录将原子归档，绝不清空浏览器存储。
     // English: New RFQs are available after the first one, without deleting browser data.
     newBtn.disabled=busy||blocked||!localReady;
@@ -439,32 +446,92 @@
     }catch(e){status("无法导出备份："+e.message,true)}
     finally{busy=false;buttons()}
   }
-  async function stageBackupFile(){
-    // 中文：每次换文件都清空旧预览，异常文件不能恢复上次通过预览的数据。
-    // English: Invalidate previous previews before parsing each selected file.
-    pendingRestore=null;previewBox.style.display="none";previewBox.textContent="";
-    restoreBtn.disabled=true;
-    const file=importInput.files?.[0];if(!file){buttons();return}
-    if(!/\.json$/i.test(file.name)||file.size>backup.MAX_BYTES||file.size===0){
-      status("仅接受不超过 16MB 的 SRM JSON 结构化备份文件，本次没有恢复任何数据。",true);
-      importInput.value="";buttons();return;
-    }
+  // 中文：所有询价只从 IndexedDB 已提交的活动和历史记录导出。
+  // English: All-RFQ backups include only committed active and archived records.
+  async function exportAllBackup(){
+    if(busy||!localReady)return;
+    if(buyerMode&&dirty){status("当前询价有尚未保存的更改，请先保存后再备份全部。",true);return}
     busy=true;buttons();
     try{
-      const text=await file.text(),parsed=backup.parse(text),info=backup.preview(parsed);
-      pendingRestore=parsed;
+      const active=await readSaved();
+      if(buyerMode&&(!active||active.workspaceId!==workspaceId||active.revision!==revision))
+        throw Error("本机活动询价与当前页面版本不一致，不能完整备份");
+      const history=await readArchived();
+      const records=[...(active?[active]:[]),...history];
+      if(!records.length)throw Error("没有已保存的正式询价记录");
+      const json=backup.createAll(records);
+      const blob=new Blob([json],{type:"application/json;charset=utf-8"});
+      const url=URL.createObjectURL(blob),link=document.createElement("a");
+      const stamp=new Date().toISOString().slice(0,10).replace(/-/g,"");
+      link.href=url;link.download=stamp+"_SRM_全部询价_结构化备份_v1.json";
+      document.body.appendChild(link);
+      try{link.click()}finally{link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
+      status("已发起全部 "+records.length+" 笔已保存询价的 JSON 备份下载。请检查下载目录；原始邮件/PDF/截图不在备份中。");
+    }catch(e){status("全部询价备份失败，未导出："+e.message,true)}
+    finally{busy=false;buttons()}
+  }
+  function renderRestorePreview(){
+    if(!pendingRestore)return;
+    if(pendingRestore.kind==="bulk"){
+      const ws=pendingRestore.workspaces;
+      const selected=restoreScope.value==="single"?[ws.find(x=>x.workspaceId===restoreSelection.value)].filter(Boolean):ws;
+      const infos=backup.previewAll({workspaces:selected});
+      previewBox.textContent="完整备份导出时间："+pendingRestore.exportedAt+
+        "\n备份内共有 "+ws.length+" 笔询价；准备恢复 "+selected.length+" 笔："+
+        "\n"+infos.slice(0,30).map(i=>i.workspaceId+" · 物料 "+i.itemCount+" · 供应商 "+i.supplierCount+" · 报价轮次 "+i.quoteRounds).join("\n")+
+        (infos.length>30?"\n…其余 "+(infos.length-30)+" 笔省略展示":"")+
+        "\n将先核对本机现有编号；任何编号冲突时整批拒绝，绝不覆盖旧记录。"+
+        "\n仅含结构化业务数据；不含原始邮件、PDF、截图等附件。";
+    }else{
+      const info=backup.preview(pendingRestore);
       previewBox.textContent="待恢复工作："+info.workspaceId+
         "\n备份版本："+info.revision+"；导出时间："+info.exportedAt+
         "\n物料行："+info.itemCount+"；供应商："+info.supplierCount+
         "；报价轮次："+info.quoteRounds+"（已确认："+info.confirmedRounds+"）"+
         "\n不包含原始邮件、PDF、聊天截图等附件文件。"+
-        "\n恢复规则：仅可恢复到没有正式记录的浏览器环境；不会替换现有询报价数据。";
-      previewBox.style.display="block";
-      status(buyerMode?
-        "文件通过结构校验，但当前已有正式工作。为保护现有数据，本版不允许覆盖；请在新的浏览器配置文件或另一台电脑恢复。":
-        "备份格式和数据关系校验通过。检查预览后，点击“恢复到空白本机”确认。");
+        "\n单笔旧版备份仍仅可恢复到没有正式记录的浏览器环境。";
+    }
+    previewBox.style.display="block";buttons();
+  }
+  // 中文：预览前辨识备份类型；严禁把未验证的文件静默写入本机。
+  // English: Distinguish validated single and all-RFQ formats before any local writes.
+  async function stageBackupFile(){
+    pendingRestore=null;previewBox.style.display="none";previewBox.textContent="";
+    restoreOptions.style.display="none";restoreBtn.disabled=true;
+    const file=importInput.files?.[0];if(!file){buttons();return}
+    if(!/\.json$/i.test(file.name)||file.size>backup.MAX_BULK_BYTES||file.size===0){
+      status("仅接受不超过 64MB 的 SRM JSON 结构化备份文件；未写入任何数据。",true);
+      importInput.value="";buttons();return;
+    }
+    busy=true;buttons();
+    try{
+      const text=await file.text();
+      let meta;
+      try{meta=JSON.parse(text)}catch(_){throw Error("JSON 文件格式错误")}
+      if(meta?.format===backup.BULK_FORMAT){
+        const parsed=backup.parseAll(text);
+        pendingRestore={...parsed,kind:"bulk"};
+        restoreOptions.style.display="flex";
+        restoreScope.value="all";
+        restoreSelection.replaceChildren();
+        for(const ws of parsed.workspaces){
+          const option=document.createElement("option");
+          option.value=ws.workspaceId;option.textContent=ws.workspaceId;
+          restoreSelection.appendChild(option);
+        }
+        restoreSelection.disabled=true;
+        status("已校验 "+parsed.workspaces.length+" 笔备份记录。可选择全部恢复或单笔恢复；已有编号不会被覆盖。");
+      }else{
+        if(file.size>backup.MAX_BYTES)throw Error("单笔旧版备份不能超过 16MB");
+        pendingRestore={...backup.parse(text),kind:"single"};
+        status(buyerMode?
+          "单笔旧版备份校验通过，但本机已有正式工作；不可覆盖。":
+          "单笔旧版备份已校验，请核对预览后恢复到空白本机。");
+      }
+      renderRestorePreview();
     }catch(e){
       pendingRestore=null;previewBox.textContent="";previewBox.style.display="none";
+      restoreOptions.style.display="none";
       status("备份文件校验失败，未写入任何数据："+e.message,true);
     }finally{busy=false;buttons();importInput.value=""}
   }
@@ -485,24 +552,84 @@
       });
     }finally{db.close()}
   }
+  // 中文：一次事务读取本机已存在的所有询价编号，发现任意冲突则整批中止。
+  // English: Check all RFQ identifiers inside one readwrite transaction; any collision aborts the whole import.
+  async function appendBulkIfUnique(records){
+    const db=await openDB();
+    try{
+      return await new Promise((resolve,reject)=>{
+        const tx=db.transaction(STORE,"readwrite"),store=tx.objectStore(STORE);
+        let failure=null,hadActive=false;
+        const req=store.getAllKeys();
+        req.onsuccess=()=>{
+          try{
+            const keys=new Set(req.result);
+            const activeReq=store.get(KEY);
+            activeReq.onsuccess=()=>{
+              try{
+                const active=activeReq.result||null;
+                if(buyerMode&&(!active||active.workspaceId!==workspaceId||active.revision!==revision))
+                  throw Error("本机活动记录已改变，请先恢复最新版本");
+                const ids=new Set();
+                if(active)ids.add(active.workspaceId);
+                for(const key of keys)if(typeof key==="string"&&key.startsWith("archive:"))ids.add(key.slice(8));
+                for(const ws of records){
+                  if(ids.has(ws.workspaceId))throw Error("询价编号冲突："+ws.workspaceId+"；本次全部取消，未覆盖现有数据");
+                  ids.add(ws.workspaceId);
+                }
+                hadActive=!!active;
+                records.forEach((ws,i)=>store.put(ws,!active&&i===0?KEY:"archive:"+ws.workspaceId));
+              }catch(e){failure=e;tx.abort()}
+            };
+          }catch(e){failure=e;tx.abort()}
+        };
+        tx.oncomplete=()=>resolve({hadActive});
+        tx.onerror=()=>reject(failure||tx.error||Error("恢复写入失败"));
+        tx.onabort=()=>reject(failure||tx.error||Error("恢复已取消"));
+      });
+    }finally{db.close()}
+  }
   async function restorePortable(){
-    if(!pendingRestore||buyerMode||busy||!localReady)return;
-    const ws=pendingRestore.workspace;
-    // 中文：用户显式确认文件与恢复目标；本地已有记录时原子拒绝恢复。
-    // English: Restore only after confirmation, and atomically reject any existing active record.
-    if(!confirm("将备份 "+ws.workspaceId+" 恢复到当前空白浏览器？不会覆盖已有记录。原始邮件/PDF 附件需要单独保管。确认继续？"))return;
+    if(!pendingRestore||busy||!localReady)return;
+    if(pendingRestore.kind==="single"&&buyerMode)return;
+    if(pendingRestore.kind==="bulk"&&buyerMode&&dirty){
+      status("当前有未保存的修改，不能恢复全部数据。请先保存本机记录。",true);return;
+    }
+    const isBulk=pendingRestore.kind==="bulk";
+    const ws=isBulk?null:pendingRestore.workspace;
+    const batch=isBulk?(restoreScope.value==="single"?
+      pendingRestore.workspaces.filter(x=>x.workspaceId===restoreSelection.value):
+      pendingRestore.workspaces):[ws];
+    if(!batch.length){status("请选定需要恢复的询价。",true);return}
+    if(!confirm("准备恢复 "+batch.length+" 笔询价。先检查编号冲突，任何冲突则全部拒绝，不会覆盖旧记录。原始邮件/PDF 需单独保管。确认继续？"))return;
     busy=true;buttons();
     try{
-      backup.parse(backup.create(ws,pendingRestore.exportedAt));
-      await writeImportedIfEmpty(ws);
-      applyWorkspace(ws);
-      pendingRestore=null;previewBox.style.display="none";previewBox.textContent="";
-      status("结构化数据已恢复到本机（版本 "+revision+"）。附件文件没有恢复；请另外核对原始邮件、PDF 和截图。");
+      if(isBulk){
+        backup.parseAll(backup.createAll(batch,pendingRestore.exportedAt));
+        const result=await appendBulkIfUnique(batch);
+        if(!result.hadActive)applyWorkspace(batch[0]);
+        pendingRestore=null;restoreOptions.style.display="none";
+        previewBox.style.display="none";previewBox.textContent="";
+        await refreshHistory();
+        status("已成功恢复 "+batch.length+" 笔询价。已有询价未覆盖；未自动恢复邮件/PDF/截图附件。");
+      }else{
+        backup.parse(backup.create(ws,pendingRestore.exportedAt));
+        await writeImportedIfEmpty(ws);
+        applyWorkspace(ws);
+        pendingRestore=null;previewBox.style.display="none";previewBox.textContent="";
+        await refreshHistory();
+        status("结构化数据已恢复到本机（版本 "+revision+"）。附件文件没有恢复；请另外核对原始邮件、PDF 和截图。");
+      }
     }catch(e){status("恢复失败，原有记录未覆盖："+e.message,true)}
     finally{busy=false;buttons()}
   }
 
   exportBtn.addEventListener("click",exportBackup);
+  exportAllBtn.addEventListener("click",exportAllBackup);
+  restoreScope.addEventListener("change",()=>{
+    restoreSelection.disabled=restoreScope.value!=="single";renderRestorePreview();
+  });
+  restoreSelection.addEventListener("change",renderRestorePreview);
   document.getElementById("pilotExportExcel").addEventListener("click",exportBusinessExcel);
   importInput.addEventListener("change",stageBackupFile);
   restoreBtn.addEventListener("click",restorePortable);
@@ -528,5 +655,5 @@
   })();
   window.SRMPilot=Object.freeze({snapshot:()=>buyerMode?readState():null,
     isBuyer:()=>buyerMode,revision:()=>revision,dirty:()=>dirty,
-    save,recover,beginBuyer,switchArchived,exportBackup,restorePortable,importSupplierRows,exportBusinessExcel,committedWorkspaceForReport,reportMessage:status});
+    save,recover,beginBuyer,switchArchived,exportBackup,exportAllBackup,restorePortable,importSupplierRows,exportBusinessExcel,committedWorkspaceForReport,reportMessage:status});
 }
