@@ -59,6 +59,22 @@ class SnapshotStoreTests(unittest.TestCase):
             self.store.save(revised, expected_revision=1)
         self.assertEqual(self.store.get("RFQ-DEMO-001")["revision"], 1)
 
+    def test_active_workspace_after_new_and_switch(self):
+        """中文：多询价保留并切换。English: Preserve and select independent RFQs."""
+        first = make_workspace()
+        second = make_workspace()
+        second["workspaceId"] = "RFQ-DEMO-002"
+        self.store.save(first)
+        self.assertEqual(self.store.active_id(), "RFQ-DEMO-001")
+        self.store.save(second)
+        self.assertEqual(self.store.active_id(), "RFQ-DEMO-002")
+        self.assertEqual(len(self.store.list_workspaces()), 2)
+        self.store.select("RFQ-DEMO-001", expected_active="RFQ-DEMO-002")
+        self.assertEqual(self.store.active()["workspaceId"], "RFQ-DEMO-001")
+        with self.assertRaises(RevisionConflict):
+            self.store.select("RFQ-DEMO-002", expected_active="RFQ-DEMO-002")
+        self.assertEqual(self.store.active_id(), "RFQ-DEMO-001")
+
     def test_verified_backup(self):
         self.store.save(make_workspace())
         target = Path(self.tmp.name) / "backups" / "copy.sqlite3"
