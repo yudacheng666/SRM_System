@@ -58,6 +58,10 @@ class SnapshotStore:
                     snapshot_json TEXT NOT NULL,
                     updated_at TEXT NOT NULL
                 );
+                CREATE TABLE IF NOT EXISTS app_state (
+                    key TEXT PRIMARY KEY,
+                    value TEXT NOT NULL
+                );
                 CREATE TABLE IF NOT EXISTS workspace_versions (
                     workspace_id TEXT NOT NULL,
                     revision INTEGER NOT NULL,
@@ -122,6 +126,11 @@ class SnapshotStore:
                 "INSERT INTO workspace_versions VALUES (?, ?, ?, ?)",
                 (identity, snapshot["revision"], payload, now),
             )
+            if current is None:
+                connection.execute(
+                    "INSERT INTO app_state(key,value) VALUES ('active_workspace',?) "
+                    "ON CONFLICT(key) DO UPDATE SET value=excluded.value", (identity,)
+                )
         return snapshot["revision"]
 
     def get(self, workspace_id: str, revision: int | None = None) -> dict[str, Any] | None:
@@ -137,6 +146,31 @@ class SnapshotStore:
         with self._connect() as connection:
             row = connection.execute(query, params).fetchone()
         return json.loads(row[0]) if row else None
+
+    def active_id(self) -> str | None:
+        """中文：返回当前询价索引，不读取整个列表。English: Return active RFQ ID."""
+        with self._connect() as connection:
+            row = connection.execute("SELECT value FROM app_state WHERE key='active_workspace'").fetchone()
+        return row[0] if row else None
+
+    def active(self) -> dict[str, Any] | None:
+        """中文：读取活动询价。English: Load the active RFQ."""
+        identity = self.active_id()
+        return self.get(identity) if identity else None
+
+    def select(self, identity: str, expected_active: str | None) -> None:
+        """中文：显式切换询价，拒绝旧页面改变其他窗口的活动项。English: Guard active selection."""
+        with self._connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            row = connection.execute("SELECT value FROM app_state WHERE key='active_workspace'").fetchone()
+            old = row[0] if row else None
+            if old != expected_active:
+                raise RevisionConflict("Active RFQ changed in another window")
+            exists = connection.execute("SELECT 1 FROM workspaces WHERE workspace_id=?", (identity,)).fetchone()
+            if not exists:
+                raise StoreError("RFQ does not exist")
+            connection.execute("INSERT INTO app_state(key,value) VALUES ('active_workspace',?) "
+                               "ON CONFLICT(key) DO UPDATE SET value=excluded.value", (identity,))
 
     def list_workspaces(self) -> list[dict[str, Any]]:
         """中文：只返回索引元数据而非整份询价。English: Return metadata only."""
