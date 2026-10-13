@@ -8,6 +8,7 @@
  const group=document.getElementById("pilotReportSupplierGroup");
  const fieldsBox=document.getElementById("pilotReportFields");
  const exportBtn=document.getElementById("pilotReportDownload");
+ const batchBtn=document.getElementById("pilotReportDownloadAll");
  const warning=document.getElementById("pilotReportHint");
  function getParticipating(){
   const ws=window.SRMPilot?.snapshot();
@@ -31,6 +32,7 @@
   supplierEl.innerHTML=candidates.map(s=>'<option value="'+escapeHtml(s.id)+'">'+escapeHtml(s.name)+' ('+escapeHtml(s.id)+')</option>').join("");
   if(candidates.some(x=>x.id===previous))supplierEl.value=previous;
   const isComparison=type.value==="comparison";
+  batchBtn.style.display=isComparison?"none":"inline-flex";
   document.getElementById("pilotReportSinglePicker").style.display=isComparison?"none":"flex";
   document.getElementById("pilotReportMultiPicker").style.display=isComparison?"block":"none";
   const selected=new Set([...group.querySelectorAll("[data-report-supplier]:checked")].map(x=>x.value));
@@ -53,6 +55,39 @@
   if(!showing)render();
  });
  type.addEventListener("change",render);
+ // 中文：参与供应商逐家产生独立询价表，再整体打包；不包含其他供方及内部比价字段。
+ // English: Each participating supplier receives its own confidential XLSX in one ZIP download.
+ batchBtn.addEventListener("click",async()=>{
+  if(batchBtn.disabled)return;
+  batchBtn.disabled=true;exportBtn.disabled=true;
+  warning.textContent="正在为本次全部参与供应商生成独立询价 Excel……";
+  try{
+   const snapshot=await window.SRMPilot.committedWorkspaceForReport();
+   const assignment=new Map(snapshot.state.assignments.map(x=>[x.key,new Set(x.values)]));
+   const participants=snapshot.state.suppliers.filter(s=>
+     snapshot.state.items.some(it=>assignment.get(it.lineId)?.has(s.id)));
+   if(!participants.length)throw Error("本次询价没有已分配物料的参与供应商");
+   if(participants.length>window.SRMZip.MAX_ENTRIES)
+     throw Error("参与供应商数量超过单次 ZIP 限制，请分批导出");
+   const chosen=selected("rfq"),entries=[];
+   for(const supplier of participants){
+    const plan=reportCore.rfq(snapshot,supplier.id,chosen);
+    entries.push({name:plan.filename,blob:window.SRMExcel.create(plan.sheets)});
+   }
+   const zip=await window.SRMZip.create(entries);
+   const safeId=String(snapshot.workspaceId).replace(/[^a-zA-Z0-9_-]/g,"_").slice(0,56);
+   const url=URL.createObjectURL(zip),a=document.createElement("a");
+   a.href=url;a.download="SRM_全部供应商询价单_"+safeId+".zip";
+   document.body.appendChild(a);
+   try{a.click()}finally{a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
+   const msg="已发起 "+participants.length+" 家供应商独立 Excel 的 ZIP 下载；请在下载目录解压检查。";
+   warning.textContent=msg;window.SRMPilot.reportMessage(msg);
+  }catch(e){
+   const msg="全部供应商询价单导出失败："+e.message;
+   warning.textContent=msg;window.SRMPilot.reportMessage(msg,true);
+  }finally{batchBtn.disabled=false;exportBtn.disabled=false}
+ });
+
  exportBtn.addEventListener("click",async()=>{
   if(exportBtn.disabled)return;
   exportBtn.disabled=true;warning.textContent="正在核查已保存的询报价记录，并生成 Excel……";
