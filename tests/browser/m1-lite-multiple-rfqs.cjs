@@ -73,13 +73,13 @@ const {chromium}=require("playwright");
   assert.deepEqual(await snapshot(),second);
   await page.locator("#pilotHistoryWorkspace").selectOption(first.id);
   await page.locator("#pilotSwitchWorkspace").click();
-  await wait("已切换到历史询价");
+  await wait("已切换到历史询价："+first.id);
   assert.deepEqual(await snapshot(),first);
   console.log("PASS MULTI04: old RFQ, supplier, confirmed quote and revision restored intact");
 
   await page.locator("#pilotHistoryWorkspace").selectOption(second.id);
   await page.locator("#pilotSwitchWorkspace").click();
-  await wait("已切换到历史询价");
+  await wait("已切换到历史询价："+second.id);
   assert.deepEqual(await snapshot(),second);
   console.log("PASS MULTI05: repeated two-way switching preserves both independently saved RFQs");
 
@@ -89,7 +89,7 @@ const {chromium}=require("playwright");
   await p2.waitForFunction(()=>document.querySelector("#pilotSaveStatus").textContent.includes("已自动恢复本机正式工作"));
   await page.locator("#pilotHistoryWorkspace").selectOption(first.id);
   await page.locator("#pilotSwitchWorkspace").click();
-  await wait("已切换到历史询价");
+  await wait("已切换到历史询价："+first.id);
   await p2.locator("#pilotSaveWorkspace").click();
   await p2.waitForFunction(()=>document.querySelector("#pilotSaveStatus").textContent.includes("保存失败"));
   assert.match(await p2.locator("#pilotSaveStatus").innerText(),/活动询价|其他窗口/);
