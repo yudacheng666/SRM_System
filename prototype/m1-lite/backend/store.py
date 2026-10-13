@@ -44,6 +44,9 @@ def _validate(snapshot: dict[str, Any]) -> str:
     return identity
 
 
+_NO_EXPECTATION = object()
+
+
 class SnapshotStore:
     """中文：显式提交快照、保存全部历史版、提供一致性数据库备份。English: Versioned atomic snapshots and backups."""
 
@@ -88,7 +91,8 @@ class SnapshotStore:
         finally:
             connection.close()
 
-    def save(self, snapshot: dict[str, Any], expected_revision: int | None = None) -> int:
+    def save(self, snapshot: dict[str, Any], expected_revision: int | None = None,
+             expected_active: object = _NO_EXPECTATION) -> int:
         """中文：必须匹配现有修订；新工作空间要求版本 1。English: Compare-and-swap with immutable revisions."""
         identity = _validate(snapshot)
         payload = json.dumps(snapshot, ensure_ascii=False, allow_nan=False, separators=(",", ":"))
@@ -97,6 +101,11 @@ class SnapshotStore:
         now = datetime.now(timezone.utc).isoformat()
         with self._connect() as connection:
             connection.execute("BEGIN IMMEDIATE")
+            if expected_active is not _NO_EXPECTATION:
+                active_row = connection.execute("SELECT value FROM app_state WHERE key='active_workspace'").fetchone()
+                current_active = active_row[0] if active_row else None
+                if current_active != expected_active:
+                    raise RevisionConflict("Active RFQ has changed in another browser window")
             row = connection.execute("SELECT revision, snapshot_json FROM workspaces WHERE workspace_id = ?", (identity,)).fetchone()
             current = row[0] if row else None
             if current != expected_revision or snapshot["revision"] != (current or 0) + 1:
