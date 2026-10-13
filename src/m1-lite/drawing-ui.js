@@ -95,6 +95,6 @@
   it.drawingStatus=statusChoice.value;window.SRMPilot.noteDrawingChange();
   renderItemList();sync();tell("已更新本行图纸状态，请保存工作。");
  };
- const refresh=()=>sync();
+ const refresh=()=>{sync();window.SRMBatchDrawUI?.reset()};
  window.SRMDrawUI=Object.freeze({refresh});
 }
