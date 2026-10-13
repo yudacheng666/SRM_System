@@ -435,7 +435,7 @@
     // 中文：程序触发的下载链接等非用户点击不代表业务发生修改；操作按钮中的真实修改仍提示保存。
     // English: Programmatic download clicks must not mark a saved workspace dirty.
     // English: Dirty indicator errs on the safe side; UI events do not automatically persist.
-    if(e.target.closest("#pilotControls"))return;
+    if(e.target.closest("#pilotControls,#pilotDrawingPanel,#drawingModal,#pilotReportPanel,#rfqPreviewModal,.tabs,[data-drawing]"))return;
     dirty=true;status("工作内容可能有未保存修改，请完成操作后点击“保存到本机”。");
   },true);
   document.addEventListener("input",e=>{
