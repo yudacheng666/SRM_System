@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SRM S2 本机存储服务验证</title>
+<title>SRM S3 本机存储服务检查</title>
 <style>
 :root{color-scheme:light;font-family:"Segoe UI","Microsoft YaHei",sans-serif;color:#1e293b;background:#f1f5f9}
 *{box-sizing:border-box}body{margin:0;padding:36px 16px}.shell{max-width:820px;margin:auto}
@@ -18,15 +18,16 @@ small{color:#64748b}a{color:#1d4ed8}.ok{color:#047857}.bad{color:#b91c1c}
 </head>
 <body>
 <main class="shell">
-  <h1>SRM 本机存储服务 · S2</h1>
-  <p class="sub">本页用于验证离线 HTTP 服务及 SQLite 基础模块，不是正式采购界面。</p>
+  <h1>SRM 本机存储服务 · S3</h1>
+  <p class="sub">本页用于检查本机 SQLite 数据服务；正式采购原型可从首页打开。</p>
   <section class="panel note">
-    <b>特别提醒：现有 M1-Lite 业务界面尚未接入 SQLite。</b>
-    <div>当前 <code>index.html</code> 仍使用浏览器 IndexedDB 手动保存。通过 <code>file://</code> 打开的原型与 <code>http://127.0.0.1:8765</code> 属于不同存储环境，旧数据不会自动出现。原有数据已确认仅为测试数据，不需要迁移至新数据库。</div>
-    <div>不要在本阶段输入真实采购资料，也不要清理原浏览器数据。</div>
+    <b>S3 已接入 SQLite，但完整自动备份恢复仍待下一阶段。</b>
+    <div><code>index.html</code> 现通过本机 HTTP API 将询价保存到 SQLite，PDF 图纸存入磁盘文件夹；需要手动点击保存。原浏览器 JSON/ZIP 都是测试数据，不需要迁移。</div>
+    <div>本阶段仍是开发候选版，请使用虚构测试数据，待 Windows 浏览器完整验收通过后再试用真实资料。</div>
   </section>
   <section class="panel">
     <h2>1. 基础检查</h2>
+    <p><a href="/">返回 SRM 业务页面</a></p>
     <button class="primary" id="health">检查本机服务</button>
     <button id="list">读取 SQLite 询价索引</button>
     <pre id="result">点击按钮读取实时状态，尚未执行检查。</pre>
@@ -39,7 +40,7 @@ small{color:#64748b}a{color:#1d4ed8}.ok{color:#047857}.bad{color:#b91c1c}
   </section>
   <section class="panel">
     <h2>3. 后续接入工作</h2>
-    <p>将在下一阶段直接让业务按钮接入 SQLite API，从空白库开始测试；之后完成文件附件独立落盘、完整备份恢复以及 UI 改造。旧测试 JSON/ZIP 不迁移。</p>
+    <p>业务数据与 PDF 图纸已接入 SQLite API/磁盘；下一阶段完成自动保存、报价原始凭证、全量备份恢复和 UI 重构。</p>
     <small>本服务只在本机 127.0.0.1 监听，不提供公司局域网访问。</small>
   </section>
 </main>
