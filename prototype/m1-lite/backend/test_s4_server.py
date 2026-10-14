@@ -86,6 +86,15 @@ class S4HttpTests(unittest.TestCase):
         self.assertEqual(code,400)
         self.assertEqual(self.call(self.target,"GET","/api/workspaces")[1]["workspaces"],[])
 
+    def test_automatic_backup_status_is_read_only(self):
+        """中文：本机接口只显示自动备份元信息。English: Read-only backup metadata."""
+        code, result = self.call(self.origin,"GET","/api/backups/auto/status")
+        self.assertEqual(code,200)
+        self.assertFalse(result["enabled"])  # Only the real main() enables the scheduler.
+        self.assertEqual(result["retained"],0)
+        self.assertIsNone(result["latestFile"])
+        self.assertIsNone(result["latestAt"])
+
     def test_backup_endpoint_requires_same_origin_and_no_data_loss(self):
         """中文：跨站不应触发完整备份。English: Cross-origin backup denied."""
         self.assertEqual(self.call(self.origin,"POST","/api/backups/full",{},origin=False)[0],403)
