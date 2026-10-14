@@ -270,6 +270,9 @@ test('06 full backup restore: actual imported quotes, history, PDFs, overwrite r
     }
     await other.locator('#pilotHistoryWorkspace').selectOption(ws.workspaceId);await other.locator('#pilotSwitchWorkspace').click();
     await expect.poll(async()=> (await snapshot(other)).state.quoteRounds).toEqual(ws.state.quoteRounds);
+    // 中文：恢复触发页面重载，数据工具区会恢复折叠；必须按真实 UI 再次展开。
+    // English: Restore reloads the page and closes the drawer; reopen it through normal UI before retrying.
+    await openTools(other,'#uiDataTools');
     await other.locator('#pilotS4BackupFile').setInputFiles(file);await other.locator('#pilotS4RestoreFull').click();await expect(other.locator('#pilotSaveStatus')).toContainText('禁止');
     const refusal=await other.evaluate(async()=>{const r=await fetch('/api/backups/full/restore',{method:'POST',headers:{'Content-Type':'application/zip'},body:new Uint8Array([1])});return r.status;}); expect(refusal).toBe(409);
   } finally {await other.close();}
@@ -306,7 +309,9 @@ test('08 bad PDF and damaged ZIP never contaminate saved data / 异常回归', a
   } finally {await other.close();}
 });
 
-test('09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台操作', async ({page})=>{
+test('09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台操作', async ({page, app})=>{
+  // 中文：显式请求 app fixture，确保先启动真实服务并导航到页面。
+  // English: Request the app fixture to start and navigate the real server before UI assertions.
   // 中文：确认四步导航与管理入口均实际可点，导航本身不能增加业务修订。
   // English: Validate real buyer navigation and drawers without altering business revisions.
   await expect(page.locator('.ui-workNav .tab')).toHaveCount(4);
