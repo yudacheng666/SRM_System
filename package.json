@@ -1,0 +1,12 @@
+{
+  "name": "srm_system",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test": "node --test prototype/m1-lite/tests/*.test.cjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2"
+  }
+}

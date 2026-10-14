@@ -163,7 +163,10 @@ def restore(store: SnapshotStore, source: Path) -> dict:
             if info.file_size > MAX_MANIFEST:
                 raise StoreError("RESTORE_MANIFEST_TOO_LARGE")
             manifest = json.loads(archive.read("manifest.json"))
-            if not isinstance(manifest, dict) or manifest.get("format") != FORMAT or manifest.get("version") != VERSION:
+            # 中文：严格核对格式版本的整数类型；Python 中 True == 1。
+            # English: Reject boolean version values even though Python considers True == 1.
+            if (not isinstance(manifest, dict) or manifest.get("format") != FORMAT
+                    or type(manifest.get("version")) is not int or manifest["version"] != VERSION):
                 raise StoreError("RESTORE_FORMAT_UNSUPPORTED")
             database = manifest.get("database",{})
             if not isinstance(database, dict):

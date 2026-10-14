@@ -353,6 +353,10 @@ def main() -> None:
             try:
                 with server.srm_lock:
                     result = run_if_due(server.srm_store)
+                if result.get("warning"):
+                    # 中文：提醒操作者此前备份存在损坏，必须人工复查旧文件。
+                    # English: Report suspect previous backups rather than silently ignoring them.
+                    print("WARNING: S4 prior full backup invalid; preserved old copies: "+result["warning"], flush=True)
                 if result["created"]:
                     print("S4 automatic full backup created: "+result["backup"]["fileName"], flush=True)
             except Exception as exc:
