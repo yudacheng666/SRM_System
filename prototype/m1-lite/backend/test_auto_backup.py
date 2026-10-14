@@ -75,6 +75,87 @@ class AutoBackupPolicyTests(unittest.TestCase):
         self.assertTrue(result["created"])
         self.assertEqual(result["backup"]["pdfCount"], 1)
 
+    def test_corrupted_recent_backup_creates_replacement_after_due(self):
+        """中文：损坏旧备份不能阻止新备份，或删除之前的健康备份。
+        English: Corruption cannot prevent fresh backup or delete earlier valid copies.
+        """
+        self.store.save(make_workspace())
+        self.assertTrue(run_if_due(self.store)["created"])
+        folder = self.root / "backups" / "auto"
+        healthy = next(folder.glob("*.zip"))
+        healthy_bytes = healthy.read_bytes()
+        old = time.time() - DAY_SECONDS - 100
+        os.utime(healthy, (old, old))
+        self.store.save(make_workspace(revision=2, name="虚拟变更"), expected_revision=1)
+        self.assertTrue(run_if_due(self.store)["created"])
+        recent = next(p for p in folder.glob("*.zip") if p != healthy)
+        recent.write_bytes(b"damaged synthetic ZIP")
+        now = recent.stat().st_mtime + DAY_SECONDS + 5
+        result = run_if_due(self.store, now=now)
+        self.assertTrue(result["created"])
+        self.assertIn("unreadable or corrupt", result["warning"])
+        self.assertEqual(result["removed"], 0)
+        self.assertEqual(healthy.read_bytes(), healthy_bytes)
+        self.assertEqual(recent.read_bytes(), b"damaged synthetic ZIP")
+        self.assertEqual(len(list(folder.glob("*.zip"))), 3)
+        restored = [p for p in folder.glob("*.zip") if p not in (healthy, recent)]
+        self.assertEqual(len(restored), 1)
+        with zipfile.ZipFile(restored[0]) as archive:
+            self.assertIn("database/srm.sqlite3", archive.namelist())
+            self.assertIsNone(archive.testzip())
+
+    def test_missing_or_invalid_manifest_never_claims_unchanged(self):
+        """中文：无清单或伪造清单不能导致自动备份误判。
+        English: Missing/malformed manifests cannot suppress a needed fresh archive.
+        """
+        for mutation in ("missing", "bad-json", "bad-structure"):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                store = SnapshotStore(root / "srm.sqlite3")
+                AssetStore(store)
+                store.save(make_workspace())
+                self.assertTrue(run_if_due(store)["created"])
+                folder = root / "backups" / "auto"
+                old_archive = next(folder.glob("*.zip"))
+                with zipfile.ZipFile(old_archive, "r") as source:
+                    original = {name: source.read(name) for name in source.namelist()}
+                with zipfile.ZipFile(old_archive, "w", compression=zipfile.ZIP_STORED) as out:
+                    for name, payload in original.items():
+                        if name == "manifest.json" and mutation == "missing":
+                            continue
+                        if name == "manifest.json" and mutation == "bad-json":
+                            payload = b"{broken json"
+                        if name == "manifest.json" and mutation == "bad-structure":
+                            payload = b'{"format":"srm-s4-full-backup","version":1,"database":[]}'
+                        out.writestr(name, payload)
+                previous_bytes = old_archive.read_bytes()
+                result = run_if_due(store, now=old_archive.stat().st_mtime+DAY_SECONDS+3)
+                self.assertTrue(result["created"])
+                self.assertTrue(result["warning"])
+                self.assertEqual(result["removed"], 0)
+                self.assertEqual(old_archive.read_bytes(), previous_bytes)
+                self.assertEqual(len(list(folder.glob("*.zip"))), 2)
+
+    def test_valid_zip_with_tampered_database_is_not_trusted(self):
+        """中文：即使 ZIP 本身 CRC 正常，数据库哈希变化也应拒绝。
+        English: Valid ZIP CRC cannot mask modified SQLite bytes against manifest SHA.
+        """
+        self.store.save(make_workspace())
+        run_if_due(self.store)
+        folder = self.root / "backups" / "auto"
+        target = next(folder.glob("*.zip"))
+        with zipfile.ZipFile(target) as source:
+            original = {name: source.read(name) for name in source.namelist()}
+        with zipfile.ZipFile(target, "w", compression=zipfile.ZIP_STORED) as out:
+            for name, payload in original.items():
+                if name == "database/srm.sqlite3":
+                    payload = payload[:-1] + (b"X" if payload[-1:] != b"X" else b"Y")
+                out.writestr(name, payload)
+        result = run_if_due(self.store, now=target.stat().st_mtime+DAY_SECONDS+3)
+        self.assertTrue(result["created"])
+        self.assertIn("corrupt", result["warning"])
+        self.assertEqual(result["removed"], 0)
+
     def test_retention_never_deletes_manual_backups(self):
         """中文：保留 7 份自动备份，手动备份永不删除。English: Auto-only pruning."""
         self.store.save(make_workspace())
