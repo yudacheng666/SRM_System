@@ -98,9 +98,14 @@ def create(store: SnapshotStore, output: Path) -> dict:
             raise StoreError("BACKUP_PDF_SIZE_MISMATCH")
         manifest = {"format":FORMAT, "version":VERSION, "database":{"path":"database/srm.sqlite3","size":dbcopy.stat().st_size,"sha256":_hash(dbcopy)},
                     "assets":files, "assetLinks":records}
+        # 中文：写 ZIP 之前预估大小，避免异常附件过多耗尽硬盘。
+        # English: Bound archive output before writing it to prevent disk exhaustion.
+        manifest_bytes = json.dumps(manifest, ensure_ascii=False, separators=(",",":")).encode("utf-8")
+        if len(manifest_bytes) > MAX_MANIFEST or dbcopy.stat().st_size + sum(f["size"] for f in files) + len(manifest_bytes) + 1024 * (len(files)+2) > MAX_ARCHIVE:
+            raise StoreError("BACKUP_SIZE_LIMIT")
         part = Path(temporary) / "bundle.partial"
         with zipfile.ZipFile(part, "w", compression=zipfile.ZIP_STORED, allowZip64=False) as archive:
-            archive.writestr("manifest.json", json.dumps(manifest, ensure_ascii=False, separators=(",",":")).encode("utf-8"))
+            archive.writestr("manifest.json", manifest_bytes)
             archive.write(dbcopy, "database/srm.sqlite3")
             for item in files:
                 sha = item["sha256"]
