@@ -17,6 +17,7 @@ from urllib.parse import parse_qs, unquote, urlsplit
 from store import RevisionConflict, SnapshotStore, StoreError
 from assets import AssetStore, MAX_PDF_BYTES
 from backup_bundle import ARCHIVE_NAME, MAX_ARCHIVE, create as create_full_backup, restore as restore_full_backup
+from auto_backup import run_if_due
 
 # 中文：仅监听本机，不暴露到局域网。
 # English: Bind only to loopback; never expose the development backend to the LAN.
@@ -37,13 +38,13 @@ def user_data_dir() -> Path:
     return (Path(base) / "SRM-Lite" if base else Path.home() / ".srm-lite").resolve()
 
 
-def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PORT):
+def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PORT, operation_lock=None):
     """中文：隔离单个服务实例便于测试。English: Independent request handler per server."""
 
     assets = AssetStore(store)
     # 中文：备份和恢复期间阻止任何其他写入。
     # English: Serialize all local operations with backup and restore.
-    operation_lock = threading.RLock()
+    operation_lock = operation_lock or threading.RLock()
 
     class Handler(BaseHTTPRequestHandler):
         server_version = "SRM-Local-S3"
@@ -198,6 +199,10 @@ def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PO
                         name = unquote(self.headers.get("X-SRM-Filename", ""))
                         info = assets.write(asset_route[0], asset_route[1], name, self.rfile.read(int(raw_size)))
                         self._json(200, {"saved": True, "document": info})
+                        # 中文：标记附件变化，提醒后台做到期完整备份。
+                        # English: Wake the background backup after new asset data is committed.
+                        if hasattr(self.server, "backup_signal"):
+                            self.server.backup_signal.set()
                     except (ValueError, StoreError) as exc:
                         self._json(400, {"error": str(exc)})
                     return
@@ -216,6 +221,8 @@ def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PO
                     kwargs = {"expected_active": body.get("expectedActive")} if "expectedActive" in body else {}
                     revision = store.save(snapshot, expected_revision=expected, **kwargs)
                     self._json(200, {"saved": True, "workspaceId": wid, "revision": revision})
+                    if hasattr(self.server, "backup_signal"):
+                        self.server.backup_signal.set()
                 except RevisionConflict as exc:
                     self._json(409, {"error": "REVISION_CONFLICT", "message": str(exc)})
                 except (ValueError, StoreError, TypeError) as exc:
@@ -272,6 +279,8 @@ def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PO
                                     left -= len(block)
                             result = restore_full_backup(store, source)
                         self._json(200, result)
+                        if hasattr(self.server, "backup_signal"):
+                            self.server.backup_signal.set()
                     except StoreError as exc:
                         code = 409 if str(exc).startswith("RESTORE_TARGET_") else 400
                         self._json(code, {"error":"RESTORE_REJECTED","message":str(exc)})
@@ -303,8 +312,13 @@ def create_server(port: int = DEFAULT_PORT, data_dir: Path | None = None, root: 
     """中文：建立测试或正式本机实例。English: Construct a loopback HTTP server."""
     location = data_dir if data_dir is not None else user_data_dir()
     store = SnapshotStore(location / "srm.sqlite3")
-    server = ThreadingHTTPServer((HOST, port), make_handler(store, root, port))
+    lock = threading.RLock()
+    server = ThreadingHTTPServer((HOST, port), make_handler(store, root, port, lock))
     server.daemon_threads = True
+    # 中文：后台备份与业务读写使用同一把锁，保证快照一致。
+    # English: Background backup shares the request lock for consistent snapshots.
+    server.srm_store = store
+    server.srm_lock = lock
     return server
 
 
@@ -315,14 +329,38 @@ def main() -> None:
     print(f"SRM local prototype: {url}", flush=True)
     print("S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.", flush=True)
     print("SQLite API check: " + url + "storage-check", flush=True)
+    # 中文：到期且数据变更时自动做完整 ZIP 备份，只保留最近 7 份自动备份。
+    # English: Backup changed data at most daily and retain seven automatic ZIP files.
+    stop_backup = threading.Event()
+    server.backup_signal = threading.Event()
+    def backup_loop():
+        while not stop_backup.is_set():
+            server.backup_signal.wait(timeout=3600)
+            server.backup_signal.clear()
+            if stop_backup.is_set():
+                break
+            try:
+                with server.srm_lock:
+                    result = run_if_due(server.srm_store)
+                if result["created"]:
+                    print("S4 automatic full backup created: "+result["backup"]["fileName"], flush=True)
+            except Exception as exc:
+                # 中文：后台备份失败不会假装成功，也不会撤销已成功保存的询价。
+                # English: A backup failure is logged without undoing committed RFQ data.
+                print("WARNING: S4 automatic backup failed: "+str(exc), flush=True)
+    worker = threading.Thread(target=backup_loop, daemon=True)
+    worker.start()
+    server.backup_signal.set()
     # 中文：本机服务直接打开业务原型；关闭服务后数据仍保存在 SQLite。
-    # English: Open the app; the local SQLite database persists after service shutdown.
+    # English: Launch the UI; SQLite persists after shutdown.
     threading.Timer(0.8, lambda: webbrowser.open(url)).start()
     try:
         server.serve_forever(poll_interval=0.2)
     except KeyboardInterrupt:
         print("Stopping SRM local server.")
     finally:
+        stop_backup.set()
+        server.backup_signal.set()
         server.server_close()
 
 
