@@ -1,0 +1,210 @@
+{
+  "config": {
+    "configFile": "/workspace/SRM_System/playwright.config.cjs",
+    "rootDir": "/workspace/SRM_System/prototype/m1-lite/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/SRM_System/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/SRM_System/prototype/m1-lite/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "acceptance.spec.cjs",
+      "file": "acceptance.spec.cjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "01 startup, demo isolation, autosave, navigation and restart / 启动与隔离",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21150,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-14T06:00:11.106Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "startup",
+                      "contentType": "image/png",
+                      "path": "/workspace/SRM_System/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/attachments/startup-4316fdfdca0f0d23b51fad6cc37ded96dbe76dd1.png"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/workspace/SRM_System/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/attachments/server-log-6e473308895ab8284dfd4c0e927f59ca41dcfd3d.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/SRM_System/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-b08ff03a3a81c6a1a501",
+          "file": "acceptance.spec.cjs",
+          "line": 119,
+          "column": 1
+        },
+        {
+          "title": "05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18652,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    },
+                    {
+                      "buffer": ""
+                    },
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-14T06:00:34.268Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "pdf-preview",
+                      "contentType": "image/png",
+                      "path": "/workspace/SRM_System/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/pdf-preview-dbc292a89814cc23323c188710e54581fc4f387f.png"
+                    },
+                    {
+                      "name": "SUP-A.zip",
+                      "contentType": "application/zip",
+                      "path": "/workspace/SRM_System/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/SUP-A-zip-436673622d022dfd5e41ea5545056eb2bfecd24e.zip"
+                    },
+                    {
+                      "name": "SUP-B.zip",
+                      "contentType": "application/zip",
+                      "path": "/workspace/SRM_System/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/SUP-B-zip-677396c5b0db012b578c99b722f8670215010812.zip"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/workspace/SRM_System/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/server-log-51058259e21934f09232354ea475a5acca361f7c.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/SRM_System/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-c1656022b669a384566f",
+          "file": "acceptance.spec.cjs",
+          "line": 210,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T06:00:05.976Z",
+    "duration": 48309.791,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -5,6 +5,10 @@ on:
   push:
     branches:
       - draft/20261013-m1-storage-ui-audit
+      - test/20261014-issue3-playwright
+  pull_request:
+    branches:
+      - draft/20261013-m1-storage-ui-audit
   workflow_dispatch:
 
 permissions:
@@ -37,3 +41,31 @@ jobs:
           if ($script | Where-Object { $_ -ge 128 }) { throw "Launcher contains non-ASCII bytes" }
           $bat = [System.Text.Encoding]::ASCII.GetString($script)
           if (-not $bat.Contains('%~dp0backend\server.py')) { throw "Launcher lost relative server path" }
+
+  browser:
+    name: Synthetic Chromium acceptance on Linux
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: python -m unittest discover -v -s prototype/m1-lite/backend -p "test_*.py"
+      - run: npm test
+      - run: npm run test:e2e
+      - name: Retain synthetic browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: srm-playwright-evidence
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14

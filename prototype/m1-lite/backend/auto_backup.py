@@ -2,12 +2,14 @@
 from __future__ import annotations
 
 import secrets
+import json
+import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 from time import time
 from typing import Any
 
-from backup_bundle import create
+from backup_bundle import create, MAX_MANIFEST
 from store import SnapshotStore, StoreError
 
 DAY_SECONDS = 24 * 60 * 60
@@ -32,7 +34,18 @@ def run_if_due(store: SnapshotStore, *, now: float | None = None,
             return {"created": False, "reason": "NOT_DUE", "nextAfter": newest + minimum_interval}
         changed_at = datetime.fromisoformat(latest[0]).astimezone(timezone.utc).timestamp()
         if changed_at <= newest:
-            return {"created": False, "reason": "UNCHANGED"}
+            # 中文：PDF 登记独立于业务快照；仅检查询价时间会漏掉已落盘原件。
+            # English: Asset registration is independent of workspace timestamps.
+            with store._connect() as db:
+                links = [{"workspaceId": wid, "sha256": sha, "name": name, "size": size}
+                         for wid, sha, name, size in db.execute(
+                             "SELECT workspace_id,sha256,original_name,size FROM assets ORDER BY workspace_id,sha256")]
+            with zipfile.ZipFile(existing[0]) as archive:
+                if archive.getinfo("manifest.json").file_size > MAX_MANIFEST:
+                    raise StoreError("BACKUP_MANIFEST_TOO_LARGE")
+                previous = json.loads(archive.read("manifest.json"))
+            if links == previous["assetLinks"]:
+                return {"created": False, "reason": "UNCHANGED"}
     stamp = datetime.fromtimestamp(moment).strftime("%Y%m%d_%H%M%S")
     target = folder / f"SRM_FULL_{stamp}_{secrets.token_hex(4)}.zip"
     # 中文：只有完整创建及检验成功后才执行保留清理。

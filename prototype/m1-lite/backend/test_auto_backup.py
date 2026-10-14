@@ -1,5 +1,6 @@
 """中文：自动备份节流、变更检测及保留七份测试。English: Automatic backup policy regression."""
 import os
+import hashlib
 import tempfile
 import time
 import unittest
@@ -7,6 +8,7 @@ import zipfile
 from pathlib import Path
 
 from auto_backup import DAY_SECONDS, run_if_due
+from assets import AssetStore
 from store import SnapshotStore
 from test_store import make_workspace
 
@@ -19,6 +21,9 @@ class AutoBackupPolicyTests(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
         self.store = SnapshotStore(self.root / "srm.sqlite3")
+        # 中文：与真实服务器一致，初始化完整备份所需附件表。
+        # English: Initialize the asset schema exactly as the real server does.
+        AssetStore(self.store)
 
     def test_no_workspace_does_not_create_backup(self):
         """中文：无询价不产生空备份。English: No empty archive loops."""
@@ -52,6 +57,23 @@ class AutoBackupPolicyTests(unittest.TestCase):
         saved = run_if_due(self.store)
         self.assertTrue(saved["created"])
         self.assertEqual(len(list(auto.glob("*.zip"))),2)
+
+    def test_pdf_upload_without_workspace_save_is_a_change(self):
+        """中文：附件落盘后尚未保存关联，也必须进入到期完整备份。
+        English: Persisted PDF uploads count as changes before a workspace save.
+        """
+        ws = make_workspace()
+        self.store.save(ws)
+        first = run_if_due(self.store)
+        folder = self.root / "backups" / "auto"
+        newest = next(folder.glob("*.zip")).stat().st_mtime
+        raw = b"%PDF-1.4\nsynthetic backup regression\n%%EOF"
+        sha = hashlib.sha256(raw).hexdigest()
+        AssetStore(self.store).write(ws["workspaceId"], sha, "synthetic.pdf", raw)
+        self.assertEqual(run_if_due(self.store, now=newest+1)["reason"], "NOT_DUE")
+        result = run_if_due(self.store, now=newest+DAY_SECONDS+1)
+        self.assertTrue(result["created"])
+        self.assertEqual(result["backup"]["pdfCount"], 1)
 
     def test_retention_never_deletes_manual_backups(self):
         """中文：保留 7 份自动备份，手动备份永不删除。English: Auto-only pruning."""

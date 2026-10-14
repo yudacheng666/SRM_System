@@ -1,0 +1,34 @@
+
+> srm_system@1.0.0 test:e2e
+> playwright test
+
+
+Running 8 tests using 1 worker
+
+(node:4763) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4763) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ✓  1 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:119:1 › 01 startup, demo isolation, autosave, navigation and restart / 启动与隔离 (26.4s)
+
+  ✓  2 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:137:1 › 02 XLSX 12/100, duplicates and invalid format / 物料 (13.3s)
+
+  ✓  3 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:150:1 › 03 suppliers and bidirectional additive allocation / 供应商与分配 (12.6s)
+
+  ✓  4 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:164:1 › 04 real quote imports, rounds, tiers, immutable confirmation and comparison XLSX / 报价比价 (16.0s)
+
+  ✓  5 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:209:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 (14.2s)
+
+  ✓  6 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:235:1 › 06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复 (22.6s)
+
+  ✓  7 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:261:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 (25.4s)
+
+  ✓  8 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:277:1 › 08 bad PDF and damaged ZIP never contaminate saved data / 异常回归 (10.3s)
+
+  8 passed (2.5m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
