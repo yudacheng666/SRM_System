@@ -668,25 +668,39 @@ function scoped(ws,supplierId){
  }
  return{items,docs:[...uniq.values()],missing,pending};
 }
+/* 中文：供应商外发文件必须保留 PDF 原始文件名，并拒绝不安全名称及文件名冲突。
+ * English: Keep original PDF names in supplier packages; reject unsafe/colliding names. */
+function supplierPdfName(raw){
+ if(typeof raw!=="string"||!raw||raw!==raw.trim()||!/\.pdf$/i.test(raw)||
+    raw.includes("/")||raw.includes("\\")||raw.includes("..")||
+    /[\x00-\x1f\x7f<>:"|?*]/.test(raw)||
+    /[. ]$/.test(raw)||new TextEncoder().encode(raw).length>240)
+  fail("原始 PDF 文件名不适合外发打包："+String(raw)+"。请先核对并规范文件名，不会自动改名或覆盖");
+ return raw;
+}
 async function packageFor(ws,supplierId,excel,name){
- const scope=scoped(ws,supplierId),entries=[{name,blob:excel}];
- const manifest={format:"srm-supplier-drawing-manifest",version:1,workspaceId:ws.workspaceId,
-  supplierId,items:scope.items.map(it=>({lineId:it.lineId,itemCode:it.id,
-   drawingStatus:it.drawingStatus||"required",
-   drawings:it.drawingStatus==="pending"?[]:docsForItem(it).map(d=>({sha256:d.sha256,name:d.name,revision:d.revision}))})),
-  missingLineIds:scope.missing,pendingRevisionLineIds:scope.pending,documents:[]};
- let n=0;
+ // 中文：内部归档 ZIP 保留索引；供应商外发包仅包含询价 Excel 与对应 PDF。
+ // English: Internal backup keeps its audit index; supplier-facing ZIP contains XLSX and PDFs only.
+ const scope=scoped(ws,supplierId),entries=[{name,blob:excel}],names=new Map();
  for(const doc of scope.docs){
+  const original=supplierPdfName(doc.name);
+  // 中文：Windows 文件名大小写不敏感；NFKC 规范化避免视觉相同的名称混淆。
+  // English: Reject case-insensitive/Unicode-equivalent filename collisions within one supplier package.
+  const normalized=original.normalize("NFKC").toLocaleLowerCase("en-US");
+  const former=names.get(normalized);
+  if(former&&former.sha256!==doc.sha256)
+   fail("供应商 "+supplierId+" 的两份不同图纸存在同名冲突："+former.name+" / "+original+
+        "。请先核对原始文件名，不会自动改名，也不会覆盖任何文件");
+  if(former)continue;
+  names.set(normalized,{sha256:doc.sha256,name:original});
   const blob=await get(ws.workspaceId,doc.sha256);
-  if(!blob)fail("图纸原件缺失："+doc.name+"，请重新导入或恢复完整资料包");
-  if(await digest(await blob.arrayBuffer())!==doc.sha256)fail("图纸校验值不符："+doc.name);
-  const filename="PDF_"+String(++n).padStart(3,"0")+"_"+doc.sha256.slice(0,12)+".pdf";
-  entries.push({name:filename,blob});
-  manifest.documents.push({...doc,file:filename});
+  if(!blob)fail("图纸原件缺失："+original+"，请重新导入或恢复资料");
+  if(await digest(await blob.arrayBuffer())!==doc.sha256)
+   fail("图纸校验值不符："+original);
+  entries.push({name:original,blob});
  }
- entries.push({name:"图纸关联清单.json",blob:new Blob([JSON.stringify(manifest,null,2)],{type:"application/json"})});
  const zipped=await root.SRMZip.create(entries);
- return{zip:zipped,missing:scope.missing,pending:scope.pending,docCount:scope.docs.length,manifest};
+ return{zip:zipped,missing:scope.missing,pending:scope.pending,docCount:entries.length-1};
 }
 async function completeBackup(workspaces){
  const json=root.M1Backup.createAll(workspaces);
