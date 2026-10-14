@@ -305,3 +305,27 @@ test('08 bad PDF and damaged ZIP never contaminate saved data / 异常回归', a
     await expect(other.locator('#pilotSaveStatus')).toContainText('未成功');expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toHaveLength(0);
   } finally {await other.close();}
 });
+
+test('09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台操作', async ({page})=>{
+  // 中文：确认四步导航与管理入口均实际可点，导航本身不能增加业务修订。
+  // English: Validate real buyer navigation and drawers without altering business revisions.
+  await expect(page.locator('.ui-workNav .tab')).toHaveCount(4);
+  await expect(page.locator('#uiCurrentRfq')).toContainText('演示');
+  await expect(page.locator('#uiDataTools')).not.toHaveAttribute('open', '');
+  await fresh(page);
+  const initial=(await snapshot(page)).revision;
+  await expect(page.locator('#uiCurrentRfq')).toContainText('RFQ-');
+  await page.locator('#uiFieldSettings').click();
+  await expect(page.locator('#settings')).toBeVisible();
+  await tab(page,'assign');
+  await expect(page.locator('#uiOpenSupplierTools')).toBeVisible();
+  await page.locator('#uiOpenSupplierTools').click();
+  await expect(page.locator('#uiSupplierTools')).toHaveAttribute('open', '');
+  await tab(page,'items');
+  await expect(page.locator('#pilotDrawingPanel')).toBeVisible();
+  await page.locator('#uiAdminToggle').click();
+  await expect(page.locator('#uiDataTools')).toHaveAttribute('open', '');
+  await page.locator('#uiProjectJump').click();
+  await page.waitForTimeout(5000);
+  expect((await snapshot(page)).revision).toBe(initial);
+});
