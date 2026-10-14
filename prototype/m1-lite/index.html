@@ -135,6 +135,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
   <div id="pilotReportHint" role="status" class="small muted" style="margin-top:8px"></div>
  </div>
  <div id="pilotSaveStatus" class="small muted" role="status" aria-live="polite">正在检测本机存储能力……</div>
+ <div id="pilotAutosaveStatus" class="small muted" role="status" aria-live="polite">自动保存：正在初始化……</div>
  <div class="small muted" style="margin-top:6px">必须先保存到本机，再下载 JSON 文件备份；文件不含原始邮件、PDF 等附件。已有正式工作不允许被导入文件覆盖。</div>
 </div></div>
 
@@ -3286,6 +3287,7 @@ renderItemList();renderAssignAll();renderQuotes();
 {
   const model=window.M1WorkspaceCore,backup=window.M1Backup;
   const pilotStatus=document.getElementById("pilotSaveStatus");
+  const autosaveStatus=document.getElementById("pilotAutosaveStatus");
   const newBtn=document.getElementById("pilotNewWorkspace");
   const saveBtn=document.getElementById("pilotSaveWorkspace");
   const resumeBtn=document.getElementById("pilotResumeWorkspace");
@@ -3310,6 +3312,26 @@ renderItemList();renderAssignAll();renderQuotes();
   const rfqHead=document.getElementById("pilotRfqHead");
   let buyerMode=false,workspaceId=null,revision=0,busy=false,dirty=false,localReady=false,blocked=false;
   let serverActiveId=null,s4Available=false;
+  // 中文：仅真实业务快照差异会触发自动保存；忽略搜索、筛选和导航。
+  // English: Only actual persisted business-state changes trigger autosave.
+  const AUTOSAVE_POLL_MS=750,AUTOSAVE_IDLE_MS=2500;
+  let savedSignature=null,lastObservedSignature=null,lastChangeAt=0,autosaveHalted=false;
+  function signature(){
+    // 中文：忽略修订版号，避免保存后的版本递增触发循环保存。
+    // English: Exclude revision number so commit increments cannot cause infinite saves.
+    return JSON.stringify(readState().state);
+  }
+  function autosaveLabel(message,isError=false){
+    autosaveStatus.textContent="自动保存："+message;
+    autosaveStatus.className=isError?"small dangertext":"small muted";
+  }
+  function resetAutosaveBaseline(){
+    savedSignature=signature();
+    lastObservedSignature=savedSignature;
+    lastChangeAt=Date.now();
+    autosaveHalted=false;
+    autosaveLabel("已同步第 "+revision+" 版；无待保存修改");
+  }
 
   function status(message,isError=false){
     pilotStatus.textContent=message;
@@ -3325,9 +3347,11 @@ renderItemList();renderAssignAll();renderQuotes();
     return data;
   }
   const jsonRequest=(method,body)=>({method,headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
-  async function readSaved(){
+  async function readSaved(captureActive=false){
     const result=await api("/api/active");
-    serverActiveId=result.activeId||null;
+    // 中文：只在初始加载/显式恢复时更新期望活动询价；其他读取不得掩盖多窗口冲突。
+    // English: Report/export reads must not rewrite the optimistic active-RFQ token.
+    if(captureActive)serverActiveId=result.activeId||null;
     return result.workspace||null;
   }
   async function readArchived(){
@@ -3365,12 +3389,12 @@ renderItemList();renderAssignAll();renderQuotes();
     newBtn.textContent=buyerMode?"新建另一笔空白询价":"新建空白正式工作";
     rfqHead.textContent=buyerMode?workspaceId:"RFQ-DEMO-001";
     document.getElementById("pilotSubtitle").textContent=buyerMode?
-      "S4 本机原型：询价数据保存在电脑 SQLite；仍需手动保存，可下载完整备份。":
+      "S4 自动保存候选：停止编辑约 3 秒后写入 SQLite；仍可手动保存和完整备份。":
       "S4 本机原型：演示数据不保存；新建正式询价后可以写入 SQLite";
     document.getElementById("pilotNotice").textContent=buyerMode?
-      "业务数据通过本机 SQLite API 保存；仍需手动保存。S4 支持完整 SQLite+PDF 备份，并仅允许恢复至空白目录。":
+      "数据修改后等待短暂空闲会自动保存到 SQLite；手动保存仍可用。S4 完整 ZIP 仅允许恢复至空白目录。":
       "使用 run_local.bat 启动后，可新建正式询价并保存到本机 SQLite。原测试 JSON/ZIP 不迁移。";
-    document.getElementById("pilotFooter").textContent="S4：SQLite + PDF 完整 ZIP 可恢复到空白目录；仍需手动保存，报价原始邮件和截图尚未纳入。";
+    document.getElementById("pilotFooter").textContent="S4：自动保存 + 完整 SQLite/PDF ZIP；恢复只允许空白目录，报价邮件和截图尚未纳入。";
     document.getElementById("demoExcelImport").disabled=buyerMode;
     document.getElementById("demoQuoteExcel").disabled=buyerMode;
     document.getElementById("demoMatchUpdate").disabled=buyerMode;
@@ -3427,21 +3451,23 @@ renderItemList();renderAssignAll();renderQuotes();
     lineSeq=s.lineSeq;createdSeq=s.createdSeq;quoteComparisonMode="returned";
     workspaceId=data.workspaceId;revision=data.revision;buyerMode=true;dirty=false;
     buttons();resetUI();window.SRMDrawUI?.refresh();dirty=false;
+    resetAutosaveBaseline();
   }
   function beginBuyer(){
     if(!localReady||busy||blocked)return;
     if(buyerMode&&dirty&&!confirm("当前询价尚有未保存修改，新建将放弃这些修改。继续？"))return;
     if(buyerMode&&!dirty&&!confirm("新建一笔空白询价？原来已保存的数据仍保存在 SQLite。"))return;
     const fresh=model.createEmptyWorkspace("RFQ-"+Date.now()+"-"+Math.random().toString(36).slice(2,8).toUpperCase());
-    applyWorkspace(fresh);dirty=true;buttons();
-    status("新询价已建立在页面内；点击“保存到本机”创建 SQLite 记录后再上传图纸。");
+    applyWorkspace(fresh);dirty=true;lastChangeAt=Date.now();buttons();
+    autosaveLabel("新询价尚未保存，将在操作空闲后自动创建；图纸上传前仍需完成首次保存");
+    status("新询价已建立；空闲约 3 秒会自动写入 SQLite，也可以立即点击“保存到本机”。");
   }
   async function recover(){
     if(busy||!localReady)return;
     if(buyerMode&&dirty&&!confirm("重新读取已保存询价会放弃当前未保存修改。继续？"))return;
     busy=true;buttons();
     try{
-      const saved=await readSaved();
+      const saved=await readSaved(true);
       if(!saved){status("当前没有已保存的询价记录。");return}
       model.validate(saved);applyWorkspace(saved);
       status("已从 SQLite 恢复："+workspaceId+"（第 "+revision+" 版）。");
@@ -3466,24 +3492,77 @@ renderItemList();renderAssignAll();renderQuotes();
   }
   function noteDrawingChange(){
     if(!buyerMode||busy)throw Error("当前无法修改图纸关联");
-    dirty=true;status("图纸关联已修改；请点击“保存到本机”提交到 SQLite。");buttons();
+    dirty=true;lastChangeAt=Date.now();autosaveLabel("图纸关联有未保存修改");buttons();
+    status("图纸关联已修改；将自动保存，也可立即点击“保存到本机”。");
   }
-  async function save(){
-    if(!buyerMode||busy||!localReady)return false;
-    busy=true;buttons();status("正在将业务数据写入 SQLite……");
+  async function save(automatic=false){
+    if(!buyerMode||busy||!localReady||blocked)return false;
+    // 中文：自动保存因真实业务变化触发；手工保存仍可强制创建新工作区。
+    // English: Autosave only commits real changes; explicit Save remains supported.
+    if(automatic&&(autosaveHalted||revision>0&&signature()===savedSignature))return false;
+    busy=true;buttons();
+    autosaveLabel("正在"+(automatic?"自动":"手动")+"保存……");
     try{
-      const current=readState();
+      const current=readState(),captured=JSON.stringify(current.state);
       const next={...current,revision:revision+1};
       model.validate(next);
       const result=await api("/api/workspaces/"+encodeURIComponent(workspaceId),
         jsonRequest("PUT",{workspace:next,expectedRevision:revision||null,expectedActive:serverActiveId}));
-      revision=result.revision;serverActiveId=workspaceId;dirty=false;
-      await refreshHistory();
-      status("SQLite 已保存："+workspaceId+"（第 "+revision+" 版）。");
+      revision=result.revision;serverActiveId=workspaceId;
+      // 中文：提交时截图的状态才算已保存；网络请求期间的新输入仍保持待保存。
+      // English: Only the captured snapshot is committed; edits during HTTP remain pending.
+      savedSignature=captured;autosaveHalted=false;
+      const actual=signature();
+      dirty=actual!==savedSignature;
+      lastObservedSignature=actual;
+      if(dirty)lastChangeAt=Date.now();
+      try{await refreshHistory()}catch(e){
+        // 中文：索引刷新失败不撤销已经成功写入的 SQLite 数据。
+        // English: History-index refresh errors cannot invalidate a committed save.
+        status("SQLite 保存成功，但历史列表刷新失败："+e.message,true);
+      }
+      autosaveLabel(dirty?"保存第 "+revision+" 版成功，仍有新修改等待保存":
+        "已"+(automatic?"自动":"手动")+"保存第 "+revision+" 版（"+new Date().toLocaleTimeString()+"）");
+      if(!dirty)status("SQLite "+(automatic?"自动":"手动")+"保存成功："+workspaceId+"（第 "+revision+" 版）。");
       return true;
-    }catch(e){dirty=true;status("未保存成功，请不要关闭页面："+e.message,true);return false}
-    finally{busy=false;buttons()}
+    }catch(e){
+      dirty=true;autosaveHalted=true;
+      autosaveLabel("保存失败，已停止自动重试；请检查并手动保存。"+e.message,true);
+      status("未保存成功，请不要关闭页面："+e.message,true);
+      return false;
+    }finally{busy=false;buttons()}
   }
+  function pollAutosave(){
+    if(!localReady||!buyerMode||blocked||busy)return;
+    try{
+      const observed=signature();
+      const changed=revision===0||observed!==savedSignature;
+      if(!changed){
+        if(dirty){dirty=false;buttons()}
+        lastObservedSignature=observed;
+        return;
+      }
+      if(observed!==lastObservedSignature){
+        lastObservedSignature=observed;
+        lastChangeAt=Date.now();
+        if(!autosaveHalted)autosaveLabel("检测到业务数据修改，等待操作结束");
+      }
+      if(!dirty){dirty=true;buttons()}
+      if(autosaveHalted)return;
+      if(Date.now()-lastChangeAt>=AUTOSAVE_IDLE_MS)void save(true);
+    }catch(e){
+      // 中文：临时输入不完整时不得写入错误快照。
+      // English: Incomplete in-progress edits never commit an invalid snapshot.
+      dirty=true;buttons();
+      autosaveLabel("当前修改尚未满足保存校验："+e.message,true);
+    }
+  }
+  setInterval(pollAutosave,AUTOSAVE_POLL_MS);
+  window.addEventListener("beforeunload",event=>{
+    if(!buyerMode||!dirty&&!busy)return;
+    event.preventDefault();
+    event.returnValue="";
+  });
 
   function addSupplier(){
     if(!buyerMode)return;
@@ -3494,7 +3573,7 @@ renderItemList();renderAssignAll();renderQuotes();
     suppliers.push({id:code,counterpartyCode:cp,supplierCode:code,name,roles:["supplier"],reason:"本次手工添加"});
     rfqSupplierPool.add(code);
     erpCounterparty.value=erpSupplier.value=erpSupplierName.value="";
-    dirty=true;status("已添加供应商："+name+"；尚未保存到本机。");
+    dirty=true;status("已添加供应商："+name+"；正在等待自动保存，也可手动保存。");
     quoteSupplierOptions();renderAssignAll();renderQuotes();
   }
   // 中文：供应商 Excel 先在预览中完整校验，再一次性写入本次候选供应商。
@@ -3516,7 +3595,7 @@ renderItemList();renderAssignAll();renderQuotes();
     fresh.forEach(s=>rfqSupplierPool.add(s.id));
     dirty=true;
     quoteSupplierOptions();renderAssignAll();renderQuotes();
-    status("已导入 "+fresh.length+" 家供应商，尚未保存到本机。");
+    status("已导入 "+fresh.length+" 家供应商，正在等待自动保存。");
     return fresh.length;
   }
   async function exportBusinessExcel(){
@@ -3564,11 +3643,11 @@ renderItemList();renderAssignAll();renderQuotes();
     // English: Programmatic download clicks must not mark a saved workspace dirty.
     // English: Dirty indicator errs on the safe side; UI events do not automatically persist.
     if(e.target.closest("#pilotControls,#pilotDrawingPanel,#drawingModal,#pilotReportPanel,#rfqPreviewModal,.tabs,[data-drawing]"))return;
-    dirty=true;status("工作内容可能有未保存修改，请完成操作后点击“保存到本机”。");
+    dirty=true;status("工作内容可能有未保存修改；系统只对实际业务变化自动保存。");
   },true);
   document.addEventListener("input",e=>{
     if(!buyerMode||busy||e.target.closest("#pilotControls"))return;
-    dirty=true;status("有未保存的输入；请完成操作后点击“保存到本机”。");
+    dirty=true;status("输入中，业务数据将在停止修改后自动保存。");
   },true);
 
 
@@ -3655,7 +3734,7 @@ renderItemList();renderAssignAll();renderQuotes();
   exportCompleteBtn.addEventListener("click",exportComplete);
   document.getElementById("pilotExportExcel").addEventListener("click",exportBusinessExcel);
   newBtn.addEventListener("click",beginBuyer);
-  saveBtn.addEventListener("click",save);
+  saveBtn.addEventListener("click",()=>void save(false));
   resumeBtn.addEventListener("click",recover);
   historyPicker.addEventListener("change",buttons);
   historyBtn.addEventListener("click",switchArchived);
@@ -3670,7 +3749,7 @@ renderItemList();renderAssignAll();renderQuotes();
         throw Error("当前本机服务不是 SQLite 版本");
       s4Available=health.stage==="S4"&&health.features?.fullBackupRestore===true;
       localReady=true;
-      const saved=await readSaved();
+      const saved=await readSaved(true);
       if(saved){model.validate(saved);applyWorkspace(saved);status("已从 SQLite 自动恢复："+workspaceId+"（第 "+revision+" 版）。")}
       else status("SQLite 当前为空；点击“新建空白正式工作”开始使用。旧浏览器测试数据不迁移。");
       await refreshHistory();
