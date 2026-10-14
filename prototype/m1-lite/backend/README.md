@@ -191,3 +191,43 @@ node --test tests/supplier_package.test.cjs
 - Python unit and HTTP tests use temporary directories and do not access the user's default data.
 - 在 GitHub Actions 成功运行前，不应宣称 CI 已通过；Windows 上的完整业务恢复仍需独立人工验收。
 - Do not claim CI passed without a successful workflow run; Windows business recovery still requires independent buyer acceptance.
+
+## S4 自动保存及定期完整备份候选（2026-10-14） / S4 Autosave and Scheduled Full-Backup Candidate
+
+- 当前版本新增自动保存：进入正式询价后检测真实业务状态变化，停止修改至少约 2.5 秒后自动写入 SQLite；扫描间隔约 0.75 秒。
+- The current version autosaves real buyer-state changes after approximately 2.5 seconds of idle time, scanning about every 0.75 seconds.
+- 不会因为搜索、切换列表或浏览页面产生相同内容的无效历史版本；新建的空白正式询价也会尝试首次自动提交。
+- Searches, browsing or no-op navigation do not create duplicate state revisions; a new empty buyer RFQ gets its first automatic commit.
+- 保留“保存到本机”按钮；已确认报价不得被改写，使用已有版本冲突检查。
+- The explicit Save button remains available; existing immutable confirmed rounds and optimistic revision checks remain in force.
+- 页面显示“检测到修改 / 自动保存中 / 第 N 版已保存 / 保存失败”等状态；失败后停止自动重试，需用户检查并手动保存。
+- The UI distinguishes dirty, saving, saved revision and failed states; failed autosave stops retrying until the user intervenes.
+- 页面离开时如有未保存业务修改，将触发浏览器支持范围内的离开确认；不能保证断电前未提交的输入被保存。
+- Uncommitted changes trigger a browser-supported navigation warning; power loss before a commit cannot be prevented.
+- **自动保存仅覆盖已经提交到业务状态的数据**。尚未点击“确认导入”“确认修改”等按钮的文本框或预览输入仍需用户完成确认。
+- **Autosave covers committed in-memory business state only**. Pending input forms and import previews still require their normal Confirm/Apply step.
+- 后台自动完整备份默认开通：程序启动、业务保存或图纸上传后检查备份是否到期；服务持续运行时每小时检查一次。
+- Background full backups are enabled in the normal app server: due checks happen at startup, after saved work/PDF upload and hourly while running.
+- 首次存在已保存询价时创建备份；此后数据有变动且距离上次自动备份至少 24 小时才再生成。
+- The first existing saved RFQ triggers a complete backup; afterward, another backup requires both a data change and a 24-hour interval.
+- 自动备份保留最近 **7** 份，不清理用户手动创建的 ZIP；备份保存在 \`%LOCALAPPDATA%\SRM-Lite\backups\auto\`。
+- Keep the newest **seven automatic** archives; manually created ZIPs are untouched. Automatic copies reside under \`%LOCALAPPDATA%\SRM-Lite\backups\auto\`.
+- 每份自动备份使用与手动 S4 完整备份相同的 SHA-256 校验和数据库一致性校验；出现错误时会在 CMD 输出 WARNING，不会谎称备份成功。
+- Automatic backups use the same SQLite and PDF integrity checks as manual full ZIPs; failures are logged as WARNING, not reported as success.
+- 页面显示最近自动备份时间和保留份数；若没有生成，不应理解为已有自动备份。
+- The UI shows the last automatic-backup time and retained-copy count; a missing timestamp means no automatic backup has completed.
+- 以上为开发候选功能，Windows 真实业务与长期运行仍需验收，不能当作无需人工检查的最终数据保护措施。
+- These are development-candidate controls requiring real Windows and long-running tests, not a substitute for independent verified backups.
+
+### 新增数据安全测试 / Additional Safety Tests
+
+\`\`\`powershell
+cd prototype\m1-lite
+python -m unittest discover -v -s backend -p "test_*.py"
+node --test tests/autosave_rules.test.cjs tests/supplier_package.test.cjs
+\`\`\`
+
+- Python 测试包含自动备份节流、变化检测、七份保留及独立数据库完整恢复；Node 测试覆盖自动保存的空闲时间和错误停止规则。
+- Python tests cover backup cadence, change detection, seven-copy retention and isolated restore; Node tests cover autosave idle and failure-halt rules.
+- 自动备份元数据 API：\`GET /api/backups/auto/status\`（只读，返回份数与最近一次时间）。
+- Automatic-backup metadata API: \`GET /api/backups/auto/status\` (read-only, counts and most recent time).
