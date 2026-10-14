@@ -91,3 +91,31 @@ py -3 -m unittest -v test_store test_server
 - Tests cover SQLite durability, conflicts, confirmed quotes, active selection, HTTP origin restrictions, PDF disk persistence, and bad-checksum rejection.
 - 下一阶段将继续补齐本机 Windows 浏览器操作验收、自动保存、原始报价附件、完整备份恢复和统一 UI 设计。
 - Next tasks are Windows browser acceptance, autosave, original quote evidence, full backup/restore, and unified UI design.
+
+## S3 工程收尾更新（2026-10-14） / S3 Engineering Follow-up (2026-10-14)
+
+- Windows 启动脚本 `run_local.bat` 已改为纯 ASCII、按脚本位置解析完整 `backend\\server.py` 路径，并检测可用的 Python 3.10+；仍需 Windows 本机双击复测。
+- The Windows launcher is now ASCII-only, resolves the absolute backend path relative to itself and checks for usable Python 3.10+; a real Windows double-click retest remains pending.
+- 供应商外发 ZIP 只包含独立 Excel 与原文件名 PDF，不再含图纸关联 JSON；用户已实际复测通过。
+- Supplier-facing ZIP now contains scoped XLSX and original-name PDFs without a drawing JSON manifest; buyer retest passed.
+- 已新增临时数据库异常回归测试 `test_s3_regression.py`、供应商 ZIP 测试 `../tests/supplier_package.test.cjs` 及开发分支 Windows CI 流程。
+- Added temporary-database failure-path tests, supplier ZIP tests and a Windows CI workflow for the development branch.
+- 当前 SQLite 单独备份可执行数据库一致性检查，但**不包含原始 PDF**；页面的完整 ZIP 导出有校验和解包基础函数，**尚未实现回写 SQLite 及附件的经验证完整恢复流程**。
+- SQLite database backup is consistency-checked but **excludes original PDFs**. The browser ZIP exporter and validation helpers exist, but there is **no verified, atomic import restoring SQLite and attachments**.
+- 当前仍为手动保存；不承诺自动保存、系统级一键恢复或面向正式业务的可靠性。
+- Saving remains manual; neither autosave, one-click full restore nor production-grade reliability is claimed.
+
+### 新增测试运行方式 / Run Expanded Regression Suite
+
+```powershell
+cd prototype\m1-lite
+python -m unittest discover -v -s backend -p "test_*.py"
+node --test tests/supplier_package.test.cjs
+```
+
+- 运行 Python 测试需要 Python 3.10+；运行供应商 ZIP 测试需要 Node.js 20+，日常使用 SRM 不需要安装 Node.js。
+- Python tests require Python 3.10+; supplier ZIP tests require Node.js 20+, but daily SRM use does not require Node.js.
+- GitHub Actions 工作流文件：`.github/workflows/srm-s3-regression.yml`；只有出现成功的工作流记录才能算云端自动测试通过。
+- The GitHub Actions workflow lives at `.github/workflows/srm-s3-regression.yml`; cloud execution must be confirmed by a successful workflow run before claiming the CI passed.
+- 本机当前已打开的服务需先按 `Ctrl+C` 停止，替换 `run_local.bat` 后才能测试新脚本；修改源码不会清理 `%LOCALAPPDATA%\\SRM-Lite` 下的数据。
+- Stop the currently running server with `Ctrl+C`, replace `run_local.bat` and retest; source updates do not erase data under `%LOCALAPPDATA%\\SRM-Lite`.
