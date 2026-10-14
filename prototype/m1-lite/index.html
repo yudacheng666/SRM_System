@@ -3281,6 +3281,20 @@ renderItemList();renderAssignAll();renderQuotes();
 }
 
 /* END M1_LITE_DRAWING_BATCH_UI */
+/* BEGIN SRM_S4_AUTOSAVE_RULES */
+/* 中文：纯计算的自动保存规则，可通过 Node.js 回归测试。
+ * English: Pure autosave predicates, independently testable in Node.js. */
+(function(root){
+"use strict";
+const IDLE_MS=2500;
+function changed(revision,current,saved){return revision===0||current!==saved}
+function due({revision,current,saved,busy,blocked,halted,ready,editingAt,now}){
+ return !!ready&&!busy&&!blocked&&!halted&&
+   changed(revision,current,saved)&&now-editingAt>=IDLE_MS;
+}
+root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
+})(typeof window!=="undefined"?window:globalThis);
+/* END SRM_S4_AUTOSAVE_RULES */
 /* BEGIN M1_LITE_MANUAL_SAVE */
 /* 中文：S3 仅通过本机 HTTP API 保存询价数据，浏览器 IndexedDB 不再用于业务数据。
  * English: S3 uses only the loopback SQLite API for business persistence; no IndexedDB fallback. */
@@ -3314,7 +3328,7 @@ renderItemList();renderAssignAll();renderQuotes();
   let serverActiveId=null,s4Available=false;
   // 中文：仅真实业务快照差异会触发自动保存；忽略搜索、筛选和导航。
   // English: Only actual persisted business-state changes trigger autosave.
-  const AUTOSAVE_POLL_MS=750,AUTOSAVE_IDLE_MS=2500;
+  const AUTOSAVE_POLL_MS=750,AUTOSAVE_IDLE_MS=window.SRMAutosaveRules.IDLE_MS;
   let savedSignature=null,lastObservedSignature=null,lastChangeAt=0,autosaveHalted=false;
   function signature(){
     // 中文：忽略修订版号，避免保存后的版本递增触发循环保存。
@@ -3536,7 +3550,7 @@ renderItemList();renderAssignAll();renderQuotes();
     if(!localReady||!buyerMode||blocked||busy)return;
     try{
       const observed=signature();
-      const changed=revision===0||observed!==savedSignature;
+      const changed=window.SRMAutosaveRules.changed(revision,observed,savedSignature);
       if(!changed){
         if(dirty){dirty=false;buttons()}
         lastObservedSignature=observed;
@@ -3549,7 +3563,10 @@ renderItemList();renderAssignAll();renderQuotes();
       }
       if(!dirty){dirty=true;buttons()}
       if(autosaveHalted)return;
-      if(Date.now()-lastChangeAt>=AUTOSAVE_IDLE_MS)void save(true);
+      if(window.SRMAutosaveRules.due({
+        revision,current:observed,saved:savedSignature,busy,blocked,
+        halted:autosaveHalted,ready:localReady,editingAt:lastChangeAt,now:Date.now()
+      }))void save(true);
     }catch(e){
       // 中文：临时输入不完整时不得写入错误快照。
       // English: Incomplete in-progress edits never commit an invalid snapshot.
