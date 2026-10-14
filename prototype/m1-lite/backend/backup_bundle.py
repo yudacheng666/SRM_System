@@ -107,7 +107,7 @@ def create(store: SnapshotStore, output: Path) -> dict:
         if part.stat().st_size > MAX_ARCHIVE:
             raise StoreError("BACKUP_SIZE_LIMIT")
         os.replace(part, output)
-        return {"fileName":output.name, "workspaceCount":len({x["workspaceId"] for x in records}) or _workspace_count(dbcopy),
+        return {"fileName":output.name, "workspaceCount":_workspace_count(dbcopy),
                 "pdfCount":len(files), "assetLinks":len(records), "bytes":output.stat().st_size, "verified":True}
 
 
