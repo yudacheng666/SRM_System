@@ -139,6 +139,17 @@ def make_handler(store: SnapshotStore, root: Path = ROOT, port: int = DEFAULT_PO
                         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
                             self.wfile.write(chunk)
                     return
+                if path == "/api/backups/auto/status":
+                    # 中文：只返回自动备份元数据，不返回文件内容或绝对路径。
+                    # English: Expose backup metadata only, never local paths or ZIP content.
+                    folder = store.path.parent / "backups" / "auto"
+                    entries = sorted(folder.glob("SRM_FULL_*.zip"), key=lambda p: p.stat().st_mtime, reverse=True) if folder.exists() else []
+                    newest = entries[0] if entries else None
+                    self._json(200, {"enabled": hasattr(self.server,"backup_signal"),
+                                     "retained": len(entries),
+                                     "latestFile": newest.name if newest else None,
+                                     "latestAt": datetime.fromtimestamp(newest.stat().st_mtime).isoformat() if newest else None})
+                    return
                 if path == "/api/active":
                     self._json(200, {"workspace": store.active(), "activeId": store.active_id()})
                     return
