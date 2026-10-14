@@ -57,10 +57,11 @@ def _db_inventory(path: Path) -> list[dict]:
         revisions = db.execute("SELECT workspace_id,revision,snapshot_json FROM workspace_versions").fetchall()
         for wid, rev, source in revisions:
             state = json.loads(source)
-            if wid not in workspaces or state.get("workspaceId") != wid or state.get("revision") != rev:
+            if not isinstance(state, dict) or wid not in workspaces or state.get("workspaceId") != wid or state.get("revision") != rev:
                 raise StoreError("BACKUP_HISTORY_INVALID")
         for wid, source in db.execute("SELECT workspace_id,snapshot_json FROM workspaces"):
-            if json.loads(source).get("workspaceId") != wid:
+            snapshot = json.loads(source)
+            if not isinstance(snapshot, dict) or snapshot.get("workspaceId") != wid:
                 raise StoreError("BACKUP_WORKSPACE_INVALID")
         active = db.execute("SELECT value FROM app_state WHERE key='active_workspace'").fetchone()
         if active is not None and active[0] not in workspaces:
@@ -157,9 +158,11 @@ def restore(store: SnapshotStore, source: Path) -> dict:
             if info.file_size > MAX_MANIFEST:
                 raise StoreError("RESTORE_MANIFEST_TOO_LARGE")
             manifest = json.loads(archive.read("manifest.json"))
-            if manifest.get("format") != FORMAT or manifest.get("version") != VERSION:
+            if not isinstance(manifest, dict) or manifest.get("format") != FORMAT or manifest.get("version") != VERSION:
                 raise StoreError("RESTORE_FORMAT_UNSUPPORTED")
             database = manifest.get("database",{})
+            if not isinstance(database, dict):
+                raise StoreError("RESTORE_DATABASE_MANIFEST_INVALID")
             if database.get("path") != "database/srm.sqlite3" or not HASH.fullmatch(str(database.get("sha256",""))) or type(database.get("size")) is not int or not 0 < database["size"] <= MAX_DATABASE:
                 raise StoreError("RESTORE_DATABASE_MANIFEST_INVALID")
             files = manifest.get("assets")
