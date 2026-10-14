@@ -78,7 +78,9 @@ class SnapshotStoreTests(unittest.TestCase):
     def test_verified_backup(self):
         self.store.save(make_workspace())
         target = Path(self.tmp.name) / "backups" / "copy.sqlite3"
-        self.assertEqual(self.store.backup(target), target)
+        # 中文：Windows 临时目录可能使用 8.3 短名；备份 API 返回规范路径。
+        # English: Windows temp roots may use 8.3 aliases; the API returns a resolved path.
+        self.assertEqual(self.store.backup(target), target.resolve())
         self.assertEqual(SnapshotStore(target).get("RFQ-DEMO-001")["revision"], 1)
         with self.assertRaises(StoreError):
             self.store.backup(target)

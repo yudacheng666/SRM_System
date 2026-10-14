@@ -108,3 +108,6 @@ Python 38/38, Node 2/2 and the full Playwright suite 8/8 passed without skips/re
 
 推送后的远端检查确认 main 仍为 f330de510f97c552629052ff1841d7223194e7f8，draft 基线仍为 49d52084190bece75ae5a0ab90da722df5872f82。
 Remote checks after push confirm main remains f330de510f97c552629052ff1841d7223194e7f8 and the draft base remains 49d52084190bece75ae5a0ab90da722df5872f82.
+
+首次 push CI 的 Linux Chromium job 已通过；Windows job 在 test_verified_backup 因 8.3 短路径与规范路径比较误报失败。按 store.backup 既有返回规范修正为 target.resolve()，保持内容与防覆盖断言；Linux store 定向 6/6 通过，Windows 重跑以 PR 最新 CI 结果为准。详见 evidence 中 windows-path-defect.md。
+The initial push CI Linux Chromium job passed; the Windows job falsely failed test_verified_backup when comparing an 8.3 alias to a canonical path. Compare against target.resolve() to match the existing store.backup return contract, preserving content and no-overwrite checks; targeted Linux store tests pass 6/6, with Windows reruns tracked in the PR's latest CI. See windows-path-defect.md in evidence.
