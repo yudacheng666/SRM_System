@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SRM-Lite 本机手动保存候选版</title>
+<title>SRM-Lite · 采购询价工作台 UI V1</title>
 <style>
 :root{--bg:#f5f7fb;--panel:#fff;--line:#dfe4ec;--text:#1f2937;--muted:#6b7280;--primary:#2563eb;--soft:#eff6ff;--warn:#b45309;--danger:#b91c1c;--ok:#047857}
 *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
@@ -55,20 +55,70 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 .roundBadge{display:inline-block;padding:3px 7px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:11px}.roundBadge.draft{background:#fff7ed;color:#9a3412}.roundBadge.confirmed{background:#ecfdf5;color:#047857}.quoteImportGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}@media(max-width:980px){.quoteImportGrid{grid-template-columns:1fr}}
 .coverageMini{display:grid;grid-template-columns:repeat(7,minmax(110px,1fr));gap:8px;margin-top:10px}@media(max-width:1100px){.coverageMini{grid-template-columns:repeat(3,1fr)}}@media(max-width:650px){.coverageMini{grid-template-columns:repeat(2,1fr)}}.coverageMini .stat b{font-size:18px}.coverageDetails{margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff}
 .pdfControls{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:10px}.pdfMeta{font-size:11px;color:var(--muted);margin-top:2px}.pdfPage{border:1px solid var(--line);background:#fff;border-radius:8px;padding:12px;min-height:520px;display:flex;justify-content:center;align-items:center;overflow:auto}.pdfPage svg{max-width:100%;height:auto}.scopeList{max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:8px}.scopeRow{display:flex;gap:8px;align-items:center;padding:5px;border-bottom:1px solid #edf0f4}.analysisTable{width:100%;border-collapse:collapse;font-size:12px}.analysisTable th,.analysisTable td{padding:6px 8px;border-bottom:1px solid #edf0f4;text-align:right}.analysisTable th:first-child,.analysisTable td:first-child{text-align:left}
+
+/* 中文：UI-1 只调整业务操作入口与布局，不改业务状态、API 或保存逻辑。
+   English: UI-1 is a layout/navigation shell, not a persistence or business-rule change. */
+.ui-appHeader{align-items:center;gap:18px;flex-wrap:wrap;padding:8px 0 10px}
+.ui-brand{min-width:235px;flex:1}.ui-eyebrow{font-size:11px;font-weight:800;letter-spacing:.09em;color:#2563eb;text-transform:uppercase;margin-bottom:5px}
+.ui-appHeader h1{font-size:24px;margin:0 0 4px}
+.ui-headActions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ui-headActions .btn,.ui-headActions .tab{padding:9px 12px;font-size:13px}
+.ui-headActions .tab{margin:0}
+.ui-context{border:1px solid #dfe4ec;background:linear-gradient(110deg,#fff,#f8fbff);border-radius:13px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.ui-context b{font-size:15px}.ui-context small{color:var(--muted);font-size:12px}
+.ui-context .ui-contextRight{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.ui-workspaceHead{padding:12px 15px 3px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ui-workspaceHead b{font-size:15px}.ui-workspaceHead .muted{font-size:12px}
+#pilotControls{border-color:#d3dce9}#pilotControls>.cardbody{padding-top:6px}
+#pilotControls>.cardbody>.toolbar:first-child{margin-bottom:10px}
+.ui-statusStrip{border:1px solid #e4eaf1;background:#f9fbff;border-radius:9px;padding:8px 11px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:7px 0 10px}
+.ui-statusStrip>[role=status]{font-size:12px;min-width:0;overflow-wrap:anywhere}
+.ui-drawer{margin:7px 0;border:1px solid #e3e8ef;border-radius:10px;background:#fff}
+.ui-drawer>summary{display:flex;align-items:center;gap:9px;cursor:pointer;list-style:none;padding:11px 13px;font-size:13px;font-weight:750;color:#334155;user-select:none}
+.ui-drawer>summary::-webkit-details-marker{display:none}
+.ui-drawer>summary::after{content:"▾";margin-left:auto;color:#64748b}
+.ui-drawer[open]>summary::after{content:"▴"}
+.ui-drawer>summary .ui-summaryHint{font-size:11px;color:#64748b;font-weight:400}
+.ui-drawer[open]>summary{background:#f8fbff;border-bottom:1px solid #e3e8ef;border-radius:10px 10px 0 0}
+.ui-drawerBody{padding:12px 13px}
+.ui-workNav{position:sticky;top:0;z-index:10;background:rgba(245,247,251,.96);padding:8px 0 3px;backdrop-filter:blur(8px)}
+.ui-workNav .tabs{margin:0 0 10px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.ui-workNav .tab{min-width:0;text-align:center;border-radius:9px;padding:12px 8px;font-size:13px;white-space:normal}
+.ui-workNav .tab.active{box-shadow:0 3px 12px #2563eb26}
+.ui-panelLead{border:1px solid #dfe4ec;background:#fff;padding:12px 15px;margin:0 0 12px;border-radius:12px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.ui-panelLead b{font-size:16px}.ui-panelLead .muted{font-size:12px}
+.ui-panelLead .toolbar{margin-left:auto}
+.ui-projectAction{white-space:nowrap}
+#items #pilotDrawingPanel{margin-top:0}
+.ui-appFooter{padding:10px 0}
+@media(max-width:940px){.ui-statusStrip{grid-template-columns:1fr}.ui-workNav .tab{font-size:12px;padding:9px 5px}}
+@media(max-width:620px){.ui-workNav .tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.ui-headActions{width:100%}.ui-context .ui-contextRight{width:100%}.ui-drawer>summary{align-items:flex-start;flex-direction:column}.ui-drawer>summary::after{position:absolute;right:18px}}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="top">
-    <div>
-      <h1>SRM-Lite · 本机保存候选版</h1>
+  <header class="top ui-appHeader">
+    <div class="ui-brand">
+      <div class="ui-eyebrow">SRM / RFQ WORKSPACE</div>
+      <h1>采购询价工作台</h1>
       <div class="sub" id="pilotSubtitle">演示模式：请从空白正式工作开始。</div>
     </div>
-    <span class="badge" id="pilotModeBadge">演示模式（不保存）</span>
-  </div>
+    <div class="ui-headActions">
+      <span class="badge" id="pilotModeBadge">演示模式（不保存）</span>
+      <button type="button" class="btn ui-projectAction" id="uiProjectJump">询价项目</button>
+      <button type="button" class="btn ui-projectAction" id="uiAdminToggle">数据与备份</button>
+      <button type="button" class="tab" data-tab="settings" id="uiFieldSettings">字段设置</button>
+    </div>
+  </header>
 
-  <div class="notice" id="pilotNotice" style="margin:0 0 12px">当前为演示模式。正式工作需手动保存。</div>
-<div class="card" id="pilotControls" style="margin-bottom:14px"><div class="cardbody">
+  <div class="ui-context" aria-label="当前询价工作摘要">
+    <div><small>当前工作 / Current RFQ</small><div><b id="uiCurrentRfq">演示数据</b></div></div>
+    <div class="ui-contextRight"><small>操作顺序：物料与图纸 → 供应商分配 → 报价回收 → 比价议价</small></div>
+  </div>
+  <div class="notice" id="pilotNotice" style="margin:0 0 12px">演示模式不会保存；请新建空白正式询价后开始操作。</div>
+<div class="card" id="pilotControls" style="margin-bottom:14px">
+  <div class="ui-workspaceHead"><div><b>询价项目</b><span class="muted">　新建、切换与保存当前项目</span></div></div>
+  <div class="cardbody">
  <div class="toolbar" style="margin-bottom:8px">
   <button type="button" class="btn primary" id="pilotNewWorkspace" disabled>新建空白正式工作</button>
   <button type="button" class="btn soft" id="pilotSaveWorkspace" disabled>保存到本机</button>
@@ -185,13 +235,14 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
        </div>
       </div>
     </div>
-    <div class="tabs">
-    <button class="tab active" data-tab="items">1. 本次询价物料</button>
-    <button class="tab" data-tab="assign">2. 询价分配中心</button>
-    <button class="tab" data-tab="quoteImport">3. 报价回收导入</button>
-    <button class="tab" data-tab="quotes">4. 报价比较</button>
-    <button class="tab" data-tab="settings">5. 系统设置</button>
-  </div>
+    <nav class="ui-workNav" aria-label="询价业务流程">
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="items" role="tab" aria-selected="true">① 物料与图纸</button>
+      <button class="tab" data-tab="assign" role="tab" aria-selected="false">② 供应商与分配</button>
+      <button class="tab" data-tab="quoteImport" role="tab" aria-selected="false">③ 报价回收</button>
+      <button class="tab" data-tab="quotes" role="tab" aria-selected="false">④ 比价议价</button>
+    </div>
+  </nav>
 
   <section id="items" class="panel active">
     <div class="card">
@@ -4123,6 +4174,120 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
  });
 }
 /* END M1_LITE_REPORT_UI */
+</script>
+
+<script>
+/* 中文：UI V1 外壳。移动既有 DOM 节点而不复制 ID/事件，业务脚本无需改动。
+   English: UI V1 shell moves existing live DOM nodes without copying IDs or handlers. */
+(function(){
+  "use strict";
+  const controls = document.querySelector("#pilotControls > .cardbody");
+  const one = id => document.getElementById(id);
+  if(!controls || one("uiSupplierTools")) return;
+
+  function drawer(id, heading, hint, nodes) {
+    const details = document.createElement("details");
+    details.className = "ui-drawer";
+    details.id = id;
+    const summary = document.createElement("summary");
+    summary.append(document.createTextNode(heading+"　"));
+    const extra = document.createElement("span");
+    extra.className = "ui-summaryHint";
+    extra.textContent = hint;
+    summary.appendChild(extra);
+    const inner = document.createElement("div");
+    inner.className = "ui-drawerBody";
+    for (const node of nodes) if(node) inner.appendChild(node);
+    details.append(summary,inner);
+    return details;
+  }
+  const project = one("pilotNewWorkspace").closest(".toolbar");
+  const statusStrip = document.createElement("div");
+  statusStrip.className = "ui-statusStrip";
+  statusStrip.setAttribute("aria-label","保存与自动备份状态");
+  for(const id of ["pilotSaveStatus","pilotAutosaveStatus","pilotAutoBackupStatus"]){
+    statusStrip.appendChild(one(id));
+  }
+  project.after(statusStrip);
+
+  const supplierTools = drawer("uiSupplierTools","供应商管理与 Excel 导入",
+      "新增供应商、批量导入及确认",[
+        one("pilotSupplierFields"),
+        one("pilotSupplierExcel").closest(".toolbar"),
+        one("pilotSupplierExcelPreview"),
+        one("pilotSupplierExcelStatus")
+      ]);
+  statusStrip.after(supplierTools);
+
+  const notes = Array.from(controls.children).find(el=>
+    el.classList?.contains("small") && el.textContent.includes("必须先保存到本机"));
+  const adminTools = drawer("uiDataTools","数据备份、恢复与报表导出",
+      "包含 S4 完整 ZIP、旧版兼容格式与业务单据",[
+        one("pilotExportBackup").closest(".toolbar"),
+        one("pilotImportComplete").closest(".toolbar"),
+        one("pilotBulkRestoreOptions"),
+        one("pilotBackupPreview"),
+        one("pilotReportPanel"),
+        notes
+      ]);
+  supplierTools.after(adminTools);
+  
+  function reveal(id){
+    const section = one(id);
+    section.open=true;
+    section.scrollIntoView({block:"start",behavior:"smooth"});
+  }
+  one("uiProjectJump").addEventListener("click",()=>{
+    one("pilotControls").scrollIntoView({block:"start",behavior:"smooth"});
+    one("pilotHistoryWorkspace").focus();
+  });
+  one("uiAdminToggle").addEventListener("click",()=>reveal("uiDataTools"));
+
+  const item = one("items");
+  const itemLead = document.createElement("div");
+  itemLead.className = "ui-panelLead";
+  itemLead.innerHTML = '<div><b>物料与图纸</b><div class="muted">管理拟询价清单、批量导入及 PDF 关联</div></div>'+
+    '<div class="toolbar"><button class="btn soft" id="uiOpenDrawings" type="button">图纸匹配与管理</button></div>';
+  item.prepend(itemLead);
+  // 中文：图纸只在“物料与图纸”页面展开，既有 PDF 事件和数据保持不变。
+  // English: Drawing controls belong to Items & Drawings; existing references stay intact.
+  item.insertBefore(one("pilotDrawingPanel"),itemLead.nextSibling);
+  one("uiOpenDrawings").addEventListener("click",()=>{
+    if(one("pilotDrawingPanel").style.display==="none") {
+      one("pilotNotice").scrollIntoView({block:"start",behavior:"smooth"});
+      return;
+    }
+    one("pilotDrawingPanel").scrollIntoView({block:"start",behavior:"smooth"});
+    one("pilotBatchDrawingFiles").focus();
+  });
+
+  const assign = one("assign");
+  const assignLead = document.createElement("div");
+  assignLead.className = "ui-panelLead";
+  assignLead.innerHTML = '<div><b>供应商与分配</b><div class="muted">支持按物料或按供应商双向分配；新增关系不会覆盖已有关系</div></div>'+
+    '<div class="toolbar"><button class="btn soft" id="uiOpenSupplierTools" type="button">添加 / 导入供应商</button></div>';
+  assign.prepend(assignLead);
+  one("uiOpenSupplierTools").addEventListener("click",()=>reveal("uiSupplierTools"));
+
+  // 中文：业务导航只切换面板，不写入任何快照或触发业务保存。
+  // English: Navigation changes visible panels only and never mutates a workspace.
+  document.querySelectorAll(".tab").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      document.querySelectorAll(".tab").forEach(tab=>tab.setAttribute("aria-selected",String(tab===btn)));
+    });
+  });
+
+  const current = one("uiCurrentRfq");
+  function syncTitle(){
+    const rfq = one("pilotRfqHead").textContent.trim();
+    const mode = one("pilotModeBadge").textContent;
+    current.textContent = mode.includes("演示") ? "演示数据（不保存）" : (rfq||"当前正式询价");
+  }
+  const observer = new MutationObserver(syncTitle);
+  observer.observe(one("pilotRfqHead"),{childList:true,characterData:true,subtree:true});
+  observer.observe(one("pilotModeBadge"),{childList:true,characterData:true,subtree:true});
+  syncTitle();
+})();
 </script>
 </body>
 </html>
