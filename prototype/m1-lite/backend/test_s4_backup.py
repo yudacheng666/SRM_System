@@ -30,9 +30,23 @@ class S4FullBackupTests(unittest.TestCase):
     def populate(self):
         """中文：两笔询价，首笔带历史版本。English: Two RFQs including a historical revision."""
         first = make_workspace()
+        first["state"]["items"][0]["lineId"] = "LINE-001"
+        first["state"]["suppliers"] = [{"id":"SUP-DEMO","name":"模拟供应商"}]
+        first["state"]["assignments"] = [{"key":"LINE-001","values":["SUP-DEMO"]}]
+        first["state"]["quoteRounds"] = [{
+            "supplierId":"SUP-DEMO","roundNo":1,"revisionNo":1,"status":"confirmed",
+            "lines":[{"lineId":"LINE-001","price":100}],"expectedLineIds":["LINE-001"]
+        }]
         self.origin.save(first)
         self.orig_assets.write(first["workspaceId"], self.sha_a, "DRAW-A.pdf", self.a)
-        revised = make_workspace(revision=2, name="模拟物料更新版")
+        # 中文：第 2 轮不允许覆盖已确认的第 1 轮。English: Preserve confirmed history.
+        revised = json.loads(json.dumps(first))
+        revised["revision"] = 2
+        revised["state"]["items"][0]["name"] = "模拟物料更新版"
+        revised["state"]["quoteRounds"].append({
+            "supplierId":"SUP-DEMO","roundNo":2,"revisionNo":1,"status":"confirmed",
+            "lines":[{"lineId":"LINE-001","price":90}],"expectedLineIds":["LINE-001"]
+        })
         self.origin.save(revised, expected_revision=1)
         second = make_workspace()
         second["workspaceId"] = "RFQ-DEMO-002"
@@ -64,6 +78,9 @@ class S4FullBackupTests(unittest.TestCase):
         self.assertEqual(new.active_id(), "RFQ-DEMO-002")
         self.assertEqual(new.get("RFQ-DEMO-001")["revision"], 2)
         self.assertEqual(new.get("RFQ-DEMO-001", revision=1)["revision"], 1)
+        self.assertEqual(new.get("RFQ-DEMO-001")["state"]["assignments"][0]["values"], ["SUP-DEMO"])
+        self.assertEqual([r["lines"][0]["price"] for r in new.get("RFQ-DEMO-001")["state"]["quoteRounds"]], [100, 90])
+        self.assertEqual(len(new.get("RFQ-DEMO-001",revision=1)["state"]["quoteRounds"]), 1)
         self.assertEqual(AssetStore(new).read("RFQ-DEMO-001", self.sha_a), self.a)
         self.assertEqual(AssetStore(new).read("RFQ-DEMO-002", self.sha_b), self.b)
         with self.assertRaises(StoreError):
