@@ -25,8 +25,10 @@ XLSX, two valid two-page PDFs and malformed inputs are generated deterministical
 业务数据通过真实点击、输入、文件选择和确认准备；API/SQLite 用于独立核对、历史读取和恶意写入保护测试。下列条目明确区分浏览器与 Python/Node 验证。
 Business setup uses real clicks, inputs, file selection and confirmations; API/SQLite reads independently verify data/history and malicious requests test protections. Entries below distinguish browser checks from Python/Node checks.
 
-最终结果及 SHA-256 清单位于 `docs/evidence/20261014-issue3/`；运行说明位于 `prototype/m1-lite/tests/e2e/README.md`。
-Final results and SHA-256 inventory are in `docs/evidence/20261014-issue3/`; run instructions are in `prototype/m1-lite/tests/e2e/README.md`.
+轻量摘要与原始证据 SHA-256 索引位于 `docs/evidence/20261014-issue3/`；大型截图、Trace、下载附件和运行日志改由每次 GitHub Actions 的 `srm-playwright-evidence` Artifacts 保存（保留 14 天）。
+Lightweight summaries and historical SHA-256 lists stay under `docs/evidence/20261014-issue3/`; large screenshots, traces, downloaded files and run logs are stored in per-run GitHub Actions `srm-playwright-evidence` artifacts (14-day retention).
+运行说明位于 `prototype/m1-lite/tests/e2e/README.md`；早期完整证据可从原始历史提交 `08ddba9cea200fe2b1bcbd6cce202f24db68d0d2` 追溯，但当前分支不再重复追踪这些运行产物。
+Run instructions are in `prototype/m1-lite/tests/e2e/README.md`; the initial historical commit `08ddba9cea200fe2b1bcbd6cce202f24db68d0d2` remains traceable, while current branch snapshots no longer track duplicate runtime artifacts.
 
 ## 场景结果
 ## Scenario results
@@ -111,3 +113,15 @@ Remote checks after push confirm main remains f330de510f97c552629052ff1841d72231
 
 首次 push CI 的 Linux Chromium job 已通过；Windows job 在 test_verified_backup 因 8.3 短路径与规范路径比较误报失败。按 store.backup 既有返回规范修正为 target.resolve()，保持内容与防覆盖断言；Linux store 定向 6/6 通过，Windows 重跑以 PR 最新 CI 结果为准。详见 evidence 中 windows-path-defect.md。
 The initial push CI Linux Chromium job passed; the Windows job falsely failed test_verified_backup when comparing an 8.3 alias to a canonical path. Compare against target.resolve() to match the existing store.backup return contract, preserving content and no-overwrite checks; targeted Linux store tests pass 6/6, with Windows reruns tracked in the PR's latest CI. See windows-path-defect.md in evidence.
+
+## ChatGPT 后续修复（待 Codex 复测）
+## Subsequent ChatGPT Fixes (Awaiting Codex Retest)
+
+- **职责分工**：ChatGPT 负责设计、修复代码、提交；Codex 只负责独立运行自动化测试、分析失败、提交测试结论，不自行修改代码或合并。
+- **Division of responsibility**: ChatGPT owns design, code fixes and commits; Codex independently runs tests, diagnoses failures and reports results without editing code or merging.
+- **备份安全加固**：上一份到期自动备份现在按 ZIP 结构、清单版本/索引及数据库/PDF SHA-256 检查；若其损坏，尝试制作完整新备份并保留所有旧备份，不执行该轮轮转删除，服务日志输出 WARNING。
+- **Backup hardening**: Before treating an eligible prior ZIP as valid, check structure, manifest, asset links and full DB/PDF SHA-256; if damaged, attempt a new complete backup and preserve all older archives without retention pruning that round, emitting a WARNING.
+- **测试证据精简**：PR 当前快照保留测试脚本、验证说明、概要和 SHA 清单。大型下载、截图、Trace 和日志由 GitHub Actions Artifacts（14 天）保存；原始提交历史不改写。
+- **Evidence cleanup**: The PR snapshot retains source, instructions, concise summary and SHA list. Downloads, screenshots, traces and logs belong to GitHub Actions artifacts (14 days); existing commit history is not rewritten.
+- **当前验收状态**：上述新修复尚未经过 Codex 的最新运行验证，先前的 8/8、38/38、2/2 仅代表旧提交 `08ddba9` 的结果。不得将此前结果直接用作这次修复的 PASS。
+- **Current verification**: The new fixes need fresh Codex/CI execution. Previous 8/8, 38/38 and 2/2 results belong to old commit `08ddba9` only and must not be presented as a pass for these changes.
