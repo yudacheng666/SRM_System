@@ -42,6 +42,13 @@ const test = base.extend({
 });
 const snapshot = page => page.evaluate(() => window.SRMPilot.snapshot());
 const tab = (page, name) => page.locator(`[data-tab="${name}"]`).click();
+// 中文：真实操作展开 UI V1 工具区，不以脚本强制绕过页面折叠状态。
+// English: Expand new UI drawers as a buyer would, never force visibility by script.
+async function openTools(page, id) {
+  const details=page.locator(id);
+  if (!await details.evaluate(node => node.open)) await details.locator('summary').click();
+  await expect(details).toHaveAttribute('open', '');
+}
 async function saved(page) {
   await expect.poll(async () => {
     const current = await snapshot(page);
@@ -64,6 +71,7 @@ async function items(page, app, file = 'items12.xlsx', count = 12) {
   await expect.poll(async () => (await snapshot(page)).state.items.length).toBe(count);
 }
 async function suppliers(page, app) {
+  await openTools(page,'#uiSupplierTools');
   await page.locator('#pilotSupplierExcel').setInputFiles(path.join(app.fixtures,'suppliers.xlsx'));
   await expect(page.locator('#pilotImportSupplierConfirm')).toBeEnabled(); await page.locator('#pilotImportSupplierConfirm').click();
   await expect.poll(async () => (await snapshot(page)).state.suppliers.length).toBe(2);
@@ -96,6 +104,7 @@ async function quotes(page, app) {
   await save(page);
 }
 async function drawings(page,app) {
+  await tab(page,'items');
   await page.locator('#pilotBatchDrawingFiles').setInputFiles(['TST-001_A.pdf','unmatched.pdf'].map(f=>path.join(app.fixtures,f)));
   await page.locator('#pilotBatchDrawingAnalyze').click();
   await expect(page.locator('#pilotBatchDrawingPreview')).toContainText('单候选匹配');
@@ -173,7 +182,7 @@ test('04 real quote imports, rounds, tiers, immutable confirmation and compariso
   await expect(page.locator('#quoteAnalysis')).toContainText('30.25');
   await expect(page.locator('#quoteAnalysis')).toContainText('33.50');
   await saved(page);
-  await page.locator('#pilotReportOpen').click(); await page.locator('#pilotReportType').selectOption('comparison');
+  await openTools(page,'#uiDataTools'); await page.locator('#pilotReportOpen').click(); await page.locator('#pilotReportType').selectOption('comparison');
   for(const check of await page.locator('[data-report-supplier]').all()) await check.check();
   const file=await download(page,'#pilotReportDownload',info,'comparison.xlsx');
   const z=inspectZip(file); expect(z['[Content_Types].xml']).toBeTruthy();
@@ -222,7 +231,7 @@ test('05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图�
   await page.locator('[data-mode="supplierFirst"]').click(); await page.locator('[data-sf-s="SUP-B"]').click();
   const ws=await snapshot(page), line=ws.state.items.find(x=>x.id==='TST-002').lineId;
   await page.locator(`[data-sfi="${line}"]`).check(); await save(page);
-  await page.locator('#pilotReportOpen').click();
+  await openTools(page,'#uiDataTools'); await page.locator('#pilotReportOpen').click();
   const crypto=require('node:crypto');
   for(const sid of ['SUP-A','SUP-B']) {
     await page.locator('#pilotReportSupplier').selectOption(sid); const file=await download(page,'#pilotReportDownload',info,sid+'.zip'); const z=inspectZip(file);
@@ -245,10 +254,12 @@ test('06 full backup restore: actual imported quotes, history, PDFs, overwrite r
   const originals={}; for(const row of index) {const w=(await (await fetch(baseURL+'/api/workspaces/'+row.workspaceId)).json()).workspace; originals[row.workspaceId]=[];
     for(let r=1;r<=w.revision;r++) originals[row.workspaceId].push((await (await fetch(baseURL+'/api/workspaces/'+row.workspaceId+'?revision='+r)).json()).workspace);
   }
+  await openTools(page,'#uiDataTools');
   const file=await download(page,'#pilotS4DownloadFull',info,'full-backup.zip'); const z=inspectZip(file); expect(z['database/srm.sqlite3']).toBeTruthy();
   await app.start(8766,path.join(app.root,'restored')); const other=await browser.newPage(); other.on('dialog',d=>d.accept());
   try {
     await other.goto('http://127.0.0.1:8766'); await expect(other.locator('#pilotNewWorkspace')).toBeEnabled();
+    await openTools(other,'#uiDataTools');
     await other.locator('#pilotS4BackupFile').setInputFiles(file); await other.locator('#pilotS4RestoreFull').click();
     await expect(other.locator('#pilotModeBadge')).toContainText('正式');
     expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toEqual(index);
@@ -268,6 +279,7 @@ test('07 real service disconnect and stale-tab 409 halt autosave / 自动保存�
   await fresh(page); const stale=await browser.newPage();stale.on('dialog',d=>d.accept());
   try {
     await stale.goto(baseURL);await expect(stale.locator('#pilotModeBadge')).toContainText('正式');
+    await openTools(stale,'#uiSupplierTools'); await openTools(page,'#uiSupplierTools');
     await items(page,app);await save(page);const good=await snapshot(page);
     await stale.locator('#pilotCounterpartyCode').fill('CP-STALE');await stale.locator('#pilotSupplierName').fill('虚构旧标签');await stale.locator('#pilotAddSupplier').click();
     await expect(stale.locator('#pilotAutosaveStatus')).toContainText('HTTP 409');await expect(stale.locator('#pilotAutosaveStatus')).toContainText('停止自动重试');
@@ -282,12 +294,13 @@ test('07 real service disconnect and stale-tab 409 halt autosave / 自动保存�
 
 test('08 bad PDF and damaged ZIP never contaminate saved data / 异常回归', async ({page,app})=>{
   await fresh(page);await items(page,app);await save(page);const good=await snapshot(page);
-  await page.locator('#pilotDrawingLine').focus();
+  await tab(page,'items'); await page.locator('#pilotDrawingLine').focus();
   await page.locator('#pilotDrawingLine').selectOption(good.state.items[0].lineId);
   await page.locator('#pilotDrawingFiles').setInputFiles(path.join(app.fixtures,'bad.pdf'));await page.locator('#pilotDrawingUpload').click();
   await expect(page.locator('#pilotDrawingInfo')).toContainText('导入未完成');expect((await snapshot(page)).state.items).toEqual(good.state.items);
   await app.start(8766,path.join(app.root,'negative'));const other=await page.context().newPage();other.on('dialog',d=>d.accept());
   try {await other.goto('http://127.0.0.1:8766');await expect(other.locator('#pilotNewWorkspace')).toBeEnabled();
+    await openTools(other,'#uiDataTools');
     await other.locator('#pilotS4BackupFile').setInputFiles(path.join(app.fixtures,'broken.zip'));await other.locator('#pilotS4RestoreFull').click();
     await expect(other.locator('#pilotSaveStatus')).toContainText('未成功');expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toHaveLength(0);
   } finally {await other.close();}
