@@ -85,8 +85,8 @@ Existing baseline backup tests omitted the assets schema initialized by the real
 NOT_IMPLEMENTED：报价邮件、聊天截图及非 PDF 原始凭证归档；已有报价供应商的正式取消/作废状态（现有 UI 拒绝破坏历史的直接移出）。代码证据：index.html 的 pilotFooter、data-pool-remove 处理器及 backend/README.md；本任务不把这些标为 PASS。
 NOT_IMPLEMENTED: archived quotation emails, chat screenshots and non-PDF evidence; formal cancellation/voiding for suppliers with quote history (current UI refuses destructive removal). Evidence: index.html pilotFooter, data-pool-remove handler and backend/README.md; these are not reported PASS.
 
-SKIP：云端 Linux 无法代替用户 Windows 双击启动、打印/人工视觉检查和实际 24 小时长期运行；启动脚本 ASCII 与路径仅做静态检查。原型历史 ERP 采购价仍未接入。
-SKIP: cloud Linux does not replace Windows double-click launch, printing/manual visual inspection or a real 24-hour endurance run; launcher ASCII/path checks are static only. Historical ERP purchasing prices remain unconnected.
+SKIP：云端 Linux 无法代替用户 Windows 双击启动、打印/人工视觉检查和实际 24 小时长期运行；启动脚本 ASCII 与路径仅做静态检查。PDF 截图可见查看器背景，原生查看器像素渲染未独立验证，不能据 iframe 或第二页 URL 宣称画面已完成渲染。原型历史 ERP 采购价仍未接入。
+SKIP: cloud Linux does not replace Windows double-click launch, printing/manual visual inspection or a real 24-hour endurance run; launcher ASCII/path checks are static only. The PDF screenshot shows the viewer background; native-viewer pixel rendering is not independently verified, and iframe/page-two URL checks do not establish finished visual rendering. Historical ERP purchasing prices remain unconnected.
 
 建议：在本分支备份遗漏修复经评审并纳入开发基线后，可以继续 UI/ERP 字段开发；修复未纳入前，应先处理该数据保护缺陷。原型仍不应作为真实采购资料的唯一存储。PR 不自动合并，需用户独立确认。
 Recommendation: after reviewing and incorporating this branch's backup-omission fix, UI/ERP field development can continue; before that fix lands, address the data-protection defect first. The prototype should not be the sole store for real purchasing records. The PR is not automatically merged and requires the user's separate confirmation.
@@ -99,3 +99,12 @@ Observed GitHub Actions status/links are recorded in the PR; executed Codex clou
 
 Python 38/38、Node 2/2、Playwright 完整运行 8/8，通过且无跳过/重试；新增筛选与 PDF 第二页断言后，01/05 定向重跑 2/2 通过。完整运行开始于 2026-10-14 13:56:48（Asia/Shanghai），耗时约 150 秒。
 Python 38/38, Node 2/2 and the full Playwright suite 8/8 passed without skips/retries; after adding filter and PDF-page-two assertions, targeted 01/05 reruns passed 2/2. The full run started at 2026-10-14 13:56:48 (Asia/Shanghai), lasting approximately 150 seconds.
+
+## PR 与 GitHub Actions
+## PR and GitHub Actions
+
+[Draft PR #4](https://github.com/yudacheng666/SRM_System/pull/4) 已创建；初始代码提交 c6797e1。首次 [push CI](https://github.com/yudacheng666/SRM_System/actions/runs/38519844286) 与 [PR CI](https://github.com/yudacheng666/SRM_System/actions/runs/38519937689) 已实际启动；本报告补充时仍在执行，最终观察结果及最新 CI 链接由 PR 描述记录。
+[Draft PR #4](https://github.com/yudacheng666/SRM_System/pull/4) is created at initial code commit c6797e1. Initial [push CI](https://github.com/yudacheng666/SRM_System/actions/runs/38519844286) and [PR CI](https://github.com/yudacheng666/SRM_System/actions/runs/38519937689) actually started; they are running when this addendum is written. The PR description records final observed results and the latest CI links.
+
+推送后的远端检查确认 main 仍为 f330de510f97c552629052ff1841d7223194e7f8，draft 基线仍为 49d52084190bece75ae5a0ab90da722df5872f82。
+Remote checks after push confirm main remains f330de510f97c552629052ff1841d7223194e7f8 and the draft base remains 49d52084190bece75ae5a0ab90da722df5872f82.
