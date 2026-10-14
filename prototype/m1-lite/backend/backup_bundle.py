@@ -106,6 +106,21 @@ def create(store: SnapshotStore, output: Path) -> dict:
                 archive.write(store.path.parent / "assets" / sha[:2] / (sha + ".pdf"), item["path"])
         if part.stat().st_size > MAX_ARCHIVE:
             raise StoreError("BACKUP_SIZE_LIMIT")
+        # 中文：创建完成后从 ZIP 重新读取和校验，避免误报备份成功。
+        # English: Verify the final archive stream before publishing a successful backup.
+        with zipfile.ZipFile(part, "r") as check:
+            names = set(check.namelist())
+            if names != {"manifest.json", "database/srm.sqlite3"} | {f["path"] for f in files}:
+                raise StoreError("BACKUP_ARCHIVE_ENTRY_MISMATCH")
+            for member, expected in [("database/srm.sqlite3", manifest["database"]["sha256"])] + [
+                (item["path"],item["sha256"]) for item in files
+            ]:
+                digest = hashlib.sha256()
+                with check.open(member) as binary:
+                    for block in iter(lambda: binary.read(1024 * 1024), b""):
+                        digest.update(block)
+                if digest.hexdigest() != expected:
+                    raise StoreError("BACKUP_ARCHIVE_HASH_MISMATCH")
         os.replace(part, output)
         return {"fileName":output.name, "workspaceCount":_workspace_count(dbcopy),
                 "pdfCount":len(files), "assetLinks":len(records), "bytes":output.stat().st_size, "verified":True}
