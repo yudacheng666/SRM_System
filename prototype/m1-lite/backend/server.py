@@ -27,7 +27,12 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def user_data_dir() -> Path:
-    """中文：数据独立于 Git 源码。English: Store user data outside the Git checkout."""
+    """中文：数据独立于 Git 源码；测试可显式指定隔离目录。English: Support opt-in isolated test roots."""
+    # 中文：显式测试路径，不会自动迁移或删除正式本机数据。
+    # English: Explicit data-root override never migrates or deletes existing data.
+    override = os.environ.get("SRM_DATA_DIR")
+    if override:
+        return Path(override).expanduser().resolve()
     base = os.environ.get("LOCALAPPDATA")
     return (Path(base) / "SRM-Lite" if base else Path.home() / ".srm-lite").resolve()
 
