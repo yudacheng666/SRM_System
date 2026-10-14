@@ -1,0 +1,39 @@
+# 中文：仅测试开发分支，使用虚构数据；不访问生产系统。
+# English: Development-branch-only synthetic regression; no production data.
+name: SRM S3 Regression
+on:
+  push:
+    branches:
+      - draft/20261013-m1-storage-ui-audit
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    name: SQLite and supplier ZIP regression on Windows
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout the tested branch
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run SQLite and local API unit tests
+        run: python -m unittest discover -v -s prototype/m1-lite/backend -p "test_*.py"
+      - name: Run supplier ZIP and PDF regression
+        run: node --test prototype/m1-lite/tests/supplier_package.test.cjs
+      - name: Verify launcher is ASCII and points to backend
+        shell: pwsh
+        run: |
+          $script = [System.IO.File]::ReadAllBytes("prototype/m1-lite/run_local.bat")
+          if ($script | Where-Object { $_ -ge 128 }) { throw "Launcher contains non-ASCII bytes" }
+          $bat = [System.Text.Encoding]::ASCII.GetString($script)
+          if (-not $bat.Contains('%~dp0backend\server.py')) { throw "Launcher lost relative server path" }
