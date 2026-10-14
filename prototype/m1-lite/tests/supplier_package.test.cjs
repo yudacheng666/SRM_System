@@ -71,8 +71,8 @@ test("supplier ZIPs preserve original names/bytes, isolate contents, and omit JS
   const ws=buildWorkspace(first,second);
   const a=await exported(app,ws,"SUP-001");
   const b=await exported(app,ws,"SUP-002");
-  assert.deepEqual(a.map(x=>x.name),["RFQ_SUP-001.xlsx","TEST-001_图号-A.pdf"]);
-  assert.deepEqual(b.map(x=>x.name),["RFQ_SUP-002.xlsx","TEST-002_REV.B.pdf"]);
+  assert.deepEqual(Array.from(a,x=>x.name),["RFQ_SUP-001.xlsx","TEST-001_图号-A.pdf"]);
+  assert.deepEqual(Array.from(b,x=>x.name),["RFQ_SUP-002.xlsx","TEST-002_REV.B.pdf"]);
   assert.equal(Buffer.compare(Buffer.from(await a[1].blob.arrayBuffer()),Buffer.from(await assets.get(first[0].sha256).arrayBuffer())),0);
   assert.equal(Buffer.compare(Buffer.from(await b[1].blob.arrayBuffer()),Buffer.from(await assets.get(second[0].sha256).arrayBuffer())),0);
   assert(a.every(x=>!x.name.endsWith(".json"))&&b.every(x=>!x.name.endsWith(".json")));
@@ -83,7 +83,7 @@ test("reused same PDF appears once per supplier ZIP",async()=>{
   const drawing=fixture(assets,[["DRAWING-007.pdf","shared"]]);
   const ws=buildWorkspace(drawing,drawing,[["L-001",["SUP-001"]],["L-002",["SUP-001"]]]);
   const entries=await exported(app,ws,"SUP-001");
-  assert.deepEqual(entries.map(x=>x.name),["RFQ_SUP-001.xlsx","DRAWING-007.pdf"]);
+  assert.deepEqual(Array.from(entries,x=>x.name),["RFQ_SUP-001.xlsx","DRAWING-007.pdf"]);
 });
 
 test("case-insensitive same-name different-content conflict is rejected",async()=>{
