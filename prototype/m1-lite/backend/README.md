@@ -119,3 +119,75 @@ node --test tests/supplier_package.test.cjs
 - The GitHub Actions workflow lives at `.github/workflows/srm-s3-regression.yml`; cloud execution must be confirmed by a successful workflow run before claiming the CI passed.
 - 本机当前已打开的服务需先按 `Ctrl+C` 停止，替换 `run_local.bat` 后才能测试新脚本；修改源码不会清理 `%LOCALAPPDATA%\\SRM-Lite` 下的数据。
 - Stop the currently running server with `Ctrl+C`, replace `run_local.bat` and retest; source updates do not erase data under `%LOCALAPPDATA%\\SRM-Lite`.
+
+## S4: SQLite + PDF 完整备份恢复候选 / S4 Full SQLite + PDF Backup and Restore Candidate
+
+- 新增可下载的 S4 完整 ZIP，包含 SQLite **当前询价、全部历史版本、关联关系**，以及资产表登记的所有原始 PDF。
+- A downloadable S4 ZIP contains SQLite **current RFQs, all committed history, relationships**, and all registered original PDFs.
+- 和仅导出业务 JSON 的旧功能不同，S4 ZIP 内含真正的 SQLite 数据库文件及内容寻址 PDF。
+- Unlike legacy JSON exports, an S4 ZIP includes the actual SQLite backup and content-addressed PDF originals.
+- 备份时使用 SQLite Backup API，并检查数据库完整性、ZIP 内数据库及 PDF SHA-256。
+- Backup uses the SQLite Backup API and validates the database and ZIP-contained database/PDF SHA-256 checksums.
+- 恢复只允许 **空白数据目录**；现有询价或 PDF 文件存在则服务端拒绝恢复，不允许合并或覆盖。
+- Restore is allowed only into an **empty data directory**; existing RFQs or PDFs cause a server-side refusal. No merge or overwrite.
+- 读取备份 ZIP 时验证文件清单、格式版本、条目大小、文件哈希、数据库数据和附件登记信息。
+- Restore checks format/version, exact ZIP entries, size limits, hashes, database records, and asset index correspondence.
+- 恢复完成后可重新启动/刷新浏览器打开以前的询价、历史版本和 PDF。
+- After restore, reload the page to reopen RFQs, histories, and PDFs.
+- 目前报价原始邮件、聊天截图、其他文档附件仍未实现上传存储，因此不在 S4 ZIP 中。
+- Raw quotation email, chat screenshots, and non-PDF evidence have not been implemented and are not included in this S4 ZIP.
+- 单个原始 PDF 上限 12 MiB；备份数据库上限 128 MiB；ZIP 上限 512 MiB；最多 2,000 个不同 PDF。
+- Limits: PDF <=12 MiB each, backed-up SQLite <=128 MiB, ZIP <=512 MiB and <=2,000 distinct PDFs.
+- S4 仍手动保存，未开发自动保存，不能作为正式唯一数据存储。
+- S4 still requires manual saves and is not a sole production data store.
+
+### 本机使用 / Windows Workflow
+
+1. 下载本开发分支最新完整文件夹并替换旧程序代码（不删除原始数据目录）。
+1. Download the entire updated development branch and replace the old source code without deleting the data root.
+2. 双击最新 \`run_local.bat\`，打开 \`http://127.0.0.1:8765/\`。
+2. Double-click the latest launcher and open \`http://127.0.0.1:8765/\`.
+3. 先保存所有修改，再点击“下载 S4 完整备份（SQLite + PDF）”，保存 ZIP 到安全位置。
+3. Save pending edits and click **Download S4 Full Backup (SQLite + PDF)**; retain the ZIP securely.
+4. 在全新电脑或明确隔离的空数据目录打开 S4，选择 ZIP，点击“恢复完整备份（仅空白数据）”。
+4. On a new PC or clearly isolated empty data directory, select the ZIP and choose **Restore Full Backup (Empty Data Only)**.
+5. 验证询价数量、历史版本、供应商关联和 PDF 预览；不能在已有询价的电脑上强行恢复覆盖。
+5. Check RFQ counts, historical revisions, supplier assignments and PDF previews; existing RFQs cannot be forcibly overwritten.
+
+### 隔离测试目录 / Safe Isolated Restore Test
+
+- 此方式**不会修改** \`%LOCALAPPDATA%\SRM-Lite\` 下原有的 SQLite 和 PDF。
+- This method **does not modify** the default SQLite or PDFs under \`%LOCALAPPDATA%\SRM-Lite\`.
+- 先用 Ctrl+C 关闭原服务器，在 \`prototype\m1-lite\` 的 CMD 窗口执行：
+- Stop the original server with Ctrl+C, then run in CMD from \`prototype\m1-lite\`:
+
+\`\`\`bat
+set "SRM_DATA_DIR=%TEMP%\SRM-S4-RESTORE-%RANDOM%"
+python backend\server.py
+\`\`\`
+
+- 此新进程将在临时空白目录建立独立数据库；关闭后用原有快捷方式/批处理在另一窗口正常启动即可切回默认数据目录。
+- This process initializes an isolated blank database; afterward, starting the launcher in a new normal window returns to the default data location.
+- 注意：本机端口 8765 一次只能运行一个服务器。
+- Only one local server can use port 8765 at a time.
+
+### 新 API / New Routes
+
+| Method | Path | Function |
+|---|---|---|
+| POST | \`/api/backups/full\` | Create checked SQLite+PDF ZIP |
+| GET | \`/api/backups/full/{generated-name}\` | Download archive |
+| POST | \`/api/backups/full/restore\` | Verify and restore only if data root empty |
+
+### S4 运行测试 / Run S4 Tests
+
+\`\`\`powershell
+cd prototype\m1-lite
+python -m unittest discover -v -s backend -p "test_*.py"
+node --test tests/supplier_package.test.cjs
+\`\`\`
+
+- Python 单元和 HTTP 测试使用临时数据目录，不读取使用者默认数据。
+- Python unit and HTTP tests use temporary directories and do not access the user's default data.
+- 在 GitHub Actions 成功运行前，不应宣称 CI 已通过；Windows 上的完整业务恢复仍需独立人工验收。
+- Do not claim CI passed without a successful workflow run; Windows business recovery still requires independent buyer acceptance.
