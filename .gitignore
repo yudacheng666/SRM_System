@@ -3,3 +3,18 @@ playwright-report/
 test-results/
 __pycache__/
 *.pyc
+
+# 中文：测试运行产物仅放 GitHub Actions Artifacts，不提交仓库。
+# English: Keep test-generated archives, traces and logs in CI artifacts only.
+**/test-results/
+**/playwright-report/
+docs/evidence/**/runtime/
+docs/evidence/**/*.trace.zip
+docs/evidence/**/server-*.log
+docs/evidence/**/detail-server-*.log
+docs/evidence/**/*.xlsx
+docs/evidence/**/*.png
+docs/evidence/**/*.zip
+docs/evidence/**/*.log
+docs/evidence/**/full-run-results.json
+docs/evidence/**/detail-run-results.json
