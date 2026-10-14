@@ -4,6 +4,8 @@ from __future__ import annotations
 import hashlib
 import secrets
 import json
+import sqlite3
+import tempfile
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -11,7 +13,7 @@ from time import time
 from typing import Any
 
 from backup_bundle import (FORMAT, VERSION, MAX_ARCHIVE, MAX_DATABASE, MAX_FILES, MAX_MANIFEST,
-                           MAX_PDF, HASH, create)
+                           MAX_PDF, HASH, _db_inventory, create)
 from store import SnapshotStore, StoreError
 
 DAY_SECONDS = 24 * 60 * 60
@@ -39,7 +41,10 @@ def _verified_asset_links(path: Path) -> list[dict]:
         if archive.getinfo("manifest.json").file_size > MAX_MANIFEST:
             raise StoreError("AUTO_BACKUP_MANIFEST_TOO_LARGE")
         manifest = json.loads(archive.read("manifest.json").decode("utf-8"))
-        if not isinstance(manifest, dict) or manifest.get("format") != FORMAT or manifest.get("version") != VERSION:
+        # 中文：bool 是 int 的子类；格式版本只允许真正的整数 1。
+        # English: Python True == 1, so require exact int to reject boolean versions.
+        if (not isinstance(manifest, dict) or manifest.get("format") != FORMAT
+                or type(manifest.get("version")) is not int or manifest["version"] != VERSION):
             raise StoreError("AUTO_BACKUP_MANIFEST_FORMAT")
         db = manifest.get("database")
         files = manifest.get("assets")
@@ -81,6 +86,26 @@ def _verified_asset_links(path: Path) -> list[dict]:
                     digest.update(block)
             if digest.hexdigest() != expected_sha:
                 raise StoreError("AUTO_BACKUP_FILE_HASH_MISMATCH")
+
+        # 中文：哈希自洽不等于 SQLite 可以恢复；复用 S4 恢复时的数据库结构和历史校验。
+        # English: Matching manifest hashes do not prove SQLite recoverability.
+        # Reuse the same schema, integrity and history validation as S4 restore.
+        with tempfile.TemporaryDirectory(prefix=".srm-auto-verify-") as temporary:
+            database_path = Path(temporary) / "srm.sqlite3"
+            with archive.open("database/srm.sqlite3") as source, database_path.open("xb") as sink:
+                remaining = db["size"]
+                for chunk in iter(lambda: source.read(min(1024 * 1024, max(remaining, 1))), b""):
+                    remaining -= len(chunk)
+                    if remaining < 0:
+                        raise StoreError("AUTO_BACKUP_DATABASE_OVERFLOW")
+                    sink.write(chunk)
+            if remaining != 0:
+                raise StoreError("AUTO_BACKUP_DATABASE_TRUNCATED")
+            indexed = _db_inventory(database_path)
+        if indexed != links:
+            raise StoreError("AUTO_BACKUP_DATABASE_ASSET_LINK_MISMATCH")
+        if set(file_sizes) != {row["sha256"] for row in indexed}:
+            raise StoreError("AUTO_BACKUP_DATABASE_PDF_SET_MISMATCH")
         return links
 
 
@@ -106,7 +131,7 @@ def run_if_due(store: SnapshotStore, *, now: float | None = None,
         try:
             previous_links = _verified_asset_links(existing[0])
         except (StoreError, OSError, ValueError, TypeError, KeyError, UnicodeError,
-                EOFError, RuntimeError, zipfile.BadZipFile) as exc:
+                EOFError, RuntimeError, sqlite3.DatabaseError, zipfile.BadZipFile) as exc:
             warning = "Previous automatic ZIP is unreadable or corrupt: " + str(exc)
             # 中文：旧文件一律保留，不静默删除或覆盖；必须另建完整新备份。
             # English: Preserve the damaged file and all older backups; create a fresh ZIP.
