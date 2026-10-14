@@ -80,6 +80,9 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
   <button type="button" class="btn soft" id="pilotExportBackup" disabled>备份当前询价 JSON</button>
   <button type="button" class="btn soft" id="pilotExportBackupAll" disabled>备份全部询价 JSON</button>
   <button type="button" class="btn soft" id="pilotExportComplete" disabled>导出询价及 PDF 原件 ZIP（S3）</button>
+  <button type="button" class="btn primary" id="pilotS4DownloadFull" disabled>下载 S4 完整备份（SQLite + PDF）</button>
+  <label class="small">选择 S4 完整备份 ZIP <input type="file" id="pilotS4BackupFile" accept=".zip,application/zip"></label>
+  <button type="button" class="btn" id="pilotS4RestoreFull" disabled>恢复完整备份（仅空白数据）</button>
   <button type="button" class="btn soft" id="pilotExportExcel" disabled>导出业务数据 Excel（3 Sheet）</button>
   <button type="button" class="btn primary" id="pilotReportOpen" disabled>导出询价单 / 比价议价单</button>
   <label class="btn" style="cursor:pointer">选择备份 JSON <input type="file" id="pilotImportBackup" accept=".json,application/json" disabled style="max-width:185px"></label>
@@ -3292,6 +3295,9 @@ renderItemList();renderAssignAll();renderQuotes();
   const exportBtn=document.getElementById("pilotExportBackup");
   const exportAllBtn=document.getElementById("pilotExportBackupAll");
   const exportCompleteBtn=document.getElementById("pilotExportComplete");
+  const s4DownloadBtn=document.getElementById("pilotS4DownloadFull");
+  const s4RestoreBtn=document.getElementById("pilotS4RestoreFull");
+  const s4FileInput=document.getElementById("pilotS4BackupFile");
   const importInput=document.getElementById("pilotImportBackup");
   const restoreBtn=document.getElementById("pilotRestoreBackup");
   const importCompleteInput=document.getElementById("pilotImportComplete");
@@ -3303,7 +3309,7 @@ renderItemList();renderAssignAll();renderQuotes();
   const badge=document.getElementById("pilotModeBadge");
   const rfqHead=document.getElementById("pilotRfqHead");
   let buyerMode=false,workspaceId=null,revision=0,busy=false,dirty=false,localReady=false,blocked=false;
-  let serverActiveId=null;
+  let serverActiveId=null,s4Available=false;
 
   function status(message,isError=false){
     pilotStatus.textContent=message;
@@ -3339,6 +3345,8 @@ renderItemList();renderAssignAll();renderQuotes();
     exportBtn.disabled=!buyerMode||busy||!localReady||dirty;
     exportAllBtn.disabled=!localReady||busy||dirty||blocked;
     exportCompleteBtn.disabled=!localReady||busy||dirty||blocked;
+    s4DownloadBtn.disabled=!s4Available||busy||dirty||blocked;
+    s4RestoreBtn.disabled=!s4Available||busy||blocked||!s4FileInput.files?.length;
     document.getElementById("pilotExportExcel").disabled=!buyerMode||busy||!localReady||dirty;
     document.getElementById("pilotReportOpen").disabled=!buyerMode||busy||!localReady||dirty;
     newBtn.disabled=busy||blocked||!localReady;
@@ -3360,14 +3368,16 @@ renderItemList();renderAssignAll();renderQuotes();
       "S3 离线原型：询价数据保存在电脑 SQLite，仍需点击“保存到本机”":
       "S3 本机原型：演示数据不保存；新建正式询价后可以写入 SQLite";
     document.getElementById("pilotNotice").textContent=buyerMode?
-      "业务数据通过本机 SQLite API 保存；关闭浏览器不会删除已保存记录。仍需手动保存；完整附件备份恢复待 S4。":
+      "业务数据通过本机 SQLite API 保存；仍需手动保存。S4 支持完整 SQLite+PDF 备份，并仅允许恢复至空白目录。":
       "使用 run_local.bat 启动后，可新建正式询价并保存到本机 SQLite。原测试 JSON/ZIP 不迁移。";
-    document.getElementById("pilotFooter").textContent="S3：本机 SQLite + 独立 PDF 图纸；尚未支持报价原始凭证的完整归档和全量恢复。";
+    document.getElementById("pilotFooter").textContent="S4：SQLite + PDF 完整 ZIP 可恢复到空白目录；仍需手动保存，报价原始邮件和截图尚未纳入。";
     document.getElementById("demoExcelImport").disabled=buyerMode;
     document.getElementById("demoQuoteExcel").disabled=buyerMode;
     document.getElementById("demoMatchUpdate").disabled=buyerMode;
     const completeInfo=document.getElementById("pilotCompleteStatus");
-    if(completeInfo)completeInfo.textContent="S3 已启用 SQLite；旧测试备份恢复入口停用。PDF+数据库完整恢复将在 S4 开发。";
+    if(completeInfo)completeInfo.textContent=s4Available?
+      "S4 完整 ZIP 可用于新电脑或空白数据目录恢复；已有询价时系统会拒绝覆盖。旧测试 ZIP 不能作为 S4 完整备份。":
+      "当前本机服务未支持 S4 完整备份，请更新 backend 文件后重启；旧测试备份入口仍停用。";
   }
   async function refreshHistory(){
     if(!localReady)return;
@@ -3602,6 +3612,44 @@ renderItemList();renderAssignAll();renderQuotes();
     }catch(e){status("ZIP 导出失败："+e.message,true)}
     finally{busy=false;buttons()}
   }
+  /* 中文：S4 ZIP 同时包含 SQLite 历史快照和全部已登记的 PDF 原件。
+   * English: Download a versioned SQLite backup plus every indexed original PDF. */
+  async function downloadS4Full(){
+    if(!s4Available||busy||dirty||blocked)return;
+    busy=true;buttons();status("正在生成并校验 S4 完整备份……");
+    try{
+      const created=await api("/api/backups/full",jsonRequest("POST",{}));
+      const download=await fetch(created.downloadUrl,{cache:"no-store"});
+      if(!download.ok)throw Error("下载备份失败（HTTP "+download.status+"）");
+      const data=await download.blob();
+      if(!data.size||data.size!==created.backup.bytes)throw Error("备份下载不完整，大小不一致");
+      downloadFile(data,created.backup.fileName);
+      status("已下载 S4 完整备份："+created.backup.workspaceCount+" 笔询价，"+
+        created.backup.pdfCount+" 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。");
+    }catch(e){status("S4 完整备份失败："+e.message,true)}
+    finally{busy=false;buttons()}
+  }
+  /* 中文：先人工确认再提交；服务端保证只向空白数据目录恢复。
+   * English: Explicit confirmation and server-side empty-target enforcement. */
+  async function restoreS4Full(){
+    if(!s4Available||busy||blocked)return;
+    const file=s4FileInput.files?.[0];
+    if(!file){status("请先选择由 S4 生成的完整 ZIP 备份。",true);return}
+    if(buyerMode){status("当前电脑已有询价，禁止直接恢复覆盖。请在新电脑或独立空白数据目录运行 S4 再恢复。",true);return}
+    if(!confirm("确定向当前【空白】数据库恢复完整 ZIP？系统将校验所有文件；已有数据时拒绝恢复。"))return;
+    busy=true;buttons();status("正在核验完整 ZIP 并恢复空白数据目录……");
+    try{
+      const result=await api("/api/backups/full/restore",
+        {method:"POST",headers:{"Content-Type":"application/zip"},body:file});
+      if(!result.verified||!result.restored)throw Error("服务器未确认完整恢复");
+      status("完整恢复成功："+result.workspaceCount+" 笔询价、"+result.pdfCount+" 个 PDF；正在重新读取……");
+      location.reload();
+    }catch(e){status("完整恢复未成功："+e.message,true)}
+    finally{busy=false;buttons()}
+  }
+  s4DownloadBtn.addEventListener("click",downloadS4Full);
+  s4FileInput.addEventListener("change",buttons);
+  s4RestoreBtn.addEventListener("click",restoreS4Full);
   exportBtn.addEventListener("click",exportBackup);
   exportAllBtn.addEventListener("click",exportAllBackup);
   exportCompleteBtn.addEventListener("click",exportComplete);
@@ -3618,7 +3666,9 @@ renderItemList();renderAssignAll();renderQuotes();
       if(!["localhost","127.0.0.1"].includes(location.hostname)||location.protocol!=="http:")
         throw Error("请通过 run_local.bat 启动，不能直接双击 index.html");
       const health=await api("/api/health");
-      if(health.backend!=="sqlite"||health.stage!=="S3")throw Error("当前本机服务不是 S3 SQLite 版本");
+      if(health.backend!=="sqlite"||!["S3","S4"].includes(health.stage))
+        throw Error("当前本机服务不是 SQLite 版本");
+      s4Available=health.stage==="S4"&&health.features?.fullBackupRestore===true;
       localReady=true;
       const saved=await readSaved();
       if(saved){model.validate(saved);applyWorkspace(saved);status("已从 SQLite 自动恢复："+workspaceId+"（第 "+revision+" 版）。")}
