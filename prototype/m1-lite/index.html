@@ -136,6 +136,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
  </div>
  <div id="pilotSaveStatus" class="small muted" role="status" aria-live="polite">正在检测本机存储能力……</div>
  <div id="pilotAutosaveStatus" class="small muted" role="status" aria-live="polite">自动保存：正在初始化……</div>
+ <div id="pilotAutoBackupStatus" class="small muted" role="status" aria-live="polite">自动备份：正在检查……</div>
  <div class="small muted" style="margin-top:6px">必须先保存到本机，再下载 JSON 文件备份；文件不含原始邮件、PDF 等附件。已有正式工作不允许被导入文件覆盖。</div>
 </div></div>
 
@@ -3302,6 +3303,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   const model=window.M1WorkspaceCore,backup=window.M1Backup;
   const pilotStatus=document.getElementById("pilotSaveStatus");
   const autosaveStatus=document.getElementById("pilotAutosaveStatus");
+  const autoBackupStatus=document.getElementById("pilotAutoBackupStatus");
   const newBtn=document.getElementById("pilotNewWorkspace");
   const saveBtn=document.getElementById("pilotSaveWorkspace");
   const resumeBtn=document.getElementById("pilotResumeWorkspace");
@@ -3339,6 +3341,21 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     autosaveStatus.textContent="自动保存："+message;
     autosaveStatus.className=isError?"small dangertext":"small muted";
   }
+  async function refreshAutoBackupStatus(){
+    if(!localReady||!s4Available)return;
+    try{
+      const info=await api("/api/backups/auto/status");
+      autoBackupStatus.textContent=info.enabled?(info.latestAt?
+        "自动备份：最近 "+new Date(info.latestAt).toLocaleString()+"，保留 "+info.retained+" 份（上限 7 份）":
+        "自动备份：已启用；首次保存后生成完整 SQLite+PDF ZIP，每日最多一次"):
+        "自动备份：当前服务没有启动备份检查";
+      autoBackupStatus.className="small muted";
+    }catch(e){
+      autoBackupStatus.textContent="自动备份：状态获取失败，请检查本机服务器";
+      autoBackupStatus.className="small dangertext";
+    }
+  }
+  setInterval(()=>void refreshAutoBackupStatus(),60000);
   function resetAutosaveBaseline(){
     savedSignature=signature();
     lastObservedSignature=savedSignature;
@@ -3768,9 +3785,17 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       localReady=true;
       const saved=await readSaved(true);
       if(saved){model.validate(saved);applyWorkspace(saved);status("已从 SQLite 自动恢复："+workspaceId+"（第 "+revision+" 版）。")}
-      else status("SQLite 当前为空；点击“新建空白正式工作”开始使用。旧浏览器测试数据不迁移。");
+      else{
+        autosaveLabel("演示数据不会自动保存；请先新建正式询价");
+        status("SQLite 当前为空；点击“新建空白正式工作”开始使用。旧浏览器测试数据不迁移。");
+      }
       await refreshHistory();
-    }catch(e){blocked=true;localReady=false;status("SQLite 服务不可用，禁止正式操作："+e.message,true)}
+      await refreshAutoBackupStatus();
+    }catch(e){
+      blocked=true;localReady=false;
+      autosaveLabel("本机服务不可用，无法保存",true);
+      status("SQLite 服务不可用，禁止正式操作："+e.message,true);
+    }
     finally{buttons()}
   })();
   window.SRMPilot=Object.freeze({snapshot:()=>buyerMode?readState():null,isBuyer:()=>buyerMode,revision:()=>revision,
