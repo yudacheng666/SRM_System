@@ -313,7 +313,7 @@ def main() -> None:
     server = create_server()
     url = f"http://{HOST}:{server.server_port}/"
     print(f"SRM local prototype: {url}", flush=True)
-    print("S3 SQLite API active. Run the SRM page through this local server, never file://.", flush=True)
+    print("S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.", flush=True)
     print("SQLite API check: " + url + "storage-check", flush=True)
     # 中文：本机服务直接打开业务原型；关闭服务后数据仍保存在 SQLite。
     # English: Open the app; the local SQLite database persists after service shutdown.
