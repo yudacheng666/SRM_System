@@ -1,6 +1,6 @@
 # 中文：仅测试开发分支，使用虚构数据；不访问生产系统。
 # English: Development-branch-only synthetic regression; no production data.
-name: SRM S3 Regression
+name: SRM S3/S4 Regression
 on:
   push:
     branches:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   regression:
-    name: SQLite and supplier ZIP regression on Windows
+    name: SQLite S4 restore and supplier ZIP regression on Windows
     runs-on: windows-latest
     timeout-minutes: 10
     steps:
@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run SQLite and local API unit tests
+      - name: Run SQLite, full backup/restore and local API tests
         run: python -m unittest discover -v -s prototype/m1-lite/backend -p "test_*.py"
       - name: Run supplier ZIP and PDF regression
         run: node --test prototype/m1-lite/tests/supplier_package.test.cjs
