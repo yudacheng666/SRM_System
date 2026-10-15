@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SRM-Lite · 采购询价工作台 UI V1</title>
+<title>SRM-Lite · 采购询价工作台 UI V2 B1</title>
 <style>
 :root{--bg:#f5f7fb;--panel:#fff;--line:#dfe4ec;--text:#1f2937;--muted:#6b7280;--primary:#2563eb;--soft:#eff6ff;--warn:#b45309;--danger:#b91c1c;--ok:#047857}
 *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
@@ -148,10 +148,147 @@ body.ui-buyer-mode #pilotNotice{font-size:11px;padding:4px 9px}
  body.ui-buyer-mode #pilotControls>.cardbody{grid-template-columns:1fr}
  body.ui-buyer-mode #pilotControls :is(.ui-projectDetails,.ui-drawer)[open]{grid-column:1}
 }
+
+/* 中文：UI V2 B 第一批只提供视觉结构，不替换业务节点、处理器或本地保存逻辑。 */
+/* English: UI V2 B batch one changes presentation only; all business IDs, handlers and persistence remain intact. */
+body.srm-v2{
+  --bg:#f3f6fa;--panel:#ffffff;--line:#dfe5ee;--text:#334155;--muted:#65758b;
+  --primary:#175cd3;--soft:#eaf2ff;--warn:#a66300;--danger:#b42318;--ok:#087f5b;
+  color:#334155;background:var(--bg);font:14px/1.5 "Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+}
+body.srm-v2 :is(button,input,select,textarea):focus-visible,
+body.srm-v2 :is(summary,[tabindex]):focus-visible{outline:2px solid #94beff;outline-offset:2px}
+body.srm-v2 .app{max-width:none;margin:0;padding:0 24px 28px 246px;min-width:0}
+body.srm-v2 .srm-v2-sidebar{
+  position:fixed;left:0;top:0;bottom:0;z-index:25;width:222px;background:#14243a;color:#b9cadd;
+  display:flex;flex-direction:column;padding:27px 14px 18px;border-right:1px solid #253b55;
+}
+body.srm-v2 .srm-v2-brand{font-size:22px;font-weight:800;letter-spacing:-.045em;color:#fff;padding:0 12px}
+body.srm-v2 .srm-v2-brand small{font-size:10px;letter-spacing:.12em;margin-left:7px;color:#9caec4}
+body.srm-v2 .srm-v2-descriptor{margin:1px 12px 31px;color:#94a9c1;font-size:11px}
+body.srm-v2 .srm-v2-navlabel{font-size:10px;letter-spacing:.14em;color:#8297b0;font-weight:750;margin:0 12px 10px}
+body.srm-v2 .srm-v2-sideitem{
+  display:flex;align-items:center;gap:12px;width:100%;border:0;border-radius:6px;padding:11px 12px;
+  margin:1px 0;color:#b9cadd;text-align:left;background:transparent;font:600 13px/1.35 "Segoe UI","Microsoft YaHei",sans-serif;
+}
+body.srm-v2 .srm-v2-sideitem:hover{background:#233a56;color:#fff}
+body.srm-v2 .srm-v2-sideitem[aria-current="page"]{background:#284568;color:#fff}
+body.srm-v2 .srm-v2-icon{display:inline-grid;place-items:center;width:19px;min-width:19px;font-size:15px}
+body.srm-v2 .srm-v2-sidefooter{margin-top:auto;padding:14px 12px 0;border-top:1px solid #34475f;color:#9aacbf;font-size:11px}
+body.srm-v2 .srm-v2-sidedivider{margin:17px 12px 19px;border:0;border-top:1px solid #35475d}
+body.srm-v2 .ui-appHeader{
+  margin:0 -24px 13px;padding:15px 24px 14px;min-height:73px;background:#fff;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:16px;
+}
+body.srm-v2 .ui-brand{min-width:190px}
+body.srm-v2 .ui-eyebrow{font-size:10px;color:#346fb9;letter-spacing:.12em;margin-bottom:2px}
+body.srm-v2 .ui-appHeader h1{font-size:20px;line-height:1.3;letter-spacing:-.035em;color:#17263e;margin:0}
+body.srm-v2 #pilotSubtitle{font-size:12px;line-height:1.4}
+body.srm-v2 .ui-headActions{gap:9px}
+body.srm-v2 .ui-headActions .btn,body.srm-v2 .ui-headActions .tab{
+  color:#334155;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:600;
+  padding:8px 11px;border-radius:6px;box-shadow:none;
+}
+body.srm-v2 #pilotModeBadge{border-radius:5px;padding:6px 9px;background:#eef3fa;color:#44546b}
+body.srm-v2 .ui-context{
+  padding:9px 15px;border:1px solid var(--line);border-radius:7px;background:#fff;
+  margin-bottom:10px;box-shadow:none;
+}
+body.srm-v2 .ui-context b{font-size:16px;color:#17263e}
+body.srm-v2 .ui-context small{font-size:12px;color:#65758b}
+body.srm-v2 .ui-contextRight small{font-size:12px}
+body.srm-v2 #pilotNotice{font-size:12px;border-radius:6px;padding:7px 11px;margin-bottom:10px!important}
+body.srm-v2 .card{border-radius:7px;border-color:var(--line);box-shadow:none}
+body.srm-v2 .cardhead{padding:12px 16px;border-bottom:1px solid var(--line)}
+body.srm-v2 .cardbody{padding:13px 16px}
+body.srm-v2 .btn{min-height:34px;border-radius:6px;padding:7px 11px;font-size:12px;font-weight:650;box-shadow:none}
+body.srm-v2 .btn.primary{background:#175cd3;color:#fff;border-color:#175cd3}
+body.srm-v2 .btn.primary:hover{background:#124aa9}
+body.srm-v2 .btn.soft{background:#f4f7fd;color:#2459a6;border:1px solid #d9e5f7}
+body.srm-v2 .btn.danger{color:#b42318;background:#fff;border:1px solid #f0d7d3}
+body.srm-v2 :is(input[type=text],select,textarea){border-radius:6px;border-color:#d8e1ec}
+body.srm-v2 .ui-workNav{position:sticky;top:0;background:rgba(243,246,250,.97);padding:5px 0 1px}
+body.srm-v2 .ui-workNav .tabs{
+  display:flex;gap:0;align-items:stretch;border-bottom:1px solid var(--line);margin:0 0 14px;
+}
+body.srm-v2 .ui-workNav .tab{
+  flex:0 1 auto;border:0;background:transparent;border-radius:0;color:#65758b;min-height:43px;
+  padding:9px 18px 10px;font-size:13px;font-weight:650;box-shadow:none;position:relative;
+}
+body.srm-v2 .ui-workNav .tab.active{color:#175cd3;background:transparent}
+body.srm-v2 .ui-workNav .tab.active:after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:3px;background:#175cd3}
+body.srm-v2 #pilotControls{border-radius:7px!important;border:1px solid var(--line);margin-bottom:10px!important}
+body.srm-v2 #pilotControls>.cardbody{padding:8px 11px}
+body.srm-v2 .ui-projectDetails,body.srm-v2 .ui-drawer{border-radius:6px;border-color:#dfe5ee}
+body.srm-v2 .ui-projectDetails>summary,body.srm-v2 .ui-drawer>summary{color:#425573;font-size:12px}
+body.srm-v2.ui-buyer-mode #pilotControls>.cardbody{gap:8px}
+body.srm-v2 .tablewrap{border:1px solid #e4e9f1;border-radius:6px;max-width:100%;background:#fff}
+body.srm-v2 .table{font-size:13px}
+body.srm-v2 .table th{color:#64748b;background:#f7f9fc;font-size:12px;font-weight:700}
+body.srm-v2 .table th,body.srm-v2 .table td{padding:9px 11px;border-bottom:1px solid #edf1f6}
+body.srm-v2 .table tr:hover td{background:#f2f7ff}
+body.srm-v2 #items .tablewrap thead tr:first-child th{background:#f7f9fc}
+body.srm-v2 #items .tablewrap thead tr:nth-child(2) th{background:#fbfcfe}
+body.srm-v2 #items>.card .cardhead{gap:9px;padding:11px 15px}
+body.srm-v2 #items>.card .cardhead>.toolbar{display:flex;align-items:center;gap:7px;flex:1;min-width:0}
+body.srm-v2 #itemSearch{flex:1 1 200px;min-width:160px;max-width:400px}
+body.srm-v2 #toggleItemIntake{
+  order:-1;background:#175cd3;color:#fff;border-color:#175cd3;font-weight:700
+}
+body.srm-v2 #toggleItemIntake:hover{background:#124aa9}
+body.srm-v2 #toggleFieldTools{background:#f8fafd}
+body.srm-v2 #items .selectionBar{display:flex;gap:5px;align-items:center;flex-wrap:wrap;margin:8px 0 9px}
+body.srm-v2 #items .selectionBar::before{content:"批量选择";font-weight:700;font-size:12px;color:#67798e;margin-right:6px}
+body.srm-v2 #items .selectionBar .btn{font-size:12px;padding:5px 9px;background:#f8fafc}
+body.srm-v2 #items .selectionBar .btn.danger{color:#b42318;background:#fff}
+body.srm-v2 #items>.card>.cardbody{padding:12px 15px}
+body.srm-v2 .pager{font-size:12px;color:#65758b}
+body.srm-v2 .pageNum{border-radius:5px}
+body.srm-v2 .pageNum.active{background:#e7f0ff;color:#175cd3;border-color:#c9defb}
+body.srm-v2 #items .ui-panelLead{border-radius:7px;background:#fff}
+body.srm-v2 .ui-drawer[open]>summary{background:#f3f7fe;border-radius:6px 6px 0 0}
+body.srm-v2 .modalCard{border-radius:8px}
+@media (max-width:1090px){
+ body.srm-v2 .app{padding-left:86px}
+ body.srm-v2 .srm-v2-sidebar{width:64px;padding:22px 7px}
+ body.srm-v2 .srm-v2-brand{font-size:15px;padding:0 5px}
+ body.srm-v2 .srm-v2-brand small,body.srm-v2 .srm-v2-descriptor,body.srm-v2 .srm-v2-navlabel,
+ body.srm-v2 .srm-v2-sideitem .srm-v2-word,body.srm-v2 .srm-v2-sidefooter{display:none}
+ body.srm-v2 .srm-v2-sideitem{justify-content:center;padding:12px 8px}
+ body.srm-v2 .srm-v2-sidedivider{margin:13px 6px}
+}
+@media (max-width:700px){
+ body.srm-v2 .app{padding:0 12px 24px}
+ body.srm-v2 .srm-v2-sidebar{display:none}
+ body.srm-v2 .ui-appHeader{margin:0 -12px 10px;padding:11px 12px;flex-wrap:wrap}
+ body.srm-v2 .ui-workNav .tabs{overflow-x:auto;white-space:nowrap}
+ body.srm-v2 .ui-workNav .tab{padding:9px 12px;font-size:12px}
+ body.srm-v2 #items>.card .cardhead>.toolbar{gap:6px}
+ body.srm-v2 #itemSearch{max-width:none}
+}
+
 </style>
 </head>
-<body>
+<body class="srm-v2">
 <div class="app">
+  <!-- 中文：可见侧边导航只代理既有按钮，不复制 RFQ 或数据模型。 -->
+  <!-- English: The visible sidebar delegates to existing tab/action controls; no duplicated business state. -->
+  <aside class="srm-v2-sidebar" aria-label="SRM 功能导航">
+    <div class="srm-v2-brand">SRM <small>STUDIO</small></div>
+    <div class="srm-v2-descriptor">采购协同 · 内部工作台</div>
+    <div class="srm-v2-navlabel">工作空间</div>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-action="project" aria-label="打开询价项目"><span class="srm-v2-icon" aria-hidden="true">▤</span><span class="srm-v2-word">询价项目</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="items" aria-label="物料与图纸" aria-current="page"><span class="srm-v2-icon" aria-hidden="true">▦</span><span class="srm-v2-word">物料与图纸</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="assign" aria-label="供应商与分配"><span class="srm-v2-icon" aria-hidden="true">♧</span><span class="srm-v2-word">供应商分配</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="quoteImport" aria-label="报价回收"><span class="srm-v2-icon" aria-hidden="true">▣</span><span class="srm-v2-word">报价回收</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="quotes" aria-label="比价议价"><span class="srm-v2-icon" aria-hidden="true">▥</span><span class="srm-v2-word">比价议价</span></button>
+    <hr class="srm-v2-sidedivider">
+    <div class="srm-v2-navlabel">管理工具</div>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-action="admin" aria-label="数据与备份"><span class="srm-v2-icon" aria-hidden="true">◫</span><span class="srm-v2-word">数据与备份</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="settings" aria-label="字段设置"><span class="srm-v2-icon" aria-hidden="true">⚙</span><span class="srm-v2-word">字段设置</span></button>
+    <div class="srm-v2-sidefooter">● 本地工作台<br>UI V2 · 第一批</div>
+  </aside>
+
   <header class="top ui-appHeader">
     <div class="ui-brand">
       <div class="ui-eyebrow">SRM / RFQ WORKSPACE</div>
@@ -4450,6 +4587,36 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   observer.observe(one("pilotRfqHead"),{childList:true,characterData:true,subtree:true});
   observer.observe(one("pilotModeBadge"),{childList:true,characterData:true,subtree:true});
   syncTitle();
+})();
+</script>
+
+<script>
+/* 中文：V2 侧边菜单只调用原工作台已有操作；原 tab 点击继续承担业务重绘。 */
+/* English: V2 sidebar invokes existing application controls; original tab handlers still redraw state. */
+(function(){
+  "use strict";
+  const buttons=Array.from(document.querySelectorAll(".srm-v2-sideitem[data-srm-v2-tab]"));
+  const original=id=>Array.from(document.querySelectorAll(".tab")).find(el=>el.dataset.tab===id);
+  function sync(){
+    const current=document.querySelector(".ui-workNav .tab.active")?.dataset.tab||
+      document.querySelector(".tab.active")?.dataset.tab||"items";
+    buttons.forEach(el=>{
+      if(el.dataset.srmV2Tab===current)el.setAttribute("aria-current","page");
+      else el.removeAttribute("aria-current");
+    });
+  }
+  buttons.forEach(el=>el.addEventListener("click",()=>{
+    const target=original(el.dataset.srmV2Tab);
+    if(target){target.click();sync();}
+  }));
+  document.querySelectorAll(".tab").forEach(el=>el.addEventListener("click",sync));
+  document.querySelector('[data-srm-v2-action="project"]')?.addEventListener("click",()=>{
+    document.getElementById("uiProjectJump")?.click();
+  });
+  document.querySelector('[data-srm-v2-action="admin"]')?.addEventListener("click",()=>{
+    document.getElementById("uiAdminToggle")?.click();
+  });
+  sync();
 })();
 </script>
 </body>
