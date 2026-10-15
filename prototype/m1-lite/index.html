@@ -2337,7 +2337,7 @@ function itemCell(it){
 function bindDrawingThumbs(){document.querySelectorAll("[data-drawing]").forEach(b=>b.onclick=e=>{e.stopPropagation();openDrawing(b.dataset.drawing)})}
 /** 中文：物料双击编辑只以稳定 RFQ Line ID 定位；已有任何报价行或确认范围时禁止覆盖。
  * English: Edit via stable RFQ Line ID; block mutation of quoted lines or confirmed scope. */
-let editingItemLineId=null;
+let editingItemLineId=null,itemEditOpeningValues=null;
 function itemHasAnyQuoteHistory(lineId){
   return quoteRounds.some(r=>r.lines.some(x=>x.lineId===lineId)||(r.status==="confirmed"&&(r.expectedLineIds||[]).includes(lineId)));
 }
@@ -2349,10 +2349,19 @@ function openItemEditor(lineId){
   itemEditHint.textContent=locked?"此询价行已有报价历史，当前只允许查看；请在后续正式修订流程中变更。":"当前属性带出该行原值。M0 尚未接入 ERP 主数据，修改存货编码不会自动更新其他 ERP 属性，也不会合并其他相同编码询价行。";
   for(const input of [itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditCat,itemEditUnit])input.disabled=locked;
   itemEditSave.disabled=locked;itemEditError.textContent="";
+  // 中文：记录当前编辑框初值；Esc/取消只在实际修改过时询问，避免意外丢弃输入。
+  // English: Snapshot input values so Escape/cancel can protect dirty edits without blocking untouched dialogs.
+  itemEditOpeningValues=[itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditCat,itemEditUnit].map(x=>x.value);
   itemEditModal.classList.add("open");itemEditModal.setAttribute("aria-hidden","false");
   if(!locked)itemEditCode.focus();
 }
-function closeItemEditor(){editingItemLineId=null;itemEditModal.classList.remove("open");itemEditModal.setAttribute("aria-hidden","true")}
+function closeItemEditor(force=false){
+  if(!itemEditModal.classList.contains("open"))return;
+  const changed=itemEditOpeningValues&&[itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditCat,itemEditUnit].some((x,i)=>x.value!==itemEditOpeningValues[i]);
+  if(!force&&changed&&!confirm("该物料有未保存的编辑。确定放弃修改并关闭窗口吗？"))return;
+  editingItemLineId=null;itemEditOpeningValues=null;
+  itemEditModal.classList.remove("open");itemEditModal.setAttribute("aria-hidden","true");
+}
 function saveItemEdit(){
   const it=items.find(x=>x.lineId===editingItemLineId);if(!it)return;
   if(itemHasAnyQuoteHistory(it.lineId)){itemEditError.textContent="该行已有报价历史，不能原位修改。";return}
@@ -2363,7 +2372,7 @@ function saveItemEdit(){
   // English: Code edits never silently merge RFQ lines or claim ERP master autofill.
   it.id=code;it.drawingNo=itemEditDrawingNo.value.trim();it.qty=qty.value;it.name=itemEditName.value.trim();it.cat=itemEditCat.value.trim();it.unit=unit;
   it.sources=it.sources||[];it.sources.push({source:"人工编辑（原位修改）",qty:it.qty});
-  closeItemEditor();renderItemList();renderAssignAll();renderQuotes();
+  closeItemEditor(true);renderItemList();renderAssignAll();renderQuotes();
 }
 itemEditClose.onclick=closeItemEditor;itemEditCancel.onclick=closeItemEditor;itemEditSave.onclick=saveItemEdit;
 itemEditModal.onclick=e=>{if(e.target===itemEditModal)closeItemEditor()};
@@ -2427,6 +2436,51 @@ drawingFit.onclick=()=>{drawingState.scale=1;renderDrawingPdf()};
 function closeDrawingModal(){realPdfRenderSeq++;revokeRealPdf();drawingModal.classList.remove("open");drawingModal.setAttribute("aria-hidden","true")}
 closeDrawing.onclick=closeDrawingModal;drawingModal.onclick=e=>{if(e.target===drawingModal)closeDrawingModal()};
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeDrawingModal();if(document.getElementById("rfqPreviewModal")?.classList.contains("open"))closeRfqPreview.click()}});
+/** 中文：全部原生页面内弹窗使用统一焦点约束、Esc、返回焦点；保留各自原有关闭/脏数据规则。
+ * English: Trap keyboard focus for actual dialogs, support Escape, and restore previous focus without bypassing dirty-edit confirmation. */
+(function bindDialogKeyboard(){
+  const closeIds={itemEditModal:"itemEditClose",drawingModal:"closeDrawing",rfqPreviewModal:"closeRfqPreview",awardReasonModal:"awardReasonClose"};
+  const selector='button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])';
+  const openModal=()=>[...document.querySelectorAll(".modalBackdrop.open")].at(-1)||null;
+  const focusable=modal=>[...modal.querySelectorAll(selector)].filter(el=>el.getClientRects().length&&getComputedStyle(el).visibility!=="hidden");
+  let outsideFocus=null,activeDialogs=new Set(),lastOpener=new Map();
+  document.addEventListener("focusin",e=>{
+    const modal=openModal();
+    if(!modal){if(e.target instanceof HTMLElement)outsideFocus=e.target;return}
+    if(!modal.contains(e.target)){const target=focusable(modal)[0];if(target)target.focus({preventScroll:true})}
+  },true);
+  const tracker=new MutationObserver(()=>{
+    for(const modal of document.querySelectorAll(".modalBackdrop")){
+      const opened=modal.classList.contains("open")&&modal.getAttribute("aria-hidden")==="false";
+      if(opened&&!activeDialogs.has(modal)){
+        activeDialogs.add(modal);lastOpener.set(modal,outsideFocus);
+        if(!modal.contains(document.activeElement)){focusable(modal)[0]?.focus({preventScroll:true})}
+      }else if(!opened&&activeDialogs.has(modal)){
+        activeDialogs.delete(modal);
+        const target=lastOpener.get(modal);
+        lastOpener.delete(modal);
+        if(target?.isConnected&&typeof target.focus==="function")target.focus({preventScroll:true});
+        else document.getElementById("itemSearch")?.focus({preventScroll:true});
+      }
+    }
+  });
+  document.querySelectorAll(".modalBackdrop").forEach(x=>tracker.observe(x,{attributes:true,attributeFilter:["class","aria-hidden"]}));
+  document.addEventListener("keydown",e=>{
+    const modal=openModal();if(!modal)return;
+    if(e.key==="Escape"){
+      e.preventDefault();e.stopImmediatePropagation();
+      const close=document.getElementById(closeIds[modal.id]);if(close)close.click();
+      return;
+    }
+    if(e.key!=="Tab")return;
+    const targets=focusable(modal),first=targets[0],last=targets.at(-1);
+    if(!first){e.preventDefault();return}
+    const active=document.activeElement;
+    if(!modal.contains(active)){e.preventDefault();(e.shiftKey?last:first).focus();return}
+    if(e.shiftKey&&active===first){e.preventDefault();last.focus()}
+    else if(!e.shiftKey&&active===last){e.preventDefault();first.focus()}
+  },true);
+})();
 function parsePositiveNumber(raw,label){
   const s=String(raw??"").trim();if(!s)return{value:null,error:label+"不能为空"};
   const n=Number(s);if(!Number.isFinite(n)||n<=0)return{value:null,error:label+"必须是大于0的数字"};return{value:n,error:null};
