@@ -63,3 +63,13 @@ jobs:
           if ($data | Where-Object { $_ -ge 128 }) { throw "Windows launcher contains non-ASCII bytes" }
           $content = [System.Text.Encoding]::ASCII.GetString($data)
           if (-not $content.Contains('%~dp0backend\server.py')) { throw "Windows launcher relative path changed" }
+      - name: Validate isolated V2 pilot launcher does not use normal data directory
+        shell: pwsh
+        run: |
+          $pilot = [System.IO.File]::ReadAllBytes("prototype/m1-lite/run_ui_v2_pilot.bat")
+          if ($pilot | Where-Object { $_ -ge 128 }) { throw "Review launcher contains non-ASCII bytes" }
+          $text = [System.Text.Encoding]::ASCII.GetString($pilot)
+          if (-not $text.Contains('SRM_DATA_DIR')) { throw "Isolated pilot data override missing" }
+          if (-not $text.Contains('SRM-Lite-V2-Review')) { throw "Isolated review data folder missing" }
+          if (-not $text.Contains('%~dp0backend\server.py')) { throw "Pilot relative backend path lost" }
+          if ($text.Contains('rd /s') -or $text.Contains('rmdir /s')) { throw "Review script must not delete trial data" }
