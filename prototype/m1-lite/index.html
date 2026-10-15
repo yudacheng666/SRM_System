@@ -2906,9 +2906,13 @@ function exportMissingCsv(round){
   document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 exportQuoteMissing.onclick=()=>{const r=currentQuoteRound();if(r)exportMissingCsv(r)};
-function showQuotePreview(rows){
+/** 中文：录入方式随预览行流转，独立于供应商原始凭证类型。
+ * English: Keep actual entry method through review independently of supplier evidence type. */
+function showQuotePreview(rows,entryMethod="file"){
   const round=currentQuoteRound();if(!round||round.status==="confirmed"){alert("已确认提交不可再导入；请新增本轮新版本。");return}
-  quoteImportPreviewRows=validateQuotePreview(rows).map((validated,i)=>({...validated,_rawInput:rows[i]}));quoteImportFeedback.textContent="以下为待确认数据，请检查每行错误。";quoteImportPreview.style.display="block";
+  quoteImportPreviewRows=validateQuotePreview(rows).map((validated,i)=>({...validated,_rawInput:rows[i],_entryMethod:entryMethod}));
+  const labels={manual:"单条手工录入",paste:"表格粘贴",file:"文件导入",demo:"虚构演示"};
+  quoteImportFeedback.textContent="录入方式："+(labels[entryMethod]||"未知")+"；以下为待确认数据，请检查每行错误。";quoteImportPreview.style.display="block";
   renderQuotePreviewTable();
   renderCoverageResult(coverageFromRows(round,quoteImportPreviewRows));
 }
@@ -2953,7 +2957,7 @@ function renderQuoteRound(){
   for(const el of [quoteEvidenceType,quoteEvidenceNote,quoteTermsNote])el.disabled=round.status==="confirmed";
   quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮 · 第${round.revisionNo}版</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认/锁定":"草稿"}</span><div class="small" style="margin-top:5px">轮次表示议价阶段；版本表示同一轮报价的更正提交。已确认提交不可覆盖修改。</div>`;
   quoteRoundHint.textContent=`本轮应报价范围 ${expected.length} 项；当前提交已记录 ${round.lines.length} 项。`;renderCoverageResult(coverageFromRows(round,round.lines));
-  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=l.source==="carry"?"明确沿用上轮":l.source==="manual"?"手工修正":l.source==="revision-copy"?"复制自上一版":"导入",prev=round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td>${esc(l.remark||"")}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="12" class="muted">当前提交还没有报价记录。</td></tr>';
+  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=({carry:"明确沿用上轮",manual:"手工录入/修正",paste:"表格粘贴",file:"文件导入",demo:"虚构演示","revision-copy":"复制自上一版",import:"旧记录（来源未细分）"})[l.source]||"历史记录（来源未知）",prev=round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td>${esc(l.remark||"")}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="12" class="muted">当前提交还没有报价记录。</td></tr>';
   document.querySelectorAll("[data-edit-quote]").forEach(b=>b.onclick=()=>editQuoteLine(Number(b.dataset.editQuote)));
   carryForwardMissing.disabled=round.roundNo===1||round.status==="confirmed";editRoundScope.disabled=round.roundNo===1||round.status==="confirmed";confirmQuoteRound.disabled=round.status==="confirmed";commitQuoteImport.disabled=round.status==="confirmed";renderQuotes();
 }
@@ -2993,13 +2997,13 @@ scopeClearAll.onclick=()=>quoteScopeList.querySelectorAll("[data-scope-line]").f
 closeRoundScope.onclick=()=>quoteScopeEditor.style.display="none";
 saveRoundScope.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;r.expectedLineIds=[...quoteScopeList.querySelectorAll("[data-scope-line]:checked")].map(x=>x.dataset.scopeLine);r.lines=r.lines.filter(x=>r.expectedLineIds.includes(x.lineId));quoteScopeEditor.style.display="none";renderQuoteRound()};
 confirmQuoteRound.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;if(!r.lines.length){alert("当前提交没有报价记录。");return}if(quoteTermsNote.value.length>4000||quoteEvidenceNote.value.length>4000){alert("本轮备注超过 4000 字，请精简后确认。");return}r.evidenceType=quoteEvidenceType.value;r.evidenceNote=quoteEvidenceNote.value.trim();r.termsNote=quoteTermsNote.value.trim();const cov=coverageFromRows(r,r.lines);if((cov.missing.length||cov.extras.length||cov.duplicates.length)&&!confirm(`覆盖检查仍有异常：漏报 ${cov.missing.length} 项，多报 ${cov.extras.length} 项，重复 ${cov.duplicates.length} 项。仍要确认并锁定本次提交吗？`))return;r.status="confirmed";r.confirmedAt=new Date().toISOString();reconcileAwardsAfterQuote();renderQuoteRoundSelector()};
-quoteManualAdd.onclick=()=>showQuotePreview([{itemRef:quoteManualItem.value.trim(),price:quoteManualPrice.value.trim(),lead:quoteManualLead.value.trim(),moq:quoteManualMoq.value.trim(),status:quoteManualStatus.value,remark:quoteManualRemark.value.trim()}]);
-quoteParsePaste.onclick=()=>{quoteFileFeedback.textContent="";const rows=parseQuoteRows(quotePaste.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到报价记录，请检查表头和数据。");return}showQuotePreview(rows)};
+quoteManualAdd.onclick=()=>showQuotePreview([{itemRef:quoteManualItem.value.trim(),price:quoteManualPrice.value.trim(),lead:quoteManualLead.value.trim(),moq:quoteManualMoq.value.trim(),status:quoteManualStatus.value,remark:quoteManualRemark.value.trim()}],"manual");
+quoteParsePaste.onclick=()=>{quoteFileFeedback.textContent="";const rows=parseQuoteRows(quotePaste.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到报价记录，请检查表头和数据。");return}showQuotePreview(rows,"paste")};
 quoteReadClipboard.onclick=async()=>{try{quotePaste.value=await navigator.clipboard.readText();quoteParsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请按 Ctrl+V 粘贴。")}};
 quoteClearInput.onclick=()=>{quotePaste.value=""};quoteClearPreview.onclick=clearQuoteImportPreview;clearQuotePreview2.onclick=clearQuoteImportPreview;
 toggleQuoteMapping.onclick=()=>{quoteMappingBox.style.display=quoteMappingBox.style.display==="none"?"block":"none"};
 saveQuoteMapping.onclick=()=>{quoteMappingHint.textContent="仅预览（未保存到系统）："+[mapItemRef.value,mapPrice.value,mapLead.value,mapMoq.value,mapStatus.value].join(" → ")};
-demoQuoteExcel.onclick=()=>{const a=assignedItemsForSupplier(quoteImportSupplier.value);showQuotePreview([{itemRef:a[0]?.lineId||items[0].lineId,price:"1-9:118|10-49:108.5|50+:98",lead:"7",moq:"1",status:"quoted"},{itemRef:a[1]?.lineId||items[1].lineId,price:"108.50",lead:"10",moq:"5",status:"quoted"}])};
+demoQuoteExcel.onclick=()=>{const a=assignedItemsForSupplier(quoteImportSupplier.value);showQuotePreview([{itemRef:a[0]?.lineId||items[0].lineId,price:"1-9:118|10-49:108.5|50+:98",lead:"7",moq:"1",status:"quoted"},{itemRef:a[1]?.lineId||items[1].lineId,price:"108.50",lead:"10",moq:"5",status:"quoted"}],"demo")};
 quoteImportFile.onchange=()=>{
   const file=quoteImportFile.files?.[0];if(!file)return;
   // 中文：拒绝文件之前清空旧预览，防止采购员误将之前的虚构报价提交。
@@ -3012,7 +3016,7 @@ quoteImportFile.onchange=()=>{
   }
   const r=new FileReader();
   r.onerror=()=>{quoteFileFeedback.textContent="文件读取失败，没有导入任何报价。";quoteImportFile.value=""};
-  r.onload=()=>{const rows=parseQuoteRows(r.result);if(rows._headerErrors?.length){quoteFileFeedback.textContent=rows._headerErrors.join("；");alert(quoteFileFeedback.textContent);return}showQuotePreview(rows)};
+  r.onload=()=>{const rows=parseQuoteRows(r.result);if(rows._headerErrors?.length){quoteFileFeedback.textContent=rows._headerErrors.join("；");alert(quoteFileFeedback.textContent);return}showQuotePreview(rows,"file")};
   r.readAsText(file);
 };
 /** 中文：仅提交明确校验通过的报价，部分提交必须告知全部拒绝行并由采购员确认。
@@ -3021,8 +3025,9 @@ function planQuoteImportCommit(rows){
   const checked=validateQuotePreview(rows.map(r=>r._rawInput||r));
   const valid=[],skipped=[];
   checked.forEach((r,i)=>{
-    if(["已报价","明确未报价","不供货"].includes(r.coverageCheck)&&!r.errors.length)valid.push({...r,_rawInput:rows[i]._rawInput||rows[i]});
-    else skipped.push({...r,_rawInput:rows[i]._rawInput||rows[i]});
+    const candidate={...r,_rawInput:rows[i]._rawInput||rows[i],_entryMethod:rows[i]._entryMethod||"import"};
+    if(["已报价","明确未报价","不供货"].includes(r.coverageCheck)&&!r.errors.length)valid.push(candidate);
+    else skipped.push(candidate);
   });
   return{valid,skipped,total:checked.length};
 }
@@ -3036,7 +3041,7 @@ commitQuoteImport.onclick=()=>{
     const details=plan.skipped.slice(0,8).map(x=>String(x._rowNo||"手工")+" 行 "+String(x.itemRef||"") + "：" + (x.errors.join("；")||x.coverageCheck)).join("\n");
     if(!confirm("本次共 "+plan.total+" 行，可提交 "+plan.valid.length+" 行，拒绝/待检查 "+plan.skipped.length+" 行。\n以下错误行不会保存，完整清单留在预览中：\n"+details+(plan.skipped.length>8?"\n……剩余 "+(plan.skipped.length-8)+" 行见预览":"")+"\n是否只提交 "+plan.valid.length+" 行？"))return;
   }
-  plan.valid.forEach(x=>upsertRoundLine(r,x,"import"));
+  plan.valid.forEach(x=>upsertRoundLine(r,x,x._entryMethod));
   renderQuoteRound();
   if(plan.skipped.length){
     quoteImportPreviewRows=plan.skipped;quoteImportPreview.style.display="block";
