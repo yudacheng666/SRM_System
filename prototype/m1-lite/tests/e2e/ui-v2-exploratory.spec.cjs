@@ -107,6 +107,8 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
         documentWidth:document.documentElement.scrollWidth,
         sidebar:rect(sidebar),app:rect(content),appContentLeft:content.getBoundingClientRect().x+parseFloat(getComputedStyle(content).paddingLeft),panel:rect(panel),
         table:rect(table),tablewrap:rect(tablewrap),
+        firstDataRow:rect(panel.querySelector('#assignItemBody tr')),
+        quoteIntake:rect(panel.querySelector('.quoteImportGrid')),
         tableScrollable:!!tablewrap&&tablewrap.scrollWidth>tablewrap.clientWidth+2,
         panelButtons:actionable.length,
         hiddenOffscreenControls:outOfViewport,
@@ -120,7 +122,21 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);
     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);
     expect(m.hiddenOffscreenControls,'No visible action should be horizontally clipped').toEqual([]);
+    if(stage==='assign'&&size.width===1024){
+      expect(m.firstDataRow?.bottom,'The first complete supplier-allocation data row must fit at laptop-size viewport').toBeLessThanOrEqual(size.height);
+    }
     await snapshotFile(page,info,size.width+'-'+stage);
+  }
+  if(size.width===1024){
+    // 中文：64px 图标侧栏必须在键盘焦点与鼠标悬停时提供文字提示。
+    // English: Icon-only sidebar must expose readable labels on both focus and hover.
+    const compact=page.locator('.srm-v2-sideitem[data-srm-v2-tab="assign"]');
+    await compact.focus();
+    const focusTooltip=await compact.evaluate(el=>getComputedStyle(el,'::after').opacity);
+    expect(focusTooltip,'Compact sidebar focus tooltip must be visible').toBe('1');
+    await compact.hover();
+    const hoverTooltip=await compact.evaluate(el=>getComputedStyle(el,'::after').visibility);
+    expect(hoverTooltip,'Compact sidebar hover tooltip must be visible').toBe('visible');
   }
   // 中文：键盘 Enter 应复用原导航业务处理器，焦点态必须可见。
   // English: Keyboard Enter delegates to the original stage handler with visible focus styling.
