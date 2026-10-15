@@ -152,9 +152,13 @@ test('01 startup, demo isolation, autosave, navigation and restart / 启动与�
 
 test('02 XLSX 12/100, duplicates and invalid format / 物料', async ({page,app})=>{
   await fresh(page); await items(page,app); await save(page);
+  // 中文：导入成功后录入面板自动收起；再次导入时从按钮重新打开。
+  // English: Open the buyer intake panel for an additional import after it auto-collapses.
+  await page.locator('#toggleItemIntake').click();
   await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'duplicates.xlsx'));
   await expect(page.locator('#importPreview')).toContainText(/合并|冲突/);
   await page.locator('#confirmImportRows').click(); expect((await snapshot(page)).state.items).toHaveLength(12);
+  await page.locator('#toggleItemIntake').click();
   await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'invalid.xlsx'));
   await expect(page.locator('#confirmImportRows')).toBeDisabled(); expect((await snapshot(page)).state.items).toHaveLength(12);
   await page.locator('#importFile').setInputFiles({name:'broken.xlsx',mimeType:'application/octet-stream',buffer:Buffer.from('broken')});
