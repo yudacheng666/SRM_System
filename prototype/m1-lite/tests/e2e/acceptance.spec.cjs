@@ -434,13 +434,31 @@ test('12 supplier status and report context reset on RFQ change / 保存提示�
 });
 
 test('13 compact laptop item table after import / 1366首屏物料可见',async ({page,app})=>{
-  // 中文：真实 1366×768 笔记本视口下，新导入物料不再被项目和导入工具挡在首屏之外。
-  // English: New item rows should be visible on a laptop viewport after importing.
+  // 中文：按 Codex U7 复现条件检查真正首屏：回到 scrollY=0，第一行上下边均在视口内，并再次刷新。
+  // English: Reproduce the reported layout failure at scrollY=0, checking the FULL row both after import and reload.
   await page.setViewportSize({width:1366,height:768});
   await fresh(page);
   await items(page,app);
   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
   await expect(page.locator('#itemIntake')).not.toBeVisible();
-  const geometry=await page.locator('#itemBody tr').first().evaluate(el=>({top:el.getBoundingClientRect().top,innerHeight:innerHeight}));
-  expect(geometry.top,'First imported item must be in the initial 1366×768 viewport').toBeLessThan(geometry.innerHeight);
+  async function checkFirstRow(label) {
+    await page.evaluate(() => window.scrollTo({top:0,behavior:'instant'}));
+    await expect.poll(()=>page.evaluate(()=>window.scrollY),{message:label+' starts at page top'}).toBe(0);
+    const row=page.locator('#itemBody tr').first();
+    await expect(row).toContainText('TST-012');
+    const geometry=await row.evaluate(el=>({
+      top:el.getBoundingClientRect().top,
+      bottom:el.getBoundingClientRect().bottom,
+      height:window.innerHeight,
+      scrollY:window.scrollY
+    }));
+    expect(geometry.top,label+' first item top: '+JSON.stringify(geometry)).toBeGreaterThanOrEqual(0);
+    expect(geometry.bottom,label+' FULL first item must fit: '+JSON.stringify(geometry)).toBeLessThanOrEqual(geometry.height);
+  }
+  await checkFirstRow('After import');
+  await saved(page);
+  await page.reload();
+  await expect(page.locator('#uiCurrentRfq')).toContainText('RFQ-');
+  await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
+  await checkFirstRow('Fresh page reload');
 });
