@@ -1025,12 +1025,14 @@ body.srm-v2 #quotes #resetAwards{color:#b42318;border-color:#efd8d3;background:#
         <div id="quoteModeNotice" class="small muted" style="margin-top:8px"></div>
         <!-- 中文：比较组不预选全体供应商；只有采购员勾选至少两家才生成同范围金额。
              English: The buyer must explicitly select two or more suppliers for shared-scope totals. -->
+        <!-- 中文：比价明细优先展示，汇总分析仍保留并移至表格之后。
+             English: Lead with actionable quote lines; preserve all analysis below the comparison table. -->
         <div id="commonScopePicker" class="coverageDetails" style="margin-top:10px"></div>
-        <div id="quoteAnalysis" class="coverageDetails" style="margin-top:10px"></div>
         <div class="tablewrap" style="margin-top:10px">
           <table class="table" id="quoteTable"></table>
         </div>
         <div class="pager"><span id="quoteCount"></span><div id="quotePager"></div></div>
+        <div id="quoteAnalysis" class="coverageDetails" style="margin-top:10px"></div>
       </div>
     </div>
     <!-- 中文：使用页面内窗口代替可能被本地浏览器拦截的原生 prompt。
