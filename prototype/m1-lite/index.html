@@ -2963,7 +2963,18 @@ function editQuoteLine(index){
   const lead=prompt("交期（天，可空）：",l.lead??"");if(lead===null)return;const moq=prompt("MOQ（可空）：",l.moq??"");if(moq===null)return;const rawStatus=prompt("状态：quoted / noquote / cannot",l.status);if(rawStatus===null)return;
   const remark=prompt("物料备注（可空）：",l.remark||"");if(remark===null)return;const row=validateQuotePreview([{itemRef:l.lineId,price,lead,moq,status:rawStatus,remark}])[0];if(row.errors.length){alert(row.errors.join("；"));return}upsertRoundLine(round,row,"manual");renderQuoteRound();
 }
-function fillCats(){["assignCatFilter","sfCatFilter"].forEach(id=>{const el=document.getElementById(id);categories.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o)})})}
+/** 中文：分类选项只从当前工作区实际物料生成；不把演示类别带入正式采购。
+ * English: Build allocation categories from real active RFQ items, not hardcoded demo options. */
+function fillCats(){
+  const available=[...new Set(items.map(it=>String(it.cat??"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"zh-CN",{numeric:true}));
+  for(const [id,applied] of [["assignCatFilter","assignCat"],["sfCatFilter","sfCat"]]){
+    const el=document.getElementById(id),current=el.value;
+    el.replaceChildren(new Option("全部分类",""));
+    for(const value of available)el.add(new Option(value,value));
+    el.value=available.includes(current)?current:"";
+    if(appliedSearch[applied]&&!available.includes(appliedSearch[applied]))appliedSearch[applied]="";
+  }
+}
 fillCats();
 
 quoteImportSupplier.onchange=()=>{clearQuoteImportPreview();quoteFileFeedback.textContent="";renderQuoteRoundSelector(true)};
@@ -3336,7 +3347,7 @@ sfCopyRange.onclick=()=>{
 };
 
 for(const [id,button] of [["assignItemSearch",runAssignSearch],["supplierSearch",runSupplierSearch],["supplierFirstSearch",runSupplierFirstSearch],["supplierPoolSearch",runSupplierPoolSearch],["sfItemSearch",runSfSearch]])document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")button.click()});
-function renderAssignAll(){renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
+function renderAssignAll(){fillCats();renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
 function flash(msg){document.getElementById("previewBox").style.display="block";document.getElementById("previewBox").textContent=msg}
 let previewSupplierId=null;
 function rfqPreviewSuppliers(){
