@@ -1,0 +1,43 @@
+# 中文：UI V2 B1 隔离真实浏览器视觉验收，仅使用虚构采购数据与临时 SQLite。
+# English: Isolated real-browser UI V2 B1 smoke tests with synthetic data and temporary SQLite.
+name: SRM UI V2 B1 Chromium Visual Smoke
+on:
+  pull_request:
+    branches:
+      - draft/20261013-m1-storage-ui-audit
+    paths:
+      - prototype/m1-lite/index.html
+      - prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs
+      - .github/workflows/srm-ui-v2-b1-smoke.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install pinned project test dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Validate live UI shell, item import, SQLite save and screenshots
+        run: npx playwright test --config=playwright.config.cjs prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs
+      - name: Upload visual screenshots, isolated server logs and browser trace
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: srm-ui-v2-b1-real-browser-evidence
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: warn
+          retention-days: 14
