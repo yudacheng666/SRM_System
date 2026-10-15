@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SRM-Lite 本机手动保存候选版</title>
+<title>SRM-Lite · 采购询价工作台 UI V1</title>
 <style>
 :root{--bg:#f5f7fb;--panel:#fff;--line:#dfe4ec;--text:#1f2937;--muted:#6b7280;--primary:#2563eb;--soft:#eff6ff;--warn:#b45309;--danger:#b91c1c;--ok:#047857}
 *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
@@ -55,20 +55,125 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 .roundBadge{display:inline-block;padding:3px 7px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:11px}.roundBadge.draft{background:#fff7ed;color:#9a3412}.roundBadge.confirmed{background:#ecfdf5;color:#047857}.quoteImportGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}@media(max-width:980px){.quoteImportGrid{grid-template-columns:1fr}}
 .coverageMini{display:grid;grid-template-columns:repeat(7,minmax(110px,1fr));gap:8px;margin-top:10px}@media(max-width:1100px){.coverageMini{grid-template-columns:repeat(3,1fr)}}@media(max-width:650px){.coverageMini{grid-template-columns:repeat(2,1fr)}}.coverageMini .stat b{font-size:18px}.coverageDetails{margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff}
 .pdfControls{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:10px}.pdfMeta{font-size:11px;color:var(--muted);margin-top:2px}.pdfPage{border:1px solid var(--line);background:#fff;border-radius:8px;padding:12px;min-height:520px;display:flex;justify-content:center;align-items:center;overflow:auto}.pdfPage svg{max-width:100%;height:auto}.scopeList{max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:8px}.scopeRow{display:flex;gap:8px;align-items:center;padding:5px;border-bottom:1px solid #edf0f4}.analysisTable{width:100%;border-collapse:collapse;font-size:12px}.analysisTable th,.analysisTable td{padding:6px 8px;border-bottom:1px solid #edf0f4;text-align:right}.analysisTable th:first-child,.analysisTable td:first-child{text-align:left}
+
+/* 中文：UI-1 只调整业务操作入口与布局，不改业务状态、API 或保存逻辑。
+   English: UI-1 is a layout/navigation shell, not a persistence or business-rule change. */
+.ui-appHeader{align-items:center;gap:18px;flex-wrap:wrap;padding:8px 0 10px}
+.ui-brand{min-width:235px;flex:1}.ui-eyebrow{font-size:11px;font-weight:800;letter-spacing:.09em;color:#2563eb;text-transform:uppercase;margin-bottom:5px}
+.ui-appHeader h1{font-size:24px;margin:0 0 4px}
+.ui-headActions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ui-headActions .btn,.ui-headActions .tab{padding:9px 12px;font-size:13px}
+.ui-headActions .tab{margin:0}
+.ui-context{border:1px solid #dfe4ec;background:linear-gradient(110deg,#fff,#f8fbff);border-radius:13px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.ui-context b{font-size:15px}.ui-context small{color:var(--muted);font-size:12px}
+.ui-context .ui-contextRight{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.ui-workspaceHead{padding:12px 15px 3px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ui-workspaceHead b{font-size:15px}.ui-workspaceHead .muted{font-size:12px}
+#pilotControls{border-color:#d3dce9}#pilotControls>.cardbody{padding-top:6px}
+#pilotControls>.cardbody>.toolbar:first-child{margin-bottom:10px}
+.ui-statusStrip{border:1px solid #e4eaf1;background:#f9fbff;border-radius:9px;padding:8px 11px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:7px 0 10px}
+.ui-statusStrip>[role=status]{font-size:12px;min-width:0;overflow-wrap:anywhere}
+.ui-drawer{margin:7px 0;border:1px solid #e3e8ef;border-radius:10px;background:#fff}
+.ui-drawer>summary{display:flex;align-items:center;gap:9px;cursor:pointer;list-style:none;padding:11px 13px;font-size:13px;font-weight:750;color:#334155;user-select:none}
+.ui-drawer>summary::-webkit-details-marker{display:none}
+.ui-drawer>summary::after{content:"▾";margin-left:auto;color:#64748b}
+.ui-drawer[open]>summary::after{content:"▴"}
+.ui-drawer>summary .ui-summaryHint{font-size:11px;color:#64748b;font-weight:400}
+.ui-drawer[open]>summary{background:#f8fbff;border-bottom:1px solid #e3e8ef;border-radius:10px 10px 0 0}
+.ui-drawerBody{padding:12px 13px}
+.ui-workNav{position:sticky;top:0;z-index:10;background:rgba(245,247,251,.96);padding:8px 0 3px;backdrop-filter:blur(8px)}
+.ui-workNav .tabs{margin:0 0 10px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.ui-workNav .tab{min-width:0;text-align:center;border-radius:9px;padding:12px 8px;font-size:13px;white-space:normal}
+.ui-workNav .tab.active{box-shadow:0 3px 12px #2563eb26}
+.ui-panelLead{border:1px solid #dfe4ec;background:#fff;padding:12px 15px;margin:0 0 12px;border-radius:12px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.ui-panelLead b{font-size:16px}.ui-panelLead .muted{font-size:12px}
+.ui-panelLead .toolbar{margin-left:auto}
+.ui-projectAction{white-space:nowrap}
+#items #pilotDrawingPanel{margin-top:0}
+.ui-appFooter{padding:10px 0}
+@media(max-width:940px){.ui-statusStrip{grid-template-columns:1fr}.ui-workNav .tab{font-size:12px;padding:9px 5px}}
+@media(max-width:620px){.ui-workNav .tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.ui-headActions{width:100%}.ui-context .ui-contextRight{width:100%}.ui-drawer>summary{align-items:flex-start;flex-direction:column}.ui-drawer>summary::after{position:absolute;right:18px}}
+
+/* 中文：物料表两行表头在内部滚动时保持列名在筛选条件之上。
+   English: Keep column names above filter controls while scrolling item rows. */
+#items .tablewrap thead tr:first-child th{top:0;z-index:7;height:53px;min-height:53px;background:#f0f5fd}
+#items .tablewrap thead tr:nth-child(2) th{top:53px;z-index:6;background:#f9fafb}
+#assignHiddenHint{display:inline-block;margin-left:8px;color:#b45309}
+@media(max-width:980px){.ui-context{padding:8px 12px}.ui-workspaceHead{padding-top:8px}.ui-appHeader h1{font-size:20px}}
+.ui-projectDetails{border:1px solid #e3e8ef;border-radius:9px;margin:3px 0 7px;background:#f9fbff}
+.ui-projectDetails>summary{padding:9px 11px;cursor:pointer;color:#334155;font-size:12px;font-weight:700}
+.ui-projectDetails>summary .ui-projectStatus{font-weight:400;color:#64748b;margin-left:7px}
+.ui-projectDetails>.ui-projectBody{padding:9px;border-top:1px solid #e3e8ef}
+#pilotControls{margin-bottom:8px!important}
+#pilotControls .cardbody{padding:5px 12px 7px}
+#pilotControls .ui-drawer{margin:4px 0}
+.ui-appHeader{margin-bottom:7px}.ui-context{margin-bottom:7px;padding:7px 12px}
+.ui-context .ui-contextRight{font-size:11px}
+#pilotNotice{padding:6px 10px;margin-bottom:7px!important}
+.ui-workspaceHead{padding:7px 12px 0}
+.ui-workNav{padding:5px 0 2px}.ui-workNav .tabs{margin-bottom:7px}
+.ui-workNav .tab{padding:8px 6px}
+.ui-panelLead{padding:8px 12px;margin-bottom:7px}
+.ui-statusStrip{grid-template-columns:repeat(3,minmax(0,1fr));margin:3px 0;padding:5px 8px}
+@media(max-width:940px){.ui-statusStrip{grid-template-columns:1fr}}
+/* 中文：正式询价采用单行项目工具条，给 1366×768 首屏让出真实物料行。
+   English: A single compact project/action row prioritizes actual item data at laptop height. */
+body.ui-buyer-mode #pilotControls .ui-workspaceHead{display:none}
+body.ui-buyer-mode #pilotControls>.cardbody{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;align-items:start;padding:7px 10px}
+body.ui-buyer-mode #pilotControls :is(.ui-projectDetails,.ui-drawer){margin:0;min-width:0}
+body.ui-buyer-mode #pilotControls :is(.ui-projectDetails,.ui-drawer)[open]{grid-column:1/-1}
+body.ui-buyer-mode #pilotControls :is(.ui-projectDetails,.ui-drawer)>summary{
+  box-sizing:border-box;min-height:34px;max-height:34px;
+  padding:7px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px}
+body.ui-buyer-mode #pilotControls .ui-drawer>summary{display:flex}
+body.ui-buyer-mode #pilotControls .ui-drawer>summary .ui-summaryHint{display:none}
+body.ui-buyer-mode #pilotControls .ui-projectDetails>summary .ui-projectStatus{display:none}
+body.ui-buyer-mode #items .ui-panelLead{display:none}
+body.ui-buyer-mode #uiDrawingTools:not([open]){display:none}
+body.ui-buyer-mode #items>.card .cardhead>div:first-child{display:none}
+body.ui-buyer-mode #items>.card .cardhead{
+  padding:7px 10px;display:flex;justify-content:flex-start;flex-wrap:wrap}
+body.ui-buyer-mode #items>.card .cardhead>.toolbar{flex:1;gap:5px}
+body.ui-buyer-mode #items>.card .cardhead .btn{padding:6px 9px}
+body.ui-buyer-mode #items>.card .cardbody{padding:7px 10px}
+body.ui-buyer-mode #itemSortHint{margin:6px 0}
+body.ui-buyer-mode #items .selectionBar{margin:4px 0}
+body.ui-buyer-mode #items .selectionBar .btn{padding:6px 9px}
+body.ui-buyer-mode #items .tablewrap{margin-top:4px!important}
+body.ui-buyer-mode .ui-contextRight{display:none}
+body.ui-buyer-mode #pilotNotice{font-size:11px;padding:4px 9px}
+@media(max-width:760px){
+ body.ui-buyer-mode #pilotControls>.cardbody{grid-template-columns:1fr}
+ body.ui-buyer-mode #pilotControls :is(.ui-projectDetails,.ui-drawer)[open]{grid-column:1}
+}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="top">
-    <div>
-      <h1>SRM-Lite · 本机保存候选版</h1>
+  <header class="top ui-appHeader">
+    <div class="ui-brand">
+      <div class="ui-eyebrow">SRM / RFQ WORKSPACE</div>
+      <h1>采购询价工作台</h1>
       <div class="sub" id="pilotSubtitle">演示模式：请从空白正式工作开始。</div>
     </div>
-    <span class="badge" id="pilotModeBadge">演示模式（不保存）</span>
-  </div>
+    <div class="ui-headActions">
+      <span class="badge" id="pilotModeBadge">演示模式（不保存）</span>
+      <button type="button" class="btn ui-projectAction" id="uiProjectJump">询价项目</button>
+      <button type="button" class="btn ui-projectAction" id="uiAdminToggle">数据与备份</button>
+      <button type="button" class="tab" data-tab="settings" id="uiFieldSettings">字段设置</button>
+    </div>
+  </header>
 
-  <div class="notice" id="pilotNotice" style="margin:0 0 12px">当前为演示模式。正式工作需手动保存。</div>
-<div class="card" id="pilotControls" style="margin-bottom:14px"><div class="cardbody">
+  <div class="ui-context" aria-label="当前询价工作摘要">
+    <div><small>当前工作 / Current RFQ</small><div><b id="uiCurrentRfq">演示数据</b></div></div>
+    <div class="ui-contextRight"><small>操作顺序：物料与图纸 → 供应商分配 → 报价回收 → 比价议价</small></div>
+  </div>
+  <div class="notice" id="pilotNotice" style="margin:0 0 12px">演示模式不会保存；请新建空白正式询价后开始操作。</div>
+<div class="card" id="pilotControls" style="margin-bottom:14px">
+  <div class="ui-workspaceHead"><div><b>询价项目</b><span class="muted">　新建、切换与保存当前项目</span></div></div>
+  <div class="cardbody">
  <div class="toolbar" style="margin-bottom:8px">
   <button type="button" class="btn primary" id="pilotNewWorkspace" disabled>新建空白正式工作</button>
   <button type="button" class="btn soft" id="pilotSaveWorkspace" disabled>保存到本机</button>
@@ -111,7 +216,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
   <button class="btn soft" id="pilotImportSupplierConfirm" disabled>确认导入供应商</button>
  </div>
  <pre id="pilotSupplierExcelPreview" class="small" style="display:none;white-space:pre-wrap;padding:10px;border:1px solid #bfdbfe"></pre>
- <div id="pilotSupplierExcelStatus" role="status" class="small muted">供应商 Excel 必须包含往来单位编码、往来单位名称；供应商编码可选。导入后先确认，再保存本机记录。</div>
+ <div id="pilotSupplierExcelStatus" role="status" class="small muted">供应商 Excel 必须包含往来单位编码、往来单位名称；供应商编码可选。确认后系统会自动保存，也可手动保存。</div>
  <div id="pilotReportPanel" style="display:none;padding:12px;border:1px solid #cbd5e1;border-radius:8px;margin:10px 0;background:#f8fafc">
   <div class="toolbar" style="align-items:center;gap:10px">
    <b>业务单据 Excel 导出</b>
@@ -185,13 +290,14 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
        </div>
       </div>
     </div>
-    <div class="tabs">
-    <button class="tab active" data-tab="items">1. 本次询价物料</button>
-    <button class="tab" data-tab="assign">2. 询价分配中心</button>
-    <button class="tab" data-tab="quoteImport">3. 报价回收导入</button>
-    <button class="tab" data-tab="quotes">4. 报价比较</button>
-    <button class="tab" data-tab="settings">5. 系统设置</button>
-  </div>
+    <nav class="ui-workNav" aria-label="询价业务流程">
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="items" role="tab" aria-selected="true">① 物料与图纸</button>
+      <button class="tab" data-tab="assign" role="tab" aria-selected="false">② 供应商与分配</button>
+      <button class="tab" data-tab="quoteImport" role="tab" aria-selected="false">③ 报价回收</button>
+      <button class="tab" data-tab="quotes" role="tab" aria-selected="false">④ 比价议价</button>
+    </div>
+  </nav>
 
   <section id="items" class="panel active">
     <div class="card">
@@ -311,7 +417,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
         </div>
         <div class="toolbar">
           <button class="btn soft" id="previewBtn">预览询价单</button>
-          <button class="btn primary" id="generateBtn">生成已分配询价单</button>
+          <button class="btn primary" id="generateBtn">导出已分配询价单</button>
         </div>
       </div>
       <div class="cardbody">
@@ -341,7 +447,7 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
           </div>
         </div>
         <div class="cardbody">
-          <div class="small muted" style="margin-bottom:8px">已选 <b id="assignSelectedCount">0</b> 项。选择供应商时默认“追加关系”，不会覆盖已有供应商。</div>
+          <div class="small muted" style="margin-bottom:8px">已选 <b id="assignSelectedCount">0</b> 项。<span id="assignHiddenHint" role="status"></span>选择供应商时默认“追加关系”，不会覆盖已有供应商。</div>
           <div class="tablewrap">
             <table class="table">
               <thead><tr><th></th><th>物料</th><th>分类</th><th>当前供应商</th></tr></thead>
@@ -1998,6 +2104,9 @@ function addRowsToRfq(rows){
   });
   pendingImportRows=[];itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;importPreview.style.display="none";
   renderItemList();renderAssignAll();renderQuotes();
+  // 中文：导入确认后收起录入区，笔记本首屏优先展示已导入的物料行。
+  // English: Collapse intake after a successful import so buyers can immediately review the table.
+  if(items.length)itemIntake.style.display="none";
   alert(`新增 ${added} 行；自动合并 ${merged} 行；冲突确认分行 ${separated} 行。合并前原始需求行已留存。`);
 }
 toggleItemIntake.onclick=()=>{itemIntake.style.display=itemIntake.style.display==="none"?"block":"none"};
@@ -2294,13 +2403,16 @@ function exportMissingCsv(round){
     const safe=/^[=+@-]/.test(raw.trimStart())?"'"+raw:raw;
     return '"'+safe.replace(/"/g,'""')+'"';
   };
+  // 中文：正式工作必须使用当前工作区真实 RFQ 身份，禁止继承演示编号。
+  // English: Formal missing-quote reports must use the active workspace identity, never a demo ID.
+  const rfqId=window.SRMPilot?.isBuyer()?window.SRMPilot.snapshot().workspaceId:"RFQ-DEMO-001";
   const lines=[["RFQ编号","供应商编码","报价轮次","报价版本","RFQ Line ID","存货编码","存货名称","询价数量","询价单位"]];
   missing.forEach(id=>{const it=items.find(x=>x.lineId===id);
-    lines.push(["RFQ-DEMO-001",round.supplierId,round.roundNo,round.revisionNo,id,it?.id||"",it?.name||"",it?.qty??"",it?.unit||""]);
+    lines.push([rfqId,round.supplierId,round.roundNo,round.revisionNo,id,it?.id||"",it?.name||"",it?.qty??"",it?.unit||""]);
   });
   const payload="\uFEFF"+lines.map(row=>row.map(csvCell).join(",")).join("\r\n");
   const url=URL.createObjectURL(new Blob([payload],{type:"text/csv;charset=utf-8"}));
-  const a=document.createElement("a");a.href=url;a.download="RFQ-DEMO-001_"+round.supplierId+"_R"+round.roundNo+"_漏报.csv";
+  const a=document.createElement("a");a.href=url;a.download=rfqId+"_"+round.supplierId+"_R"+round.roundNo+"_漏报.csv";
   document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 exportQuoteMissing.onclick=()=>{const r=currentQuoteRound();if(r)exportMissingCsv(r)};
@@ -2364,8 +2476,8 @@ function editQuoteLine(index){
 function fillCats(){["assignCatFilter","sfCatFilter"].forEach(id=>{const el=document.getElementById(id);categories.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o)})})}
 fillCats();
 
-quoteImportSupplier.onchange=()=>{clearQuoteImportPreview();renderQuoteRoundSelector(true)};
-quoteRoundSelect.onchange=()=>{clearQuoteImportPreview();renderQuoteRound()};
+quoteImportSupplier.onchange=()=>{clearQuoteImportPreview();quoteFileFeedback.textContent="";renderQuoteRoundSelector(true)};
+quoteRoundSelect.onchange=()=>{clearQuoteImportPreview();quoteFileFeedback.textContent="";renderQuoteRound()};
 quoteEvidenceType.onchange=()=>{const r=currentQuoteRound();if(r&&r.status!=="confirmed")r.evidenceType=quoteEvidenceType.value};
 // 中文：输入时实时更新草稿，避免导入报价后的界面刷新清空尚未失焦的备注。
 // English: Keep unsaved draft terms in memory on every input, including before quote-preview rerenders.
@@ -2381,7 +2493,7 @@ closeRoundScope.onclick=()=>quoteScopeEditor.style.display="none";
 saveRoundScope.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;r.expectedLineIds=[...quoteScopeList.querySelectorAll("[data-scope-line]:checked")].map(x=>x.dataset.scopeLine);r.lines=r.lines.filter(x=>r.expectedLineIds.includes(x.lineId));quoteScopeEditor.style.display="none";renderQuoteRound()};
 confirmQuoteRound.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;if(!r.lines.length){alert("当前提交没有报价记录。");return}if(quoteTermsNote.value.length>4000||quoteEvidenceNote.value.length>4000){alert("本轮备注超过 4000 字，请精简后确认。");return}r.evidenceType=quoteEvidenceType.value;r.evidenceNote=quoteEvidenceNote.value.trim();r.termsNote=quoteTermsNote.value.trim();const cov=coverageFromRows(r,r.lines);if((cov.missing.length||cov.extras.length||cov.duplicates.length)&&!confirm(`覆盖检查仍有异常：漏报 ${cov.missing.length} 项，多报 ${cov.extras.length} 项，重复 ${cov.duplicates.length} 项。仍要确认并锁定本次提交吗？`))return;r.status="confirmed";r.confirmedAt=new Date().toISOString();reconcileAwardsAfterQuote();renderQuoteRoundSelector()};
 quoteManualAdd.onclick=()=>showQuotePreview([{itemRef:quoteManualItem.value.trim(),price:quoteManualPrice.value.trim(),lead:quoteManualLead.value.trim(),moq:quoteManualMoq.value.trim(),status:quoteManualStatus.value,remark:quoteManualRemark.value.trim()}]);
-quoteParsePaste.onclick=()=>{const rows=parseQuoteRows(quotePaste.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到报价记录，请检查表头和数据。");return}showQuotePreview(rows)};
+quoteParsePaste.onclick=()=>{quoteFileFeedback.textContent="";const rows=parseQuoteRows(quotePaste.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到报价记录，请检查表头和数据。");return}showQuotePreview(rows)};
 quoteReadClipboard.onclick=async()=>{try{quotePaste.value=await navigator.clipboard.readText();quoteParsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请按 Ctrl+V 粘贴。")}};
 quoteClearInput.onclick=()=>{quotePaste.value=""};quoteClearPreview.onclick=clearQuoteImportPreview;clearQuotePreview2.onclick=clearQuoteImportPreview;
 toggleQuoteMapping.onclick=()=>{quoteMappingBox.style.display=quoteMappingBox.style.display==="none"?"block":"none"};
@@ -2482,7 +2594,11 @@ function openCarryForwardPreview(){
 }
 carryForwardMissing.onclick=openCarryForwardPreview;
 
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active");if(b.dataset.tab==="assign")renderAssignAll();if(b.dataset.tab==="quoteImport"){enterReturnedQuoteMode();quoteSupplierOptions();renderQuoteRoundSelector()}if(b.dataset.tab==="quotes")renderQuotes()});
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active");
+  // 中文：分配后返回物料页要即时更新供应商数量和图纸行控件。
+  // English: Redraw cross-step dependent item and drawing views on tab entry.
+  if(b.dataset.tab==="items")renderItemList();
+  if(b.dataset.tab==="assign")renderAssignAll();if(b.dataset.tab==="quoteImport"){enterReturnedQuoteMode();quoteSupplierOptions();renderQuoteRoundSelector()}if(b.dataset.tab==="quotes")renderQuotes()});
 document.querySelectorAll(".modebtn").forEach(b=>b.onclick=()=>{assignMode=b.dataset.mode;document.querySelectorAll(".modebtn").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("itemFirstView").style.display=assignMode==="itemFirst"?"grid":"none";document.getElementById("supplierFirstView").style.display=assignMode==="supplierFirst"?"grid":"none";renderAssignAll()});
 
 function appliedValue(id){const m={assignItem:"assignItemSearch",assignCat:"assignCatFilter",assignState:"assignStateFilter",supplier:"supplierSearch",supplierFirst:"supplierFirstSearch",supplierPool:"supplierPoolSearch",sfItem:"sfItemSearch",sfCat:"sfCatFilter"};const key=Object.keys(m).find(k=>m[k]===id);return key?appliedSearch[key]:""}
@@ -2567,6 +2683,9 @@ function renderItemList(){
   itemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${itemPage+1}/${pages} 页 · 已选择 ${itemManageSel.size} 项`;
   itemSortHint.textContent="当前排序："+itemSortRules.map((r,i)=>`${i+1}.${fields.find(f=>f.key===r.key)?.label||"新增顺序"}${r.direction==="asc"?"升序":"降序"}`).join(" → ")+"；Shift+点击列标题叠加字段排序";
   renderPageNav(itemPager,itemPage,list.length,PAGE,p=>{itemPage=p;resetRange("item-manage");renderItemList()});
+  // 中文：物料增删和列表重绘后，同步真实 PDF 关联控件；不等待 F5。
+  // English: Synchronize drawing row options after item mutations without reloading.
+  window.SRMDrawUI?.sync?.();
 }
 runItemSearch.onclick=()=>{appliedSearch.item=itemSearch.value.trim();Object.keys(fieldFilterDraft).forEach(k=>fieldFilters[k]=fieldFilterDraft[k]);itemPage=0;resetRange("item-manage");renderItemList()};
 itemSelectAll.onclick=()=>{selectAllIds(itemManageSel,currentItemList());renderItemList()};
@@ -2590,6 +2709,12 @@ function renderAssignItems(){
   bindDrawingThumbs();
   bindShiftRange("#assignItemBody input[data-ai]","assign-items","ai",(id,checked)=>checked?assignSel.add(id):assignSel.delete(id),()=>{renderAssignItems();renderSuppliers()});
   assignSelectedCount.textContent=assignSel.size;
+  // 中文：跨筛选保留选中，但必须显示未在筛选结果内的物料数量，避免误操作。
+  // English: Retain selections across filters while clearly counting hidden selected lines.
+  const visibleIds=new Set(list.map(it=>it.lineId));
+  const hiddenSelected=[...assignSel].filter(id=>!visibleIds.has(id));
+  document.getElementById("assignHiddenHint").textContent=hiddenSelected.length?
+    "其中 "+hiddenSelected.length+" 项不在当前筛选结果内，仍会参与批量操作；": "";
   assignItemCount.textContent=`筛选结果 ${list.length} 项 · 第 ${assignPage+1}/${pages} 页`;
   renderPageNav(assignPager,assignPage,list.length,PAGE,p=>{assignPage=p;resetRange("assign-items");renderAssignItems()});
 }
@@ -2701,7 +2826,9 @@ function applySupplierBulkChange(lineIds,sid,mode,label){
   if(!affected.length){flash("没有需要修改的关联。");return}
   if(!guardMutableLines(affected,label))return;
   const supplier=suppliers.find(x=>x.id===sid);
-  if(!confirm(label+"：即将变更 "+affected.length+" 条物料与“"+(supplier?.name||sid)+"”的实际关联。\n此操作不是临时勾选，确认后立即生效，是否继续？"))return;
+  const affectedCodes=affected.slice(0,8).map(id=>items.find(it=>it.lineId===id)?.id||id);
+  const scopeText=affectedCodes.join("、")+(affected.length>8?" 等 "+affected.length+" 项":"");
+  if(!confirm(label+"：即将变更 "+affected.length+" 条物料与“"+(supplier?.name||sid)+"”的实际关联。\n涉及物料："+scopeText+"\n注意：筛选后仍选中的隐藏物料也包含在内。\n确认后立即生效，是否继续？"))return;
   const n=changeSupplierRelations(affected,sid,mode);
   if(n<0)return;
   flash(label+"：成功变更 "+n+" 条实际关联。");
@@ -2736,7 +2863,25 @@ function renderRfqPreview(){
 previewBtn.onclick=()=>{rfqPreviewModal.classList.add("open");rfqPreviewModal.setAttribute("aria-hidden","false");renderRfqPreview()};
 closeRfqPreview.onclick=()=>{rfqPreviewModal.classList.remove("open");rfqPreviewModal.setAttribute("aria-hidden","true")};
 rfqPreviewModal.onclick=e=>{if(e.target===rfqPreviewModal)closeRfqPreview.click()};
-generateBtn.onclick=()=>{const c=coverage();alert(`原型动作：允许生成。\n已覆盖 ${c.covered}/${items.length} 项，未覆盖 ${c.none} 项将保留在当前 RFQ 中。\n正式 M4 再实现 Excel 文件生成。`)};
+generateBtn.onclick=()=>{
+  const c=coverage();
+  if(!window.SRMPilot?.isBuyer()){alert("请先新建空白正式询价，再导出已分配的供应商询价单。");return}
+  if(!c.covered){alert("尚未分配任何物料，请先分配供应商。");return}
+  const exportOpen=document.getElementById("pilotReportOpen");
+  if(exportOpen.disabled){alert("当前数据尚未保存或本机服务不可用。请等待自动保存成功后再导出。");return}
+  // 中文：直接打开已实现的正式导出面板，不使用原型占位弹窗。
+  // English: Route the visible action to the working supplier export panel, not a placeholder alert.
+  const admin=document.getElementById("uiDataTools");
+  if(admin)admin.open=true;
+  const panel=document.getElementById("pilotReportPanel");
+  const type=document.getElementById("pilotReportType");
+  type.value="rfq";
+  if(panel.style.display==="none")exportOpen.click();
+  else type.dispatchEvent(new Event("change",{bubbles:true}));
+  const hint=document.getElementById("pilotReportHint");
+  hint.textContent="本次已分配 "+c.covered+"/"+items.length+" 项；未分配 "+c.none+" 项不参与外发。请选择供应商并检查图纸后下载。";
+  panel.scrollIntoView({block:"start",behavior:"smooth"});
+};
 
 const awards=new Map(), awardReasons=new Map(),manualAwards=new Set(),awardReviewIds=new Set();
 /** 中文：浏览器演示报价与实际报价回收互斥，避免假价格影响真实比价。
@@ -3071,7 +3216,7 @@ renderItemList();renderAssignAll();renderQuotes();
   renderItemList();sync();tell("已更新本行图纸状态，请保存工作。");
  };
  const refresh=()=>{sync();window.SRMBatchDrawUI?.reset()};
- window.SRMDrawUI=Object.freeze({refresh});
+ window.SRMDrawUI=Object.freeze({refresh,sync});
 }
 
 /* END M1_LITE_DRAWING_UI */
@@ -3483,6 +3628,9 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     workspaceId=data.workspaceId;revision=data.revision;buyerMode=true;dirty=false;
     buttons();resetUI();window.SRMDrawUI?.refresh();dirty=false;
     resetAutosaveBaseline();
+    // 中文：询价身份切换后只通知其他 UI 面板刷新；不触发数据库写入。
+    // English: Notify dependent UI of an RFQ switch; never persist from this event.
+    window.dispatchEvent(new CustomEvent("srm:workspace-changed",{detail:{workspaceId}}));
   }
   function beginBuyer(){
     if(!localReady||busy||blocked)return;
@@ -3555,6 +3703,9 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       autosaveLabel(dirty?"保存第 "+revision+" 版成功，仍有新修改等待保存":
         "已"+(automatic?"自动":"手动")+"保存第 "+revision+" 版（"+new Date().toLocaleTimeString()+"）");
       if(!dirty)status("SQLite "+(automatic?"自动":"手动")+"保存成功："+workspaceId+"（第 "+revision+" 版）。");
+      // 中文：只报告真实 SQLite PUT 成功的版本；仍有输入时标记待保存。
+      // English: Acknowledge only a real successful SQLite commit, marking pending edits.
+      window.dispatchEvent(new CustomEvent("srm:workspace-saved",{detail:{workspaceId,revision,dirty}}));
       return true;
     }catch(e){
       dirty=true;autosaveHalted=true;
@@ -3887,10 +4038,24 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   if(!staged)return;
   try{
    const count=window.SRMPilot.importSupplierRows(staged);
-   supplierStatus.textContent="已新增 "+count+" 家供应商，记得点击“保存到本机”。";
+   // 中文：提示归属到当前 RFQ，自动保存后由真实成功事件更新；不要求手工保存。
+   // English: Scope import feedback to this RFQ and update after a confirmed autosave.
+   supplierStatus.dataset.pendingWorkspace=window.SRMPilot.snapshot().workspaceId;
+   supplierStatus.textContent="已导入 "+count+" 家供应商，等待自动保存；也可手动保存。";
    clearStage();
   }catch(e){supplierStatus.textContent="导入未执行："+e.message;alert(supplierStatus.textContent);clearStage()}
  };
+ window.addEventListener("srm:workspace-saved",event=>{
+   if(supplierStatus.dataset.pendingWorkspace!==event.detail.workspaceId)return;
+   supplierStatus.textContent=event.detail.dirty?
+     "已保存第 "+event.detail.revision+" 版，但仍有新修改等待自动保存。":
+     "供应商已保存到当前询价（第 "+event.detail.revision+" 版）。";
+   if(!event.detail.dirty)delete supplierStatus.dataset.pendingWorkspace;
+ });
+ window.addEventListener("srm:workspace-changed",()=>{
+   clearStage();delete supplierStatus.dataset.pendingWorkspace;
+   supplierStatus.textContent="仅针对当前询价导入供应商；导入后会自动保存。";
+ });
 }
 /* END M1_LITE_EXCEL_BRIDGE */
 /* BEGIN M1_LITE_ZIP_BATCH */
@@ -4018,6 +4183,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   if(candidates.some(x=>x.id===previous))supplierEl.value=previous;
   const isComparison=type.value==="comparison";
   batchBtn.style.display=isComparison?"none":"inline-flex";
+  exportBtn.textContent=isComparison?"下载内部比价议价单 Excel（仅内部）":"下载当前供应商询价 Excel";
   document.getElementById("pilotReportSinglePicker").style.display=isComparison?"none":"flex";
   document.getElementById("pilotReportMultiPicker").style.display=isComparison?"block":"none";
   const selected=new Set([...group.querySelectorAll("[data-report-supplier]:checked")].map(x=>x.value));
@@ -4040,6 +4206,13 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   if(!showing)render();
  });
  type.addEventListener("change",render);
+ // 中文：切换询价后清除供应商、文件类型/选择和下载成功消息；如果面板打开立即重新绑定。
+ // English: Remove stale supplier/report selections and export success after an RFQ switch.
+ window.addEventListener("srm:workspace-changed",()=>{
+   supplierEl.replaceChildren();group.replaceChildren();fieldsBox.replaceChildren();
+   warning.textContent="";
+   if(box.style.display!=="none")render();
+ });
  // 中文：参与供应商逐家产生独立询价表，再整体打包；不包含其他供方及内部比价字段。
  // English: Each participating supplier receives its own confidential XLSX in one ZIP download.
  batchBtn.addEventListener("click",async()=>{
@@ -4123,6 +4296,161 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
  });
 }
 /* END M1_LITE_REPORT_UI */
+</script>
+
+<script>
+/* 中文：UI V1 外壳。移动既有 DOM 节点而不复制 ID/事件，业务脚本无需改动。
+   English: UI V1 shell moves existing live DOM nodes without copying IDs or handlers. */
+(function(){
+  "use strict";
+  const controls = document.querySelector("#pilotControls > .cardbody");
+  const one = id => document.getElementById(id);
+  if(!controls || one("uiSupplierTools")) return;
+
+  function drawer(id, heading, hint, nodes) {
+    const details = document.createElement("details");
+    details.className = "ui-drawer";
+    details.id = id;
+    const summary = document.createElement("summary");
+    summary.append(document.createTextNode(heading+"　"));
+    const extra = document.createElement("span");
+    extra.className = "ui-summaryHint";
+    extra.textContent = hint;
+    summary.appendChild(extra);
+    const inner = document.createElement("div");
+    inner.className = "ui-drawerBody";
+    for (const node of nodes) if(node) inner.appendChild(node);
+    summary.title=hint;
+    details.append(summary,inner);
+    return details;
+  }
+  const project = one("pilotNewWorkspace").closest(".toolbar");
+  const statusStrip = document.createElement("div");
+  statusStrip.className = "ui-statusStrip";
+  statusStrip.setAttribute("aria-label","保存与自动备份状态");
+  for(const id of ["pilotSaveStatus","pilotAutosaveStatus","pilotAutoBackupStatus"]){
+    statusStrip.appendChild(one(id));
+  }
+  project.after(statusStrip);
+  // 中文：演示时项目按钮展开；打开正式询价后默认收起，以便 1366×768 笔记本首屏显示业务。
+  // English: Demo exposes the create controls; active RFQs collapse project admin for table-first use.
+  const projectDetails=document.createElement("details");
+  projectDetails.id="uiProjectDetails";projectDetails.className="ui-projectDetails";projectDetails.open=true;
+  const projectSummary=document.createElement("summary");
+  projectSummary.innerHTML='项目操作：新建 / 切换 / 手动保存 <span class="ui-projectStatus" id="uiProjectStatus">演示模式</span>';
+  const projectBody=document.createElement("div");
+  projectBody.className="ui-projectBody";
+  projectBody.append(project,statusStrip);
+  projectDetails.append(projectSummary,projectBody);
+  controls.prepend(projectDetails);
+  window.addEventListener("srm:workspace-changed",()=>{projectDetails.open=false});
+  if(window.SRMPilot?.isBuyer())projectDetails.open=false;
+  const projectStatus=one("uiProjectStatus"),autosave=one("pilotAutosaveStatus");
+  const updateProjectStatus=()=>{
+    projectStatus.textContent=autosave.textContent.replace(/^自动保存：/,"");
+    projectDetails.querySelector("summary").title=projectStatus.textContent;
+  };
+  new MutationObserver(updateProjectStatus).observe(autosave,{subtree:true,characterData:true,childList:true});
+  updateProjectStatus();
+
+  const supplierTools = drawer("uiSupplierTools","供应商管理与 Excel 导入",
+      "新增供应商、批量导入及确认",[
+        one("pilotSupplierFields"),
+        one("pilotSupplierExcel").closest(".toolbar"),
+        one("pilotSupplierExcelPreview"),
+        one("pilotSupplierExcelStatus")
+      ]);
+  projectDetails.after(supplierTools);
+
+  const notes = Array.from(controls.children).find(el=>
+    el.classList?.contains("small") && el.textContent.includes("必须先保存到本机"));
+  const adminTools = drawer("uiDataTools","数据备份、恢复与报表导出",
+      "包含 S4 完整 ZIP、旧版兼容格式与业务单据",[
+        one("pilotExportBackup").closest(".toolbar"),
+        one("pilotImportComplete").closest(".toolbar"),
+        one("pilotBulkRestoreOptions"),
+        one("pilotBackupPreview"),
+        one("pilotReportPanel"),
+        notes
+      ]);
+  supplierTools.after(adminTools);
+  
+  function reveal(id){
+    const section = one(id);
+    section.open=true;
+    section.scrollIntoView({block:"start",behavior:"smooth"});
+  }
+  one("uiProjectJump").addEventListener("click",()=>{
+    projectDetails.open=true;
+    projectDetails.scrollIntoView({block:"start",behavior:"smooth"});
+    one("pilotHistoryWorkspace").focus();
+  });
+  one("uiAdminToggle").addEventListener("click",()=>reveal("uiDataTools"));
+
+  const item = one("items");
+  const itemLead = document.createElement("div");
+  itemLead.className = "ui-panelLead";
+  itemLead.innerHTML = '<div><b>物料与图纸</b><div class="muted">管理拟询价清单、批量导入及 PDF 关联</div></div>'+
+    '<div class="toolbar"><button class="btn soft" id="uiOpenDrawings" type="button">图纸匹配与管理</button></div>';
+  item.prepend(itemLead);
+  // 中文：按钮移入日常物料工具栏，避免重复标题/工具占满首屏。
+  // English: Keep drawing access in the items toolbar rather than a redundant heading block.
+  one("items").querySelector(".cardhead .toolbar").appendChild(one("uiOpenDrawings"));
+  // 中文：图纸只在“物料与图纸”页面展开，既有 PDF 事件和数据保持不变。
+  // English: Drawing controls belong to Items & Drawings; existing references stay intact.
+  // 中文：默认收起图纸面板，让笔记本首屏优先显示物料表，展开后保留原所有控件。
+  // English: Keep the drawing editor collapsed until requested so the item table stays prominent.
+  const drawingTools=document.createElement("details");
+  drawingTools.id="uiDrawingTools";drawingTools.className="ui-drawer";
+  const drawingTitle=document.createElement("summary");
+  drawingTitle.textContent="PDF 图纸匹配与关联管理（点击展开）";
+  drawingTools.append(drawingTitle,one("pilotDrawingPanel"));
+  item.insertBefore(drawingTools,itemLead.nextSibling);
+  // 中文：排序操作说明移至物料表下方（保留原 ID），避免抢占首屏物料位置。
+  // English: Preserve sorting instructions below the item table instead of above its rows.
+  const itemSort=one("itemSortHint");
+  const itemPager=one("itemPager").closest(".pager");
+  itemPager.after(itemSort);
+  one("uiOpenDrawings").addEventListener("click",()=>{
+    if(one("pilotDrawingPanel").style.display==="none") {
+      one("pilotNotice").scrollIntoView({block:"start",behavior:"smooth"});
+      return;
+    }
+    drawingTools.open=true;
+    drawingTools.scrollIntoView({block:"start",behavior:"smooth"});
+    one("pilotBatchDrawingFiles").focus();
+  });
+
+  const assign = one("assign");
+  const assignLead = document.createElement("div");
+  assignLead.className = "ui-panelLead";
+  assignLead.innerHTML = '<div><b>供应商与分配</b><div class="muted">支持按物料或按供应商双向分配；新增关系不会覆盖已有关系</div></div>'+
+    '<div class="toolbar"><button class="btn" id="uiJumpSupplierList" type="button">查看供应商分配操作 ↓</button><button class="btn soft" id="uiOpenSupplierTools" type="button">添加 / 导入供应商</button></div>';
+  assign.prepend(assignLead);
+  one("uiOpenSupplierTools").addEventListener("click",()=>reveal("uiSupplierTools"));
+  one("uiJumpSupplierList").addEventListener("click",()=>one("supplierSearch").scrollIntoView({block:"center",behavior:"smooth"}));
+
+  // 中文：业务导航只切换面板，不写入任何快照或触发业务保存。
+  // English: Navigation changes visible panels only and never mutates a workspace.
+  document.querySelectorAll(".tab").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      document.querySelectorAll(".tab").forEach(tab=>tab.setAttribute("aria-selected",String(tab===btn)));
+    });
+  });
+
+  const current = one("uiCurrentRfq");
+  function syncTitle(){
+    const rfq = one("pilotRfqHead").textContent.trim();
+    const mode = one("pilotModeBadge").textContent;
+    const formal = !mode.includes("演示");
+    document.body.classList.toggle("ui-buyer-mode",formal);
+    current.textContent = formal ? (rfq||"当前正式询价") : "演示数据（不保存）";
+  }
+  const observer = new MutationObserver(syncTitle);
+  observer.observe(one("pilotRfqHead"),{childList:true,characterData:true,subtree:true});
+  observer.observe(one("pilotModeBadge"),{childList:true,characterData:true,subtree:true});
+  syncTitle();
+})();
 </script>
 </body>
 </html>
