@@ -1,0 +1,35 @@
+# 中文：仅由 UI V2 设计审查 PR 触发，不对 main 或 SRM 业务数据执行任何写入。
+# English: PR-only visual acceptance on the isolated design base, with read-only repository permissions.
+name: SRM UI V2 Concept B Chromium Visual Review
+on:
+  pull_request:
+    branches:
+      - design/20261015-ui-system-v2
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install pinned test dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser verify 1366x768 and 1600x900, all four stages
+        run: npx playwright test --config=design/ui-v2/playwright.visual.config.cjs
+      - name: Archive visual screenshots, layout metrics, traces and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: srm-ui-v2-b-chromium-visual-evidence
+          path: |
+            test-results/
+          retention-days: 30
+          if-no-files-found: warn
