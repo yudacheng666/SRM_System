@@ -116,6 +116,38 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 .ui-panelLead{padding:8px 12px;margin-bottom:7px}
 .ui-statusStrip{grid-template-columns:repeat(3,minmax(0,1fr));margin:3px 0;padding:5px 8px}
 @media(max-width:940px){.ui-statusStrip{grid-template-columns:1fr}}
+/* 中文：正式询价采用单行项目工具条，给 1366×768 首屏让出真实物料行。
+   English: A single compact project/action row prioritizes actual item data at laptop height. */
+body.ui-buyer-mode #pilotControls .ui-workspaceHead{display:none}
+body.ui-buyer-mode #pilotControls>.cardbody{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;align-items:start;padding:7px 10px}
+body.ui-buyer-mode #pilotControls :is(.ui-projectDetails,.ui-drawer){margin:0;min-width:0}
+body.ui-buyer-mode #pilotControls :is(.ui-projectDetails,.ui-drawer)[open]{grid-column:1/-1}
+body.ui-buyer-mode #pilotControls :is(.ui-projectDetails,.ui-drawer)>summary{
+  box-sizing:border-box;min-height:34px;max-height:34px;
+  padding:7px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px}
+body.ui-buyer-mode #pilotControls .ui-drawer>summary{display:flex}
+body.ui-buyer-mode #pilotControls .ui-drawer>summary .ui-summaryHint{display:none}
+body.ui-buyer-mode #pilotControls .ui-projectDetails>summary .ui-projectStatus{display:none}
+body.ui-buyer-mode #items .ui-panelLead{display:none}
+body.ui-buyer-mode #uiDrawingTools:not([open]){display:none}
+body.ui-buyer-mode #items>.card .cardhead>div:first-child{display:none}
+body.ui-buyer-mode #items>.card .cardhead{
+  padding:7px 10px;display:flex;justify-content:flex-start;flex-wrap:wrap}
+body.ui-buyer-mode #items>.card .cardhead>.toolbar{flex:1;gap:5px}
+body.ui-buyer-mode #items>.card .cardhead .btn{padding:6px 9px}
+body.ui-buyer-mode #items>.card .cardbody{padding:7px 10px}
+body.ui-buyer-mode #itemSortHint{margin:6px 0}
+body.ui-buyer-mode #items .selectionBar{margin:4px 0}
+body.ui-buyer-mode #items .selectionBar .btn{padding:6px 9px}
+body.ui-buyer-mode #items .tablewrap{margin-top:4px!important}
+body.ui-buyer-mode .ui-contextRight{display:none}
+body.ui-buyer-mode #pilotNotice{font-size:11px;padding:4px 9px}
+@media(max-width:760px){
+ body.ui-buyer-mode #pilotControls>.cardbody{grid-template-columns:1fr}
+ body.ui-buyer-mode #pilotControls :is(.ui-projectDetails,.ui-drawer)[open]{grid-column:1}
+}
 </style>
 </head>
 <body>
@@ -4288,6 +4320,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
     const inner = document.createElement("div");
     inner.className = "ui-drawerBody";
     for (const node of nodes) if(node) inner.appendChild(node);
+    summary.title=hint;
     details.append(summary,inner);
     return details;
   }
@@ -4313,7 +4346,10 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   window.addEventListener("srm:workspace-changed",()=>{projectDetails.open=false});
   if(window.SRMPilot?.isBuyer())projectDetails.open=false;
   const projectStatus=one("uiProjectStatus"),autosave=one("pilotAutosaveStatus");
-  const updateProjectStatus=()=>{projectStatus.textContent=autosave.textContent.replace(/^自动保存：/,"")};
+  const updateProjectStatus=()=>{
+    projectStatus.textContent=autosave.textContent.replace(/^自动保存：/,"");
+    projectDetails.querySelector("summary").title=projectStatus.textContent;
+  };
   new MutationObserver(updateProjectStatus).observe(autosave,{subtree:true,characterData:true,childList:true});
   updateProjectStatus();
 
@@ -4357,6 +4393,9 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   itemLead.innerHTML = '<div><b>物料与图纸</b><div class="muted">管理拟询价清单、批量导入及 PDF 关联</div></div>'+
     '<div class="toolbar"><button class="btn soft" id="uiOpenDrawings" type="button">图纸匹配与管理</button></div>';
   item.prepend(itemLead);
+  // 中文：按钮移入日常物料工具栏，避免重复标题/工具占满首屏。
+  // English: Keep drawing access in the items toolbar rather than a redundant heading block.
+  one("items").querySelector(".cardhead .toolbar").appendChild(one("uiOpenDrawings"));
   // 中文：图纸只在“物料与图纸”页面展开，既有 PDF 事件和数据保持不变。
   // English: Drawing controls belong to Items & Drawings; existing references stay intact.
   // 中文：默认收起图纸面板，让笔记本首屏优先显示物料表，展开后保留原所有控件。
@@ -4367,6 +4406,11 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   drawingTitle.textContent="PDF 图纸匹配与关联管理（点击展开）";
   drawingTools.append(drawingTitle,one("pilotDrawingPanel"));
   item.insertBefore(drawingTools,itemLead.nextSibling);
+  // 中文：排序操作说明移至物料表下方（保留原 ID），避免抢占首屏物料位置。
+  // English: Preserve sorting instructions below the item table instead of above its rows.
+  const itemSort=one("itemSortHint");
+  const itemPager=one("itemPager").closest(".pager");
+  itemPager.after(itemSort);
   one("uiOpenDrawings").addEventListener("click",()=>{
     if(one("pilotDrawingPanel").style.display==="none") {
       one("pilotNotice").scrollIntoView({block:"start",behavior:"smooth"});
@@ -4398,7 +4442,9 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   function syncTitle(){
     const rfq = one("pilotRfqHead").textContent.trim();
     const mode = one("pilotModeBadge").textContent;
-    current.textContent = mode.includes("演示") ? "演示数据（不保存）" : (rfq||"当前正式询价");
+    const formal = !mode.includes("演示");
+    document.body.classList.toggle("ui-buyer-mode",formal);
+    current.textContent = formal ? (rfq||"当前正式询价") : "演示数据（不保存）";
   }
   const observer = new MutationObserver(syncTitle);
   observer.observe(one("pilotRfqHead"),{childList:true,characterData:true,subtree:true});
