@@ -7,7 +7,7 @@
 
 - 被测 SHA：`1747df6896ed888986d2f1e49398fd13b0af37e3`，PR #5 保持 Draft。
 - [最新任务](https://github.com/yudacheng666/SRM_System/pull/5#issuecomment-6183698488)；按仓库《20261015 SRM Codex 可视化代理验收规范 V1》执行。
-- 2026-10-15，约 11:34–12:01（Asia/Shanghai）。Linux Chromium 154 / Playwright 1.58.2；1440×900、1366×768、960×900、760×900。
+- 2026-10-15，操作约 11:34–11:56（Asia/Shanghai；报告发布另计）。Linux Chromium 154 / Playwright 1.58.2；1440×900、1366×768、960×900、760×900。
 - 先核对 [同 SHA CI 38676212138](https://github.com/yudacheng666/SRM_System/actions/runs/38676212138)：[Linux](https://github.com/yudacheng666/SRM_System/actions/runs/38676212138/job/116230284585)、[Windows](https://github.com/yudacheng666/SRM_System/actions/runs/38676212138/job/116230284656) 均 success。**本轮未重跑 Python、Node 或已有 9 场景套件。**
 - 通过临时浏览器控制台逐步观察页面、截图，再决定点击/输入/上传/下载；未直接调用 API 代替业务操作，未读取 UI 源码寻找功能入口。只读 SQLite/ZIP/XLSX 检查用于佐证实际 UI 结果。
 - Isolated actual service/browser, synthetic data, adaptive visible-page exploration. Existing passing suites were not rerun. DOM was read to identify visible controls; SQLite and exported files only corroborate UI actions.
