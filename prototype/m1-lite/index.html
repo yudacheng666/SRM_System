@@ -267,6 +267,23 @@ body.srm-v2 .modalCard{border-radius:8px}
  body.srm-v2 #itemSearch{max-width:none}
 }
 
+
+/* 中文：实时保存状态出现在固定顶栏，真实内容来自现有后台同步控件；仅展示，不改变保存机制。 */
+/* English: Real save feedback is mirrored in the header without touching save or conflict semantics. */
+body.srm-v2 .srm-v2-live-status{
+  color:#336449;background:#edf7f0;border:1px solid #d3e8dc;border-radius:5px;
+  padding:6px 9px;display:inline-block;max-width:310px;overflow-wrap:anywhere;font-size:12px;font-weight:650;
+}
+body.srm-v2 .srm-v2-live-status.srm-v2-attention{
+  color:#975400;background:#fff7e6;border-color:#f5d9a5;
+}
+body.srm-v2 .srm-v2-live-status.srm-v2-error{
+  color:#ad3028;background:#fff0ee;border-color:#f0c4bf;
+}
+@media(max-width:1260px){
+ body.srm-v2 .srm-v2-live-status{max-width:245px}
+}
+
 </style>
 </head>
 <body class="srm-v2">
@@ -297,6 +314,7 @@ body.srm-v2 .modalCard{border-radius:8px}
     </div>
     <div class="ui-headActions">
       <span class="badge" id="pilotModeBadge">演示模式（不保存）</span>
+      <span id="srmV2LiveStatus" class="srm-v2-live-status" role="status" aria-live="polite">正在读取保存状态…</span>
       <button type="button" class="btn ui-projectAction" id="uiProjectJump">询价项目</button>
       <button type="button" class="btn ui-projectAction" id="uiAdminToggle">数据与备份</button>
       <button type="button" class="tab" data-tab="settings" id="uiFieldSettings">字段设置</button>
@@ -4616,6 +4634,20 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   document.querySelector('[data-srm-v2-action="admin"]')?.addEventListener("click",()=>{
     document.getElementById("uiAdminToggle")?.click();
   });
+
+  // 中文：只监听现有已保存/自动保存/冲突状态节点；不调用持久化 API、不伪造状态。
+  // English: Mirror existing autosave/conflict text only; never write data or invent a saved state.
+  const statusSource=document.getElementById("pilotAutosaveStatus");
+  const headerStatus=document.getElementById("srmV2LiveStatus");
+  function syncRealSaveStatus(){
+    const value=statusSource?.textContent?.trim()||"保存状态尚未就绪";
+    headerStatus.textContent=value;
+    headerStatus.title=value;
+    headerStatus.classList.toggle("srm-v2-error",/失败|错误|冲突|无法|拒绝|未能/.test(value));
+    headerStatus.classList.toggle("srm-v2-attention",!/失败|错误|冲突|无法|拒绝|未能/.test(value)&&/尚未|等待|未保存|初始化|正在/.test(value));
+  }
+  if(statusSource)new MutationObserver(syncRealSaveStatus).observe(statusSource,{childList:true,characterData:true,subtree:true});
+  syncRealSaveStatus();
   sync();
 })();
 </script>
