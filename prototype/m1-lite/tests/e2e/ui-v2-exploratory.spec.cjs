@@ -109,6 +109,8 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
         table:rect(table),tablewrap:rect(tablewrap),
         firstDataRow:rect(panel.querySelector('#assignItemBody tr')),
         quoteIntake:rect(panel.querySelector('.quoteImportGrid')),
+        quoteReview:rect(panel.querySelector('.srm-v2-quote-review')),
+        confirmButton:rect(panel.querySelector('#confirmQuoteRound')),
         tableScrollable:!!tablewrap&&tablewrap.scrollWidth>tablewrap.clientWidth+2,
         panelButtons:actionable.length,
         hiddenOffscreenControls:outOfViewport,
@@ -122,6 +124,11 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);
     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);
     expect(m.hiddenOffscreenControls,'No visible action should be horizontally clipped').toEqual([]);
+    if(stage==='quoteImport'){
+      expect(m.quoteIntake?.y,'The quote intake entry should appear in the initial viewport').toBeLessThan(size.height);
+      expect(m.quoteReview?.y,'Review follows intake in natural reading order').toBeGreaterThan(m.quoteIntake.y);
+      expect(m.confirmButton?.y,'Final confirmation should follow intake and review').toBeGreaterThan(m.quoteReview.y);
+    }
     if(stage==='assign'&&size.width===1024){
       expect(m.firstDataRow?.bottom,'The first complete supplier-allocation data row must fit at laptop-size viewport').toBeLessThanOrEqual(size.height);
     }
@@ -132,8 +139,12 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
     // English: Icon-only sidebar must expose readable labels on both focus and hover.
     const compact=page.locator('.srm-v2-sideitem[data-srm-v2-tab="assign"]');
     await compact.focus();
-    const focusTooltip=await compact.evaluate(el=>getComputedStyle(el,'::after').opacity);
-    expect(focusTooltip,'Compact sidebar focus tooltip must be visible').toBe('1');
+    // 中文：先键盘移动到下一控件，再 Shift+Tab 返回，真实触发 :focus-visible 而非模拟鼠标聚焦。
+    // English: Keyboard Tab/Shift+Tab genuinely triggers focus-visible rather than a mouse-like programmatic focus.
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Shift+Tab');
+    await expect(compact).toBeFocused();
+    await expect.poll(async()=>compact.evaluate(el=>getComputedStyle(el,'::after').opacity)).toBe('1');
     await compact.hover();
     const hoverTooltip=await compact.evaluate(el=>getComputedStyle(el,'::after').visibility);
     expect(hoverTooltip,'Compact sidebar hover tooltip must be visible').toBe('visible');
