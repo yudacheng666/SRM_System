@@ -101,6 +101,10 @@ for (const viewport of [{width:1366,height:768},{width:1600,height:900}]) {
     await expect(page.locator('#itemBody')).toContainText('TST-001');
     await page.locator('#clearItemSearch').click();
     await expect(page.locator('#itemCount')).toContainText('12');
+    // 中文：恢复首屏原点后再测量，防止 Playwright 自动滚动导致虚假的首屏合格。
+    // English: Reset to the top before measuring; auto-scroll must never mask an offscreen first row.
+    await page.evaluate(() => window.scrollTo({top:0,left:0,behavior:'instant'}));
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
     const layout=await page.evaluate(()=>{
       const first=document.querySelector('#itemBody tr')?.getBoundingClientRect();
       const nav=document.querySelector('.srm-v2-sidebar')?.getBoundingClientRect();
@@ -108,6 +112,7 @@ for (const viewport of [{width:1366,height:768},{width:1600,height:900}]) {
       return{
         viewport:{width:innerWidth,height:innerHeight},
         documentWidth:document.documentElement.scrollWidth,
+        scrollY:window.scrollY,
         sidebar:{width:nav?.width,height:nav?.height},
         tableTop:table?.top,firstRowTop:first?.top,firstRowBottom:first?.bottom,
         bodyFont:getComputedStyle(document.body).fontSize,
@@ -115,6 +120,7 @@ for (const viewport of [{width:1366,height:768},{width:1600,height:900}]) {
       };
     });
     console.log('SRM_UI_V2_B1_METRIC='+JSON.stringify(layout));
+    expect(layout.scrollY).toBe(0);
     expect(layout.documentWidth).toBeLessThanOrEqual(viewport.width+2);
     expect(layout.firstRowTop).toBeLessThan(viewport.height);
     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);
