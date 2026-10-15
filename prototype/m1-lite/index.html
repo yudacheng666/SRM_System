@@ -2386,7 +2386,9 @@ function saveItemEdit(){
   it.sources=it.sources||[];it.sources.push({source:"人工编辑（原位修改）",qty:it.qty});
   closeItemEditor(true);renderItemList();renderAssignAll();renderQuotes();
 }
-itemEditClose.onclick=closeItemEditor;itemEditCancel.onclick=closeItemEditor;itemEditSave.onclick=saveItemEdit;
+// 中文：事件对象不能作为 force 参数，否则普通关闭会意外绕过未保存修改的确认。
+ // English: Wrap click callbacks so MouseEvent cannot bypass the dirty-edit confirmation.
+itemEditClose.onclick=()=>closeItemEditor();itemEditCancel.onclick=()=>closeItemEditor();itemEditSave.onclick=saveItemEdit;
 itemEditModal.onclick=e=>{if(e.target===itemEditModal)closeItemEditor()};
 
 let drawingState={itemId:null,docIndex:0,page:1,scale:1};
