@@ -1,0 +1,75 @@
+# 中文：统一 UI V2 验收候选，整套 B1-B3 + 探索修正均真实验收。
+# English: Single acceptance workflow for approved B1-B3 UI and exploratory refinements.
+name: SRM UI V2 Unified Candidate Acceptance
+on:
+  pull_request:
+    branches:
+      - draft/20261013-m1-storage-ui-audit
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  linux-real-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked Node dependencies
+        run: npm ci
+      - name: Install real Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Check Python SQLite, complete backup and restoration logic
+        run: python -m unittest discover -v -s prototype/m1-lite/backend -p 'test_*.py'
+      - name: Check supplier quotation and workbook business rules
+        run: npm test
+      - name: Run complete real Chromium M1-Lite and UI V2 end-to-end acceptance
+        run: npm run test:e2e
+      - name: Archive screenshots, database test logs, HTML report and traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: srm-ui-v2-candidate-chromium-evidence
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
+          if-no-files-found: warn
+  windows-business-safety:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify Windows SQLite and backup restore
+        run: python -m unittest discover -v -s prototype/m1-lite/backend -p "test_*.py"
+      - name: Verify supplier packages and autosave rules
+        run: node --test prototype/m1-lite/tests/autosave_rules.test.cjs prototype/m1-lite/tests/supplier_package.test.cjs
+      - name: Validate Windows local launcher's encoding and relative path
+        shell: pwsh
+        run: |
+          $data = [System.IO.File]::ReadAllBytes("prototype/m1-lite/run_local.bat")
+          if ($data | Where-Object { $_ -ge 128 }) { throw "Windows launcher contains non-ASCII bytes" }
+          $content = [System.Text.Encoding]::ASCII.GetString($data)
+          if (-not $content.Contains('%~dp0backend\server.py')) { throw "Windows launcher relative path changed" }
+      - name: Validate isolated V2 pilot launcher does not use normal data directory
+        shell: pwsh
+        run: |
+          $pilot = [System.IO.File]::ReadAllBytes("prototype/m1-lite/run_ui_v2_pilot.bat")
+          if ($pilot | Where-Object { $_ -ge 128 }) { throw "Review launcher contains non-ASCII bytes" }
+          $text = [System.Text.Encoding]::ASCII.GetString($pilot)
+          if (-not $text.Contains('SRM_DATA_DIR')) { throw "Isolated pilot data override missing" }
+          if (-not $text.Contains('SRM-Lite-V2-Review')) { throw "Isolated review data folder missing" }
+          if (-not $text.Contains('%~dp0backend\server.py')) { throw "Pilot relative backend path lost" }
+          if ($text.Contains('rd /s') -or $text.Contains('rmdir /s')) { throw "Review script must not delete trial data" }
