@@ -105,6 +105,10 @@ async function quotes(page, app) {
 }
 async function drawings(page,app) {
   await tab(page,'items');
+  // 中文：图纸面板默认折叠，必须按采购员操作真实展开。
+  // English: The drawing tools start collapsed; open them through the real UI.
+  if(!await page.locator('#uiDrawingTools').evaluate(node=>node.open))
+    await page.locator('#uiOpenDrawings').click();
   await page.locator('#pilotBatchDrawingFiles').setInputFiles(['TST-001_A.pdf','unmatched.pdf'].map(f=>path.join(app.fixtures,f)));
   await page.locator('#pilotBatchDrawingAnalyze').click();
   await expect(page.locator('#pilotBatchDrawingPreview')).toContainText('单候选匹配');
@@ -297,7 +301,8 @@ test('07 real service disconnect and stale-tab 409 halt autosave / 自动保存�
 
 test('08 bad PDF and damaged ZIP never contaminate saved data / 异常回归', async ({page,app})=>{
   await fresh(page);await items(page,app);await save(page);const good=await snapshot(page);
-  await tab(page,'items'); await page.locator('#pilotDrawingLine').focus();
+  await tab(page,'items'); await page.locator('#uiOpenDrawings').click();
+  await page.locator('#pilotDrawingLine').focus();
   await page.locator('#pilotDrawingLine').selectOption(good.state.items[0].lineId);
   await page.locator('#pilotDrawingFiles').setInputFiles(path.join(app.fixtures,'bad.pdf'));await page.locator('#pilotDrawingUpload').click();
   await expect(page.locator('#pilotDrawingInfo')).toContainText('导入未完成');expect((await snapshot(page)).state.items).toEqual(good.state.items);
@@ -327,10 +332,64 @@ test('09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台�
   await page.locator('#uiOpenSupplierTools').click();
   await expect(page.locator('#uiSupplierTools')).toHaveAttribute('open', '');
   await tab(page,'items');
+  await expect(page.locator('#pilotDrawingPanel')).not.toBeVisible();
+  await page.locator('#uiOpenDrawings').click();
   await expect(page.locator('#pilotDrawingPanel')).toBeVisible();
   await page.locator('#uiAdminToggle').click();
   await expect(page.locator('#uiDataTools')).toHaveAttribute('open', '');
   await page.locator('#uiProjectJump').click();
   await page.waitForTimeout(5000);
   expect((await snapshot(page)).revision).toBe(initial);
+});
+
+
+test('10 buyer continuous allocation to items and drawing select without reload / 跨步骤实时同步',async ({page,app})=>{
+  // 中文：不允许靠 F5 掩盖跨页面未同步；测试使用真实导入和分配按钮。
+  // English: Verify dependent views without F5 after real item/supplier import and allocation.
+  await fresh(page);await items(page,app);await suppliers(page,app);
+  await tab(page,'assign');
+  const current=await snapshot(page);
+  const first=current.state.items.find(it=>it.id==='TST-001');
+  const second=current.state.items.find(it=>it.id==='TST-002');
+  await page.locator('[data-ai="'+first.lineId+'"]').check();
+  await page.locator('[data-ai="'+second.lineId+'"]').check();
+  await page.locator('[data-add="SUP-A"]').click();
+  await page.locator('[data-add="SUP-B"]').click();
+  await tab(page,'items');
+  await expect(page.locator('[data-edit-line="'+first.lineId+'"] td').nth(8)).toHaveText('2');
+  await expect(page.locator('[data-edit-line="'+second.lineId+'"] td').nth(8)).toHaveText('2');
+  await page.locator('#uiOpenDrawings').click();
+  await expect(page.locator('#pilotDrawingLine option')).toHaveCount(12);
+  await expect(page.locator('#pilotDrawingLine')).toBeEnabled();
+});
+
+test('11 formal RFQ identity in missing-quote CSV and working export shortcut / 单据追溯',async ({page,app},info)=>{
+  // 中文：在正式 RFQ 连续操作，漏报 CSV 行及文件名绝不可沿用演示编号。
+  // English: Verify real project identity in missing-quote CSV and the operative export route.
+  await allocated(page,app);
+  const ws=await snapshot(page);
+  await page.locator('#generateBtn').click();
+  await expect(page.locator('#uiDataTools')).toHaveAttribute('open','');
+  await expect(page.locator('#pilotReportPanel')).toBeVisible();
+  await expect(page.locator('#pilotReportType')).toHaveValue('rfq');
+  await tab(page,'quoteImport');
+  await page.locator('#quoteImportSupplier').selectOption('SUP-B');
+  await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\nTST-001,19,5,1,正常报价');
+  await page.locator('#quoteParsePaste').click();
+  await page.locator('#commitQuoteImport').click();
+  await expect(page.locator('#qcMissing')).toHaveText('11');
+  const filePromise=page.waitForEvent('download');
+  await page.locator('#exportQuoteMissing').click();
+  const file=await filePromise;
+  expect(file.suggestedFilename()).toContain(ws.workspaceId);
+  const target=info.outputPath('missing-rfq-identity.csv');
+  await file.saveAs(target);
+  const data=fs.readFileSync(target,'utf8');
+  expect(data).toContain(ws.workspaceId);
+  expect(data).not.toContain('RFQ-DEMO-001');
+  await tab(page,'quotes');
+  await openTools(page,'#uiDataTools');
+  if(!await page.locator('#pilotReportPanel').isVisible())await page.locator('#pilotReportOpen').click();
+  await page.locator('#pilotReportType').selectOption('comparison');
+  await expect(page.locator('#pilotReportDownload')).toContainText('内部比价议价单');
 });
