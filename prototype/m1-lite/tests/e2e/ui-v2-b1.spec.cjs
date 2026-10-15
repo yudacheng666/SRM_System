@@ -83,7 +83,9 @@ for (const viewport of [{width:1366,height:768},{width:1600,height:900}]) {
     // 中文：项目面板收起后，状态摘要仍然可见，详细状态节点继续保留。
     // English: After project drawer collapses, summary remains visible and detailed status IDs remain mounted.
     await expect(page.locator('#pilotSaveStatus')).toHaveCount(1);
-    await expect(page.locator('#uiProjectStatus')).toBeVisible();
+    // 中文：旧状态节点在收起的工具抽屉内；新版顶栏必须实时展示真实保存状态。
+    // English: The legacy status sits in a collapsed drawer; the new header must expose real save feedback.
+    await expect(page.locator('#srmV2LiveStatus')).toBeVisible();
     await page.locator('#toggleItemIntake').click();
     await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'items12.xlsx'));
     await expect(page.locator('#confirmImportRows')).toBeEnabled();
@@ -104,6 +106,7 @@ for (const viewport of [{width:1366,height:768},{width:1600,height:900}]) {
       return stored.revision>0 && JSON.stringify(stored.state)===JSON.stringify(snap.state);
     },{timeout:20000}).toBe(true);
 
+    await expect(page.locator('#srmV2LiveStatus')).toContainText(/已自动保存|已手动保存/);
     await page.locator('#itemSearch').fill('TST-001');
     await page.locator('#runItemSearch').click();
     await expect(page.locator('#itemBody')).toContainText('TST-001');
