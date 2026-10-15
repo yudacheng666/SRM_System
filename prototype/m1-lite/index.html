@@ -604,6 +604,18 @@ body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar #confirmQuoteRound{margin-lef
  body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar #confirmQuoteRound{margin-left:auto}
 }
 
+/* 中文：P3-06 报价与比价宽表横向滚动时，始终保留稳定的物料编码/RFQ 行身份。
+ * English: Freeze line identity in wide quote/comparison tables during right-side editing. */
+body.srm-v2 #quoteImport .tablewrap:has(#quoteRoundBody) table :is(th,td):first-child,
+body.srm-v2 #quotes #quoteTable :is(th,td):first-child{
+  position:sticky;left:0;min-width:185px;max-width:235px;
+  background:#fff;box-shadow:2px 0 0 #d6e2ef;z-index:3;
+}
+body.srm-v2 #quoteImport .tablewrap:has(#quoteRoundBody) table th:first-child,
+body.srm-v2 #quotes #quoteTable th:first-child{z-index:5;background:#f7f9fc}
+body.srm-v2 #quoteImport .tablewrap:has(#quoteRoundBody) table tr:hover td:first-child,
+body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
+
 </style>
 </head>
 <body class="srm-v2">
@@ -3719,7 +3731,15 @@ renderItemList();renderAssignAll();renderQuotes();
   const available=!!it&&active(),locked=it?itemHasAnyQuoteHistory(it.lineId):false;
   for(const el of [files,version,upload,existing,attach,linked,unlink,statusChoice,applyStatus])
    el.disabled=!available||locked;
+  // 中文：提示随真实 RFQ 和当前物料更新，不再沿用演示模式的过期信息。
+  // English: Derive drawing instructions from the active project and selected line.
   if(it&&locked)tell("该行已有报价历史，不能静默修改或删除关联图纸；请新建询价版本。");
+  else if(window.SRMPilot?.isBuyer()&&it){
+    const amount=service.docsForItem(it).length;
+    const label=it.drawingStatus==="not_required"?"无需图纸":it.drawingStatus==="pending"?"版本待确认":amount?"已关联 "+amount+" 份 PDF":"尚未关联 PDF";
+    tell("当前物料 "+it.id+"（"+it.lineId+"）· "+label+"；可核对图纸版本并显式确认关联。");
+  }else if(window.SRMPilot?.isBuyer())tell("当前询价暂无物料，请先导入物料后选择对应 RFQ 行。");
+  else tell("演示模式：新建正式询价并录入物料后可关联真实 PDF。");
  }
  line.onchange=sync;
  line.addEventListener("focus",sync);
