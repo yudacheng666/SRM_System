@@ -58,8 +58,10 @@ async function saved(page) {
     return stored.revision > 0 && JSON.stringify(stored.state) === JSON.stringify(current.state);
   }).toBe(true);
 }
-async function fresh(page) { await page.locator('#pilotNewWorkspace').click(); await saved(page); }
+async function openProject(page) { await openTools(page,'#uiProjectDetails'); }
+async function fresh(page) { await openProject(page); await page.locator('#pilotNewWorkspace').click(); await saved(page); }
 async function save(page) {
+  await openProject(page);
   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));
   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);
   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');
@@ -157,7 +159,7 @@ test('02 XLSX 12/100, duplicates and invalid format / 物料', async ({page,app}
   await expect(page.locator('#confirmImportRows')).toBeDisabled(); expect((await snapshot(page)).state.items).toHaveLength(12);
   await page.locator('#importFile').setInputFiles({name:'broken.xlsx',mimeType:'application/octet-stream',buffer:Buffer.from('broken')});
   await expect(page.locator('#itemFileFeedback')).toContainText('读取失败');
-  await page.locator('#pilotNewWorkspace').click(); await saved(page); await items(page,app,'items100.xlsx',100); await save(page);
+  await openProject(page); await page.locator('#pilotNewWorkspace').click(); await saved(page); await items(page,app,'items100.xlsx',100); await save(page);
   await page.reload(); await expect(page.locator('#itemCount')).toContainText('100');
 });
 
@@ -169,7 +171,8 @@ test('03 suppliers and bidirectional additive allocation / 供应商与分配', 
   await expect.poll(async () => (await snapshot(page)).state.assignments.every(x=>!x.values.includes('SUP-B'))).toBe(true);
   await page.locator('[data-mode="supplierFirst"]').click(); await page.locator('[data-sf-s="SUP-B"]').click();
   await page.locator('#sfItemBody input[data-sfi]').first().check(); await save(page); const state=(await snapshot(page)).state;
-  await page.locator('#pilotNewWorkspace').click(); await saved(page);
+  await openProject(page); await page.locator('#pilotNewWorkspace').click(); await saved(page);
+  await openProject(page);
   await page.locator('#pilotHistoryWorkspace').selectOption({index:1}); await page.locator('#pilotSwitchWorkspace').click();
   await expect.poll(async () => (await snapshot(page)).state.assignments).toEqual(state.assignments);
   expect((await snapshot(page)).state.suppliers).toEqual(state.suppliers);
@@ -253,7 +256,7 @@ test('05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图�
 
 test('06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复', async ({page,app,browser},info)=>{
   await allocated(page,app); await drawings(page,app); await quotes(page,app); const ws=await snapshot(page);
-  await page.locator('#pilotNewWorkspace').click(); await saved(page); await save(page);
+  await openProject(page); await page.locator('#pilotNewWorkspace').click(); await saved(page); await save(page);
   const index=(await (await fetch(baseURL+'/api/workspaces')).json()).workspaces;
   const originals={}; for(const row of index) {const w=(await (await fetch(baseURL+'/api/workspaces/'+row.workspaceId)).json()).workspace; originals[row.workspaceId]=[];
     for(let r=1;r<=w.revision;r++) originals[row.workspaceId].push((await (await fetch(baseURL+'/api/workspaces/'+row.workspaceId+'?revision='+r)).json()).workspace);
@@ -272,6 +275,7 @@ test('06 full backup restore: actual imported quotes, history, PDFs, overwrite r
       const from=Buffer.from(await (await fetch(baseURL+'/api/assets/'+ws.workspaceId+'/'+pdf.sha256)).arrayBuffer());
       const to=Buffer.from(await (await fetch('http://127.0.0.1:8766/api/assets/'+ws.workspaceId+'/'+pdf.sha256)).arrayBuffer());expect(to).toEqual(from);
     }
+    await openProject(other);
     await other.locator('#pilotHistoryWorkspace').selectOption(ws.workspaceId);await other.locator('#pilotSwitchWorkspace').click();
     await expect.poll(async()=> (await snapshot(other)).state.quoteRounds).toEqual(ws.state.quoteRounds);
     // 中文：恢复触发页面重载，数据工具区会恢复折叠；必须按真实 UI 再次展开。
@@ -294,7 +298,7 @@ test('07 real service disconnect and stale-tab 409 halt autosave / 自动保存�
     await app.stop(app.child);
     await page.locator('#pilotCounterpartyCode').fill('CP-OFFLINE');await page.locator('#pilotSupplierName').fill('虚构断线');await page.locator('#pilotAddSupplier').click();
     await expect(page.locator('#pilotAutosaveStatus')).toContainText('保存失败');
-    await app.start();await page.locator('#pilotSaveWorkspace').click();await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');
+    await app.start();await openProject(page);await page.locator('#pilotSaveWorkspace').click();await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');
     await page.reload();await expect.poll(async()=> (await snapshot(page)).state.suppliers.length).toBe(1);
   } finally {await stale.close();}
 });
@@ -392,4 +396,47 @@ test('11 formal RFQ identity in missing-quote CSV and working export shortcut / 
   if(!await page.locator('#pilotReportPanel').isVisible())await page.locator('#pilotReportOpen').click();
   await page.locator('#pilotReportType').selectOption('comparison');
   await expect(page.locator('#pilotReportDownload')).toContainText('内部比价议价单');
+});
+
+
+test('12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离',async ({page,app})=>{
+  // 中文：真实 UI 导入并自动保存后，旧提示不得残留；新 RFQ 不得显示旧供应商及导出成功消息。
+  // English: Confirm autosave feedback and clear stale report participants after switching RFQs.
+  await fresh(page);
+  await items(page,app);
+  await suppliers(page,app);
+  await saved(page);
+  await expect(page.locator('#pilotSupplierExcelStatus')).toContainText('供应商已保存到当前询价');
+  await tab(page,'assign');
+  await page.locator('#selectAssignAll').click();
+  await page.locator('[data-add="SUP-A"]').click();
+  await saved(page);
+  await openTools(page,'#uiDataTools');
+  await page.locator('#pilotReportOpen').click();
+  await expect(page.locator('#pilotReportSupplier option')).toHaveCount(1);
+  const downloadWait=page.waitForEvent('download');
+  await page.locator('#pilotReportDownload').click();
+  await downloadWait;
+  await expect(page.locator('#pilotReportHint')).toContainText('已发起供应商询价');
+  await fresh(page);
+  await expect(page.locator('#pilotReportPanel')).toBeVisible();
+  await expect(page.locator('#pilotReportSupplier option')).toHaveCount(0);
+  await expect(page.locator('#pilotReportSupplierGroup')).toBeEmpty();
+  await expect(page.locator('#pilotReportHint')).not.toContainText('已发起');
+  await expect(page.locator('#pilotSupplierExcelStatus')).toContainText('仅针对当前询价');
+  await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
+  await page.locator('#uiProjectJump').click();
+  await expect(page.locator('#uiProjectDetails')).toHaveAttribute('open','');
+});
+
+test('13 compact laptop item table after import / 1366首屏物料可见',async ({page,app})=>{
+  // 中文：真实 1366×768 笔记本视口下，新导入物料不再被项目和导入工具挡在首屏之外。
+  // English: New item rows should be visible on a laptop viewport after importing.
+  await page.setViewportSize({width:1366,height:768});
+  await fresh(page);
+  await items(page,app);
+  await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
+  await expect(page.locator('#itemIntake')).not.toBeVisible();
+  const geometry=await page.locator('#itemBody tr').first().evaluate(el=>({top:el.getBoundingClientRect().top,innerHeight:innerHeight}));
+  expect(geometry.top,'First imported item must be in the initial 1366×768 viewport').toBeLessThan(geometry.innerHeight);
 });
