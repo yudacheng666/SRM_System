@@ -147,7 +147,7 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
     await expect.poll(async()=>compact.evaluate(el=>getComputedStyle(el,'::after').opacity)).toBe('1');
     // 中文：鼠标提示交给浏览器原生 title（延迟出现），避免点击导航后立即遮挡工作台。
     // English: Native hover title appears after the browser delay; avoid custom overlay after mouse clicks.
-    await expect(compact).toHaveAttribute('title','供应商分配');
+    await expect(compact).toHaveAttribute('title','供应商与分配');
     await compact.hover();
   }
   // 中文：键盘 Enter 应复用原导航业务处理器，焦点态必须可见。
