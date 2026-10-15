@@ -19,6 +19,7 @@ const uiTest = test.extend({
       env: {...process.env, SRM_DATA_DIR: path.join(root, 'data'), PYTHONUNBUFFERED: '1'},
       stdio: ['ignore','pipe','pipe'],
     });
+    page.on('dialog', dialog => dialog.accept());
     const logs = [];
     child.stdout.on('data', x => logs.push(x.toString()));
     child.stderr.on('data', x => logs.push(x.toString()));
@@ -72,10 +73,17 @@ for (const viewport of [{width:1366,height:768},{width:1600,height:900}]) {
 
     // 中文：新建和导入真实虚构工作区，不能把视觉演示当作完成。
     // English: Create a genuine isolated workspace and import synthetic XLSX through the real UI.
-    await page.locator('#uiProjectDetails summary').click();
+    // 中文：只在未展开时打开项目操作，避免反向折叠已展开的面板。
+    // English: Open only when collapsed, never close the already-open project action drawer.
+    if(!await page.locator('#uiProjectDetails').evaluate(el=>el.open))
+      await page.locator('#uiProjectDetails summary').click();
+    await expect(page.locator('#pilotNewWorkspace')).toBeVisible();
     await page.locator('#pilotNewWorkspace').click();
     await expect(page.locator('#pilotModeBadge')).not.toContainText('演示');
-    await expect(page.locator('#pilotSaveStatus')).toBeVisible();
+    // 中文：项目面板收起后，状态摘要仍然可见，详细状态节点继续保留。
+    // English: After project drawer collapses, summary remains visible and detailed status IDs remain mounted.
+    await expect(page.locator('#pilotSaveStatus')).toHaveCount(1);
+    await expect(page.locator('#uiProjectStatus')).toBeVisible();
     await page.locator('#toggleItemIntake').click();
     await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'items12.xlsx'));
     await expect(page.locator('#confirmImportRows')).toBeEnabled();
