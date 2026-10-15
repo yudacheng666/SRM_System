@@ -8,8 +8,8 @@
 - Test target: standalone `design/ui-v2/concept-b-v2.1.html`; no SRM business backend.
 - Chromium 环境：GitHub Actions ubuntu-latest，Node 22，npm ci 锁定 @playwright/test 1.58.2。
 - Environment: GitHub Actions ubuntu-latest; Node 22; pinned @playwright/test 1.58.2.
-- 验收运行：<https://github.com/yudacheng666/SRM_System/actions/runs/38700668438>。
-- Verified workflow run: <https://github.com/yudacheng666/SRM_System/actions/runs/38700668438>.
+- 验收运行：<https://github.com/yudacheng666/SRM_System/actions/runs/38701335818>。
+- Verified workflow run: <https://github.com/yudacheng666/SRM_System/actions/runs/38701335818>.
 - 截图与 JSON 坐标下载：Actions → 此运行 → Artifacts → `srm-ui-v2-b-chromium-visual-evidence`，保留 30 天。
 - Screenshots and metric JSON: Actions → run → Artifacts → `srm-ui-v2-b-chromium-visual-evidence`; retention 30 days.
 - 隔离 Draft PR：<https://github.com/yudacheng666/SRM_System/pull/6>，目标仅为设计分支，未合并。
@@ -45,9 +45,9 @@ Positions in CSS pixels relative to viewport top.
 - 改动仅存在于 `concept-b-v2.1.html` 副本中；用户已确认的 `concept-b-refined.html` 保持不变。
 - These adjustments live in a separate standalone file; the originally approved concept remains unchanged.
 
-## 4. 仍未验证 / Not Covered
-- 尚未由人员逐张审看像素级截图；自动 PASS 仅指机器断言满足，不代表美学人工验收。
-- Screenshots were captured but not independently pixel-reviewed by a human; automated PASS does not equal aesthetic sign-off.
+## 4. 截图视觉抽检与限制 / Screenshot Review and Limitations
+- 已人工检查 1366 与 1600 两组各四页截图总览及部分原始单页；未发现明显遮挡或截断。浏览器验收与最终业务 UI 仍须分别验收。
+- Reviewed both four-screen contact sheets and selected full-resolution screenshots, with no obvious clipping/occlusion; the actual SRM application still needs separate acceptance.
 - 未测试真实 Windows Edge/Chrome 字体渲染、浏览器缩放、辅助技术完整审计、正式 M1-Lite 交互。
 - Native Windows fonts, zoom, full accessibility audit, and integrated M1-Lite workflows were not tested.
 - 测试的“已保存”文字是视觉模拟，不是后端状态；原型未触碰 SQLite、备份、PDF 字节或报价数据。
