@@ -2072,6 +2072,9 @@ function addRowsToRfq(rows){
   });
   pendingImportRows=[];itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;importPreview.style.display="none";
   renderItemList();renderAssignAll();renderQuotes();
+  // 中文：导入确认后收起录入区，笔记本首屏优先展示已导入的物料行。
+  // English: Collapse intake after a successful import so buyers can immediately review the table.
+  if(items.length)itemIntake.style.display="none";
   alert(`新增 ${added} 行；自动合并 ${merged} 行；冲突确认分行 ${separated} 行。合并前原始需求行已留存。`);
 }
 toggleItemIntake.onclick=()=>{itemIntake.style.display=itemIntake.style.display==="none"?"block":"none"};
