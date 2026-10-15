@@ -1,0 +1,41 @@
+{"time":"2026-10-15T12:36:09.240Z","kind":"error","message":"Failed to load resource: the server responded with a status of 404 (Not Found)"}
+{"time":"2026-10-15T12:37:12.554Z","kind":"dialog","type":"alert","message":"新增 12 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
+{"time":"2026-10-15T12:38:18.771Z","kind":"dialog","type":"confirm","message":"保存此询价行修改？RFQ Line ID 和已分配供应商保持不变。"}
+{"time":"2026-10-15T12:39:02.002Z","kind":"dialog","type":"alert","message":"新增 1 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
+{"time":"2026-10-15T12:39:02.921Z","kind":"dialog","type":"alert","message":"新增 1 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
+{"time":"2026-10-15T12:42:34.367Z","kind":"dialog","type":"confirm","message":"有 1 条相同编码存在属性或业务冲突，不能自动合并。是否明确保留为独立 RFQ 询价行？取消则本批次不导入。"}
+{"time":"2026-10-15T12:42:34.415Z","kind":"dialog","type":"alert","message":"新增 1 行；自动合并 0 行；冲突确认分行 1 行。合并前原始需求行已留存。"}
+{"time":"2026-10-15T12:43:39.949Z","kind":"dialog","type":"confirm","message":"确认将 2 份 PDF 关联到 2 条 RFQ 物料？请先核对编码、图号、行号和版本。保存后再用于供应商询价包。"}
+{"time":"2026-10-15T12:44:58.622Z","kind":"dialog","type":"confirm","message":"为选中物料添加供应商：即将变更 3 条物料与“虚构精工甲”的实际关联。\n涉及物料：TST-001、TST-002、TST-003\n注意：筛选后仍选中的隐藏物料也包含在内。\n确认后立即生效，是否继续？"}
+{"time":"2026-10-15T12:45:00.338Z","kind":"dialog","type":"confirm","message":"为选中物料添加供应商：即将变更 3 条物料与“虚构机件乙”的实际关联。\n涉及物料：TST-001、TST-002、TST-004\n注意：筛选后仍选中的隐藏物料也包含在内。\n确认后立即生效，是否继续？"}
+{"time":"2026-10-15T12:47:01.934Z","kind":"dialog","type":"confirm","message":"这家供应商缺图 1 条、版本待确认 0 条（这些 PDF 暂不打包），是否导出已完成部分？"}
+{"time":"2026-10-15T12:47:01.977Z","kind":"download","name":"SRM_询价单_UAT-A_虚构精工甲_含图纸.zip"}
+{"time":"2026-10-15T12:47:03.858Z","kind":"dialog","type":"confirm","message":"从本次 RFQ 删除选中的 2 项物料？\n相关供应商分配关系也会同时删除。"}
+{"time":"2026-10-15T12:48:26.571Z","kind":"dialog","type":"confirm","message":"本次共 4 行，可提交 3 行，拒绝/待检查 1 行。\n以下错误行不会保存，完整清单留在预览中：\n5 行 UNKNOWN-777：多报\n是否只提交 3 行？"}
+{"time":"2026-10-15T12:48:53.282Z","kind":"dialog","type":"confirm","message":"本次共 3 行，可提交 1 行，拒绝/待检查 2 行。\n以下错误行不会保存，完整清单留在预览中：\n3 行 TST-002：重复\n4 行 TST-002：重复\n是否只提交 1 行？"}
+{"time":"2026-10-15T12:50:20.385Z","kind":"dialog","type":"prompt","message":"单价 / 阶梯价："}
+{"time":"2026-10-15T12:50:20.402Z","kind":"dialog","type":"prompt","message":"交期（天，可空）："}
+{"time":"2026-10-15T12:50:20.413Z","kind":"dialog","type":"prompt","message":"MOQ（可空）："}
+{"time":"2026-10-15T12:50:20.423Z","kind":"dialog","type":"prompt","message":"状态：quoted / noquote / cannot"}
+{"time":"2026-10-15T12:50:20.433Z","kind":"dialog","type":"prompt","message":"物料备注（可空）："}
+{"time":"2026-10-15T12:50:20.514Z","kind":"dialog","type":"alert","message":"价格不能为空"}
+{"time":"2026-10-15T12:50:46.347Z","kind":"dialog","message":"单价 / 阶梯价：","answer":"synthetic value"}
+{"time":"2026-10-15T12:50:46.357Z","kind":"dialog","message":"交期（天，可空）：","answer":"synthetic value"}
+{"time":"2026-10-15T12:50:46.377Z","kind":"dialog","message":"MOQ（可空）：","answer":"synthetic value"}
+{"time":"2026-10-15T12:50:46.391Z","kind":"dialog","message":"状态：quoted / noquote / cannot","answer":"synthetic value"}
+{"time":"2026-10-15T12:50:46.410Z","kind":"dialog","message":"物料备注（可空）：","answer":"synthetic value"}
+{"time":"2026-10-15T12:53:27.125Z","kind":"download","name":"SRM_比价议价单_RFQ-1792067805618-H0OZ0C.xlsx"}
+{"time":"2026-10-15T12:54:14.550Z","kind":"dialog","message":"当前询价尚有未保存修改，新建将放弃这些修改。继续？","answer":"accept"}
+{"time":"2026-10-15T12:56:33.145Z","kind":"dialog","message":"新增 100 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。","answer":"accept"}
+{"time":"2026-10-15T12:58:49.766Z","kind":"download","name":"SRM_FULL_20261015_125849_893072fa.zip"}
+{"time":"2026-10-15T12:59:23.656Z","kind":"error","message":"Failed to load resource: the server responded with a status of 404 (Not Found)"}
+{"time":"2026-10-15T12:59:24.374Z","kind":"dialog","type":"confirm","message":"确定向当前【空白】数据库恢复完整 ZIP？系统将校验所有文件；已有数据时拒绝恢复。"}
+{"time":"2026-10-15T12:59:24.430Z","kind":"error","message":"Failed to load resource: the server responded with a status of 400 (Bad Request)"}
+{"time":"2026-10-15T13:00:08.975Z","kind":"dialog","type":"confirm","message":"确定向当前【空白】数据库恢复完整 ZIP？系统将校验所有文件；已有数据时拒绝恢复。"}
+{"time":"2026-10-15T13:01:56.714Z","kind":"dialog","message":"保存此询价行修改？RFQ Line ID 和已分配供应商保持不变。","answer":"accept"}
+{"time":"2026-10-15T13:01:58.475Z","kind":"error","message":"Failed to load resource: net::ERR_INTERNET_DISCONNECTED"}
+{"time":"2026-10-15T13:02:09.303Z","kind":"error","message":"Failed to load resource: net::ERR_INTERNET_DISCONNECTED"}
+{"time":"2026-10-15T13:02:12.541Z","kind":"error","message":"Failed to load resource: net::ERR_INTERNET_DISCONNECTED"}
+{"time":"2026-10-15T13:04:04.074Z","kind":"dialog","message":"当前提交没有报价记录。","answer":"accept"}
+{"time":"2026-10-15T13:07:38.762Z","kind":"dialog","message":"从本次 RFQ 删除选中的 1 项物料？\n相关供应商分配关系也会同时删除。","answer":"cancel"}
+{"time":"2026-10-15T13:07:41.243Z","kind":"dialog","type":"alert","message":"新增 1 行；自动合并 1 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
