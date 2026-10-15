@@ -54,6 +54,10 @@ test('B2 allocation real-browser '+viewport.width+'x'+viewport.height,async({pag
   await expect(page.locator('#pilotImportSupplierConfirm')).toBeEnabled();
   await page.locator('#pilotImportSupplierConfirm').click();
   await expect.poll(async()=>(await status(page)).state.suppliers.length).toBe(2);
+  // 中文：完成导入后关闭供应商工具区，再测量正常业务工作台首屏。
+  // English: Close supplier intake after use to measure the normal working viewport.
+  if(await page.locator('#uiSupplierTools').evaluate(n=>n.open))
+    await page.locator('#uiSupplierTools > summary').click();
   await page.locator('.srm-v2-sideitem[data-srm-v2-tab="assign"]').click();
   await expect(page.locator('#assign')).toHaveClass(/active/);
   await expect(page.locator('#stTotal')).toHaveText('12');
