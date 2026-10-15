@@ -604,6 +604,18 @@ body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar #confirmQuoteRound{margin-lef
  body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar #confirmQuoteRound{margin-left:auto}
 }
 
+/* 中文：P3-06 报价与比价宽表横向滚动时，始终保留稳定的物料编码/RFQ 行身份。
+ * English: Freeze line identity in wide quote/comparison tables during right-side editing. */
+body.srm-v2 #quoteImport .tablewrap:has(#quoteRoundBody) table :is(th,td):first-child,
+body.srm-v2 #quotes #quoteTable :is(th,td):first-child{
+  position:sticky;left:0;min-width:185px;max-width:235px;
+  background:#fff;box-shadow:2px 0 0 #d6e2ef;z-index:3;
+}
+body.srm-v2 #quoteImport .tablewrap:has(#quoteRoundBody) table th:first-child,
+body.srm-v2 #quotes #quoteTable th:first-child{z-index:5;background:#f7f9fc}
+body.srm-v2 #quoteImport .tablewrap:has(#quoteRoundBody) table tr:hover td:first-child,
+body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
+
 </style>
 </head>
 <body class="srm-v2">
@@ -663,6 +675,7 @@ body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar #confirmQuoteRound{margin-lef
   <button type="button" class="btn primary" id="pilotS4DownloadFull" disabled>下载 S4 完整备份（SQLite + PDF）</button>
   <label class="small">选择 S4 完整备份 ZIP <input type="file" id="pilotS4BackupFile" accept=".zip,application/zip"></label>
   <button type="button" class="btn" id="pilotS4RestoreFull" disabled>恢复完整备份（仅空白数据）</button>
+  <div id="pilotS4RestoreFeedback" role="alert" aria-live="assertive" hidden style="flex-basis:100%;width:100%;padding:9px 12px;border:1px solid #efc0bb;border-radius:6px;background:#fff1f0;color:#a32922;font-size:12px"></div>
   <button type="button" class="btn soft" id="pilotExportExcel" disabled>导出业务数据 Excel（3 Sheet）</button>
   <button type="button" class="btn primary" id="pilotReportOpen" disabled>导出询价单 / 比价议价单</button>
   <label class="btn" style="cursor:pointer">选择备份 JSON <input type="file" id="pilotImportBackup" accept=".json,application/json" disabled style="max-width:185px"></label>
@@ -2336,7 +2349,7 @@ function itemCell(it){
 function bindDrawingThumbs(){document.querySelectorAll("[data-drawing]").forEach(b=>b.onclick=e=>{e.stopPropagation();openDrawing(b.dataset.drawing)})}
 /** 中文：物料双击编辑只以稳定 RFQ Line ID 定位；已有任何报价行或确认范围时禁止覆盖。
  * English: Edit via stable RFQ Line ID; block mutation of quoted lines or confirmed scope. */
-let editingItemLineId=null;
+let editingItemLineId=null,itemEditOpeningValues=null;
 function itemHasAnyQuoteHistory(lineId){
   return quoteRounds.some(r=>r.lines.some(x=>x.lineId===lineId)||(r.status==="confirmed"&&(r.expectedLineIds||[]).includes(lineId)));
 }
@@ -2348,10 +2361,19 @@ function openItemEditor(lineId){
   itemEditHint.textContent=locked?"此询价行已有报价历史，当前只允许查看；请在后续正式修订流程中变更。":"当前属性带出该行原值。M0 尚未接入 ERP 主数据，修改存货编码不会自动更新其他 ERP 属性，也不会合并其他相同编码询价行。";
   for(const input of [itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditCat,itemEditUnit])input.disabled=locked;
   itemEditSave.disabled=locked;itemEditError.textContent="";
+  // 中文：记录当前编辑框初值；Esc/取消只在实际修改过时询问，避免意外丢弃输入。
+  // English: Snapshot input values so Escape/cancel can protect dirty edits without blocking untouched dialogs.
+  itemEditOpeningValues=[itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditCat,itemEditUnit].map(x=>x.value);
   itemEditModal.classList.add("open");itemEditModal.setAttribute("aria-hidden","false");
   if(!locked)itemEditCode.focus();
 }
-function closeItemEditor(){editingItemLineId=null;itemEditModal.classList.remove("open");itemEditModal.setAttribute("aria-hidden","true")}
+function closeItemEditor(force=false){
+  if(!itemEditModal.classList.contains("open"))return;
+  const changed=itemEditOpeningValues&&[itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditCat,itemEditUnit].some((x,i)=>x.value!==itemEditOpeningValues[i]);
+  if(!force&&changed&&!confirm("该物料有未保存的编辑。确定放弃修改并关闭窗口吗？"))return;
+  editingItemLineId=null;itemEditOpeningValues=null;
+  itemEditModal.classList.remove("open");itemEditModal.setAttribute("aria-hidden","true");
+}
 function saveItemEdit(){
   const it=items.find(x=>x.lineId===editingItemLineId);if(!it)return;
   if(itemHasAnyQuoteHistory(it.lineId)){itemEditError.textContent="该行已有报价历史，不能原位修改。";return}
@@ -2362,9 +2384,11 @@ function saveItemEdit(){
   // English: Code edits never silently merge RFQ lines or claim ERP master autofill.
   it.id=code;it.drawingNo=itemEditDrawingNo.value.trim();it.qty=qty.value;it.name=itemEditName.value.trim();it.cat=itemEditCat.value.trim();it.unit=unit;
   it.sources=it.sources||[];it.sources.push({source:"人工编辑（原位修改）",qty:it.qty});
-  closeItemEditor();renderItemList();renderAssignAll();renderQuotes();
+  closeItemEditor(true);renderItemList();renderAssignAll();renderQuotes();
 }
-itemEditClose.onclick=closeItemEditor;itemEditCancel.onclick=closeItemEditor;itemEditSave.onclick=saveItemEdit;
+// 中文：事件对象不能作为 force 参数，否则普通关闭会意外绕过未保存修改的确认。
+ // English: Wrap click callbacks so MouseEvent cannot bypass the dirty-edit confirmation.
+itemEditClose.onclick=()=>closeItemEditor();itemEditCancel.onclick=()=>closeItemEditor();itemEditSave.onclick=saveItemEdit;
 itemEditModal.onclick=e=>{if(e.target===itemEditModal)closeItemEditor()};
 
 let drawingState={itemId:null,docIndex:0,page:1,scale:1};
@@ -2426,6 +2450,51 @@ drawingFit.onclick=()=>{drawingState.scale=1;renderDrawingPdf()};
 function closeDrawingModal(){realPdfRenderSeq++;revokeRealPdf();drawingModal.classList.remove("open");drawingModal.setAttribute("aria-hidden","true")}
 closeDrawing.onclick=closeDrawingModal;drawingModal.onclick=e=>{if(e.target===drawingModal)closeDrawingModal()};
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeDrawingModal();if(document.getElementById("rfqPreviewModal")?.classList.contains("open"))closeRfqPreview.click()}});
+/** 中文：全部原生页面内弹窗使用统一焦点约束、Esc、返回焦点；保留各自原有关闭/脏数据规则。
+ * English: Trap keyboard focus for actual dialogs, support Escape, and restore previous focus without bypassing dirty-edit confirmation. */
+(function bindDialogKeyboard(){
+  const closeIds={itemEditModal:"itemEditClose",drawingModal:"closeDrawing",rfqPreviewModal:"closeRfqPreview",awardReasonModal:"awardReasonClose"};
+  const selector='button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])';
+  const openModal=()=>[...document.querySelectorAll(".modalBackdrop.open")].at(-1)||null;
+  const focusable=modal=>[...modal.querySelectorAll(selector)].filter(el=>el.getClientRects().length&&getComputedStyle(el).visibility!=="hidden");
+  let outsideFocus=null,activeDialogs=new Set(),lastOpener=new Map();
+  document.addEventListener("focusin",e=>{
+    const modal=openModal();
+    if(!modal){if(e.target instanceof HTMLElement)outsideFocus=e.target;return}
+    if(!modal.contains(e.target)){const target=focusable(modal)[0];if(target)target.focus({preventScroll:true})}
+  },true);
+  const tracker=new MutationObserver(()=>{
+    for(const modal of document.querySelectorAll(".modalBackdrop")){
+      const opened=modal.classList.contains("open")&&modal.getAttribute("aria-hidden")==="false";
+      if(opened&&!activeDialogs.has(modal)){
+        activeDialogs.add(modal);lastOpener.set(modal,outsideFocus);
+        if(!modal.contains(document.activeElement)){focusable(modal)[0]?.focus({preventScroll:true})}
+      }else if(!opened&&activeDialogs.has(modal)){
+        activeDialogs.delete(modal);
+        const target=lastOpener.get(modal);
+        lastOpener.delete(modal);
+        if(target?.isConnected&&typeof target.focus==="function")target.focus({preventScroll:true});
+        else document.getElementById("itemSearch")?.focus({preventScroll:true});
+      }
+    }
+  });
+  document.querySelectorAll(".modalBackdrop").forEach(x=>tracker.observe(x,{attributes:true,attributeFilter:["class","aria-hidden"]}));
+  document.addEventListener("keydown",e=>{
+    const modal=openModal();if(!modal)return;
+    if(e.key==="Escape"){
+      e.preventDefault();e.stopImmediatePropagation();
+      const close=document.getElementById(closeIds[modal.id]);if(close)close.click();
+      return;
+    }
+    if(e.key!=="Tab")return;
+    const targets=focusable(modal),first=targets[0],last=targets.at(-1);
+    if(!first){e.preventDefault();return}
+    const active=document.activeElement;
+    if(!modal.contains(active)){e.preventDefault();(e.shiftKey?last:first).focus();return}
+    if(e.shiftKey&&active===first){e.preventDefault();last.focus()}
+    else if(!e.shiftKey&&active===last){e.preventDefault();first.focus()}
+  },true);
+})();
 function parsePositiveNumber(raw,label){
   const s=String(raw??"").trim();if(!s)return{value:null,error:label+"不能为空"};
   const n=Number(s);if(!Number.isFinite(n)||n<=0)return{value:null,error:label+"必须是大于0的数字"};return{value:n,error:null};
@@ -2906,9 +2975,13 @@ function exportMissingCsv(round){
   document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 exportQuoteMissing.onclick=()=>{const r=currentQuoteRound();if(r)exportMissingCsv(r)};
-function showQuotePreview(rows){
+/** 中文：录入方式随预览行流转，独立于供应商原始凭证类型。
+ * English: Keep actual entry method through review independently of supplier evidence type. */
+function showQuotePreview(rows,entryMethod="file"){
   const round=currentQuoteRound();if(!round||round.status==="confirmed"){alert("已确认提交不可再导入；请新增本轮新版本。");return}
-  quoteImportPreviewRows=validateQuotePreview(rows).map((validated,i)=>({...validated,_rawInput:rows[i]}));quoteImportFeedback.textContent="以下为待确认数据，请检查每行错误。";quoteImportPreview.style.display="block";
+  quoteImportPreviewRows=validateQuotePreview(rows).map((validated,i)=>({...validated,_rawInput:rows[i],_entryMethod:entryMethod}));
+  const labels={manual:"单条手工录入",paste:"表格粘贴",file:"文件导入",demo:"虚构演示"};
+  quoteImportFeedback.textContent="录入方式："+(labels[entryMethod]||"未知")+"；以下为待确认数据，请检查每行错误。";quoteImportPreview.style.display="block";
   renderQuotePreviewTable();
   renderCoverageResult(coverageFromRows(round,quoteImportPreviewRows));
 }
@@ -2953,7 +3026,7 @@ function renderQuoteRound(){
   for(const el of [quoteEvidenceType,quoteEvidenceNote,quoteTermsNote])el.disabled=round.status==="confirmed";
   quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮 · 第${round.revisionNo}版</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认/锁定":"草稿"}</span><div class="small" style="margin-top:5px">轮次表示议价阶段；版本表示同一轮报价的更正提交。已确认提交不可覆盖修改。</div>`;
   quoteRoundHint.textContent=`本轮应报价范围 ${expected.length} 项；当前提交已记录 ${round.lines.length} 项。`;renderCoverageResult(coverageFromRows(round,round.lines));
-  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=l.source==="carry"?"明确沿用上轮":l.source==="manual"?"手工修正":l.source==="revision-copy"?"复制自上一版":"导入",prev=round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td>${esc(l.remark||"")}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="12" class="muted">当前提交还没有报价记录。</td></tr>';
+  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=({carry:"明确沿用上轮",manual:"手工录入/修正",paste:"表格粘贴",file:"文件导入",demo:"虚构演示","revision-copy":"复制自上一版",import:"旧记录（来源未细分）"})[l.source]||"历史记录（来源未知）",prev=round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td>${esc(l.remark||"")}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="12" class="muted">当前提交还没有报价记录。</td></tr>';
   document.querySelectorAll("[data-edit-quote]").forEach(b=>b.onclick=()=>editQuoteLine(Number(b.dataset.editQuote)));
   carryForwardMissing.disabled=round.roundNo===1||round.status==="confirmed";editRoundScope.disabled=round.roundNo===1||round.status==="confirmed";confirmQuoteRound.disabled=round.status==="confirmed";commitQuoteImport.disabled=round.status==="confirmed";renderQuotes();
 }
@@ -2963,7 +3036,18 @@ function editQuoteLine(index){
   const lead=prompt("交期（天，可空）：",l.lead??"");if(lead===null)return;const moq=prompt("MOQ（可空）：",l.moq??"");if(moq===null)return;const rawStatus=prompt("状态：quoted / noquote / cannot",l.status);if(rawStatus===null)return;
   const remark=prompt("物料备注（可空）：",l.remark||"");if(remark===null)return;const row=validateQuotePreview([{itemRef:l.lineId,price,lead,moq,status:rawStatus,remark}])[0];if(row.errors.length){alert(row.errors.join("；"));return}upsertRoundLine(round,row,"manual");renderQuoteRound();
 }
-function fillCats(){["assignCatFilter","sfCatFilter"].forEach(id=>{const el=document.getElementById(id);categories.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o)})})}
+/** 中文：分类选项只从当前工作区实际物料生成；不把演示类别带入正式采购。
+ * English: Build allocation categories from real active RFQ items, not hardcoded demo options. */
+function fillCats(){
+  const available=[...new Set(items.map(it=>String(it.cat??"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"zh-CN",{numeric:true}));
+  for(const [id,applied] of [["assignCatFilter","assignCat"],["sfCatFilter","sfCat"]]){
+    const el=document.getElementById(id),current=el.value;
+    el.replaceChildren(new Option("全部分类",""));
+    for(const value of available)el.add(new Option(value,value));
+    el.value=available.includes(current)?current:"";
+    if(appliedSearch[applied]&&!available.includes(appliedSearch[applied]))appliedSearch[applied]="";
+  }
+}
 fillCats();
 
 quoteImportSupplier.onchange=()=>{clearQuoteImportPreview();quoteFileFeedback.textContent="";renderQuoteRoundSelector(true)};
@@ -2982,13 +3066,13 @@ scopeClearAll.onclick=()=>quoteScopeList.querySelectorAll("[data-scope-line]").f
 closeRoundScope.onclick=()=>quoteScopeEditor.style.display="none";
 saveRoundScope.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;r.expectedLineIds=[...quoteScopeList.querySelectorAll("[data-scope-line]:checked")].map(x=>x.dataset.scopeLine);r.lines=r.lines.filter(x=>r.expectedLineIds.includes(x.lineId));quoteScopeEditor.style.display="none";renderQuoteRound()};
 confirmQuoteRound.onclick=()=>{const r=currentQuoteRound();if(!r||r.status==="confirmed")return;if(!r.lines.length){alert("当前提交没有报价记录。");return}if(quoteTermsNote.value.length>4000||quoteEvidenceNote.value.length>4000){alert("本轮备注超过 4000 字，请精简后确认。");return}r.evidenceType=quoteEvidenceType.value;r.evidenceNote=quoteEvidenceNote.value.trim();r.termsNote=quoteTermsNote.value.trim();const cov=coverageFromRows(r,r.lines);if((cov.missing.length||cov.extras.length||cov.duplicates.length)&&!confirm(`覆盖检查仍有异常：漏报 ${cov.missing.length} 项，多报 ${cov.extras.length} 项，重复 ${cov.duplicates.length} 项。仍要确认并锁定本次提交吗？`))return;r.status="confirmed";r.confirmedAt=new Date().toISOString();reconcileAwardsAfterQuote();renderQuoteRoundSelector()};
-quoteManualAdd.onclick=()=>showQuotePreview([{itemRef:quoteManualItem.value.trim(),price:quoteManualPrice.value.trim(),lead:quoteManualLead.value.trim(),moq:quoteManualMoq.value.trim(),status:quoteManualStatus.value,remark:quoteManualRemark.value.trim()}]);
-quoteParsePaste.onclick=()=>{quoteFileFeedback.textContent="";const rows=parseQuoteRows(quotePaste.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到报价记录，请检查表头和数据。");return}showQuotePreview(rows)};
+quoteManualAdd.onclick=()=>showQuotePreview([{itemRef:quoteManualItem.value.trim(),price:quoteManualPrice.value.trim(),lead:quoteManualLead.value.trim(),moq:quoteManualMoq.value.trim(),status:quoteManualStatus.value,remark:quoteManualRemark.value.trim()}],"manual");
+quoteParsePaste.onclick=()=>{quoteFileFeedback.textContent="";const rows=parseQuoteRows(quotePaste.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到报价记录，请检查表头和数据。");return}showQuotePreview(rows,"paste")};
 quoteReadClipboard.onclick=async()=>{try{quotePaste.value=await navigator.clipboard.readText();quoteParsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请按 Ctrl+V 粘贴。")}};
 quoteClearInput.onclick=()=>{quotePaste.value=""};quoteClearPreview.onclick=clearQuoteImportPreview;clearQuotePreview2.onclick=clearQuoteImportPreview;
 toggleQuoteMapping.onclick=()=>{quoteMappingBox.style.display=quoteMappingBox.style.display==="none"?"block":"none"};
 saveQuoteMapping.onclick=()=>{quoteMappingHint.textContent="仅预览（未保存到系统）："+[mapItemRef.value,mapPrice.value,mapLead.value,mapMoq.value,mapStatus.value].join(" → ")};
-demoQuoteExcel.onclick=()=>{const a=assignedItemsForSupplier(quoteImportSupplier.value);showQuotePreview([{itemRef:a[0]?.lineId||items[0].lineId,price:"1-9:118|10-49:108.5|50+:98",lead:"7",moq:"1",status:"quoted"},{itemRef:a[1]?.lineId||items[1].lineId,price:"108.50",lead:"10",moq:"5",status:"quoted"}])};
+demoQuoteExcel.onclick=()=>{const a=assignedItemsForSupplier(quoteImportSupplier.value);showQuotePreview([{itemRef:a[0]?.lineId||items[0].lineId,price:"1-9:118|10-49:108.5|50+:98",lead:"7",moq:"1",status:"quoted"},{itemRef:a[1]?.lineId||items[1].lineId,price:"108.50",lead:"10",moq:"5",status:"quoted"}],"demo")};
 quoteImportFile.onchange=()=>{
   const file=quoteImportFile.files?.[0];if(!file)return;
   // 中文：拒绝文件之前清空旧预览，防止采购员误将之前的虚构报价提交。
@@ -3001,7 +3085,7 @@ quoteImportFile.onchange=()=>{
   }
   const r=new FileReader();
   r.onerror=()=>{quoteFileFeedback.textContent="文件读取失败，没有导入任何报价。";quoteImportFile.value=""};
-  r.onload=()=>{const rows=parseQuoteRows(r.result);if(rows._headerErrors?.length){quoteFileFeedback.textContent=rows._headerErrors.join("；");alert(quoteFileFeedback.textContent);return}showQuotePreview(rows)};
+  r.onload=()=>{const rows=parseQuoteRows(r.result);if(rows._headerErrors?.length){quoteFileFeedback.textContent=rows._headerErrors.join("；");alert(quoteFileFeedback.textContent);return}showQuotePreview(rows,"file")};
   r.readAsText(file);
 };
 /** 中文：仅提交明确校验通过的报价，部分提交必须告知全部拒绝行并由采购员确认。
@@ -3010,8 +3094,9 @@ function planQuoteImportCommit(rows){
   const checked=validateQuotePreview(rows.map(r=>r._rawInput||r));
   const valid=[],skipped=[];
   checked.forEach((r,i)=>{
-    if(["已报价","明确未报价","不供货"].includes(r.coverageCheck)&&!r.errors.length)valid.push({...r,_rawInput:rows[i]._rawInput||rows[i]});
-    else skipped.push({...r,_rawInput:rows[i]._rawInput||rows[i]});
+    const candidate={...r,_rawInput:rows[i]._rawInput||rows[i],_entryMethod:rows[i]._entryMethod||"import"};
+    if(["已报价","明确未报价","不供货"].includes(r.coverageCheck)&&!r.errors.length)valid.push(candidate);
+    else skipped.push(candidate);
   });
   return{valid,skipped,total:checked.length};
 }
@@ -3025,7 +3110,7 @@ commitQuoteImport.onclick=()=>{
     const details=plan.skipped.slice(0,8).map(x=>String(x._rowNo||"手工")+" 行 "+String(x.itemRef||"") + "：" + (x.errors.join("；")||x.coverageCheck)).join("\n");
     if(!confirm("本次共 "+plan.total+" 行，可提交 "+plan.valid.length+" 行，拒绝/待检查 "+plan.skipped.length+" 行。\n以下错误行不会保存，完整清单留在预览中：\n"+details+(plan.skipped.length>8?"\n……剩余 "+(plan.skipped.length-8)+" 行见预览":"")+"\n是否只提交 "+plan.valid.length+" 行？"))return;
   }
-  plan.valid.forEach(x=>upsertRoundLine(r,x,"import"));
+  plan.valid.forEach(x=>upsertRoundLine(r,x,x._entryMethod));
   renderQuoteRound();
   if(plan.skipped.length){
     quoteImportPreviewRows=plan.skipped;quoteImportPreview.style.display="block";
@@ -3336,7 +3421,7 @@ sfCopyRange.onclick=()=>{
 };
 
 for(const [id,button] of [["assignItemSearch",runAssignSearch],["supplierSearch",runSupplierSearch],["supplierFirstSearch",runSupplierFirstSearch],["supplierPoolSearch",runSupplierPoolSearch],["sfItemSearch",runSfSearch]])document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")button.click()});
-function renderAssignAll(){renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
+function renderAssignAll(){fillCats();renderStats();renderAssignItems();renderSuppliers();renderSupplierFirstList();renderSfItems()}
 function flash(msg){document.getElementById("previewBox").style.display="block";document.getElementById("previewBox").textContent=msg}
 let previewSupplierId=null;
 function rfqPreviewSuppliers(){
@@ -3648,7 +3733,15 @@ renderItemList();renderAssignAll();renderQuotes();
   const available=!!it&&active(),locked=it?itemHasAnyQuoteHistory(it.lineId):false;
   for(const el of [files,version,upload,existing,attach,linked,unlink,statusChoice,applyStatus])
    el.disabled=!available||locked;
+  // 中文：提示随真实 RFQ 和当前物料更新，不再沿用演示模式的过期信息。
+  // English: Derive drawing instructions from the active project and selected line.
   if(it&&locked)tell("该行已有报价历史，不能静默修改或删除关联图纸；请新建询价版本。");
+  else if(window.SRMPilot?.isBuyer()&&it){
+    const amount=service.docsForItem(it).length;
+    const label=it.drawingStatus==="not_required"?"无需图纸":it.drawingStatus==="pending"?"版本待确认":amount?"已关联 "+amount+" 份 PDF":"尚未关联 PDF";
+    tell("当前物料 "+it.id+"（"+it.lineId+"）· "+label+"；可核对图纸版本并显式确认关联。");
+  }else if(window.SRMPilot?.isBuyer())tell("当前询价暂无物料，请先导入物料后选择对应 RFQ 行。");
+  else tell("演示模式：新建正式询价并录入物料后可关联真实 PDF。");
  }
  line.onchange=sync;
  line.addEventListener("focus",sync);
@@ -4002,6 +4095,19 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   function status(message,isError=false){
     pilotStatus.textContent=message;
     pilotStatus.className=isError?"small dangertext":"small muted";
+  }
+  /** 中文：恢复结果必须留在当前可见的备份操作区域，不能只写入已折叠的项目抽屉。
+   * English: Report restore errors next to the action, not solely in a collapsed project drawer. */
+  function restoreNotice(message,isError=false){
+    const notice=document.getElementById("pilotS4RestoreFeedback");
+    if(notice){
+      notice.textContent=message;
+      notice.hidden=!message;
+      notice.style.background=isError?"#fff1f0":"#edf7f0";
+      notice.style.color=isError?"#a32922":"#116143";
+      notice.style.borderColor=isError?"#efc0bb":"#bce2c9";
+    }
+    if(message)status(message,isError);
   }
   async function api(path,options={}){
     // 中文：不允许静默退回浏览器存储；服务断开时明确失败。
@@ -4388,21 +4494,21 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   async function restoreS4Full(){
     if(!s4Available||busy||blocked)return;
     const file=s4FileInput.files?.[0];
-    if(!file){status("请先选择由 S4 生成的完整 ZIP 备份。",true);return}
-    if(buyerMode){status("当前电脑已有询价，禁止直接恢复覆盖。请在新电脑或独立空白数据目录运行 S4 再恢复。",true);return}
+    if(!file){restoreNotice("请先选择由 S4 生成的完整 ZIP 备份。",true);return}
+    if(buyerMode){restoreNotice("当前电脑已有询价，禁止直接恢复覆盖。请在新电脑或独立空白数据目录运行 S4 再恢复。",true);return}
     if(!confirm("确定向当前【空白】数据库恢复完整 ZIP？系统将校验所有文件；已有数据时拒绝恢复。"))return;
-    busy=true;buttons();status("正在核验完整 ZIP 并恢复空白数据目录……");
+    busy=true;buttons();restoreNotice("正在核验完整 ZIP 并恢复空白数据目录……");
     try{
       const result=await api("/api/backups/full/restore",
         {method:"POST",headers:{"Content-Type":"application/zip"},body:file});
       if(!result.verified||!result.restored)throw Error("服务器未确认完整恢复");
-      status("完整恢复成功："+result.workspaceCount+" 笔询价、"+result.pdfCount+" 个 PDF；正在重新读取……");
+      restoreNotice("完整恢复成功："+result.workspaceCount+" 笔询价、"+result.pdfCount+" 个 PDF；正在重新读取……");
       location.reload();
-    }catch(e){status("完整恢复未成功："+e.message,true)}
+    }catch(e){restoreNotice("完整恢复未成功："+e.message,true)}
     finally{busy=false;buttons()}
   }
   s4DownloadBtn.addEventListener("click",downloadS4Full);
-  s4FileInput.addEventListener("change",buttons);
+  s4FileInput.addEventListener("change",()=>{const feedback=document.getElementById("pilotS4RestoreFeedback");if(feedback){feedback.hidden=true;feedback.textContent=""}buttons()});
   s4RestoreBtn.addEventListener("click",restoreS4Full);
   exportBtn.addEventListener("click",exportBackup);
   exportAllBtn.addEventListener("click",exportAllBackup);
