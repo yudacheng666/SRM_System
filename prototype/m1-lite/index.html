@@ -663,6 +663,7 @@ body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar #confirmQuoteRound{margin-lef
   <button type="button" class="btn primary" id="pilotS4DownloadFull" disabled>下载 S4 完整备份（SQLite + PDF）</button>
   <label class="small">选择 S4 完整备份 ZIP <input type="file" id="pilotS4BackupFile" accept=".zip,application/zip"></label>
   <button type="button" class="btn" id="pilotS4RestoreFull" disabled>恢复完整备份（仅空白数据）</button>
+  <div id="pilotS4RestoreFeedback" role="alert" aria-live="assertive" hidden style="flex-basis:100%;width:100%;padding:9px 12px;border:1px solid #efc0bb;border-radius:6px;background:#fff1f0;color:#a32922;font-size:12px"></div>
   <button type="button" class="btn soft" id="pilotExportExcel" disabled>导出业务数据 Excel（3 Sheet）</button>
   <button type="button" class="btn primary" id="pilotReportOpen" disabled>导出询价单 / 比价议价单</button>
   <label class="btn" style="cursor:pointer">选择备份 JSON <input type="file" id="pilotImportBackup" accept=".json,application/json" disabled style="max-width:185px"></label>
@@ -4019,6 +4020,19 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     pilotStatus.textContent=message;
     pilotStatus.className=isError?"small dangertext":"small muted";
   }
+  /** 中文：恢复结果必须留在当前可见的备份操作区域，不能只写入已折叠的项目抽屉。
+   * English: Report restore errors next to the action, not solely in a collapsed project drawer. */
+  function restoreNotice(message,isError=false){
+    const notice=document.getElementById("pilotS4RestoreFeedback");
+    if(notice){
+      notice.textContent=message;
+      notice.hidden=!message;
+      notice.style.background=isError?"#fff1f0":"#edf7f0";
+      notice.style.color=isError?"#a32922":"#116143";
+      notice.style.borderColor=isError?"#efc0bb":"#bce2c9";
+    }
+    if(message)status(message,isError);
+  }
   async function api(path,options={}){
     // 中文：不允许静默退回浏览器存储；服务断开时明确失败。
     // English: Never silently fall back to browser storage.
@@ -4404,21 +4418,21 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   async function restoreS4Full(){
     if(!s4Available||busy||blocked)return;
     const file=s4FileInput.files?.[0];
-    if(!file){status("请先选择由 S4 生成的完整 ZIP 备份。",true);return}
-    if(buyerMode){status("当前电脑已有询价，禁止直接恢复覆盖。请在新电脑或独立空白数据目录运行 S4 再恢复。",true);return}
+    if(!file){restoreNotice("请先选择由 S4 生成的完整 ZIP 备份。",true);return}
+    if(buyerMode){restoreNotice("当前电脑已有询价，禁止直接恢复覆盖。请在新电脑或独立空白数据目录运行 S4 再恢复。",true);return}
     if(!confirm("确定向当前【空白】数据库恢复完整 ZIP？系统将校验所有文件；已有数据时拒绝恢复。"))return;
-    busy=true;buttons();status("正在核验完整 ZIP 并恢复空白数据目录……");
+    busy=true;buttons();restoreNotice("正在核验完整 ZIP 并恢复空白数据目录……");
     try{
       const result=await api("/api/backups/full/restore",
         {method:"POST",headers:{"Content-Type":"application/zip"},body:file});
       if(!result.verified||!result.restored)throw Error("服务器未确认完整恢复");
-      status("完整恢复成功："+result.workspaceCount+" 笔询价、"+result.pdfCount+" 个 PDF；正在重新读取……");
+      restoreNotice("完整恢复成功："+result.workspaceCount+" 笔询价、"+result.pdfCount+" 个 PDF；正在重新读取……");
       location.reload();
-    }catch(e){status("完整恢复未成功："+e.message,true)}
+    }catch(e){restoreNotice("完整恢复未成功："+e.message,true)}
     finally{busy=false;buttons()}
   }
   s4DownloadBtn.addEventListener("click",downloadS4Full);
-  s4FileInput.addEventListener("change",buttons);
+  s4FileInput.addEventListener("change",()=>{const feedback=document.getElementById("pilotS4RestoreFeedback");if(feedback){feedback.hidden=true;feedback.textContent=""}buttons()});
   s4RestoreBtn.addEventListener("click",restoreS4Full);
   exportBtn.addEventListener("click",exportBackup);
   exportAllBtn.addEventListener("click",exportAllBackup);
