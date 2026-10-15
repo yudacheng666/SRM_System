@@ -42,6 +42,9 @@ for (const viewport of viewportCases) {
       const expected = index === 0 ? page.locator('section.surface:not(.panel-screen)') : page.locator('#screen-' + stage.id);
       await expect(expected).toBeVisible();
       await expect(expected.locator('table').first()).toBeVisible();
+      // 中文：关闭阶段切换的临时演示提示后再截图，避免遮挡表格。
+      // English: Wait for transient mock toast to disappear before taking visual evidence.
+      await expect(page.locator('#notice')).toBeHidden({ timeout: 6500 });
 
       const layout = await page.evaluate(() => {
         const box = selector => {
