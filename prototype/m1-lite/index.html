@@ -357,6 +357,120 @@ body.srm-v2 #assign .preview{border-radius:7px}
  body.srm-v2 #assign .modebtn{flex:1}
 }
 
+
+/* 中文：UI V2 B3 报价回收与比价的视觉结构，保留原始轮次、报价凭证和选择规则。 */
+/* English: UI V2 B3 presentation only; preserve rounds, evidence, quote locking and comparable-scope calculations. */
+body.srm-v2 #quoteImport>.card:first-child,
+body.srm-v2 #quoteImport>.card,
+body.srm-v2 #quotes>.card{border:1px solid #dfe5ee;border-radius:7px;box-shadow:none}
+body.srm-v2 #quoteImport>.card:first-child>.cardhead{
+  align-items:flex-start;flex-direction:column;gap:10px;padding:13px 16px;
+}
+body.srm-v2 #quoteImport>.card:first-child>.cardhead>div:first-child,
+body.srm-v2 #quotes>.card>.cardhead>div:first-child{font-size:15px;color:#17263e;line-height:1.45}
+body.srm-v2 #quoteImport>.card:first-child>.cardhead>div:first-child b,
+body.srm-v2 #quotes>.card>.cardhead b{font-size:16px;font-weight:750;color:#17263e}
+body.srm-v2 #quoteImport>.card:first-child>.cardhead .muted,
+body.srm-v2 #quotes>.card>.cardhead .muted{display:block;font-size:12px;color:#65758b;margin-top:3px}
+body.srm-v2 #quoteImport .srm-v2-quote-controls{
+  width:100%;gap:9px;align-items:center;min-width:0;
+}
+body.srm-v2 #quoteImport .srm-v2-quote-section-label{
+  white-space:nowrap;color:#53708f;font-size:11px;font-weight:800;letter-spacing:.015em;
+}
+body.srm-v2 #quoteImport .srm-v2-quote-controls-break{
+  width:100%;height:0;flex-basis:100%;min-width:100%;
+}
+body.srm-v2 #quoteImport #quoteImportSupplier,
+body.srm-v2 #quoteImport #quoteRoundSelect{min-width:175px;max-width:330px;flex:1 1 190px}
+body.srm-v2 #quoteImport #newQuoteRound,
+body.srm-v2 #quoteImport #newQuoteRevision{color:#2459a6;background:#f4f7fd}
+body.srm-v2 #quoteImport #quoteEvidenceType{min-width:170px;max-width:220px;flex:1 0 170px}
+body.srm-v2 #quoteImport #quoteEvidenceNote{min-width:190px;flex:1 1 240px;max-width:none}
+body.srm-v2 #quoteImport #quoteTermsNote{height:38px;min-height:38px;max-height:85px;resize:vertical;line-height:1.35}
+body.srm-v2 #quoteImport label:has(#quoteTermsNote){
+  min-width:250px!important;flex:1 1 290px!important;max-width:490px;font-size:12px;color:#65758b;gap:9px;
+}
+body.srm-v2 #quoteImport #confirmQuoteRound{margin-left:auto;min-height:38px;padding:9px 20px}
+body.srm-v2 #quoteImport>.card:first-child>.cardbody{padding:11px 15px}
+body.srm-v2 #quoteRoundSummary{
+  background:#f3f8ff;border:1px solid #d9e5f6;color:#446080;border-radius:6px;
+  padding:9px 12px;font-size:12px;line-height:1.45;margin-bottom:11px;
+}
+body.srm-v2 #quoteImport #quoteCoverageSummary{
+  grid-template-columns:repeat(7,minmax(105px,1fr));gap:8px;margin:0 0 11px;
+}
+body.srm-v2 #quoteImport #quoteCoverageSummary .stat{
+  border:1px solid #dfe6ef;border-radius:6px;padding:10px 12px;min-width:0;box-shadow:none;
+}
+body.srm-v2 #quoteCoverageSummary .stat small{display:block;font-size:11px;color:#65758b}
+body.srm-v2 #quoteCoverageSummary .stat b{font-size:22px;color:#17263e;font-weight:750;font-variant-numeric:tabular-nums}
+body.srm-v2 #quoteCoverageSummary .stat:nth-child(5){
+  border-color:#efd5a3;background:#fffbf3;
+}
+body.srm-v2 #quoteCoverageSummary .stat:nth-child(5) b,
+body.srm-v2 #quoteCoverageSummary .stat:nth-child(6) b,
+body.srm-v2 #quoteCoverageSummary .stat:nth-child(7) b{color:#a66300}
+body.srm-v2 #quoteImport #quoteCoverageDetails{background:#fbfcfe;border-color:#e4eaf2;border-radius:6px;line-height:1.5;padding:9px 11px}
+body.srm-v2 #quoteImport #exportQuoteMissing{margin:3px 0 0}
+body.srm-v2 #quoteImport .quoteImportGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox{
+  min-width:0;background:#fff;border:1px solid #dfe5ee;border-radius:7px;padding:14px 15px;box-shadow:none;
+}
+body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox h3{font-size:15px;color:#17263e;font-weight:750;margin:0 0 13px;display:flex;align-items:center;gap:8px}
+body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox h3::before{
+  content:"";width:4px;height:16px;background:#175cd3;border-radius:3px;flex:0 0 auto;
+}
+body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox .toolbar{align-items:flex-end;gap:8px}
+body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox input,
+body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox select,
+body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox textarea{max-width:100%}
+body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox textarea{background:#fff;border-color:#d8e1ec;border-radius:6px}
+body.srm-v2 #quoteImport #quoteImportPreview,
+body.srm-v2 #quoteImport>.card:last-child{margin-top:12px!important}
+body.srm-v2 #quoteImport #quoteImportPreview .cardhead,
+body.srm-v2 #quoteImport>.card:last-child>.cardhead{padding:12px 15px}
+body.srm-v2 #quoteImport .tablewrap,
+body.srm-v2 #quotes .tablewrap{overflow:auto;max-height:520px;border:1px solid #e4e9f1;border-radius:6px}
+body.srm-v2 #quoteImport .table th,
+body.srm-v2 #quotes .table th{position:sticky;top:0;background:#f7f9fc;color:#65758b;font-size:12px;padding:10px 11px}
+body.srm-v2 #quoteImport .table td,
+body.srm-v2 #quotes .table td{padding:11px;font-size:13px}
+body.srm-v2 #quoteImport .roundBadge{border-radius:4px;font-size:12px}
+body.srm-v2 #quoteImport .roundBadge.confirmed{background:#e7f5ee;color:#087f5b}
+body.srm-v2 #quoteImport .roundBadge.draft{background:#fff3e3;color:#a66300}
+body.srm-v2 #quotes>.card>.cardhead{padding:15px 17px;gap:11px}
+body.srm-v2 #quotes>.card>.cardbody{padding:13px 17px}
+body.srm-v2 #quotes .notice{
+  background:#f2f7ff;border:1px solid #d8e5f6;border-left:3px solid #175cd3;
+  color:#425d7f;border-radius:6px;font-size:12px;line-height:1.6;padding:10px 13px;
+}
+body.srm-v2 #quotes #quoteModeNotice{color:#65758b;font-size:12px}
+body.srm-v2 #quotes #commonScopePicker,
+body.srm-v2 #quotes #quoteAnalysis{
+  background:#fff;border:1px solid #dfe5ee;border-radius:7px;padding:13px 15px;margin-top:11px!important;
+}
+body.srm-v2 #quotes #commonScopePicker{background:#f9fbff}
+body.srm-v2 #quotes #quoteAnalysis{border-left:3px solid #81a9e9}
+body.srm-v2 #quotes .analysisTable th,
+body.srm-v2 #quotes .analysisTable td{font-size:12px;padding:8px 10px}
+body.srm-v2 #quotes .quotePrice.low{font-weight:800;color:#087f5b}
+body.srm-v2 #quotes .selectedCell{outline:2px solid #175cd3;background:#ebf3ff!important}
+body.srm-v2 #quotes .awardSelectable:focus-visible{outline:2px solid #175cd3;outline-offset:-2px}
+body.srm-v2 #quotes #resetAwards{color:#b42318;border-color:#efd8d3;background:#fff;font-size:12px}
+@media(max-width:1300px){
+ body.srm-v2 #quoteImport #quoteCoverageSummary{grid-template-columns:repeat(4,minmax(0,1fr))}
+ body.srm-v2 #quoteImport .quoteImportGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox:last-child{grid-column:1/-1}
+}
+@media(max-width:840px){
+ body.srm-v2 #quoteImport #quoteCoverageSummary{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.srm-v2 #quoteImport .quoteImportGrid{grid-template-columns:1fr}
+ body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox:last-child{grid-column:auto}
+ body.srm-v2 #quoteImport .srm-v2-quote-controls{align-items:flex-start}
+ body.srm-v2 #quoteImport #confirmQuoteRound{margin-left:0}
+}
+
 </style>
 </head>
 <body class="srm-v2">
@@ -758,14 +872,17 @@ body.srm-v2 #assign .preview{border-radius:7px}
   <section id="quoteImport" class="panel">
     <div class="card" style="margin-bottom:14px">
       <div class="cardhead">
-        <div><b>报价回收导入</b> <span class="muted small">M0 验证多种导入方式、轮次、修改与异常处理</span></div>
-        <div class="toolbar">
-          <select id="quoteImportSupplier"></select>
+        <div><b>报价回收与核验</b> <span class="muted small">先选供应商与轮次，再导入报价、检查异常并确认</span></div>
+        <div class="toolbar srm-v2-quote-controls">
+          <span class="srm-v2-quote-section-label">01　供应商与轮次</span>
+          <select id="quoteImportSupplier" aria-label="本轮报价供应商"></select>
           <select id="quoteRoundSelect"></select>
           <button class="btn soft" id="newQuoteRound">+ 新增下一轮</button>
           <button class="btn soft" id="newQuoteRevision">+ 新增本轮新版本</button>
           <button class="btn" id="editRoundScope">设置本轮议价范围</button>
-          <select id="quoteEvidenceType">
+          <span class="srm-v2-quote-controls-break" aria-hidden="true"></span>
+          <span class="srm-v2-quote-section-label">02　报价凭证与条款</span>
+          <select id="quoteEvidenceType" aria-label="本轮报价凭证类型">
             <option value="email_attachment">邮件及原始附件</option>
             <option value="chat_screenshot">聊天截图</option>
             <option value="standalone_pdf">单独PDF/文件</option>
@@ -773,6 +890,8 @@ body.srm-v2 #assign .preview{border-radius:7px}
           </select>
           <input id="quoteEvidenceNote" type="text" maxlength="4000" placeholder="报价来源文件/凭证说明">
           <label class="small" style="display:flex;align-items:center;gap:6px;flex:1;min-width:260px">本轮供应商商务备注<textarea id="quoteTermsNote" maxlength="4000" rows="2" style="flex:1;min-width:190px" placeholder="报价有效期、运费、税、付款方式等整份报价条款"></textarea></label>
+          <span class="srm-v2-quote-controls-break" aria-hidden="true"></span>
+          <span class="srm-v2-quote-section-label">03　核验完成后确认</span>
           <button class="btn primary" id="confirmQuoteRound">确认本次提交</button>
         </div>
       </div>
@@ -857,7 +976,7 @@ body.srm-v2 #assign .preview{border-radius:7px}
   <section id="quotes" class="panel">
     <div class="card">
       <div class="cardhead">
-        <div><b>报价比较</b> <span class="muted small">M0 模拟/报价回收验证；上次采购价均为虚构示例</span></div>
+        <div><b>报价比较</b> <span class="muted small">支持共同报价范围、最低价提示与非最低价选择说明；演示历史采购价为虚构示例</span></div>
         <div class="toolbar"><button class="btn" id="resetAwards">清空选择</button></div>
       </div>
       <div class="cardbody">
