@@ -528,6 +528,82 @@ body.srm-v2 #quotes #resetAwards{color:#b42318;border-color:#efd8d3;background:#
  body.srm-v2 #assign>.card #previewBox{padding:3px 7px;font-size:11px;line-height:1.25}
 }
 
+
+/* UI V2 exploratory refinement / 独立验收修正：窄桌面侧栏可发现性与首屏数据优先。 */
+/* The following rules are presentation-only; no business handlers or persistence are changed. */
+@media (min-width:701px) and (max-width:1090px){
+  /* 中文：收窄侧栏隐藏文字时，鼠标和键盘聚焦显示完整菜单标签。 */
+  /* English: Restore discoverability of compact icon-only navigation on hover/focus. */
+  body.srm-v2 .srm-v2-sideitem{position:relative}
+  body.srm-v2 .srm-v2-sideitem::after{
+    content:attr(aria-label);position:absolute;top:50%;left:calc(100% + 10px);transform:translateY(-50%);
+    color:#fff;background:#172e4b;border:1px solid #416080;white-space:nowrap;
+    padding:8px 11px;border-radius:6px;font-size:12px;font-weight:650;box-shadow:0 6px 16px #0a152b35;
+    opacity:0;visibility:hidden;pointer-events:none;z-index:60;transition:opacity .12s;
+  }
+  body.srm-v2 .srm-v2-sideitem:focus-visible::after{opacity:1;visibility:visible}
+  body.srm-v2 .ui-appHeader{padding:9px 16px 9px;min-height:65px;gap:9px;margin-bottom:8px}
+  body.srm-v2 .ui-appHeader .ui-brand{min-width:165px}
+  body.srm-v2 .ui-appHeader h1{font-size:18px}
+  body.srm-v2 .ui-appHeader #pilotSubtitle{font-size:10px;max-width:260px;line-height:1.25}
+  body.srm-v2 .ui-headActions{gap:6px}
+  body.srm-v2 .ui-headActions .btn,body.srm-v2 .ui-headActions .tab{padding:6px 9px;font-size:11px;min-height:30px}
+  body.srm-v2 .srm-v2-live-status{max-width:205px;font-size:11px;padding:4px 7px}
+  body.srm-v2 .ui-context{padding:6px 10px;min-height:44px;margin-bottom:6px}
+  body.srm-v2 .ui-context small{font-size:10px}
+  body.srm-v2 .ui-context b{font-size:14px}
+  body.srm-v2 #pilotNotice{font-size:10px;padding:3px 8px;margin-bottom:5px!important}
+  body.srm-v2 #pilotControls{margin-bottom:6px!important}
+  body.srm-v2 #pilotControls>.cardbody{padding:5px 7px}
+  body.srm-v2 #pilotControls :is(.ui-projectDetails,.ui-drawer)>summary{min-height:30px;max-height:30px;padding:5px 8px;font-size:11px}
+  body.srm-v2 .ui-workNav{padding:3px 0 0}
+  body.srm-v2 .ui-workNav .tab{min-height:36px;padding:7px 11px;font-size:12px}
+  body.srm-v2 .ui-workNav .tabs{margin-bottom:8px}
+  body.srm-v2 #assign .ui-panelLead{padding:6px 10px;margin-bottom:8px;min-height:40px}
+  body.srm-v2 #assign .ui-panelLead .muted{display:none}
+  body.srm-v2 #assign .ui-panelLead .btn{min-height:29px;padding:5px 8px;font-size:11px}
+  body.srm-v2 #assign .stats{gap:6px;margin-bottom:8px}
+  body.srm-v2 #assign .stat{padding:7px 10px}
+  body.srm-v2 #assign .stat b{font-size:19px}
+  body.srm-v2 #assign>.card{margin-bottom:8px!important}
+  body.srm-v2 #assign>.card>.cardhead{padding:6px 8px;min-height:37px;gap:6px}
+  body.srm-v2 #assign .modebar{gap:2px;padding:2px}
+  body.srm-v2 #assign .modebtn{min-height:30px;padding:5px 10px;font-size:11px}
+  body.srm-v2 #assign>.card>.cardhead .btn{padding:5px 8px;min-height:30px;font-size:11px}
+  body.srm-v2 #assign>.card>.cardbody{padding:2px 9px}
+  body.srm-v2 #assign .grid2{gap:8px}
+  body.srm-v2 #itemFirstView>.card>.cardhead,
+  body.srm-v2 #supplierFirstView>.card>.cardhead{padding:7px 10px;gap:6px}
+  body.srm-v2 #assign #itemFirstView>.card:first-child>.cardbody>.small:first-child{
+    padding:5px 7px;line-height:1.3;margin-bottom:6px!important
+  }
+  body.srm-v2 #assign .grid2>.card>.cardbody{padding:8px 10px}
+  body.srm-v2 #itemFirstView>.card>.cardhead .toolbar{gap:5px}
+  body.srm-v2 #itemFirstView>.card>.cardhead .btn{padding:4px 7px;min-height:29px;font-size:11px}
+  body.srm-v2 #itemFirstView>.card>.cardhead :is(input,select){padding:5px 7px;font-size:11px}
+  body.srm-v2 #assign .table th{padding:7px 9px}
+  body.srm-v2 #assign .table td{padding:8px 9px}
+}
+
+
+/* 中文：报价回收按真实操作顺序重排：供应商/凭证 → 输入/导入 → 异常检查 → 确认。
+   English: Semantic DOM order is supplier/evidence -> intake -> validation -> final confirmation. */
+body.srm-v2 #quoteImport>.card:first-child{margin-bottom:10px!important}
+body.srm-v2 #quoteImport>.card:first-child>.cardhead{border-bottom:0}
+body.srm-v2 #quoteImport>.quoteImportGrid{margin-bottom:12px}
+body.srm-v2 #quoteImport>.srm-v2-quote-review{margin:0 0 12px!important}
+body.srm-v2 #quoteImport>.srm-v2-quote-review>.cardbody{padding:13px 15px}
+body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar{
+  display:flex;align-items:center;justify-content:flex-end;gap:14px;
+  margin-top:12px;padding:12px 0 0;border-top:1px solid #e2e9f2;
+}
+body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar .srm-v2-quote-section-label{margin-right:auto}
+body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar #confirmQuoteRound{margin-left:0}
+@media(max-width:700px){
+ body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar{flex-wrap:wrap}
+ body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar #confirmQuoteRound{margin-left:auto}
+}
+
 </style>
 </head>
 <body class="srm-v2">
@@ -538,15 +614,15 @@ body.srm-v2 #quotes #resetAwards{color:#b42318;border-color:#efd8d3;background:#
     <div class="srm-v2-brand">SRM <small>STUDIO</small></div>
     <div class="srm-v2-descriptor">采购协同 · 内部工作台</div>
     <div class="srm-v2-navlabel">工作空间</div>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-action="project" aria-label="打开询价项目"><span class="srm-v2-icon" aria-hidden="true">▤</span><span class="srm-v2-word">询价项目</span></button>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="items" aria-label="物料与图纸" aria-current="page"><span class="srm-v2-icon" aria-hidden="true">▦</span><span class="srm-v2-word">物料与图纸</span></button>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="assign" aria-label="供应商与分配"><span class="srm-v2-icon" aria-hidden="true">♧</span><span class="srm-v2-word">供应商分配</span></button>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="quoteImport" aria-label="报价回收"><span class="srm-v2-icon" aria-hidden="true">▣</span><span class="srm-v2-word">报价回收</span></button>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="quotes" aria-label="比价议价"><span class="srm-v2-icon" aria-hidden="true">▥</span><span class="srm-v2-word">比价议价</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-action="project" aria-label="打开询价项目" title="打开询价项目"><span class="srm-v2-icon" aria-hidden="true">▤</span><span class="srm-v2-word">询价项目</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="items" aria-label="物料与图纸" title="物料与图纸" aria-current="page"><span class="srm-v2-icon" aria-hidden="true">▦</span><span class="srm-v2-word">物料与图纸</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="assign" aria-label="供应商与分配" title="供应商与分配"><span class="srm-v2-icon" aria-hidden="true">♧</span><span class="srm-v2-word">供应商分配</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="quoteImport" aria-label="报价回收" title="报价回收"><span class="srm-v2-icon" aria-hidden="true">▣</span><span class="srm-v2-word">报价回收</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="quotes" aria-label="比价议价" title="比价议价"><span class="srm-v2-icon" aria-hidden="true">▥</span><span class="srm-v2-word">比价议价</span></button>
     <hr class="srm-v2-sidedivider">
     <div class="srm-v2-navlabel">管理工具</div>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-action="admin" aria-label="数据与备份"><span class="srm-v2-icon" aria-hidden="true">◫</span><span class="srm-v2-word">数据与备份</span></button>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="settings" aria-label="字段设置"><span class="srm-v2-icon" aria-hidden="true">⚙</span><span class="srm-v2-word">字段设置</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-action="admin" aria-label="数据与备份" title="数据与备份"><span class="srm-v2-icon" aria-hidden="true">◫</span><span class="srm-v2-word">数据与备份</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="settings" aria-label="字段设置" title="字段设置"><span class="srm-v2-icon" aria-hidden="true">⚙</span><span class="srm-v2-word">字段设置</span></button>
     <div class="srm-v2-sidefooter">● 本地工作台<br>UI V2 · 第一批</div>
   </aside>
 
@@ -947,30 +1023,10 @@ body.srm-v2 #quotes #resetAwards{color:#b42318;border-color:#efd8d3;background:#
           </select>
           <input id="quoteEvidenceNote" type="text" maxlength="4000" placeholder="报价来源文件/凭证说明">
           <label class="small" style="display:flex;align-items:center;gap:6px;flex:1;min-width:260px">本轮供应商商务备注<textarea id="quoteTermsNote" maxlength="4000" rows="2" style="flex:1;min-width:190px" placeholder="报价有效期、运费、税、付款方式等整份报价条款"></textarea></label>
-          <span class="srm-v2-quote-controls-break" aria-hidden="true"></span>
-          <span class="srm-v2-quote-section-label">03　核验完成后确认</span>
-          <button class="btn primary" id="confirmQuoteRound">确认本次提交</button>
-        </div>
-      </div>
-      <div class="cardbody">
-        <div id="quoteRoundSummary" class="notice"></div>
-        <div id="quoteCoverageSummary" class="coverageMini">
-          <div class="stat"><small>本轮应报价</small><b id="qcExpected">0</b></div>
-          <div class="stat"><small>已报价</small><b id="qcQuoted">0</b></div>
-          <div class="stat"><small>明确未报价</small><b id="qcNoquote">0</b></div>
-          <div class="stat"><small>不供货</small><b id="qcCannot">0</b></div>
-          <div class="stat"><small>漏报</small><b id="qcMissing">0</b></div>
-          <div class="stat"><small>多报</small><b id="qcExtra">0</b></div>
-          <div class="stat"><small>重复</small><b id="qcDuplicate">0</b></div>
-        </div>
-        <div id="quoteCoverageDetails" class="coverageDetails small"></div><button class="btn soft" id="exportQuoteMissing">导出本供应商本轮漏报 CSV</button>
-        <div id="quoteScopeEditor" class="coverageDetails" style="display:none">
-          <div class="sline"><b>本轮议价范围</b><div class="toolbar"><button class="btn" id="scopeSelectAll">全选</button><button class="btn" id="scopeClearAll">全不选</button><button class="btn primary" id="saveRoundScope">保存范围</button><button class="btn" id="closeRoundScope">关闭</button></div></div>
-          <div id="quoteScopeList" class="scopeList" style="margin-top:8px"></div>
+
         </div>
       </div>
     </div>
-
     <div class="quoteImportGrid">
       <div class="intakeBox">
         <h3>单条输入</h3>
@@ -1011,6 +1067,32 @@ body.srm-v2 #quotes #resetAwards{color:#b42318;border-color:#efd8d3;background:#
             <button class="btn primary" id="saveQuoteMapping">演示映射预览（不保存）</button>
           </div>
           <div id="quoteMappingHint" class="muted" style="margin-top:5px">M0 只验证映射交互；M5 实现真实 Excel 列读取和模板持久化。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card srm-v2-quote-review">
+      <div class="cardbody">
+        <div id="quoteRoundSummary" class="notice"></div>
+        <div id="quoteCoverageSummary" class="coverageMini">
+          <div class="stat"><small>本轮应报价</small><b id="qcExpected">0</b></div>
+          <div class="stat"><small>已报价</small><b id="qcQuoted">0</b></div>
+          <div class="stat"><small>明确未报价</small><b id="qcNoquote">0</b></div>
+          <div class="stat"><small>不供货</small><b id="qcCannot">0</b></div>
+          <div class="stat"><small>漏报</small><b id="qcMissing">0</b></div>
+          <div class="stat"><small>多报</small><b id="qcExtra">0</b></div>
+          <div class="stat"><small>重复</small><b id="qcDuplicate">0</b></div>
+        </div>
+        <div id="quoteCoverageDetails" class="coverageDetails small"></div><button class="btn soft" id="exportQuoteMissing">导出本供应商本轮漏报 CSV</button>
+        <div id="quoteScopeEditor" class="coverageDetails" style="display:none">
+          <div class="sline"><b>本轮议价范围</b><div class="toolbar"><button class="btn" id="scopeSelectAll">全选</button><button class="btn" id="scopeClearAll">全不选</button><button class="btn primary" id="saveRoundScope">保存范围</button><button class="btn" id="closeRoundScope">关闭</button></div></div>
+          <div id="quoteScopeList" class="scopeList" style="margin-top:8px"></div>
+        </div>
+        <!-- 中文：确认操作位于导入/异常核验之后；原 DOM ID 与业务事件处理器保持不变。 -->
+        <!-- English: Move confirmation after import/review; preserve the original ID and handler. -->
+        <div class="srm-v2-quote-confirm-bar">
+          <span class="srm-v2-quote-section-label">03　完成异常核验后确认本轮</span>
+          <button class="btn primary" id="confirmQuoteRound">确认本次提交</button>
         </div>
       </div>
     </div>

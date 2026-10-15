@@ -1,0 +1,37 @@
+# 中文：仅在独立验收 PR 上运行，绝不更改 main 或真实数据。
+# English: PR-scoped exploratory Chromium audit, no main modifications or real user data.
+name: SRM UI V2 Exploratory Browser Audit
+on:
+  pull_request:
+    branches:
+      - feat/20261015-ui-v2-b3-quote-comparison
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  explore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Run real browser control visibility/keyboard/desktop geometry audit
+        run: npx playwright test --config=playwright.config.cjs prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs
+      - name: Preserve stage screenshots, coordinate logs and browser traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: srm-ui-v2-exploratory-browser-evidence
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
+          if-no-files-found: warn

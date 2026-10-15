@@ -1,0 +1,56 @@
+# 中文：对独立 UI 视觉修正执行完整安全回归，不合并任何分支。
+# English: Full safety regression for isolated visual refinements; no branch merges.
+name: SRM UI V2 Exploratory Full Regression
+on:
+  pull_request:
+    branches:
+      - feat/20261015-ui-v2-b3-quote-comparison
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  full-chromium:
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Backend Python tests
+        run: python -m unittest discover -v -s prototype/m1-lite/backend -p 'test_*.py'
+      - name: Business logic Node tests
+        run: npm test
+      - name: Complete real RFQ Chrome acceptance including B1 B2 B3 and exploratory cases
+        run: npm run test:e2e
+      - name: Archive full browser report and traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: srm-ui-v2-exploratory-full-regression
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
+          if-no-files-found: warn
+  windows-backend:
+    runs-on: windows-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Windows backend restore and local API checks
+        run: python -m unittest discover -v -s prototype/m1-lite/backend -p "test_*.py"
+      - name: Windows Node business rules
+        run: node --test prototype/m1-lite/tests/autosave_rules.test.cjs prototype/m1-lite/tests/supplier_package.test.cjs
