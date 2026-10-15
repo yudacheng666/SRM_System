@@ -100,6 +100,22 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 #items .tablewrap thead tr:nth-child(2) th{top:53px;z-index:6;background:#f9fafb}
 #assignHiddenHint{display:inline-block;margin-left:8px;color:#b45309}
 @media(max-width:980px){.ui-context{padding:8px 12px}.ui-workspaceHead{padding-top:8px}.ui-appHeader h1{font-size:20px}}
+.ui-projectDetails{border:1px solid #e3e8ef;border-radius:9px;margin:3px 0 7px;background:#f9fbff}
+.ui-projectDetails>summary{padding:9px 11px;cursor:pointer;color:#334155;font-size:12px;font-weight:700}
+.ui-projectDetails>summary .ui-projectStatus{font-weight:400;color:#64748b;margin-left:7px}
+.ui-projectDetails>.ui-projectBody{padding:9px;border-top:1px solid #e3e8ef}
+#pilotControls{margin-bottom:8px!important}
+#pilotControls .cardbody{padding:5px 12px 7px}
+#pilotControls .ui-drawer{margin:4px 0}
+.ui-appHeader{margin-bottom:7px}.ui-context{margin-bottom:7px;padding:7px 12px}
+.ui-context .ui-contextRight{font-size:11px}
+#pilotNotice{padding:6px 10px;margin-bottom:7px!important}
+.ui-workspaceHead{padding:7px 12px 0}
+.ui-workNav{padding:5px 0 2px}.ui-workNav .tabs{margin-bottom:7px}
+.ui-workNav .tab{padding:8px 6px}
+.ui-panelLead{padding:8px 12px;margin-bottom:7px}
+.ui-statusStrip{grid-template-columns:repeat(3,minmax(0,1fr));margin:3px 0;padding:5px 8px}
+@media(max-width:940px){.ui-statusStrip{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -3577,6 +3593,9 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     workspaceId=data.workspaceId;revision=data.revision;buyerMode=true;dirty=false;
     buttons();resetUI();window.SRMDrawUI?.refresh();dirty=false;
     resetAutosaveBaseline();
+    // 中文：询价身份切换后只通知其他 UI 面板刷新；不触发数据库写入。
+    // English: Notify dependent UI of an RFQ switch; never persist from this event.
+    window.dispatchEvent(new CustomEvent("srm:workspace-changed",{detail:{workspaceId}}));
   }
   function beginBuyer(){
     if(!localReady||busy||blocked)return;
@@ -3649,6 +3668,9 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       autosaveLabel(dirty?"保存第 "+revision+" 版成功，仍有新修改等待保存":
         "已"+(automatic?"自动":"手动")+"保存第 "+revision+" 版（"+new Date().toLocaleTimeString()+"）");
       if(!dirty)status("SQLite "+(automatic?"自动":"手动")+"保存成功："+workspaceId+"（第 "+revision+" 版）。");
+      // 中文：只报告真实 SQLite PUT 成功的版本；仍有输入时标记待保存。
+      // English: Acknowledge only a real successful SQLite commit, marking pending edits.
+      window.dispatchEvent(new CustomEvent("srm:workspace-saved",{detail:{workspaceId,revision,dirty}}));
       return true;
     }catch(e){
       dirty=true;autosaveHalted=true;
@@ -3981,10 +4003,24 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   if(!staged)return;
   try{
    const count=window.SRMPilot.importSupplierRows(staged);
-   supplierStatus.textContent="已新增 "+count+" 家供应商，记得点击“保存到本机”。";
+   // 中文：提示归属到当前 RFQ，自动保存后由真实成功事件更新；不要求手工保存。
+   // English: Scope import feedback to this RFQ and update after a confirmed autosave.
+   supplierStatus.dataset.pendingWorkspace=window.SRMPilot.snapshot().workspaceId;
+   supplierStatus.textContent="已导入 "+count+" 家供应商，等待自动保存；也可手动保存。";
    clearStage();
   }catch(e){supplierStatus.textContent="导入未执行："+e.message;alert(supplierStatus.textContent);clearStage()}
  };
+ window.addEventListener("srm:workspace-saved",event=>{
+   if(supplierStatus.dataset.pendingWorkspace!==event.detail.workspaceId)return;
+   supplierStatus.textContent=event.detail.dirty?
+     "已保存第 "+event.detail.revision+" 版，但仍有新修改等待自动保存。":
+     "供应商已保存到当前询价（第 "+event.detail.revision+" 版）。";
+   if(!event.detail.dirty)delete supplierStatus.dataset.pendingWorkspace;
+ });
+ window.addEventListener("srm:workspace-changed",()=>{
+   clearStage();delete supplierStatus.dataset.pendingWorkspace;
+   supplierStatus.textContent="仅针对当前询价导入供应商；导入后会自动保存。";
+ });
 }
 /* END M1_LITE_EXCEL_BRIDGE */
 /* BEGIN M1_LITE_ZIP_BATCH */
@@ -4135,6 +4171,13 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   if(!showing)render();
  });
  type.addEventListener("change",render);
+ // 中文：切换询价后清除供应商、文件类型/选择和下载成功消息；如果面板打开立即重新绑定。
+ // English: Remove stale supplier/report selections and export success after an RFQ switch.
+ window.addEventListener("srm:workspace-changed",()=>{
+   supplierEl.replaceChildren();group.replaceChildren();fieldsBox.replaceChildren();
+   warning.textContent="";
+   if(box.style.display!=="none")render();
+ });
  // 中文：参与供应商逐家产生独立询价表，再整体打包；不包含其他供方及内部比价字段。
  // English: Each participating supplier receives its own confidential XLSX in one ZIP download.
  batchBtn.addEventListener("click",async()=>{
@@ -4253,6 +4296,23 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
     statusStrip.appendChild(one(id));
   }
   project.after(statusStrip);
+  // 中文：演示时项目按钮展开；打开正式询价后默认收起，以便 1366×768 笔记本首屏显示业务。
+  // English: Demo exposes the create controls; active RFQs collapse project admin for table-first use.
+  const projectDetails=document.createElement("details");
+  projectDetails.id="uiProjectDetails";projectDetails.className="ui-projectDetails";projectDetails.open=true;
+  const projectSummary=document.createElement("summary");
+  projectSummary.innerHTML='项目操作：新建 / 切换 / 手动保存 <span class="ui-projectStatus" id="uiProjectStatus">演示模式</span>';
+  const projectBody=document.createElement("div");
+  projectBody.className="ui-projectBody";
+  projectBody.append(project,statusStrip);
+  projectDetails.append(projectSummary,projectBody);
+  controls.prepend(projectDetails);
+  window.addEventListener("srm:workspace-changed",()=>{projectDetails.open=false});
+  if(window.SRMPilot?.isBuyer())projectDetails.open=false;
+  const projectStatus=one("uiProjectStatus"),autosave=one("pilotAutosaveStatus");
+  const updateProjectStatus=()=>{projectStatus.textContent=autosave.textContent.replace(/^自动保存：/,"")};
+  new MutationObserver(updateProjectStatus).observe(autosave,{subtree:true,characterData:true,childList:true});
+  updateProjectStatus();
 
   const supplierTools = drawer("uiSupplierTools","供应商管理与 Excel 导入",
       "新增供应商、批量导入及确认",[
@@ -4261,7 +4321,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
         one("pilotSupplierExcelPreview"),
         one("pilotSupplierExcelStatus")
       ]);
-  statusStrip.after(supplierTools);
+  projectDetails.after(supplierTools);
 
   const notes = Array.from(controls.children).find(el=>
     el.classList?.contains("small") && el.textContent.includes("必须先保存到本机"));
@@ -4282,7 +4342,8 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
     section.scrollIntoView({block:"start",behavior:"smooth"});
   }
   one("uiProjectJump").addEventListener("click",()=>{
-    one("pilotControls").scrollIntoView({block:"start",behavior:"smooth"});
+    projectDetails.open=true;
+    projectDetails.scrollIntoView({block:"start",behavior:"smooth"});
     one("pilotHistoryWorkspace").focus();
   });
   one("uiAdminToggle").addEventListener("click",()=>reveal("uiDataTools"));
