@@ -1,0 +1,40 @@
+# 中文：B3 真实浏览器验收报价轮次/锁定及比价；仅使用虚构数据。
+# English: Real Chromium validates quote revisions, immutable confirmation, and comparison using synthetic data.
+name: SRM UI V2 B3 Quote Comparison Acceptance
+on:
+  pull_request:
+    branches:
+      - feat/20261015-ui-v2-b2-supplier-allocation
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  b3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Real quote and comparison UI testing at two desktop sizes
+        run: npx playwright test --config=playwright.config.cjs prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs
+      - name: Preserve SQLite and existing RFQ logic
+        run: |
+          python -m unittest discover -v -s prototype/m1-lite/backend -p 'test_*.py'
+          npm test
+      - name: Keep screenshots, reports, and traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: srm-ui-v2-b3-quote-comparison-evidence
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
