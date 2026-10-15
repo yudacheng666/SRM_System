@@ -398,6 +398,22 @@ body.srm-v2 #assign .preview{border-radius:7px}
  body.srm-v2:has(#assign.panel.active) .ui-workNav .tabs{margin-bottom:9px}
 }
 
+
+/* 中文：B2 精简双向模式标题，使分配模式与导出动作同一行，保留完整辅助说明。 */
+/* English: Compact allocation mode labels allow switcher and export actions in one desktop toolbar. */
+@media(min-width:1100px){
+ body.srm-v2 #assign>.card>.cardhead{
+   flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:6px;
+   min-height:37px;padding:5px 9px;
+ }
+ body.srm-v2 #assign>.card>.cardhead .toolbar{flex-wrap:nowrap;gap:5px}
+ body.srm-v2 #assign>.card>.cardhead .btn{padding:5px 8px;min-height:30px;white-space:nowrap;font-size:11px}
+ body.srm-v2 #assign>.card .modebar{flex:0 0 auto;padding:2px}
+ body.srm-v2 #assign>.card .modebtn{padding:5px 9px;min-height:29px;font-size:11px;white-space:nowrap}
+ body.srm-v2 #assign>.card>.cardbody{padding:1px 9px 5px}
+ body.srm-v2 #assign>.card #previewBox{padding:3px 7px;font-size:11px;line-height:1.25}
+}
+
 </style>
 </head>
 <body class="srm-v2">
@@ -681,8 +697,8 @@ body.srm-v2 #assign .preview{border-radius:7px}
     <div class="card" style="margin-bottom:14px">
       <div class="cardhead">
         <div class="modebar">
-          <button class="modebtn active" data-mode="itemFirst">按物料分配供应商</button>
-          <button class="modebtn" data-mode="supplierFirst">按供应商分配物料</button>
+          <button class="modebtn active" data-mode="itemFirst" aria-label="按物料分配供应商" title="按物料分配供应商">按物料</button>
+          <button class="modebtn" data-mode="supplierFirst" aria-label="按供应商分配物料" title="按供应商分配物料">按供应商</button>
         </div>
         <div class="toolbar">
           <button class="btn soft" id="previewBtn">预览询价单</button>
