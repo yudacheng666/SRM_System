@@ -471,6 +471,47 @@ body.srm-v2 #quotes #resetAwards{color:#b42318;border-color:#efd8d3;background:#
  body.srm-v2 #quoteImport #confirmQuoteRound{margin-left:0}
 }
 
+
+/* 中文：B2 首屏优化：将真实覆盖指标与分配模式并排，不隐藏业务入口或关联操作。 */
+/* English: B2 desktop fold optimization places live KPIs beside mode/export controls; no hidden business actions. */
+@media(min-width:1100px){
+ body.srm-v2 #assign.panel.active{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(425px,.85fr);
+  column-gap:12px;row-gap:10px;align-items:stretch;
+ }
+ body.srm-v2 #assign>.ui-panelLead{grid-column:1/-1;margin-bottom:0;padding:7px 13px;min-height:43px}
+ body.srm-v2 #assign>.stats{
+  grid-column:1;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;
+  margin:0;align-self:stretch;
+ }
+ body.srm-v2 #assign>.stats .stat{padding:8px 10px;min-width:0}
+ body.srm-v2 #assign>.stats .stat small{font-size:11px}
+ body.srm-v2 #assign>.stats .stat b{font-size:20px;margin-top:2px}
+ body.srm-v2 #assign>.card{
+  grid-column:2;margin:0!important;align-self:stretch;display:flex;flex-direction:column;justify-content:center;
+ }
+ body.srm-v2 #assign>.card>.cardhead{border-bottom:0;gap:6px;justify-content:space-between;padding:6px 10px}
+ body.srm-v2 #assign>.card>.cardbody{padding:0 10px 5px}
+ body.srm-v2 #assign>.card #previewBox{padding:5px 8px;margin:0;font-size:12px;line-height:1.35}
+ body.srm-v2 #assign>.grid2{grid-column:1/-1}
+ body.srm-v2 #itemFirstView>.card>.cardhead,
+ body.srm-v2 #supplierFirstView>.card>.cardhead{padding:9px 12px;gap:7px}
+ body.srm-v2 #itemFirstView>.card>.cardhead>.toolbar{gap:5px}
+ body.srm-v2 #itemFirstView>.card>.cardhead .btn{padding:5px 8px;min-height:30px}
+ body.srm-v2 #itemFirstView>.card>.cardbody{padding:8px 10px}
+ body.srm-v2 #itemFirstView>.card>.cardbody>.small:first-child{padding:5px 8px;margin-bottom:6px!important}
+ body.srm-v2 #assign .table th,
+ body.srm-v2 #assign .table td{padding:7px 9px}
+}
+@media(min-width:1100px) and (max-height:820px){
+ body.srm-v2:has(#assign.panel.active) .ui-appHeader{min-height:62px;padding-top:8px;padding-bottom:8px}
+ body.srm-v2:has(#assign.panel.active) .ui-context{padding:6px 12px;margin-bottom:6px}
+ body.srm-v2:has(#assign.panel.active) #pilotNotice{padding:4px 10px;margin-bottom:6px!important}
+ body.srm-v2:has(#assign.panel.active) #pilotControls{margin-bottom:6px!important}
+ body.srm-v2:has(#assign.panel.active) .ui-workNav .tab{min-height:36px;padding:7px 15px}
+ body.srm-v2:has(#assign.panel.active) .ui-workNav .tabs{margin-bottom:9px}
+}
+
 </style>
 </head>
 <body class="srm-v2">
