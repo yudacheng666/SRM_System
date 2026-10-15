@@ -586,6 +586,25 @@ body.srm-v2 #quotes #resetAwards{color:#b42318;border-color:#efd8d3;background:#
   body.srm-v2 #assign .table td{padding:8px 9px}
 }
 
+
+/* 中文：报价回收按真实操作顺序重排：供应商/凭证 → 输入/导入 → 异常检查 → 确认。
+   English: Semantic DOM order is supplier/evidence -> intake -> validation -> final confirmation. */
+body.srm-v2 #quoteImport>.card:first-child{margin-bottom:10px!important}
+body.srm-v2 #quoteImport>.card:first-child>.cardhead{border-bottom:0}
+body.srm-v2 #quoteImport>.quoteImportGrid{margin-bottom:12px}
+body.srm-v2 #quoteImport>.srm-v2-quote-review{margin:0 0 12px!important}
+body.srm-v2 #quoteImport>.srm-v2-quote-review>.cardbody{padding:13px 15px}
+body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar{
+  display:flex;align-items:center;justify-content:flex-end;gap:14px;
+  margin-top:12px;padding:12px 0 0;border-top:1px solid #e2e9f2;
+}
+body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar .srm-v2-quote-section-label{margin-right:auto}
+body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar #confirmQuoteRound{margin-left:0}
+@media(max-width:700px){
+ body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar{flex-wrap:wrap}
+ body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar #confirmQuoteRound{margin-left:auto}
+}
+
 </style>
 </head>
 <body class="srm-v2">
@@ -1005,30 +1024,10 @@ body.srm-v2 #quotes #resetAwards{color:#b42318;border-color:#efd8d3;background:#
           </select>
           <input id="quoteEvidenceNote" type="text" maxlength="4000" placeholder="报价来源文件/凭证说明">
           <label class="small" style="display:flex;align-items:center;gap:6px;flex:1;min-width:260px">本轮供应商商务备注<textarea id="quoteTermsNote" maxlength="4000" rows="2" style="flex:1;min-width:190px" placeholder="报价有效期、运费、税、付款方式等整份报价条款"></textarea></label>
-          <span class="srm-v2-quote-controls-break" aria-hidden="true"></span>
-          <span class="srm-v2-quote-section-label">03　核验完成后确认</span>
-          <button class="btn primary" id="confirmQuoteRound">确认本次提交</button>
-        </div>
-      </div>
-      <div class="cardbody">
-        <div id="quoteRoundSummary" class="notice"></div>
-        <div id="quoteCoverageSummary" class="coverageMini">
-          <div class="stat"><small>本轮应报价</small><b id="qcExpected">0</b></div>
-          <div class="stat"><small>已报价</small><b id="qcQuoted">0</b></div>
-          <div class="stat"><small>明确未报价</small><b id="qcNoquote">0</b></div>
-          <div class="stat"><small>不供货</small><b id="qcCannot">0</b></div>
-          <div class="stat"><small>漏报</small><b id="qcMissing">0</b></div>
-          <div class="stat"><small>多报</small><b id="qcExtra">0</b></div>
-          <div class="stat"><small>重复</small><b id="qcDuplicate">0</b></div>
-        </div>
-        <div id="quoteCoverageDetails" class="coverageDetails small"></div><button class="btn soft" id="exportQuoteMissing">导出本供应商本轮漏报 CSV</button>
-        <div id="quoteScopeEditor" class="coverageDetails" style="display:none">
-          <div class="sline"><b>本轮议价范围</b><div class="toolbar"><button class="btn" id="scopeSelectAll">全选</button><button class="btn" id="scopeClearAll">全不选</button><button class="btn primary" id="saveRoundScope">保存范围</button><button class="btn" id="closeRoundScope">关闭</button></div></div>
-          <div id="quoteScopeList" class="scopeList" style="margin-top:8px"></div>
+
         </div>
       </div>
     </div>
-
     <div class="quoteImportGrid">
       <div class="intakeBox">
         <h3>单条输入</h3>
@@ -1069,6 +1068,32 @@ body.srm-v2 #quotes #resetAwards{color:#b42318;border-color:#efd8d3;background:#
             <button class="btn primary" id="saveQuoteMapping">演示映射预览（不保存）</button>
           </div>
           <div id="quoteMappingHint" class="muted" style="margin-top:5px">M0 只验证映射交互；M5 实现真实 Excel 列读取和模板持久化。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card srm-v2-quote-review">
+      <div class="cardbody">
+        <div id="quoteRoundSummary" class="notice"></div>
+        <div id="quoteCoverageSummary" class="coverageMini">
+          <div class="stat"><small>本轮应报价</small><b id="qcExpected">0</b></div>
+          <div class="stat"><small>已报价</small><b id="qcQuoted">0</b></div>
+          <div class="stat"><small>明确未报价</small><b id="qcNoquote">0</b></div>
+          <div class="stat"><small>不供货</small><b id="qcCannot">0</b></div>
+          <div class="stat"><small>漏报</small><b id="qcMissing">0</b></div>
+          <div class="stat"><small>多报</small><b id="qcExtra">0</b></div>
+          <div class="stat"><small>重复</small><b id="qcDuplicate">0</b></div>
+        </div>
+        <div id="quoteCoverageDetails" class="coverageDetails small"></div><button class="btn soft" id="exportQuoteMissing">导出本供应商本轮漏报 CSV</button>
+        <div id="quoteScopeEditor" class="coverageDetails" style="display:none">
+          <div class="sline"><b>本轮议价范围</b><div class="toolbar"><button class="btn" id="scopeSelectAll">全选</button><button class="btn" id="scopeClearAll">全不选</button><button class="btn primary" id="saveRoundScope">保存范围</button><button class="btn" id="closeRoundScope">关闭</button></div></div>
+          <div id="quoteScopeList" class="scopeList" style="margin-top:8px"></div>
+        </div>
+        <!-- 中文：确认操作位于导入/异常核验之后；原 DOM ID 与业务事件处理器保持不变。 -->
+        <!-- English: Move confirmation after import/review; preserve the original ID and handler. -->
+        <div class="srm-v2-quote-confirm-bar">
+          <span class="srm-v2-quote-section-label">03　完成异常核验后确认本轮</span>
+          <button class="btn primary" id="confirmQuoteRound">确认本次提交</button>
         </div>
       </div>
     </div>
