@@ -1,0 +1,40 @@
+# 中文：B2 供应商分配真实 Chromium 验收，使用独立数据库与虚构数据。
+# English: B2 supplier assignment Chromium checks use temporary SQLite and synthetic inputs only.
+name: SRM UI V2 B2 Supplier Allocation Acceptance
+on:
+  pull_request:
+    branches:
+      - feat/20261015-ui-v2-b1-shell-items
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  allocation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Run synthetic real-browser B2 tests in both allocation directions
+        run: npx playwright test --config=playwright.config.cjs prototype/m1-lite/tests/e2e/ui-v2-b2.spec.cjs
+      - name: Run existing application logic and safety regression
+        run: |
+          python -m unittest discover -v -s prototype/m1-lite/backend -p 'test_*.py'
+          npm test
+      - name: Upload Chromium screenshots and traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: srm-ui-v2-b2-allocation-evidence
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
