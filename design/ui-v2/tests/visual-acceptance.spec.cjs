@@ -7,7 +7,7 @@ const { pathToFileURL } = require('node:url');
 
 // 中文：通过 file:// 打开真实的 HTML 文件，测试浏览器实际布局，而不是比对静态源码。
 // English: Render the real HTML file in Chromium and inspect actual layout and interaction.
-const prototypeURL = pathToFileURL(path.resolve(__dirname, '../concept-b-refined.html')).href;
+const prototypeURL = pathToFileURL(path.resolve(__dirname, '../concept-b-v2.1.html')).href;
 const viewportCases = [{ width: 1366, height: 768 }, { width: 1600, height: 900 }];
 const stages = [
   { id: 'items', label: '物料与图纸' },
@@ -51,6 +51,7 @@ for (const viewport of viewportCases) {
         };
         const visiblePanel = [...document.querySelectorAll('section.surface')].find(el => getComputedStyle(el).display !== 'none');
         const table = visiblePanel?.querySelector('table');
+        const firstRow = table?.querySelector('tbody tr');
         return {
           screen: { width: innerWidth, height: innerHeight },
           documentWidth: document.documentElement.scrollWidth,
@@ -59,6 +60,7 @@ for (const viewport of viewportCases) {
           navigation: box('.worknav'),
           panel: visiblePanel ? (() => { const r = visiblePanel.getBoundingClientRect(); return { y: +r.y.toFixed(1), bottom: +r.bottom.toFixed(1) }; })() : null,
           table: table ? (() => { const r = table.getBoundingClientRect(); return { y: +r.y.toFixed(1), width: +r.width.toFixed(1) }; })() : null,
+          firstRowBottom: firstRow ? +firstRow.getBoundingClientRect().bottom.toFixed(1) : null,
           visiblePrimaryButtons: [...document.querySelectorAll('.btn.primary')].filter(el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; }).map(el => el.textContent.trim()),
         };
       });
@@ -68,7 +70,8 @@ for (const viewport of viewportCases) {
       expect(layout.table, 'A visible data table should exist').not.toBeNull();
       expect(layout.navigation.bottom, 'Navigation should remain in the viewport on initial presentation').toBeLessThan(viewport.height);
       expect(layout.table.y, 'The first part of the table should enter the initial desktop viewport').toBeLessThan(viewport.height);
-      expect(layout.visiblePrimaryButtons.length).toBeGreaterThanOrEqual(1);
+      expect(layout.firstRowBottom, 'The complete first data row must be visible in the initial desktop viewport').toBeLessThanOrEqual(viewport.height);
+      expect(layout.visiblePrimaryButtons, 'Exactly one visually dominant CTA per stage').toHaveLength(1);
       const imagePath = path.join(screenshotsDir, `${viewport.width}x${viewport.height}-0${index+1}-${stage.id}.png`);
       await page.screenshot({ path: imagePath, fullPage: true });
       await testInfo.attach(`ui-v2-${viewport.width}-${stage.id}`, { path: imagePath, contentType: 'image/png' });
@@ -89,7 +92,7 @@ for (const viewport of viewportCases) {
     expect(pageErrors, 'No uncaught browser JS exceptions').toEqual([]);
 
     const metricsFile = testInfo.outputPath(`metrics-${viewport.width}x${viewport.height}.json`);
-    fs.writeFileSync(metricsFile, JSON.stringify({ renderedFrom: 'design/ui-v2/concept-b-refined.html', viewport, stages: report, pageErrors }, null, 2));
+    fs.writeFileSync(metricsFile, JSON.stringify({ renderedFrom: 'design/ui-v2/concept-b-v2.1.html', viewport, stages: report, pageErrors }, null, 2));
     await testInfo.attach(`ui-v2-metrics-${viewport.width}`, { path: metricsFile, contentType: 'application/json' });
   });
 }
