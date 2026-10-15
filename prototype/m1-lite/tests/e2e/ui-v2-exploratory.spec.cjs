@@ -94,14 +94,18 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
       const table=panel.querySelector('.tablewrap table');
       const tablewrap=table?.closest('.tablewrap');
       const actionable=[...panel.querySelectorAll('button:not(:disabled),input,select')].filter(visible);
+      // 中文：位于可横向滚动的数据表格中的控件是允许的，不将其误判成整页裁切。
+      // English: Actions inside intentionally horizontally scrollable tables are reachable by local scrolling.
+      const inScrollableTable=el=>el.closest('.tablewrap');
       const outOfViewport=actionable.filter(el=>{
+        if(inScrollableTable(el))return false;
         const b=el.getBoundingClientRect();
         return b.width===0||b.height===0||b.right>innerWidth+2||b.left<-2;
       }).map(el=>el.id||el.textContent?.trim().slice(0,24)).slice(0,25);
       return{
         stage,width:innerWidth,height:innerHeight,scrollY:window.scrollY,
         documentWidth:document.documentElement.scrollWidth,
-        sidebar:rect(sidebar),app:rect(content),panel:rect(panel),
+        sidebar:rect(sidebar),app:rect(content),appContentLeft:content.getBoundingClientRect().x+parseFloat(getComputedStyle(content).paddingLeft),panel:rect(panel),
         table:rect(table),tablewrap:rect(tablewrap),
         tableScrollable:!!tablewrap&&tablewrap.scrollWidth>tablewrap.clientWidth+2,
         panelButtons:actionable.length,
@@ -112,7 +116,7 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
     measurements.push(m);
     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));
     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);
-    expect(m.app.x,'Main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);
+    expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);
     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);
     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);
     expect(m.hiddenOffscreenControls,'No visible action should be horizontally clipped').toEqual([]);
