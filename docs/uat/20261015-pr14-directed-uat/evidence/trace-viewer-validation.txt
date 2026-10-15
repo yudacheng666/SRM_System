@@ -1,0 +1,1629 @@
+Playwright
+0
+50.0s
+1.7m
+2.5m
+3.3m
+4.2m
+5.0m
+5.8m
+6.7m
+7.5m
+8.3m
+9.2m
+10.0m
+10.8m
+11.7m
+12.5m
+13.3m
+Action
+Before
+After
+about:blank
+Actions
+Metadata
+56 hidden
+Click
+206ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Evaluate
+39ms
+locator('#assignCatFilter option')
+Screenshot
+172ms
+Click
+112ms
+getByRole('button', { name: '按供应商分配物料', exact: true })
+Click
+118ms
+locator('#supplierFirstList').getByText('虚构精工甲', { exact: true })
+Evaluate
+33ms
+locator('#sfCatFilter option')
+Click
+254ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Evaluate
+43ms
+locator('#assignCatFilter option')
+Screenshot
+158ms
+Select option
+48ms
+locator('#assignCatFilter')
+Press "Enter"
+79ms
+locator('#assignItemSearch')
+Query count
+33ms
+locator('#assignItemBody tr')
+Click
+98ms
+getByRole('button', { name: '按供应商分配物料', exact: true })
+Click
+112ms
+locator('#supplierFirstList').getByText('虚构精工甲', { exact: true })
+Evaluate
+22ms
+locator('#sfCatFilter option')
+Select option
+54ms
+locator('#sfCatFilter')
+Press "Enter"
+82ms
+locator('#sfItemSearch')
+Screenshot
+191ms
+Set viewport size
+97ms
+Click
+195ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Focus
+43ms
+locator('#itemSearch')
+Double click
+166ms
+getByRole('row').filter({ hasText: 'TST-004' })
+Press "Escape"
+42ms
+Press "Tab"
+15ms
+Evaluate
+18ms
+Press "Tab"
+30ms
+Evaluate
+26ms
+Press "Tab"
+21ms
+Evaluate
+33ms
+Press "Tab"
+39ms
+Evaluate
+21ms
+Press "Tab"
+31ms
+Evaluate
+25ms
+Press "Tab"
+23ms
+Evaluate
+15ms
+Press "Tab"
+19ms
+Evaluate
+11ms
+Press "Tab"
+15ms
+Evaluate
+16ms
+Press "Tab"
+24ms
+Evaluate
+20ms
+Press "Tab"
+31ms
+Evaluate
+22ms
+Press "Tab"
+24ms
+Evaluate
+27ms
+Press "Tab"
+20ms
+Evaluate
+19ms
+Press "Tab"
+26ms
+Evaluate
+18ms
+Press "Tab"
+29ms
+Evaluate
+12ms
+Press "Tab"
+16ms
+Evaluate
+8ms
+Press "Tab"
+22ms
+Evaluate
+29ms
+Press "Tab"
+15ms
+Evaluate
+41ms
+Press "Tab"
+40ms
+Evaluate
+27ms
+Screenshot
+139ms
+Click
+78ms
+getByRole('button', { name: '取消', exact: true })
+Set viewport size
+74ms
+Click
+207ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Focus
+73ms
+locator('#itemSearch')
+Double click
+129ms
+getByRole('row').filter({ hasText: 'TST-004' })
+Press "Escape"
+50ms
+Evaluate
+15ms
+Double click
+86ms
+getByRole('row').filter({ hasText: 'TST-004' })
+Press "Tab"
+47ms
+Evaluate
+16ms
+Press "Tab"
+21ms
+Evaluate
+14ms
+Press "Tab"
+18ms
+Evaluate
+10ms
+Press "Tab"
+17ms
+Evaluate
+15ms
+Press "Tab"
+23ms
+Evaluate
+18ms
+Press "Tab"
+23ms
+Evaluate
+21ms
+Press "Tab"
+22ms
+Evaluate
+14ms
+Press "Tab"
+28ms
+Evaluate
+12ms
+Press "Tab"
+14ms
+Evaluate
+13ms
+Press "Tab"
+22ms
+Evaluate
+8ms
+Press "Tab"
+18ms
+Evaluate
+13ms
+Press "Tab"
+35ms
+Evaluate
+9ms
+Press "Tab"
+22ms
+Evaluate
+12ms
+Press "Tab"
+18ms
+Evaluate
+14ms
+Press "Tab"
+30ms
+Evaluate
+12ms
+Press "Tab"
+14ms
+Evaluate
+23ms
+Press "Tab"
+22ms
+Evaluate
+14ms
+Press "Tab"
+32ms
+Evaluate
+19ms
+Screenshot
+143ms
+Fill "虚构未保存改名"
+72ms
+locator('#itemEditName')
+Press "Escape"
+28ms
+Dismiss dialog
+5ms
+Click
+227ms
+getByRole('button', { name: '关闭', exact: true })
+Dismiss dialog
+8ms
+Click
+369ms
+getByRole('button', { name: '取消', exact: true })
+Dismiss dialog
+44ms
+Screenshot
+172ms
+Click
+168ms
+getByRole('button', { name: '取消', exact: true })
+Accept dialog
+12ms
+Double click
+174ms
+getByRole('row').filter({ hasText: 'TST-004' })
+Fill "UAT新材料"
+97ms
+locator('#itemEditCat')
+Fill "虚构备用件_已保存"
+91ms
+locator('#itemEditName')
+Click
+157ms
+getByRole('button', { name: '保存修改', exact: true })
+Accept dialog
+11ms
+Click
+219ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Evaluate
+34ms
+locator('#assignCatFilter option')
+Set viewport size
+254ms
+Click
+213ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+205ms
+getByRole('button', { name: '图纸匹配与管理', exact: true })
+Select option
+165ms
+locator('#pilotDrawingLine')
+Scroll into view
+45ms
+locator('#pilotDrawingInfo')
+Screenshot
+277ms
+Evaluate
+73ms
+locator('#uiProjectDetails')
+Evaluate
+46ms
+locator('#uiDataTools')
+Click
+118ms
+locator('#uiDataTools summary')
+Set input files
+76ms
+locator('#pilotS4BackupFile')
+Click
+123ms
+getByRole('button', { name: '恢复完整备份（仅空白数据）', exact: true })
+Query count
+43ms
+getByText('当前电脑已有询价，禁止直接恢复覆盖。请在新电脑或独立空白数据目录运行 S4 再恢复。', { exact: true })
+Screenshot
+997ms
+Set viewport size
+42ms
+Click
+162ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+200ms
+getByRole('button', { name: '图纸匹配与管理', exact: true })
+Select option
+118ms
+locator('#pilotDrawingLine')
+Scroll into view
+141ms
+locator('#pilotDrawingInfo')
+Screenshot
+245ms
+Set input files
+509ms
+locator('#pilotBatchDrawingFiles')
+Click
+152ms
+getByRole('button', { name: '执行匹配预览', exact: true })
+Click
+478ms
+getByRole('button', { name: '确认建立选中关联', exact: true })
+Accept dialog
+17ms
+Wait for timeout
+664ms
+Select option
+55ms
+locator('#pilotDrawingLine')
+Select option
+49ms
+locator('#pilotDrawingLine')
+Scroll into view
+49ms
+locator('#pilotDrawingInfo')
+Screenshot
+226ms
+Evaluate
+23ms
+locator('#uiProjectDetails')
+Evaluate
+88ms
+locator('#uiDataTools')
+Click
+356ms
+locator('#uiDataTools summary')
+Set input files
+98ms
+locator('#pilotS4BackupFile')
+Click
+170ms
+getByRole('button', { name: '恢复完整备份（仅空白数据）', exact: true })
+Query count
+46ms
+getByText('当前电脑已有询价，禁止直接恢复覆盖。请在新电脑或独立空白数据目录运行 S4 再恢复。', { exact: true })
+Screenshot
+241ms
+Click
+149ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+145ms
+getByRole('button', { name: '按物料分配供应商', exact: true })
+Select option
+54ms
+locator('#assignCatFilter')
+Press "Enter"
+196ms
+locator('#assignItemSearch')
+Click
+123ms
+getByRole('button', { name: '全选', exact: true })
+Click
+121ms
+getByRole('button', { name: '给所选物料添加此供应商', exact: true }).first()
+Accept dialog
+9ms
+Click
+137ms
+getByRole('button', { name: '给所选物料添加此供应商', exact: true }).nth(1)
+Accept dialog
+5ms
+Click
+177ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+40ms
+locator('#quoteImportSupplier')
+Select option
+57ms
+locator('#quoteEvidenceType')
+Fill "虚构聊天截图编号PR14-001，仅说明，不含真实附件"
+57ms
+locator('#quoteEvidenceNote')
+Set input files
+139ms
+locator('#quoteImportFile')
+Wait for selector
+12.1s
+getByText('来自 file-quote.csv')
+Click
+99ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+147ms
+getByRole('button', { name: '按物料分配供应商', exact: true })
+Select option
+40ms
+locator('#assignCatFilter')
+Press "Enter"
+71ms
+locator('#assignItemSearch')
+Click
+112ms
+getByRole('button', { name: '全选', exact: true })
+Click
+95ms
+getByRole('button', { name: '给所选物料添加此供应商', exact: true }).first()
+Click
+55ms
+getByRole('button', { name: '给所选物料添加此供应商', exact: true }).nth(1)
+Click
+143ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+86ms
+locator('#quoteImportSupplier')
+Select option
+68ms
+locator('#quoteEvidenceType')
+Fill "虚构聊天截图编号PR14-001，仅说明，不含真实附件"
+47ms
+locator('#quoteEvidenceNote')
+Set input files
+50ms
+locator('#quoteImportFile')
+Wait for selector
+12.0s
+locator('#quoteImportPreview').getByRole('row').filter({ hasText: 'TST-001' })
+Evaluate
+12.0s
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Set input files
+59ms
+locator('#quoteImportFile')
+Set input files
+158ms
+locator('#quoteImportFile')
+Wait for selector
+34ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Click
+178ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Fill "存货编码,报价单价,交期,MOQ,报价状态\nTST-002,30,5,1,正常报价"
+156ms
+locator('#quotePaste')
+Click
+185ms
+getByRole('button', { name: '解析预览', exact: true })
+Click
+144ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Fill "TST-003"
+176ms
+locator('#quoteManualItem')
+Fill "40"
+97ms
+locator('#quoteManualPrice')
+Fill "6"
+70ms
+locator('#quoteManualLead')
+Fill "1"
+77ms
+locator('#quoteManualMoq')
+Click
+109ms
+getByRole('button', { name: '加入预览', exact: true })
+Click
+119ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Fill "TST-004"
+89ms
+locator('#quoteManualItem')
+Fill "50"
+137ms
+locator('#quoteManualPrice')
+Fill "6"
+47ms
+locator('#quoteManualLead')
+Fill "1"
+72ms
+locator('#quoteManualMoq')
+Click
+107ms
+getByRole('button', { name: '加入预览', exact: true })
+Click
+175ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Click
+105ms
+getByRole('button', { name: '确认本次提交', exact: true })
+Evaluate
+43ms
+locator('#quoteRoundBody tr')
+Evaluate
+34ms
+locator('#quoteRoundBody')
+Scroll into view
+38ms
+locator('#quoteRoundBody')
+Screenshot
+169ms
+Click
+115ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+175ms
+getByRole('button', { name: '按物料分配供应商', exact: true })
+Select option
+63ms
+locator('#assignCatFilter')
+Press "Enter"
+53ms
+locator('#assignItemSearch')
+Click
+194ms
+getByRole('button', { name: '全选', exact: true })
+Click
+193ms
+getByRole('button', { name: '给所选物料添加此供应商', exact: true }).first()
+Accept dialog
+12ms
+Click
+194ms
+getByRole('button', { name: '给所选物料添加此供应商', exact: true }).nth(1)
+Accept dialog
+18ms
+Click
+252ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+65ms
+locator('#quoteImportSupplier')
+Select option
+43ms
+locator('#quoteEvidenceType')
+Fill "虚构聊天截图编号PR14-001，仅说明，不含真实附件"
+136ms
+locator('#quoteEvidenceNote')
+Set input files
+99ms
+locator('#quoteImportFile')
+Wait for selector
+60ms
+locator('#quoteImportPreview').getByRole('row').filter({ hasText: 'TST-001' })
+Click
+152ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Fill "存货编码,报价单价,交期,MOQ,报价状态\nTST-002,30,5,1,正常报价"
+127ms
+locator('#quotePaste')
+Click
+114ms
+getByRole('button', { name: '解析预览', exact: true })
+Click
+286ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Fill "TST-003"
+118ms
+locator('#quoteManualItem')
+Fill "40"
+175ms
+locator('#quoteManualPrice')
+Fill "6"
+120ms
+locator('#quoteManualLead')
+Fill "1"
+96ms
+locator('#quoteManualMoq')
+Click
+373ms
+getByRole('button', { name: '加入预览', exact: true })
+Click
+166ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Fill "TST-004"
+125ms
+locator('#quoteManualItem')
+Fill "50"
+112ms
+locator('#quoteManualPrice')
+Fill "6"
+106ms
+locator('#quoteManualLead')
+Fill "1"
+99ms
+locator('#quoteManualMoq')
+Click
+162ms
+getByRole('button', { name: '加入预览', exact: true })
+Click
+229ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Click
+204ms
+getByRole('button', { name: '确认本次提交', exact: true })
+Evaluate
+52ms
+locator('#quoteRoundBody tr')
+Evaluate
+28ms
+locator('#quoteRoundBody')
+Scroll into view
+55ms
+locator('#quoteRoundBody')
+Screenshot
+216ms
+Evaluate
+51ms
+locator('#pilotS4RestoreFeedback')
+Select option
+67ms
+locator('#quoteImportSupplier')
+Fill "存货编码,报价单价,交期,MOQ,报价状态\nTST-001,19,3,1,正常报价\nTST-002,28,8,1,正常报价\nTST-003,42,6,1,正常报价\nTST-004,48,6,1,正常报价"
+114ms
+locator('#quotePaste')
+Click
+6.8s
+getByRole('button', { name: '解析预览', exact: true })
+Click
+7.6s
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Click
+203ms
+getByRole('button', { name: '确认本次提交', exact: true })
+Click
+109ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Check
+157ms
+locator('input[data-common-supplier="UAT-A"]')
+Check
+319ms
+locator('input[data-common-supplier="UAT-B"]')
+Select option
+53ms
+locator('#quoteImportSupplier')
+Fill "存货编码,报价单价,交期,MOQ,报价状态\nTST-001,19,3,1,正常报价\nTST-002,28,8,1,正常报价\nTST-003,42,6,1,正常报价\nTST-004,48,6,1,正常报价"
+164ms
+locator('#quotePaste')
+Click
+168ms
+getByRole('button', { name: '解析预览', exact: true })
+Click
+119ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Click
+136ms
+getByRole('button', { name: '确认本次提交', exact: true })
+Click
+75ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Check
+106ms
+locator('input[data-common-supplier="UAT-A"]')
+Check
+207ms
+locator('input[data-common-supplier="UAT-B"]')
+Click
+87ms
+locator('#uiProjectDetails summary')
+Click
+194ms
+getByRole('button', { name: '保存到本机', exact: true })
+Reload
+574ms
+Click
+445ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+55ms
+locator('#quoteImportSupplier')
+Evaluate
+52ms
+locator('#quoteRoundBody tr')
+Set viewport size
+66ms
+Click
+321ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+58ms
+locator('#quoteImportSupplier')
+Scroll into view
+38ms
+locator('#quoteRoundBody').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Hover
+135ms
+locator('#quoteRoundBody').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Mouse wheel
+42ms
+Wait for timeout
+236ms
+Evaluate
+22ms
+locator('#quoteRoundBody')
+Screenshot
+146ms
+Click
+84ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Scroll into view
+25ms
+locator('#quoteTable').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Hover
+79ms
+locator('#quoteTable').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Mouse wheel
+24ms
+Wait for timeout
+210ms
+Evaluate
+26ms
+locator('#quoteTable')
+Screenshot
+202ms
+Set viewport size
+36ms
+Click
+130ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+46ms
+locator('#quoteImportSupplier')
+Scroll into view
+30ms
+locator('#quoteRoundBody').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Hover
+87ms
+locator('#quoteRoundBody').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Mouse wheel
+34ms
+Wait for timeout
+213ms
+Evaluate
+20ms
+locator('#quoteRoundBody')
+Click
+71ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Scroll into view
+43ms
+locator('#quoteTable').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Hover
+87ms
+locator('#quoteTable').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Mouse wheel
+34ms
+Wait for timeout
+210ms
+Evaluate
+26ms
+locator('#quoteTable')
+Set viewport size
+40ms
+Click
+174ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+74ms
+locator('#quoteImportSupplier')
+Scroll into view
+34ms
+locator('#quoteRoundBody').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Hover
+107ms
+locator('#quoteRoundBody').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Mouse wheel
+23ms
+Wait for timeout
+208ms
+Evaluate
+23ms
+locator('#quoteRoundBody')
+Click
+102ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Scroll into view
+45ms
+locator('#quoteTable').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Hover
+120ms
+locator('#quoteTable').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Mouse wheel
+30ms
+Wait for timeout
+211ms
+Evaluate
+22ms
+locator('#quoteTable')
+Set viewport size
+46ms
+Click
+123ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+51ms
+locator('#quoteImportSupplier')
+Scroll into view
+37ms
+locator('#quoteRoundBody').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Hover
+123ms
+locator('#quoteRoundBody').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Mouse wheel
+17ms
+Wait for timeout
+223ms
+Evaluate
+54ms
+locator('#quoteRoundBody')
+Screenshot
+101ms
+Click
+78ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Scroll into view
+24ms
+locator('#quoteTable').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Hover
+137ms
+locator('#quoteTable').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Mouse wheel
+18ms
+Wait for timeout
+213ms
+Evaluate
+29ms
+locator('#quoteTable')
+Screenshot
+155ms
+Set viewport size
+29ms
+Click
+218ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+42ms
+locator('#quoteImportSupplier')
+Scroll into view
+31ms
+locator('#quoteRoundBody').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Hover
+124ms
+locator('#quoteRoundBody').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Mouse wheel
+19ms
+Wait for timeout
+208ms
+Evaluate
+34ms
+locator('#quoteRoundBody')
+Screenshot
+155ms
+Click
+169ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Scroll into view
+53ms
+locator('#quoteTable').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Hover
+87ms
+locator('#quoteTable').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Mouse wheel
+73ms
+Wait for timeout
+211ms
+Evaluate
+35ms
+locator('#quoteTable')
+Screenshot
+142ms
+Set viewport size
+23ms
+Click
+172ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+57ms
+locator('#quoteImportSupplier')
+Scroll into view
+45ms
+locator('#quoteRoundBody').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Hover
+101ms
+locator('#quoteRoundBody').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Mouse wheel
+24ms
+Wait for timeout
+208ms
+Evaluate
+41ms
+locator('#quoteRoundBody')
+Screenshot
+165ms
+Click
+109ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Scroll into view
+38ms
+locator('#quoteTable').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Hover
+85ms
+locator('#quoteTable').locator('xpath=ancestor::div[contains(@class,"tablewrap")][1]')
+Mouse wheel
+24ms
+Wait for timeout
+236ms
+Evaluate
+27ms
+locator('#quoteTable')
+Screenshot
+131ms
+Click
+140ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+81ms
+locator('#quoteImportSupplier')
+Click
+156ms
+getByRole('button', { name: '+ 新增本轮新版本', exact: true })
+Set input files
+87ms
+locator('#quoteImportFile')
+Wait for selector
+76ms
+getByText('来自 one-quote.xlsx')
+Click
+135ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Click
+131ms
+getByRole('button', { name: '确认本次提交', exact: true })
+Screenshot
+144ms
+Evaluate
+18ms
+locator('#quoteRoundSelect option')
+Evaluate
+39ms
+locator('#uiProjectDetails')
+Click
+168ms
+locator('#uiProjectDetails summary')
+Click
+194ms
+getByRole('button', { name: '保存到本机', exact: true })
+Wait for timeout
+531ms
+Evaluate
+25ms
+locator('#uiDataTools')
+Wait for event "download"
+123ms
+Click
+87ms
+getByRole('button', { name: '下载 S4 完整备份（SQLite + PDF）', exact: true })
+Create page
+210ms
+Navigate to "/"
+581ms
+1
+Evaluate
+313ms
+locator('#uiProjectDetails')
+Click
+116ms
+locator('#uiProjectDetails summary')
+Click
+133ms
+locator('#uiAdminToggle')
+Set input files
+106ms
+locator('#pilotS4BackupFile')
+Click
+308ms
+getByRole('button', { name: '恢复完整备份（仅空白数据）', exact: true })
+Accept dialog
+7ms
+1
+Wait for selector
+63ms
+locator('#pilotS4RestoreFeedback').getByText('完整恢复未成功')
+Screenshot
+168ms
+Set input files
+55ms
+locator('#pilotS4BackupFile')
+Click
+166ms
+getByRole('button', { name: '恢复完整备份（仅空白数据）', exact: true })
+Accept dialog
+6ms
+Wait for timeout
+802ms
+Click
+137ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+59ms
+locator('#quoteImportSupplier')
+Evaluate
+40ms
+locator('#quoteRoundBody tr')
+Evaluate
+23ms
+locator('#quoteRoundBody')
+Scroll into view
+50ms
+locator('#quoteRoundBody')
+Screenshot
+139ms
+Click
+524ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Evaluate
+43ms
+locator('#uiDataTools')
+Click
+123ms
+locator('#uiDataTools summary')
+Click
+3.8s
+getByRole('button', { name: '导出询价单 / 比价议价单', exact: true })
+Select option
+240ms
+locator('#pilotReportType')
+Check
+125ms
+locator('input[data-report-supplier="UAT-A"]')
+Check
+106ms
+locator('input[data-report-supplier="UAT-B"]')
+Wait for event "download"
+219ms
+Click
+226ms
+getByRole('button', { name: '下载内部比价议价单 Excel（仅内部）', exact: true })
+Set viewport size
+64ms
+Focus
+139ms
+getByRole('row').filter({ hasText: 'RFQ-L00001' }).getByRole('button', { name: '¥19.00', exact: true })
+Click
+391ms
+getByRole('row').filter({ hasText: 'RFQ-L00001' }).getByRole('button', { name: '¥19.00', exact: true })
+Press "Tab"
+101ms
+Evaluate
+57ms
+locator('#awardReasonModal')
+Press "Tab"
+21ms
+Evaluate
+28ms
+locator('#awardReasonModal')
+Press "Tab"
+214ms
+Evaluate
+32ms
+locator('#awardReasonModal')
+Press "Tab"
+23ms
+Evaluate
+183ms
+locator('#awardReasonModal')
+Press "Tab"
+33ms
+Evaluate
+20ms
+locator('#awardReasonModal')
+Press "Tab"
+13ms
+Evaluate
+46ms
+locator('#awardReasonModal')
+Press "Tab"
+27ms
+Evaluate
+651ms
+locator('#awardReasonModal')
+Press "Tab"
+27ms
+Evaluate
+36ms
+locator('#awardReasonModal')
+Press "Tab"
+20ms
+Evaluate
+34ms
+locator('#awardReasonModal')
+Press "Tab"
+40ms
+Evaluate
+84ms
+locator('#awardReasonModal')
+Press "Tab"
+22ms
+Evaluate
+41ms
+locator('#awardReasonModal')
+Press "Tab"
+21ms
+Evaluate
+40ms
+locator('#awardReasonModal')
+Press "Tab"
+17ms
+Evaluate
+74ms
+locator('#awardReasonModal')
+Press "Tab"
+22ms
+Evaluate
+30ms
+locator('#awardReasonModal')
+Press "Tab"
+22ms
+Evaluate
+45ms
+locator('#awardReasonModal')
+Press "Tab"
+19ms
+Evaluate
+30ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+19ms
+Evaluate
+32ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+24ms
+Evaluate
+26ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+19ms
+Evaluate
+43ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+32ms
+Evaluate
+43ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+77ms
+Evaluate
+238ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+159ms
+Evaluate
+25ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+40ms
+Evaluate
+28ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+154ms
+Evaluate
+25ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+39ms
+Evaluate
+57ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+28ms
+Evaluate
+32ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+24ms
+Evaluate
+25ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+34ms
+Evaluate
+24ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+23ms
+Evaluate
+21ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+53ms
+Evaluate
+56ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+27ms
+Evaluate
+38ms
+locator('#awardReasonModal')
+Press "Shift+Tab"
+41ms
+Evaluate
+39ms
+locator('#awardReasonModal')
+Screenshot
+194ms
+Press "Escape"
+33ms
+Evaluate
+47ms
+getByRole('row').filter({ hasText: 'RFQ-L00001' }).getByRole('button', { name: '¥19.00', exact: true })
+Click
+180ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+120ms
+getByRole('button', { name: '按物料分配供应商', exact: true })
+Focus
+75ms
+getByRole('button', { name: '预览询价单', exact: true })
+Click
+97ms
+getByRole('button', { name: '预览询价单', exact: true })
+Press "Tab"
+30ms
+Evaluate
+33ms
+locator('#rfqPreviewModal')
+Press "Tab"
+25ms
+Evaluate
+34ms
+locator('#rfqPreviewModal')
+Press "Tab"
+23ms
+Evaluate
+81ms
+locator('#rfqPreviewModal')
+Press "Tab"
+20ms
+Evaluate
+56ms
+locator('#rfqPreviewModal')
+Press "Tab"
+38ms
+Evaluate
+41ms
+locator('#rfqPreviewModal')
+Press "Tab"
+35ms
+Evaluate
+66ms
+locator('#rfqPreviewModal')
+Press "Tab"
+26ms
+Evaluate
+30ms
+locator('#rfqPreviewModal')
+Press "Tab"
+36ms
+Evaluate
+30ms
+locator('#rfqPreviewModal')
+Press "Tab"
+18ms
+Evaluate
+61ms
+locator('#rfqPreviewModal')
+Press "Tab"
+41ms
+Evaluate
+50ms
+locator('#rfqPreviewModal')
+Press "Tab"
+19ms
+Evaluate
+33ms
+locator('#rfqPreviewModal')
+Press "Tab"
+18ms
+Evaluate
+52ms
+locator('#rfqPreviewModal')
+Press "Tab"
+22ms
+Evaluate
+35ms
+locator('#rfqPreviewModal')
+Press "Tab"
+15ms
+Evaluate
+54ms
+locator('#rfqPreviewModal')
+Press "Tab"
+26ms
+Evaluate
+28ms
+locator('#rfqPreviewModal')
+Press "Tab"
+27ms
+Evaluate
+29ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+37ms
+Evaluate
+31ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+31ms
+Evaluate
+41ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+40ms
+Evaluate
+37ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+36ms
+Evaluate
+28ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+26ms
+Evaluate
+41ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+27ms
+Evaluate
+54ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+20ms
+Evaluate
+809ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+100ms
+Evaluate
+26ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+27ms
+Evaluate
+42ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+25ms
+Evaluate
+56ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+25ms
+Evaluate
+68ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+21ms
+Evaluate
+36ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+18ms
+Evaluate
+31ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+22ms
+Evaluate
+46ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+18ms
+Evaluate
+26ms
+locator('#rfqPreviewModal')
+Press "Shift+Tab"
+35ms
+Evaluate
+61ms
+locator('#rfqPreviewModal')
+Screenshot
+212ms
+Press "Escape"
+32ms
+Evaluate
+49ms
+getByRole('button', { name: '预览询价单', exact: true })
+Click
+126ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Focus
+43ms
+getByRole('row').filter({ hasText: 'RFQ-L00001' }).getByRole('button', { name: 'PDF', exact: true })
+Click
+94ms
+getByRole('row').filter({ hasText: 'RFQ-L00001' }).getByRole('button', { name: 'PDF', exact: true })
+Press "Shift+Tab"
+147ms
+Evaluate
+158ms
+locator('#drawingModal')
+Press "Tab"
+196ms
+Evaluate
+120ms
+locator('#drawingModal')
+Press "Shift+Tab"
+99ms
+Evaluate
+146ms
+locator('#drawingModal')
+Press "Tab"
+164ms
+Evaluate
+135ms
+locator('#drawingModal')
+Press "Shift+Tab"
+121ms
+Evaluate
+114ms
+locator('#drawingModal')
+Press "Tab"
+62ms
+Evaluate
+95ms
+locator('#drawingModal')
+Press "Shift+Tab"
+28ms
+Evaluate
+76ms
+locator('#drawingModal')
+Press "Tab"
+30ms
+Evaluate
+47ms
+locator('#drawingModal')
+Press "Shift+Tab"
+29ms
+Evaluate
+29ms
+locator('#drawingModal')
+Press "Tab"
+24ms
+Evaluate
+34ms
+locator('#drawingModal')
+Press "Shift+Tab"
+37ms
+Evaluate
+51ms
+locator('#drawingModal')
+Press "Tab"
+48ms
+Evaluate
+126ms
+locator('#drawingModal')
+Press "Shift+Tab"
+33ms
+Evaluate
+31ms
+locator('#drawingModal')
+Press "Tab"
+35ms
+Evaluate
+85ms
+locator('#drawingModal')
+Press "Shift+Tab"
+83ms
+Evaluate
+208ms
+locator('#drawingModal')
+Press "Tab"
+34ms
+Evaluate
+33ms
+locator('#drawingModal')
+Focus
+47ms
+getByRole('button', { name: '关闭', exact: true })
+Press "Escape"
+29ms
+Evaluate
+49ms
+getByRole('row').filter({ hasText: 'RFQ-L00001' }).getByRole('button', { name: 'PDF', exact: true })
+Click
+144ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+160ms
+getByRole('button', { name: '按物料分配供应商', exact: true })
+Select option
+57ms
+locator('#assignCatFilter')
+Press "Enter"
+114ms
+locator('#assignItemSearch')
+Click
+141ms
+getByRole('button', { name: '询价项目', exact: true })
+Click
+306ms
+getByRole('button', { name: '保存到本机', exact: true })
+Click
+207ms
+getByRole('button', { name: '新建另一笔空白询价', exact: true })
+Accept dialog
+6ms
+Evaluate
+71ms
+locator('#assignCatFilter option')
+Click
+129ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+212ms
+getByRole('button', { name: '图纸匹配与管理', exact: true })
+Screenshot
+458ms
+Click
+171ms
+getByRole('button', { name: '询价项目', exact: true })
+Click
+423ms
+getByRole('button', { name: '保存到本机', exact: true })
+Select option
+150ms
+locator('#pilotHistoryWorkspace')
+Click
+262ms
+getByRole('button', { name: '打开所选历史询价', exact: true })
+Click
+349ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Evaluate
+61ms
+locator('#assignCatFilter option')
+Click
+218ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+382ms
+getByRole('button', { name: '图纸匹配与管理', exact: true })
+Select option
+237ms
+locator('#pilotDrawingLine')
+Locator
+Call
+Log
+Errors
+1
+Console
+2
+Network
+305
+Source
+Attachments
+Evaluate
+TIME
+start:
+5.4m
+duration:
+12.0s
+PARAMETERS
+locator:
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+strict:
+true
+timeout:
+12000
+state:
+"attached"

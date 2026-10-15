@@ -1,0 +1,508 @@
+[
+  {
+    "format": "srm-workspace",
+    "schemaVersion": 1,
+    "workspaceId": "RFQ-1792084720071-V2LE4D",
+    "origin": "buyer",
+    "revision": 7,
+    "state": {
+      "items": [
+        {
+          "id": "TST-001",
+          "lineId": "RFQ-L00001",
+          "name": "虚构泵体",
+          "cat": "UAT机加工",
+          "qty": 10,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 2,
+          "sources": [
+            {
+              "source": "剪贴板批量粘贴预览 · 第2行",
+              "qty": 10
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 1,
+          "drawings": [
+            {
+              "id": "b75eb44a3675b962",
+              "sha256": "b75eb44a3675b9624ae02c74fdd1047fa28c8480a03f0a176f14b37dc46f9427",
+              "name": "TST-001_A.pdf",
+              "revision": "A",
+              "size": 864,
+              "createdAt": "2026-10-15T17:21:05.038Z"
+            }
+          ]
+        },
+        {
+          "id": "TST-002",
+          "lineId": "RFQ-L00002",
+          "name": "虚构支架",
+          "cat": "UAT钣金",
+          "qty": 3,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 3,
+          "sources": [
+            {
+              "source": "剪贴板批量粘贴预览 · 第3行",
+              "qty": 3
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 2
+        },
+        {
+          "id": "TST-003",
+          "lineId": "RFQ-L00003",
+          "name": "虚构轴套",
+          "cat": "UAT机加工",
+          "qty": 4,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 4,
+          "sources": [
+            {
+              "source": "剪贴板批量粘贴预览 · 第4行",
+              "qty": 4
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 3
+        },
+        {
+          "id": "TST-004",
+          "lineId": "RFQ-L00004",
+          "name": "虚构备用件_已保存",
+          "cat": "UAT新材料",
+          "qty": 5,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 5,
+          "sources": [
+            {
+              "source": "剪贴板批量粘贴预览 · 第5行",
+              "qty": 5
+            },
+            {
+              "source": "人工编辑（原位修改）",
+              "qty": 5
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 4
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "UAT-A",
+          "counterpartyCode": "UAT-CP-A",
+          "supplierCode": "UAT-A",
+          "name": "虚构精工甲",
+          "roles": [
+            "supplier"
+          ],
+          "reason": "本次 Excel 导入"
+        },
+        {
+          "id": "UAT-B",
+          "counterpartyCode": "UAT-CP-B",
+          "supplierCode": "UAT-B",
+          "name": "虚构机件乙",
+          "roles": [
+            "supplier"
+          ],
+          "reason": "本次 Excel 导入"
+        },
+        {
+          "id": "UAT-C",
+          "counterpartyCode": "UAT-CP-C",
+          "supplierCode": "UAT-C",
+          "name": "虚构备选丙",
+          "roles": [
+            "supplier"
+          ],
+          "reason": "本次 Excel 导入"
+        }
+      ],
+      "assignments": [
+        {
+          "key": "RFQ-L00001",
+          "values": [
+            "UAT-A",
+            "UAT-B"
+          ]
+        },
+        {
+          "key": "RFQ-L00002",
+          "values": [
+            "UAT-A",
+            "UAT-B"
+          ]
+        },
+        {
+          "key": "RFQ-L00003",
+          "values": [
+            "UAT-A",
+            "UAT-B"
+          ]
+        },
+        {
+          "key": "RFQ-L00004",
+          "values": [
+            "UAT-A",
+            "UAT-B"
+          ]
+        }
+      ],
+      "quoteRounds": [
+        {
+          "supplierId": "UAT-A",
+          "roundNo": 1,
+          "revisionNo": 1,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00001",
+              "itemId": "TST-001",
+              "price": 18,
+              "tiers": [],
+              "lead": 7,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构文件原价",
+              "source": "file",
+              "original": {
+                "price": "18",
+                "lead": "7",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-15T17:25:25.264Z"
+            },
+            {
+              "lineId": "RFQ-L00002",
+              "itemId": "TST-002",
+              "price": 30,
+              "tiers": [],
+              "lead": 5,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "",
+              "source": "paste",
+              "original": {
+                "price": "30",
+                "lead": "5",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-15T17:25:25.854Z"
+            },
+            {
+              "lineId": "RFQ-L00003",
+              "itemId": "TST-003",
+              "price": 40,
+              "tiers": [],
+              "lead": 6,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "",
+              "source": "manual",
+              "original": {
+                "price": "40",
+                "lead": "6",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-15T17:25:27.129Z"
+            },
+            {
+              "lineId": "RFQ-L00004",
+              "itemId": "TST-004",
+              "price": 50,
+              "tiers": [],
+              "lead": 6,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "",
+              "source": "manual",
+              "original": {
+                "price": "50",
+                "lead": "6",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-15T17:25:28.170Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00001",
+            "RFQ-L00002",
+            "RFQ-L00003",
+            "RFQ-L00004"
+          ],
+          "evidenceType": "chat_screenshot",
+          "evidenceNote": "虚构聊天截图编号PR14-001，仅说明，不含真实附件",
+          "termsNote": "",
+          "createdAt": "2026-10-15T17:25:24.467Z",
+          "confirmedAt": "2026-10-15T17:25:28.445Z"
+        },
+        {
+          "supplierId": "UAT-B",
+          "roundNo": 1,
+          "revisionNo": 1,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00001",
+              "itemId": "TST-001",
+              "price": 19,
+              "tiers": [],
+              "lead": 3,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "",
+              "source": "paste",
+              "original": {
+                "price": "19",
+                "lead": "3",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-15T17:26:24.875Z"
+            },
+            {
+              "lineId": "RFQ-L00002",
+              "itemId": "TST-002",
+              "price": 28,
+              "tiers": [],
+              "lead": 8,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "",
+              "source": "paste",
+              "original": {
+                "price": "28",
+                "lead": "8",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-15T17:26:24.875Z"
+            },
+            {
+              "lineId": "RFQ-L00003",
+              "itemId": "TST-003",
+              "price": 42,
+              "tiers": [],
+              "lead": 6,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "",
+              "source": "paste",
+              "original": {
+                "price": "42",
+                "lead": "6",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-15T17:26:24.875Z"
+            },
+            {
+              "lineId": "RFQ-L00004",
+              "itemId": "TST-004",
+              "price": 48,
+              "tiers": [],
+              "lead": 6,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "",
+              "source": "paste",
+              "original": {
+                "price": "48",
+                "lead": "6",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-15T17:26:24.875Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00001",
+            "RFQ-L00002",
+            "RFQ-L00003",
+            "RFQ-L00004"
+          ],
+          "evidenceType": "email_attachment",
+          "evidenceNote": "",
+          "termsNote": "",
+          "createdAt": "2026-10-15T17:26:24.339Z",
+          "confirmedAt": "2026-10-15T17:26:25.026Z"
+        },
+        {
+          "supplierId": "UAT-A",
+          "roundNo": 1,
+          "revisionNo": 2,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00001",
+              "itemId": "TST-001",
+              "price": null,
+              "tiers": [
+                {
+                  "min": 1,
+                  "max": 9,
+                  "price": 20
+                },
+                {
+                  "min": 10,
+                  "max": null,
+                  "price": 17.5
+                }
+              ],
+              "lead": 7,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "",
+              "source": "file",
+              "original": {
+                "price": "18",
+                "lead": "7",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-15T17:28:25.093Z"
+            },
+            {
+              "lineId": "RFQ-L00002",
+              "itemId": "TST-002",
+              "price": 30,
+              "tiers": [],
+              "lead": 5,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "",
+              "source": "revision-copy",
+              "original": {
+                "price": "30",
+                "lead": "5",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-15T17:25:25.854Z"
+            },
+            {
+              "lineId": "RFQ-L00003",
+              "itemId": "TST-003",
+              "price": 40,
+              "tiers": [],
+              "lead": 6,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "",
+              "source": "revision-copy",
+              "original": {
+                "price": "40",
+                "lead": "6",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-15T17:25:27.129Z"
+            },
+            {
+              "lineId": "RFQ-L00004",
+              "itemId": "TST-004",
+              "price": 50,
+              "tiers": [],
+              "lead": 6,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "",
+              "source": "revision-copy",
+              "original": {
+                "price": "50",
+                "lead": "6",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-15T17:25:28.170Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00001",
+            "RFQ-L00002",
+            "RFQ-L00003",
+            "RFQ-L00004"
+          ],
+          "evidenceType": "chat_screenshot",
+          "evidenceNote": "",
+          "termsNote": "",
+          "createdAt": "2026-10-15T17:28:24.743Z",
+          "confirmedAt": "2026-10-15T17:28:25.277Z"
+        }
+      ],
+      "awards": [
+        {
+          "key": "RFQ-L00001",
+          "value": "UAT-A"
+        },
+        {
+          "key": "RFQ-L00002",
+          "value": "UAT-B"
+        },
+        {
+          "key": "RFQ-L00003",
+          "value": "UAT-A"
+        },
+        {
+          "key": "RFQ-L00004",
+          "value": "UAT-B"
+        }
+      ],
+      "awardReasons": [],
+      "manualAwards": [],
+      "awardReviewIds": [],
+      "supplierPool": [
+        "UAT-A",
+        "UAT-B",
+        "UAT-C"
+      ],
+      "selectedCompareSuppliers": [
+        "UAT-A",
+        "UAT-B"
+      ],
+      "customFields": [],
+      "lineSeq": 4,
+      "createdSeq": 4,
+      "quoteComparisonMode": "returned"
+    }
+  },
+  {
+    "format": "srm-workspace",
+    "schemaVersion": 1,
+    "workspaceId": "RFQ-1792085456997-L0BEH2",
+    "origin": "buyer",
+    "revision": 1,
+    "state": {
+      "items": [],
+      "suppliers": [],
+      "assignments": [],
+      "quoteRounds": [],
+      "awards": [],
+      "awardReasons": [],
+      "manualAwards": [],
+      "awardReviewIds": [],
+      "supplierPool": [],
+      "selectedCompareSuppliers": [],
+      "customFields": [],
+      "lineSeq": 0,
+      "createdSeq": 0,
+      "quoteComparisonMode": "returned"
+    }
+  }
+]

@@ -1,0 +1,312 @@
+SRM STUDIO
+采购协同 · 内部工作台
+工作空间
+▤
+询价项目
+▦
+物料与图纸
+♧
+供应商分配
+▣
+报价回收
+▥
+比价议价
+管理工具
+◫
+数据与备份
+⚙
+字段设置
+● 本地工作台
+UI V2 · 候选验收版
+SRM / RFQ WORKSPACE
+采购询价工作台
+S4 本机原型：演示数据不保存；新建正式询价后可以写入 SQLite
+本机演示模式（不保存）
+自动保存：演示数据不会自动保存；请先新建正式询价
+询价项目
+数据与备份
+字段设置
+当前工作 / Current RFQ
+演示数据（不保存）
+操作顺序：物料与图纸 → 供应商分配 → 报价回收 → 比价议价
+使用 run_local.bat 启动后，可新建正式询价并保存到本机 SQLite。原测试 JSON/ZIP 不迁移。
+询价项目　新建、切换与保存当前项目
+项目操作：新建 / 切换 / 手动保存 演示数据不会自动保存；请先新建正式询价
+供应商管理与 Excel 导入　
+新增供应商、批量导入及确认
+数据备份、恢复与报表导出　
+包含 S4 完整 ZIP、旧版兼容格式与业务单据
+备份当前询价 JSON
+备份全部询价 JSON
+旧版 JSON+PDF 资料 ZIP（不可用于 S4 恢复）
+下载 S4 完整备份（SQLite + PDF）
+选择 S4 完整备份 ZIP 
+恢复完整备份（仅空白数据）
+完整恢复未成功：File is not a zip file（HTTP 400）
+导出业务数据 Excel（3 Sheet）
+导出询价单 / 比价议价单
+S4 完整 ZIP 可用于新电脑或空白数据目录恢复；已有询价时系统会拒绝覆盖。旧测试 ZIP 不能作为 S4 完整备份。
+必须先保存到本机，再下载 JSON 文件备份；文件不含原始邮件、PDF 等附件。已有正式工作不允许被导入文件覆盖。
+① 物料与图纸
+② 供应商与分配
+③ 报价回收
+④ 比价议价
+物料与图纸
+管理拟询价清单、批量导入及 PDF 关联
+PDF 图纸匹配与关联管理（点击展开）
+RFQ-DEMO-001 本次询价物料
+搜索
+清空搜索
++ 添加询价物料
+删除选中物料
+批量更新字段值
+图纸匹配与管理
+全选
+本页全选
+反选
+本页反选
+取消选择
+选择	RFQ Line ID	存货编码	图纸	存货名称	所属类别	询价数量	询价单位	已分配供应商
+搜索清空								
+	RFQ-L01200	ITEM-01200	
+ITEM-01200 · PDF
+ITEM-01200_零件图.pdf · 第 1/1 页 · Rev A
+PDF 1页
+	示例物料 1200	类别F	10	个	0
+	RFQ-L01199	ITEM-01199	缺图纸	示例物料 1199	类别E	9	套	0
+	RFQ-L01198	ITEM-01198	
+ITEM-01198 · PDF
+ITEM-01198_零件图.pdf · 第 1/3 页 · Rev A
+PDF 3页
+	示例物料 1198	类别D	8	件	0
+	RFQ-L01197	ITEM-01197	
+ITEM-01197 · PDF
+ITEM-01197_零件图.pdf · 第 1/2 页 · Rev A
+PDF 2页
+	示例物料 1197	类别C	7	个	0
+	RFQ-L01196	ITEM-01196	
+ITEM-01196 · PDF
+ITEM-01196_零件图.pdf · 第 1/1 页 · Rev A
+PDF 1页
+	示例物料 1196	类别B	6	套	0
+	RFQ-L01195	ITEM-01195	
+ITEM-01195 · PDF
+ITEM-01195_零件图.pdf · 第 1/4 页 · Rev A
+PDF 4页
+	示例物料 1195	类别A	5	件	0
+	RFQ-L01194	ITEM-01194	
+ITEM-01194 · PDF
+ITEM-01194_零件图.pdf · 第 1/3 页 · Rev A
+PDF 3页
+	示例物料 1194	类别F	4	个	0
+	RFQ-L01193	ITEM-01193	
+ITEM-01193 · PDF
+ITEM-01193_零件图.pdf · 第 1/2 页 · Rev A
+PDF 2页
+	示例物料 1193	类别E	3	套	0
+	RFQ-L01192	ITEM-01192	
+ITEM-01192 · PDF
+ITEM-01192_零件图.pdf · 第 1/1 页 · Rev A
+PDF 1页
+	示例物料 1192	类别D	2	件	0
+	RFQ-L01191	ITEM-01191	
+ITEM-01191 · PDF
+ITEM-01191_零件图.pdf · 第 1/4 页 · Rev A
+PDF 4页
+	示例物料 1191	类别C	1	个	0
+	RFQ-L01190	ITEM-01190	
+ITEM-01190 · PDF
+ITEM-01190_零件图.pdf · 第 1/3 页 · Rev A
+PDF 3页
+	示例物料 1190	类别B	17	套	0
+	RFQ-L01189	ITEM-01189	
+ITEM-01189 · PDF
+ITEM-01189_零件图.pdf · 第 1/2 页 · Rev A
+PDF 2页
+	示例物料 1189	类别A	16	件	0
+	RFQ-L01188	ITEM-01188	缺图纸	示例物料 1188	类别F	15	个	0
+	RFQ-L01187	ITEM-01187	
+ITEM-01187 · PDF
+ITEM-01187_零件图.pdf · 第 1/4 页 · Rev A
+PDF 4页
+	示例物料 1187	类别E	14	套	0
+	RFQ-L01186	ITEM-01186	
+ITEM-01186 · PDF
+ITEM-01186_零件图.pdf · 第 1/3 页 · Rev A
+PDF 3页
+	示例物料 1186	类别D	13	件	0
+	RFQ-L01185	ITEM-01185	
+ITEM-01185 · PDF
+ITEM-01185_零件图.pdf · 第 1/2 页 · Rev A
+PDF 2页
+	示例物料 1185	类别C	12	个	0
+	RFQ-L01184	ITEM-01184	
+ITEM-01184 · PDF
+ITEM-01184_零件图.pdf · 第 1/1 页 · Rev A
+PDF 1页
+	示例物料 1184	类别B	11	套	0
+	RFQ-L01183	ITEM-01183	
+ITEM-01183 · PDF
+ITEM-01183_零件图.pdf · 第 1/4 页 · Rev A
+PDF 4页
+	示例物料 1183	类别A	10	件	0
+	RFQ-L01182	ITEM-01182	
+ITEM-01182 · PDF
+ITEM-01182_零件图.pdf · 第 1/3 页 · Rev A
+PDF 3页
+	示例物料 1182	类别F	9	个	0
+	RFQ-L01181	ITEM-01181	
+ITEM-01181 · PDF
+ITEM-01181_零件图.pdf · 第 1/2 页 · Rev A
+PDF 2页
+	示例物料 1181	类别E	8	套	0
+	RFQ-L01180	ITEM-01180	
+ITEM-01180 · PDF
+ITEM-01180_零件图.pdf · 第 1/1 页 · Rev A
+PDF 1页
+	示例物料 1180	类别D	7	件	0
+	RFQ-L01179	ITEM-01179	
+ITEM-01179 · PDF
+ITEM-01179_零件图.pdf · 第 1/4 页 · Rev A
+PDF 4页
+	示例物料 1179	类别C	6	个	0
+	RFQ-L01178	ITEM-01178	
+ITEM-01178 · PDF
+ITEM-01178_零件图.pdf · 第 1/3 页 · Rev A
+PDF 3页
+	示例物料 1178	类别B	5	套	0
+	RFQ-L01177	ITEM-01177	缺图纸	示例物料 1177	类别A	4	件	0
+	RFQ-L01176	ITEM-01176	
+ITEM-01176 · PDF
+ITEM-01176_零件图.pdf · 第 1/1 页 · Rev A
+PDF 1页
+	示例物料 1176	类别F	3	个	0
+	RFQ-L01175	ITEM-01175	
+ITEM-01175 · PDF
+ITEM-01175_零件图.pdf · 第 1/4 页 · Rev A
+PDF 4页
+	示例物料 1175	类别E	2	套	0
+	RFQ-L01174	ITEM-01174	
+ITEM-01174 · PDF
+ITEM-01174_零件图.pdf · 第 1/3 页 · Rev A
+PDF 3页
+	示例物料 1174	类别D	1	件	0
+	RFQ-L01173	ITEM-01173	
+ITEM-01173 · PDF
+ITEM-01173_零件图.pdf · 第 1/2 页 · Rev A
+PDF 2页
+	示例物料 1173	类别C	17	个	0
+	RFQ-L01172	ITEM-01172	
+ITEM-01172 · PDF
+ITEM-01172_零件图.pdf · 第 1/1 页 · Rev A
+PDF 1页
+	示例物料 1172	类别B	16	套	0
+	RFQ-L01171	ITEM-01171	
+ITEM-01171 · PDF
+ITEM-01171_零件图.pdf · 第 1/4 页 · Rev A
+PDF 4页
+	示例物料 1171	类别A	15	件	0
+	RFQ-L01170	ITEM-01170	
+ITEM-01170 · PDF
+ITEM-01170_零件图.pdf · 第 1/3 页 · Rev A
+PDF 3页
+	示例物料 1170	类别F	14	个	0
+	RFQ-L01169	ITEM-01169	
+ITEM-01169 · PDF
+ITEM-01169_零件图.pdf · 第 1/2 页 · Rev A
+PDF 2页
+	示例物料 1169	类别E	13	套	0
+	RFQ-L01168	ITEM-01168	
+ITEM-01168 · PDF
+ITEM-01168_零件图.pdf · 第 1/1 页 · Rev A
+PDF 1页
+	示例物料 1168	类别D	12	件	0
+	RFQ-L01167	ITEM-01167	
+ITEM-01167 · PDF
+ITEM-01167_零件图.pdf · 第 1/4 页 · Rev A
+PDF 4页
+	示例物料 1167	类别C	11	个	0
+	RFQ-L01166	ITEM-01166	缺图纸	示例物料 1166	类别B	10	套	0
+	RFQ-L01165	ITEM-01165	
+ITEM-01165 · PDF
+ITEM-01165_零件图.pdf · 第 1/2 页 · Rev A
+PDF 2页
+	示例物料 1165	类别A	9	件	0
+	RFQ-L01164	ITEM-01164	
+ITEM-01164 · PDF
+ITEM-01164_零件图.pdf · 第 1/1 页 · Rev A
+PDF 1页
+	示例物料 1164	类别F	8	个	0
+	RFQ-L01163	ITEM-01163	
+ITEM-01163 · PDF
+ITEM-01163_零件图.pdf · 第 1/4 页 · Rev A
+PDF 4页
+	示例物料 1163	类别E	7	套	0
+	RFQ-L01162	ITEM-01162	
+ITEM-01162 · PDF
+ITEM-01162_零件图.pdf · 第 1/3 页 · Rev A
+PDF 3页
+	示例物料 1162	类别D	6	件	0
+	RFQ-L01161	ITEM-01161	
+ITEM-01161 · PDF
+ITEM-01161_零件图.pdf · 第 1/2 页 · Rev A
+PDF 2页
+	示例物料 1161	类别C	5	个	0
+	RFQ-L01160	ITEM-01160	
+ITEM-01160 · PDF
+ITEM-01160_零件图.pdf · 第 1/1 页 · Rev A
+PDF 1页
+	示例物料 1160	类别B	4	套	0
+	RFQ-L01159	ITEM-01159	
+ITEM-01159 · PDF
+ITEM-01159_零件图.pdf · 第 1/4 页 · Rev A
+PDF 4页
+	示例物料 1159	类别A	3	件	0
+	RFQ-L01158	ITEM-01158	
+ITEM-01158 · PDF
+ITEM-01158_零件图.pdf · 第 1/3 页 · Rev A
+PDF 3页
+	示例物料 1158	类别F	2	个	0
+	RFQ-L01157	ITEM-01157	
+ITEM-01157 · PDF
+ITEM-01157_零件图.pdf · 第 1/2 页 · Rev A
+PDF 2页
+	示例物料 1157	类别E	1	套	0
+	RFQ-L01156	ITEM-01156	
+ITEM-01156 · PDF
+ITEM-01156_零件图.pdf · 第 1/1 页 · Rev A
+PDF 1页
+	示例物料 1156	类别D	17	件	0
+	RFQ-L01155	ITEM-01155	缺图纸	示例物料 1155	类别C	16	个	0
+	RFQ-L01154	ITEM-01154	
+ITEM-01154 · PDF
+ITEM-01154_零件图.pdf · 第 1/3 页 · Rev A
+PDF 3页
+	示例物料 1154	类别B	15	套	0
+	RFQ-L01153	ITEM-01153	
+ITEM-01153 · PDF
+ITEM-01153_零件图.pdf · 第 1/2 页 · Rev A
+PDF 2页
+	示例物料 1153	类别A	14	件	0
+	RFQ-L01152	ITEM-01152	
+ITEM-01152 · PDF
+ITEM-01152_零件图.pdf · 第 1/1 页 · Rev A
+PDF 1页
+	示例物料 1152	类别F	13	个	0
+	RFQ-L01151	ITEM-01151	
+ITEM-01151 · PDF
+ITEM-01151_零件图.pdf · 第 1/4 页 · Rev A
+PDF 4页
+	示例物料 1151	类别E	12	套	0
+筛选结果 1200 项 · 第 1/24 页 · 已选择 0 项
+上一页
+…
+1
+2
+3
+…
+24
+下一页
+当前排序：1.新增顺序降序；Shift+点击列标题叠加字段排序
+双击物料行可编辑编码、数量和属性；已有报价记录的行只能查看。
+S4：自动保存 + 完整 SQLite/PDF ZIP；恢复只允许空白目录，报价邮件和截图尚未纳入。
