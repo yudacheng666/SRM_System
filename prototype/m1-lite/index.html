@@ -3708,13 +3708,18 @@ function exportSelectedCommonScopeCsv(plan){
     const safe=/^[=+@-]/.test(raw.trimStart())?"'"+raw:raw;
     return '"'+safe.replace(/"/g,'""')+'"';
   };
-  const headers=["RFQ Line ID","存货编码","存货名称","询价数量","询价单位"];
+  // 中文：与漏报报表相同，从当前正式工作区读取 RFQ 身份；不依赖页面演示占位编号。
+  // English: Always identify a formal comparison export by its actual workspace, not the demo placeholder.
+  const formal=window.SRMPilot?.isBuyer();
+  const rfqId=formal?window.SRMPilot.snapshot()?.workspaceId:"RFQ-DEMO-001";
+  if(!rfqId){alert("无法确定当前询价编号，同范围报价未导出");return}
+  const headers=["RFQ编号","RFQ Line ID","存货编码","存货名称","询价数量","询价单位"];
   plan.selected.forEach(s=>headers.push(s.name+" 适用单价（元/单位）",s.name+" 同范围金额（元）"));
-  const rows=[headers,...plan.items.map(({it,values})=>[it.lineId,it.id,it.name,it.qty,it.unit,...values.flatMap(v=>[String(v.price),(v.amountCents/100).toFixed(2)])])];
-  rows.push(["同范围合计","","",plan.items.length,"项",...plan.selected.flatMap(s=>["",(plan.totals.get(s.id)/100).toFixed(2)])]);
+  const rows=[headers,...plan.items.map(({it,values})=>[rfqId,it.lineId,it.id,it.name,it.qty,it.unit,...values.flatMap(v=>[String(v.price),(v.amountCents/100).toFixed(2)])])];
+  rows.push([rfqId,"同范围合计","","",plan.items.length,"项",...plan.selected.flatMap(s=>["",(plan.totals.get(s.id)/100).toFixed(2)])]);
   const csv="\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
   const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
-  const link=document.createElement("a");link.href=url;link.download="RFQ-DEMO-001_指定供应商组同范围报价.csv";
+  const link=document.createElement("a");link.href=url;link.download=String(rfqId).replace(/[\\/:*?"<>|\x00-\x1F]/g,"_")+"_指定供应商组同范围报价.csv";
   document.body.appendChild(link);link.click();link.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
