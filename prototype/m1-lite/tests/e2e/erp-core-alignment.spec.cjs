@@ -232,7 +232,10 @@ test('ERP06: repeated internal XLSX export and UI import keep current/source RFQ
   expect(exported.headers.filter(h=>h==='RFQ Line ID')).toHaveLength(1);
   expect(exported.headers).not.toContain('来源 RFQ Line ID');
   for(let i=0;i<2;i++){
-    await createBuyer(page);
+    await open(page,'#uiProjectDetails');
+    await page.locator('#pilotNewWorkspace').click();
+    await page.locator('.srm-v2-sideitem[data-srm-v2-tab="items"]').click();
+    if(!await page.locator('#itemIntake').isVisible())await page.locator('#toggleItemIntake').click();
     await page.locator('#importFile').setInputFiles({name:'roundtrip-'+i+'.xlsx',
       mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:Buffer.from(exported.bytes)});
     await expect(page.locator('#confirmImportRows')).toBeEnabled();
@@ -311,6 +314,10 @@ test('ERP08: confirmed cannot supply remains visible in comparison, not a zero-p
   await expect(rows.nth(1)).toContainText('明确未报价');
   await expect(rows.nth(2)).toContainText('未报价');
   await expect(rows.nth(0)).not.toContainText('¥0.00');
+  await expect.poll(async()=>{
+    const ws=await snap(page),res=await page.request.get(URL+'/api/workspaces/'+ws.workspaceId);
+    return res.ok()&&JSON.stringify((await res.json()).workspace.state)===JSON.stringify(ws.state);
+  }).toBe(true);
   await page.reload();
   await page.locator('.srm-v2-sideitem[data-srm-v2-tab="comparison"]').click();
   await expect(page.locator('#quoteTable tbody tr').nth(0)).toContainText('不供货');
