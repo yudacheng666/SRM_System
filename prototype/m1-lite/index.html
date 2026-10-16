@@ -3165,7 +3165,18 @@ quoteEvidenceNote.oninput=()=>{const r=currentQuoteRound();if(r&&r.status!=="con
 quoteTermsNote.oninput=()=>{const r=currentQuoteRound();if(r&&r.status!=="confirmed")r.termsNote=quoteTermsNote.value.trim()};
 newQuoteRound.onclick=()=>{const sid=quoteImportSupplier.value;if(!sid)return;const subs=supplierSubmissions(sid),last=subs[subs.length-1];if(last&&last.status!=="confirmed"){alert("请先确认当前草稿，或继续修改当前草稿。");return}const next=(last?.roundNo||0)+1,expected=(last?.expectedLineIds?.length?last.expectedLineIds:assignedItemsForSupplier(sid).map(x=>x.lineId)).slice();quoteRounds.push({supplierId:sid,roundNo:next,revisionNo:1,status:"draft",lines:[],expectedLineIds:expected,evidenceType:"email_attachment",evidenceNote:"",termsNote:"",createdAt:new Date().toISOString()});renderQuoteRoundSelector(true)};
 newQuoteRevision.onclick=()=>{const cur=currentQuoteRound();if(!cur)return;if(cur.status!=="confirmed"){alert("当前提交仍是草稿，直接修改即可，无需创建新版本。");return}const revisions=supplierSubmissions(cur.supplierId).filter(x=>x.roundNo===cur.roundNo).sort((a,b)=>b.revisionNo-a.revisionNo),base=revisions[0];if(cur.revisionNo!==base.revisionNo){alert("只能从本轮最新版本创建下一版，请先切换到最新版。");return}const next=base.revisionNo+1;quoteRounds.push({supplierId:base.supplierId,roundNo:base.roundNo,revisionNo:next,status:"draft",lines:base.lines.map(x=>({...x,tiers:(x.tiers||[]).map(t=>({...t})),source:"revision-copy"})),expectedLineIds:[...expectedIdsForRound(base)],evidenceType:base.evidenceType,evidenceNote:"",termsNote:base.termsNote||"",createdAt:new Date().toISOString()});renderQuoteRoundSelector(true)};
-function renderScopeEditor(){const r=currentQuoteRound();if(!r)return;const expected=new Set(expectedIdsForRound(r));quoteScopeList.innerHTML=assignedItemsForSupplier(r.supplierId).map(it=>`<label class="scopeRow"><input type="checkbox" data-scope-line="${it.lineId}" ${expected.has(it.lineId)?"checked":""}><span><b>${esc(it.id)}</b> · ${esc(it.name)} <span class="muted">${it.lineId}</span></span></label>`).join("");quoteScopeEditor.style.display="block"}
+/** 中文：第二轮议价范围必须同时展示物料规格与不可变 RFQ 行身份，防止同码不同规格错选。
+ * English: Negotiation scope labels show specification and immutable line ID, without changing selection values. */
+function renderScopeEditor(){
+  const r=currentQuoteRound();if(!r)return;
+  const expected=new Set(expectedIdsForRound(r));
+  quoteScopeList.innerHTML=assignedItemsForSupplier(r.supplierId).map(it=>`<label class="scopeRow">
+    <input type="checkbox" data-scope-line="${esc(it.lineId)}" ${expected.has(it.lineId)?"checked":""}>
+    <span><b>${esc(it.id)}</b> · ${esc(it.name)}
+      <span class="small muted" title="规格型号：${esc(it.spec||"未填写")}" style="display:inline-block;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:bottom">规格：${esc(it.spec||"未填写")}</span>
+      <span class="muted">${esc(it.lineId)}</span></span></label>`).join("");
+  quoteScopeEditor.style.display="block";
+}
 editRoundScope.onclick=()=>{const r=currentQuoteRound();if(!r||r.roundNo===1||r.status==="confirmed")return;renderScopeEditor()};
 scopeSelectAll.onclick=()=>quoteScopeList.querySelectorAll("[data-scope-line]").forEach(x=>x.checked=true);
 scopeClearAll.onclick=()=>quoteScopeList.querySelectorAll("[data-scope-line]").forEach(x=>x.checked=false);
@@ -3253,7 +3264,7 @@ function openCarryForwardPreview(){
   carryForwardPreview.style.display="block";
   carryForwardPreview.innerHTML='<div class="sline"><b>沿用上轮预览 · '+candidates.length+' 项可选（默认不勾选）</b><button class="btn" id="cancelCarryPreview">取消</button></div>'+
     '<div class="small muted" style="margin:8px 0">仅对供应商明确确认维持原报价条件的项目勾选；无适用阶梯价和被拒绝/不供货的历史报价不在可选范围。</div>'+
-    '<div class="scopeList">'+candidates.map(c=>'<label class="scopeRow"><input type="checkbox" data-carry-line="'+esc(c.lineId)+'"><span>'+esc(c.it.id)+' ('+esc(c.lineId)+') · 第 '+c.prev.roundNo+' 轮第 '+c.prev.revisionNo+' 版 · 当前适用价 '+c.price.toFixed(2)+' · '+esc(tierText(c.prev))+' · 交期 '+(c.prev.lead??"—")+' 天 · MOQ '+(c.prev.moq??"—")+'</span></label>').join("")+'</div>'+
+    '<div class="scopeList">'+candidates.map(c=>'<label class="scopeRow"><input type="checkbox" data-carry-line="'+esc(c.lineId)+'"><span>'+esc(c.it.id)+' ('+esc(c.lineId)+') · <span class="small muted" title="规格型号：'+esc(c.it.spec||"未填写")+'">规格：'+esc(c.it.spec||"未填写")+'</span> · 第 '+c.prev.roundNo+' 轮第 '+c.prev.revisionNo+' 版 · 当前适用价 '+c.price.toFixed(2)+' · '+esc(tierText(c.prev))+' · 交期 '+(c.prev.lead??"—")+' 天 · MOQ '+(c.prev.moq??"—")+'</span></label>').join("")+'</div>'+
     '<div class="toolbar" style="margin-top:8px"><input type="text" id="carryEvidenceNote" style="flex:1;min-width:260px" placeholder="供应商确认沿用的原始来源/日期/说明（必填）"></div>'+
     '<label class="scopeRow"><input type="checkbox" id="carryConfirmSource"><span>我已核实供应商明确维持上述选中项目的原报价条件</span></label>'+
     '<button class="btn primary" id="confirmCarrySelection">确认沿用选中的项目</button>';
