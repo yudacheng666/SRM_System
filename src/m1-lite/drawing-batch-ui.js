@@ -18,11 +18,11 @@
  const isBuyer=()=>!!window.SRMPilot?.isBuyer();
  const model=()=>window.SRMPilot?.snapshot();
  const sig=()=>JSON.stringify(items.map(it=>({
-  lineId:it.lineId,id:it.id,drawingNo:it.drawingNo,drawingNumber:it.drawingNumber,
+  lineId:it.lineId,id:it.id,name:it.name,spec:it.spec,drawingNo:it.drawingNo,drawingNumber:it.drawingNumber,
   drawingCode:it.drawingCode,custom:it.custom,drawings:it.drawings,
   drawingStatus:it.drawingStatus,locked:itemHasAnyQuoteHistory(it.lineId)
  })));
- function lineName(it){return it.id+" · "+(it.drawingNo?"图号 "+it.drawingNo+" · ":"")+it.lineId}
+ function lineName(it){return it.id+" · 规格 "+(it.spec||"未填写")+" · "+(it.drawingNo?"图号 "+it.drawingNo+" · ":"")+it.lineId}
  function tell(message,bad=false){
   summary.textContent=message;
   summary.className=bad?"small dangertext":"small muted";
