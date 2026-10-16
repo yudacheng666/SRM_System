@@ -2652,7 +2652,7 @@ function renderItemImportPreview(source){
   const visible=list.slice(from,from+perPage);
   importPreview.innerHTML=`<div class="sline"><div><b>${esc(source)}</b> · ${actions.length} 行 · 自动合并 ${merged} 行 · 冲突 ${conflicts} 行 · 错误 ${bad} 行</div><button class="btn primary" id="confirmImportRows" ${bad?"disabled":""}>确认加入本次询价（全部 ${actions.length} 行）</button></div>
     <div class="toolbar" style="margin-top:8px"><button class="btn" id="toggleImportProblems">${itemImportPreviewState.onlyProblems?"显示全部行":"仅看全部错误/冲突（"+problems.length+"）"}</button><span class="small muted">当前显示 ${list.length?from+1:0}–${Math.min(from+perPage,list.length)} / ${list.length}；可查看所有异常，提交不受分页限制。</span></div>
-    <div class="tablewrap" style="max-height:230px;margin-top:8px"><table><thead><tr><th>原始行号</th><th>物料编码</th><th>名称</th><th>数量</th><th>单位</th><th>处理方案</th></tr></thead><tbody>${visible.map(x=>`<tr><td>${esc(x.row._rowNo??"单条")}</td><td>${esc(x.row.id)}</td><td>${esc(x.row.name)}</td><td>${x.row.qty??"—"}</td><td>${esc(x.row.unit)}</td><td class="${x.row._errors?.length||x.kind==="conflict"?"dangertext":"ok"}">${esc(x.row._errors?.join("、")|| (x.kind==="merge"?"合并至 "+x.target.lineId:x.kind==="conflict"?"冲突："+x.reasons.join("、"):"新建询价行"))}</td></tr>`).join("")}</tbody></table></div>
+    <div class="tablewrap" style="max-height:230px;margin-top:8px"><table><thead><tr><th>原始行号</th><th>存货编码</th><th>存货名称</th><th>规格型号</th><th>数量</th><th>单位</th><th>处理方案</th></tr></thead><tbody>${visible.map(x=>`<tr><td>${esc(x.row._rowNo??"单条")}</td><td>${esc(x.row.id)}</td><td>${esc(x.row.name)}</td><td>${esc(x.row.spec||"")}</td><td>${x.row.qty??"—"}</td><td>${esc(x.row.unit)}</td><td class="${x.row._errors?.length||x.kind==="conflict"?"dangertext":"ok"}">${esc(x.row._errors?.join("、")|| (x.kind==="merge"?"合并至 "+x.target.lineId:x.kind==="conflict"?"冲突："+x.reasons.join("、"):"新建询价行"))}</td></tr>`).join("")}</tbody></table></div>
     <div id="itemImportPager" class="pager"></div>`;
   document.getElementById("confirmImportRows").onclick=()=>addRowsToRfq(pendingImportRows);
   document.getElementById("toggleImportProblems").onclick=()=>{
@@ -2742,18 +2742,18 @@ importFile.onchange=()=>{
   reader.readAsText(file);
 };
 function refreshFieldControls(){
-  const base=[["lineId","RFQ Line ID"],["id","物料编码"],["name","名称"],["cat","分类"],["qty","数量"],["unit","单位"]];
-  const editable=[["name","名称"],["cat","分类"],["qty","数量"],["unit","单位"],...customFields.map(f=>[f.key,f.label])];
+  const base=[["lineId","RFQ Line ID"],["id","存货编码"],["name","存货名称"],["spec","规格型号"],["cat","所属类别"],["ref1","参考编码1"],["ref2","参考编码2"],["purchaseUnit","采购常用单位"],["qty","询价数量"],["unit","询价单位"]];
+  const editable=[["name","存货名称"],["spec","规格型号"],["cat","所属类别"],["ref1","参考编码1"],["ref2","参考编码2"],["purchaseUnit","采购常用单位"],["qty","询价数量"],["unit","询价单位"],...customFields.map(f=>[f.key,f.label])];
   bulkFieldSelect.innerHTML='<option value="">选择批量更新字段</option>'+editable.map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("");
   matchKeyField.innerHTML='<option value="">匹配关键字段</option>'+base.concat(customFields.map(f=>[f.key,f.label])).map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("");
   matchUpdateField.innerHTML='<option value="">要更新的字段</option>'+editable.map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("");
   deleteFieldSelect.innerHTML='<option value="">选择要删除的自定义字段</option>'+customFields.map(f=>`<option value="${f.key}">${esc(f.label)}</option>`).join("");
-  fieldDefinitionList.innerHTML='<table class="table"><thead><tr><th>字段</th><th>类型</th><th>来源</th></tr></thead><tbody>'+base.map(x=>`<tr><td>${x[1]}</td><td>演示</td><td>基础字段</td></tr>`).join("")+customFields.map(f=>`<tr><td>${esc(f.label)}</td><td>文本</td><td>自定义</td></tr>`).join("")+'</tbody></table>';
+  fieldDefinitionList.innerHTML='<table class="table"><thead><tr><th>字段</th><th>类型</th><th>来源</th></tr></thead><tbody>'+base.map(x=>`<tr><td>${x[1]}</td><td>文本/数量</td><td>ERP 对齐 / SRM 业务字段</td></tr>`).join("")+customFields.map(f=>`<tr><td>${esc(f.label)}</td><td>文本</td><td>自定义</td></tr>`).join("")+'</tbody></table>';
 }
 toggleFieldTools.onclick=()=>{fieldTools.style.display=fieldTools.style.display==="none"?"block":"none";refreshFieldControls()};
 addCustomField.onclick=()=>{
   const label=prompt("请输入新字段名称：","");if(!label||!label.trim())return;
-  const clean=label.trim();if(customFields.some(f=>f.label===clean)){alert("字段已存在。");return}
+  const clean=label.trim();if(customFields.some(f=>f.label===clean)||["存货编码","存货名称","规格型号","所属类别","参考编码1","参考编码2","采购常用单位","询价数量","询价单位","RFQ Line ID"].includes(clean)){alert("字段已存在于 ERP / SRM 基础字段，请直接使用正式字段，不能重复建立自定义列。");return}
   const key="cf_"+Date.now();customFields.push({key,label:clean});fieldFilters[key]="";fieldFilterDraft[key]="";items.forEach(it=>{it.custom=it.custom||{};it.custom[key]=""});
   refreshFieldControls();renderItemList();
 };
@@ -2771,7 +2771,7 @@ bulkUpdateField.onclick=()=>{
   if(key==="qty"){const pv=parsePositiveNumber(value,"数量");if(pv.error){alert(pv.error);return}}
   if(key==="unit"&&!value.trim()){alert("单位不能为空");return}
   if(!guardMutableLines([...itemManageSel],"批量更新物料属性"))return;
-  itemManageSel.forEach(id=>{const it=items.find(x=>x.lineId===id);if(!it)return;if(["name","cat","qty","unit"].includes(key)){it[key]=key==="qty"?Number(value):value}else{it.custom=it.custom||{};it.custom[key]=value}n++});
+  itemManageSel.forEach(id=>{const it=items.find(x=>x.lineId===id);if(!it)return;if(["name","cat","spec","ref1","ref2","purchaseUnit","qty","unit"].includes(key)){it[key]=key==="qty"?Number(value):value}else{it.custom=it.custom||{};it.custom[key]=value}n++});
   renderItemList();renderAssignAll();alert(`已更新 ${n} 项。`);
 };
 /** 中文：匹配更新必须先统计命中情况，重复键或已确认历史不允许自动更新。
@@ -2825,7 +2825,7 @@ function applyMatchedUpdates(rows){
     applicable.forEach(e=>{
       const it=items.find(x=>x.lineId===e.lineId);
       if(fresh.target==="qty")it.qty=Number(e.newVal);
-      else if(["name","cat","unit"].includes(fresh.target))it[fresh.target]=e.newVal;
+      else if(["name","cat","spec","ref1","ref2","purchaseUnit","unit"].includes(fresh.target))it[fresh.target]=e.newVal;
       else{it.custom=it.custom||{};it.custom[fresh.target]=e.newVal}
     });
     pendingMatchedUpdatePlan=null;matchedUpdatePreview.innerHTML="";matchedUpdatePreview.style.display="none";
@@ -3228,7 +3228,7 @@ function filteredItems(searchId,catId,stateId){
   return items.filter(it=>{
     const n=getSet(it.lineId).size;
     const stateOk=!state||(state==="none"&&n===0)||(state==="single"&&n===1)||(state==="multi"&&n>=2);
-    const searchOk=!q||[it.lineId,it.id,it.name,it.cat,it.qty,it.unit,n,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q));
+    const searchOk=!q||[it.lineId,it.id,it.name,it.spec,it.ref1,it.ref2,it.purchaseUnit,it.cat,it.qty,it.unit,n,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q));
     return searchOk&&(!cat||it.cat===cat)&&stateOk
   })
 }
@@ -3251,8 +3251,8 @@ function sortItemList(list){
 function currentItemList(){
   const q=appliedSearch.item;
   return sortItemList(items.filter(it=>{
-    if(q&&![it.lineId,it.id,it.name,it.cat,it.qty,it.unit,getSet(it.lineId).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))return false;
-    const keys=["lineId","id","name","cat","qty","unit","supplierCount",...customFields.map(f=>f.key)];
+    if(q&&![it.lineId,it.id,it.name,it.spec,it.ref1,it.ref2,it.purchaseUnit,it.cat,it.qty,it.unit,getSet(it.lineId).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))return false;
+    const keys=["lineId","id","name","spec","ref1","ref2","purchaseUnit","cat","qty","unit","supplierCount",...customFields.map(f=>f.key)];
     return keys.every(k=>!fieldFilters[k]||fuzzyIncludes(itemFieldValue(it,k),fieldFilters[k]));
   }));
 }
@@ -3270,7 +3270,7 @@ function renderItemList(){
   const fields=[
     {key:"lineId",label:"RFQ Line ID"},{key:"id",label:"存货编码"},
     {key:"drawing",label:"图纸"},{key:"name",label:"存货名称"},
-    {key:"cat",label:"所属类别"},{key:"qty",label:"询价数量"},
+    {key:"spec",label:"规格型号"},{key:"cat",label:"所属类别"},{key:"qty",label:"询价数量"},
     {key:"unit",label:"询价单位"},{key:"supplierCount",label:"已分配供应商"},
     ...customFields.map(f=>({key:f.key,label:f.label}))
   ];
@@ -3294,7 +3294,7 @@ function renderItemList(){
   itemBody.innerHTML=slice.map(it=>`<tr data-edit-line="${esc(it.lineId)}" title="双击编辑此询价行">
     <td><input type="checkbox" data-im="${it.lineId}" ${itemManageSel.has(it.lineId)?"checked":""}></td>
     <td>${esc(it.lineId)}</td><td>${esc(it.id)}</td><td>${itemDrawingCell(it)}</td>
-    <td>${esc(it.name)}</td><td>${esc(it.cat)}</td><td>${it.qty}</td>
+    <td>${esc(it.name)}</td><td>${esc(it.spec||"")}</td><td>${esc(it.cat)}</td><td>${it.qty}</td>
     <td>${esc(it.unit)}</td><td>${getSet(it.lineId).size}</td>
     ${customFields.map(f=>`<td>${esc(itemFieldValue(it,f.key))}</td>`).join("")}
   </tr>`).join("");
@@ -3420,7 +3420,7 @@ runSupplierPoolSearch.onclick=()=>{appliedSearch.supplierPool=supplierPoolSearch
 clearSupplierPoolSearch.onclick=()=>{supplierPoolSearch.value="";runSupplierPoolSearch.click()};
 function filteredSfItems(){
   const q=appliedSearch.sfItem,cat=appliedSearch.sfCat;
-  return items.filter(it=>(!q||[it.lineId,it.id,it.name,it.cat,it.qty,it.unit,getSet(it.lineId).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))&&(!cat||it.cat===cat))
+  return items.filter(it=>(!q||[it.lineId,it.id,it.name,it.spec,it.ref1,it.ref2,it.purchaseUnit,it.cat,it.qty,it.unit,getSet(it.lineId).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))&&(!cat||it.cat===cat))
 }
 function renderSfItems(){
   if(!activeSupplier){supplierFirstTitle.textContent="选择左侧供应商";sfItemBody.innerHTML="";sfItemCount.textContent="";return}
