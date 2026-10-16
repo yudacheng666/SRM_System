@@ -2561,20 +2561,40 @@ function findHeaderValue(row,headers){
   for(const h of headers){if(Object.prototype.hasOwnProperty.call(row,h))return row[h]}
   return"";
 }
+/** 中文：SRM 核心表头采用已知 ERP 原名；别名仅供旧文件兼容。
+ * 英文：Core item imports prefer known ERP labels; aliases exist only for legacy input.
+ * 禁止同一字段两个表头提供不同值时静默取其一；避免物料或数量错配。
+ * English: Conflicting values across canonical/legacy headers must be rejected per row. */
+const ERP_ITEM_HEADERS=Object.freeze({
+  id:["存货编码","物料编码"],name:["存货名称","物料名称","名称"],
+  cat:["所属类别","分类","物料分类"],spec:["规格型号","规格"],
+  ref1:["参考编码1"],ref2:["参考编码2"],purchaseUnit:["采购常用单位"],
+  qty:["询价数量","数量"],unit:["询价单位","单位"]
+});
+function readErpItemValue(data,key,errors,rowNo){
+  const headers=ERP_ITEM_HEADERS[key],found=headers.filter(h=>Object.prototype.hasOwnProperty.call(data,h)&&String(data[h]??"").trim());
+  const distinct=[...new Set(found.map(h=>String(data[h]).trim()))];
+  if(distinct.length>1)errors.push("第 "+rowNo+" 行字段 "+headers[0]+" 的多个表头值不一致："+found.join(" / "));
+  return found.length?String(data[found[0]]).trim():"";
+}
 /** 物料导入按首行标题映射，保持 CSV 引号与空值。\n * Map imported items by the first-row headers, preserving CSV quotes and empty cells. */
 function parseItemRows(text){
-  const table=parseHeaderTable(text,["存货编码","物料编码"]);
+  const table=parseHeaderTable(text,ERP_ITEM_HEADERS.id);
   if(table.errors.length){const rows=[];rows._headerErrors=table.errors;return rows}
   const result=table.rows.map(({data,rowNo})=>{
-    const id=findHeaderValue(data,["存货编码","物料编码"]),name=findHeaderValue(data,["存货名称","物料名称","名称"]),
-      cat=findHeaderValue(data,["所属类别","分类","物料分类"]),
-      qtyRaw=findHeaderValue(data,["询价数量","数量"]),unit=findHeaderValue(data,["询价单位","单位"]),
-      drawingNo=findHeaderValue(data,["图号","图纸编号","图样代号","Drawing No","Drawing Number"]),
-      qty=parsePositiveNumber(qtyRaw,"询价数量"),errors=[];
+    const errors=[],pick=key=>readErpItemValue(data,key,errors,rowNo);
+    const id=pick("id"),name=pick("name"),cat=pick("cat"),spec=pick("spec"),
+      ref1=pick("ref1"),ref2=pick("ref2"),purchaseUnit=pick("purchaseUnit"),
+      qtyRaw=pick("qty"),unit=pick("unit"),
+      drawingNo=String(findHeaderValue(data,["图号","图纸编号","图样代号","Drawing No","Drawing Number"])||"").trim(),
+      qty=parsePositiveNumber(qtyRaw,"询价数量");
     if(!id)errors.push("第 "+rowNo+" 行存货编码为空");
     if(qty.error)errors.push("第 "+rowNo+" 行："+qty.error);
     if(!unit)errors.push("第 "+rowNo+" 行询价单位不能为空");
-    return{id,lineId:nextLineId(),name,cat,qty:qty.value,unit,drawingNo,_rowNo:rowNo,
+    // 中文：采购常用单位仅用于核对，不能当作询价单位或私自换算数量。
+    // English: Purchase-unit metadata never substitutes the required RFQ unit or converts quantities.
+    return{id,lineId:nextLineId(),name,cat,spec,ref1,ref2,purchaseUnit,
+      qty:qty.value,unit,drawingNo,_rowNo:rowNo,
       sources:[{source:"导入第 "+rowNo+" 行",qty:qty.value}],_errors:errors};
   });
   result._headers=table.headers;return result;
@@ -2586,7 +2606,7 @@ function parseItemRows(text){
 function itemMergeCheck(a,b){
   if(a.id!==b.id)return{kind:"different",reasons:[]};
   const diffs=[];
-  for(const [k,label] of [["name","名称"],["cat","分类"],["unit","单位"],["drawingNo","图号"],["technicalRevision","技术版本"],["deliveryTerm","交货条件"]]){
+  for(const [k,label] of [["name","名称"],["cat","分类"],["spec","规格型号"],["ref1","参考编码1"],["ref2","参考编码2"],["purchaseUnit","采购常用单位"],["unit","单位"],["drawingNo","图号"],["technicalRevision","技术版本"],["deliveryTerm","交货条件"]]){
     const x=String(a[k]??"").trim(),y=String(b[k]??"").trim();
     if(x!==y)diffs.push(label+"不一致");
   }
