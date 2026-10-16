@@ -819,19 +819,27 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
         <div id="itemIntake" style="display:none">
           <div class="intakeGrid">
             <div class="intakeBox">
-              <h3>单条输入（演示字段）</h3>
+              <h3>单条输入（ERP 核心字段）</h3>
               <div class="toolbar">
                 <input id="manualCode" type="text" placeholder="存货编码">
                 <input id="manualDrawingNo" type="text" placeholder="图号（可选）">
                 <input id="manualName" type="text" placeholder="存货名称">
+                <input id="manualSpec" type="text" placeholder="规格型号（可选）">
                 <input id="manualQty" type="text" placeholder="询价数量">
                 <input id="manualUnit" type="text" placeholder="询价单位">
+                <details style="width:100%"><summary class="small">ERP 扩展字段（可选）：参考编码与采购常用单位</summary>
+                  <div class="toolbar" style="margin-top:6px">
+                    <input id="manualRef1" type="text" placeholder="参考编码1">
+                    <input id="manualRef2" type="text" placeholder="参考编码2">
+                    <input id="manualPurchaseUnit" type="text" placeholder="采购常用单位">
+                  </div>
+                </details>
                 <button class="btn soft" id="manualAdd">加入本次询价</button>
               </div>
             </div>
             <div class="intakeBox">
               <h3>剪贴板批量粘贴</h3>
-              <textarea id="pasteItems" placeholder="推荐 ERP 正式名称：存货编码、存货名称、所属类别，另加询价数量和询价单位；兼容旧表头。&#10;存货编码,存货名称,所属类别,询价数量,询价单位&#10;P-001,示例轴,类别A,2,件"></textarea>
+              <textarea id="pasteItems" placeholder="ERP 核心字段按原名：存货编码、存货名称、规格型号、所属类别、参考编码1、参考编码2、采购常用单位；另外必须填写 SRM 的询价数量和询价单位。&#10;存货编码,存货名称,规格型号,所属类别,询价数量,询价单位&#10;P-001,示例轴,直径20,类别A,2,件"></textarea>
               <div class="toolbar">
                 <button class="btn" id="readClipboard">读取剪贴板</button>
                 <button class="btn soft" id="parsePaste">解析预览</button>
@@ -866,7 +874,7 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
       </div>
     </div>
     <div id="itemEditModal" class="modalBackdrop" aria-hidden="true">
-      <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="itemEditTitle" style="width:min(620px,96vw)">
+      <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="itemEditTitle" style="width:min(760px,96vw);max-height:85vh;overflow:auto">
         <div class="modalHead"><b id="itemEditTitle">编辑本次询价物料</b><button class="btn" id="itemEditClose" type="button">关闭</button></div>
         <div class="modalBody">
           <div id="itemEditIdentity" class="small muted" style="margin-bottom:10px"></div>
@@ -875,6 +883,10 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
             <label>图号 / 图纸编号（可选）<input id="itemEditDrawingNo" type="text" style="width:100%"></label>
             <label>询价数量<input id="itemEditQty" type="number" step="any" min="0.000001" style="width:100%"></label>
             <label>存货名称<input id="itemEditName" type="text" style="width:100%"></label>
+            <label>规格型号<input id="itemEditSpec" type="text" style="width:100%"></label>
+            <label>参考编码1<input id="itemEditRef1" type="text" style="width:100%"></label>
+            <label>参考编码2<input id="itemEditRef2" type="text" style="width:100%"></label>
+            <label>采购常用单位（不自动换算）<input id="itemEditPurchaseUnit" type="text" style="width:100%"></label>
             <label>所属类别<input id="itemEditCat" type="text" style="width:100%"></label>
             <label>询价单位<input id="itemEditUnit" type="text" style="width:100%"></label>
           </div>
