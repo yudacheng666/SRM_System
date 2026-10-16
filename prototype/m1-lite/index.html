@@ -3534,8 +3534,17 @@ function filteredSfItems(){
   return items.filter(it=>(!q||[it.lineId,it.id,it.name,it.spec,it.ref1,it.ref2,it.purchaseUnit,it.cat,it.qty,it.unit,getSet(it.lineId).size,...customFields.map(f=>itemFieldValue(it,f.key))].some(v=>fuzzyIncludes(v,q)))&&(!cat||it.cat===cat))
 }
 function renderSfItems(){
-  if(!activeSupplier){supplierFirstTitle.textContent="选择左侧供应商";sfItemBody.innerHTML="";sfItemCount.textContent="";return}
-  const sup=suppliers.find(s=>s.id===activeSupplier);supplierFirstTitle.textContent=sup.name+"：选择物料";
+  // 中文：切换询价时旧供应商不属于新项目；回退到未选择状态，禁止引用上个RFQ对象。
+  // English: Never render a stale supplier from a previous workspace.
+  const sup=activeSupplier?suppliers.find(s=>s.id===activeSupplier&&rfqSupplierPool.has(s.id)):null;
+  if(!sup){
+    activeSupplier=null;
+    supplierFirstTitle.textContent="选择左侧供应商";
+    sfItemBody.innerHTML="";
+    sfItemCount.textContent="";
+    return;
+  }
+  supplierFirstTitle.textContent=sup.name+"：选择物料";
   const list=filteredSfItems(),pages=Math.max(1,Math.ceil(list.length/PAGE));sfPage=Math.min(sfPage,pages-1);
   const slice=list.slice(sfPage*PAGE,sfPage*PAGE+PAGE);
   sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.lineId}" ${getSet(it.lineId).has(activeSupplier)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td></tr>`).join("");
@@ -4379,6 +4388,9 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     });
   }
   function resetUI(){
+    // 中文：RFQ 切换只保留视图模式，不继承上一项目的供应商选择。
+    // English: Preserve navigation mode, but reset supplier-context identity across workspaces.
+    activeSupplier=null;sfPage=0;supplierFirstPage=0;
     itemManageSel.clear();assignSel.clear();supplierPickerSel.clear();rangeAnchors.clear();
     pendingImportRows=[];quoteImportPreviewRows=[];itemPage=0;quotePage=0;
     clearPastePreview.click();clearQuoteImportPreview();
