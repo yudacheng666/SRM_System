@@ -308,7 +308,7 @@ test('ERP08: confirmed cannot supply remains visible in comparison, not a zero-p
   await expect(page.locator('#qcCannot')).toHaveText('1');
   await expect(page.locator('#qcNoquote')).toHaveText('1');
   await page.locator('#confirmQuoteRound').click();
-  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="comparison"]').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
   const rows=page.locator('#quoteTable tbody tr');
   await expect(rows.nth(0)).toContainText('不供货');
   await expect(rows.nth(1)).toContainText('明确未报价');
@@ -319,7 +319,7 @@ test('ERP08: confirmed cannot supply remains visible in comparison, not a zero-p
     return res.ok()&&JSON.stringify((await res.json()).workspace.state)===JSON.stringify(ws.state);
   }).toBe(true);
   await page.reload();
-  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="comparison"]').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
   await expect(page.locator('#quoteTable tbody tr').nth(0)).toContainText('不供货');
   const stored=await snap(page);
   const q=stored.state.quoteRounds.find(x=>x.supplierId==='SUP-A'&&x.status==='confirmed');
