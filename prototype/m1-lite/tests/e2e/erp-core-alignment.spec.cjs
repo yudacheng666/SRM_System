@@ -326,3 +326,75 @@ test('ERP08: confirmed cannot supply remains visible in comparison, not a zero-p
   expect(q.lines.find(x=>x.lineId===ids[0]).status).toBe('cannot');
   expect(q.lines.find(x=>x.lineId===ids[1]).status).toBe('noquote');
 });
+
+
+// PR16 F2-R: negotiation-scope and carry-forward options must identify same-code distinct-spec lines.
+test('ERP09: second-round scope shows specification and preserves selected line identities',async({page,app},info)=>{
+  await page.setViewportSize({width:1024,height:768});
+  await createBuyer(page);
+  await page.locator('#importFile').setInputFiles(path.join(app.fixture,'erp_items.xlsx'));
+  await expect(page.locator('#confirmImportRows')).toBeEnabled();
+  await page.locator('#confirmImportRows').click();
+  const original=(await snap(page)).state.items;
+  const m120=original.find(x=>x.id==='ERP-A1'&&x.spec==='120W');
+  const m220=original.find(x=>x.id==='ERP-A1'&&x.spec==='220W');
+  expect(m120?.lineId).toBeTruthy();
+  expect(m220?.lineId).toBeTruthy();
+  expect(m120.lineId).not.toBe(m220.lineId);
+  await open(page,'#uiSupplierTools');
+  await page.locator('#pilotSupplierExcel').setInputFiles(path.join(app.fixture,'suppliers.xlsx'));
+  await expect(page.locator('#pilotImportSupplierConfirm')).toBeEnabled();
+  await page.locator('#pilotImportSupplierConfirm').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="assign"]').click();
+  await page.locator('#selectAssignAll').click();
+  await page.locator('[data-add="SUP-A"]').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quoteImport"]').click();
+  await page.locator('#quoteImportSupplier').selectOption('SUP-A');
+  // English: Use immutable line IDs for both identical-code items.
+  const firstQuotes='RFQ Line ID,报价单价,交期,MOQ,报价状态\n'+
+    m120.lineId+',9,3,1,正常报价\n'+m220.lineId+',11,3,1,正常报价';
+  await page.locator('#quotePaste').fill(firstQuotes);
+  await page.locator('#quoteParsePaste').click();
+  await expect(page.locator('#commitQuoteImport')).toBeEnabled();
+  await page.locator('#commitQuoteImport').click();
+  await page.locator('#confirmQuoteRound').click();
+  await page.locator('#newQuoteRound').click();
+  await page.locator('#editRoundScope').click();
+  const selector=page.locator('#quoteScopeList');
+  await expect(selector).toBeVisible();
+  const row120=selector.locator('label.scopeRow').filter({has:page.locator('input[data-scope-line="'+m120.lineId+'"]')});
+  const row220=selector.locator('label.scopeRow').filter({has:page.locator('input[data-scope-line="'+m220.lineId+'"]')});
+  await expect(row120).toContainText('规格：120W');
+  await expect(row220).toContainText('规格：220W');
+  await expect(row120).toContainText(m120.lineId);
+  await expect(row220).toContainText(m220.lineId);
+  await expect(row220.locator('[title]')).toHaveAttribute('title','规格型号：220W');
+  const shot=info.outputPath('pr16-negotiation-scope-1024.png');
+  await page.screenshot({path:shot,fullPage:true});
+  await info.attach('pr16-negotiation-scope',{path:shot,contentType:'image/png'});
+  // 只保留220W，不能误影响同编码120W的上一轮报价。
+  // Keep only the 220W line in round two, without losing round-one 120W quote.
+  await page.locator('#scopeClearAll').click();
+  await row220.locator('input[data-scope-line]').check();
+  await page.locator('#saveRoundScope').click();
+  const newDraft=(await snap(page)).state.quoteRounds.find(r=>r.supplierId==='SUP-A'&&r.roundNo===2);
+  expect(newDraft.expectedLineIds).toEqual([m220.lineId]);
+  await page.locator('#carryForwardMissing').click();
+  await expect(page.locator('#carryForwardPreview')).toContainText('规格：220W');
+  await expect(page.locator('#carryForwardPreview')).not.toContainText('规格：120W');
+  await page.locator('#cancelCarryPreview').click();
+  const revised='RFQ Line ID,报价单价,交期,MOQ,报价状态\n'+m220.lineId+',10,4,1,正常报价';
+  await page.locator('#quotePaste').fill(revised);
+  await page.locator('#quoteParsePaste').click();
+  await expect(page.locator('#commitQuoteImport')).toBeEnabled();
+  await page.locator('#commitQuoteImport').click();
+  await page.locator('#confirmQuoteRound').click();
+  const saved=(await snap(page)).state.quoteRounds.filter(r=>r.supplierId==='SUP-A'&&r.status==='confirmed');
+  expect(saved.find(r=>r.roundNo===1)?.lines.map(x=>x.lineId).sort()).toEqual([m120.lineId,m220.lineId].sort());
+  expect(saved.find(r=>r.roundNo===2)?.lines.map(x=>x.lineId)).toEqual([m220.lineId]);
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
+  await expect(page.locator('#quoteTable')).toContainText('规格：120W');
+  await expect(page.locator('#quoteTable')).toContainText('规格：220W');
+  await expect(page.locator('#quoteTable')).toContainText('¥9.00');
+  await expect(page.locator('#quoteTable')).toContainText('¥10.00');
+});
