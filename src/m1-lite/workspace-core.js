@@ -102,6 +102,17 @@ function validate(ws){
     for(const key of ["spec","ref1","ref2","purchaseUnit"]){
       ensure(it[key]==null||(typeof it[key]==="string"&&it[key].length<=1000),"ERP_FIELD_"+key);
     }
+    // 中文：其他 ERP 列保留原名原值，不用来自动识别物料、换算数量或计算价格。
+    // English: Retained raw ERP columns have no implicit identity, unit-conversion or pricing semantics.
+    if(it.erpExtra!=null){
+      ensure(isObj(it.erpExtra)&&Object.keys(it.erpExtra).length<=220,"ERP_EXTRA_OBJECT");
+      let chars=0;
+      for(const [key,value] of Object.entries(it.erpExtra)){
+        chars+=key.length+String(value).length;
+        ensure(!["__proto__","prototype","constructor"].includes(key)&&key.length<=100&&
+          typeof value==="string"&&value.length<=1000&&chars<=16000,"ERP_EXTRA_VALUE");
+      }
+    }
     lineIds.push(it.lineId);
   }
   for(const sup of s.suppliers){ensure(isObj(sup)&&id(sup.id)&&typeof sup.name==="string","SUPPLIER");supplierIds.push(sup.id)}
