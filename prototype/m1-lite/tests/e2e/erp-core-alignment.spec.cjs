@@ -512,3 +512,84 @@ test('ERP10: settings provide three correct XLSX import templates and one header
   await page.screenshot({path:shot,fullPage:true});
   await info.attach('settings-import-templates',{path:shot,contentType:'image/png'});
 });
+
+
+// 中文：非法预览、取消预览、手动预览均不得提前消耗行号或触发 SQLite 自动保存。
+// English: Invalid/canceled previews must not reserve real IDs or bump persisted revisions.
+test('ERP11: rejected and canceled material previews do not alter line sequence or saved workspace',async({page,app})=>{
+  await createBuyer(page);
+  const savedWorkspace=async()=>{
+    const ws=await snap(page);
+    const response=await page.request.get(URL+'/api/workspaces/'+ws.workspaceId);
+    if(!response.ok())return null;
+    return(await response.json()).workspace;
+  };
+  await expect.poll(async()=>{
+    const saved=await savedWorkspace(),ws=await snap(page);
+    return saved&&saved.revision>0&&JSON.stringify(saved.state)===JSON.stringify(ws.state);
+  },{timeout:30000}).toBe(true);
+  const before=await savedWorkspace();
+  expect(before.state.items).toHaveLength(0);
+  const startSeq=before.state.lineSeq;
+  const startCreated=before.state.createdSeq;
+
+  // 中文：一行缺少必填询价单位，只出现错误预览，绝不允许确认。
+  // English: A row with missing RFQ unit must only preview an error and disable commit.
+  const invalid=await page.evaluate(async()=>{
+    const blob=SRMExcel.create([{name:'询价物料',rows:[
+      ['存货编码','存货名称','询价数量','询价单位'],
+      ['INVALID-001','虚构缺单位',2,'']
+    ]}]);return Array.from(new Uint8Array(await blob.arrayBuffer()));
+  });
+  await page.locator('#importFile').setInputFiles({name:'invalid-no-unit.xlsx',
+    mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    buffer:Buffer.from(invalid)});
+  await expect(page.locator('#importPreview')).toContainText('询价单位不能为空');
+  await expect(page.locator('#confirmImportRows')).toBeDisabled();
+  expect((await snap(page)).state.lineSeq).toBe(startSeq);
+  expect((await snap(page)).state.assignments).toEqual([]);
+  // 中文：超过实际自动保存空闲窗口，比较数据库版本与完整保存内容。
+  // English: Wait beyond autosave debounce and compare the actual SQLite snapshot.
+  await page.waitForTimeout(4800);
+  let stored=await savedWorkspace();
+  expect(stored.revision).toBe(before.revision);
+  expect(stored.state).toEqual(before.state);
+  await page.locator('#clearPastePreview').click();
+
+  // 中文：即使输入完全有效，只预览再取消也不能产生新版本。
+  // English: Preview and cancel of a valid item must leave persisted identity untouched.
+  await page.locator('#pasteItems').fill(
+    '存货编码,存货名称,规格型号,询价数量,询价单位\n'+
+    'TEST-PREVIEW,虚构预览,M16,2,件'
+  );
+  await page.locator('#parsePaste').click();
+  await expect(page.locator('#confirmImportRows')).toBeEnabled();
+  expect((await snap(page)).state.lineSeq).toBe(startSeq);
+  await page.locator('#clearPastePreview').click();
+  await page.waitForTimeout(4200);
+  stored=await savedWorkspace();
+  expect(stored.revision).toBe(before.revision);
+  expect(stored.state).toEqual(before.state);
+
+  // 中文：正式确认后的两条同规格行仍按既有逻辑合并，并恰好分配有效主身份。
+  // English: Only a confirmed two-row input consumes two IDs and merges compatible quantities.
+  await page.locator('#pasteItems').fill(
+    '存货编码,存货名称,规格型号,询价数量,询价单位\n'+
+    'TEST-COMMIT,虚构测试件,M16,2,件\n'+
+    'TEST-COMMIT,虚构测试件,M16,3,件'
+  );
+  await page.locator('#parsePaste').click();
+  await expect(page.locator('#importPreview')).toContainText('自动合并 1 行');
+  await expect(page.locator('#confirmImportRows')).toBeEnabled();
+  await page.locator('#confirmImportRows').click();
+  const committed=await snap(page);
+  expect(committed.state.items).toHaveLength(1);
+  expect(committed.state.items[0].qty).toBe(5);
+  expect(committed.state.items[0].lineId).toBe('RFQ-L'+String(startSeq+1).padStart(5,'0'));
+  expect(committed.state.lineSeq).toBe(startSeq+2);
+  expect(committed.state.createdSeq).toBe(startCreated+1);
+  await expect.poll(async()=>{
+    const saved=await savedWorkspace();
+    return saved?.state.items.length===1&&saved?.state.lineSeq===startSeq+2;
+  },{timeout:30000}).toBe(true);
+});
