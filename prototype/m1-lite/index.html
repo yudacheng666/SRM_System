@@ -2281,7 +2281,12 @@ const items=Array.from({length:1200},(_,i)=>({
   unit:units[i%units.length],
   custom:{},_createdOrder:i+1,sources:[{source:"演示初始行",qty:(i%17)+1}]
 }));
-let lineSeq=1200,createdSeq=1200;function nextLineId(){lineSeq++;return "RFQ-L"+String(lineSeq).padStart(5,"0")}
+let lineSeq=1200,createdSeq=1200;
+let pendingImportBaseLineSeq=null;
+// 中文：预览只计算候选 RFQ 行号，正式序列仅在用户确认实际提交时递增。
+// English: Preview computes prospective IDs without changing persisted lineSeq.
+function lineIdAt(sequence){return "RFQ-L"+String(sequence).padStart(5,"0")}
+function nextLineId(){lineSeq++;return lineIdAt(lineSeq)}
 const suppliers=Array.from({length:24},(_,i)=>({
   id:"SUP-"+String(i+1).padStart(3,"0"),
   name:"示例供应商 "+String(i+1).padStart(2,"0"),
@@ -2677,7 +2682,7 @@ function parseItemRows(text){
     if(!unit)errors.push("第 "+rowNo+" 行询价单位不能为空");
     // 中文：采购常用单位仅用于核对，不能当作询价单位或私自换算数量。
     // English: Purchase-unit metadata never substitutes the required RFQ unit or converts quantities.
-    return{id,lineId:nextLineId(),name,cat,spec,ref1,ref2,purchaseUnit,erpExtra,
+    return{id,lineId:"",name,cat,spec,ref1,ref2,purchaseUnit,erpExtra,
       qty:qty.value,unit,drawingNo,_rowNo:rowNo,
       sources:[{source:"导入第 "+rowNo+" 行",qty:qty.value}],_errors:errors};
   });
@@ -2700,7 +2705,7 @@ function itemMergeCheck(a,b){
   for(const k of erpKeys)if(String(a.erpExtra?.[k]??"")!==String(b.erpExtra?.[k]??""))diffs.push("ERP 原始字段 "+k+" 不一致");
   const keys=new Set([...Object.keys(a.custom||{}),...Object.keys(b.custom||{})]);
   for(const k of keys)if(String(a.custom?.[k]??"")!==String(b.custom?.[k]??""))diffs.push("自定义属性 "+k+" 不一致");
-  if(getSet(a.lineId).size)diffs.push("已有供应商分配");
+  if(assignments.get(a.lineId)?.size)diffs.push("已有供应商分配");
   if(quoteRounds.some(r=>r.lines.some(l=>l.lineId===a.lineId)||r.status==="confirmed"&&r.expectedLineIds?.includes(a.lineId)))diffs.push("已有报价历史");
   return{kind:diffs.length?"conflict":"merge",reasons:diffs};
 }
@@ -2752,8 +2757,11 @@ function setImportPreview(rows,source){
   if(!rows.length){alert("只有表头，没有可导入的数据行。");return}
   // 中文：保留导入来源，所有输入先进入统一的完整预览。
   // English: Keep import origins and route all inputs through complete preview.
-  rows.forEach(row=>{
-    if(!row.lineId)row.lineId=nextLineId();
+  pendingImportBaseLineSeq=lineSeq;
+  rows.forEach((row,i)=>{
+    // 中文：供预览合并判断使用的候选 ID 不会改变正式序列。
+    // English: Prospective IDs are stable in preview but never reserved in persisted state.
+    row.lineId=lineIdAt(pendingImportBaseLineSeq+i+1);
     if(row._rowNo)row.sources=[{source:source+" · 第"+row._rowNo+"行",qty:row.qty}];
   });
   pendingImportRows=rows;itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;
@@ -2762,11 +2770,17 @@ function setImportPreview(rows,source){
 /** 确认后应用合并/新增，保留来源行，冲突由采购员确认。
  * Apply merges/additions after confirmation and keep source rows traceable. */
 function addRowsToRfq(rows){
-  rows.forEach(row=>{if(!row.lineId)row.lineId=nextLineId()});
+  if(!rows.length||rows!==pendingImportRows){alert("导入预览已失效，请重新检查数据");return}
   if(rows.some(r=>r._errors?.length)){alert("有错误数据，不允许写入");return}
+  // 中文：预览后如正式序列已变化，拒绝沿用旧候选身份。
+  // English: A stale preview must not commit IDs against a changed sequence.
+  if(pendingImportBaseLineSeq!==lineSeq){alert("物料数据已变化，请重新生成导入预览");return}
   const actions=planItemImport(rows);
   const conflicts=actions.filter(x=>x.kind==="conflict");
   if(conflicts.length&&!confirm("有 "+conflicts.length+" 条相同编码存在属性或业务冲突，不能自动合并。是否明确保留为独立 RFQ 询价行？取消则本批次不导入。"))return;
+  // 中文：仅经过全部校验且采购员已确认后正式分配 RFQ 行身份。
+  // English: Consume RFQ IDs only after validation and explicit buyer approval.
+  rows.forEach(row=>{row.lineId=nextLineId()});
   let added=0,merged=0,separated=0;
   // 先按预览决策写入；整个流程由单次确认提交。 / Apply the previewed decisions after one explicit confirmation.
   actions.forEach(a=>{
@@ -2781,7 +2795,7 @@ function addRowsToRfq(rows){
       added++;if(a.kind==="conflict")separated++;
     }
   });
-  pendingImportRows=[];itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;importPreview.style.display="none";
+  pendingImportRows=[];pendingImportBaseLineSeq=null;itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;importPreview.style.display="none";
   renderItemList();renderAssignAll();renderQuotes();
   // 中文：导入确认后收起录入区，笔记本首屏优先展示已导入的物料行。
   // English: Collapse intake after a successful import so buyers can immediately review the table.
@@ -2795,7 +2809,7 @@ manualAdd.onclick=()=>{
   if(!code||qty.error||!unit){
     alert([!code?"存货编码不能为空":"",qty.error||"",!unit?"询价单位不能为空":""].filter(Boolean).join("；"));return;
   }
-  const row={id:code,lineId:nextLineId(),name,cat:"",spec:manualSpec.value.trim(),
+  const row={id:code,lineId:"",name,cat:"",spec:manualSpec.value.trim(),
     ref1:manualRef1.value.trim(),ref2:manualRef2.value.trim(),purchaseUnit:manualPurchaseUnit.value.trim(),
     qty:qty.value,unit,drawingNo:manualDrawingNo.value.trim(),
     sources:[{source:"单条录入",qty:qty.value}],_errors:[]};
@@ -2804,7 +2818,7 @@ manualAdd.onclick=()=>{
 };
 parsePaste.onclick=()=>{const rows=parseItemRows(pasteItems.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到物料。");return}setImportPreview(rows,"剪贴板批量粘贴预览")};
 clearPasteInput.onclick=()=>{pasteItems.value=""};
-clearPastePreview.onclick=()=>{pendingImportRows=[];itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;importPreview.innerHTML="";importPreview.style.display="none"};
+clearPastePreview.onclick=()=>{pendingImportRows=[];pendingImportBaseLineSeq=null;itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;importPreview.innerHTML="";importPreview.style.display="none"};
 readClipboard.onclick=async()=>{try{pasteItems.value=await navigator.clipboard.readText();parsePaste.click()}catch(e){alert("当前浏览器未允许直接读取剪贴板，请在文本框中按 Ctrl+V 粘贴。")}};
 demoExcelImport.onclick=()=>setImportPreview([
   {id:"XLS-DEMO-001",name:"导入示例物料 A",cat:"类别A",qty:3,unit:"件"},
