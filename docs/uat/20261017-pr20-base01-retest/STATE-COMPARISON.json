@@ -1,0 +1,45 @@
+{
+  "candidate_sha": "244dc7c9088cee2e1f0e9488156c249dfbb59ac3",
+  "semantic_checks": {
+    "new-demo export preserves revisions/snapshot/data": true,
+    "P2-first export preserves revisions/snapshot/data": true,
+    "P1-first export preserves revisions/snapshot/data": true,
+    "P1-switched export preserves revisions/snapshot/data": true,
+    "P1-F5 export preserves revisions/snapshot/data": true,
+    "P2-F5 export preserves revisions/snapshot/data": true,
+    "P1-restarted export preserves revisions/snapshot/data": true,
+    "P2-restarted export preserves revisions/snapshot/data": true,
+    "P1-return-restarted export preserves revisions/snapshot/data": true,
+    "after-full-restart semantic equality": true,
+    "restored-full semantic equality": true,
+    "restore-overwrite-refused semantic equality": true,
+    "main-final semantic equality": true,
+    "all raw snapshot sha256 values recomputed": true,
+    "backup SQLite read-only integrity_check and two workspaces": true
+  },
+  "raw_log_counts": {
+    "console": 4,
+    "command": 7,
+    "step-source": 8,
+    "check": 43,
+    "dialog": 22,
+    "pageerror": 1,
+    "screenshot": 21,
+    "observation": 14,
+    "result": 6,
+    "download": 14,
+    "saved-download": 5,
+    "driver-error": 1
+  },
+  "raw_check_pass": 41,
+  "raw_check_false": 2,
+  "raw_false_explanation": "Two JSON.stringify order-sensitive S4 comparisons; equal fields/revisions/raw snapshot hashes/PDF hashes verified separately. Originals retained.",
+  "independent_candidate_cases": {
+    "PASS": 22,
+    "FAIL_P3": 1,
+    "NOT_TESTED": 3
+  },
+  "actual_csv_files": 9,
+  "formal_csv_files": 8,
+  "original_BASE01_control_reproduced_this_round": true
+}

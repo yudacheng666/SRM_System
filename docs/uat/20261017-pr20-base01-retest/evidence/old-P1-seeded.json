@@ -1,0 +1,176 @@
+{
+  "workspaces": {
+    "RFQ-1792171864202-QKYO0W": {
+      "revision": 2,
+      "lineSeq": 3,
+      "createdSeq": 3,
+      "item_count": 3,
+      "assignments": [
+        {
+          "key": "RFQ-L00001",
+          "values": [
+            "RET-A",
+            "RET-B"
+          ]
+        },
+        {
+          "key": "RFQ-L00002",
+          "values": [
+            "RET-A",
+            "RET-B"
+          ]
+        },
+        {
+          "key": "RFQ-L00003",
+          "values": [
+            "RET-A",
+            "RET-B"
+          ]
+        }
+      ],
+      "sha256": "2c105286482761a86ad7607f4295e806a369c6820e54f44a368f146cf0a7ad30",
+      "state": {
+        "items": [
+          {
+            "id": "+RET-AXLE",
+            "lineId": "RFQ-L00001",
+            "name": "=1+1,虚构\"轴\"\n第二行",
+            "cat": "测试",
+            "spec": "M16",
+            "ref1": "PRIVATE-REF16",
+            "ref2": "PRIVATE-16",
+            "purchaseUnit": "盒",
+            "erpExtra": {
+              "虚构ERP扩展": "RAW-SECRET-2"
+            },
+            "qty": 10,
+            "unit": "件",
+            "drawingNo": "D16",
+            "_rowNo": 2,
+            "sources": [
+              {
+                "source": "P1-materials.xlsx · 工作表：询价物料 · 真实 XLSX · 第2行",
+                "qty": 10
+              }
+            ],
+            "_errors": [],
+            "custom": {},
+            "_createdOrder": 1
+          },
+          {
+            "id": "+RET-AXLE",
+            "lineId": "RFQ-L00002",
+            "name": "=1+1,虚构\"轴\"\n第二行",
+            "cat": "测试",
+            "spec": "M20",
+            "ref1": "PRIVATE-REF20",
+            "ref2": "PRIVATE-20",
+            "purchaseUnit": "盒",
+            "erpExtra": {
+              "虚构ERP扩展": "RAW-SECRET-3"
+            },
+            "qty": 20,
+            "unit": "件",
+            "drawingNo": "D20",
+            "_rowNo": 3,
+            "sources": [
+              {
+                "source": "P1-materials.xlsx · 工作表：询价物料 · 真实 XLSX · 第3行",
+                "qty": 20
+              }
+            ],
+            "_errors": [],
+            "custom": {},
+            "_createdOrder": 2
+          },
+          {
+            "id": "RET-BRACKET",
+            "lineId": "RFQ-L00003",
+            "name": "虚构不供货支架",
+            "cat": "测试",
+            "spec": "M24",
+            "ref1": "PRIVATE-REF24",
+            "ref2": "PRIVATE-24",
+            "purchaseUnit": "箱",
+            "erpExtra": {
+              "虚构ERP扩展": "RAW-SECRET-4"
+            },
+            "qty": 5,
+            "unit": "件",
+            "drawingNo": "D24",
+            "_rowNo": 4,
+            "sources": [
+              {
+                "source": "P1-materials.xlsx · 工作表：询价物料 · 真实 XLSX · 第4行",
+                "qty": 5
+              }
+            ],
+            "_errors": [],
+            "custom": {},
+            "_createdOrder": 3
+          }
+        ],
+        "suppliers": [
+          {
+            "id": "RET-A",
+            "counterpartyCode": "RET-CP-A",
+            "supplierCode": "RET-A",
+            "name": "@虚构复验甲",
+            "roles": [
+              "supplier"
+            ],
+            "reason": "本次 Excel 导入"
+          },
+          {
+            "id": "RET-B",
+            "counterpartyCode": "RET-CP-B",
+            "supplierCode": "RET-B",
+            "name": "虚构复验乙",
+            "roles": [
+              "supplier"
+            ],
+            "reason": "本次 Excel 导入"
+          }
+        ],
+        "assignments": [
+          {
+            "key": "RFQ-L00001",
+            "values": [
+              "RET-A",
+              "RET-B"
+            ]
+          },
+          {
+            "key": "RFQ-L00002",
+            "values": [
+              "RET-A",
+              "RET-B"
+            ]
+          },
+          {
+            "key": "RFQ-L00003",
+            "values": [
+              "RET-A",
+              "RET-B"
+            ]
+          }
+        ],
+        "quoteRounds": [],
+        "awards": [],
+        "awardReasons": [],
+        "manualAwards": [],
+        "awardReviewIds": [],
+        "supplierPool": [
+          "RET-A",
+          "RET-B"
+        ],
+        "selectedCompareSuppliers": [],
+        "customFields": [],
+        "lineSeq": 3,
+        "createdSeq": 3,
+        "quoteComparisonMode": "returned"
+      }
+    }
+  },
+  "pdf": {}
+}

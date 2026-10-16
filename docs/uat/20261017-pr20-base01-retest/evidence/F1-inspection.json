@@ -1,0 +1,75 @@
+{
+  "PASS": true,
+  "rows": [
+    [
+      "RFQ Line ID",
+      "存货编码",
+      "存货名称",
+      "规格型号",
+      "所属类别",
+      "参考编码1",
+      "参考编码2",
+      "采购常用单位",
+      "询价数量",
+      "询价单位",
+      "来源 RFQ Line ID",
+      "虚构ERP扩展"
+    ],
+    [
+      "RFQ-L00001",
+      "F1-DUMMY",
+      "虚构占位",
+      null,
+      null,
+      null,
+      null,
+      null,
+      1,
+      "件",
+      null,
+      null
+    ],
+    [
+      "RFQ-L00002",
+      "+RET-AXLE",
+      "=1+1,虚构\"轴\"\n第二行",
+      "M16",
+      "测试",
+      "PRIVATE-REF16",
+      "PRIVATE-16",
+      "盒",
+      10,
+      "件",
+      "RFQ-L00001",
+      "RAW-SECRET-2"
+    ],
+    [
+      "RFQ-L00003",
+      "+RET-AXLE",
+      "=1+1,虚构\"轴\"\n第二行",
+      "M20",
+      "测试",
+      "PRIVATE-REF20",
+      "PRIVATE-20",
+      "盒",
+      20,
+      "件",
+      "RFQ-L00002",
+      "RAW-SECRET-3"
+    ],
+    [
+      "RFQ-L00004",
+      "RET-BRACKET",
+      "虚构不供货支架",
+      "M24",
+      "测试",
+      "PRIVATE-REF24",
+      "PRIVATE-24",
+      "箱",
+      5,
+      "件",
+      "RFQ-L00003",
+      "RAW-SECRET-4"
+    ]
+  ]
+}
