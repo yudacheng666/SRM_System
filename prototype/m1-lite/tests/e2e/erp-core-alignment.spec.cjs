@@ -398,3 +398,210 @@ test('ERP09: second-round scope shows specification and preserves selected line 
   await expect(page.locator('#quoteTable')).toContainText('¥9.00');
   await expect(page.locator('#quoteTable')).toContainText('¥10.00');
 });
+
+
+// 中文：系统设置应为全部支持的正式导入提供标准模板，不应包含真实或演示业务数据。
+// English: Download all supported canonical templates in settings; verify real ZIP headers and a filled import.
+test('ERP10: settings provide three correct XLSX import templates and one header-aware CSV template',async({page,app},info)=>{
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="settings"]').click();
+  await expect(page.locator('#importTemplatesCard')).toBeVisible();
+  const defined={
+    items:['存货编码','存货名称','规格型号','所属类别','参考编码1','参考编码2','采购常用单位','询价数量','询价单位','图号'],
+    suppliers:['往来单位编码','供应商编码','往来单位名称'],
+    quotes:['RFQ Line ID','存货编码','报价单价','交期','MOQ','报价状态','物料备注']
+  };
+  const downloaded={};
+  const getZipHeaders=(file)=>JSON.parse(execFileSync('python',['-c',
+    'import json,sys,zipfile,xml.etree.ElementTree as E\n'+
+    'z=zipfile.ZipFile(sys.argv[1]);n={"m":"http://schemas.openxmlformats.org/spreadsheetml/2006/main"}\n'+
+    'doc=E.fromstring(z.read("xl/workbook.xml"));sheets=doc.findall(".//m:sheet",n)\n'+
+    'doc=E.fromstring(z.read("xl/worksheets/sheet1.xml"));rows=doc.findall(".//m:row",n)\n'+
+    'headers=["".join(cell.itertext()) for cell in rows[0].findall("m:c",n)]\n'+
+    'print(json.dumps({"sheets":len(sheets),"rows":len(rows),"headers":headers},ensure_ascii=False))',
+    file],{encoding:'utf8'}));
+  for(const [kind,expected] of Object.entries(defined)){
+    const downloadPromise=page.waitForEvent('download');
+    await page.locator('[data-template-download="'+kind+'"]').click();
+    const download=await downloadPromise;
+    expect(download.suggestedFilename()).toMatch(/\.xlsx$/);
+    const file=await download.path();
+    downloaded[kind]=fs.readFileSync(file);
+    const output=getZipHeaders(file);
+    expect(output.sheets).toBe(1);
+    expect(output.rows).toBe(1);
+    expect(output.headers).toEqual(expected);
+    expect(new Set(output.headers).size).toBe(output.headers.length);
+  }
+  const downloadPromise=page.waitForEvent('download');
+  await page.locator('[data-template-download="matched"]').click();
+  const csvDownload=await downloadPromise;
+  expect(csvDownload.suggestedFilename()).toMatch(/\.csv$/);
+  const csv=fs.readFileSync(await csvDownload.path(),'utf8');
+  expect(csv).toBe('\uFEFF匹配值,新值\r\n');
+
+  // 中文：在真正下载的物料模板表头后增加合法业务行，再通过真实 UI 导入。
+  // English: Fill the exact downloaded template heading, then confirm a real buyer import.
+  const itemHeaders=defined.items;
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="items"]').click();
+  await createBuyer(page);
+  const materialBuffer=await page.evaluate(async headers=>{
+    const row=['TPL-001','虚构模板测试件','M16','测试分类','','','件',2,'件',''];
+    const blob=SRMExcel.create([{name:'询价物料',rows:[headers,row]}]);
+    return Array.from(new Uint8Array(await blob.arrayBuffer()));
+  },itemHeaders);
+  await page.locator('#importFile').setInputFiles({name:'template-filled.xlsx',
+    mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    buffer:Buffer.from(materialBuffer)});
+  await expect(page.locator('#confirmImportRows')).toBeEnabled();
+  await page.locator('#confirmImportRows').click();
+  const afterImport=await snap(page);
+  expect(afterImport.state.items).toHaveLength(1);
+  expect(afterImport.state.items[0].id).toBe('TPL-001');
+  expect(afterImport.state.items[0].spec).toBe('M16');
+
+  // 中文：匹配更新模板第一行须被识别为表头，而非业务变更或未匹配行。
+  // English: Accept canonical CSV headers while retaining the legacy two-column update mapping.
+  await page.locator('#toggleFieldTools').click();
+  await page.locator('#matchKeyField').selectOption('id');
+  await page.locator('#matchUpdateField').selectOption('spec');
+  await page.locator('#matchUpdateFile').setInputFiles({name:'filled-matched.csv',
+    mimeType:'text/csv',buffer:Buffer.from(csv+'TPL-001,M20\r\n','utf8')});
+  await expect(page.locator('#matchedUpdatePreview')).toContainText('可更新 1 行');
+  await expect(page.locator('#matchedUpdatePreview')).toContainText('未匹配 0 行');
+  await page.locator('#confirmMatchedUpdate').click();
+  expect((await snap(page)).state.items[0].spec).toBe('M20');
+
+  // 中文：使用已核对的供应商模板表头，经实际 XLSX 导入与确认。
+  // English: Populate the downloaded supplier format and commit through the real import UI.
+  await open(page,'#uiSupplierTools');
+  const supplierBuffer=await page.evaluate(async headers=>{
+    const blob=SRMExcel.create([{name:'供应商',rows:[headers,['CP-TPL','SUP-TPL','虚构模板供应商']]}]);
+    return Array.from(new Uint8Array(await blob.arrayBuffer()));
+  },defined.suppliers);
+  await page.locator('#pilotSupplierExcel').setInputFiles({name:'supplier-template-filled.xlsx',
+    mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    buffer:Buffer.from(supplierBuffer)});
+  await expect(page.locator('#pilotImportSupplierConfirm')).toBeEnabled();
+  await page.locator('#pilotImportSupplierConfirm').click();
+  await expect.poll(async()=> (await snap(page)).state.suppliers.some(x=>x.id==='SUP-TPL')).toBe(true);
+
+  // 中文：报价模板的行身份必须是当前真实 RFQ ID；不能使用来源 RFQ 身份。
+  // English: The quote template must resolve the current line identity rather than any source ID.
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="assign"]').click();
+  await page.locator('#selectAssignAll').click();
+  await page.locator('[data-add="SUP-TPL"]').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quoteImport"]').click();
+  await page.locator('#quoteImportSupplier').selectOption('SUP-TPL');
+  const quoteBuffer=await page.evaluate(async({headers,lineId})=>{
+    const row=[lineId,'TPL-001',12.5,4,1,'正常报价','虚构报价'];
+    const blob=SRMExcel.create([{name:'供应商报价',rows:[headers,row]}]);
+    return Array.from(new Uint8Array(await blob.arrayBuffer()));
+  },{headers:defined.quotes,lineId:afterImport.state.items[0].lineId});
+  await page.locator('#quoteImportFile').setInputFiles({name:'quote-template-filled.xlsx',
+    mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    buffer:Buffer.from(quoteBuffer)});
+  await expect(page.locator('#commitQuoteImport')).toBeEnabled();
+  await page.locator('#commitQuoteImport').click();
+  await expect(page.locator('#qcQuoted')).toHaveText('1');
+  expect((await snap(page)).state.quoteRounds.some(q=>q.supplierId==='SUP-TPL'&&
+    q.lines.some(l=>l.lineId===afterImport.state.items[0].lineId&&l.price===12.5))).toBe(true);
+
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="settings"]').click();
+  await expect(page.locator('#importTemplatesCard')).toBeVisible();
+  const shot=info.outputPath('settings-import-templates.png');
+  await page.screenshot({path:shot,fullPage:true});
+  await info.attach('settings-import-templates',{path:shot,contentType:'image/png'});
+});
+
+
+// 中文：非法预览、取消预览、手动预览均不得提前消耗行号或触发 SQLite 自动保存。
+// English: Invalid/canceled previews must not reserve real IDs or bump persisted revisions.
+test('ERP11: rejected and canceled material previews do not alter line sequence or saved workspace',async({page,app})=>{
+  await createBuyer(page);
+  const savedWorkspace=async()=>{
+    const ws=await snap(page);
+    const response=await page.request.get(URL+'/api/workspaces/'+ws.workspaceId);
+    if(!response.ok())return null;
+    return(await response.json()).workspace;
+  };
+  await expect.poll(async()=>{
+    const saved=await savedWorkspace(),ws=await snap(page);
+    return saved&&saved.revision>0&&JSON.stringify(saved.state)===JSON.stringify(ws.state);
+  },{timeout:30000}).toBe(true);
+  const before=await savedWorkspace();
+  expect(before.state.items).toHaveLength(0);
+  const startSeq=before.state.lineSeq;
+  const startCreated=before.state.createdSeq;
+
+  // 中文：一行缺少必填询价单位，只出现错误预览，绝不允许确认。
+  // English: A row with missing RFQ unit must only preview an error and disable commit.
+  const invalid=await page.evaluate(async()=>{
+    const blob=SRMExcel.create([{name:'询价物料',rows:[
+      ['存货编码','存货名称','询价数量','询价单位'],
+      ['INVALID-001','虚构缺单位',2,'']
+    ]}]);return Array.from(new Uint8Array(await blob.arrayBuffer()));
+  });
+  await page.locator('#importFile').setInputFiles({name:'invalid-no-unit.xlsx',
+    mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    buffer:Buffer.from(invalid)});
+  await expect(page.locator('#importPreview')).toContainText('询价单位不能为空');
+  await expect(page.locator('#confirmImportRows')).toBeDisabled();
+  expect((await snap(page)).state.lineSeq).toBe(startSeq);
+  expect((await snap(page)).state.assignments).toEqual([]);
+  // 中文：超过实际自动保存空闲窗口，比较数据库版本与完整保存内容。
+  // English: Wait beyond autosave debounce and compare the actual SQLite snapshot.
+  await page.waitForTimeout(4800);
+  let stored=await savedWorkspace();
+  expect(stored.revision).toBe(before.revision);
+  expect(stored.state).toEqual(before.state);
+  await page.locator('#clearPastePreview').click();
+
+  // 中文：即使输入完全有效，只预览再取消也不能产生新版本。
+  // English: Preview and cancel of a valid item must leave persisted identity untouched.
+  await page.locator('#pasteItems').fill(
+    '存货编码,存货名称,规格型号,询价数量,询价单位\n'+
+    'TEST-PREVIEW,虚构预览,M16,2,件'
+  );
+  await page.locator('#parsePaste').click();
+  await expect(page.locator('#confirmImportRows')).toBeEnabled();
+  expect((await snap(page)).state.lineSeq).toBe(startSeq);
+  await page.locator('#clearPastePreview').click();
+  await page.waitForTimeout(4200);
+  stored=await savedWorkspace();
+  expect(stored.revision).toBe(before.revision);
+  expect(stored.state).toEqual(before.state);
+
+  // 中文：单条手工输入也只能预览、不能预占正式序列。
+  // English: Manual item preview must also remain transaction-free until commit.
+  await page.locator('#manualCode').fill('TEST-MANUAL');
+  await page.locator('#manualName').fill('虚构手动预览');
+  await page.locator('#manualQty').fill('1');
+  await page.locator('#manualUnit').fill('件');
+  await page.locator('#manualAdd').click();
+  await expect(page.locator('#confirmImportRows')).toBeEnabled();
+  expect((await snap(page)).state.lineSeq).toBe(startSeq);
+  await page.locator('#clearPastePreview').click();
+  expect((await snap(page)).state.lineSeq).toBe(startSeq);
+
+  // 中文：正式确认后的两条同规格行仍按既有逻辑合并，并恰好分配有效主身份。
+  // English: Only a confirmed two-row input consumes two IDs and merges compatible quantities.
+  await page.locator('#pasteItems').fill(
+    '存货编码,存货名称,规格型号,询价数量,询价单位\n'+
+    'TEST-COMMIT,虚构测试件,M16,2,件\n'+
+    'TEST-COMMIT,虚构测试件,M16,3,件'
+  );
+  await page.locator('#parsePaste').click();
+  await expect(page.locator('#importPreview')).toContainText('自动合并 1 行');
+  await expect(page.locator('#confirmImportRows')).toBeEnabled();
+  await page.locator('#confirmImportRows').click();
+  const committed=await snap(page);
+  expect(committed.state.items).toHaveLength(1);
+  expect(committed.state.items[0].qty).toBe(5);
+  expect(committed.state.items[0].lineId).toBe('RFQ-L'+String(startSeq+1).padStart(5,'0'));
+  expect(committed.state.lineSeq).toBe(startSeq+2);
+  expect(committed.state.createdSeq).toBe(startCreated+1);
+  await expect.poll(async()=>{
+    const saved=await savedWorkspace();
+    return saved?.state.items.length===1&&saved?.state.lineSeq===startSeq+2;
+  },{timeout:30000}).toBe(true);
+});
