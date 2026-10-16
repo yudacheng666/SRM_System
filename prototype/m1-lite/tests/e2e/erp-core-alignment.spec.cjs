@@ -571,6 +571,18 @@ test('ERP11: rejected and canceled material previews do not alter line sequence 
   expect(stored.revision).toBe(before.revision);
   expect(stored.state).toEqual(before.state);
 
+  // 中文：单条手工输入也只能预览、不能预占正式序列。
+  // English: Manual item preview must also remain transaction-free until commit.
+  await page.locator('#manualCode').fill('TEST-MANUAL');
+  await page.locator('#manualName').fill('虚构手动预览');
+  await page.locator('#manualQty').fill('1');
+  await page.locator('#manualUnit').fill('件');
+  await page.locator('#manualAdd').click();
+  await expect(page.locator('#confirmImportRows')).toBeEnabled();
+  expect((await snap(page)).state.lineSeq).toBe(startSeq);
+  await page.locator('#clearPastePreview').click();
+  expect((await snap(page)).state.lineSeq).toBe(startSeq);
+
   // 中文：正式确认后的两条同规格行仍按既有逻辑合并，并恰好分配有效主身份。
   // English: Only a confirmed two-row input consumes two IDs and merges compatible quantities.
   await page.locator('#pasteItems').fill(
