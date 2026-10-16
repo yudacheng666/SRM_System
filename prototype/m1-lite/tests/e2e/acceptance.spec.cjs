@@ -540,7 +540,7 @@ test('15 new RFQ clears stale supplier-first context without corrupting saved RF
   await tab(page,'assign');
   await page.locator('[data-mode="supplierFirst"]').click();
   await page.locator('[data-sf-s="SUP-B"]').click();
-  await expect(page.locator('#supplierFirstTitle')).toContainText('SUP-B');
+  await expect(page.locator('#supplierFirstTitle')).toContainText('虚构供应商B');
   await fresh(page);
   const second=await snapshot(page);
   expect(second.workspaceId).not.toBe(originalId);
@@ -558,7 +558,7 @@ test('15 new RFQ clears stale supplier-first context without corrupting saved RF
   await page.locator('[data-mode="supplierFirst"]').click();
   await expect(page.locator('#supplierFirstTitle')).toHaveText('选择左侧供应商');
   await page.locator('[data-sf-s="SUP-A"]').click();
-  await expect(page.locator('#supplierFirstTitle')).toContainText('SUP-A');
+  await expect(page.locator('#supplierFirstTitle')).toContainText('虚构供应商A');
   await saved(page);
   // 通过真实项目列表切回老项目后也应清空活动选择。
   // The supplier title must reset again when switching back to the previous saved RFQ.
