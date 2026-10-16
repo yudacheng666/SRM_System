@@ -1,0 +1,935 @@
+Playwright
+0
+50.0s
+1.7m
+2.5m
+3.3m
+4.2m
+5.0m
+5.8m
+6.7m
+7.5m
+8.3m
+9.2m
+10.0m
+10.8m
+11.7m
+12.5m
+13.3m
+14.2m
+Action
+Before
+After
+http://127.0.0.1:8902/
+Actions
+Metadata
+58 hidden
+Navigate to "/"
+2.2s
+1
+Click
+491ms
+getByRole('button', { name: '新建空白正式工作', exact: true })
+Evaluate
+106ms
+locator('#uiProjectDetails')
+Click
+247ms
+locator('#uiProjectDetails summary')
+Click
+293ms
+getByRole('button', { name: '保存到本机', exact: true })
+Wait for function
+28ms
+Wait for timeout
+1.0s
+Evaluate
+18ms
+locator('#itemIntake')
+Click
+15.8s
+locator('#itemIntake summary')
+Click
+93ms
+getByRole('button', { name: '+ 添加询价物料', exact: true })
+Set input files
+80ms
+locator('#importFile')
+Wait for timeout
+6.5s
+Screenshot
+303ms
+Reload
+315ms
+Wait for timeout
+1.6s
+Screenshot
+130ms
+Create page
+172ms
+Navigate to "/"
+683ms
+1
+Click
+556ms
+getByRole('button', { name: '新建空白正式工作', exact: true })
+Evaluate
+59ms
+locator('#uiProjectDetails')
+Click
+59ms
+locator('#uiProjectDetails summary')
+Click
+96ms
+getByRole('button', { name: '保存到本机', exact: true })
+Wait for function
+42ms
+Click
+81ms
+getByRole('button', { name: '+ 添加询价物料', exact: true })
+Set input files
+44ms
+locator('#importFile')
+Wait for timeout
+6.5s
+Screenshot
+203ms
+Click
+63ms
+getByRole('button', { name: '清空预览', exact: true })
+Wait for timeout
+4.2s
+Reload
+565ms
+Wait for timeout
+1.3s
+Click
+146ms
+locator('[data-srm-v2-tab="settings"]')
+Wait for event "download"
+408ms
+Click
+421ms
+getByRole('button', { name: '下载询价物料模板 .xlsx', exact: true })
+Wait for event "download"
+120ms
+Click
+140ms
+getByRole('button', { name: '下载供应商模板 .xlsx', exact: true })
+Wait for event "download"
+119ms
+Click
+142ms
+getByRole('button', { name: '下载供应商报价模板 .xlsx', exact: true })
+Wait for event "download"
+68ms
+Click
+81ms
+getByRole('button', { name: '下载匹配更新模板 .csv', exact: true })
+Screenshot
+197ms
+Click
+87ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+85ms
+getByRole('button', { name: '+ 添加询价物料', exact: true })
+Set input files
+36ms
+locator('#importFile')
+Wait for timeout
+4.4s
+Click
+78ms
+locator('#clearPastePreview')
+Wait for timeout
+4.2s
+Set input files
+39ms
+locator('#importFile')
+Wait for timeout
+4.4s
+Click
+103ms
+locator('#clearPastePreview')
+Wait for timeout
+4.2s
+Fill "存货编码	存货名称	规格型号	询价数量	询价单位\nPASTE-PREVIEW	虚构粘贴预览	M12	3	件"
+194ms
+locator('#pasteItems')
+Click
+114ms
+locator('#parsePaste')
+Wait for timeout
+4.4s
+Click
+176ms
+locator('#clearPastePreview')
+Fill "MANUAL-PREVIEW"
+161ms
+locator('#manualCode')
+Fill "虚构手动预览"
+780ms
+locator('#manualName')
+Fill "M14"
+64ms
+locator('#manualSpec')
+Fill "4"
+115ms
+locator('#manualQty')
+Fill "件"
+128ms
+locator('#manualUnit')
+Click
+204ms
+locator('#manualAdd')
+Wait for timeout
+4.5s
+Screenshot
+179ms
+Click
+205ms
+locator('#clearPastePreview')
+Wait for timeout
+4.2s
+Set input files
+49ms
+locator('#importFile')
+Click
+348ms
+locator('#itemImportPager').getByRole('button', { name: '下一页', exact: true })
+Click
+112ms
+locator('#toggleImportProblems')
+Screenshot
+280ms
+Click
+95ms
+locator('#toggleImportProblems')
+Fill "PREVIEW-08"
+59ms
+locator('#itemSearch')
+Click
+253ms
+locator('#runItemSearch')
+Click
+125ms
+locator('#clearItemSearch')
+Wait for timeout
+4.4s
+Click
+78ms
+locator('#clearPastePreview')
+Set input files
+154ms
+locator('#importFile')
+Click
+316ms
+locator('#itemImportPager').getByRole('button', { name: '下一页', exact: true })
+Click
+95ms
+locator('#toggleImportProblems')
+Screenshot
+149ms
+Click
+114ms
+locator('#toggleImportProblems')
+Fill "PREVIEW-08"
+95ms
+locator('#itemSearch')
+Click
+172ms
+locator('#runItemSearch')
+Click
+89ms
+locator('#clearItemSearch')
+Wait for timeout
+4.4s
+Click
+93ms
+locator('#clearPastePreview')
+Wait for timeout
+4.2s
+Close page
+30ms
+Create page
+170ms
+Navigate to "/"
+765ms
+Wait for timeout
+1.1s
+Screenshot
+157ms
+Click
+94ms
+getByRole('button', { name: '+ 添加询价物料', exact: true })
+Set input files
+43ms
+locator('#importFile')
+Wait for timeout
+4.2s
+Screenshot
+156ms
+Click
+146ms
+locator('#confirmImportRows')
+Accept dialog
+17ms
+Wait for timeout
+4.5s
+Set input files
+49ms
+locator('#importFile')
+Click
+15.0s
+locator('#confirmImportRows')
+Click
+329ms
+locator('#toggleItemIntake')
+Set input files
+64ms
+locator('#importFile')
+Click
+1.4s
+locator('#confirmImportRows')
+Dismiss dialog
+484ms
+Wait for timeout
+4.5s
+Screenshot
+171ms
+Click
+107ms
+locator('#confirmImportRows')
+Accept dialog
+5ms
+Accept dialog
+5ms
+Wait for timeout
+4.5s
+Screenshot
+227ms
+Click
+96ms
+locator('#toggleFieldTools')
+Select option
+52ms
+locator('#matchKeyField')
+Select option
+32ms
+locator('#matchUpdateField')
+Set input files
+82ms
+locator('#matchUpdateFile')
+Click
+96ms
+locator('#matchedUpdatePreview').getByRole('button', { name: '确认更新', exact: true })
+Accept dialog
+7ms
+Accept dialog
+7ms
+Wait for timeout
+4.2s
+Click
+113ms
+getByRole('button', { name: '图纸匹配与管理', exact: true })
+Evaluate
+67ms
+locator('#pilotDrawingLine option')
+Select option
+25ms
+locator('#pilotDrawingLine')
+Set input files
+52ms
+locator('#pilotDrawingFiles')
+Click
+975ms
+locator('#pilotDrawingUpload')
+Wait for function
+15.1s
+Scroll into view
+29ms
+locator('#pilotDrawingInfo')
+Screenshot
+124ms
+Evaluate
+17ms
+locator('#uiProjectDetails')
+Click
+64ms
+locator('#uiProjectDetails summary')
+Click
+112ms
+getByRole('button', { name: '保存到本机', exact: true })
+Wait for function
+29ms
+Evaluate
+20ms
+locator('#uiSupplierTools')
+Click
+52ms
+locator('#uiSupplierTools summary')
+Set input files
+36ms
+locator('#pilotSupplierExcel')
+Click
+96ms
+getByRole('button', { name: '确认导入供应商', exact: true })
+Click
+102ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Check
+139ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00001' }).getByRole('checkbox')
+Check
+119ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00003' }).getByRole('checkbox')
+Check
+64ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00004' }).getByRole('checkbox')
+Click
+91ms
+getByRole('button', { name: '给所选物料添加此供应商', exact: true }).first()
+Accept dialog
+14ms
+Uncheck
+100ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00001' }).getByRole('checkbox')
+Click
+106ms
+getByRole('button', { name: '给所选物料添加此供应商', exact: true }).nth(1)
+Accept dialog
+15ms
+Evaluate
+19ms
+locator('#uiProjectDetails')
+Click
+93ms
+getByRole('button', { name: '保存到本机', exact: true })
+Wait for function
+46ms
+Screenshot
+163ms
+Click
+140ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Evaluate
+29ms
+locator('#quoteImportSupplier option')
+Select option
+7.8s
+locator('#quoteImportSupplier')
+Select option
+250ms
+locator('#quoteEvidenceType')
+Fill "P301 独立验收虚构报价，无真实业务信息"
+372ms
+locator('#quoteEvidenceNote')
+Fill "虚构测试条款；单价人民币，数量以询价为准"
+133ms
+locator('#quoteTermsNote')
+Set input files
+336ms
+locator('#quoteImportFile')
+Scroll into view
+114ms
+locator('#quoteImportPreviewBody')
+Screenshot
+531ms
+Click
+178ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Accept dialog
+15ms
+Click
+223ms
+getByRole('button', { name: '确认本次提交', exact: true })
+Accept dialog
+12ms
+Evaluate
+47ms
+locator('#uiProjectDetails')
+Click
+237ms
+getByRole('button', { name: '保存到本机', exact: true })
+Wait for function
+47ms
+Scroll into view
+36ms
+locator('#quoteRoundBody')
+Screenshot
+294ms
+Select option
+48ms
+locator('#quoteImportSupplier')
+Select option
+49ms
+locator('#quoteEvidenceType')
+Fill "P301 独立验收虚构报价，无真实业务信息"
+82ms
+locator('#quoteEvidenceNote')
+Fill "虚构测试条款；单价人民币，数量以询价为准"
+72ms
+locator('#quoteTermsNote')
+Set input files
+102ms
+locator('#quoteImportFile')
+Scroll into view
+84ms
+locator('#quoteImportPreviewBody')
+Screenshot
+203ms
+Click
+199ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Accept dialog
+31ms
+Click
+195ms
+getByRole('button', { name: '确认本次提交', exact: true })
+Accept dialog
+19ms
+Evaluate
+87ms
+locator('#uiProjectDetails')
+Click
+160ms
+getByRole('button', { name: '保存到本机', exact: true })
+Wait for function
+17ms
+Scroll into view
+20ms
+locator('#quoteRoundBody')
+Screenshot
+106ms
+Click
+85ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Scroll into view
+16ms
+locator('#quoteTable')
+Evaluate
+16ms
+locator('#quoteTable tbody tr')
+Screenshot
+184ms
+Evaluate
+20ms
+locator('#uiDataTools')
+Click
+82ms
+locator('#uiDataTools summary')
+Wait for event "download"
+117ms
+Click
+123ms
+getByRole('button', { name: '导出业务数据 Excel（3 Sheet）', exact: true })
+Evaluate
+20ms
+locator('#uiProjectDetails')
+Click
+95ms
+getByRole('button', { name: '保存到本机', exact: true })
+Wait for function
+150ms
+Click
+98ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+66ms
+locator('#toggleItemIntake')
+Set input files
+47ms
+locator('#importFile')
+Wait for timeout
+6.5s
+Scroll into view
+28ms
+locator('#importPreview')
+Screenshot
+148ms
+Click
+61ms
+locator('#clearPastePreview')
+Wait for timeout
+4.2s
+Set input files
+50ms
+locator('#importFile')
+Wait for timeout
+4.5s
+Scroll into view
+25ms
+locator('#importPreview')
+Screenshot
+135ms
+Click
+109ms
+locator('#clearPastePreview')
+Wait for timeout
+4.2s
+Click
+154ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+58ms
+locator('#quoteImportSupplier')
+Select option
+44ms
+locator('#quoteEvidenceType')
+Fill "P301 独立验收虚构报价，无真实业务信息"
+42ms
+locator('#quoteEvidenceNote')
+Fill "虚构测试条款；单价人民币，数量以询价为准"
+61ms
+locator('#quoteTermsNote')
+Set input files
+48ms
+locator('#quoteImportFile')
+Scroll into view
+50ms
+locator('#quoteImportPreviewBody')
+Screenshot
+124ms
+Click
+120ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Click
+128ms
+getByRole('button', { name: '确认本次提交', exact: true })
+Evaluate
+32ms
+locator('#uiProjectDetails')
+Click
+104ms
+getByRole('button', { name: '保存到本机', exact: true })
+Wait for function
+30ms
+Scroll into view
+19ms
+locator('#quoteRoundBody')
+Screenshot
+178ms
+Select option
+41ms
+locator('#quoteImportSupplier')
+Click
+80ms
+locator('#newQuoteRevision')
+Select option
+25ms
+locator('#quoteEvidenceType')
+Fill "P301 独立验收虚构报价，无真实业务信息"
+68ms
+locator('#quoteEvidenceNote')
+Fill "虚构测试条款；单价人民币，数量以询价为准"
+38ms
+locator('#quoteTermsNote')
+Set input files
+42ms
+locator('#quoteImportFile')
+Scroll into view
+45ms
+locator('#quoteImportPreviewBody')
+Screenshot
+180ms
+Click
+177ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Click
+105ms
+getByRole('button', { name: '确认本次提交', exact: true })
+Evaluate
+54ms
+locator('#uiProjectDetails')
+Click
+167ms
+getByRole('button', { name: '保存到本机', exact: true })
+Wait for function
+43ms
+Scroll into view
+39ms
+locator('#quoteRoundBody')
+Screenshot
+219ms
+Click
+111ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Scroll into view
+66ms
+locator('#quoteTable')
+Evaluate
+23ms
+locator('#quoteTable tbody tr')
+Screenshot
+230ms
+Evaluate
+25ms
+locator('#uiDataTools')
+Wait for event "download"
+148ms
+Click
+97ms
+getByRole('button', { name: '导出业务数据 Excel（3 Sheet）', exact: true })
+Evaluate
+76ms
+locator('#uiProjectDetails')
+Click
+138ms
+getByRole('button', { name: '保存到本机', exact: true })
+Wait for function
+53ms
+Click
+85ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Set input files
+43ms
+locator('#importFile')
+Wait for timeout
+6.5s
+Scroll into view
+29ms
+locator('#importPreview')
+Screenshot
+184ms
+Click
+104ms
+locator('#clearPastePreview')
+Wait for timeout
+4.2s
+Set input files
+39ms
+locator('#importFile')
+Wait for timeout
+4.5s
+Scroll into view
+20ms
+locator('#importPreview')
+Screenshot
+129ms
+Click
+56ms
+locator('#clearPastePreview')
+Wait for timeout
+4.2s
+Reload
+372ms
+Wait for timeout
+1.6s
+Click
+123ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Scroll into view
+35ms
+locator('#quoteTable')
+Screenshot
+220ms
+Evaluate
+35ms
+locator('#quoteTable .quotePrice')
+Evaluate
+29ms
+locator('#uiDataTools')
+Click
+449ms
+locator('#uiDataTools summary')
+Wait for event "download"
+813ms
+Click
+708ms
+getByRole('button', { name: '下载 S4 完整备份（SQLite + PDF）', exact: true })
+Close page
+21ms
+Create page
+102ms
+Navigate to "/"
+763ms
+Wait for timeout
+1.1s
+Click
+141ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Scroll into view
+49ms
+locator('#quoteTable')
+Screenshot
+205ms
+Create page
+59ms
+Navigate to "/"
+662ms
+1
+Evaluate
+335ms
+locator('#uiDataTools')
+Click
+139ms
+locator('#uiDataTools summary')
+Set input files
+81ms
+locator('#pilotS4BackupFile')
+Click
+291ms
+getByRole('button', { name: '恢复完整备份（仅空白数据）', exact: true })
+Accept dialog
+4ms
+Wait for timeout
+2.0s
+Click
+138ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Scroll into view
+26ms
+locator('#quoteTable')
+Screenshot
+170ms
+Create page
+128ms
+Navigate to "/"
+531ms
+Click
+498ms
+1
+getByRole('button', { name: '新建空白正式工作', exact: true })
+Click
+57ms
+locator('#toggleItemIntake')
+Set input files
+39ms
+locator('#importFile')
+Click
+155ms
+locator('#confirmImportRows')
+Accept dialog
+8ms
+Accept dialog
+7ms
+Evaluate
+34ms
+locator('#uiProjectDetails')
+Click
+66ms
+locator('#uiProjectDetails summary')
+Click
+152ms
+getByRole('button', { name: '保存到本机', exact: true })
+Wait for function
+32ms
+Scroll into view
+18ms
+locator('#itemBody')
+Screenshot
+156ms
+Evaluate
+19ms
+locator('#uiDataTools')
+Click
+34ms
+locator('#uiDataTools summary')
+Wait for event "download"
+104ms
+Click
+106ms
+getByRole('button', { name: '导出业务数据 Excel（3 Sheet）', exact: true })
+Click
+68ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+52ms
+locator('#toggleItemIntake')
+Set input files
+47ms
+locator('#importFile')
+Scroll into view
+51ms
+locator('#importPreview')
+Wait for timeout
+6.5s
+Screenshot
+2.1s
+Click
+85ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+86ms
+locator('#toggleItemIntake')
+Set input files
+42ms
+locator('#importFile')
+Scroll into view
+52ms
+locator('#importPreview')
+Wait for timeout
+6.5s
+Screenshot
+1.4s
+Click
+54ms
+locator('#clearPastePreview')
+Click
+141ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+58ms
+locator('#quoteImportSupplier')
+Click
+111ms
+locator('#newQuoteRound')
+Click
+60ms
+getByRole('button', { name: '设置本轮议价范围', exact: true })
+Scroll into view
+37ms
+locator('#quoteScopeList')
+Screenshot
+2.2s
+Click
+59ms
+locator('#quoteScopeEditor').getByRole('button', { name: '关闭', exact: true })
+Click
+71ms
+getByRole('button', { name: /选择沿用上轮项目/ })
+Scroll into view
+25ms
+locator('#carryForwardPreview')
+Screenshot
+1.1s
+Click
+131ms
+locator('#carryForwardPreview').getByRole('button', { name: /取消/ })
+Wait for timeout
+4.2s
+Close page
+17ms
+Close page
+19ms
+Close page
+24ms
+Close page
+25ms
+Locator
+Call
+Log
+Errors
+1
+Console
+4
+Network
+115
+Source
+Attachments
+Wait for function
+TIME
+start:
+7.6m
+duration:
+15.1s
+PARAMETERS
+expression:
+"()=>document.getElementById('pilotDrawingInfo').textContent.includes('已关联')"
+isFunction:
+true
+arg:
+undefined
+timeout:
+15000

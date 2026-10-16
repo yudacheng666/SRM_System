@@ -1,0 +1,39 @@
+{
+  "PASS": true,
+  "old_A_R1V1_preserved": {
+    "supplierId": "P301-A",
+    "roundNo": 1,
+    "revisionNo": 1,
+    "status": "confirmed",
+    "lines": [
+      {
+        "lineId": "RFQ-L00004",
+        "itemId": "AXLE-SPLIT",
+        "price": null,
+        "tiers": [],
+        "lead": null,
+        "moq": null,
+        "status": "cannot",
+        "remark": "虚构M20不供货",
+        "source": "file",
+        "original": {
+          "price": "",
+          "lead": "",
+          "moq": "",
+          "status": "cannot"
+        },
+        "updatedAt": "2026-10-16T11:34:03.269Z"
+      }
+    ],
+    "expectedLineIds": [
+      "RFQ-L00001",
+      "RFQ-L00003",
+      "RFQ-L00004"
+    ],
+    "evidenceType": "manual_other",
+    "evidenceNote": "P301 独立验收虚构报价，无真实业务信息",
+    "termsNote": "虚构测试条款；单价人民币，数量以询价为准",
+    "createdAt": "2026-10-16T11:33:03.994Z",
+    "confirmedAt": "2026-10-16T11:34:03.497Z"
+  }
+}

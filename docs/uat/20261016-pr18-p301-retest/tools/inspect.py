@@ -1,0 +1,9 @@
+from pathlib import Path
+from openpyxl import load_workbook
+import json,zipfile,hashlib
+r=Path('/tmp/srm-p301-downloads');e=Path('/tmp/srm-p301-evidence')
+w=load_workbook(r/'F1-roundtrip-business.xlsx',data_only=True);s=w['询价物料'];rows=list(s.values);headers=rows[0];assert len(set(headers))==len(headers);assert headers[0]=='RFQ Line ID';assert headers[-1]=='来源 RFQ Line ID';assert [x[0] for x in rows[1:]]==['RFQ-L00001','RFQ-L00002','RFQ-L00003'];assert [x[-1] for x in rows[1:]]==['RFQ-L00001','RFQ-L00003','RFQ-L00004'];assert [x[5] for x in rows[1:]]==['ERP-BATCH-A','ERP-BATCH-B','ERP-BATCH-C'];assert [x[6] for x in rows[1:]]==[None,'P301-CHECK16','P301-CHECK20']
+(e/'F1-roundtrip-inspection.json').write_text(json.dumps({'PASS':True,'sheets':{s.title:list(s.values) for s in w}},ensure_ascii=False,indent=2,default=str))
+z=zipfile.ZipFile(r/'s4-full-backup.zip');z.testzip();out={'files':[{ 'path':i.filename,'size':i.file_size,'sha256':hashlib.sha256(z.read(i.filename)).hexdigest()}for i in z.infolist() if not i.is_dir()]};assert any(i['path'].endswith('.pdf') for i in out['files']);assert any(i['path'].endswith('.sqlite3') for i in out['files']);(e/'s4-backup-inspection.json').write_text(json.dumps(out,ensure_ascii=False,indent=2))
+old=json.loads((e/'new-17-rich-baseline.json').read_text());new=json.loads((e/'new-22-rich-baseline.json').read_text());a=list(old['workspaces'].values())[0]['state']['quoteRounds'][0];b=[q for q in list(new['workspaces'].values())[0]['state']['quoteRounds'] if q['supplierId']=='P301-A' and q['revisionNo']==1][0];assert a==b;(e/'quote-history-preservation.json').write_text(json.dumps({'PASS':True,'old_A_R1V1_preserved':a},ensure_ascii=False,indent=2))
+print('F1_HEADERS_SOURCE_IDS_ERP_VALUES_PASS; S4_ZIP_INTEGRITY_PASS; A_CONFIRMED_V1_HISTORY_PRESERVED_PASS')

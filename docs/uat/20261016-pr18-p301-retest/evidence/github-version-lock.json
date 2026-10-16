@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-16T11:37:22.781Z",
+  "pr": {
+    "url": "https://github.com/yudacheng666/SRM_System/pull/18",
+    "head": "8af8bd119e476bdb16a20bbe5fd629db3212cccc",
+    "base": "9406973f0e99bd33f9f4140c89b9df5d7c58d443",
+    "headBranch": "feat/20261016-settings-import-templates",
+    "baseBranch": "fix/20261016-pr15-uat-f1-f3",
+    "draft": true,
+    "merged": false
+  },
+  "latestTask": [
+    {
+      "url": "https://github.com/yudacheng666/SRM_System/pull/18#issuecomment-6213219286",
+      "created_at": "2026-10-16T10:12:50Z",
+      "updated_at": "2026-10-16T10:12:50Z",
+      "body": "## [Codex Cloud INDEPENDENT RETEST TASK] PR #18 P3-01 非法预览自动保存副作用 / Import preview must be transaction-free\n\n**本任务仅供 Codex Cloud 独立测试。ChatGPT 已提交修复；Codex 不修改产品代码、既有测试或 CI，不合并任何 PR。**\n\n### 版本与依据 / Lock versions\n- 原验收：[PR #18 独立报告（23 PASS / 1 FAIL / 2 NOT TESTED）](https://github.com/yudacheng666/SRM_System/pull/18#issuecomment-6212965726)；[完整双语报告及独立证据](https://github.com/yudacheng666/SRM_System/blob/85ccfe47764dabe9ab9d8bdc9d1a5a17b25c678f/docs/uat/20261016-pr18-template-uat/REPORT.md)。\n- **旧失败候选 SHA：`5424e57cf6648cef4382bd715f00993b1b5f4165`**。原证据显示缺必填单位的物料文件只预览却使保存 `revision 1→2`、`lineSeq 0→1`。\n- **修复候选 SHA：`8af8bd119e476bdb16a20bbe5fd629db3212cccc`**，`feat/20261016-settings-import-templates` → `fix/20261016-pr15-uat-f1-f3`（Draft PR #18）。复验前核实准确 HEAD；发生变化不得沿用旧 PASS。\n- ChatGPT 已将行号分配从「解析/预览」移至「用户确认提交」，改为只读的候选 RFQ 行号；预览合并判断不再向供应商关联映射注入空键；并增加 ERP11 自动回归。**不能只看代码或自动回归结果代替实际采购员操作。**\n- 候选准确 SHA 上 GitHub Actions 已成功：[UI V2 完整 Chromium](https://github.com/yudacheng666/SRM_System/actions/runs/38885078080)；[S3/S4 Linux + Windows 后端](https://github.com/yudacheng666/SRM_System/actions/runs/38885078099)。Windows 本机实操仍 NOT TESTED。\n\n### 必须完成的真实浏览器操作 / Required independent checks\n1. 使用隔离的 Codex Cloud/Linux SQLite 数据目录启动真实 M1-Lite HTTP 服务和 Chromium，全部只用虚构物料。先新建一笔空白正式 RFQ 并真实保存，记录**数据库持久化**状态，包括 `revision`、`lineSeq`、`createdSeq`、`items`、`assignments` 以及可核对的业务快照 SHA。\n2. **在旧 SHA 上重新复现**同样的非法文件（如「存货编码、存货名称、询价数量、询价单位」+ 一条空单位记录），真实 UI 上传 → 预览（错误、确认按钮禁用）→ 无任何点击确认 → 等待自动保存窗口约 5–7 秒 → F5/必要时进程重启；独立只读数据库核对是否出现原失败。若未重做旧版操作，只能明确引用以前证据，不能伪称新复现。\n3. **在新 SHA 上同输入重做**：错误预览必须显示清晰，确认禁用，等待 > 自动保存窗口后 **`revision`、`lineSeq`、`createdSeq`、`items`、`assignments` 与保存态 SHA 完全不变**。取消预览、刷新和真正重启仍保持原始空白 RFQ，不出现孤儿关联或新身份。\n4. **有效 CSV/粘贴及有效 XLSX 仅预览后取消**：不改变已保存状态、不提前分配行号。**单条手动输入仅预览后取消**亦不改变已保存状态。连续多次预览、修改筛选条件、翻页和「仅看错误」不会改变数据库。\n5. **正式确认仍正常**：用两条同码同规格虚构物料 2+3 件，预览显示自动合并1行；只有最终确认后 `items` 新增1行、数量5、来源2条、`lineSeq` 按正式导入规则递增。再输入两条同码不同规格 M16/M20，手动接受冲突拆行，保证行身份唯一且供应商分配/报价历史不串行。对用户**取消冲突确认**需验证零持久化副作用。\n6. **已有业务的保护**：在已有图纸、供应商分配、报价历史的工作上重复非法预览并取消，不应修改现有业务或已确认记录。测试有效导入后 F5/进程重启、SQLite 自动保存及 S4 完整备份恢复无新增回归。\n7. **模板与既有修复抽测**：四类模板下载结构、真实 XLSX/CSV 回填导入仍可用；F1 来源行身份往返、F2 同码不同规格显示、F3 不供货状态精简复验。不得把模板和报价原来的 PASS 仅凭开发者 Actions 冒充本轮独立执行。\n8. 只读 SQLite/openpyxl/ZIP 验证可用，**不得通过 API、JS 或直接 SQLite 写入替代 GUI 业务操作**。所有文件/截图/trace 必须匿名化。Windows Computer Use/Windows 原生 Excel/真实采购员试用均明确 NOT TESTED。\n\n### 交付与停止点 / Deliverable\n- 对原版与新候选分别提供确切 SHA、Chromium 环境、操作路径、保存态差异（revision/lineSeq/createdSeq/业务行/关联）、截图、trace 与可复现记录。逐项 `PASS / FAIL / NOT TESTED`，结论 `P3-01 PASS / FAIL / BLOCKED`。\n- 在 **PR #18 新建顶层评论**，中文报告配英文摘要；可存独立 `test/` 证据分支，仅写脱敏测试材料，不改业务代码。说明对先前 23 PASS 的必要回归与剩余 Windows 未测项。\n- **不得自行修改或合并 PR #18、PR #16、PR #15、开发基线或 main**。即使本轮 PASS，也只是向用户建议进入合并审核；用户另行决定。\n\n完成独立复验并回写 PR #18 后停止。"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "workspaces": {
+    "RFQ-1792150097748-S3YRFW": {
+      "revision": 4,
+      "lineSeq": 4,
+      "createdSeq": 3,
+      "item_count": 3,
+      "assignments": [
+        {
+          "key": "RFQ-L00001",
+          "values": []
+        },
+        {
+          "key": "RFQ-L00003",
+          "values": []
+        },
+        {
+          "key": "RFQ-L00004",
+          "values": []
+        }
+      ],
+      "sha256": "8113d553ea970bfaff7f8a183afbcbd48212664afb809ca9ba024fa56487bc93",
+      "state": {
+        "items": [
+          {
+            "id": "AXLE-MERGE",
+            "lineId": "RFQ-L00001",
+            "name": "虚构验收轴",
+            "cat": "测试类别",
+            "spec": "M16",
+            "ref1": "ERP-BATCH-A",
+            "ref2": "",
+            "purchaseUnit": "件",
+            "erpExtra": {},
+            "qty": 5,
+            "unit": "件",
+            "drawingNo": "",
+            "_rowNo": 2,
+            "sources": [
+              {
+                "source": "material-merge.xlsx · 工作表：询价物料 · 真实 XLSX · 第2行",
+                "qty": 2
+              },
+              {
+                "source": "material-merge.xlsx · 工作表：询价物料 · 真实 XLSX · 第3行",
+                "qty": 3
+              }
+            ],
+            "_errors": [],
+            "custom": {},
+            "_createdOrder": 1
+          },
+          {
+            "id": "AXLE-SPLIT",
+            "lineId": "RFQ-L00003",
+            "name": "虚构验收轴",
+            "cat": "测试类别",
+            "spec": "M16",
+            "ref1": "ERP-BATCH-B",
+            "ref2": "P301-CHECK16",
+            "purchaseUnit": "件",
+            "erpExtra": {},
+            "qty": 2,
+            "unit": "件",
+            "drawingNo": "",
+            "_rowNo": 2,
+            "sources": [
+              {
+                "source": "material-split.xlsx · 工作表：询价物料 · 真实 XLSX · 第2行",
+                "qty": 2
+              }
+            ],
+            "_errors": [],
+            "custom": {},
+            "_createdOrder": 2
+          },
+          {
+            "id": "AXLE-SPLIT",
+            "lineId": "RFQ-L00004",
+            "name": "虚构验收轴",
+            "cat": "测试类别",
+            "spec": "M20",
+            "ref1": "ERP-BATCH-C",
+            "ref2": "P301-CHECK20",
+            "purchaseUnit": "件",
+            "erpExtra": {},
+            "qty": 3,
+            "unit": "件",
+            "drawingNo": "",
+            "_rowNo": 3,
+            "sources": [
+              {
+                "source": "material-split.xlsx · 工作表：询价物料 · 真实 XLSX · 第3行",
+                "qty": 3
+              }
+            ],
+            "_errors": [],
+            "custom": {},
+            "_createdOrder": 3
+          }
+        ],
+        "suppliers": [],
+        "assignments": [
+          {
+            "key": "RFQ-L00001",
+            "values": []
+          },
+          {
+            "key": "RFQ-L00003",
+            "values": []
+          },
+          {
+            "key": "RFQ-L00004",
+            "values": []
+          }
+        ],
+        "quoteRounds": [],
+        "awards": [],
+        "awardReasons": [],
+        "manualAwards": [],
+        "awardReviewIds": [],
+        "supplierPool": [],
+        "selectedCompareSuppliers": [],
+        "customFields": [],
+        "lineSeq": 4,
+        "createdSeq": 3,
+        "quoteComparisonMode": "returned"
+      }
+    }
+  },
+  "pdf": {}
+}
