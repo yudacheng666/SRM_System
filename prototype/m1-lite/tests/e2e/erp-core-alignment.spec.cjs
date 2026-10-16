@@ -398,3 +398,80 @@ test('ERP09: second-round scope shows specification and preserves selected line 
   await expect(page.locator('#quoteTable')).toContainText('¥9.00');
   await expect(page.locator('#quoteTable')).toContainText('¥10.00');
 });
+
+
+// 中文：系统设置应为全部支持的正式导入提供标准模板，不应包含真实或演示业务数据。
+// English: Download all supported canonical templates in settings; verify real ZIP headers and a filled import.
+test('ERP10: settings provide three correct XLSX import templates and one header-aware CSV template',async({page,app},info)=>{
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="settings"]').click();
+  await expect(page.locator('#importTemplatesCard')).toBeVisible();
+  const defined={
+    items:['存货编码','存货名称','规格型号','所属类别','参考编码1','参考编码2','采购常用单位','询价数量','询价单位','图号'],
+    suppliers:['往来单位编码','供应商编码','往来单位名称'],
+    quotes:['RFQ Line ID','存货编码','报价单价','交期','MOQ','报价状态','物料备注']
+  };
+  const downloaded={};
+  const getZipHeaders=(file)=>JSON.parse(execFileSync('python',['-c',
+    'import json,sys,zipfile,xml.etree.ElementTree as E\n'+
+    'z=zipfile.ZipFile(sys.argv[1]);n={"m":"http://schemas.openxmlformats.org/spreadsheetml/2006/main"}\n'+
+    'doc=E.fromstring(z.read("xl/workbook.xml"));sheets=doc.findall(".//m:sheet",n)\n'+
+    'doc=E.fromstring(z.read("xl/worksheets/sheet1.xml"));rows=doc.findall(".//m:row",n)\n'+
+    'headers=["".join(cell.itertext()) for cell in rows[0].findall("m:c",n)]\n'+
+    'print(json.dumps({"sheets":len(sheets),"rows":len(rows),"headers":headers},ensure_ascii=False))',
+    file],{encoding:'utf8'}));
+  for(const [kind,expected] of Object.entries(defined)){
+    const downloadPromise=page.waitForEvent('download');
+    await page.locator('[data-template-download="'+kind+'"]').click();
+    const download=await downloadPromise;
+    expect(download.suggestedFilename()).toMatch(/\.xlsx$/);
+    const file=await download.path();
+    downloaded[kind]=fs.readFileSync(file);
+    const output=getZipHeaders(file);
+    expect(output.sheets).toBe(1);
+    expect(output.rows).toBe(1);
+    expect(output.headers).toEqual(expected);
+    expect(new Set(output.headers).size).toBe(output.headers.length);
+  }
+  const downloadPromise=page.waitForEvent('download');
+  await page.locator('[data-template-download="matched"]').click();
+  const csvDownload=await downloadPromise;
+  expect(csvDownload.suggestedFilename()).toMatch(/\.csv$/);
+  const csv=fs.readFileSync(await csvDownload.path(),'utf8');
+  expect(csv).toBe('\uFEFF匹配值,新值\r\n');
+
+  // 中文：在真正下载的物料模板表头后增加合法业务行，再通过真实 UI 导入。
+  // English: Fill the exact downloaded template heading, then confirm a real buyer import.
+  const itemHeaders=defined.items;
+  await createBuyer(page);
+  const materialBuffer=await page.evaluate(async headers=>{
+    const row=['TPL-001','虚构模板测试件','M16','测试分类','','','件',2,'件',''];
+    const blob=SRMExcel.create([{name:'询价物料',rows:[headers,row]}]);
+    return Array.from(new Uint8Array(await blob.arrayBuffer()));
+  },itemHeaders);
+  await page.locator('#importFile').setInputFiles({name:'template-filled.xlsx',
+    mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    buffer:Buffer.from(materialBuffer)});
+  await expect(page.locator('#confirmImportRows')).toBeEnabled();
+  await page.locator('#confirmImportRows').click();
+  const afterImport=await snap(page);
+  expect(afterImport.state.items).toHaveLength(1);
+  expect(afterImport.state.items[0].id).toBe('TPL-001');
+  expect(afterImport.state.items[0].spec).toBe('M16');
+
+  // 中文：匹配更新模板第一行须被识别为表头，而非业务变更或未匹配行。
+  // English: Accept canonical CSV headers while retaining the legacy two-column update mapping.
+  await page.locator('#toggleFieldTools').click();
+  await page.locator('#matchKeyField').selectOption('id');
+  await page.locator('#matchUpdateField').selectOption('spec');
+  await page.locator('#matchUpdateFile').setInputFiles({name:'filled-matched.csv',
+    mimeType:'text/csv',buffer:Buffer.from(csv+'TPL-001,M20\r\n','utf8')});
+  await expect(page.locator('#matchedUpdatePreview')).toContainText('可更新 1 行');
+  await expect(page.locator('#matchedUpdatePreview')).toContainText('未匹配 0 行');
+  await page.locator('#confirmMatchedUpdate').click();
+  expect((await snap(page)).state.items[0].spec).toBe('M20');
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="settings"]').click();
+  await expect(page.locator('#importTemplatesCard')).toBeVisible();
+  const shot=info.outputPath('settings-import-templates.png');
+  await page.screenshot({path:shot,fullPage:true});
+  await info.attach('settings-import-templates',{path:shot,contentType:'image/png'});
+});
