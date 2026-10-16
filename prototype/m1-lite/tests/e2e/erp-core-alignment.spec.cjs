@@ -106,6 +106,30 @@ test('ERP03: equal specifications merge quantity; conflicting canonical and alia
   data=await snap(page);
   expect(data.state.items).toHaveLength(1);
 });
+
+test('ERP05: wide 220-column ERP source survives native XLSX importer and remains internal metadata',async({page})=>{
+  await createBuyer(page);
+  // 中文：从页面原生 XLSX 生成器生成 229 列虚构源数据，验证超出原 80 列上限的正式导入。
+  // English: Generate a synthetic 229-column XLSX with the same native workbook layout.
+  const base=['存货编码','存货名称','规格型号','所属类别','询价数量','询价单位','参考编码1','参考编码2','采购常用单位'];
+  const extra=Array.from({length:220},(_,i)=>'ERP原始字段'+String(i+1).padStart(3,'0'));
+  const values=await page.evaluate(({base,extra})=>new Promise(async(resolve,reject)=>{
+    try{
+      const headers=[...base,...extra],row=['ERP-WIDE','虚构宽表部件','S1','测试类别','5','件','RC1','RC2','件',...extra.map((_,i)=>'E'+i)];
+      const blob=SRMExcel.create([{name:'ERP宽表',rows:[headers,row]}]);
+      resolve(Array.from(new Uint8Array(await blob.arrayBuffer())));
+    }catch(e){reject(e.message)}
+  }),{base,extra});
+  await page.locator('#importFile').setInputFiles({name:'erp-229cols.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:Buffer.from(values)});
+  await expect(page.locator('#confirmImportRows')).toBeEnabled();
+  await expect(page.locator('#importPreview')).toContainText('220 项');
+  await page.locator('#confirmImportRows').click();
+  const current=await snap(page);
+  expect(current.state.items).toHaveLength(1);
+  expect(Object.keys(current.state.items[0].erpExtra)).toHaveLength(220);
+  expect(current.state.items[0].erpExtra.ERP原始字段220).toBe('E219');
+});
+
 test('ERP04: new ERP fields are searchable/editable, internal-vs-supplier export boundaries hold',async({page,app})=>{
   await createBuyer(page);
   await page.locator('#importFile').setInputFiles(path.join(app.fixture,'erp_items.xlsx'));
@@ -150,4 +174,27 @@ test('ERP04: new ERP fields are searchable/editable, internal-vs-supplier export
   // English: ERP-alignment only; no RFQ unit conversions or phantom price entries.
   const priceCol=rfqHeaders.indexOf('报价单价');
   expect(reports.rfq.sheets[0].rows.slice(1).every(row=>row[priceCol]==='')).toBe(true);
+  // 中文：下载真实内部 XLSX，并重新用 SRM 原生读取器验证原始字段列仍在，而非只存在 JSON。
+  // English: Verify actual internal XLSX bytes retain original extra headings, not merely the JSON snapshot.
+  await expect.poll(async()=>{
+    const ws=await snap(page),res=await page.request.get(URL+'/api/workspaces/'+ws.workspaceId);
+    if(!res.ok())return false;
+    const saved=(await res.json()).workspace;
+    return saved.revision>0&&JSON.stringify(saved.state)===JSON.stringify(ws.state);
+  },{timeout:30000}).toBe(true);
+  await open(page,'#uiDataTools');
+  await expect(page.locator('#pilotExportExcel')).toBeEnabled();
+  const downloadEvent=page.waitForEvent('download');
+  await page.locator('#pilotExportExcel').click();
+  const downloaded=await downloadEvent;
+  const bytes=fs.readFileSync(await downloaded.path());
+  const internalWorkbook=await page.evaluate(async arr=>{
+    const wb=await SRMExcel.read(Uint8Array.from(arr).buffer,['RFQ Line ID']);
+    return{headers:wb.rows[0],rows:wb.rows.slice(1)};
+  },Array.from(bytes));
+  expect(internalWorkbook.headers).toContain('ERP批次属性');
+  expect(internalWorkbook.headers).toContain('参考编码1');
+  const j=internalWorkbook.headers.indexOf('ERP批次属性');
+  expect(internalWorkbook.rows.some(row=>row[j]==='内部批次B')).toBe(true);
+
 });
