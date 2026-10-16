@@ -2277,8 +2277,8 @@ let pendingImportRows=[];
 const itemImportPreviewState={page:0,onlyProblems:false};
 let pendingMatchedUpdatePlan=null;
 const customFields=[];
-const fieldFilterDraft={lineId:"",id:"",name:"",cat:"",qty:"",unit:"",supplierCount:""};
-const fieldFilters={lineId:"",id:"",name:"",cat:"",qty:"",unit:"",supplierCount:""};
+const fieldFilterDraft={lineId:"",id:"",name:"",spec:"",ref1:"",ref2:"",purchaseUnit:"",cat:"",qty:"",unit:"",supplierCount:""};
+const fieldFilters={lineId:"",id:"",name:"",spec:"",ref1:"",ref2:"",purchaseUnit:"",cat:"",qty:"",unit:"",supplierCount:""};
 const appliedSearch={item:"",assignItem:"",assignCat:"",assignState:"",supplier:"",supplierFirst:"",supplierPool:"",sfItem:"",sfCat:""};
 const rfqSupplierPool=new Set();
 items.forEach(it=>getSet(it.lineId).forEach(sid=>rfqSupplierPool.add(sid)));
@@ -2295,7 +2295,7 @@ function fuzzyIncludes(value,q){
 }
 function itemFieldValue(it,key){
   if(key==="supplierCount")return getSet(it.lineId).size;
-  if(["id","lineId","name","cat","qty","unit"].includes(key))return it[key];
+  if(["id","lineId","name","cat","spec","ref1","ref2","purchaseUnit","qty","unit"].includes(key))return it[key]??"";
   return it.custom?.[key]??"";
 }
 function supplierMatches(s,q){
@@ -2370,18 +2370,19 @@ function openItemEditor(lineId){
   editingItemLineId=it.lineId;const locked=itemHasAnyQuoteHistory(lineId);
   itemEditIdentity.textContent="RFQ Line ID："+it.lineId+"（保持不变）";
   itemEditCode.value=it.id;itemEditDrawingNo.value=it.drawingNo||"";itemEditQty.value=it.qty;itemEditName.value=it.name;itemEditCat.value=it.cat;itemEditUnit.value=it.unit;
+  itemEditSpec.value=it.spec||"";itemEditRef1.value=it.ref1||"";itemEditRef2.value=it.ref2||"";itemEditPurchaseUnit.value=it.purchaseUnit||"";
   itemEditHint.textContent=locked?"此询价行已有报价历史，当前只允许查看；请在后续正式修订流程中变更。":"当前属性带出该行原值。M0 尚未接入 ERP 主数据，修改存货编码不会自动更新其他 ERP 属性，也不会合并其他相同编码询价行。";
-  for(const input of [itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditCat,itemEditUnit])input.disabled=locked;
+  for(const input of [itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditSpec,itemEditRef1,itemEditRef2,itemEditPurchaseUnit,itemEditCat,itemEditUnit])input.disabled=locked;
   itemEditSave.disabled=locked;itemEditError.textContent="";
   // 中文：记录当前编辑框初值；Esc/取消只在实际修改过时询问，避免意外丢弃输入。
   // English: Snapshot input values so Escape/cancel can protect dirty edits without blocking untouched dialogs.
-  itemEditOpeningValues=[itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditCat,itemEditUnit].map(x=>x.value);
+  itemEditOpeningValues=[itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditSpec,itemEditRef1,itemEditRef2,itemEditPurchaseUnit,itemEditCat,itemEditUnit].map(x=>x.value);
   itemEditModal.classList.add("open");itemEditModal.setAttribute("aria-hidden","false");
   if(!locked)itemEditCode.focus();
 }
 function closeItemEditor(force=false){
   if(!itemEditModal.classList.contains("open"))return;
-  const changed=itemEditOpeningValues&&[itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditCat,itemEditUnit].some((x,i)=>x.value!==itemEditOpeningValues[i]);
+  const changed=itemEditOpeningValues&&[itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditSpec,itemEditRef1,itemEditRef2,itemEditPurchaseUnit,itemEditCat,itemEditUnit].some((x,i)=>x.value!==itemEditOpeningValues[i]);
   if(!force&&changed&&!confirm("该物料有未保存的编辑。确定放弃修改并关闭窗口吗？"))return;
   editingItemLineId=null;itemEditOpeningValues=null;
   itemEditModal.classList.remove("open");itemEditModal.setAttribute("aria-hidden","true");
@@ -2395,6 +2396,7 @@ function saveItemEdit(){
   // 中文：改码不自动修改或合并其他行；记录编辑来源但不冒充 ERP 数据。
   // English: Code edits never silently merge RFQ lines or claim ERP master autofill.
   it.id=code;it.drawingNo=itemEditDrawingNo.value.trim();it.qty=qty.value;it.name=itemEditName.value.trim();it.cat=itemEditCat.value.trim();it.unit=unit;
+  it.spec=itemEditSpec.value.trim();it.ref1=itemEditRef1.value.trim();it.ref2=itemEditRef2.value.trim();it.purchaseUnit=itemEditPurchaseUnit.value.trim();
   it.sources=it.sources||[];it.sources.push({source:"人工编辑（原位修改）",qty:it.qty});
   closeItemEditor(true);renderItemList();renderAssignAll();renderQuotes();
 }
@@ -2701,7 +2703,19 @@ function addRowsToRfq(rows){
   alert(`新增 ${added} 行；自动合并 ${merged} 行；冲突确认分行 ${separated} 行。合并前原始需求行已留存。`);
 }
 toggleItemIntake.onclick=()=>{itemIntake.style.display=itemIntake.style.display==="none"?"block":"none"};
-manualAdd.onclick=()=>{const code=manualCode.value.trim(),name=manualName.value.trim(),qty=parsePositiveNumber(manualQty.value,"数量"),unit=manualUnit.value.trim();if(!code||qty.error||!unit){alert([!code?"物料编码不能为空":"",qty.error||"",!unit?"单位不能为空":""].filter(Boolean).join("；"));return}const row={id:code,lineId:nextLineId(),name,cat:"",qty:qty.value,unit,drawingNo:manualDrawingNo.value.trim(),sources:[{source:"单条录入",qty:qty.value}],_errors:[]};setImportPreview([row],"单条输入预览");manualCode.value=manualName.value=manualQty.value=manualUnit.value=manualDrawingNo.value=""};
+manualAdd.onclick=()=>{
+  const code=manualCode.value.trim(),name=manualName.value.trim(),
+    qty=parsePositiveNumber(manualQty.value,"询价数量"),unit=manualUnit.value.trim();
+  if(!code||qty.error||!unit){
+    alert([!code?"存货编码不能为空":"",qty.error||"",!unit?"询价单位不能为空":""].filter(Boolean).join("；"));return;
+  }
+  const row={id:code,lineId:nextLineId(),name,cat:"",spec:manualSpec.value.trim(),
+    ref1:manualRef1.value.trim(),ref2:manualRef2.value.trim(),purchaseUnit:manualPurchaseUnit.value.trim(),
+    qty:qty.value,unit,drawingNo:manualDrawingNo.value.trim(),
+    sources:[{source:"单条录入",qty:qty.value}],_errors:[]};
+  setImportPreview([row],"单条输入预览");
+  for(const input of [manualCode,manualName,manualSpec,manualRef1,manualRef2,manualPurchaseUnit,manualQty,manualUnit,manualDrawingNo])input.value="";
+};
 parsePaste.onclick=()=>{const rows=parseItemRows(pasteItems.value);if(rows._headerErrors?.length){alert(rows._headerErrors.join("；"));return}if(!rows.length){alert("没有识别到物料。");return}setImportPreview(rows,"剪贴板批量粘贴预览")};
 clearPasteInput.onclick=()=>{pasteItems.value=""};
 clearPastePreview.onclick=()=>{pendingImportRows=[];itemImportPreviewState.page=0;itemImportPreviewState.onlyProblems=false;importPreview.innerHTML="";importPreview.style.display="none"};
