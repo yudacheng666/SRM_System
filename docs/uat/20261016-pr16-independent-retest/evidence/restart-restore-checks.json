@@ -1,0 +1,21 @@
+{
+  "restart_exact": true,
+  "backup_restore_exact": true,
+  "projects": 3,
+  "PDFs": 2,
+  "restart_revisions": {
+    "RFQ-1792135934514-B47WGC": 28,
+    "RFQ-1792135973593-G1YD2R": 1,
+    "RFQ-1792136020536-FU6UZ5": 8
+  },
+  "restore_backup_revisions": {
+    "RFQ-1792135934514-B47WGC": 27,
+    "RFQ-1792135973593-G1YD2R": 1,
+    "RFQ-1792136020536-FU6UZ5": 8
+  },
+  "pdf_sha256": {
+    "assets/c7/c77b15711304bfcf2353fefc296c6b320d7e5075449d7bc5ab0f8ec79aeaa755.pdf": "c77b15711304bfcf2353fefc296c6b320d7e5075449d7bc5ab0f8ec79aeaa755",
+    "assets/f7/f73b2bdd2592fd383e50de97b8657cf631ebb583edfe83de67f5f3e47c7f52e3.pdf": "f73b2bdd2592fd383e50de97b8657cf631ebb583edfe83de67f5f3e47c7f52e3"
+  },
+  "note": "Initial pre-restart-state.json is the earlier backup baseline at revisions 27/1/8; F5 boundary preview caused a pre-shutdown autosave to revision28 (business fields unchanged). A second actual stop/restart after closing browser writers verifies immediate snapshots/revisions 28/1/8 exactly."
+}

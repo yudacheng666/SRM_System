@@ -1,0 +1,333 @@
+{
+  "vendor": [
+    {
+      "file": "CLOUD-A-candidate.zip",
+      "actual_type": "XLSX (original .xlsx download retained unchanged)",
+      "members": [
+        "OOXML package"
+      ],
+      "pdf_sha256": {},
+      "sheets": [
+        {
+          "name": "供应商报价填写",
+          "headings": [
+            "RFQ Line ID",
+            "存货编码",
+            "存货名称",
+            "询价数量",
+            "询价单位",
+            "报价单价",
+            "报价状态",
+            "所属类别",
+            "规格型号",
+            "交期",
+            "MOQ",
+            "物料备注"
+          ],
+          "rows": [
+            [
+              "RFQ-L00001",
+              "TEST-001",
+              "虚构轴",
+              5,
+              "件",
+              null,
+              null,
+              "机械件",
+              "M16",
+              null,
+              null,
+              null
+            ],
+            [
+              "RFQ-L00004",
+              "TEST-002",
+              "虚构支架",
+              6,
+              "件",
+              null,
+              null,
+              "钣金件",
+              null,
+              null,
+              null,
+              null
+            ]
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "file": "CLOUD-B-candidate.zip",
+      "actual_type": "XLSX (original .xlsx download retained unchanged)",
+      "members": [
+        "OOXML package"
+      ],
+      "pdf_sha256": {},
+      "sheets": [
+        {
+          "name": "供应商报价填写",
+          "headings": [
+            "RFQ Line ID",
+            "存货编码",
+            "存货名称",
+            "询价数量",
+            "询价单位",
+            "报价单价",
+            "报价状态",
+            "所属类别",
+            "规格型号",
+            "交期",
+            "MOQ",
+            "物料备注"
+          ],
+          "rows": [
+            [
+              "RFQ-L00001",
+              "TEST-001",
+              "虚构轴",
+              5,
+              "件",
+              null,
+              null,
+              "机械件",
+              "M16",
+              null,
+              null,
+              null
+            ],
+            [
+              "RFQ-L00004",
+              "TEST-002",
+              "虚构支架",
+              6,
+              "件",
+              null,
+              null,
+              "钣金件",
+              null,
+              null,
+              null,
+              null
+            ]
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "file": "CLOUD-C-candidate.zip",
+      "actual_type": "XLSX (original .xlsx download retained unchanged)",
+      "members": [
+        "OOXML package"
+      ],
+      "pdf_sha256": {},
+      "sheets": [
+        {
+          "name": "供应商报价填写",
+          "headings": [
+            "RFQ Line ID",
+            "存货编码",
+            "存货名称",
+            "询价数量",
+            "询价单位",
+            "报价单价",
+            "报价状态",
+            "所属类别",
+            "规格型号",
+            "交期",
+            "MOQ",
+            "物料备注"
+          ],
+          "rows": [
+            [
+              "RFQ-L00001",
+              "TEST-001",
+              "虚构轴",
+              5,
+              "件",
+              null,
+              null,
+              "机械件",
+              "M16",
+              null,
+              null,
+              null
+            ],
+            [
+              "RFQ-L00003",
+              "TEST-001",
+              "虚构轴",
+              4,
+              "件",
+              null,
+              null,
+              "机械件",
+              "M20",
+              null,
+              null,
+              null
+            ],
+            [
+              "RFQ-L00004",
+              "TEST-002",
+              "虚构支架",
+              6,
+              "件",
+              null,
+              null,
+              "钣金件",
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "RFQ-L00005",
+              "WIDE-221",
+              "虚构宽表件",
+              1,
+              "件",
+              null,
+              null,
+              "宽表验证",
+              "虚构超长规格-耐压耐磨采购验收-虚构超长规格-耐压耐磨采购验收-虚构超长规格-耐压耐磨采购验收-虚构超长规格-耐压耐磨采购验收-虚构超长规格-耐压耐磨采购验收-虚构超长规格-耐压耐磨采购验收-虚构超长规格-耐压耐磨采购验收-虚构超长规格-耐压耐磨采购验收-虚构超长规格-耐压耐磨采购验收-虚构超长规格-耐压耐磨采购验收-虚构超长规格-耐压耐磨采购验收-虚构超长规格-耐压耐磨采购验收-末尾识别Ω",
+              null,
+              null,
+              null
+            ]
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "file": "roundtrip-supplier-package.zip",
+      "actual_type": "ZIP",
+      "members": [
+        "SRM_询价单_CLOUD-A_虚构供应甲.xlsx",
+        "TEST-001_A.pdf",
+        "TEST-002_A.pdf"
+      ],
+      "pdf_sha256": {
+        "TEST-001_A.pdf": "f73b2bdd2592fd383e50de97b8657cf631ebb583edfe83de67f5f3e47c7f52e3",
+        "TEST-002_A.pdf": "c77b15711304bfcf2353fefc296c6b320d7e5075449d7bc5ab0f8ec79aeaa755"
+      },
+      "sheets": [
+        {
+          "name": "供应商报价填写",
+          "headings": [
+            "RFQ Line ID",
+            "存货编码",
+            "存货名称",
+            "询价数量",
+            "询价单位",
+            "报价单价",
+            "报价状态",
+            "所属类别",
+            "规格型号",
+            "交期",
+            "MOQ",
+            "物料备注"
+          ],
+          "rows": [
+            [
+              "RFQ-L00001",
+              "TEST-001",
+              "虚构轴",
+              5,
+              "件",
+              null,
+              null,
+              "机械件",
+              "M16",
+              null,
+              null,
+              null
+            ],
+            [
+              "RFQ-L00002",
+              "TEST-001",
+              "虚构轴",
+              4,
+              "件",
+              null,
+              null,
+              "机械件",
+              "M20",
+              null,
+              null,
+              null
+            ],
+            [
+              "RFQ-L00003",
+              "TEST-002",
+              "虚构支架",
+              6,
+              "件",
+              null,
+              null,
+              "钣金件",
+              "板厚4",
+              null,
+              null,
+              null
+            ],
+            [
+              "RFQ-L00004",
+              "WIDE-221",
+              "虚构宽表件",
+              1,
+              "件",
+              null,
+              null,
+              "宽表验证",
+              "221",
+              null,
+              null,
+              null
+            ]
+          ]
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "financial": {
+    "cell_checks": {
+      "R2": {
+        "formula": "=ROUND(Q2*C2,2)",
+        "independent_value": 90.0
+      },
+      "U2": {
+        "formula": "=ROUND(T2*C2,2)",
+        "independent_value": 105.0
+      },
+      "R3": {
+        "formula": "=ROUND(Q3*C3,2)",
+        "independent_value": 180.0
+      },
+      "U3": {
+        "formula": "=ROUND(T3*C3,2)",
+        "independent_value": 192.0
+      }
+    },
+    "A": 270,
+    "B": 297,
+    "selected": 285,
+    "minimum": 270,
+    "nonlowest_delta": 15,
+    "A_B_common_items": 2,
+    "quote_history_rows": 8,
+    "all_three_common_items": 0,
+    "M20_unpriced_cells_blank": true
+  },
+  "legacy": {
+    "original": {
+      "RFQ Line ID": "RFQ-L00003",
+      "ERP批次属性": "内部标签A"
+    }
+  },
+  "result": "PASS"
+}

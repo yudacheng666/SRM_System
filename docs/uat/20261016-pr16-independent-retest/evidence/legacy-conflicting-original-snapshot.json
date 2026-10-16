@@ -1,0 +1,56 @@
+{
+  "format": "srm-workspace",
+  "schemaVersion": 1,
+  "workspaceId": "RFQ-1792136200803-WU8DL3",
+  "origin": "buyer",
+  "revision": 3,
+  "state": {
+    "items": [
+      {
+        "id": "LEGACY-CONFLICT",
+        "lineId": "RFQ-L00002",
+        "name": "虚构旧版双来源冲突",
+        "cat": "",
+        "spec": "",
+        "ref1": "",
+        "ref2": "",
+        "purchaseUnit": "",
+        "erpExtra": {
+          "RFQ Line ID": "OLD-SOURCE-A",
+          "来源 RFQ Line ID": "OLD-SOURCE-B"
+        },
+        "qty": 1,
+        "unit": "件",
+        "drawingNo": "",
+        "_rowNo": 2,
+        "sources": [
+          {
+            "source": "legacy-conflicting-source.xlsx · 工作表：Sheet · 真实 XLSX · 第2行",
+            "qty": 1
+          }
+        ],
+        "_errors": [],
+        "custom": {},
+        "_createdOrder": 1
+      }
+    ],
+    "suppliers": [],
+    "assignments": [
+      {
+        "key": "RFQ-L00002",
+        "values": []
+      }
+    ],
+    "quoteRounds": [],
+    "awards": [],
+    "awardReasons": [],
+    "manualAwards": [],
+    "awardReviewIds": [],
+    "supplierPool": [],
+    "selectedCompareSuppliers": [],
+    "customFields": [],
+    "lineSeq": 2,
+    "createdSeq": 1,
+    "quoteComparisonMode": "returned"
+  }
+}
