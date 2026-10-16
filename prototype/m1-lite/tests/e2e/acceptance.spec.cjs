@@ -474,7 +474,10 @@ test('14 common-scope CSV uses the real RFQ ID across two workspaces and restart
   // Use real buyer clicks for two independent RFQs, not injected state.
   async function exportCurrent(){
     await tab(page,'quotes');
-    for(const box of await page.locator('#commonScopePicker input:not(:checked)').all())await box.check();
+    // 中文：勾选会重绘DOM；必须每次以固定供应商ID重新定位，不能迭代动态 :not(:checked)。
+    // English: Reacquire each stable supplier-ID checkbox after comparison picker rerenders.
+    for(const sid of ['SUP-A','SUP-B'])
+      await page.locator('#commonScopePicker input[data-common-supplier="'+sid+'"]').check();
     await expect(page.locator('#quoteAnalysis')).toContainText('共同有效报价 1 项');
     const current=await snapshot(page);
     expect(current.workspaceId).toMatch(/^RFQ-/);
@@ -524,4 +527,48 @@ test('14 common-scope CSV uses the real RFQ ID across two workspaces and restart
   const shot=info.outputPath('common-scope-csv-rfq-identity.png');
   await page.screenshot({path:shot,fullPage:true});
   await info.attach('common-scope-csv-rfq-identity',{path:shot,contentType:'image/png'});
+});
+
+
+test('15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离',async({page,app},info)=>{
+  // 中文：原 BASE-01：旧RFQ选中供应商后新建正式RFQ会崩溃并遗留旧标题。
+  // English: Reproduce the independently reported BASE-01 via actual buyer controls.
+  const errors=[];page.on('pageerror',err=>errors.push(String(err.message)));
+  await allocated(page,app);
+  const first=await snapshot(page);
+  const originalId=first.workspaceId,originalState=first.state;
+  await tab(page,'assign');
+  await page.locator('[data-mode="supplierFirst"]').click();
+  await page.locator('[data-sf-s="SUP-B"]').click();
+  await expect(page.locator('#supplierFirstTitle')).toContainText('SUP-B');
+  await fresh(page);
+  const second=await snapshot(page);
+  expect(second.workspaceId).not.toBe(originalId);
+  expect(second.state.items).toHaveLength(0);
+  expect(second.state.suppliers).toHaveLength(0);
+  await expect(page.locator('#supplierFirstTitle')).toHaveText('选择左侧供应商');
+  await expect(page.locator('#supplierFirstList [data-sf-s]')).toHaveCount(0);
+  await expect(page.locator('#sfItemBody input')).toHaveCount(0);
+  expect(errors).toEqual([]);
+  // 新询价可以重新添加供应商，旧项目的供应商上下文不得串到新询价。
+  // A new workspace may import independently, while the original snapshot remains immutable.
+  await items(page,app);
+  await suppliers(page,app);
+  await tab(page,'assign');
+  await page.locator('[data-mode="supplierFirst"]').click();
+  await expect(page.locator('#supplierFirstTitle')).toHaveText('选择左侧供应商');
+  await page.locator('[data-sf-s="SUP-A"]').click();
+  await expect(page.locator('#supplierFirstTitle')).toContainText('SUP-A');
+  await saved(page);
+  // 通过真实项目列表切回老项目后也应清空活动选择。
+  // The supplier title must reset again when switching back to the previous saved RFQ.
+  await openProject(page);
+  await page.locator('#pilotHistoryWorkspace').selectOption(originalId);
+  await page.locator('#pilotSwitchWorkspace').click();
+  await expect(page.locator('#supplierFirstTitle')).toHaveText('选择左侧供应商');
+  expect((await snapshot(page)).state).toEqual(originalState);
+  expect(errors).toEqual([]);
+  const shot=info.outputPath('supplier-context-cross-rfq.png');
+  await page.screenshot({path:shot,fullPage:true});
+  await info.attach('supplier-context-cross-rfq',{path:shot,contentType:'image/png'});
 });
