@@ -1181,6 +1181,32 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
   </section>
 
   <section id="settings" class="panel">
+    <!-- 中文：标准模板统一放在设置页，直接复用实际导入表头及本机 XLSX 生成器。 -->
+    <!-- English: Centralize canonical upload templates; use the same native XLSX writer as business exports. -->
+    <div class="card" id="importTemplatesCard" style="margin-bottom:16px">
+      <div class="cardhead"><b>数据导入模板下载</b><span class="muted small">先下载标准模板，再在对应业务模块导入</span></div>
+      <div class="cardbody">
+        <div class="small muted" style="margin-bottom:12px">Excel 模板均为单工作表、仅含正式表头，不含虚构或真实业务行。第一行表头不要修改，第二行开始填写；保存为 .xlsx。字段说明及必填项见下方。</div>
+        <div class="toolbar" style="gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+          <button class="btn soft" type="button" data-template-download="items">下载询价物料模板 .xlsx</button>
+          <span class="small muted">必填：存货编码、询价数量、询价单位；规格型号与 ERP 参考字段可选</span>
+        </div>
+        <div class="toolbar" style="gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+          <button class="btn soft" type="button" data-template-download="suppliers">下载供应商模板 .xlsx</button>
+          <span class="small muted">必填：往来单位编码、往来单位名称；供应商编码可选</span>
+        </div>
+        <div class="toolbar" style="gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+          <button class="btn soft" type="button" data-template-download="quotes">下载供应商报价模板 .xlsx</button>
+          <span class="small muted">必填：当前 RFQ Line ID（或唯一存货编码），报价及状态按实际情况填写</span>
+        </div>
+        <div class="toolbar" style="gap:10px;align-items:center;flex-wrap:wrap">
+          <button class="btn soft" type="button" data-template-download="matched">下载匹配更新模板 .csv</button>
+          <span class="small muted">非 Excel 导入：物料页面当前仅支持 CSV/TXT；需先选择匹配字段与更新字段</span>
+        </div>
+        <div class="small" style="margin-top:12px">注意：报价模板是空白通用表头，不会生成有效 RFQ Line ID。请从当前询价单中核对并填写；相同存货编码但不同规格时必须使用实际 RFQ Line ID。外发供应商询价单与内部比价报表不可直接当作本模板导入。</div>
+        <div class="small muted" id="importTemplateFeedback" role="status" aria-live="polite" style="margin-top:9px">模板只在本机下载，不修改当前询价或数据库。</div>
+      </div>
+    </div>
     <div class="settingsGrid">
       <div class="card">
         <div class="cardhead"><b>字段维护</b><span class="muted small">正式版本按 ERP 字段与映射方案配置</span></div>
@@ -2895,7 +2921,7 @@ function applyMatchedUpdates(rows){
 demoMatchUpdate.onclick=()=>{applyMatchedUpdates([["ITEM-00001","批量更新示例A"],["ITEM-00002","批量更新示例B"],["ITEM-99999","无匹配示例"]])};
 matchUpdateFile.onchange=()=>{
   const file=matchUpdateFile.files?.[0];if(!file)return;const ext=(file.name.split(".").pop()||"").toLowerCase();
-  if(ext==="csv"||ext==="txt"){const r=new FileReader();r.onload=()=>{const rows=String(r.result).split(/[;；\n\r]+/).map(x=>x.trim()).filter(Boolean).map(x=>x.split(/[，,\t]/).slice(0,2));applyMatchedUpdates(rows)};r.readAsText(file)}
+  if(ext==="csv"||ext==="txt"){const r=new FileReader();r.onload=()=>{const rows=String(r.result).replace(/^\uFEFF/,"").split(/[;；\n\r]+/).map(x=>x.trim()).filter(Boolean).map(x=>x.split(/[，,\t]/).slice(0,2));if(rows.length&&rows[0][0]?.trim()==="匹配值"&&rows[0][1]?.trim()==="新值")rows.shift();if(!rows.length){alert("匹配更新文件只有表头，请从第二行填写实际匹配值和新值。");return}applyMatchedUpdates(rows)};r.readAsText(file)}
   else{const msg="当前不支持直接读取 Excel 文件，请另存为 CSV/TXT 后导入；本次没有更新任何数据。";matchUpdateFile.value="";alert(msg)}
 };
 deleteSelectedItems.onclick=()=>{
@@ -5235,6 +5261,62 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   if(statusSource)new MutationObserver(syncRealSaveStatus).observe(statusSource,{childList:true,characterData:true,subtree:true});
   syncRealSaveStatus();
   sync();
+})();
+</script>
+
+<script>
+/* 中文：设置页根据实际 ERP/供应商/报价导入表头生成单表空白模板，避免静态附件过期。
+ * English: Generate canonical header-only templates from the same native XLSX writer, without workspace mutation. */
+(function(){
+  "use strict";
+  const headers=Object.freeze({
+    // 物料核心表头与 parseItemRows 的 ERP_ITEM_HEADERS、单据导出对应。
+    // Item columns match the current canonical ERP importer; raw ERP extras may be added by users.
+    items:["存货编码","存货名称","规格型号","所属类别","参考编码1","参考编码2","采购常用单位","询价数量","询价单位","图号"],
+    // 供应商编码为可选；读取器使用往来单位编码和往来单位名称。
+    // Supplier code is optional and defaults to counterparty code when omitted.
+    suppliers:["往来单位编码","供应商编码","往来单位名称"],
+    // 通过 RFQ Line ID 优先识别同编码不同规格；手工填写编码时必须唯一。
+    // Immutable RFQ line IDs resolve duplicate item codes in quote imports.
+    quotes:["RFQ Line ID","存货编码","报价单价","交期","MOQ","报价状态","物料备注"],
+    // 匹配更新目前只支持 CSV/TXT，首行表头会在导入前跳过。
+    // Matched updates remain CSV/TXT-only and skip the canonical header.
+    matched:["匹配值","新值"]
+  });
+  const options=Object.freeze({
+    items:{sheet:"询价物料",filename:"SRM_询价物料导入模板.xlsx"},
+    suppliers:{sheet:"供应商",filename:"SRM_供应商导入模板.xlsx"},
+    quotes:{sheet:"供应商报价",filename:"SRM_供应商报价导入模板.xlsx"},
+    matched:{filename:"SRM_批量匹配更新模板.csv"}
+  });
+  const feedback=document.getElementById("importTemplateFeedback");
+  const download=(blob,name)=>{
+    const url=URL.createObjectURL(blob),link=document.createElement("a");
+    link.href=url;link.download=name;document.body.appendChild(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),30000);
+  };
+  document.querySelectorAll("[data-template-download]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      const kind=button.dataset.templateDownload,fields=headers[kind],cfg=options[kind];
+      if(!fields||!cfg)return;
+      try{
+        if(kind==="matched"){
+          const data="\uFEFF"+fields.join(",")+"\r\n";
+          download(new Blob([data],{type:"text/csv;charset=utf-8"}),cfg.filename);
+        }else{
+          if(!window.SRMExcel?.create)throw Error("Excel 模板生成器未加载");
+          const blob=window.SRMExcel.create([{name:cfg.sheet,rows:[fields]}]);
+          download(blob,cfg.filename);
+        }
+        feedback.textContent="已发起下载："+cfg.filename+"。请保留第一行标准表头，从第二行填入真实数据。";
+      }catch(e){
+        feedback.textContent="模板下载失败，未修改业务数据："+e.message;
+      }
+    });
+  });
+  // 供自动化检查标准表头；不可由调用者修改，避免模板与页面不一致。
+  // Expose read-only template header copies for browser regression assertions.
+  window.SRMImportTemplateHeaders=Object.freeze(Object.fromEntries(Object.entries(headers).map(([k,v])=>[k,Object.freeze([...v])])));
 })();
 </script>
 </body>
