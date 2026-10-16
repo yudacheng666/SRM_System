@@ -1558,6 +1558,17 @@ function validate(ws){
     for(const key of ["spec","ref1","ref2","purchaseUnit"]){
       ensure(it[key]==null||(typeof it[key]==="string"&&it[key].length<=1000),"ERP_FIELD_"+key);
     }
+    // 中文：其他 ERP 列保留原名原值，不用来自动识别物料、换算数量或计算价格。
+    // English: Retained raw ERP columns have no implicit identity, unit-conversion or pricing semantics.
+    if(it.erpExtra!=null){
+      ensure(isObj(it.erpExtra)&&Object.keys(it.erpExtra).length<=220,"ERP_EXTRA_OBJECT");
+      let chars=0;
+      for(const [key,value] of Object.entries(it.erpExtra)){
+        chars+=key.length+String(value).length;
+        ensure(!["__proto__","prototype","constructor"].includes(key)&&key.length<=100&&
+          typeof value==="string"&&value.length<=1000&&chars<=16000,"ERP_EXTRA_VALUE");
+      }
+    }
     lineIds.push(it.lineId);
   }
   for(const sup of s.suppliers){ensure(isObj(sup)&&id(sup.id)&&typeof sup.name==="string","SUPPLIER");supplierIds.push(sup.id)}
@@ -4474,13 +4485,16 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       if(!ws||ws.workspaceId!==workspaceId||ws.revision!==revision)throw Error("本机记录版本不一致，请先恢复或保存");
       model.validate(ws);
       const st=ws.state;
+      // 中文：内部物料明细保留 ERP 原始附加列；供应商外发 RFQ 不含未知字段。
+      // English: Keep raw ERP columns only in internal detail exports, never supplier-facing RFQs.
+      const erpExtraColumns=[...new Set(st.items.flatMap(it=>Object.keys(it.erpExtra||{})))].sort((a,b)=>a.localeCompare(b,"zh-CN",{numeric:true}));
       const quoted=st.quoteRounds.flatMap(r=>(r.lines||[]).map(q=>{
         const item=st.items.find(it=>it.lineId===q.lineId);
         const tiers=(q.tiers||[]).map(t=>t.min+(t.max==null?"+":"-"+t.max)+":"+t.price).join("|");
         return[r.supplierId,r.roundNo,r.revisionNo,r.status,r.termsNote||"",r.evidenceType||"",r.evidenceNote||"",q.lineId,item?.id||q.itemId||"",q.price,q.lead,q.moq,q.status,q.remark||"",tiers];
       }));
       const excel=window.SRMExcel.create([
-        {name:"询价物料",rows:[["RFQ Line ID","存货编码","存货名称","规格型号","所属类别","参考编码1","参考编码2","采购常用单位","询价数量","询价单位"],...st.items.map(it=>[it.lineId,it.id,it.name,it.spec||"",it.cat||"",it.ref1||"",it.ref2||"",it.purchaseUnit||"",it.qty,it.unit])]},
+        {name:"询价物料",rows:[["RFQ Line ID","存货编码","存货名称","规格型号","所属类别","参考编码1","参考编码2","采购常用单位","询价数量","询价单位",...erpExtraColumns],...st.items.map(it=>[it.lineId,it.id,it.name,it.spec||"",it.cat||"",it.ref1||"",it.ref2||"",it.purchaseUnit||"",it.qty,it.unit,...erpExtraColumns.map(k=>it.erpExtra?.[k]||"")])]},
         {name:"供应商",rows:[["往来单位编码","供应商编码","往来单位名称"],...st.suppliers.map(s=>[s.counterpartyCode||s.id,s.supplierCode||s.id,s.name])]},
         {name:"报价明细",rows:[["供应商编码","报价轮次","报价版本","确认状态","整轮商务备注","报价凭证类型","凭证说明","RFQ Line ID","存货编码","报价单价","交期天数","MOQ","报价状态","物料备注","阶梯报价"],...quoted]}
       ]);
