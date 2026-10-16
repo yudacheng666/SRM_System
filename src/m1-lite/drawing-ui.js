@@ -21,7 +21,7 @@
   line.replaceChildren();
   for(const it of ls){
    const op=document.createElement("option");op.value=it.lineId;
-   op.textContent=it.id+" · "+it.name+" · "+it.lineId;line.appendChild(op);
+   op.textContent=it.id+" · "+it.name+" · 规格 "+(it.spec||"未填写")+" · "+it.lineId;line.appendChild(op);
   }
   if(ls.some(x=>x.lineId===old))line.value=old;
   const it=chosen(),all=copies();

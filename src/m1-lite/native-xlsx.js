@@ -7,7 +7,7 @@
  */
 (function(root){
 "use strict";
-const MAX_INPUT=12*1024*1024,MAX_PART=32*1024*1024,MAX_PARTS=160,MAX_ROWS=20000,MAX_COLS=80;
+const MAX_INPUT=12*1024*1024,MAX_PART=32*1024*1024,MAX_PARTS=160,MAX_ROWS=20000,MAX_COLS=256;
 const u8=s=>new TextEncoder().encode(s),str=b=>new TextDecoder("utf-8",{fatal:true}).decode(b);
 const byteLen=s=>u8(s).length;
 function err(message){throw Error("XLSX: "+message)}
@@ -108,7 +108,7 @@ function parseSheet(text,shared){
   for(const cell of [...row.children].filter(x=>x.localName==="c")){
    if(first(cell,"f"))err("发现公式单元格；请在 Excel 中粘贴为值后重新导入");
    const col=excelCol(cell.getAttribute("r"));
-   if(col>=MAX_COLS)err("列数超过 80 列限制");
+   if(col>=MAX_COLS)err("列数超过 256 列限制");
    const type=cell.getAttribute("t")||"n",v=first(cell,"v")?.textContent||"";
    let value;
    if(type==="s"){
@@ -216,3 +216,4 @@ function create(sheets){
 root.SRMExcel=Object.freeze({read,create,MAX_INPUT,MAX_ROWS});
 if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMExcel;
 })(typeof window!=="undefined"?window:globalThis);
+

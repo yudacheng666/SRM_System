@@ -15,6 +15,7 @@ const mandatoryRfq=[
 ];
 const rfqExtras=[
  {key:"category",name:"所属类别"},
+ {key:"spec",name:"规格型号"},
  {key:"lead",name:"交期"},
  {key:"moq",name:"MOQ"},
  {key:"remark",name:"物料备注"}
@@ -28,6 +29,10 @@ const summaryRequired=[
 const summaryOptional=[
  {key:"name",name:"存货名称"},
  {key:"category",name:"所属类别"},
+ {key:"spec",name:"规格型号"},
+ {key:"ref1",name:"参考编码1"},
+ {key:"ref2",name:"参考编码2"},
+ {key:"purchaseUnit",name:"采购常用单位"},
  {key:"common",name:"是否共同有效报价"},
  {key:"lowest",name:"最低适用单价"},
  {key:"award",name:"最终选择供应商"},
@@ -47,6 +52,10 @@ const historyRequired=[
 const historyOptional=[
  {key:"supplierName",name:"往来单位名称"},
  {key:"name",name:"存货名称"},
+ {key:"spec",name:"规格型号"},
+ {key:"ref1",name:"参考编码1"},
+ {key:"ref2",name:"参考编码2"},
+ {key:"purchaseUnit",name:"采购常用单位"},
  {key:"qty",name:"询价数量"},
  {key:"unit",name:"询价单位"},
  {key:"price",name:"报价单价"},
@@ -125,7 +134,7 @@ function rfq(ws,supplierId,chosen){
  const cols=fieldSelection("rfq",chosen);
  const cells={
   lineId:it=>it.lineId,code:it=>String(it.id),name:it=>it.name,quantity:it=>it.qty,
-  unit:it=>it.unit,price:()=>"",status:()=>"",category:it=>it.cat||"",
+  unit:it=>it.unit,price:()=>"",status:()=>"",category:it=>it.cat||"",spec:it=>it.spec||"",
   lead:()=>"",moq:()=>"",remark:()=>""
  };
  const rows=[cols.map(f=>f.name),...lines.map(it=>cols.map(f=>cells[f.key](it)))];
@@ -155,6 +164,7 @@ function comparison(ws,selectedSuppliers,selectSummary,selectHistory){
  let commonCount=0;
  const sourceValues={
   lineId:it=>it.lineId,code:it=>it.id,name:it=>it.name,category:it=>it.cat||"",
+  spec:it=>it.spec||"",ref1:it=>it.ref1||"",ref2:it=>it.ref2||"",purchaseUnit:it=>it.purchaseUnit||"",
   quantity:it=>it.qty,unit:it=>it.unit
  };
  for(const it of activeItems){
@@ -214,7 +224,9 @@ function comparison(ws,selectedSuppliers,selectSummary,selectHistory){
    const val={
     supplierCode:r.supplierId,supplierName:supMap.get(r.supplierId)?.name||"",
     round:r.roundNo,revision:r.revisionNo,confirmed:r.status==="confirmed"?"已确认":"草稿（不可用作比价）",
-    lineId:line.lineId,code:it?.id||line.itemId||"",name:it?.name||"",qty:it?.qty??"",unit:it?.unit||"",
+    lineId:line.lineId,code:it?.id||line.itemId||"",name:it?.name||"",
+    spec:it?.spec||"",ref1:it?.ref1||"",ref2:it?.ref2||"",purchaseUnit:it?.purchaseUnit||"",
+    qty:it?.qty??"",unit:it?.unit||"",
     status:line.status==="quoted"?"正常报价":line.status==="noquote"?"未报价":line.status==="cannot"?"不供货":line.status,
     price:line.price??"",applicable:effectivePrice(line,it?.qty)??"",tiers:tierText(line),
     lead:line.lead??"",moq:line.moq??"",terms:r.termsNote||"",note:line.remark||"",
@@ -235,3 +247,4 @@ function comparison(ws,selectedSuppliers,selectSummary,selectHistory){
 root.SRMReports=Object.freeze({fields,rfq,comparison,latestConfirmedQuote,effectivePrice});
 if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMReports;
 })(typeof window!=="undefined"?window:globalThis);
+

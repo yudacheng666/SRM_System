@@ -20,6 +20,16 @@ xlsx('items100.xlsx',[header]+[[f'BIG-{i:03}',f'虚构批量物料{i}','虚构�
 xlsx('duplicates.xlsx',[header,rows[0],rows[0]])
 xlsx('invalid.xlsx',[header,['BAD-001','虚构异常','虚构类别','not-a-number','件']])
 xlsx('suppliers.xlsx',[['往来单位编码','供应商编码','往来单位名称'],['CP-A','SUP-A','虚构供应商A'],['CP-B','SUP-B','虚构供应商B']])
+# 中文：ERP 核心及原始附加列仅使用虚构编码，验证不丢字段和同码不同规格不合并。
+# English: Synthetic ERP source columns test core mapping, raw retention and collision-safe merging.
+erp_header=['存货编码','存货名称','规格型号','所属类别','参考编码1','参考编码2','采购常用单位','询价数量','询价单位','ERP批次属性']
+xlsx('erp_items.xlsx',[erp_header,
+ ['ERP-A1','虚构电机','120W','机加工','OLD-A','ALT-A','套',10,'件','内部批次A'],
+ ['ERP-A1','虚构电机','220W','机加工','OLD-A','ALT-A','套',3,'件','内部批次A'],
+ ['ERP-B2','虚构轴套','M16','标准件','OLD-B','ALT-B','个',2,'个','内部批次B']])
+xlsx('erp_alias_conflict.xlsx',[['存货编码','物料编码','存货名称','询价数量','询价单位'],
+ ['ERP-A1','CONFLICT-ID','虚构冲突物料',1,'件']])
+
 xlsx('quotes.xlsx',[['存货编码','报价单价','交期','MOQ','报价状态','物料备注'],['TST-001','1-9:17.25|10+:16.5',7,1,'正常报价','虚构阶梯报价'],['TST-002','23.75',9,1,'正常报价','虚构报价'],['UNKNOWN','1',1,1,'正常报价','拒绝多报']])
 def pdf(name, label):
     objs=[b'<< /Type /Catalog /Pages 2 0 R >>',b'<< /Type /Pages /Kids [3 0 R 5 0 R] /Count 2 >>']
