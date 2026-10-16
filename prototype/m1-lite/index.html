@@ -1989,6 +1989,7 @@ const mandatoryRfq=[
 ];
 const rfqExtras=[
  {key:"category",name:"所属类别"},
+ {key:"spec",name:"规格型号"},
  {key:"lead",name:"交期"},
  {key:"moq",name:"MOQ"},
  {key:"remark",name:"物料备注"}
@@ -2002,6 +2003,10 @@ const summaryRequired=[
 const summaryOptional=[
  {key:"name",name:"存货名称"},
  {key:"category",name:"所属类别"},
+ {key:"spec",name:"规格型号"},
+ {key:"ref1",name:"参考编码1"},
+ {key:"ref2",name:"参考编码2"},
+ {key:"purchaseUnit",name:"采购常用单位"},
  {key:"common",name:"是否共同有效报价"},
  {key:"lowest",name:"最低适用单价"},
  {key:"award",name:"最终选择供应商"},
@@ -2021,6 +2026,10 @@ const historyRequired=[
 const historyOptional=[
  {key:"supplierName",name:"往来单位名称"},
  {key:"name",name:"存货名称"},
+ {key:"spec",name:"规格型号"},
+ {key:"ref1",name:"参考编码1"},
+ {key:"ref2",name:"参考编码2"},
+ {key:"purchaseUnit",name:"采购常用单位"},
  {key:"qty",name:"询价数量"},
  {key:"unit",name:"询价单位"},
  {key:"price",name:"报价单价"},
@@ -2099,7 +2108,7 @@ function rfq(ws,supplierId,chosen){
  const cols=fieldSelection("rfq",chosen);
  const cells={
   lineId:it=>it.lineId,code:it=>String(it.id),name:it=>it.name,quantity:it=>it.qty,
-  unit:it=>it.unit,price:()=>"",status:()=>"",category:it=>it.cat||"",
+  unit:it=>it.unit,price:()=>"",status:()=>"",category:it=>it.cat||"",spec:it=>it.spec||"",
   lead:()=>"",moq:()=>"",remark:()=>""
  };
  const rows=[cols.map(f=>f.name),...lines.map(it=>cols.map(f=>cells[f.key](it)))];
@@ -2129,6 +2138,7 @@ function comparison(ws,selectedSuppliers,selectSummary,selectHistory){
  let commonCount=0;
  const sourceValues={
   lineId:it=>it.lineId,code:it=>it.id,name:it=>it.name,category:it=>it.cat||"",
+  spec:it=>it.spec||"",ref1:it=>it.ref1||"",ref2:it=>it.ref2||"",purchaseUnit:it=>it.purchaseUnit||"",
   quantity:it=>it.qty,unit:it=>it.unit
  };
  for(const it of activeItems){
@@ -2188,7 +2198,9 @@ function comparison(ws,selectedSuppliers,selectSummary,selectHistory){
    const val={
     supplierCode:r.supplierId,supplierName:supMap.get(r.supplierId)?.name||"",
     round:r.roundNo,revision:r.revisionNo,confirmed:r.status==="confirmed"?"已确认":"草稿（不可用作比价）",
-    lineId:line.lineId,code:it?.id||line.itemId||"",name:it?.name||"",qty:it?.qty??"",unit:it?.unit||"",
+    lineId:line.lineId,code:it?.id||line.itemId||"",name:it?.name||"",
+    spec:it?.spec||"",ref1:it?.ref1||"",ref2:it?.ref2||"",purchaseUnit:it?.purchaseUnit||"",
+    qty:it?.qty??"",unit:it?.unit||"",
     status:line.status==="quoted"?"正常报价":line.status==="noquote"?"未报价":line.status==="cannot"?"不供货":line.status,
     price:line.price??"",applicable:effectivePrice(line,it?.qty)??"",tiers:tierText(line),
     lead:line.lead??"",moq:line.moq??"",terms:r.termsNote||"",note:line.remark||"",
@@ -3478,7 +3490,7 @@ function renderRfqPreview(){
   if(!previewSupplierId||!list.some(s=>s.id===previewSupplierId))previewSupplierId=list[0].id;
   const sup=list.find(s=>s.id===previewSupplierId),rows=items.filter(it=>getSet(it.lineId).has(previewSupplierId));
   const docs=[],missing=[];rows.forEach(it=>{const ds=drawingDocsForItem(it);if(!ds.length&&it.drawingStatus!=="not_required")missing.push(it);ds.forEach(d=>{if(!docs.some(x=>(x.sha256||x.name)===(d.sha256||d.name)))docs.push({...d,itemId:it.id})})});
-  rfqPreviewContent.innerHTML=`<div class="rfqSupplierNav">${list.map(s=>{const n=items.filter(it=>getSet(it.lineId).has(s.id)).length;return `<button class="btn ${s.id===previewSupplierId?"soft":""}" data-rfq-supplier="${s.id}">${esc(s.name)} · ${n} 项</button>`}).join("")}</div><div class="rfqDoc"><div class="rfqDocHead"><div><b>询价包 ${window.SRMPilot?.isBuyer()?esc(window.SRMPilot.snapshot().workspaceId)+" · 第"+window.SRMPilot.revision()+"版":"RFQ-DEMO-001 · Rev.0"}</b><div class="small muted">供应商：${esc(sup.name)}</div></div><div class="small">物料 ${rows.length} 项 · PDF ${docs.length} 个 · 缺图纸 ${missing.length} 项</div></div><div class="notice" style="margin-bottom:10px"><b>附件检查：</b>应按物料范围附带 PDF 图纸；当前找到 ${docs.length} 个唯一 PDF。${missing.length?` <span class="dangertext">缺图纸：${missing.map(x=>esc(x.id)).join("、")}</span>`:" 无缺失。"}</div><table><thead><tr><th>序号</th><th>RFQ Line ID</th><th>物料编码</th><th>名称</th><th>数量</th><th>单位</th><th>单价</th><th>交期</th><th>MOQ</th></tr></thead><tbody>${rows.map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.lineId)}</td><td>${esc(it.id)}</td><td>${esc(it.name)}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td></td><td></td><td></td></tr>`).join("")}</tbody></table><div class="coverageDetails"><b>将打包的 PDF：</b><div class="small">${docs.length?docs.map(d=>esc(d.name)).join("、"):"无"} </div></div></div>`;
+  rfqPreviewContent.innerHTML=`<div class="rfqSupplierNav">${list.map(s=>{const n=items.filter(it=>getSet(it.lineId).has(s.id)).length;return `<button class="btn ${s.id===previewSupplierId?"soft":""}" data-rfq-supplier="${s.id}">${esc(s.name)} · ${n} 项</button>`}).join("")}</div><div class="rfqDoc"><div class="rfqDocHead"><div><b>询价包 ${window.SRMPilot?.isBuyer()?esc(window.SRMPilot.snapshot().workspaceId)+" · 第"+window.SRMPilot.revision()+"版":"RFQ-DEMO-001 · Rev.0"}</b><div class="small muted">供应商：${esc(sup.name)}</div></div><div class="small">物料 ${rows.length} 项 · PDF ${docs.length} 个 · 缺图纸 ${missing.length} 项</div></div><div class="notice" style="margin-bottom:10px"><b>附件检查：</b>应按物料范围附带 PDF 图纸；当前找到 ${docs.length} 个唯一 PDF。${missing.length?` <span class="dangertext">缺图纸：${missing.map(x=>esc(x.id)).join("、")}</span>`:" 无缺失。"}</div><table><thead><tr><th>序号</th><th>RFQ Line ID</th><th>存货编码</th><th>存货名称</th><th>规格型号</th><th>数量</th><th>单位</th><th>单价</th><th>交期</th><th>MOQ</th></tr></thead><tbody>${rows.map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.lineId)}</td><td>${esc(it.id)}</td><td>${esc(it.name)}</td><td>${esc(it.spec||"")}</td><td>${it.qty}</td><td>${esc(it.unit)}</td><td></td><td></td><td></td></tr>`).join("")}</tbody></table><div class="coverageDetails"><b>将打包的 PDF：</b><div class="small">${docs.length?docs.map(d=>esc(d.name)).join("、"):"无"} </div></div></div>`;
   document.querySelectorAll("[data-rfq-supplier]").forEach(b=>b.onclick=()=>{previewSupplierId=b.dataset.rfqSupplier;renderRfqPreview()});
 }
 previewBtn.onclick=()=>{rfqPreviewModal.classList.add("open");rfqPreviewModal.setAttribute("aria-hidden","false");renderRfqPreview()};
@@ -4440,7 +4452,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
         return[r.supplierId,r.roundNo,r.revisionNo,r.status,r.termsNote||"",r.evidenceType||"",r.evidenceNote||"",q.lineId,item?.id||q.itemId||"",q.price,q.lead,q.moq,q.status,q.remark||"",tiers];
       }));
       const excel=window.SRMExcel.create([
-        {name:"询价物料",rows:[["RFQ Line ID","存货编码","存货名称","所属类别","询价数量","询价单位"],...st.items.map(it=>[it.lineId,it.id,it.name,it.cat||"",it.qty,it.unit])]},
+        {name:"询价物料",rows:[["RFQ Line ID","存货编码","存货名称","规格型号","所属类别","参考编码1","参考编码2","采购常用单位","询价数量","询价单位"],...st.items.map(it=>[it.lineId,it.id,it.name,it.spec||"",it.cat||"",it.ref1||"",it.ref2||"",it.purchaseUnit||"",it.qty,it.unit])]},
         {name:"供应商",rows:[["往来单位编码","供应商编码","往来单位名称"],...st.suppliers.map(s=>[s.counterpartyCode||s.id,s.supplierCode||s.id,s.name])]},
         {name:"报价明细",rows:[["供应商编码","报价轮次","报价版本","确认状态","整轮商务备注","报价凭证类型","凭证说明","RFQ Line ID","存货编码","报价单价","交期天数","MOQ","报价状态","物料备注","阶梯报价"],...quoted]}
       ]);
