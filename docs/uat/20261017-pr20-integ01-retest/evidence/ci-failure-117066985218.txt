@@ -1,0 +1,60 @@
+2026-10-16T16:09:26.3676933Z   1) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:472:1 › 14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯 
+2026-10-16T16:09:26.3677977Z 
+2026-10-16T16:09:26.3678403Z     [31mTest timeout of 90000ms exceeded.[39m
+2026-10-16T16:09:26.3678807Z 
+2026-10-16T16:09:26.3679192Z     Error: locator.check: Test timeout of 90000ms exceeded.
+2026-10-16T16:09:26.3679835Z     Call log:
+2026-10-16T16:09:26.3680717Z     [2m  - waiting for locator('#commonScopePicker input:not(:checked)').first()[22m
+2026-10-16T16:09:26.3685591Z     [2m    - locator resolved to <input type="checkbox" data-common-supplier="SUP-A"/>[22m
+2026-10-16T16:09:26.3686659Z     [2m  - attempting click action[22m
+2026-10-16T16:09:26.3687858Z     [2m    - waiting for element to be visible, enabled and stable[22m
+2026-10-16T16:09:26.3688881Z     [2m    - element is visible, enabled and stable[22m
+2026-10-16T16:09:26.3690060Z     [2m    - scrolling into view if needed[22m
+2026-10-16T16:09:26.3690851Z     [2m    - done scrolling[22m
+2026-10-16T16:09:26.3691519Z     [2m    - performing click action[22m
+2026-10-16T16:09:26.3692501Z     [2m    - click action done[22m
+2026-10-16T16:09:26.3693339Z     [2m    - waiting for scheduled navigations to finish[22m
+2026-10-16T16:09:26.3694195Z     [2m    - navigations have finished[22m
+2026-10-16T16:09:26.3695306Z     [2m    - locator resolved to <input type="checkbox" data-common-supplier="SUP-B"/>[22m
+2026-10-16T16:09:26.3696266Z     [2m  - attempting click action[22m
+2026-10-16T16:09:26.3697248Z     [2m    - waiting for element to be visible, enabled and stable[22m
+2026-10-16T16:09:26.3698230Z     [2m    - element is visible, enabled and stable[22m
+2026-10-16T16:09:26.3699084Z     [2m    - scrolling into view if needed[22m
+2026-10-16T16:09:26.3699782Z     [2m    - done scrolling[22m
+2026-10-16T16:09:26.3700479Z     [2m    - performing click action[22m
+2026-10-16T16:09:26.3701195Z     [2m    - click action done[22m
+2026-10-16T16:09:26.3702573Z     [2m    - waiting for scheduled navigations to finish[22m
+2026-10-16T16:09:26.3703463Z     [2m    - navigations have finished[22m
+2026-10-16T16:09:26.3703828Z 
+2026-10-16T16:09:26.3703838Z 
+2026-10-16T16:09:26.3704091Z       475 |   async function exportCurrent(){
+2026-10-16T16:09:26.3704655Z       476 |     await tab(page,'quotes');
+2026-10-16T16:09:26.3705775Z     > 477 |     for(const box of await page.locator('#commonScopePicker input:not(:checked)').all())await box.check();
+2026-10-16T16:09:26.3707056Z           |                                                                                                   ^
+2026-10-16T16:09:26.3708326Z       478 |     await expect(page.locator('#quoteAnalysis')).toContainText('共同有效报价 1 项');
+2026-10-16T16:09:26.3709289Z       479 |     const current=await snapshot(page);
+2026-10-16T16:09:26.3710056Z       480 |     expect(current.workspaceId).toMatch(/^RFQ-/);
+2026-10-16T16:09:26.3711378Z         at exportCurrent (/home/runner/work/SRM_System/SRM_System/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:477:99)
+2026-10-16T16:09:26.3713212Z         at /home/runner/work/SRM_System/SRM_System/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:508:15
+2026-10-16T16:09:26.3713965Z 
+2026-10-16T16:09:26.3714795Z     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+2026-10-16T16:09:26.3716384Z     test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/test-failed-1.png
+2026-10-16T16:09:26.3717817Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-10-16T16:09:26.3718363Z 
+2026-10-16T16:09:26.3719133Z     attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+2026-10-16T16:09:26.3721347Z     test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/attachments/server-log-4db9f893ccb14ac576f3ae148181ac0abfd99510.log
+2026-10-16T16:09:26.3723429Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-10-16T16:09:26.3723979Z 
+2026-10-16T16:09:26.3725014Z     Error Context: test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/error-context.md
+2026-10-16T16:09:26.3725951Z 
+2026-10-16T16:09:26.3726800Z     attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+2026-10-16T16:09:26.3728317Z     test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/trace.zip
+2026-10-16T16:09:26.3729243Z     Usage:
+2026-10-16T16:09:26.3729471Z 
+2026-10-16T16:09:26.3730599Z         npx playwright show-trace test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/trace.zip
+2026-10-16T16:09:26.3731589Z 
+2026-10-16T16:09:26.3732619Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-10-16T16:09:26.3733202Z 
+2026-10-16T16:09:26.3733372Z   1 failed
+2026-10-16T16:09:26.3734842Z     prototype/m1-lite/tests/e2e/acceptance.spec.cjs:472:1 › 14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯 
+2026-10-16T16:09:26.3736109Z   38 passed (6.4m)

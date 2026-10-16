@@ -1,0 +1,28 @@
+# 原生截图索引 / Screenshots
+
+24张未经修改的Chromium截图：19张主操作、4张两版异常探针、1张Trace Viewer。
+
+- [10-R2-A-single-spec-scope](evidence/10-R2-A-single-spec-scope.png)
+- [11-R2-A-carry-confirmed](evidence/11-R2-A-carry-confirmed.png)
+- [12-R2-B-two-spec-scope](evidence/12-R2-B-two-spec-scope.png)
+- [13-R2-B-missing-M20-confirmed](evidence/13-R2-B-missing-M20-confirmed.png)
+- [14-R2-comparison](evidence/14-R2-comparison.png)
+- [demo-download-unavailable](evidence/demo-download-unavailable.png)
+- [new-P1-F5-actual-export](evidence/new-P1-F5-actual-export.png)
+- [new-P1-R1-actual-export](evidence/new-P1-R1-actual-export.png)
+- [new-P1-R2-actual-export](evidence/new-P1-R2-actual-export.png)
+- [new-P1-confirmed-line-drawing-controls-locked](evidence/new-P1-confirmed-line-drawing-controls-locked.png)
+- [new-P1-restart-actual-export](evidence/new-P1-restart-actual-export.png)
+- [new-P1-restart-return-actual-export](evidence/new-P1-restart-return-actual-export.png)
+- [new-P1-switched-back-actual-export](evidence/new-P1-switched-back-actual-export.png)
+- [new-P2-F5-actual-export](evidence/new-P2-F5-actual-export.png)
+- [new-P2-first-actual-export](evidence/new-P2-first-actual-export.png)
+- [new-P2-restart-F5-actual-export](evidence/new-P2-restart-F5-actual-export.png)
+- [new-P2-restart-actual-export](evidence/new-P2-restart-actual-export.png)
+- [new-cross-probe-error](evidence/new-cross-probe-error.png)
+- [new-cross-probe-reload](evidence/new-cross-probe-reload.png)
+- [new-demo-labelled-export](evidence/new-demo-labelled-export.png)
+- [old-cross-probe-error](evidence/old-cross-probe-error.png)
+- [old-cross-probe-reload](evidence/old-cross-probe-reload.png)
+- [old-original-actual-export](evidence/old-original-actual-export.png)
+- [trace-viewer-validation](evidence/trace-viewer-validation.png)
