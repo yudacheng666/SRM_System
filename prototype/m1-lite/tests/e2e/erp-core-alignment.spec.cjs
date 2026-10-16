@@ -200,3 +200,122 @@ test('ERP04: new ERP fields are searchable/editable, internal-vs-supplier export
   expect(internalWorkbook.rows.some(row=>row[j]==='内部批次B')).toBe(true);
 
 });
+
+
+// PR15 F1: UI-exported material tab must remain re-importable repeatedly with unique identity headings.
+test('ERP06: repeated internal XLSX export and UI import keep current/source RFQ IDs distinct',async({page,app})=>{
+  await createBuyer(page);
+  await page.locator('#importFile').setInputFiles(path.join(app.fixture,'erp_items.xlsx'));
+  await expect(page.locator('#confirmImportRows')).toBeEnabled();
+  await page.locator('#confirmImportRows').click();
+  const first=await snap(page);
+  expect(first.state.items).toHaveLength(3);
+  const initialIds=first.state.items.map(x=>x.lineId);
+  async function roundtrip(){
+    await expect.poll(async()=>{
+      const ws=await snap(page),res=await page.request.get(URL+'/api/workspaces/'+ws.workspaceId);
+      return res.ok()&&(await res.json()).workspace.revision>0;
+    }).toBe(true);
+    await open(page,'#uiDataTools');
+    await expect(page.locator('#pilotExportExcel')).toBeEnabled();
+    const download=page.waitForEvent('download');
+    await page.locator('#pilotExportExcel').click();
+    const raw=fs.readFileSync(await(await download).path());
+    return page.evaluate(async data=>{
+      const workbook=await SRMExcel.read(Uint8Array.from(data).buffer,['ERP批次属性']);
+      const headers=workbook.rows[0],rows=workbook.rows.slice(1);
+      const blob=SRMExcel.create([{name:'询价物料',rows:workbook.rows}]);
+      return{headers,rows,bytes:Array.from(new Uint8Array(await blob.arrayBuffer()))};
+    },Array.from(raw));
+  }
+  let exported=await roundtrip();
+  expect(exported.headers.filter(h=>h==='RFQ Line ID')).toHaveLength(1);
+  expect(exported.headers).not.toContain('来源 RFQ Line ID');
+  for(let i=0;i<2;i++){
+    await createBuyer(page);
+    await page.locator('#importFile').setInputFiles({name:'roundtrip-'+i+'.xlsx',
+      mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:Buffer.from(exported.bytes)});
+    await expect(page.locator('#confirmImportRows')).toBeEnabled();
+    await page.locator('#confirmImportRows').click();
+    const fresh=await snap(page);
+    expect(fresh.state.items).toHaveLength(3);
+    expect(fresh.state.items.every(it=>!!it.erpExtra['来源 RFQ Line ID'])).toBe(true);
+    expect(fresh.state.items.map(it=>it.erpExtra['ERP批次属性'])).toEqual(['内部批次A','内部批次A','内部批次B']);
+    exported=await roundtrip();
+    expect(exported.headers.filter(h=>h==='RFQ Line ID')).toHaveLength(1);
+    expect(exported.headers.filter(h=>h==='来源 RFQ Line ID')).toHaveLength(1);
+    expect(new Set(exported.headers).size).toBe(exported.headers.length);
+    expect(exported.rows.map(row=>row[exported.headers.indexOf('来源 RFQ Line ID')])).toEqual(initialIds);
+    expect(exported.rows.map(row=>row[exported.headers.indexOf('RFQ Line ID')])).toEqual(fresh.state.items.map(it=>it.lineId));
+  }
+});
+
+// PR15 F2: same-code/different-spec RFQ rows must be identifiable at every decision surface.
+test('ERP07: specifications visibly distinguish drawing candidates and supplier allocation',async({page,app},info)=>{
+  await page.setViewportSize({width:1024,height:768});
+  await createBuyer(page);
+  await page.locator('#importFile').setInputFiles(path.join(app.fixture,'erp_items.xlsx'));
+  await page.locator('#confirmImportRows').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="assign"]').click();
+  await expect(page.locator('#assignItemBody')).toContainText('120W');
+  await expect(page.locator('#assignItemBody')).toContainText('220W');
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="items"]').click();
+  if(!await page.locator('#uiDrawingTools').evaluate(x=>x.open))
+    await page.locator('#uiOpenDrawings').click();
+  const pdf=fs.readFileSync(path.join(app.fixture,'TST-001_A.pdf'));
+  await page.locator('#pilotBatchDrawingFiles').setInputFiles({name:'ERP-A1_A.pdf',mimeType:'application/pdf',buffer:pdf});
+  await page.locator('#pilotBatchDrawingAnalyze').click();
+  await expect(page.locator('#pilotBatchDrawingPreview')).toContainText('120W');
+  await expect(page.locator('#pilotBatchDrawingPreview')).toContainText('220W');
+  const labels=await page.locator('#pilotBatchDrawingPreview option').allTextContents();
+  expect(labels.some(t=>t.includes('ERP-A1')&&t.includes('120W'))).toBe(true);
+  expect(labels.some(t=>t.includes('ERP-A1')&&t.includes('220W'))).toBe(true);
+  const manual=await page.locator('#pilotBatchDrawingManualLine option').allTextContents();
+  expect(manual.some(t=>t.includes('120W'))).toBe(true);
+  expect(manual.some(t=>t.includes('220W'))).toBe(true);
+  const shot=info.outputPath('pr15-spec-decisions-1024.png');
+  await page.screenshot({path:shot,fullPage:true});
+  await info.attach('pr15-spec-decisions',{path:shot,contentType:'image/png'});
+});
+
+// PR15 F3: missing price must not flatten an explicit confirmed cannot-supply into "unquoted".
+test('ERP08: confirmed cannot supply remains visible in comparison, not a zero-priced offer',async({page,app})=>{
+  await createBuyer(page);
+  await page.locator('#importFile').setInputFiles(path.join(app.fixture,'erp_items.xlsx'));
+  await page.locator('#confirmImportRows').click();
+  await open(page,'#uiSupplierTools');
+  await page.locator('#pilotSupplierExcel').setInputFiles(path.join(app.fixture,'suppliers.xlsx'));
+  await expect(page.locator('#pilotImportSupplierConfirm')).toBeEnabled();
+  await page.locator('#pilotImportSupplierConfirm').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="assign"]').click();
+  await page.locator('#selectAssignAll').click();
+  await page.locator('[data-add="SUP-A"]').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quoteImport"]').click();
+  await page.locator('#quoteImportSupplier').selectOption('SUP-A');
+  const ids=(await snap(page)).state.items.map(it=>it.lineId);
+  await page.locator('#quoteManualItem').fill(ids[0]);
+  await page.locator('#quoteManualStatus').selectOption('cannot');
+  await page.locator('#quoteManualPrice').fill('');
+  await page.locator('#quoteManualAdd').click();
+  await page.locator('#commitQuoteImport').click();
+  await page.locator('#quoteManualItem').fill(ids[1]);
+  await page.locator('#quoteManualStatus').selectOption('noquote');
+  await page.locator('#quoteManualAdd').click();
+  await page.locator('#commitQuoteImport').click();
+  await expect(page.locator('#qcCannot')).toHaveText('1');
+  await expect(page.locator('#qcNoquote')).toHaveText('1');
+  await page.locator('#confirmQuoteRound').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="comparison"]').click();
+  const rows=page.locator('#quoteTable tbody tr');
+  await expect(rows.nth(0)).toContainText('不供货');
+  await expect(rows.nth(1)).toContainText('明确未报价');
+  await expect(rows.nth(2)).toContainText('未报价');
+  await expect(rows.nth(0)).not.toContainText('¥0.00');
+  await page.reload();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="comparison"]').click();
+  await expect(page.locator('#quoteTable tbody tr').nth(0)).toContainText('不供货');
+  const stored=await snap(page);
+  const q=stored.state.quoteRounds.find(x=>x.supplierId==='SUP-A'&&x.status==='confirmed');
+  expect(q.lines.find(x=>x.lineId===ids[0]).status).toBe('cannot');
+  expect(q.lines.find(x=>x.lineId===ids[1]).status).toBe('noquote');
+});
