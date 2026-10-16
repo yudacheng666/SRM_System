@@ -467,3 +467,61 @@ test('13 compact laptop item table after import / 1366首屏物料可见',async 
   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
   await checkFirstRow('Fresh page reload');
 });
+
+
+test('14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯', async ({page,app},info)=>{
+  // 业务必须通过真实 UI：新建→导入物料/供应商→分配→确认报价→指定比较组→下载。
+  // Use real buyer clicks for two independent RFQs, not injected state.
+  async function exportCurrent(){
+    await tab(page,'quotes');
+    for(const box of await page.locator('#commonScopePicker input:not(:checked)').all())await box.check();
+    await expect(page.locator('#quoteAnalysis')).toContainText('共同有效报价 1 项');
+    const current=await snapshot(page);
+    expect(current.workspaceId).toMatch(/^RFQ-/);
+    const downloadPromise=page.waitForEvent('download');
+    await page.locator('#exportSelectedCommonScope').click();
+    const downloaded=await downloadPromise;
+    const name=downloaded.suggestedFilename();
+    const raw=fs.readFileSync(await downloaded.path());
+    expect(raw.subarray(0,3)).toEqual(Buffer.from([0xEF,0xBB,0xBF]));
+    const csv=raw.toString('utf8').replace(/^\uFEFF/,'');
+    const lines=csv.split(/\r\n/).filter(Boolean);
+    const values=lines.map(line=>line.split(',').map(cell=>{
+      expect(cell.startsWith('"')&&cell.endsWith('"')).toBe(true);
+      return cell.slice(1,-1).replace(/""/g,'"');
+    }));
+    const headers=values[0];
+    expect(headers.slice(0,6)).toEqual(['RFQ编号','RFQ Line ID','存货编码','存货名称','询价数量','询价单位']);
+    expect(new Set(headers).size).toBe(headers.length);
+    expect(values).toHaveLength(3); // Header + shared line + totals.
+    expect(values.every(row=>row.length===headers.length)).toBe(true);
+    expect(values.slice(1).every(row=>row[0]===current.workspaceId)).toBe(true);
+    expect(values[1][1]).toBe(current.state.items.find(it=>it.id==='TST-001').lineId);
+    expect(values[1]).toContain('30.25');
+    expect(values[1]).toContain('33.50');
+    expect(name).toBe(current.workspaceId+'_指定供应商组同范围报价.csv');
+    expect(name).not.toContain('RFQ-DEMO-001');
+    return{rfq:current.workspaceId,name,raw,values};
+  }
+  await allocated(page,app);
+  await quotes(page,app);
+  const first=await exportCurrent();
+  await allocated(page,app);
+  await quotes(page,app);
+  const second=await exportCurrent();
+  expect(second.rfq).not.toBe(first.rfq);
+  expect(second.raw.toString('utf8')).not.toContain(first.rfq);
+  expect(first.raw.toString('utf8')).not.toContain(second.rfq);
+
+  await app.stop(app.child);
+  await app.start();
+  await page.reload();
+  const repeated=await exportCurrent();
+  expect(repeated.rfq).toBe(second.rfq);
+  expect(repeated.name).toBe(second.name);
+  expect(repeated.values).toEqual(second.values);
+  await saved(page);
+  const shot=info.outputPath('common-scope-csv-rfq-identity.png');
+  await page.screenshot({path:shot,fullPage:true});
+  await info.attach('common-scope-csv-rfq-identity',{path:shot,contentType:'image/png'});
+});
