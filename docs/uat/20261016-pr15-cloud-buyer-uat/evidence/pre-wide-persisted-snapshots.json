@@ -1,0 +1,775 @@
+[
+  {
+    "format": "srm-workspace",
+    "schemaVersion": 1,
+    "workspaceId": "RFQ-1792128679531-71B0KB",
+    "origin": "buyer",
+    "revision": 17,
+    "state": {
+      "items": [
+        {
+          "id": "TEST-001",
+          "lineId": "RFQ-L00001",
+          "name": "虚构轴",
+          "cat": "机械件",
+          "spec": "M16",
+          "ref1": "R-100",
+          "ref2": "R-200",
+          "purchaseUnit": "盒",
+          "erpExtra": {
+            "ERP批次属性": "内部标签A"
+          },
+          "qty": 5,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 2,
+          "sources": [
+            {
+              "source": "task-materials.xlsx · 工作表：云端虚构采购 · 真实 XLSX · 第2行",
+              "qty": 2
+            },
+            {
+              "source": "task-materials.xlsx · 工作表：云端虚构采购 · 真实 XLSX · 第3行",
+              "qty": 3
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 1,
+          "drawings": [
+            {
+              "id": "3187ce96e709d192",
+              "sha256": "3187ce96e709d192010516eef8562ee11edcfe19d37f5cf66731f7ddbcea8887",
+              "name": "TEST-001_B.pdf",
+              "revision": "B",
+              "size": 880,
+              "createdAt": "2026-10-16T05:37:47.571Z"
+            }
+          ],
+          "drawingStatus": "required"
+        },
+        {
+          "id": "TEST-001",
+          "lineId": "RFQ-L00003",
+          "name": "虚构轴",
+          "cat": "机械件",
+          "spec": "M20",
+          "ref1": "R-100",
+          "ref2": "R-200",
+          "purchaseUnit": "盒",
+          "erpExtra": {
+            "ERP批次属性": "内部标签A"
+          },
+          "qty": 4,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 4,
+          "sources": [
+            {
+              "source": "task-materials.xlsx · 工作表：云端虚构采购 · 真实 XLSX · 第4行",
+              "qty": 4
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 2,
+          "drawings": [],
+          "drawingStatus": "not_required"
+        },
+        {
+          "id": "TEST-002",
+          "lineId": "RFQ-L00004",
+          "name": "虚构支架-采购复核",
+          "cat": "钣金件",
+          "spec": "板厚4-复核",
+          "ref1": "R-101",
+          "ref2": "",
+          "purchaseUnit": "件",
+          "erpExtra": {
+            "ERP批次属性": "内部标签B"
+          },
+          "qty": 6,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 5,
+          "sources": [
+            {
+              "source": "task-materials.xlsx · 工作表：云端虚构采购 · 真实 XLSX · 第5行",
+              "qty": 6
+            },
+            {
+              "source": "人工编辑（原位修改）",
+              "qty": 6
+            },
+            {
+              "source": "人工编辑（原位修改）",
+              "qty": 6
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 3,
+          "drawings": [
+            {
+              "id": "c77b15711304bfcf",
+              "sha256": "c77b15711304bfcf2353fefc296c6b320d7e5075449d7bc5ab0f8ec79aeaa755",
+              "name": "TEST-002_A.pdf",
+              "revision": "A",
+              "size": 888,
+              "createdAt": "2026-10-16T05:37:46.475Z"
+            }
+          ]
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "CLOUD-A",
+          "counterpartyCode": "CLOUD-CP-A",
+          "supplierCode": "CLOUD-A",
+          "name": "虚构供应甲",
+          "roles": [
+            "supplier"
+          ],
+          "reason": "本次 Excel 导入"
+        },
+        {
+          "id": "CLOUD-B",
+          "counterpartyCode": "CLOUD-CP-B",
+          "supplierCode": "CLOUD-B",
+          "name": "虚构供应乙",
+          "roles": [
+            "supplier"
+          ],
+          "reason": "本次 Excel 导入"
+        },
+        {
+          "id": "CLOUD-C",
+          "counterpartyCode": "CLOUD-CP-C",
+          "supplierCode": "CLOUD-C",
+          "name": "虚构供应丙",
+          "roles": [
+            "supplier"
+          ],
+          "reason": "本次 Excel 导入"
+        }
+      ],
+      "assignments": [
+        {
+          "key": "RFQ-L00001",
+          "values": [
+            "CLOUD-A",
+            "CLOUD-B"
+          ]
+        },
+        {
+          "key": "RFQ-L00003",
+          "values": [
+            "CLOUD-C"
+          ]
+        },
+        {
+          "key": "RFQ-L00004",
+          "values": [
+            "CLOUD-A",
+            "CLOUD-B",
+            "CLOUD-C"
+          ]
+        }
+      ],
+      "quoteRounds": [
+        {
+          "supplierId": "CLOUD-A",
+          "roundNo": 1,
+          "revisionNo": 1,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00001",
+              "itemId": "TEST-001",
+              "price": null,
+              "tiers": [
+                {
+                  "min": 1,
+                  "max": 4,
+                  "price": 22
+                },
+                {
+                  "min": 5,
+                  "max": null,
+                  "price": 20
+                }
+              ],
+              "lead": 7,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构甲阶梯价，数量五件",
+              "source": "file",
+              "original": {
+                "price": "1-4:22|5+:20",
+                "lead": "7",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T05:43:18.427Z"
+            },
+            {
+              "lineId": "RFQ-L00004",
+              "itemId": "TEST-002",
+              "price": 30,
+              "tiers": [],
+              "lead": 5,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构甲支架含运费",
+              "source": "file",
+              "original": {
+                "price": "30",
+                "lead": "5",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T05:43:18.427Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00001",
+            "RFQ-L00004"
+          ],
+          "evidenceType": "email_attachment",
+          "evidenceNote": "虚构邮件编号CLOUD-A-01，仅来源说明，原邮件未归档",
+          "termsNote": "虚构条款：人民币含税13%，月结30天，含运费",
+          "createdAt": "2026-10-16T05:42:07.431Z",
+          "confirmedAt": "2026-10-16T05:43:18.617Z"
+        },
+        {
+          "supplierId": "CLOUD-B",
+          "roundNo": 1,
+          "revisionNo": 1,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00004",
+              "itemId": "TEST-002",
+              "price": 32,
+              "tiers": [],
+              "lead": 8,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构乙支架",
+              "source": "paste",
+              "original": {
+                "price": "32",
+                "lead": "8",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T05:43:19.817Z"
+            },
+            {
+              "lineId": "RFQ-L00001",
+              "itemId": "TEST-001",
+              "price": 19,
+              "tiers": [],
+              "lead": 3,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构乙三天交期优势",
+              "source": "manual",
+              "original": {
+                "price": "19",
+                "lead": "3",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T05:43:20.827Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00001",
+            "RFQ-L00004"
+          ],
+          "evidenceType": "chat_screenshot",
+          "evidenceNote": "虚构聊天报价说明，聊天截图原件未保存",
+          "termsNote": "",
+          "createdAt": "2026-10-16T05:43:18.847Z",
+          "confirmedAt": "2026-10-16T05:43:20.985Z"
+        },
+        {
+          "supplierId": "CLOUD-C",
+          "roundNo": 1,
+          "revisionNo": 1,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00003",
+              "itemId": "TEST-001",
+              "price": null,
+              "tiers": [],
+              "lead": null,
+              "moq": null,
+              "status": "cannot",
+              "remark": "虚构M20不供货",
+              "source": "manual",
+              "original": {
+                "price": "",
+                "lead": "",
+                "moq": "",
+                "status": "cannot"
+              },
+              "updatedAt": "2026-10-16T05:44:16.796Z"
+            },
+            {
+              "lineId": "RFQ-L00004",
+              "itemId": "TEST-002",
+              "price": null,
+              "tiers": [],
+              "lead": null,
+              "moq": null,
+              "status": "noquote",
+              "remark": "虚构支架待评估未报价",
+              "source": "manual",
+              "original": {
+                "price": "",
+                "lead": "",
+                "moq": "",
+                "status": "noquote"
+              },
+              "updatedAt": "2026-10-16T05:44:17.459Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00003",
+            "RFQ-L00004"
+          ],
+          "evidenceType": "manual_other",
+          "evidenceNote": "虚构人工确认丙无供货能力，无原始附件",
+          "termsNote": "",
+          "createdAt": "2026-10-16T05:43:21.073Z",
+          "confirmedAt": "2026-10-16T05:44:17.571Z"
+        },
+        {
+          "supplierId": "CLOUD-A",
+          "roundNo": 2,
+          "revisionNo": 1,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00001",
+              "itemId": "TEST-001",
+              "price": 18.5,
+              "tiers": [],
+              "lead": 7,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构第二轮M16降价",
+              "source": "manual",
+              "original": {
+                "price": "18.5",
+                "lead": "7",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T05:44:19.783Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00001"
+          ],
+          "evidenceType": "manual_other",
+          "evidenceNote": "虚构电话议价，仅文字说明，无录音归档",
+          "termsNote": "虚构第二轮只谈M16，其余沿用前轮",
+          "createdAt": "2026-10-16T05:44:18.536Z",
+          "confirmedAt": "2026-10-16T05:44:19.881Z"
+        },
+        {
+          "supplierId": "CLOUD-A",
+          "roundNo": 2,
+          "revisionNo": 2,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00001",
+              "itemId": "TEST-001",
+              "price": 18,
+              "tiers": [],
+              "lead": 7,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构二轮修订价18元",
+              "source": "manual",
+              "original": {
+                "price": "18.5",
+                "lead": "7",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T05:44:20.179Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00001"
+          ],
+          "evidenceType": "manual_other",
+          "evidenceNote": "",
+          "termsNote": "虚构第二轮只谈M16，其余沿用前轮",
+          "createdAt": "2026-10-16T05:44:20.000Z",
+          "confirmedAt": "2026-10-16T05:44:20.380Z"
+        },
+        {
+          "supplierId": "CLOUD-B",
+          "roundNo": 1,
+          "revisionNo": 2,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00004",
+              "itemId": "TEST-002",
+              "price": 32,
+              "tiers": [],
+              "lead": 8,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构乙支架",
+              "source": "revision-copy",
+              "original": {
+                "price": "32",
+                "lead": "8",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T05:43:19.817Z"
+            },
+            {
+              "lineId": "RFQ-L00001",
+              "itemId": "TEST-001",
+              "price": 21,
+              "tiers": [],
+              "lead": 3,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构乙提价后需复核",
+              "source": "manual",
+              "original": {
+                "price": "19",
+                "lead": "3",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T05:45:29.818Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00001",
+            "RFQ-L00004"
+          ],
+          "evidenceType": "chat_screenshot",
+          "evidenceNote": "",
+          "termsNote": "",
+          "createdAt": "2026-10-16T05:45:29.665Z",
+          "confirmedAt": "2026-10-16T05:45:29.930Z"
+        }
+      ],
+      "awards": [
+        {
+          "key": "RFQ-L00001",
+          "value": "CLOUD-B"
+        },
+        {
+          "key": "RFQ-L00004",
+          "value": "CLOUD-A"
+        }
+      ],
+      "awardReasons": [
+        {
+          "key": "RFQ-L00001",
+          "value": "虚构项目仍需3天交付，复核乙21元，接受较最低价总增15元"
+        }
+      ],
+      "manualAwards": [
+        "RFQ-L00001"
+      ],
+      "awardReviewIds": [],
+      "supplierPool": [
+        "CLOUD-A",
+        "CLOUD-B",
+        "CLOUD-C"
+      ],
+      "selectedCompareSuppliers": [
+        "CLOUD-A",
+        "CLOUD-B"
+      ],
+      "customFields": [],
+      "lineSeq": 6,
+      "createdSeq": 3,
+      "quoteComparisonMode": "returned"
+    }
+  },
+  {
+    "format": "srm-workspace",
+    "schemaVersion": 1,
+    "workspaceId": "RFQ-1792128758449-LBI3MR",
+    "origin": "buyer",
+    "revision": 2,
+    "state": {
+      "items": [
+        {
+          "id": "TEST-001",
+          "lineId": "RFQ-L00001",
+          "name": "虚构轴",
+          "cat": "机械件",
+          "spec": "M16",
+          "ref1": "R-100",
+          "ref2": "R-200",
+          "purchaseUnit": "盒",
+          "erpExtra": {
+            "ERP批次属性": "内部标签A"
+          },
+          "qty": 5,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 2,
+          "sources": [
+            {
+              "source": "剪贴板批量粘贴预览 · 第2行",
+              "qty": 2
+            },
+            {
+              "source": "剪贴板批量粘贴预览 · 第3行",
+              "qty": 3
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 1
+        },
+        {
+          "id": "TEST-001",
+          "lineId": "RFQ-L00003",
+          "name": "虚构轴",
+          "cat": "机械件",
+          "spec": "M20",
+          "ref1": "R-100",
+          "ref2": "R-200",
+          "purchaseUnit": "盒",
+          "erpExtra": {
+            "ERP批次属性": "内部标签A"
+          },
+          "qty": 4,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 4,
+          "sources": [
+            {
+              "source": "剪贴板批量粘贴预览 · 第4行",
+              "qty": 4
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 2
+        },
+        {
+          "id": "TEST-002",
+          "lineId": "RFQ-L00004",
+          "name": "虚构支架",
+          "cat": "钣金件",
+          "spec": "板厚4",
+          "ref1": "R-101",
+          "ref2": "",
+          "purchaseUnit": "件",
+          "erpExtra": {
+            "ERP批次属性": "内部标签B"
+          },
+          "qty": 6,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 5,
+          "sources": [
+            {
+              "source": "剪贴板批量粘贴预览 · 第5行",
+              "qty": 6
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 3
+        },
+        {
+          "id": "TEST-001",
+          "lineId": "RFQ-L00005",
+          "name": "虚构轴",
+          "cat": "机械件",
+          "spec": "M16",
+          "ref1": "R-100",
+          "ref2": "R-200",
+          "purchaseUnit": "盒",
+          "erpExtra": {
+            "ERP批次属性": "内部标签A"
+          },
+          "qty": 1,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 2,
+          "sources": [
+            {
+              "source": "剪贴板批量粘贴预览 · 第2行",
+              "qty": 1
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 4
+        }
+      ],
+      "suppliers": [],
+      "assignments": [
+        {
+          "key": "RFQ-L00001",
+          "values": []
+        },
+        {
+          "key": "RFQ-L00003",
+          "values": []
+        },
+        {
+          "key": "RFQ-L00004",
+          "values": []
+        },
+        {
+          "key": "RFQ-L00005",
+          "values": []
+        }
+      ],
+      "quoteRounds": [],
+      "awards": [],
+      "awardReasons": [],
+      "manualAwards": [],
+      "awardReviewIds": [],
+      "supplierPool": [],
+      "selectedCompareSuppliers": [],
+      "customFields": [],
+      "lineSeq": 5,
+      "createdSeq": 4,
+      "quoteComparisonMode": "returned"
+    }
+  },
+  {
+    "format": "srm-workspace",
+    "schemaVersion": 1,
+    "workspaceId": "RFQ-1792129785629-2TN8N8",
+    "origin": "buyer",
+    "revision": 2,
+    "state": {
+      "items": [
+        {
+          "id": "TEST-001",
+          "lineId": "RFQ-L00001",
+          "name": "虚构轴",
+          "cat": "机械件",
+          "spec": "M16",
+          "ref1": "R-100",
+          "ref2": "R-200",
+          "purchaseUnit": "盒",
+          "erpExtra": {
+            "ERP批次属性": "内部标签A"
+          },
+          "qty": 5,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 2,
+          "sources": [
+            {
+              "source": "剪贴板批量粘贴预览 · 第2行",
+              "qty": 2
+            },
+            {
+              "source": "剪贴板批量粘贴预览 · 第3行",
+              "qty": 3
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 1
+        },
+        {
+          "id": "TEST-001",
+          "lineId": "RFQ-L00003",
+          "name": "虚构轴",
+          "cat": "机械件",
+          "spec": "M20",
+          "ref1": "R-100",
+          "ref2": "R-200",
+          "purchaseUnit": "盒",
+          "erpExtra": {
+            "ERP批次属性": "内部标签A"
+          },
+          "qty": 4,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 4,
+          "sources": [
+            {
+              "source": "剪贴板批量粘贴预览 · 第4行",
+              "qty": 4
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 2
+        },
+        {
+          "id": "TEST-002",
+          "lineId": "RFQ-L00004",
+          "name": "虚构支架",
+          "cat": "钣金件",
+          "spec": "板厚4",
+          "ref1": "R-101",
+          "ref2": "",
+          "purchaseUnit": "件",
+          "erpExtra": {
+            "ERP批次属性": "内部标签B"
+          },
+          "qty": 6,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 5,
+          "sources": [
+            {
+              "source": "剪贴板批量粘贴预览 · 第5行",
+              "qty": 6
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 3
+        }
+      ],
+      "suppliers": [],
+      "assignments": [
+        {
+          "key": "RFQ-L00001",
+          "values": []
+        },
+        {
+          "key": "RFQ-L00003",
+          "values": []
+        },
+        {
+          "key": "RFQ-L00004",
+          "values": []
+        }
+      ],
+      "quoteRounds": [],
+      "awards": [],
+      "awardReasons": [],
+      "manualAwards": [],
+      "awardReviewIds": [],
+      "supplierPool": [],
+      "selectedCompareSuppliers": [],
+      "customFields": [],
+      "lineSeq": 4,
+      "createdSeq": 3,
+      "quoteComparisonMode": "returned"
+    }
+  }
+]

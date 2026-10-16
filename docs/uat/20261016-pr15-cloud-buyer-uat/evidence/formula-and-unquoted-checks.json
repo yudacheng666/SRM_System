@@ -1,0 +1,62 @@
+{
+  "formulas": [
+    {
+      "cell": "R2",
+      "formula": "=ROUND(Q2*C2,2)",
+      "independent_result": 90.0
+    },
+    {
+      "cell": "U2",
+      "formula": "=ROUND(T2*C2,2)",
+      "independent_result": 105.0
+    },
+    {
+      "cell": "R3",
+      "formula": "=ROUND(Q3*C3,2)",
+      "independent_result": 180.0
+    },
+    {
+      "cell": "U3",
+      "formula": "=ROUND(T3*C3,2)",
+      "independent_result": 192.0
+    },
+    {
+      "cell": "R4",
+      "formula": "=SUMIF(K2:K3,\"是\",R2:R3)",
+      "independent_result": 270.0
+    },
+    {
+      "cell": "U4",
+      "formula": "=SUMIF(K2:K3,\"是\",U2:U3)",
+      "independent_result": 297.0
+    }
+  ],
+  "unquoted_M20": {
+    "RFQ Line ID": "RFQ-L00003",
+    "存货编码": "TEST-001",
+    "询价数量": 4,
+    "询价单位": "件",
+    "存货名称": "虚构轴",
+    "所属类别": "机械件",
+    "规格型号": "M20",
+    "参考编码1": "R-100",
+    "参考编码2": "R-200",
+    "采购常用单位": "盒",
+    "是否共同有效报价": "否",
+    "最低适用单价": null,
+    "最终选择供应商": null,
+    "选择供应商适用单价": null,
+    "非最低价选择原因": null,
+    "选择待复核": null,
+    "虚构供应甲 (CLOUD-A) 适用单价": null,
+    "虚构供应甲 (CLOUD-A) 行金额": null,
+    "虚构供应甲 (CLOUD-A) 报价轮次": null,
+    "虚构供应乙 (CLOUD-B) 适用单价": null,
+    "虚构供应乙 (CLOUD-B) 行金额": null,
+    "虚构供应乙 (CLOUD-B) 报价轮次": null,
+    "虚构供应丙 (CLOUD-C) 适用单价": null,
+    "虚构供应丙 (CLOUD-C) 行金额": null,
+    "虚构供应丙 (CLOUD-C) 报价轮次": "第1轮/第1版"
+  },
+  "result": "PASS: independent ROUND/SUMIF totals 270/297; unquoted prices/amounts remain empty, not zero; no desktop Excel claim"
+}
