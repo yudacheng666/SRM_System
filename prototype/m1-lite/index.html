@@ -891,6 +891,9 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
             <label>询价单位<input id="itemEditUnit" type="text" style="width:100%"></label>
           </div>
           <div class="small muted" id="itemEditHint" style="margin:10px 0"></div>
+          <details id="itemEditErpExtra" style="display:none;margin:8px 0"><summary class="small">查看保留的其他 ERP 原始字段（只读）</summary>
+            <pre id="itemEditErpExtraPreview" style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px"></pre>
+          </details>
           <div id="itemEditError" class="dangertext small"></div>
           <div class="toolbar" style="justify-content:flex-end;margin-top:12px">
             <button id="itemEditCancel" class="btn" type="button">取消</button>
@@ -2388,6 +2391,9 @@ function openItemEditor(lineId){
   itemEditIdentity.textContent="RFQ Line ID："+it.lineId+"（保持不变）";
   itemEditCode.value=it.id;itemEditDrawingNo.value=it.drawingNo||"";itemEditQty.value=it.qty;itemEditName.value=it.name;itemEditCat.value=it.cat;itemEditUnit.value=it.unit;
   itemEditSpec.value=it.spec||"";itemEditRef1.value=it.ref1||"";itemEditRef2.value=it.ref2||"";itemEditPurchaseUnit.value=it.purchaseUnit||"";
+  const raw=Object.entries(it.erpExtra||{});
+  itemEditErpExtra.style.display=raw.length?"block":"none";
+  itemEditErpExtraPreview.textContent=raw.map(([k,v])=>k+"： "+v).join("\n");
   itemEditHint.textContent=locked?"此询价行已有报价历史，当前只允许查看；请在后续正式修订流程中变更。":"当前属性带出该行原值。M0 尚未接入 ERP 主数据，修改存货编码不会自动更新其他 ERP 属性，也不会合并其他相同编码询价行。";
   for(const input of [itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditSpec,itemEditRef1,itemEditRef2,itemEditPurchaseUnit,itemEditCat,itemEditUnit])input.disabled=locked;
   itemEditSave.disabled=locked;itemEditError.textContent="";
@@ -2602,6 +2608,19 @@ function parseItemRows(text){
   if(table.errors.length){const rows=[];rows._headerErrors=table.errors;return rows}
   const result=table.rows.map(({data,rowNo})=>{
     const errors=[],pick=key=>readErpItemValue(data,key,errors,rowNo);
+    // 中文：未知的 ERP 原始表头只作有界元数据保留，不推测其业务语义。
+    // English: Preserve unrecognized original ERP columns as bounded metadata without inventing semantics.
+    const known=new Set([...Object.values(ERP_ITEM_HEADERS).flat(),"图号","图纸编号","图样代号","Drawing No","Drawing Number"]);
+    const erpExtra=Object.create(null);let extraChars=0,extraCount=0;
+    for(const header of table.headers){
+      if(known.has(header))continue;
+      const value=String(data[header]??"").trim();if(!value)continue;
+      if(["__proto__","prototype","constructor"].includes(header)||header.length>100||value.length>1000||
+         ++extraCount>220||(extraChars+=header.length+value.length)>16000){
+        errors.push("第 "+rowNo+" 行存在过大或不安全的 ERP 原始附加字段："+header);continue;
+      }
+      erpExtra[header]=value;
+    }
     const id=pick("id"),name=pick("name"),cat=pick("cat"),spec=pick("spec"),
       ref1=pick("ref1"),ref2=pick("ref2"),purchaseUnit=pick("purchaseUnit"),
       qtyRaw=pick("qty"),unit=pick("unit"),
@@ -2612,7 +2631,7 @@ function parseItemRows(text){
     if(!unit)errors.push("第 "+rowNo+" 行询价单位不能为空");
     // 中文：采购常用单位仅用于核对，不能当作询价单位或私自换算数量。
     // English: Purchase-unit metadata never substitutes the required RFQ unit or converts quantities.
-    return{id,lineId:nextLineId(),name,cat,spec,ref1,ref2,purchaseUnit,
+    return{id,lineId:nextLineId(),name,cat,spec,ref1,ref2,purchaseUnit,erpExtra,
       qty:qty.value,unit,drawingNo,_rowNo:rowNo,
       sources:[{source:"导入第 "+rowNo+" 行",qty:qty.value}],_errors:errors};
   });
@@ -2629,6 +2648,10 @@ function itemMergeCheck(a,b){
     const x=String(a[k]??"").trim(),y=String(b[k]??"").trim();
     if(x!==y)diffs.push(label+"不一致");
   }
+  // 中文：未正式映射的 ERP 原始列若内容不同，保守拆行待核，不得自动丢失来源差异。
+  // English: Divergent preserved ERP raw columns prevent silent aggregation and metadata loss.
+  const erpKeys=new Set([...Object.keys(a.erpExtra||{}),...Object.keys(b.erpExtra||{})]);
+  for(const k of erpKeys)if(String(a.erpExtra?.[k]??"")!==String(b.erpExtra?.[k]??""))diffs.push("ERP 原始字段 "+k+" 不一致");
   const keys=new Set([...Object.keys(a.custom||{}),...Object.keys(b.custom||{})]);
   for(const k of keys)if(String(a.custom?.[k]??"")!==String(b.custom?.[k]??""))diffs.push("自定义属性 "+k+" 不一致");
   if(getSet(a.lineId).size)diffs.push("已有供应商分配");
@@ -2669,7 +2692,7 @@ function renderItemImportPreview(source){
   const visible=list.slice(from,from+perPage);
   importPreview.innerHTML=`<div class="sline"><div><b>${esc(source)}</b> · ${actions.length} 行 · 自动合并 ${merged} 行 · 冲突 ${conflicts} 行 · 错误 ${bad} 行</div><button class="btn primary" id="confirmImportRows" ${bad?"disabled":""}>确认加入本次询价（全部 ${actions.length} 行）</button></div>
     <div class="toolbar" style="margin-top:8px"><button class="btn" id="toggleImportProblems">${itemImportPreviewState.onlyProblems?"显示全部行":"仅看全部错误/冲突（"+problems.length+"）"}</button><span class="small muted">当前显示 ${list.length?from+1:0}–${Math.min(from+perPage,list.length)} / ${list.length}；可查看所有异常，提交不受分页限制。</span></div>
-    <div class="tablewrap" style="max-height:230px;margin-top:8px"><table><thead><tr><th>原始行号</th><th>存货编码</th><th>存货名称</th><th>规格型号</th><th>数量</th><th>单位</th><th>处理方案</th></tr></thead><tbody>${visible.map(x=>`<tr><td>${esc(x.row._rowNo??"单条")}</td><td>${esc(x.row.id)}</td><td>${esc(x.row.name)}</td><td>${esc(x.row.spec||"")}</td><td>${x.row.qty??"—"}</td><td>${esc(x.row.unit)}</td><td class="${x.row._errors?.length||x.kind==="conflict"?"dangertext":"ok"}">${esc(x.row._errors?.join("、")|| (x.kind==="merge"?"合并至 "+x.target.lineId:x.kind==="conflict"?"冲突："+x.reasons.join("、"):"新建询价行"))}</td></tr>`).join("")}</tbody></table></div>
+    <div class="tablewrap" style="max-height:230px;margin-top:8px"><table><thead><tr><th>原始行号</th><th>存货编码</th><th>存货名称</th><th>规格型号</th><th>数量</th><th>单位</th><th>处理方案</th></tr></thead><tbody>${visible.map(x=>`<tr><td>${esc(x.row._rowNo??"单条")}</td><td>${esc(x.row.id)}</td><td>${esc(x.row.name)}</td><td>${esc(x.row.spec||"")}${Object.keys(x.row.erpExtra||{}).length?'<div class="small muted">已保留其他 ERP 原始字段 '+Object.keys(x.row.erpExtra).length+' 项</div>':""}</td><td>${x.row.qty??"—"}</td><td>${esc(x.row.unit)}</td><td class="${x.row._errors?.length||x.kind==="conflict"?"dangertext":"ok"}">${esc(x.row._errors?.join("、")|| (x.kind==="merge"?"合并至 "+x.target.lineId:x.kind==="conflict"?"冲突："+x.reasons.join("、"):"新建询价行"))}</td></tr>`).join("")}</tbody></table></div>
     <div id="itemImportPager" class="pager"></div>`;
   document.getElementById("confirmImportRows").onclick=()=>addRowsToRfq(pendingImportRows);
   document.getElementById("toggleImportProblems").onclick=()=>{
