@@ -1,0 +1,12 @@
+await p.getByRole('tab',{name:'① 物料与图纸',exact:true}).click();
+await p.getByRole('button',{name:'+ 添加询价物料',exact:true}).click();
+await p.locator('#importFile').setInputFiles('/tmp/srm-pr18-fixtures/materials-filled.xlsx');
+await p.getByRole('button',{name:'确认加入本次询价（全部 2 行）',exact:true}).waitFor();
+await p.locator('#importFile').scrollIntoViewIfNeeded();await shot('04-material-template-filled-preview');
+await p.getByRole('button',{name:'确认加入本次询价（全部 2 行）',exact:true}).click();
+await check('two same-code specifications stay separate',await p.locator('#itemBody tr').count(),2);
+await p.locator('#itemBody').scrollIntoViewIfNeeded();await shot('05-two-materials-imported');
+await tell('material import actual rows',await p.locator('#itemBody tr').allTextContents());
+await saveUI();
+await p.getByRole('button',{name:'批量更新字段值',exact:true}).click();
+await tell('match visible controls',await p.locator('input:visible,select:visible').evaluateAll(es=>es.map(e=>({id:e.id,type:e.type,value:e.value,text:e.innerText,accept:e.accept}))));

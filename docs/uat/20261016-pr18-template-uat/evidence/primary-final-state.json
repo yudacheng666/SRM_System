@@ -1,0 +1,214 @@
+{
+  "workspaces": {
+    "RFQ-1792143383508-HZK8U2": {
+      "revision": 16,
+      "sha256": "6ef9d54ed67617770e5f54d8736ccedef61329f6b4b80d7b28847e84ae2e9083",
+      "item_count": 2,
+      "assignments": [
+        {
+          "key": "RFQ-L00001",
+          "values": [
+            "TPL-A",
+            "CP-TPL-B"
+          ]
+        },
+        {
+          "key": "RFQ-L00002",
+          "values": [
+            "TPL-A",
+            "CP-TPL-B"
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "supplierId": "CP-TPL-B",
+          "roundNo": 1,
+          "revisionNo": 1,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00001",
+              "itemId": "TPL-001",
+              "price": 14,
+              "tiers": [],
+              "lead": 5,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构乙M16十四元",
+              "source": "file",
+              "original": {
+                "price": "14",
+                "lead": "5",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T09:41:24.321Z"
+            },
+            {
+              "lineId": "RFQ-L00002",
+              "itemId": "TPL-001",
+              "price": 22,
+              "tiers": [],
+              "lead": 6,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构乙M20二十二元",
+              "source": "file",
+              "original": {
+                "price": "22",
+                "lead": "6",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T09:41:24.321Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00001",
+            "RFQ-L00002"
+          ],
+          "evidenceType": "manual_other",
+          "evidenceNote": "虚构乙通过标准模板回填，无真实业务附件",
+          "termsNote": "",
+          "createdAt": "2026-10-16T09:41:23.309Z",
+          "confirmedAt": "2026-10-16T09:41:24.394Z"
+        },
+        {
+          "supplierId": "TPL-A",
+          "roundNo": 1,
+          "revisionNo": 1,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00001",
+              "itemId": "TPL-001",
+              "price": 12.5,
+              "tiers": [],
+              "lead": 3,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构M16含税12.5元",
+              "source": "file",
+              "original": {
+                "price": "12.5",
+                "lead": "3",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T09:46:01.259Z"
+            },
+            {
+              "lineId": "RFQ-L00002",
+              "itemId": "TPL-001",
+              "price": null,
+              "tiers": [],
+              "lead": null,
+              "moq": null,
+              "status": "cannot",
+              "remark": "虚构M20暂停供货",
+              "source": "file",
+              "original": {
+                "price": "",
+                "lead": "",
+                "moq": "",
+                "status": "cannot"
+              },
+              "updatedAt": "2026-10-16T09:46:01.259Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00001",
+            "RFQ-L00002"
+          ],
+          "evidenceType": "manual_other",
+          "evidenceNote": "虚构甲从本轮实际下载的通用报价模板回填",
+          "termsNote": "虚构本轮M16报价、M20不供货",
+          "createdAt": "2026-10-16T09:43:02.588Z",
+          "confirmedAt": "2026-10-16T09:46:01.404Z"
+        },
+        {
+          "supplierId": "TPL-A",
+          "roundNo": 2,
+          "revisionNo": 1,
+          "status": "draft",
+          "lines": [],
+          "expectedLineIds": [
+            "RFQ-L00001",
+            "RFQ-L00002"
+          ],
+          "evidenceType": "email_attachment",
+          "evidenceNote": "",
+          "termsNote": "",
+          "createdAt": "2026-10-16T09:46:50.736Z"
+        }
+      ],
+      "items": [
+        {
+          "id": "TPL-001",
+          "lineId": "RFQ-L00001",
+          "name": "虚构模板轴",
+          "cat": "机械件",
+          "spec": "M16",
+          "ref1": "TPL-REF1",
+          "ref2": "TPL-LEGACY16",
+          "purchaseUnit": "盒",
+          "erpExtra": {
+            "ERP批次属性": "内部批次A"
+          },
+          "qty": 5,
+          "unit": "件",
+          "drawingNo": "DRAW-TPL-A",
+          "_rowNo": 2,
+          "sources": [
+            {
+              "source": "materials-filled.xlsx · 工作表：询价物料 · 真实 XLSX · 第2行",
+              "qty": 5
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 1
+        },
+        {
+          "id": "TPL-001",
+          "lineId": "RFQ-L00002",
+          "name": "虚构模板轴",
+          "cat": "机械件",
+          "spec": "M20",
+          "ref1": "TPL-REF1",
+          "ref2": "TPL-LEGACY20",
+          "purchaseUnit": "盒",
+          "erpExtra": {
+            "ERP批次属性": "内部批次B"
+          },
+          "qty": 4,
+          "unit": "件",
+          "drawingNo": "DRAW-TPL-B",
+          "_rowNo": 3,
+          "sources": [
+            {
+              "source": "materials-filled.xlsx · 工作表：询价物料 · 真实 XLSX · 第3行",
+              "qty": 4
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 2
+        }
+      ],
+      "awards": [
+        {
+          "key": "RFQ-L00001",
+          "value": "TPL-A"
+        },
+        {
+          "key": "RFQ-L00002",
+          "value": "CP-TPL-B"
+        }
+      ],
+      "reasons": []
+    }
+  },
+  "pdf": {}
+}

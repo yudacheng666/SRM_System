@@ -1,0 +1,15 @@
+global.readRef2=async(page=p)=>{const out={};for(const id of ['RFQ-L00001','RFQ-L00002']){await page.locator('#itemBody tr').filter({hasText:id}).dblclick();out[id]=await page.locator('#itemEditRef2').inputValue();await page.keyboard.press('Escape')}return out};
+await tell('before CSV update references',await readRef2());
+global.dialogMode='dismiss';await p.locator('#matchedUpdatePreview').getByRole('button',{name:'确认更新',exact:true}).click();global.dialogMode='accept';
+await check('dismiss CSV second confirmation leaves original values',await readRef2(),{'RFQ-L00001':'TPL-REF2','RFQ-L00002':'TPL-REF2'});
+await p.locator('#matchedUpdatePreview').getByRole('button',{name:'确认更新',exact:true}).click();
+await check('CSV two actual updates',await readRef2(),{'RFQ-L00001':'TPL-NEW16','RFQ-L00002':'TPL-NEW20'});
+await saveUI();await shot('07-csv-standard-header-applied');
+await p.locator('#matchUpdateFile').setInputFiles('/tmp/srm-pr18-fixtures/update-headerless.csv');
+await p.locator('#matchedUpdatePreview').waitFor({state:'visible'});await tell('legacy headerless preview',await p.locator('#matchedUpdatePreview').innerText());
+await p.locator('#matchedUpdatePreview').getByRole('button',{name:'确认更新',exact:true}).click();
+await check('headerless CSV compatibility actual update',await readRef2(),{'RFQ-L00001':'TPL-LEGACY16','RFQ-L00002':'TPL-LEGACY20'});await saveUI();await shot('08-headerless-csv-applied');
+await ensureOpen('#uiSupplierTools');await p.locator('#pilotSupplierExcel').setInputFiles('/tmp/srm-pr18-fixtures/suppliers-filled.xlsx');
+await tell('supplier template preview',(await p.locator('body').innerText()).slice(0,3000));await p.locator('#pilotSupplierExcel').scrollIntoViewIfNeeded();await shot('09-supplier-template-preview');
+await p.getByRole('button',{name:'确认导入供应商',exact:true}).click();await saveUI();
+await p.getByRole('tab',{name:'② 供应商与分配',exact:true}).click();await tell('supplier codes and names',await p.locator('#assignSupplierList').count());await shot('10-two-suppliers-fallback-code');

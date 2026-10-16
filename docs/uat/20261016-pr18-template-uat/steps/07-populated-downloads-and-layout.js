@@ -1,0 +1,13 @@
+global.fingerprint=(dataDir,name)=>require('child_process').execFileSync('python',['/tmp/srm-pr18-fingerprint.py',dataDir,'/tmp/srm-pr18-evidence/'+name],{encoding:'utf8'});
+await saveUI(p);fingerprint('/tmp/srm-pr18-data','before-populated-downloads.json');
+await p.locator('[data-srm-v2-tab="settings"]').click();
+for(const [name,label,ext] of templates)await download('populated-'+name+'.'+ext,p.getByRole('button',{name:label,exact:true}));
+for(const [width,height] of [[1024,768],[1366,768],[1600,900]]){
+ await p.setViewportSize({width,height});await p.getByRole('button',{name:'下载询价物料模板 .xlsx',exact:true}).scrollIntoViewIfNeeded();await shot('layout-settings-'+width);
+ await check('settings document width '+width,await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+ await tell('download button hit boxes '+width,await p.getByRole('button',{name:/下载.*模板/}).evaluateAll(es=>es.map(e=>({text:e.innerText,box:{x:e.getBoundingClientRect().x,y:e.getBoundingClientRect().y,width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height}}))));
+}
+await p.setViewportSize({width:1366,height:768});await p.getByRole('button',{name:'下载询价物料模板 .xlsx',exact:true}).focus();await p.keyboard.press('Tab');await tell('keyboard focus after Tab',await p.evaluate(()=>({text:document.activeElement.textContent,tag:document.activeElement.tagName,outline:getComputedStyle(document.activeElement).outlineStyle})));await shot('keyboard-template-focus');
+const pending=p.waitForEvent('download');await p.keyboard.press('Enter');const keyboardDownload=await pending;await keyboardDownload.saveAs('/tmp/srm-pr18-downloads/keyboard-suppliers.xlsx');await tell('keyboard actual download',keyboardDownload.suggestedFilename());
+await p.waitForTimeout(4200);fingerprint('/tmp/srm-pr18-data','after-populated-downloads.json');await shot('16-populated-template-feedback');
+await p.getByRole('tab',{name:'③ 报价回收',exact:true}).click();await p.locator('#quoteImportSupplier').selectOption({label:'虚构模板甲 (TPL-A)'});await p.getByRole('button',{name:'+ 新增下一轮',exact:true}).click();await p.getByRole('button',{name:'设置本轮议价范围',exact:true}).click();await p.locator('#quoteScopeList').scrollIntoViewIfNeeded();await shot('17-F2-scope-specifications');await tell('F2 scope identities',await p.locator('#quoteScopeList label').allTextContents());await p.locator('#quoteScopeEditor').getByRole('button',{name:'关闭',exact:true}).click();await p.getByRole('button',{name:/选择沿用上轮项目/}).click();await shot('18-F2-carry-identity');await tell('F2 carry identities',await p.locator('#carryForwardPreview').innerText());await p.locator('#carryForwardPreview').getByRole('button',{name:'取消',exact:true}).click();await saveUI(p);

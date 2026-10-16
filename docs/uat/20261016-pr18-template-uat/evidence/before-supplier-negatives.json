@@ -1,0 +1,77 @@
+{
+  "workspaces": {
+    "RFQ-1792143383508-HZK8U2": {
+      "revision": 5,
+      "sha256": "13edcecded38207bd250cfe68aa4aaee4f4bbdad47c94a3679c1569336e17679",
+      "item_count": 2,
+      "assignments": [
+        {
+          "key": "RFQ-L00001",
+          "values": []
+        },
+        {
+          "key": "RFQ-L00002",
+          "values": []
+        }
+      ],
+      "rounds": [],
+      "items": [
+        {
+          "id": "TPL-001",
+          "lineId": "RFQ-L00001",
+          "name": "虚构模板轴",
+          "cat": "机械件",
+          "spec": "M16",
+          "ref1": "TPL-REF1",
+          "ref2": "TPL-LEGACY16",
+          "purchaseUnit": "盒",
+          "erpExtra": {
+            "ERP批次属性": "内部批次A"
+          },
+          "qty": 5,
+          "unit": "件",
+          "drawingNo": "DRAW-TPL-A",
+          "_rowNo": 2,
+          "sources": [
+            {
+              "source": "materials-filled.xlsx · 工作表：询价物料 · 真实 XLSX · 第2行",
+              "qty": 5
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 1
+        },
+        {
+          "id": "TPL-001",
+          "lineId": "RFQ-L00002",
+          "name": "虚构模板轴",
+          "cat": "机械件",
+          "spec": "M20",
+          "ref1": "TPL-REF1",
+          "ref2": "TPL-LEGACY20",
+          "purchaseUnit": "盒",
+          "erpExtra": {
+            "ERP批次属性": "内部批次B"
+          },
+          "qty": 4,
+          "unit": "件",
+          "drawingNo": "DRAW-TPL-B",
+          "_rowNo": 3,
+          "sources": [
+            {
+              "source": "materials-filled.xlsx · 工作表：询价物料 · 真实 XLSX · 第3行",
+              "qty": 4
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 2
+        }
+      ],
+      "awards": [],
+      "reasons": []
+    }
+  },
+  "pdf": {}
+}

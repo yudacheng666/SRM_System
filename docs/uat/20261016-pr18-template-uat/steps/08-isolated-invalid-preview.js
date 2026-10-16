@@ -1,0 +1,4 @@
+await ensureOpen('#uiProjectDetails',q);await q.getByRole('button',{name:'新建另一笔空白询价',exact:true}).click();await q.getByRole('tab',{name:'① 物料与图纸',exact:true}).click();await saveUI(q);
+global.invalidReproRfq=(await q.locator('body').innerText()).match(/RFQ-\d+-[A-Z0-9]+/)[0];await tell('isolated invalid-preview RFQ',invalidReproRfq);fingerprint('/tmp/srm-pr18-probe-data','invalid-preview-before.json');
+if(!await q.locator('#importFile').isVisible())await q.getByRole('button',{name:'+ 添加询价物料',exact:true}).click();await q.locator('#importFile').setInputFiles('/tmp/srm-pr18-fixtures/missing-unit.xlsx');await q.waitForTimeout(4500);
+await q.locator('#importFile').scrollIntoViewIfNeeded();await shot('19-invalid-preview-advances-save-version',q);await tell('isolated invalid preview after idle',(await q.locator('body').innerText()).slice(0,2600));fingerprint('/tmp/srm-pr18-probe-data','invalid-preview-after.json');

@@ -1,0 +1,90 @@
+[
+  {
+    "file": "wrong-header.xlsx",
+    "feedback": "Excel 读取失败，没有导入任何物料：XLSX: 没有找到包含必要列标题的工作表：存货编码 或 物料编码",
+    "canConfirm": false,
+    "preview": "单条输入（ERP 核心字段）\nERP 扩展字段（可选）：参考编码与采购常用单位\n加入本次询价\n剪贴板批量粘贴\n读取剪贴板\n解析预览\n清空输入\n清空预览\n文件导入\n直接导入 Excel .xlsx / CSV / TXT。请使用含有“存货编码、存货名称、询价数量、询价单位”的单张数据表；旧表头仍兼容。原始 .xls 暂不支持。\n仅模拟：查看虚构物料\nExcel 读取失败，没有导入任何物料：XLSX: 没有找到包含必要列标题的工作表：存货编码 或 物料编码",
+    "rowsAfter": [
+      "\n    \n    RFQ-L00002TPL-001PDF缺图纸\n    虚构模板轴M20机械件4\n    件0\n    \n  ",
+      "\n    \n    RFQ-L00001TPL-001PDF缺图纸\n    虚构模板轴M16机械件5\n    件0\n    \n  "
+    ],
+    "businessRowsUnchanged": true
+  },
+  {
+    "file": "missing-unit.xlsx",
+    "feedback": "",
+    "canConfirm": false,
+    "preview": "单条输入（ERP 核心字段）\nERP 扩展字段（可选）：参考编码与采购常用单位\n加入本次询价\n剪贴板批量粘贴\n读取剪贴板\n解析预览\n清空输入\n清空预览\n文件导入\n直接导入 Excel .xlsx / CSV / TXT。请使用含有“存货编码、存货名称、询价数量、询价单位”的单张数据表；旧表头仍兼容。原始 .xls 暂不支持。\n仅模拟：查看虚构物料\nmissing-unit.xlsx · 工作表：询价物料 · 真实 XLSX · 1 行 · 自动合并 0 行 · 冲突 0 行 · 错误 1 行\n确认加入本次询价（全部 1 行）\n仅看全部错误/冲突（1）\n当前显示 1–1 / 1；可查看所有异常，提交不受分页限制。\n原始行号\t存货编码\t存货名称\t规格型号\t数量\t单位\t处理方案\n2\tBAD-NO-UNIT\t\t\t1\t\t第 2 行询价单位不能为空\n上一页\n…\n1\n下一页",
+    "rowsAfter": [
+      "\n    \n    RFQ-L00002TPL-001PDF缺图纸\n    虚构模板轴M20机械件4\n    件0\n    \n  ",
+      "\n    \n    RFQ-L00001TPL-001PDF缺图纸\n    虚构模板轴M16机械件5\n    件0\n    \n  "
+    ],
+    "businessRowsUnchanged": true
+  },
+  {
+    "file": "duplicate-heading.xlsx",
+    "feedback": "Excel 读取失败，没有导入任何物料：XLSX: 存在重复列标题",
+    "canConfirm": false,
+    "preview": "单条输入（ERP 核心字段）\nERP 扩展字段（可选）：参考编码与采购常用单位\n加入本次询价\n剪贴板批量粘贴\n读取剪贴板\n解析预览\n清空输入\n清空预览\n文件导入\n直接导入 Excel .xlsx / CSV / TXT。请使用含有“存货编码、存货名称、询价数量、询价单位”的单张数据表；旧表头仍兼容。原始 .xls 暂不支持。\n仅模拟：查看虚构物料\nExcel 读取失败，没有导入任何物料：XLSX: 存在重复列标题",
+    "rowsAfter": [
+      "\n    \n    RFQ-L00002TPL-001PDF缺图纸\n    虚构模板轴M20机械件4\n    件0\n    \n  ",
+      "\n    \n    RFQ-L00001TPL-001PDF缺图纸\n    虚构模板轴M16机械件5\n    件0\n    \n  "
+    ],
+    "businessRowsUnchanged": true
+  },
+  {
+    "file": "other-sheet.xlsx",
+    "feedback": "Excel 读取失败，没有导入任何物料：XLSX: 没有找到包含必要列标题的工作表：存货编码 或 物料编码",
+    "canConfirm": false,
+    "preview": "单条输入（ERP 核心字段）\nERP 扩展字段（可选）：参考编码与采购常用单位\n加入本次询价\n剪贴板批量粘贴\n读取剪贴板\n解析预览\n清空输入\n清空预览\n文件导入\n直接导入 Excel .xlsx / CSV / TXT。请使用含有“存货编码、存货名称、询价数量、询价单位”的单张数据表；旧表头仍兼容。原始 .xls 暂不支持。\n仅模拟：查看虚构物料\nExcel 读取失败，没有导入任何物料：XLSX: 没有找到包含必要列标题的工作表：存货编码 或 物料编码",
+    "rowsAfter": [
+      "\n    \n    RFQ-L00002TPL-001PDF缺图纸\n    虚构模板轴M20机械件4\n    件0\n    \n  ",
+      "\n    \n    RFQ-L00001TPL-001PDF缺图纸\n    虚构模板轴M16机械件5\n    件0\n    \n  "
+    ],
+    "businessRowsUnchanged": true
+  },
+  {
+    "file": "ambiguous-multisheet.xlsx",
+    "feedback": "Excel 读取失败，没有导入任何物料：XLSX: 有多张匹配的工作表（数据甲、数据乙），请另存单张数据工作表再导入",
+    "canConfirm": false,
+    "preview": "单条输入（ERP 核心字段）\nERP 扩展字段（可选）：参考编码与采购常用单位\n加入本次询价\n剪贴板批量粘贴\n读取剪贴板\n解析预览\n清空输入\n清空预览\n文件导入\n直接导入 Excel .xlsx / CSV / TXT。请使用含有“存货编码、存货名称、询价数量、询价单位”的单张数据表；旧表头仍兼容。原始 .xls 暂不支持。\n仅模拟：查看虚构物料\nExcel 读取失败，没有导入任何物料：XLSX: 有多张匹配的工作表（数据甲、数据乙），请另存单张数据工作表再导入",
+    "rowsAfter": [
+      "\n    \n    RFQ-L00002TPL-001PDF缺图纸\n    虚构模板轴M20机械件4\n    件0\n    \n  ",
+      "\n    \n    RFQ-L00001TPL-001PDF缺图纸\n    虚构模板轴M16机械件5\n    件0\n    \n  "
+    ],
+    "businessRowsUnchanged": true
+  },
+  {
+    "file": "corrupt.xlsx",
+    "feedback": "Excel 读取失败，没有导入任何物料：XLSX: 这不是有效的 .xlsx ZIP 文件",
+    "canConfirm": false,
+    "preview": "单条输入（ERP 核心字段）\nERP 扩展字段（可选）：参考编码与采购常用单位\n加入本次询价\n剪贴板批量粘贴\n读取剪贴板\n解析预览\n清空输入\n清空预览\n文件导入\n直接导入 Excel .xlsx / CSV / TXT。请使用含有“存货编码、存货名称、询价数量、询价单位”的单张数据表；旧表头仍兼容。原始 .xls 暂不支持。\n仅模拟：查看虚构物料\nExcel 读取失败，没有导入任何物料：XLSX: 这不是有效的 .xlsx ZIP 文件",
+    "rowsAfter": [
+      "\n    \n    RFQ-L00002TPL-001PDF缺图纸\n    虚构模板轴M20机械件4\n    件0\n    \n  ",
+      "\n    \n    RFQ-L00001TPL-001PDF缺图纸\n    虚构模板轴M16机械件5\n    件0\n    \n  "
+    ],
+    "businessRowsUnchanged": true
+  },
+  {
+    "file": "zero-byte.xlsx",
+    "feedback": "只允许不超过 12MB 的真实 XLSX 文件，未导入任何物料。",
+    "canConfirm": false,
+    "preview": "单条输入（ERP 核心字段）\nERP 扩展字段（可选）：参考编码与采购常用单位\n加入本次询价\n剪贴板批量粘贴\n读取剪贴板\n解析预览\n清空输入\n清空预览\n文件导入\n直接导入 Excel .xlsx / CSV / TXT。请使用含有“存货编码、存货名称、询价数量、询价单位”的单张数据表；旧表头仍兼容。原始 .xls 暂不支持。\n仅模拟：查看虚构物料\n只允许不超过 12MB 的真实 XLSX 文件，未导入任何物料。",
+    "rowsAfter": [
+      "\n    \n    RFQ-L00002TPL-001PDF缺图纸\n    虚构模板轴M20机械件4\n    件0\n    \n  ",
+      "\n    \n    RFQ-L00001TPL-001PDF缺图纸\n    虚构模板轴M16机械件5\n    件0\n    \n  "
+    ],
+    "businessRowsUnchanged": true
+  },
+  {
+    "file": "blank-workbook.xlsx",
+    "feedback": "Excel 读取失败，没有导入任何物料：XLSX: 没有找到包含必要列标题的工作表：存货编码 或 物料编码",
+    "canConfirm": false,
+    "preview": "单条输入（ERP 核心字段）\nERP 扩展字段（可选）：参考编码与采购常用单位\n加入本次询价\n剪贴板批量粘贴\n读取剪贴板\n解析预览\n清空输入\n清空预览\n文件导入\n直接导入 Excel .xlsx / CSV / TXT。请使用含有“存货编码、存货名称、询价数量、询价单位”的单张数据表；旧表头仍兼容。原始 .xls 暂不支持。\n仅模拟：查看虚构物料\nExcel 读取失败，没有导入任何物料：XLSX: 没有找到包含必要列标题的工作表：存货编码 或 物料编码",
+    "rowsAfter": [
+      "\n    \n    RFQ-L00002TPL-001PDF缺图纸\n    虚构模板轴M20机械件4\n    件0\n    \n  ",
+      "\n    \n    RFQ-L00001TPL-001PDF缺图纸\n    虚构模板轴M16机械件5\n    件0\n    \n  "
+    ],
+    "businessRowsUnchanged": true
+  }
+]
