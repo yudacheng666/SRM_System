@@ -442,6 +442,7 @@ test('ERP10: settings provide three correct XLSX import templates and one header
   // 中文：在真正下载的物料模板表头后增加合法业务行，再通过真实 UI 导入。
   // English: Fill the exact downloaded template heading, then confirm a real buyer import.
   const itemHeaders=defined.items;
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="items"]').click();
   await createBuyer(page);
   const materialBuffer=await page.evaluate(async headers=>{
     const row=['TPL-001','虚构模板测试件','M16','测试分类','','','件',2,'件',''];
@@ -469,6 +470,42 @@ test('ERP10: settings provide three correct XLSX import templates and one header
   await expect(page.locator('#matchedUpdatePreview')).toContainText('未匹配 0 行');
   await page.locator('#confirmMatchedUpdate').click();
   expect((await snap(page)).state.items[0].spec).toBe('M20');
+
+  // 中文：使用已核对的供应商模板表头，经实际 XLSX 导入与确认。
+  // English: Populate the downloaded supplier format and commit through the real import UI.
+  await open(page,'#uiSupplierTools');
+  const supplierBuffer=await page.evaluate(async headers=>{
+    const blob=SRMExcel.create([{name:'供应商',rows:[headers,['CP-TPL','SUP-TPL','虚构模板供应商']]}]);
+    return Array.from(new Uint8Array(await blob.arrayBuffer()));
+  },defined.suppliers);
+  await page.locator('#pilotSupplierExcel').setInputFiles({name:'supplier-template-filled.xlsx',
+    mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    buffer:Buffer.from(supplierBuffer)});
+  await expect(page.locator('#pilotImportSupplierConfirm')).toBeEnabled();
+  await page.locator('#pilotImportSupplierConfirm').click();
+  await expect.poll(async()=> (await snap(page)).state.suppliers.some(x=>x.id==='SUP-TPL')).toBe(true);
+
+  // 中文：报价模板的行身份必须是当前真实 RFQ ID；不能使用来源 RFQ 身份。
+  // English: The quote template must resolve the current line identity rather than any source ID.
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="assign"]').click();
+  await page.locator('#selectAssignAll').click();
+  await page.locator('[data-add="SUP-TPL"]').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quoteImport"]').click();
+  await page.locator('#quoteImportSupplier').selectOption('SUP-TPL');
+  const quoteBuffer=await page.evaluate(async({headers,lineId})=>{
+    const row=[lineId,'TPL-001',12.5,4,1,'正常报价','虚构报价'];
+    const blob=SRMExcel.create([{name:'供应商报价',rows:[headers,row]}]);
+    return Array.from(new Uint8Array(await blob.arrayBuffer()));
+  },{headers:defined.quotes,lineId:afterImport.state.items[0].lineId});
+  await page.locator('#quoteImportFile').setInputFiles({name:'quote-template-filled.xlsx',
+    mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    buffer:Buffer.from(quoteBuffer)});
+  await expect(page.locator('#commitQuoteImport')).toBeEnabled();
+  await page.locator('#commitQuoteImport').click();
+  await expect(page.locator('#qcQuoted')).toHaveText('1');
+  expect((await snap(page)).state.quoteRounds.some(q=>q.supplierId==='SUP-TPL'&&
+    q.lines.some(l=>l.lineId===afterImport.state.items[0].lineId&&l.price===12.5))).toBe(true);
+
   await page.locator('.srm-v2-sideitem[data-srm-v2-tab="settings"]').click();
   await expect(page.locator('#importTemplatesCard')).toBeVisible();
   const shot=info.outputPath('settings-import-templates.png');
