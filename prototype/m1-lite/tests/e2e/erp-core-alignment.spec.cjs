@@ -37,7 +37,7 @@ async function createBuyer(page){
   await expect(page.locator('#pilotModeBadge')).not.toContainText('演示');
   await page.locator('#toggleItemIntake').click();
 }
-test('ERP01: canonical aliases, optional original columns and conflicting identities are explicit',async({page})=>{
+test('ERP01: canonical aliases, optional original columns and conflicting identities are explicit',async({page,app})=>{
   const result=await page.evaluate(()=>{
     const a=parseItemRows('存货编码,存货名称,规格型号,参考编码1,参考编码2,采购常用单位,询价数量,询价单位,未映射原始列\nERP-T1,虚构螺母,M16,REF-1,REF-2,盒,12,件,ERP值');
     const b=parseItemRows('存货编码,物料编码,存货名称,询价数量,询价单位\nA,B,虚构,1,件');
@@ -107,7 +107,7 @@ test('ERP03: equal specifications merge quantity; conflicting canonical and alia
   expect(data.state.items).toHaveLength(1);
 });
 
-test('ERP05: wide 220-column ERP source survives native XLSX importer and remains internal metadata',async({page})=>{
+test('ERP05: wide 220-column ERP source survives native XLSX importer and remains internal metadata',async({page,app})=>{
   await createBuyer(page);
   // 中文：从页面原生 XLSX 生成器生成 229 列虚构源数据，验证超出原 80 列上限的正式导入。
   // English: Generate a synthetic 229-column XLSX with the same native workbook layout.
@@ -189,7 +189,9 @@ test('ERP04: new ERP fields are searchable/editable, internal-vs-supplier export
   const downloaded=await downloadEvent;
   const bytes=fs.readFileSync(await downloaded.path());
   const internalWorkbook=await page.evaluate(async arr=>{
-    const wb=await SRMExcel.read(Uint8Array.from(arr).buffer,['RFQ Line ID']);
+    // 中文：用只出现在内部物料表的 ERP 原始列识别正确工作表，避免跨表同名 RFQ 主键歧义。
+    // English: Select the internal material worksheet by its exclusive ERP heading, not RFQ Line ID shared by multiple sheets.
+    const wb=await SRMExcel.read(Uint8Array.from(arr).buffer,['ERP批次属性']);
     return{headers:wb.rows[0],rows:wb.rows.slice(1)};
   },Array.from(bytes));
   expect(internalWorkbook.headers).toContain('ERP批次属性');
