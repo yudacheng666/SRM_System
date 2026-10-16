@@ -364,8 +364,13 @@ test('10 buyer continuous allocation to items and drawing select without reload 
   await page.locator('[data-add="SUP-A"]').click();
   await page.locator('[data-add="SUP-B"]').click();
   await tab(page,'items');
-  await expect(page.locator('[data-edit-line="'+first.lineId+'"] td').nth(8)).toHaveText('2');
-  await expect(page.locator('[data-edit-line="'+second.lineId+'"] td').nth(8)).toHaveText('2');
+  // 中文：按字段标题定位分配数量；ERP 新增规格列不应破坏既有业务验收。
+  // English: Find allocation count by semantic header, not a fragile numeric column offset.
+  const itemHeaders=await page.locator('#itemHead tr').first().locator('th').allTextContents();
+  const allocatedColumn=itemHeaders.findIndex(text=>text.includes('已分配供应商'));
+  expect(allocatedColumn).toBeGreaterThan(0);
+  await expect(page.locator('[data-edit-line="'+first.lineId+'"] td').nth(allocatedColumn)).toHaveText('2');
+  await expect(page.locator('[data-edit-line="'+second.lineId+'"] td').nth(allocatedColumn)).toHaveText('2');
   await page.locator('#uiOpenDrawings').click();
   await expect(page.locator('#pilotDrawingLine option')).toHaveCount(12);
   await expect(page.locator('#pilotDrawingLine')).toBeEnabled();
