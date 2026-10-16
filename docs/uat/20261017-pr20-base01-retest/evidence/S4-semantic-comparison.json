@@ -1,0 +1,10 @@
+{
+  "result": "PASS",
+  "inputs": [
+    "before-full-restart",
+    "restored-full",
+    "restore-overwrite-refused"
+  ],
+  "json_semantic_equality": true,
+  "note": "Original driver uses JSON.stringify equality: restored workspaces have different key insertion order. No field/value differs. Raw CHECK_FAIL records retained."
+}

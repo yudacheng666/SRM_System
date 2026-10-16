@@ -1,0 +1,169 @@
+{
+  "workspaces": {
+    "RFQ-1792172501714-LDN6W8": {
+      "revision": 2,
+      "lineSeq": 4,
+      "createdSeq": 4,
+      "item_count": 4,
+      "assignments": [
+        {
+          "key": "RFQ-L00001",
+          "values": []
+        },
+        {
+          "key": "RFQ-L00002",
+          "values": []
+        },
+        {
+          "key": "RFQ-L00003",
+          "values": []
+        },
+        {
+          "key": "RFQ-L00004",
+          "values": []
+        }
+      ],
+      "sha256": "4182f4f09f79035210e723b3abfe55e28e741ad3e4e485f304cb7b3d6f1434cf",
+      "state": {
+        "items": [
+          {
+            "id": "F1-DUMMY",
+            "lineId": "RFQ-L00001",
+            "name": "虚构占位",
+            "cat": "",
+            "spec": "",
+            "ref1": "",
+            "ref2": "",
+            "purchaseUnit": "",
+            "erpExtra": {},
+            "qty": 1,
+            "unit": "件",
+            "drawingNo": "",
+            "_rowNo": 2,
+            "sources": [
+              {
+                "source": "剪贴板批量粘贴预览 · 第2行",
+                "qty": 1
+              }
+            ],
+            "_errors": [],
+            "custom": {},
+            "_createdOrder": 1
+          },
+          {
+            "id": "+RET-AXLE",
+            "lineId": "RFQ-L00002",
+            "name": "=1+1,虚构\"轴\"\n第二行",
+            "cat": "测试",
+            "spec": "M16",
+            "ref1": "PRIVATE-REF16",
+            "ref2": "PRIVATE-16",
+            "purchaseUnit": "盒",
+            "erpExtra": {
+              "虚构ERP扩展": "RAW-SECRET-2",
+              "来源 RFQ Line ID": "RFQ-L00001"
+            },
+            "qty": 10,
+            "unit": "件",
+            "drawingNo": "",
+            "_rowNo": 2,
+            "sources": [
+              {
+                "source": "F1-material-only.xlsx · 工作表：询价物料 · 真实 XLSX · 第2行",
+                "qty": 10
+              }
+            ],
+            "_errors": [],
+            "custom": {},
+            "_createdOrder": 2
+          },
+          {
+            "id": "+RET-AXLE",
+            "lineId": "RFQ-L00003",
+            "name": "=1+1,虚构\"轴\"\n第二行",
+            "cat": "测试",
+            "spec": "M20",
+            "ref1": "PRIVATE-REF20",
+            "ref2": "PRIVATE-20",
+            "purchaseUnit": "盒",
+            "erpExtra": {
+              "虚构ERP扩展": "RAW-SECRET-3",
+              "来源 RFQ Line ID": "RFQ-L00002"
+            },
+            "qty": 20,
+            "unit": "件",
+            "drawingNo": "",
+            "_rowNo": 3,
+            "sources": [
+              {
+                "source": "F1-material-only.xlsx · 工作表：询价物料 · 真实 XLSX · 第3行",
+                "qty": 20
+              }
+            ],
+            "_errors": [],
+            "custom": {},
+            "_createdOrder": 3
+          },
+          {
+            "id": "RET-BRACKET",
+            "lineId": "RFQ-L00004",
+            "name": "虚构不供货支架",
+            "cat": "测试",
+            "spec": "M24",
+            "ref1": "PRIVATE-REF24",
+            "ref2": "PRIVATE-24",
+            "purchaseUnit": "箱",
+            "erpExtra": {
+              "虚构ERP扩展": "RAW-SECRET-4",
+              "来源 RFQ Line ID": "RFQ-L00003"
+            },
+            "qty": 5,
+            "unit": "件",
+            "drawingNo": "",
+            "_rowNo": 4,
+            "sources": [
+              {
+                "source": "F1-material-only.xlsx · 工作表：询价物料 · 真实 XLSX · 第4行",
+                "qty": 5
+              }
+            ],
+            "_errors": [],
+            "custom": {},
+            "_createdOrder": 4
+          }
+        ],
+        "suppliers": [],
+        "assignments": [
+          {
+            "key": "RFQ-L00001",
+            "values": []
+          },
+          {
+            "key": "RFQ-L00002",
+            "values": []
+          },
+          {
+            "key": "RFQ-L00003",
+            "values": []
+          },
+          {
+            "key": "RFQ-L00004",
+            "values": []
+          }
+        ],
+        "quoteRounds": [],
+        "awards": [],
+        "awardReasons": [],
+        "manualAwards": [],
+        "awardReviewIds": [],
+        "supplierPool": [],
+        "selectedCompareSuppliers": [],
+        "customFields": [],
+        "lineSeq": 4,
+        "createdSeq": 4,
+        "quoteComparisonMode": "returned"
+      }
+    }
+  },
+  "pdf": {}
+}

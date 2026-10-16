@@ -1,0 +1,1157 @@
+Playwright
+0
+50.0s
+1.7m
+2.5m
+3.3m
+4.2m
+5.0m
+5.8m
+6.7m
+7.5m
+8.3m
+9.2m
+10.0m
+10.8m
+11.7m
+12.5m
+Action
+Before
+After
+http://127.0.0.1:8946/
+Actions
+Metadata
+59 hidden
+Navigate to "/"
+3.4s
+1
+Evaluate
+220ms
+locator('#uiProjectDetails')
+Click
+197ms
+locator('#pilotNewWorkspace')
+Wait for timeout
+4.6s
+Click
+100ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+101ms
+locator('#toggleItemIntake')
+Set input files
+73ms
+locator('#importFile')
+Click
+416ms
+locator('#confirmImportRows')
+Accept dialog
+17ms
+Accept dialog
+8ms
+Evaluate
+53ms
+locator('#uiSupplierTools')
+Click
+108ms
+locator('#uiSupplierTools > summary')
+Set input files
+81ms
+locator('#pilotSupplierExcel')
+Click
+136ms
+locator('#pilotImportSupplierConfirm')
+Click
+169ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+149ms
+locator('.modebtn[data-mode="itemFirst"]')
+Check
+156ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00001' }).getByRole('checkbox')
+Check
+127ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00002' }).getByRole('checkbox')
+Check
+101ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00003' }).getByRole('checkbox')
+Click
+128ms
+locator('[data-add="RET-A"]')
+Accept dialog
+18ms
+Click
+91ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Click
+182ms
+locator('[data-sf-s="RET-B"]')
+Check
+143ms
+locator('[data-sfi="RFQ-L00001"]')
+Check
+146ms
+locator('[data-sfi="RFQ-L00002"]')
+Check
+111ms
+locator('[data-sfi="RFQ-L00003"]')
+Evaluate
+24ms
+locator('#uiProjectDetails')
+Click
+125ms
+locator('#uiProjectDetails > summary')
+Click
+93ms
+locator('#pilotSaveWorkspace')
+Wait for function
+18ms
+Wait for timeout
+472ms
+Wait for timeout
+4.2s
+Click
+98ms
+locator('[data-sf-s="RET-B"]')
+Evaluate
+37ms
+locator('#uiProjectDetails')
+Click
+125ms
+locator('#pilotNewWorkspace')
+Accept dialog
+12ms
+1
+Wait for timeout
+5.7s
+Screenshot
+497ms
+Create page
+132ms
+Navigate to "/"
+930ms
+1
+Click
+304ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Check
+242ms
+locator('[data-common-supplier="SUP-001"]')
+Check
+149ms
+locator('[data-common-supplier="SUP-003"]')
+Wait for timeout
+4.5s
+Wait for event "download"
+154ms
+Click
+188ms
+getByRole('button', { name: '导出本比较组全部共同项目 CSV', exact: true })
+Wait for timeout
+4.2s
+Scroll into view
+40ms
+locator('#quoteAnalysis')
+Screenshot
+199ms
+Evaluate
+39ms
+locator('#uiProjectDetails')
+Click
+145ms
+locator('#pilotNewWorkspace')
+Wait for timeout
+4.5s
+Click
+84ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+99ms
+locator('#toggleItemIntake')
+Set input files
+82ms
+locator('#importFile')
+Click
+274ms
+locator('#confirmImportRows')
+Accept dialog
+12ms
+Accept dialog
+7ms
+Evaluate
+30ms
+locator('#uiSupplierTools')
+Click
+97ms
+locator('#uiSupplierTools > summary')
+Set input files
+42ms
+locator('#pilotSupplierExcel')
+Click
+126ms
+locator('#pilotImportSupplierConfirm')
+Click
+101ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+78ms
+locator('.modebtn[data-mode="itemFirst"]')
+Check
+110ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00001' }).getByRole('checkbox')
+Check
+174ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00002' }).getByRole('checkbox')
+Check
+107ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00003' }).getByRole('checkbox')
+Click
+108ms
+locator('[data-add="RET-A"]')
+Accept dialog
+12ms
+Click
+98ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Click
+111ms
+locator('[data-sf-s="RET-B"]')
+Check
+142ms
+locator('[data-sfi="RFQ-L00001"]')
+Check
+152ms
+locator('[data-sfi="RFQ-L00002"]')
+Check
+104ms
+locator('[data-sfi="RFQ-L00003"]')
+Evaluate
+35ms
+locator('#uiProjectDetails')
+Click
+71ms
+locator('#uiProjectDetails > summary')
+Click
+83ms
+locator('#pilotSaveWorkspace')
+Wait for function
+51ms
+Wait for timeout
+459ms
+Wait for timeout
+4.2s
+Click
+81ms
+locator('[data-sf-s="RET-B"]')
+Evaluate
+19ms
+locator('#uiProjectDetails')
+Click
+96ms
+locator('#pilotNewWorkspace')
+Accept dialog
+14ms
+Wait for timeout
+4.5s
+Query count
+23ms
+locator('#supplierFirstList [data-sf-s]')
+Scroll into view
+24ms
+locator('#supplierFirstTitle')
+Screenshot
+133ms
+Reload
+319ms
+Wait for timeout
+1.3s
+Click
+150ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+872ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Screenshot
+172ms
+Close page
+23ms
+Create page
+1.5s
+Navigate to "/"
+2.3s
+Wait for timeout
+1.3s
+Click
+519ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+344ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Screenshot
+7.0s
+Click
+4.9s
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+6.4s
+locator('#toggleItemIntake')
+Set input files
+200ms
+locator('#importFile')
+Click
+587ms
+locator('#confirmImportRows')
+Accept dialog
+12ms
+Accept dialog
+8ms
+Evaluate
+498ms
+locator('#uiSupplierTools')
+Click
+148ms
+locator('#uiSupplierTools > summary')
+Set input files
+58ms
+locator('#pilotSupplierExcel')
+Click
+145ms
+locator('#pilotImportSupplierConfirm')
+Click
+99ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+79ms
+locator('.modebtn[data-mode="itemFirst"]')
+Check
+143ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00001' }).getByRole('checkbox')
+Check
+151ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00002' }).getByRole('checkbox')
+Click
+301ms
+locator('[data-add="RET-A"]')
+Accept dialog
+6ms
+Click
+123ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Click
+102ms
+locator('[data-sf-s="RET-B"]')
+Check
+160ms
+locator('[data-sfi="RFQ-L00001"]')
+Check
+192ms
+locator('[data-sfi="RFQ-L00002"]')
+Evaluate
+23ms
+locator('#uiProjectDetails')
+Click
+127ms
+locator('#uiProjectDetails > summary')
+Click
+72ms
+locator('#pilotSaveWorkspace')
+Wait for function
+69ms
+Wait for timeout
+478ms
+Wait for timeout
+4.2s
+Click
+98ms
+locator('[data-sf-s="RET-A"]')
+Evaluate
+23ms
+locator('#uiProjectDetails')
+Select option
+32ms
+locator('#pilotHistoryWorkspace')
+Click
+125ms
+getByRole('button', { name: '打开所选历史询价', exact: true })
+Accept dialog
+19ms
+Wait for timeout
+1.8s
+Scroll into view
+19ms
+locator('#supplierFirstTitle')
+Screenshot
+107ms
+Evaluate
+13ms
+locator('#uiProjectDetails')
+Click
+76ms
+locator('#uiProjectDetails > summary')
+Select option
+34ms
+locator('#pilotHistoryWorkspace')
+Click
+115ms
+getByRole('button', { name: '打开所选历史询价', exact: true })
+Wait for timeout
+1.8s
+Click
+69ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+75ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Click
+69ms
+locator('[data-sf-s="RET-B"]')
+Click
+129ms
+locator('[data-pool-remove="RET-B"]')
+Accept dialog
+9ms
+Wait for timeout
+4.5s
+Query count
+27ms
+locator('[data-sf-s="RET-B"]')
+Scroll into view
+23ms
+locator('#supplierFirstTitle')
+Screenshot
+108ms
+Click
+64ms
+locator('#openSupplierPicker')
+Check
+108ms
+locator('[data-spick="RET-B"]')
+Click
+118ms
+locator('#addPickedSuppliers')
+Click
+74ms
+locator('#closeSupplierPicker')
+Click
+90ms
+locator('[data-sf-s="RET-B"]')
+Check
+106ms
+locator('[data-sfi="RFQ-L00001"]')
+Check
+118ms
+locator('[data-sfi="RFQ-L00002"]')
+Evaluate
+17ms
+locator('#uiProjectDetails')
+Click
+66ms
+locator('#uiProjectDetails > summary')
+Click
+80ms
+locator('#pilotSaveWorkspace')
+Wait for function
+18ms
+Wait for timeout
+460ms
+Click
+107ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+43ms
+locator('#quoteImportSupplier')
+Select option
+52ms
+locator('#quoteEvidenceType')
+Fill "虚构BASE-01复验项目2 供应商A 来源凭证说明"
+56ms
+locator('#quoteEvidenceNote')
+Fill "虚构人民币同税口径，独立验收"
+76ms
+locator('#quoteTermsNote')
+Set input files
+51ms
+locator('#quoteImportFile')
+Click
+197ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Click
+88ms
+locator('#confirmQuoteRound')
+Evaluate
+29ms
+locator('#uiProjectDetails')
+Click
+190ms
+locator('#pilotSaveWorkspace')
+Wait for function
+40ms
+Wait for timeout
+470ms
+Select option
+79ms
+locator('#quoteImportSupplier')
+Select option
+64ms
+locator('#quoteEvidenceType')
+Fill "虚构BASE-01复验项目2 供应商B 来源凭证说明"
+73ms
+locator('#quoteEvidenceNote')
+Fill "虚构人民币同税口径，独立验收"
+50ms
+locator('#quoteTermsNote')
+Set input files
+45ms
+locator('#quoteImportFile')
+Click
+195ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Click
+99ms
+locator('#confirmQuoteRound')
+Evaluate
+77ms
+locator('#uiProjectDetails')
+Click
+72ms
+locator('#pilotSaveWorkspace')
+Wait for function
+97ms
+Wait for timeout
+495ms
+Wait for timeout
+4.3s
+Click
+126ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Check
+88ms
+locator('[data-common-supplier="RET-A"]')
+Check
+126ms
+locator('[data-common-supplier="RET-B"]')
+Wait for timeout
+4.5s
+Wait for event "download"
+139ms
+Click
+195ms
+getByRole('button', { name: '导出本比较组全部共同项目 CSV', exact: true })
+Wait for timeout
+4.2s
+Scroll into view
+28ms
+locator('#quoteAnalysis')
+Screenshot
+156ms
+Click
+141ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+910ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Click
+153ms
+locator('[data-sf-s="RET-B"]')
+Click
+127ms
+locator('[data-pool-remove="RET-B"]')
+Accept dialog
+27ms
+Wait for timeout
+4.5s
+Query count
+33ms
+locator('[data-sf-s="RET-B"]')
+Screenshot
+204ms
+Evaluate
+34ms
+locator('#uiProjectDetails')
+Select option
+48ms
+locator('#pilotHistoryWorkspace')
+Click
+234ms
+getByRole('button', { name: '打开所选历史询价', exact: true })
+Wait for timeout
+1.8s
+Click
+150ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+102ms
+getByRole('button', { name: '图纸匹配与管理', exact: true })
+Select option
+43ms
+locator('#pilotDrawingLine')
+Fill "A"
+139ms
+locator('#pilotDrawingVersion')
+Set input files
+54ms
+locator('#pilotDrawingFiles')
+Click
+63ms
+locator('#pilotDrawingUpload')
+Wait for function
+66ms
+Evaluate
+24ms
+locator('#uiProjectDetails')
+Click
+90ms
+locator('#uiProjectDetails > summary')
+Click
+117ms
+locator('#pilotSaveWorkspace')
+Wait for function
+17ms
+Wait for timeout
+460ms
+Select option
+73ms
+locator('#pilotDrawingLine')
+Fill "B"
+65ms
+locator('#pilotDrawingVersion')
+Set input files
+38ms
+locator('#pilotDrawingFiles')
+Click
+75ms
+locator('#pilotDrawingUpload')
+Wait for function
+41ms
+Evaluate
+115ms
+locator('#uiProjectDetails')
+Click
+102ms
+locator('#pilotSaveWorkspace')
+Wait for function
+37ms
+Wait for timeout
+455ms
+Scroll into view
+28ms
+locator('#pilotDrawingInfo')
+Screenshot
+163ms
+Click
+88ms
+getByRole('tab', { name: '③ 报价回收', exact: true })
+Select option
+45ms
+locator('#quoteImportSupplier')
+Select option
+53ms
+locator('#quoteEvidenceType')
+Fill "虚构BASE-01复验项目1 供应商A 来源凭证说明"
+77ms
+locator('#quoteEvidenceNote')
+Fill "虚构人民币同税口径，独立验收"
+84ms
+locator('#quoteTermsNote')
+Set input files
+40ms
+locator('#quoteImportFile')
+Click
+208ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Click
+107ms
+locator('#confirmQuoteRound')
+Evaluate
+215ms
+locator('#uiProjectDetails')
+Click
+121ms
+locator('#pilotSaveWorkspace')
+Wait for function
+71ms
+Wait for timeout
+516ms
+Select option
+43ms
+locator('#quoteImportSupplier')
+Select option
+67ms
+locator('#quoteEvidenceType')
+Fill "虚构BASE-01复验项目1 供应商B 来源凭证说明"
+110ms
+locator('#quoteEvidenceNote')
+Fill "虚构人民币同税口径，独立验收"
+49ms
+locator('#quoteTermsNote')
+Set input files
+44ms
+locator('#quoteImportFile')
+Click
+155ms
+getByRole('button', { name: '写入当前报价轮次', exact: true })
+Click
+72ms
+locator('#confirmQuoteRound')
+Evaluate
+24ms
+locator('#uiProjectDetails')
+Click
+134ms
+locator('#pilotSaveWorkspace')
+Wait for function
+59ms
+Wait for timeout
+464ms
+Wait for timeout
+4.2s
+Click
+97ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Check
+136ms
+locator('[data-common-supplier="RET-A"]')
+Check
+86ms
+locator('[data-common-supplier="RET-B"]')
+Wait for timeout
+4.5s
+Wait for event "download"
+101ms
+Click
+115ms
+getByRole('button', { name: '导出本比较组全部共同项目 CSV', exact: true })
+Wait for timeout
+4.6s
+Scroll into view
+44ms
+locator('#quoteAnalysis')
+Screenshot
+193ms
+Evaluate
+26ms
+locator('#quoteTable tbody tr')
+Screenshot
+363ms
+Click
+621ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+97ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Click
+116ms
+locator('[data-sf-s="RET-B"]')
+Evaluate
+17ms
+locator('#uiProjectDetails')
+Select option
+32ms
+locator('#pilotHistoryWorkspace')
+Click
+124ms
+getByRole('button', { name: '打开所选历史询价', exact: true })
+Accept dialog
+8ms
+Wait for timeout
+1.8s
+Click
+93ms
+locator('[data-sf-s="RET-A"]')
+Evaluate
+26ms
+locator('#uiProjectDetails')
+Click
+68ms
+locator('#uiProjectDetails > summary')
+Select option
+35ms
+locator('#pilotHistoryWorkspace')
+Click
+116ms
+getByRole('button', { name: '打开所选历史询价', exact: true })
+Accept dialog
+6ms
+Wait for timeout
+1.8s
+Click
+216ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Wait for timeout
+4.5s
+Wait for event "download"
+101ms
+Click
+117ms
+getByRole('button', { name: '导出本比较组全部共同项目 CSV', exact: true })
+Wait for timeout
+4.2s
+Scroll into view
+40ms
+locator('#quoteAnalysis')
+Screenshot
+128ms
+Reload
+344ms
+Wait for timeout
+1.4s
+Click
+137ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Wait for timeout
+4.5s
+Wait for event "download"
+296ms
+Click
+311ms
+getByRole('button', { name: '导出本比较组全部共同项目 CSV', exact: true })
+Wait for timeout
+4.2s
+Scroll into view
+47ms
+locator('#quoteAnalysis')
+Screenshot
+151ms
+Evaluate
+28ms
+locator('#uiProjectDetails')
+Click
+81ms
+locator('#uiProjectDetails > summary')
+Select option
+61ms
+locator('#pilotHistoryWorkspace')
+Click
+114ms
+getByRole('button', { name: '打开所选历史询价', exact: true })
+Wait for timeout
+1.8s
+Reload
+485ms
+Wait for timeout
+1.5s
+Click
+111ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Wait for timeout
+4.5s
+Wait for event "download"
+110ms
+Click
+126ms
+getByRole('button', { name: '导出本比较组全部共同项目 CSV', exact: true })
+Wait for timeout
+4.2s
+Scroll into view
+36ms
+locator('#quoteAnalysis')
+Screenshot
+149ms
+Evaluate
+30ms
+locator('#uiProjectDetails')
+Click
+96ms
+locator('#uiProjectDetails > summary')
+Select option
+71ms
+locator('#pilotHistoryWorkspace')
+Click
+160ms
+getByRole('button', { name: '打开所选历史询价', exact: true })
+Wait for timeout
+1.8s
+Evaluate
+27ms
+locator('#uiDataTools')
+Click
+79ms
+locator('#uiDataTools > summary')
+Wait for event "download"
+140ms
+Click
+100ms
+getByRole('button', { name: '导出业务数据 Excel（3 Sheet）', exact: true })
+Click
+136ms
+locator('#pilotReportOpen')
+Select option
+38ms
+locator('#pilotReportType')
+Select option
+40ms
+locator('#pilotReportSupplier')
+Wait for event "download"
+167ms
+Click
+90ms
+locator('#pilotReportDownload')
+Accept dialog
+16ms
+Select option
+90ms
+locator('#pilotReportSupplier')
+Wait for event "download"
+168ms
+Click
+106ms
+locator('#pilotReportDownload')
+Accept dialog
+10ms
+Wait for event "download"
+154ms
+Click
+119ms
+getByRole('button', { name: '下载 S4 完整备份（SQLite + PDF）', exact: true })
+Close page
+21ms
+Create page
+4.8s
+Navigate to "/"
+18.2s
+Wait for timeout
+1.2s
+Click
+163ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+97ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Click
+101ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Wait for timeout
+4.5s
+Wait for event "download"
+73ms
+Click
+102ms
+getByRole('button', { name: '导出本比较组全部共同项目 CSV', exact: true })
+Wait for timeout
+4.2s
+Scroll into view
+60ms
+locator('#quoteAnalysis')
+Screenshot
+159ms
+Evaluate
+26ms
+locator('#uiProjectDetails')
+Click
+125ms
+locator('#uiProjectDetails > summary')
+Select option
+38ms
+locator('#pilotHistoryWorkspace')
+Click
+118ms
+getByRole('button', { name: '打开所选历史询价', exact: true })
+Wait for timeout
+1.8s
+Click
+121ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Wait for timeout
+4.5s
+Wait for event "download"
+82ms
+Click
+100ms
+getByRole('button', { name: '导出本比较组全部共同项目 CSV', exact: true })
+Wait for timeout
+4.2s
+Scroll into view
+35ms
+locator('#quoteAnalysis')
+Screenshot
+170ms
+Evaluate
+19ms
+locator('#uiProjectDetails')
+Click
+66ms
+locator('#uiProjectDetails > summary')
+Select option
+73ms
+locator('#pilotHistoryWorkspace')
+Click
+156ms
+getByRole('button', { name: '打开所选历史询价', exact: true })
+Wait for timeout
+1.8s
+Click
+84ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Wait for timeout
+4.5s
+Wait for event "download"
+112ms
+Click
+116ms
+getByRole('button', { name: '导出本比较组全部共同项目 CSV', exact: true })
+Wait for timeout
+4.2s
+Scroll into view
+43ms
+locator('#quoteAnalysis')
+Screenshot
+227ms
+Create page
+99ms
+Navigate to "/"
+1.6s
+1
+Evaluate
+516ms
+locator('#uiDataTools')
+Click
+399ms
+locator('#uiDataTools > summary')
+Set input files
+258ms
+locator('#pilotS4BackupFile')
+Click
+230ms
+getByRole('button', { name: '恢复完整备份（仅空白数据）', exact: true })
+Accept dialog
+7ms
+Wait for timeout
+2.2s
+Click
+194ms
+getByRole('tab', { name: '② 供应商与分配', exact: true })
+Click
+95ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Scroll into view
+40ms
+locator('#supplierFirstTitle')
+Screenshot
+165ms
+Click
+105ms
+getByRole('tab', { name: '④ 比价议价', exact: true })
+Scroll into view
+29ms
+locator('#quoteTable')
+Screenshot
+263ms
+Evaluate
+18ms
+locator('#uiDataTools')
+Click
+55ms
+locator('#uiDataTools > summary')
+Set input files
+46ms
+locator('#pilotS4BackupFile')
+Click
+96ms
+getByRole('button', { name: '恢复完整备份（仅空白数据）', exact: true })
+Wait for timeout
+809ms
+Create page
+159ms
+Navigate to "/"
+720ms
+1
+Evaluate
+199ms
+locator('#uiProjectDetails')
+Click
+195ms
+locator('#pilotNewWorkspace')
+Wait for timeout
+4.5s
+Click
+268ms
+getByRole('tab', { name: '① 物料与图纸', exact: true })
+Click
+59ms
+locator('#toggleItemIntake')
+Fill "存货编码,存货名称,询价数量,询价单位\nF1-DUMMY,虚构占位,1,件"
+50ms
+locator('#pasteItems')
+Click
+89ms
+locator('#parsePaste')
+Click
+131ms
+locator('#confirmImportRows')
+Accept dialog
+6ms
+Click
+64ms
+locator('#toggleItemIntake')
+Set input files
+50ms
+locator('#importFile')
+Click
+250ms
+locator('#confirmImportRows')
+Accept dialog
+7ms
+Accept dialog
+15ms
+Evaluate
+25ms
+locator('#uiProjectDetails')
+Click
+50ms
+locator('#uiProjectDetails > summary')
+Click
+139ms
+locator('#pilotSaveWorkspace')
+Wait for function
+31ms
+Wait for timeout
+455ms
+Scroll into view
+34ms
+locator('#itemBody')
+Screenshot
+158ms
+Evaluate
+21ms
+locator('#uiDataTools')
+Click
+66ms
+locator('#uiDataTools > summary')
+Wait for event "download"
+95ms
+Click
+90ms
+getByRole('button', { name: '导出业务数据 Excel（3 Sheet）', exact: true })
+Close page
+9ms
+Close page
+19ms
+Close page
+25ms
+Close page
+23ms
+Locator
+Call
+Log
+Errors
+1
+Console
+5
+Network
+136
+Source
+Attachments
+Navigate to "/"
+TIME
+start:
+6.8m
+duration:
+18.2s
+PARAMETERS
+url:
+"http://127.0.0.1:8946"
+timeout:
+15000
+waitUntil:
+"load"

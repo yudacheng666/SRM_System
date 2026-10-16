@@ -1,0 +1,7 @@
+CSV_PARSE_PASS 9
+XLSX_PRIVACY_AND_REAL_PDF_HASHES_PASS
+Traceback (most recent call last):
+  File "/tmp/srm-r2-inspect.py", line 22, in <module>
+    w=load_workbook(r/'F1-business.xlsx',data_only=True);rows=list(w['询价物料'].values);h=rows[0];assert len(h)==len(set(h))and h[0]=='RFQ Line ID'and h[-1]=='来源 RFQ Line ID';assert [x[0]for x in rows[2:]]==['RFQ-L00002','RFQ-L00003','RFQ-L00004'];assert [x[-1]for x in rows[2:]]==['RFQ-L00001','RFQ-L00002','RFQ-L00003'];assert [x[h.index('虚构ERP扩展')]for x in rows[2:]]==['RAW-SECRET-2','RAW-SECRET-3','RAW-SECRET-4'];(e/'F1-inspection.json').write_text(json.dumps({'PASS':True,'rows':rows},ensure_ascii=False,indent=2,default=str));print('F1_DISTINCT_CURRENT_SOURCE_IDS_PASS')
+                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
