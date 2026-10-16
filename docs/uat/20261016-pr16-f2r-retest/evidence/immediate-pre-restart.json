@@ -1,0 +1,288 @@
+{
+  "workspaces": {
+    "RFQ-1792141338115-HUQVZV": {
+      "revision": 9,
+      "sha256": "6c3c0b8ca762584310a784148950e89706555a6eeebc852bd1a20906937b9017",
+      "item_count": 4,
+      "assignments": [
+        {
+          "key": "RFQ-L00001",
+          "values": [
+            "F2R-A"
+          ]
+        },
+        {
+          "key": "RFQ-L00002",
+          "values": [
+            "F2R-A"
+          ]
+        },
+        {
+          "key": "RFQ-L00003",
+          "values": [
+            "F2R-A"
+          ]
+        },
+        {
+          "key": "RFQ-L00004",
+          "values": [
+            "F2R-A"
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "supplierId": "F2R-A",
+          "roundNo": 1,
+          "revisionNo": 1,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00001",
+              "itemId": "TEST-001",
+              "price": 9,
+              "tiers": [],
+              "lead": 3,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构M16九元",
+              "source": "paste",
+              "original": {
+                "price": "9",
+                "lead": "3",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T09:02:26.764Z"
+            },
+            {
+              "lineId": "RFQ-L00002",
+              "itemId": "TEST-001",
+              "price": 11,
+              "tiers": [],
+              "lead": 4,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构M20十一元",
+              "source": "paste",
+              "original": {
+                "price": "11",
+                "lead": "4",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T09:02:26.764Z"
+            },
+            {
+              "lineId": "RFQ-L00003",
+              "itemId": "TEST-EMPTY",
+              "price": 3,
+              "tiers": [],
+              "lead": 5,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构空规格三元",
+              "source": "paste",
+              "original": {
+                "price": "3",
+                "lead": "5",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T09:02:26.764Z"
+            },
+            {
+              "lineId": "RFQ-L00004",
+              "itemId": "TEST-LONG",
+              "price": 4,
+              "tiers": [],
+              "lead": 6,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构长规格四元",
+              "source": "paste",
+              "original": {
+                "price": "4",
+                "lead": "6",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T09:02:26.764Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00001",
+            "RFQ-L00002",
+            "RFQ-L00003",
+            "RFQ-L00004"
+          ],
+          "evidenceType": "manual_other",
+          "evidenceNote": "虚构第一轮人工录入来源说明，无原件附件",
+          "termsNote": "虚构含税自提，第一轮四项",
+          "createdAt": "2026-10-16T09:02:25.176Z",
+          "confirmedAt": "2026-10-16T09:02:26.842Z"
+        },
+        {
+          "supplierId": "F2R-A",
+          "roundNo": 2,
+          "revisionNo": 1,
+          "status": "confirmed",
+          "lines": [
+            {
+              "lineId": "RFQ-L00002",
+              "itemId": "TEST-001",
+              "price": 8,
+              "tiers": [],
+              "lead": 2,
+              "moq": 1,
+              "status": "quoted",
+              "remark": "虚构仅M20降价，其余历史不改",
+              "source": "manual",
+              "original": {
+                "price": "8",
+                "lead": "2",
+                "moq": "1",
+                "status": "quoted"
+              },
+              "updatedAt": "2026-10-16T09:03:31.207Z"
+            }
+          ],
+          "expectedLineIds": [
+            "RFQ-L00002"
+          ],
+          "evidenceType": "manual_other",
+          "evidenceNote": "虚构第二轮人工议价，仅M20新单价8元",
+          "termsNote": "虚构第二轮范围仅M20，其他沿用已确认前轮",
+          "createdAt": "2026-10-16T09:03:26.256Z",
+          "confirmedAt": "2026-10-16T09:03:31.300Z"
+        }
+      ],
+      "items": [
+        {
+          "id": "TEST-001",
+          "lineId": "RFQ-L00001",
+          "name": "虚构轴",
+          "cat": "",
+          "spec": "M16",
+          "ref1": "",
+          "ref2": "",
+          "purchaseUnit": "",
+          "erpExtra": {
+            "ERP批次属性": "内部A"
+          },
+          "qty": 5,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 2,
+          "sources": [
+            {
+              "source": "four-items.xlsx · 工作表：Sheet · 真实 XLSX · 第2行",
+              "qty": 5
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 1
+        },
+        {
+          "id": "TEST-001",
+          "lineId": "RFQ-L00002",
+          "name": "虚构轴",
+          "cat": "",
+          "spec": "M20",
+          "ref1": "",
+          "ref2": "",
+          "purchaseUnit": "",
+          "erpExtra": {
+            "ERP批次属性": "内部B"
+          },
+          "qty": 4,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 3,
+          "sources": [
+            {
+              "source": "four-items.xlsx · 工作表：Sheet · 真实 XLSX · 第3行",
+              "qty": 4
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 2
+        },
+        {
+          "id": "TEST-EMPTY",
+          "lineId": "RFQ-L00003",
+          "name": "虚构空规格",
+          "cat": "",
+          "spec": "",
+          "ref1": "",
+          "ref2": "",
+          "purchaseUnit": "",
+          "erpExtra": {
+            "ERP批次属性": "内部C"
+          },
+          "qty": 2,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 4,
+          "sources": [
+            {
+              "source": "four-items.xlsx · 工作表：Sheet · 真实 XLSX · 第4行",
+              "qty": 2
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 3
+        },
+        {
+          "id": "TEST-LONG",
+          "lineId": "RFQ-L00004",
+          "name": "虚构长规格",
+          "cat": "",
+          "spec": "虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-虚构长规格-耐压耐磨-完整末尾Ω",
+          "ref1": "",
+          "ref2": "",
+          "purchaseUnit": "",
+          "erpExtra": {
+            "ERP批次属性": "内部D"
+          },
+          "qty": 3,
+          "unit": "件",
+          "drawingNo": "",
+          "_rowNo": 5,
+          "sources": [
+            {
+              "source": "four-items.xlsx · 工作表：Sheet · 真实 XLSX · 第5行",
+              "qty": 3
+            }
+          ],
+          "_errors": [],
+          "custom": {},
+          "_createdOrder": 4
+        }
+      ],
+      "awards": [
+        {
+          "key": "RFQ-L00001",
+          "value": "F2R-A"
+        },
+        {
+          "key": "RFQ-L00002",
+          "value": "F2R-A"
+        },
+        {
+          "key": "RFQ-L00003",
+          "value": "F2R-A"
+        },
+        {
+          "key": "RFQ-L00004",
+          "value": "F2R-A"
+        }
+      ],
+      "reasons": []
+    }
+  },
+  "pdf": {}
+}

@@ -1,0 +1,33 @@
+{
+  "R1_exactly_unchanged": true,
+  "R2_expectedLineIds": [
+    "RFQ-L00002"
+  ],
+  "R2_line": [
+    {
+      "lineId": "RFQ-L00002",
+      "itemId": "TEST-001",
+      "price": 8,
+      "tiers": [],
+      "lead": 2,
+      "moq": 1,
+      "status": "quoted",
+      "remark": "虚构仅M20降价，其余历史不改",
+      "source": "manual",
+      "original": {
+        "price": "8",
+        "lead": "2",
+        "moq": "1",
+        "status": "quoted"
+      },
+      "updatedAt": "2026-10-16T09:03:31.207Z"
+    }
+  ],
+  "effective_prices": {
+    "M16_R1": 9,
+    "M20_R2": 8,
+    "empty_R1": 3,
+    "long_R1": 4
+  },
+  "expected_total": 95
+}
