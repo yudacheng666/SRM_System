@@ -97,6 +97,11 @@ function validate(ws){
   const lineIds=[],supplierIds=[];
   for(const it of s.items){
     ensure(isObj(it)&&id(it.lineId)&&id(it.id)&&typeof it.name==="string"&&Number.isFinite(it.qty)&&it.qty>0&&id(it.unit),"ITEM");
+    // 中文：ERP 可选核心属性允许旧快照缺失；如有值必须是有界文本，不能破坏备份兼容。
+    // English: Legacy snapshots may omit ERP optional fields; present values must be bounded strings.
+    for(const key of ["spec","ref1","ref2","purchaseUnit"]){
+      ensure(it[key]==null||(typeof it[key]==="string"&&it[key].length<=1000),"ERP_FIELD_"+key);
+    }
     lineIds.push(it.lineId);
   }
   for(const sup of s.suppliers){ensure(isObj(sup)&&id(sup.id)&&typeof sup.name==="string","SUPPLIER");supplierIds.push(sup.id)}
@@ -161,3 +166,4 @@ function parse(json,options){
 root.M1WorkspaceCore=Object.freeze({VERSION,FORMAT,createEmptyWorkspace,captureM0,validate,hydrate,stringify,parse});
 if(typeof module!=="undefined"&&module.exports)module.exports=root.M1WorkspaceCore;
 })(typeof window!=="undefined"?window:globalThis);
+
