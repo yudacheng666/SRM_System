@@ -10,7 +10,7 @@
 <body>
 <div class="shell">
   <aside class="sidebar" aria-label="工作台主导航">
-    <div class="brand"><div class="brandmark">S</div><div><strong>SRM <em>Studio</em></strong><small>采购管理工作台</small></div></div>
+    <div class="brand"><div class="brandmark">S</div><div><strong>SRM <em>Workspace</em></strong><small>PROCUREMENT DESK</small></div></div>
     <div class="side-group-label">采购工作流 / WORKFLOW</div>
     <nav id="sidebarNav">
       <button type="button" data-view="projects" class="navlink"><span class="navicon">▤</span><span>询价项目</span><span class="navindex">01</span></button>
@@ -26,11 +26,12 @@
 
   <div class="mainframe">
     <header class="topbar">
-      <div class="topbar-left"><span class="top-kicker">工作区</span><span class="top-sep">/</span><strong id="topPage">供应商分配</strong><span class="status neutral">设计评审版</span></div>
-      <div class="top-actions"><div class="rfq-identity"><small>当前询价单</small><strong>RFQ-20261019-001</strong></div><button class="btn btn-quiet" id="feedbackBtn" type="button">复制评审摘要</button><button class="btn btn-outline" id="resetBtn" type="button">重置演示</button></div>
+      <div class="topbar-left"><span class="top-kicker">工作台</span><span class="top-sep">›</span><strong id="topPage">供应商分配</strong><span class="status neutral"><span class="status-dot"></span> 原型 · 离线演示</span></div>
+      <div class="top-actions"><div class="rfq-identity"><small>当前项目 · 询价处理中</small><strong>RFQ-20261019-001</strong></div><button class="btn btn-guide" id="guidedTour" type="button"><span aria-hidden="true">◈</span> 查看典型场景</button><button class="btn btn-quiet" id="feedbackBtn" type="button">记录意见</button><button class="btn btn-outline" id="resetBtn" type="button">重置</button></div>
     </header>
 
     <main class="workspace">
+      <div class="workflow-context"><div class="workflow-label"><span class="workflow-mini-icon">◉</span><span>业务流程</span></div><div class="workflow-path"><span data-step="items">物料清单</span><span class="workflow-arrow">→</span><span data-step="assign">供应商分配</span><span class="workflow-arrow">→</span><span data-step="quotes">报价回收</span><span class="workflow-arrow">→</span><span data-step="compare">比价决策</span></div><div class="workflow-meta">DEMO / 2026.10.19</div></div>
       <section id="projects" data-panel class="screen" hidden>
         <div class="page-header"><div><p class="eyebrow">01 / PROJECT WORKSPACE</p><h1>询价项目</h1><p class="lead">项目身份始终可见，数据管理与采购操作明确分离。</p></div><span class="notice-pill">概念演示</span></div>
         <div class="overview-cards">
@@ -47,21 +48,21 @@
       </section>
 
       <section id="items" data-panel class="screen" hidden>
-        <div class="page-header"><div><p class="eyebrow">02 / ITEMS & DRAWINGS</p><h1>物料与图纸</h1><p class="lead">物料表格优先，图纸管理从当前物料进入，避免堆叠大量工具面板。</p></div><button class="btn btn-primary" data-go="assign">继续：供应商分配 →</button></div>
+        <div class="page-header"><div><p class="eyebrow">02 / ITEMS & DRAWINGS</p><h1>物料与图纸</h1><p class="lead">物料表格优先，图纸管理从当前物料进入，避免堆叠大量工具面板。</p></div><button class="btn btn-primary" data-go="assign">继续分配供应商 →</button></div>
         <div class="card content-card"><div class="card-heading"><h2>本次询价物料</h2><span class="muted" id="itemsCount"></span></div><div class="table-scroll"><table class="data-table"><thead><tr><th>RFQ 行号</th><th>物料编码 / 名称</th><th>规格</th><th class="num">数量</th><th>图纸</th><th>操作</th></tr></thead><tbody id="itemsPreviewBody"></tbody></table></div></div>
       </section>
 
       <section id="assign" data-panel class="screen">
-        <div class="page-header"><div><p class="eyebrow">03 / SUPPLIER ALLOCATION</p><h1>供应商分配</h1><p class="lead">按供应商选、按物料分配。多对多关系始终可见，选择与提交分开。</p></div><button id="exportRfq" type="button" class="btn btn-primary">导出当前供应商询价单 ↓</button></div>
-        <div class="metrics" id="assignMetrics"></div>
+        <div class="page-header"><div><p class="eyebrow">SUPPLIER MANAGEMENT <span class="eyebrow-rule"></span> STEP 03</p><h1>供应商分配 <span class="page-title-note">/ 物料范围管理</span></h1><p class="lead">建立询价范围，统一供应商入口。关联是追加操作，不会覆盖其他供应商。</p></div><div class="page-header-actions"><span class="step-progress"><b>03</b> / 05</span><button id="exportRfq" type="button" class="btn btn-primary"><span class="btn-arrow">↧</span> 导出该供应商询价清单</button></div></div>
+        <div class="metrics" id="assignMetrics"></div><div class="inline-overview"><div><strong>分配工作区</strong><span>先选择左侧供应商，再勾选对应物料；右侧会显示每个物料已分配给哪些供应商。</span></div><span class="inline-overview-icon" aria-hidden="true">↗</span></div>
         <div class="assignment-layout">
           <section class="card supplier-rail"><div class="rail-heading"><div><h2>本次供应商</h2><small id="supplierCount"></small></div><button class="iconbutton" id="newSupplier" type="button" aria-label="新增供应商" title="新增供应商">＋</button></div>
-            <div class="rail-search"><input id="supplierSearch" type="search" placeholder="搜索编码或供应商名称" aria-label="搜索供应商"></div>
+            <div class="rail-search"><span class="input-icon" aria-hidden="true">⌕</span><input id="supplierSearch" type="search" placeholder="搜索供应商" aria-label="搜索供应商"></div>
             <div id="supplierList" class="supplier-list" role="listbox" aria-label="本次供应商列表"></div>
             <div class="rail-footer"><button class="btn btn-outline full" id="simulateImport" type="button">模拟 Excel 导入 / 去重预览</button><small>新增供应商与批量导入统一在本模块</small></div>
           </section>
           <section class="card allocation-table-card">
-            <div class="table-toolbar"><div><h2>物料分配明细</h2><p id="activeSupplierLabel" class="section-sub"></p></div><div class="table-toolbar-right"><input id="itemSearch" type="search" placeholder="搜索编码 / 名称 / 规格" aria-label="搜索物料"><button id="clearSelection" class="btn btn-quiet" type="button">清空选择</button></div></div>
+            <div class="table-toolbar"><div><h2>物料分配明细</h2><p id="activeSupplierLabel" class="section-sub"></p></div><div class="table-toolbar-right"><div class="search-field"><span class="input-icon" aria-hidden="true">⌕</span><input id="itemSearch" type="search" placeholder="搜索编码、名称、规格" aria-label="搜索物料"></div><div class="density-control" role="group" aria-label="表格密度"><button type="button" class="density-option active" data-density="compact" aria-pressed="true" title="紧凑行高">紧凑</button><button type="button" class="density-option" data-density="comfortable" aria-pressed="false" title="舒适行高">舒适</button></div><button id="clearSelection" class="btn btn-quiet" type="button">清空</button></div></div>
             <div class="actionstrip"><span id="selectedCount">已选 0 项</span><button id="selectFiltered" class="textbutton" type="button">选中全部筛选结果</button><span class="strip-divider"></span><button id="bulkLink" class="btn btn-primary btn-small" type="button">关联到当前供应商</button><button id="bulkUnlink" class="btn btn-outline btn-small" type="button">取消当前供应商关联</button></div>
             <div class="table-scroll fill"><table class="data-table dense"><thead><tr><th class="check-col"><input type="checkbox" id="pageSelect" aria-label="勾选或取消当前页"></th><th>物料 / RFQ Line ID</th><th>规格型号</th><th class="num">询价数量</th><th>当前分配供应商（全部显示）</th><th class="center">当前供应商</th></tr></thead><tbody id="assignBody"></tbody></table></div>
             <div class="table-footer"><span id="assignFooter"></span><div class="pager"><button class="btn btn-quiet btn-small" id="prevPage">上一页</button><span id="pageNo"></span><button class="btn btn-quiet btn-small" id="nextPage">下一页</button></div></div>
@@ -71,9 +72,9 @@
       </section>
 
       <section id="quotes" data-panel class="screen" hidden>
-        <div class="page-header"><div><p class="eyebrow">04 / QUOTATION INTAKE</p><h1>报价回收</h1><p class="lead">每个供应商、轮次、版本都有明确身份。修改只呈现差异，旧确认版本不可更改。</p></div><div class="header-actions"><button id="newRound" class="btn btn-outline" type="button">新建下一轮</button><button id="newRevision" class="btn btn-primary" type="button">基于当前版本修订 ＋</button></div></div>
+        <div class="page-header"><div><p class="eyebrow">QUOTATION MANAGEMENT <span class="eyebrow-rule"></span> STEP 04</p><h1>报价回收 <span class="page-title-note">/ 轮次与修订</span></h1><p class="lead">报价接收、覆盖核查、差异审核到版本确认，每一步可追溯。</p></div><div class="header-actions"><span class="step-progress"><b>04</b> / 05</span><button id="newRound" class="btn btn-outline" type="button">新建下一轮</button><button id="newRevision" class="btn btn-primary" type="button">创建修订版本 ＋</button></div></div>
         <div class="quote-context card"><label>供应商<select id="quoteSupplier"></select></label><label>轮次 / 版本<select id="quoteVersion"></select></label><div class="quote-context-status"><span id="quoteVersionStatus" class="status"></span><small id="quoteMeta"></small></div><button class="btn btn-outline" id="quotePasteBtn">模拟报价导入</button></div>
-        <div class="metrics" id="quoteMetrics"></div>
+        <div class="metrics" id="quoteMetrics"></div><div class="inline-overview is-quote"><div><strong>版本核查</strong><span>已确认的报价只能查看；新增修订会突出显示变更项目，并保留原始版本。</span></div><span class="inline-overview-icon" aria-hidden="true">↗</span></div>
         <div class="card content-card">
           <div class="card-heading"><div><h2>本次应报价清单与版本差异</h2><p class="section-sub">正常报价、明确未报价、不供货及缺报是不同状态</p></div><div class="header-actions"><span id="quoteDiffSummary" class="notice-pill"></span><button id="confirmVersion" class="btn btn-primary">确认并锁定版本</button></div></div>
           <div class="table-scroll"><table class="data-table dense"><thead><tr><th>物料 / 规格</th><th class="num">询价数量</th><th>报价状态</th><th>单价 / 阶梯价格</th><th>上版本价格</th><th>本次变化</th></tr></thead><tbody id="quoteBody"></tbody></table></div>
@@ -83,8 +84,8 @@
       </section>
 
       <section id="compare" data-panel class="screen" hidden>
-        <div class="page-header"><div><p class="eyebrow">05 / COMPARISON & AWARD</p><h1>比价与议价</h1><p class="lead">计算结果与采购决定分开。并列最低价不自动选定，选择须注明理由。</p></div><button id="exportComparison" class="btn btn-primary" type="button">导出本次比价决策 CSV ↓</button></div>
-        <div class="metrics" id="compareMetrics"></div>
+        <div class="page-header"><div><p class="eyebrow">COMMERCIAL ANALYSIS <span class="eyebrow-rule"></span> STEP 05</p><h1>比价与议价 <span class="page-title-note">/ 供应商决策</span></h1><p class="lead">对齐询价范围与有效报价，用价格辅助决策，但由采购员作出最终选择。</p></div><div class="page-header-actions"><span class="step-progress"><b>05</b> / 05</span><button id="exportComparison" class="btn btn-primary" type="button"><span class="btn-arrow">↧</span> 导出逐项决策清单</button></div></div>
+        <div class="metrics" id="compareMetrics"></div><div id="analysisInsight" class="analysis-insight"></div>
         <div class="card compare-control"><div class="control-head"><div><h2>指定供应商组 · 同范围比较</h2><p class="section-sub">至少两家供应商；缺报及不供货不自动按零元参与</p></div><div class="segmented" id="compareFilters"><button data-filter="all" class="selected">全部物料</button><button data-filter="ties">并列最低</button><button data-filter="open">待决定</button></div></div><div id="comparisonSuppliers" class="supplier-picks"></div></div>
         <section class="card content-card comparison-table-card"><div class="card-heading"><div><h2>逐物料最低价决策清单</h2><p class="section-sub">相同 RFQ 数量与适用单价比较，金额展示只用于原型演示</p></div><span id="compareScope" class="muted"></span></div>
           <div class="table-scroll"><table class="data-table dense matrix"><thead id="compareHead"></thead><tbody id="compareBody"></tbody></table></div>
