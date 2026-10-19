@@ -123,13 +123,17 @@ test('UI V3.1 P2 buyer layout and semantic controls / 正式 RFQ 标题、抽屉
     })));
     for(const item of closed)expect(item.actual,'closed drawer must match summary height').toBeLessThanOrEqual(item.summary+3);
     await page.locator('.srm-v2-sideitem[data-srm-v2-tab="assign"]').click();
+    await expect(page.locator('#assign')).toHaveClass(/active/);
+    // 中文：实际分配视角可跨导航保留；先明确切到“按物料”，再验证双栏。
+    // English: Explicitly switch to item-first before testing geometry; navigation need not reset persisted mode.
+    await page.locator('#assign .modebtn[data-mode="itemFirst"]').click();
     await expect(page.locator('#itemFirstView')).toBeVisible();
     const dimensions=await page.evaluate(()=>{
       const a=document.querySelector('#itemFirstView'),cells=[...a.children].map(n=>n.getBoundingClientRect());
       return {material:cells[0]?.width||0,suppliers:cells[1]?.width||0,columns:getComputedStyle(a).gridTemplateColumns};
     });
     expect(dimensions.material,'material pane must be wider').toBeGreaterThan(dimensions.suppliers);
-    await page.locator('[data-mode="supplierFirst"]').click();
+    await page.locator('#assign .modebtn[data-mode="supplierFirst"]').click();
     await expect(page.locator('#supplierFirstView')).toBeVisible();
     const supplierColumns=await page.evaluate(()=>{
       const cards=[...document.querySelector('#supplierFirstView').children].map(n=>n.getBoundingClientRect());
