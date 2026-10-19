@@ -203,8 +203,11 @@ el("quotePasteBtn").onclick=function(){
   el("mockCsv").value=rows;
 };
 /* COMPARISON / separates calculated recommendations from buyer awards. */
-function confirmedForLine(sid,lineId){var rounds=supplierHistory(sid).filter(function(h){return h.confirmed;});for(var i=0;i<rounds.length;i++){var row=historyLine(rounds[i],lineId);if(row)return row;}return null;}
+function confirmedForLine(sid,lineId){/* Never silently carry old-round prices into a new-round scope. */var current=latestConfirmed(sid);return historyLine(current,lineId);}
 function compareRows(){
+  // 中文：少于两家供应商时不形成可比较的报价集合。
+  // English: Require two suppliers before forming a comparable group.
+  if(state.compareSuppliers.size<2)return [];
   return state.items.filter(function(it){return [...state.compareSuppliers].some(function(sid){return state.links[it.lineId].has(sid);});}).map(function(it){
     var cells=[...state.compareSuppliers].map(function(sid){var row=state.links[it.lineId].has(sid)?confirmedForLine(sid,it.lineId):null;return{sid:sid,row:row,price:priceInfo(row,it.qty)};});
     var finite=cells.filter(function(c){return c.price!==null;}).map(function(c){return c.price;});var low=finite.length?Math.min.apply(null,finite):null;
