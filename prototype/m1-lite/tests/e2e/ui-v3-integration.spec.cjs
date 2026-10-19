@@ -42,7 +42,8 @@ const sizes=[
   {width:1366,height:768},
   {width:1600,height:900}
 ];
-test('UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归',async({page})=>{
+test('UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归',async({page,app})=>{
+  void app;
   const errors=[];
   page.on('pageerror',e=>errors.push(e.message));
   const stylePresent=await page.locator('#ui-v3-integration-styles').count();
