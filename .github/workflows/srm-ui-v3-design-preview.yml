@@ -1,0 +1,39 @@
+# 中文：单独验证 UI V3 静态设计原型；绝不连接 SRM SQLite 数据。
+# English: Isolated V3 design screenshots; no production workspace or SQLite.
+name: SRM UI V3 Design Preview
+on:
+  pull_request:
+    branches:
+      - draft/20261013-m1-storage-ui-audit
+    paths:
+      - 'prototype/ui-v3-concept/**'
+      - '.github/workflows/srm-ui-v3-design-preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-preview:
+    name: Browser smoke + desktop screenshots
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Run concept-specific Chromium flows at three viewport sizes
+        run: npx playwright test --config=prototype/ui-v3-concept/playwright.config.cjs
+      - name: Upload screenshots and traces for design review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: srm-ui-v3-design-review
+          path: |
+            prototype/ui-v3-concept/ui-v3-test-results/
+            prototype/ui-v3-concept/ui-v3-playwright-report/
+          retention-days: 14
