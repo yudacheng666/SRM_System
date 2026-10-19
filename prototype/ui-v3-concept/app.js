@@ -65,10 +65,10 @@ el("guidedTour").onclick=function(){
         var h=latestConfirmed("SUP-A"),existing=supplierHistory("SUP-A").find(function(r){return r.round===1&&r.version===2;});
         if(existing){state.quoteVersion=existing.key;}else{
           var newh={key:quoteKey("SUP-A",1,2),supplier:"SUP-A",round:1,version:2,confirmed:false,created:"虚构修订草稿",lines:clone(h.lines)};
-          var target=newh.lines.find(function(x){return x.lineId==="RFQ-L00001";});
+          var target=newh.lines.find(function(x){return x.lineId==="RFQ-L00002";});
           if(target)target.price="17.80";state.history.push(newh);state.quoteVersion=newh.key;
         }
-        navigate("quotes");toast("已创建报价修订 V2，DEMO-1001 的新旧价格差异已标出。","good");
+        navigate("quotes");toast("已创建报价修订 V2，DEMO-1002 的新旧价格差异已标出。","good");
       }else{state.compareSuppliers=new Set(["SUP-A","SUP-B"]);state.filter="ties";navigate("compare");toast("当前筛选为并列最低价。请点“选择供应商”查看理由必填规则。","good");}
     };
   });
