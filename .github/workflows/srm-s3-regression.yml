@@ -63,6 +63,9 @@ jobs:
       - name: Retain synthetic browser evidence
         if: always()
         uses: actions/upload-artifact@v4
+        # 中文：附件存储额度耗尽时，证据上传失败不应覆盖业务回归结果。
+        # English: Artifact storage failure must not override required regression results.
+        continue-on-error: true
         with:
           name: srm-playwright-evidence
           path: |
