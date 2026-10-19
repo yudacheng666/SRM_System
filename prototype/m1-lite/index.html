@@ -1244,6 +1244,35 @@ body.srm-v2 #settings .settingsGrid>.card{border-color:#e2e9f1}
   body.srm-v2 .panel .cardbody{padding:7px 10px}
 }
 
+
+/* PR26 P2-V01: legacy buyer selector hid the approved V3.1 Items title. */
+body.srm-v2.ui-buyer-mode #items #srmV3PageStage-items,
+body.srm-v2 #items #srmV3PageStage-items{display:flex!important;visibility:visible!important}
+/* PR26 P2-V02: closed drawers must not stretch to the height of the open drawer. */
+body.srm-v2 #pilotControls>.cardbody{align-items:flex-start!important;align-content:start}
+body.srm-v2 #pilotControls>.cardbody>details{align-self:flex-start!important;height:fit-content!important}
+body.srm-v2 #pilotControls>.cardbody>details:not([open]){overflow:hidden}
+body.srm-v2 #pilotControls>.cardbody>details:not([open]) .ui-projectBody,
+body.srm-v2 #pilotControls>.cardbody>details:not([open]) .ui-drawerBody{display:none!important}
+/* PR26 P2-V03: list navigation narrow, material business data prominent even at 1024px. */
+body.srm-v2 #assign #itemFirstView{grid-template-columns:minmax(0,1.7fr) minmax(255px,.8fr);align-items:start;gap:10px}
+body.srm-v2 #assign #supplierFirstView{grid-template-columns:minmax(240px,.68fr) minmax(0,1.7fr);align-items:start;gap:10px}
+body.srm-v2 #assign #supplierFirstView>.card,
+body.srm-v2 #assign #itemFirstView>.card{min-width:0}
+body.srm-v2 #assign #supplierFirstList{max-height:220px;overflow-y:auto;scrollbar-width:thin}
+body.srm-v2 #assign #supplierFirstView>.card:first-child>.cardhead .toolbar input{max-width:100%;min-width:0}
+body.srm-v2 #assign #sfItemBody .srm-v31-allSuppliers{font-size:11px;color:#476786}
+body.srm-v2 #assign #sfItemBody .srm-v31-relationCheck{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;cursor:pointer}
+body.srm-v2 #assign #sfItemBody .srm-v31-relation{border-radius:4px;padding:3px 5px;font-size:10px;font-weight:700}
+body.srm-v2 #assign #sfItemBody .srm-v31-relation.linked{background:#e5f5ee;color:#18744f}
+body.srm-v2 #assign #sfItemBody .srm-v31-relation.unlinked{background:#f0f3f8;color:#66798c}
+@media(min-width:701px) and (max-width:1140px){
+body.srm-v2 #assign #itemFirstView{grid-template-columns:minmax(0,1.5fr) minmax(250px,.8fr)}
+body.srm-v2 #assign #supplierFirstView{grid-template-columns:minmax(240px,.7fr) minmax(0,1.5fr)}
+}
+@media(max-width:760px){
+body.srm-v2 #assign #itemFirstView,body.srm-v2 #assign #supplierFirstView{grid-template-columns:minmax(0,1fr)}
+}
 </style>
 </head>
 <body class="srm-v2">
@@ -1651,7 +1680,7 @@ body.srm-v2 #settings .settingsGrid>.card{border-color:#e2e9f1}
         </div>
         <div class="cardbody">
           <div class="tablewrap">
-            <table class="table"><thead><tr><th>已关联（勾选即生效）</th><th>物料</th><th>分类</th></tr></thead><tbody id="sfItemBody"></tbody></table>
+            <table class="table"><thead><tr><th>当前供应商</th><th>物料 / RFQ行</th><th>询价数量</th><th>分类</th><th>全部关联方</th></tr></thead><tbody id="sfItemBody"></tbody></table>
           </div>
           <div class="pager"><span id="sfItemCount"></span><div id="sfPager"></div></div>
         </div>
@@ -4179,7 +4208,11 @@ function renderSfItems(){
   supplierFirstTitle.textContent=sup.name+"：选择物料";
   const list=filteredSfItems(),pages=Math.max(1,Math.ceil(list.length/PAGE));sfPage=Math.min(sfPage,pages-1);
   const slice=list.slice(sfPage*PAGE,sfPage*PAGE+PAGE);
-  sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.lineId}" ${getSet(it.lineId).has(activeSupplier)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td></tr>`).join("");
+  sfItemBody.innerHTML=slice.map(it=>{
+    const linked=[...getSet(it.lineId)].map(id=>suppliers.find(s=>s.id===id)?.name||id);
+    const selected=getSet(it.lineId).has(activeSupplier);
+    return `<tr><td><label class="srm-v31-relationCheck"><input type="checkbox" data-sfi="${esc(it.lineId)}" ${selected?"checked":""}><span class="srm-v31-relation ${selected?"linked":"unlinked"}">${selected?"已关联":"未关联"}</span></label></td><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>${esc(String(it.qty))} ${esc(it.unit||"")}</td><td>${esc(it.cat||"—")}</td><td><span class="srm-v31-allSuppliers">${linked.length?esc(linked.join("、")):"尚未分配"}</span></td></tr>`;
+  }).join("");
   bindDrawingThumbs();
   bindShiftRange("#sfItemBody input[data-sfi]","supplier-items","sfi",(id,checked)=>{const set=getSet(id);checked?set.add(activeSupplier):set.delete(activeSupplier)},renderAssignAll,(ids,checked)=>guardMutableLines(ids.filter(id=>getSet(id).has(activeSupplier)!==checked),"修改供应商物料关联"));
   const related=list.filter(it=>getSet(it.lineId).has(activeSupplier)).length;
