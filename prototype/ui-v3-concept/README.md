@@ -8,6 +8,24 @@
 - 原型覆盖三个复杂环节：供应商分配、报价回收、比价议价；询价项目、物料与图纸、设置管理提供统一导航和业务归属展示。
 - The prototype focuses on supplier allocation, quote intake/revisions and buyer comparison/awards; the remaining screens illustrate navigation and functional ownership.
 
+## 最简体验入口（建议管理人员使用） / One-file review
+
+**不要在 GitHub 的文件列表中评价界面。** GitHub 只显示源文件，不能执行 HTML/JS 交互；需要在 Edge/Chrome 本地打开原型。
+**Do not assess the UI by the GitHub file listing.** Download and open the HTML locally in Edge/Chrome.
+
+1. 打开 [SRM_UI_V3_1_Offline_Preview.html](./SRM_UI_V3_1_Offline_Preview.html)，点击 GitHub 文件右上角的 **Download raw file（下载原始文件）** 按钮。保存为 `.html` 文件；不要复制 GitHub 代码文本。
+1. Open the linked one-file preview and click GitHub's **Download raw file** control. Keep the `.html` extension.
+2. 双击下载的 HTML 文件，用 Edge/Chrome 打开，无需下载其他资源、运行 Python 或连接网络。
+2. Open the downloaded HTML in Edge/Chrome; no other files, Python or network are needed.
+3. 首屏查看「比价与议价」；再点击右上角「**查看典型场景**」，依次选择「并列最低价」「报价修订」「跨页分配」。每个场景都内置演示数据，无需手工造数据。
+3. Review the comparison screen, then use **查看典型场景** for tie decisions, quote revisions and cross-page supplier allocation.
+
+**评价重点只需三件事**：页面是否清楚（字号、主次、密度）、业务流程是否顺手、哪些内容与真实采购习惯不符。现阶段不需要检查算法、导入格式或测试异常数据；自动化与 Codex Cloud 负责这些验证。
+**Review focus:** clarity and hierarchy, practical workflow, and mismatch with real buying practice; scripted testing is handled separately.
+
+> 此单文件只是当前 V3.1 概念页面的便捷打包版本。所有状态都在内存中，刷新后清空；它不连接正式 SRM、SQLite 或外部服务。之后如果修改 `index.html`、`styles.css` 或 `app.js`，需重新生成此单文件，避免与最新多文件原型不一致。
+> The standalone file is a V3.1 snapshot. It is memory-only and must be regenerated after source edits.
+
 ## 打开方式 / Open locally
 
 1. 在 GitHub 选择 **design/20261019-srm-ui-v3-interactive-prototype** 分支，下载完整 ZIP 并解压。
