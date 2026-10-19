@@ -41,9 +41,38 @@ function navigate(view){
   document.querySelectorAll("[data-panel]").forEach(function(p){p.hidden=p.id!==view;});
   document.querySelectorAll("[data-view]").forEach(function(b){var active=b.dataset.view===view;b.classList.toggle("active",active);if(active)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});
   el("topPage").textContent=({projects:"询价项目",items:"物料与图纸",assign:"供应商分配",quotes:"报价回收",compare:"比价与议价",settings:"设置与数据管理"})[view];
+  document.querySelectorAll("[data-step]").forEach(function(x){x.classList.toggle("active",x.dataset.step===view);});
   if(view==="items")renderItems();if(view==="assign")renderAssign();if(view==="quotes")renderQuotes();if(view==="compare")renderCompare();
 }
 document.addEventListener("click",function(e){var b=e.target.closest("[data-view],[data-go]");if(b)navigate(b.dataset.view||b.dataset.go);});
+/* 中文：评审者不需要自行设计测试步骤，三条典型情景可一步展示。 
+   English: A one-click guided state is preferable to asking reviewers to invent test data. */
+el("guidedTour").onclick=function(){
+  modal("选择一个典型采购场景","DESIGN REVIEW · GUIDED WALKTHROUGH",
+    '<p class="guided-intro">三个场景已经准备了虚构数据。点击任意场景即可跳转到对应页面，看到关键状态和操作入口。它们只影响本页内存，不会写入 SRM 数据库。</p>'+
+    '<div class="guided-cards">'+
+      '<button type="button" class="guided-card" data-guide="allocation"><span class="guide-number">01</span><span class="guide-content"><strong>供应商分配 · 跨页选择</strong><span>预选两个页面中的物料，体验多对多关联和批量操作。</span></span><span class="guide-next">↗</span></button>'+
+      '<button type="button" class="guided-card" data-guide="revision"><span class="guide-number">02</span><span class="guide-content"><strong>报价修订 · 只看变化行</strong><span>自动准备一份新的 V2 草稿，检查修改与历史保护。</span></span><span class="guide-next">↗</span></button>'+
+      '<button type="button" class="guided-card" data-guide="tie"><span class="guide-number">03</span><span class="guide-content"><strong>并列最低价 · 人工决策</strong><span>展示最低价并列的物料以及记录选择理由的入口。</span></span><span class="guide-next">↗</span></button>'+
+    '</div>',[{label:"稍后再看",action:closeModal}]);
+  el("modalBody").querySelectorAll("[data-guide]").forEach(function(b){
+    b.onclick=function(){var scenario=b.dataset.guide;closeModal();
+      if(scenario==="allocation"){
+        state.activeSupplier="SUP-B";state.selected=new Set(["RFQ-L00001","RFQ-L00002","RFQ-L00010","RFQ-L00011"]);state.page=1;
+        navigate("assign");toast("已预选跨两页的 4 条物料。查看批量操作条和全部已分配供应商。","good");
+      }else if(scenario==="revision"){
+        state.quoteSupplier="SUP-A";
+        var h=latestConfirmed("SUP-A"),existing=supplierHistory("SUP-A").find(function(r){return r.round===1&&r.version===2;});
+        if(existing){state.quoteVersion=existing.key;}else{
+          var newh={key:quoteKey("SUP-A",1,2),supplier:"SUP-A",round:1,version:2,confirmed:false,created:"虚构修订草稿",lines:clone(h.lines)};
+          var target=newh.lines.find(function(x){return x.lineId==="RFQ-L00001";});
+          if(target)target.price="17.80";state.history.push(newh);state.quoteVersion=newh.key;
+        }
+        navigate("quotes");toast("已创建报价修订 V2，DEMO-1001 的新旧价格差异已标出。","good");
+      }else{state.compareSuppliers=new Set(["SUP-A","SUP-B"]);state.filter="ties";navigate("compare");toast("当前筛选为并列最低价。请点“选择供应商”查看理由必填规则。","good");}
+    };
+  });
+};
 el("resetBtn").onclick=function(){modal("重置全部演示操作","RESET DEMO","<p>这将把浏览器里的虚构供应商、分配、报价修订和比价决策恢复初始状态。</p><p class='helper'>原型不连接正式 SRM 数据库，重置不会影响真实询价。</p>",[{label:"取消",action:closeModal},{label:"重置演示",primary:true,action:function(){location.reload();}}]);};
 el("feedbackBtn").onclick=function(){
   var txt="SRM UI V3 原型评审\n当前： "+RFQ+"\n模块： "+el("topPage").textContent+"\n供应商： "+state.suppliers.length+" 家；物料： "+state.items.length+" 项\n人工决定："+Object.keys(state.awards).length+" 项\n评审意见：\n1. 页面结构：\n2. 表格密度：\n3. 操作顺序：\n4. 风险与改进：";
@@ -84,6 +113,7 @@ function renderAssign(){
 el("supplierList").onclick=function(e){var b=e.target.closest("[data-supplier]");if(!b)return;state.activeSupplier=b.dataset.supplier;renderAssign();};
 el("supplierSearch").oninput=function(e){state.supplierSearch=e.target.value;renderAssign();};
 el("itemSearch").oninput=function(e){state.itemSearch=e.target.value;state.page=0;renderAssign();};
+document.querySelectorAll("[data-density]").forEach(function(b){b.onclick=function(){document.body.classList.toggle("density-comfortable",b.dataset.density==="comfortable");document.querySelectorAll("[data-density]").forEach(function(x){var active=x===b;x.classList.toggle("active",active);x.setAttribute("aria-pressed",String(active));});};});
 el("assignBody").onchange=function(e){var b=e.target.closest("[data-check-item]");if(!b)return;if(b.checked)state.selected.add(b.dataset.checkItem);else state.selected.delete(b.dataset.checkItem);renderAssign();};
 el("pageSelect").onchange=function(e){itemsFiltered().slice(state.page*state.pageSize,(state.page+1)*state.pageSize).forEach(function(it){if(e.target.checked)state.selected.add(it.lineId);else state.selected.delete(it.lineId);});renderAssign();};
 el("prevPage").onclick=function(){state.page--;renderAssign();};el("nextPage").onclick=function(){state.page++;renderAssign();};
@@ -221,6 +251,10 @@ function renderCompare(){
   var rows=compareRows(),tie=rows.filter(function(r){return r.tied&&!r.decision;}),undecided=rows.filter(function(r){return !r.decision;}),chosen=rows.filter(function(r){return !!r.decision;});
   var total=chosen.reduce(function(sum,r){var sid=r.decision.sid,entry=r.cells.find(function(c){return c.sid===sid;});return sum+(entry?.price||0)*r.item.qty;},0);
   el("compareMetrics").innerHTML=metric("当前比较范围",rows.length+" 项",state.compareSuppliers.size+" 家参与 · 含独立价格状态",true)+metric("并列最低待确认",tie.length+" 项","不会按照排序自动选第一家")+metric("已人工决定",chosen.length+" 项","每项需记录决策理由")+metric("已决定金额",money(total),"只有已选且有适用价的行计入");
+  el("analysisInsight").innerHTML='<div class="insight-icon" aria-hidden="true">✦</div><div class="insight-copy"><strong>本轮比价提醒</strong><span>'+
+    (state.compareSuppliers.size<2?"当前仅选择一家供应商，请至少勾选两家再进行比较。":tie.length?"发现 "+tie.length+" 项并列最低价。已确认报价仅用于推荐，采购员仍需填写中选理由。":undecided.length?"还有 "+undecided.length+" 项尚未决定中选供应商。":"所有项目已记录人工决策和理由。")+
+    '</span></div><button type="button" id="insightAction">'+(tie.length?"查看并列最低项":undecided.length?"查看待决定项":"查看全部")+' →</button>';
+  el("insightAction").onclick=function(){state.filter=tie.length?"ties":undecided.length?"open":"all";renderCompare();};
   el("compareScope").textContent="参与 "+state.compareSuppliers.size+" 家 · 显示 "+rows.length+" 项";
   var suppliers=[...state.compareSuppliers].map(supplierById).filter(Boolean);
   el("compareHead").innerHTML="<tr><th>存货编码 / 规格</th><th class='num'>数量</th>"+suppliers.map(function(s){return "<th>"+esc(s.name.replace("演示供应商 ",""))+"<br><span class='muted'>适用单价</span></th>";}).join("")+"<th>系统推荐</th><th>采购决定</th></tr>";
@@ -250,5 +284,5 @@ el("exportComparison").onclick=function(){
   compareRows().forEach(function(r){var s=r.decision?.sid,price=r.cells.find(function(c){return c.sid===s;})?.price;rows.push([RFQ,r.item.lineId,r.item.code,r.item.spec,r.item.qty,r.item.unit,r.min??"",r.tied?r.winners.map(function(id){return supplierById(id)?.name;}).join(" / "):"",s?supplierById(s)?.name:"未决定",price??"",r.decision?.reason||""]);});
   downloadCsv(RFQ+"_比价决策清单-原型.csv",rows);toast("已导出演示 CSV；并列最低价未决定的行会明确标示，不会自动选供应商。","good");
 };
-navigate("assign");
+navigate("compare");
 })();
