@@ -1273,6 +1273,15 @@ body.srm-v2 #assign #supplierFirstView{grid-template-columns:minmax(240px,.7fr) 
 @media(max-width:760px){
 body.srm-v2 #assign #itemFirstView,body.srm-v2 #assign #supplierFirstView{grid-template-columns:minmax(0,1fr)}
 }
+
+/* PR26 P2-V04: real same-round V1/V2 revision comparison displayed above table. */
+body.srm-v2 #quoteImport #srmV31RevisionDiff{margin-bottom:10px;border:1px solid #d8e6f5;border-radius:7px;background:#f7fbff;padding:10px 12px}
+body.srm-v2 #quoteImport #srmV31RevisionDiff[hidden]{display:none!important}
+body.srm-v2 #quoteImport .srm-v31-revisionHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+body.srm-v2 #quoteImport .srm-v31-revisionHeader strong{font-size:12px;color:#284c73}
+body.srm-v2 #quoteImport .srm-v31-revisionCount{font-size:11px;font-weight:740;color:#285fa7}
+body.srm-v2 #quoteImport #srmV31RevisionDiff .table td,
+body.srm-v2 #quoteImport #srmV31RevisionDiff .table th{padding:7px 9px;font-size:11px}
 </style>
 </head>
 <body class="srm-v2">
@@ -1792,9 +1801,10 @@ body.srm-v2 #assign #itemFirstView,body.srm-v2 #assign #supplierFirstView{grid-t
     <div class="card" style="margin-top:14px">
       <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small">导入后可点击“修改”逐行修正</span></div><div class="toolbar"><button class="btn" id="carryForwardMissing">选择沿用上轮项目…</button></div></div>
       <div class="cardbody">
+        <div id="srmV31RevisionDiff" class="srm-v31-revisionDiff" aria-live="polite" hidden></div>
         <div id="quoteRoundHint" class="small muted" style="margin-bottom:8px"></div>
         <div id="carryForwardPreview" class="coverageDetails" style="display:none"></div>
-        <div class="tablewrap"><table class="table"><thead><tr><th>存货编码 / RFQ Line ID / 存货名称</th><th>询价数量（询价单位）</th><th>上轮单价（元/单位）</th><th>本轮单价 / 阶梯价（元/单位）</th><th>本轮适用单价（元/单位）</th><th>单价变化</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>报价来源</th><th>物料备注</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
+        <div class="tablewrap"><table class="table"><thead><tr><th>存货编码 / RFQ Line ID / 存货名称</th><th>询价数量（询价单位）</th><th id="srmV31PreviousPriceHeading">上轮单价（元/单位）</th><th>本轮单价 / 阶梯价（元/单位）</th><th>本轮适用单价（元/单位）</th><th>单价变化</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>报价来源</th><th>物料备注</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
       </div>
     </div>
   </section>
@@ -3826,14 +3836,53 @@ function latestConfirmedQuoteLine(lineId,sid){
   for(const rn of rounds){const sub=latestConfirmedSubmissionForRound(sid,rn);if(!sub||!expectedIdsForRound(sub).includes(lineId))continue;const line=sub.lines.find(x=>x.lineId===lineId);if(!line)return null;if(line.status==="quoted")return{...line,roundNo:rn,revisionNo:sub.revisionNo};return null}
   return null;
 }
+
+/* 中文：从真实已确认报价中读取同轮前一版，只生成只读差异呈现，绝不改写业务历史。
+ * English: Project a read-only same-round revision diff from confirmed submissions only. */
+function renderV31RevisionDiff(round){
+  const box=document.getElementById("srmV31RevisionDiff");
+  const heading=document.getElementById("srmV31PreviousPriceHeading");
+  const previous=supplierSubmissions(round.supplierId)
+    .filter(x=>x.roundNo===round.roundNo&&x.revisionNo<round.revisionNo&&x.status==="confirmed")
+    .sort((a,b)=>b.revisionNo-a.revisionNo)[0];
+  heading.textContent=previous?"同轮上版 V"+previous.revisionNo+" 适用单价":"上轮单价（元/单位）";
+  if(!previous){box.hidden=true;box.innerHTML="";return null}
+  const before=new Map(previous.lines.map(l=>[l.lineId,l]));
+  const after=new Map(round.lines.map(l=>[l.lineId,l]));
+  const keys=[...new Set([...before.keys(),...after.keys()])];
+  const rows=[];let unchanged=0;
+  for(const key of keys){
+    const old=before.get(key),now=after.get(key),it=items.find(x=>x.lineId===key);
+    // revision-copy is provenance only; unchanged commercial terms do not count as differences.
+    const signature=l=>l?[
+      String(l.status||""),String(tierText(l)),String(l.lead??""),
+      String(l.moq??""),String(l.remark??"")
+    ].join("\u001f"):"";
+    if(old&&now&&signature(old)===signature(now)){unchanged++;continue}
+    const effective=l=>{const p=effectivePriceForLine(l,it?.qty);return p==null?"—":"¥"+p.toFixed(2)};
+    const kind=old&&now?"修订":old?"上版存在 / 本版删除":"本版新增";
+    const status=l=>l?quoteStatusLabel(l.status):"无记录";
+    rows.push('<tr><td>'+esc(it?.id||key)+'<div class="small muted">'+esc(key)+'</div></td>'+
+      '<td>'+esc(kind)+'</td><td>'+esc(effective(old))+'</td><td>'+esc(effective(now))+'</td>'+
+      '<td>'+esc(status(old))+' → '+esc(status(now))+'</td></tr>');
+  }
+  box.hidden=false;
+  box.innerHTML='<div class="srm-v31-revisionHeader"><div><strong>同轮报价版本对照 · V'+previous.revisionNo+' → V'+round.revisionNo+'</strong>'+
+    '<div class="small muted">上版已确认且只读；本版修订应逐项核验后再确认</div></div>'+
+    '<span class="srm-v31-revisionCount">变化 '+rows.length+' 项 · 未变 '+unchanged+' 项</span></div>'+
+    (rows.length?'<div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>变更</th><th>上版适用价</th><th>本版适用价</th><th>报价状态</th></tr></thead><tbody>'+
+      rows.join("")+'</tbody></table></div>':'<div class="small muted">本版与上一个已确认版本的报价明细一致。</div>');
+  return previous;
+}
 function renderQuoteRound(){
   carryForwardPreview.style.display="none";carryForwardPreview.innerHTML="";
   const round=currentQuoteRound();if(!round)return;const sup=suppliers.find(s=>s.id===round.supplierId),expected=expectedIdsForRound(round);
   quoteEvidenceType.value=round.evidenceType||"email_attachment";quoteEvidenceNote.value=round.evidenceNote||"";quoteTermsNote.value=round.termsNote||"";
   for(const el of [quoteEvidenceType,quoteEvidenceNote,quoteTermsNote])el.disabled=round.status==="confirmed";
   quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮 · 第${round.revisionNo}版</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认/锁定":"草稿"}</span><div class="small" style="margin-top:5px">轮次表示议价阶段；版本表示同一轮报价的更正提交。已确认提交不可覆盖修改。</div>`;
+  const previousV31=renderV31RevisionDiff(round);
   quoteRoundHint.textContent=`本轮应报价范围 ${expected.length} 项；当前提交已记录 ${round.lines.length} 项。`;renderCoverageResult(coverageFromRows(round,round.lines));
-  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=({carry:"明确沿用上轮",manual:"手工录入/修正",paste:"表格粘贴",file:"文件导入",demo:"虚构演示","revision-copy":"复制自上一版",import:"旧记录（来源未细分）"})[l.source]||"历史记录（来源未知）",prev=round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)} · 规格：${esc(it?.spec||"未填写")}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td>${esc(l.remark||"")}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="12" class="muted">当前提交还没有报价记录。</td></tr>';
+  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=({carry:"明确沿用上轮",manual:"手工录入/修正",paste:"表格粘贴",file:"文件导入",demo:"虚构演示","revision-copy":"复制自上一版",import:"旧记录（来源未细分）"})[l.source]||"历史记录（来源未知）",prev=previousV31?previousV31.lines.find(x=>x.lineId===l.lineId):round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)} · 规格：${esc(it?.spec||"未填写")}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td>${esc(l.remark||"")}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="12" class="muted">当前提交还没有报价记录。</td></tr>';
   document.querySelectorAll("[data-edit-quote]").forEach(b=>b.onclick=()=>editQuoteLine(Number(b.dataset.editQuote)));
   carryForwardMissing.disabled=round.roundNo===1||round.status==="confirmed";editRoundScope.disabled=round.roundNo===1||round.status==="confirmed";confirmQuoteRound.disabled=round.status==="confirmed";commitQuoteImport.disabled=round.status==="confirmed";renderQuotes();
 }
