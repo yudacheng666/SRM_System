@@ -34,6 +34,9 @@ jobs:
       - name: Archive screenshots, database test logs, HTML report and traces
         if: always()
         uses: actions/upload-artifact@v4
+        # 中文：仓库附件额度耗尽时，上传证据不应覆盖真正的测试结果。
+        # English: Artifact upload is best-effort and must not override required test results.
+        continue-on-error: true
         with:
           name: srm-ui-v2-candidate-chromium-evidence
           path: |
