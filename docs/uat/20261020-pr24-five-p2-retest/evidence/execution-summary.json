@@ -1,0 +1,46 @@
+{
+  "browser.jsonl": {
+    "events": {
+      "request": 288,
+      "console": 2,
+      "command": 7,
+      "screenshot": 63,
+      "step": 8,
+      "check": 138,
+      "observation": 38,
+      "dialog": 16,
+      "driver-error": 1,
+      "download": 8
+    },
+    "checks": {
+      "true": 136,
+      "false": 2
+    },
+    "warnings": [
+      {
+        "time": "2026-10-19T22:44:45.256Z",
+        "kind": "console",
+        "url": "http://127.0.0.1:8970/",
+        "type": "error",
+        "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "time": "2026-10-19T22:51:01.010Z",
+        "kind": "console",
+        "url": "http://127.0.0.1:8971/",
+        "type": "error",
+        "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      }
+    ]
+  },
+  "aux-browser.jsonl": {
+    "events": {
+      "dialog": 2,
+      "check": 5
+    },
+    "checks": {
+      "true": 5
+    },
+    "warnings": []
+  }
+}
