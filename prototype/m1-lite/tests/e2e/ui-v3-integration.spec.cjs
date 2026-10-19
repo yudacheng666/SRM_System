@@ -104,3 +104,45 @@ test('UI V3 integration: theme, active navigation and responsive workspace / 视
   }
   expect(errors).toEqual([]);
 });
+
+
+// 中文：PR #26 五项 P2 中可由自动化验证的真实 UI 结构，必须进入买方正式询价再检查。
+// English: Check actual buyer-mode geometry instead of only asserting the default demo shell.
+test('UI V3.1 P2 buyer layout and semantic controls / 正式 RFQ 标题、抽屉、分配与决策',async({page,app})=>{
+  void app;
+  page.on('dialog',d=>d.accept());
+  await page.locator('#pilotNewWorkspace').click();
+  await expect(page.locator('body')).toHaveClass(/ui-buyer-mode/);
+  for(const size of sizes){
+    await page.setViewportSize(size);
+    await page.locator('.srm-v2-sideitem[data-srm-v2-tab="items"]').click();
+    await expect(page.locator('#srmV3PageStage-items')).toBeVisible();
+    await expect(page.locator('#srmV3PageStage-items h2')).toContainText('物料与图纸');
+    const closed=await page.evaluate(()=>[...document.querySelectorAll('#pilotControls>.cardbody>details:not([open])')].map(x=>({
+      actual:x.getBoundingClientRect().height,summary:x.querySelector('summary').getBoundingClientRect().height
+    })));
+    for(const item of closed)expect(item.actual,'closed drawer must match summary height').toBeLessThanOrEqual(item.summary+3);
+    await page.locator('.srm-v2-sideitem[data-srm-v2-tab="assign"]').click();
+    await expect(page.locator('#itemFirstView')).toBeVisible();
+    const dimensions=await page.evaluate(()=>{
+      const a=document.querySelector('#itemFirstView'),cells=[...a.children].map(n=>n.getBoundingClientRect());
+      return {material:cells[0]?.width||0,suppliers:cells[1]?.width||0,columns:getComputedStyle(a).gridTemplateColumns};
+    });
+    expect(dimensions.material,'material pane must be wider').toBeGreaterThan(dimensions.suppliers);
+    await page.locator('[data-mode="supplierFirst"]').click();
+    await expect(page.locator('#supplierFirstView')).toBeVisible();
+    const supplierColumns=await page.evaluate(()=>{
+      const cards=[...document.querySelector('#supplierFirstView').children].map(n=>n.getBoundingClientRect());
+      return {navigation:cards[0].width,items:cards[1].width};
+    });
+    expect(supplierColumns.items,'supplier-first items must be wider than navigation').toBeGreaterThan(supplierColumns.navigation);
+    await expect(page.locator('#sfItemBody').locator('..').locator('thead')).toContainText('全部关联方');
+    await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quoteImport"]').click();
+    await expect(page.locator('#srmV31RevisionDiff')).toHaveCount(1);
+    await expect(page.locator('#srmV31PreviousPriceHeading')).toHaveCount(1);
+    await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
+    await expect(page.locator('#srmV31DecisionBoard')).toBeVisible();
+    await expect(page.locator('#srmV31DecisionBoard')).toContainText('待人工决定');
+    await expect(page.locator('#quoteTable')).toContainText('系统建议 / 人工决定');
+  }
+});
