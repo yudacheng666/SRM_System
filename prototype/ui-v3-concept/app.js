@@ -115,7 +115,7 @@ function initQuotes(){
   state.suppliers.slice(0,3).forEach(function(s,idx){
     var lines=state.items.filter(function(it){return state.links[it.lineId].has(s.id);}).map(function(it,i){
       if(idx===2&&i%7===0)return makeLine(it.lineId,"","noquote");
-      if(idx===1&&i%9===0)return makeLine(it.lineId,"","cannot");
+      if(idx===1&&i%9===0&&it.lineId!=="RFQ-L00001")return makeLine(it.lineId,"","cannot");
       return makeLine(it.lineId,(idx===0&&it.lineId==="RFQ-L00001"?"18.50":idx===1&&it.lineId==="RFQ-L00001"?"18.50":(12+i*3.2+idx*1.9).toFixed(2)),"quoted",7+idx);
     });
     state.history.push({key:quoteKey(s.id,1,1),supplier:s.id,round:1,version:1,confirmed:true,created:"虚构初始报价 · R1 V1",lines:lines});
