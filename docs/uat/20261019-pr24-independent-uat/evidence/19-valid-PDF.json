@@ -1,0 +1,76 @@
+{
+  "workspaces": {
+    "RFQ-1792411169725-HRCHQJ": {
+      "revision": 2,
+      "sha256": "857222cab0395cb551175337e8259da180c771a5623c52ce10701dd5f5b4616c",
+      "snapshot": {
+        "format": "srm-workspace",
+        "schemaVersion": 1,
+        "workspaceId": "RFQ-1792411169725-HRCHQJ",
+        "origin": "buyer",
+        "revision": 2,
+        "state": {
+          "items": [
+            {
+              "id": "UAT24-SHAFT",
+              "lineId": "RFQ-L00001",
+              "name": "虚构采购轴：同编码规格区分",
+              "cat": "机加工",
+              "spec": "M16 / 220 mm",
+              "ref1": "",
+              "ref2": "",
+              "purchaseUnit": "",
+              "erpExtra": {
+                "虚构ERP备注": "ANON-ERP-01"
+              },
+              "qty": 10,
+              "unit": "件",
+              "drawingNo": "U24-D16",
+              "_rowNo": 2,
+              "sources": [
+                {
+                  "source": "one-material.xlsx · 工作表：Sheet · 真实 XLSX · 第2行",
+                  "qty": 10
+                }
+              ],
+              "_errors": [],
+              "custom": {},
+              "_createdOrder": 1,
+              "drawings": [
+                {
+                  "id": "df9001cd22011eca",
+                  "sha256": "df9001cd22011eca2e6241e6e5d2ca7bcea3e44d08db346151402b780cd08786",
+                  "name": "valid-U24-D16.pdf",
+                  "revision": "A",
+                  "size": 594,
+                  "createdAt": "2026-10-19T11:59:34.136Z"
+                }
+              ]
+            }
+          ],
+          "suppliers": [],
+          "assignments": [
+            {
+              "key": "RFQ-L00001",
+              "values": []
+            }
+          ],
+          "quoteRounds": [],
+          "awards": [],
+          "awardReasons": [],
+          "manualAwards": [],
+          "awardReviewIds": [],
+          "supplierPool": [],
+          "selectedCompareSuppliers": [],
+          "customFields": [],
+          "lineSeq": 1,
+          "createdSeq": 1,
+          "quoteComparisonMode": "returned"
+        }
+      }
+    }
+  },
+  "pdf": {
+    "assets/df/df9001cd22011eca2e6241e6e5d2ca7bcea3e44d08db346151402b780cd08786.pdf": "df9001cd22011eca2e6241e6e5d2ca7bcea3e44d08db346151402b780cd08786"
+  }
+}

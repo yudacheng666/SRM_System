@@ -1,0 +1,417 @@
+{
+  "head": "feat/20261019-srm-ui-v3-integration",
+  "head_sha": "67b1a7625db229e36ef4054127539e830d12079f",
+  "base": "draft/20261013-m1-storage-ui-audit",
+  "base_sha": "457edcf4214220deacb4288b372ea78f144e5333",
+  "body": "## 目标 / Goal\n\n将用户已确认的 SRM UI V3.1 视觉层级接入现有 M1-Lite，而不是用概念原型替换正式业务页面。\n\n用户确认了界面清晰度、信息主次与采购操作流程，并反馈“进步了很多”。本 PR 是第一批低风险的呈现层接入。\n\n## 本批变更 / Changes\n\n- 在 `prototype/m1-lite/index.html` 中内嵌独立 V3 样式块，统一工作区留白、深色导航、活动模块标记、RFQ 身份区、工作流步骤、表格层级、按钮主次、输入焦点与响应式布局。\n- 更新页面标题/候选标识；不新增静态资源路由或外部依赖。\n- 新增 `prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs`，验证样式实际加载、导航状态同步、1024×768 / 1366×768 / 1600×900 下工作区与侧栏几何关系。\n- 保留现有业务 DOM ID、事件处理器、报价轮次与锁定、SQLite/API、PDF 图纸、导入导出、S4 完整备份恢复等实现；不把概念原型的内存状态或 CSV 导出移植到正式业务。\n\n## 验收门槛 / Acceptance\n\n- GitHub Actions 必须对该 PR 的准确 HEAD 完成现有 Chromium、Node、Python/SQLite、S3/S4 回归。\n- Codex Cloud 随后独立检查视觉、真实点击流程、响应布局与数据持久化；只测试和报告，不改产品代码。\n- 如果 CSS 路径或页面布局导致既有测试失败，修复后再申请独立验收。\n- 仅第一批视觉层接入，不宣称整个产品已完成 V3。后续仍需根据实际浏览器截图逐页精修。\n\n**安全边界：** 仅修改设计分支与 M1-Lite 展示层/新测试；不改 `main`，不合并任何 PR，不迁移或清理用户本机数据。样例数据保持虚构。\n\n## CI 证据上传策略 / CI artifact policy\n\n- 仓库 GitHub Actions artifact 存储配额已满，因此 UI V2 与 S3/S4 两套工作流中的截图/日志附件上传均为 best-effort（`continue-on-error: true`）。\n- **浏览器、Node、Python/SQLite、S3/S4 业务测试仍是阻断门槛**；此设置仅避免附件上传故障覆盖真实测试结果，不跳过测试。\n",
+  "comments": [
+    {
+      "id": 6263313787,
+      "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6263313787",
+      "body": "## Codex Cloud — TEST-ONLY independent review task / 独立验收任务\n\n**Target candidate HEAD:** `67b1a7625db229e36ef4054127539e830d12079f`  \n**Current required Actions:** [UI V2 Unified Acceptance #36](https://github.com/yudacheng666/SRM_System/actions/runs/39228203050) · [S3/S4 Regression #123](https://github.com/yudacheng666/SRM_System/actions/runs/39228203069)  \n**Start only after both Actions finish successfully on this exact HEAD.** Do not edit source code, tests, workflows or this PR.\n\n1. Confirm both Actions' final conclusions are success and the tested HEAD matches exactly. Record the run URLs and results.\n2. Use a fresh cloud Chromium session and isolated temporary `SRM_DATA_DIR`. Start the real local Python/SQLite backend from this branch, not the static concept prototype.\n3. Review `1024×768`, `1366×768`, and `1600×900` screenshots for visual hierarchy, typography, spacing, table readability, clipped controls, document overflow, sidebar overlap and navigation discoverability.\n4. Click through items/drawings → supplier allocation → quote intake/revision → comparison/award → settings. Check that active sidebar and workflow tabs remain synchronized and existing controls are visible/reachable.\n5. Run one synthetic business path with temporary data: create RFQ, import synthetic items/suppliers, allocate items, confirm a quote round, compare/record an award, save/reload, and inspect backup/restore controls. Confirm no real user data or main branch changes.\n6. Explicitly check that the V3 CSS is embedded in `index.html`, with no new static-server route or external dependency. Capture screenshots, console/page errors and traces. Report concrete P1/P2/P3 issues honestly.\n7. Write the bilingual report and evidence to a separate anonymous evidence branch and Draft evidence PR; comment here with PASS/FAIL/NOT TESTED, exact SHA and artifact links. **TEST ONLY: no product changes, no merges, no main changes.**\n\nExisting business functions and data safety take precedence over visual polish. If a visual change breaks an old workflow, report it as a failure rather than adapting the test to fit.",
+      "created_at": "2026-10-19T08:46:08Z",
+      "updated_at": "2026-10-19T09:16:16Z"
+    },
+    {
+      "id": 6263488361,
+      "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6263488361",
+      "body": "### First CI findings and corrections / 首轮回归发现与修正\n\n首轮 Chromium 回归未通过，未将其判为成功：\n- 1024×768 供应商分配页首条完整数据行 bottom=806.7px，超出 768px 首屏。\n- 新增 UI V3 测试使用了与既有 UAT 测试相同的本地端口，导致读到的页面不是当前候选。\n\n已在当前分支修正：为 1024×768 增加纵向紧凑规则（不隐藏业务操作），并将新测试改用独立端口 8793。当前候选 HEAD 为 `9b8e5fea7503bb7baef7de5a222326d3a62f46fc`，两套完整 GitHub Actions 正在重新运行；只有最新 HEAD 全部成功后才交给 Codex Cloud 独立验收。",
+      "created_at": "2026-10-19T08:56:29Z",
+      "updated_at": "2026-10-19T08:56:29Z"
+    },
+    {
+      "id": 6263586351,
+      "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6263586351",
+      "body": "### Test-fixture correction / 测试夹具补正\n\n复核首轮失败后进一步确认：新 UI V3 测试函数没有显式请求 `app` fixture，因此本地服务初始化步骤没有执行，导致样式节点计数为 0；并非样式文件缺失。已补上 fixture 依赖，同时将测试端口设为独立的 8793，避免与既有 UAT 测试共享端口。上一条评论中将样式检查失败归因于端口复用不够准确，现予以更正。最新提交 `056dfedf9c7aa09ebac79b08a1085409ba1fc509` 将重新运行完整 Actions。",
+      "created_at": "2026-10-19T09:02:25Z",
+      "updated_at": "2026-10-19T09:02:25Z"
+    },
+    {
+      "id": 6263897355,
+      "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6263897355",
+      "body": "## 开发者回归结果 / Developer regression result — exact HEAD `67b1a7625db229e36ef4054127539e830d12079f`\n\n- [UI V2 Unified Candidate Acceptance #36](https://github.com/yudacheng666/SRM_System/actions/runs/39228203050)：**SUCCESS**（Windows safety + Linux real Chromium）。\n- [S3/S4 Regression #123](https://github.com/yudacheng666/SRM_System/actions/runs/39228203069)：**SUCCESS**（Windows SQLite/full backup restore + Linux real Chromium）。\n- 两套真实 Chromium E2E 均为 **41 passed / 0 failed**；新增 UI V3 接入检查通过，1024×768 分配页首条完整数据行 bottom=714.7px，位于 768px 首屏内。\n- GitHub artifact 存储配额仍满，S3/S4 的证据 ZIP 上传步骤记录失败；已由 `continue-on-error: true` 设为非阻断。**测试步骤本身 SUCCESS，没有跳过测试。**\n- 下一步按本 PR 前一条 Codex Cloud 任务执行独立 TEST-ONLY 审查，固定以上 SHA；不得改代码或合并。PR 保持 Draft，main 未修改。",
+      "created_at": "2026-10-19T09:20:07Z",
+      "updated_at": "2026-10-19T09:20:07Z"
+    }
+  ],
+  "ci": {
+    "workflow_runs": [
+      {
+        "id": 39228203069,
+        "name": "SRM S3/S4 Regression",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 123,
+        "jobs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39228203069/jobs",
+        "logs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39228203069/logs",
+        "workflow_id": 383906368
+      },
+      {
+        "id": 39228203050,
+        "name": "SRM UI V2 Unified Candidate Acceptance",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 36,
+        "jobs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39228203050/jobs",
+        "logs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39228203050/logs",
+        "workflow_id": 385464786
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "jobs": [
+        {
+          "id": 117979576313,
+          "name": "linux-real-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 39228203050,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Install locked Node dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Install real Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Check Python SQLite, complete backup and restoration logic",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Check supplier quotation and workbook business rules",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run complete real Chromium M1-Lite and UI V2 end-to-end acceptance",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Archive screenshots, database test logs, HTML report and traces",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        },
+        {
+          "id": 117979576761,
+          "name": "windows-business-safety",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 39228203050,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Verify Windows SQLite and backup restore",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Verify supplier packages and autosave rules",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Validate Windows local launcher's encoding and relative path",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Validate isolated V2 pilot launcher does not use normal data directory",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "jobs": [
+        {
+          "id": 117979576183,
+          "name": "SQLite S4 restore and supplier ZIP regression on Windows",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 39228203069,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Checkout the tested branch",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Set up Node.js",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run SQLite, full backup/restore and local API tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run supplier ZIP and PDF regression",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Verify launcher is ASCII and points to backend",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Set up Node.js",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Post Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Checkout the tested branch",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        },
+        {
+          "id": 117979576609,
+          "name": "Synthetic Chromium acceptance on Linux",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 39228203069,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run npm ci",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run npx playwright install --with-deps chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run python -m unittest discover -v -s prototype/m1-lite/backend -p \"test_*.py\"",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Run npm test",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run npm run test:e2e",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Retain synthetic browser evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
