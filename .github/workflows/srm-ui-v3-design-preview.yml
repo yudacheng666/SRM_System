@@ -28,8 +28,9 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Run concept-specific Chromium flows at three viewport sizes
         run: npx playwright test --config=prototype/ui-v3-concept/playwright.config.cjs
-      - name: Upload screenshots and traces for design review
+      - name: Upload screenshots and traces for design review (quota-dependent)
         if: always()
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: srm-ui-v3-design-review
