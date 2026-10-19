@@ -1,0 +1,222 @@
+[
+  {
+    "label": "business sheets",
+    "actual": [
+      "询价物料",
+      "供应商",
+      "报价明细"
+    ],
+    "expected": [
+      "询价物料",
+      "供应商",
+      "报价明细"
+    ],
+    "pass_": true
+  },
+  {
+    "label": "business row counts",
+    "actual": [
+      3,
+      2,
+      9
+    ],
+    "expected": [
+      3,
+      2,
+      9
+    ],
+    "pass_": true
+  },
+  {
+    "label": "immutable V1 and newV2 exported",
+    "actual": [
+      10,
+      9
+    ],
+    "expected": [
+      10,
+      9
+    ],
+    "pass_": true
+  },
+  {
+    "label": "CSV UTF8 BOM",
+    "actual": "efbbbf",
+    "expected": "efbbbf",
+    "pass_": true
+  },
+  {
+    "label": "CSV two real RFQ rows",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002"
+    ],
+    "pass_": true
+  },
+  {
+    "label": "CSV totals",
+    "actual": [
+      "590.00",
+      "620.00"
+    ],
+    "expected": [
+      "590.00",
+      "620.00"
+    ],
+    "pass_": true
+  },
+  {
+    "label": "CSV line amount arithmetic",
+    "actual": true,
+    "expected": true,
+    "pass_": true
+  },
+  {
+    "label": "report sheet dimensions",
+    "actual": [
+      [
+        5,
+        22
+      ],
+      [
+        10,
+        26
+      ]
+    ],
+    "expected": [
+      [
+        5,
+        22
+      ],
+      [
+        10,
+        26
+      ]
+    ],
+    "pass_": true
+  },
+  {
+    "label": "report real prices",
+    "actual": [
+      9,
+      12,
+      20,
+      20
+    ],
+    "expected": [
+      9,
+      12,
+      20,
+      20
+    ],
+    "pass_": true
+  },
+  {
+    "label": "report formulas",
+    "actual": [
+      "=ROUND(Q2*C2,2)",
+      "=ROUND(T3*C3,2)",
+      "=SUMIF(K2:K4,\"是\",R2:R4)"
+    ],
+    "expected": [
+      "=ROUND(Q2*C2,2)",
+      "=ROUND(T3*C3,2)",
+      "=SUMIF(K2:K4,\"是\",R2:R4)"
+    ],
+    "pass_": true
+  },
+  {
+    "label": "noquote not zero",
+    "actual": [
+      null,
+      null,
+      null
+    ],
+    "expected": [
+      null,
+      null,
+      null
+    ],
+    "pass_": true
+  },
+  {
+    "label": "report manual B decisions",
+    "actual": [
+      "虚构乙方，快速交付测试供应商",
+      "虚构乙方，快速交付测试供应商"
+    ],
+    "expected": [
+      "虚构乙方，快速交付测试供应商",
+      "虚构乙方，快速交付测试供应商"
+    ],
+    "pass_": true
+  },
+  {
+    "label": "A supplier blank price cells",
+    "actual": [
+      null,
+      null,
+      null
+    ],
+    "expected": [
+      null,
+      null,
+      null
+    ],
+    "pass_": true
+  },
+  {
+    "label": "A no private ERP / competitor",
+    "actual": true,
+    "expected": true,
+    "pass_": true
+  },
+  {
+    "label": "A PDF exactbytes",
+    "actual": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+    "expected": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+    "pass_": true
+  },
+  {
+    "label": "B supplier blank price cells",
+    "actual": [
+      null,
+      null,
+      null
+    ],
+    "expected": [
+      null,
+      null,
+      null
+    ],
+    "pass_": true
+  },
+  {
+    "label": "B no private ERP / competitor",
+    "actual": true,
+    "expected": true,
+    "pass_": true
+  },
+  {
+    "label": "B PDF exactbytes",
+    "actual": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+    "expected": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+    "pass_": true
+  },
+  {
+    "label": "backup SQLite integrity",
+    "actual": "ok",
+    "expected": "ok",
+    "pass_": true
+  },
+  {
+    "label": "backup two RFQs",
+    "actual": 2,
+    "expected": 2,
+    "pass_": true
+  }
+]

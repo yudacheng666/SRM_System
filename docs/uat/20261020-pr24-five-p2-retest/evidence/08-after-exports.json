@@ -1,0 +1,410 @@
+{
+  "workspaces": {
+    "RFQ-1792449920474-GCGOHX": {
+      "revision": 8,
+      "sha256": "ded7c8b11eba33e2be1002b7a224e375dbd4364c5a3c67bbbdf0f5910c02fd30",
+      "snapshot": {
+        "format": "srm-workspace",
+        "schemaVersion": 1,
+        "workspaceId": "RFQ-1792449920474-GCGOHX",
+        "origin": "buyer",
+        "revision": 8,
+        "state": {
+          "items": [
+            {
+              "id": "UAT24-SHAFT",
+              "lineId": "RFQ-L00001",
+              "name": "虚构采购轴：同编码规格区分",
+              "cat": "机加工",
+              "spec": "M16 / 220 mm",
+              "ref1": "",
+              "ref2": "",
+              "purchaseUnit": "",
+              "erpExtra": {
+                "虚构ERP备注": "ANON-ERP-01"
+              },
+              "qty": 10,
+              "unit": "件",
+              "drawingNo": "U24-D16",
+              "_rowNo": 2,
+              "sources": [
+                {
+                  "source": "materials.xlsx · 工作表：Sheet · 真实 XLSX · 第2行",
+                  "qty": 10
+                }
+              ],
+              "_errors": [],
+              "custom": {},
+              "_createdOrder": 1,
+              "drawings": [
+                {
+                  "id": "a243754cd142b4d5",
+                  "sha256": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+                  "name": "U24-D16_A.pdf",
+                  "revision": "A",
+                  "size": 592,
+                  "createdAt": "2026-10-19T22:46:13.308Z"
+                }
+              ]
+            },
+            {
+              "id": "UAT24-SHAFT",
+              "lineId": "RFQ-L00002",
+              "name": "虚构采购轴：同编码规格区分",
+              "cat": "机加工",
+              "spec": "M20 / 350 mm",
+              "ref1": "",
+              "ref2": "",
+              "purchaseUnit": "",
+              "erpExtra": {
+                "虚构ERP备注": "ANON-ERP-02"
+              },
+              "qty": 25,
+              "unit": "件",
+              "drawingNo": "U24-D20",
+              "_rowNo": 3,
+              "sources": [
+                {
+                  "source": "materials.xlsx · 工作表：Sheet · 真实 XLSX · 第3行",
+                  "qty": 25
+                }
+              ],
+              "_errors": [],
+              "custom": {},
+              "_createdOrder": 2
+            },
+            {
+              "id": "UAT24-BASE",
+              "lineId": "RFQ-L00003",
+              "name": "虚构不供货底座",
+              "cat": "钣金",
+              "spec": "L型 90×120",
+              "ref1": "",
+              "ref2": "",
+              "purchaseUnit": "",
+              "erpExtra": {
+                "虚构ERP备注": "ANON-ERP-03"
+              },
+              "qty": 4,
+              "unit": "件",
+              "drawingNo": "U24-BASE",
+              "_rowNo": 4,
+              "sources": [
+                {
+                  "source": "materials.xlsx · 工作表：Sheet · 真实 XLSX · 第4行",
+                  "qty": 4
+                }
+              ],
+              "_errors": [],
+              "custom": {},
+              "_createdOrder": 3
+            }
+          ],
+          "suppliers": [
+            {
+              "id": "U24-A",
+              "counterpartyCode": "U24-CP-A",
+              "supplierCode": "U24-A",
+              "name": "虚构甲方精密制造有限公司",
+              "roles": [
+                "supplier"
+              ],
+              "reason": "本次 Excel 导入"
+            },
+            {
+              "id": "U24-B",
+              "counterpartyCode": "U24-CP-B",
+              "supplierCode": "U24-B",
+              "name": "虚构乙方，快速交付测试供应商",
+              "roles": [
+                "supplier"
+              ],
+              "reason": "本次 Excel 导入"
+            }
+          ],
+          "assignments": [
+            {
+              "key": "RFQ-L00001",
+              "values": [
+                "U24-A",
+                "U24-B"
+              ]
+            },
+            {
+              "key": "RFQ-L00002",
+              "values": [
+                "U24-A",
+                "U24-B"
+              ]
+            },
+            {
+              "key": "RFQ-L00003",
+              "values": [
+                "U24-A",
+                "U24-B"
+              ]
+            }
+          ],
+          "quoteRounds": [
+            {
+              "supplierId": "U24-A",
+              "roundNo": 1,
+              "revisionNo": 1,
+              "status": "confirmed",
+              "lines": [
+                {
+                  "lineId": "RFQ-L00001",
+                  "itemId": "UAT24-SHAFT",
+                  "price": 10,
+                  "tiers": [],
+                  "lead": 10,
+                  "moq": 1,
+                  "status": "quoted",
+                  "remark": "虚构报价凭证",
+                  "source": "file",
+                  "original": {
+                    "price": "10",
+                    "lead": "10",
+                    "moq": "1",
+                    "status": "quoted"
+                  },
+                  "updatedAt": "2026-10-19T22:46:15.964Z"
+                },
+                {
+                  "lineId": "RFQ-L00002",
+                  "itemId": "UAT24-SHAFT",
+                  "price": 20,
+                  "tiers": [],
+                  "lead": 10,
+                  "moq": 1,
+                  "status": "quoted",
+                  "remark": "虚构报价凭证",
+                  "source": "file",
+                  "original": {
+                    "price": "20",
+                    "lead": "10",
+                    "moq": "1",
+                    "status": "quoted"
+                  },
+                  "updatedAt": "2026-10-19T22:46:15.964Z"
+                },
+                {
+                  "lineId": "RFQ-L00003",
+                  "itemId": "UAT24-BASE",
+                  "price": null,
+                  "tiers": [],
+                  "lead": null,
+                  "moq": null,
+                  "status": "cannot",
+                  "remark": "虚构报价凭证",
+                  "source": "file",
+                  "original": {
+                    "price": "",
+                    "lead": "10",
+                    "moq": "1",
+                    "status": "cannot"
+                  },
+                  "updatedAt": "2026-10-19T22:46:15.964Z"
+                }
+              ],
+              "expectedLineIds": [
+                "RFQ-L00001",
+                "RFQ-L00002",
+                "RFQ-L00003"
+              ],
+              "evidenceType": "manual_other",
+              "evidenceNote": "完全虚构验收 U24 A Excel来源凭证",
+              "termsNote": "人民币，含税同口径；虚构验收",
+              "createdAt": "2026-10-19T22:46:15.290Z",
+              "confirmedAt": "2026-10-19T22:46:16.119Z"
+            },
+            {
+              "supplierId": "U24-B",
+              "roundNo": 1,
+              "revisionNo": 1,
+              "status": "confirmed",
+              "lines": [
+                {
+                  "lineId": "RFQ-L00001",
+                  "itemId": "UAT24-SHAFT",
+                  "price": 12,
+                  "tiers": [],
+                  "lead": 4,
+                  "moq": 1,
+                  "status": "quoted",
+                  "remark": "虚构报价凭证",
+                  "source": "file",
+                  "original": {
+                    "price": "12",
+                    "lead": "4",
+                    "moq": "1",
+                    "status": "quoted"
+                  },
+                  "updatedAt": "2026-10-19T22:46:19.500Z"
+                },
+                {
+                  "lineId": "RFQ-L00002",
+                  "itemId": "UAT24-SHAFT",
+                  "price": 20,
+                  "tiers": [],
+                  "lead": 4,
+                  "moq": 1,
+                  "status": "quoted",
+                  "remark": "虚构报价凭证",
+                  "source": "file",
+                  "original": {
+                    "price": "20",
+                    "lead": "4",
+                    "moq": "1",
+                    "status": "quoted"
+                  },
+                  "updatedAt": "2026-10-19T22:46:19.500Z"
+                },
+                {
+                  "lineId": "RFQ-L00003",
+                  "itemId": "UAT24-BASE",
+                  "price": null,
+                  "tiers": [],
+                  "lead": null,
+                  "moq": null,
+                  "status": "noquote",
+                  "remark": "虚构报价凭证",
+                  "source": "file",
+                  "original": {
+                    "price": "",
+                    "lead": "4",
+                    "moq": "1",
+                    "status": "noquote"
+                  },
+                  "updatedAt": "2026-10-19T22:46:19.500Z"
+                }
+              ],
+              "expectedLineIds": [
+                "RFQ-L00001",
+                "RFQ-L00002",
+                "RFQ-L00003"
+              ],
+              "evidenceType": "manual_other",
+              "evidenceNote": "完全虚构验收 U24 B Excel来源凭证",
+              "termsNote": "人民币，含税同口径；虚构验收",
+              "createdAt": "2026-10-19T22:46:17.493Z",
+              "confirmedAt": "2026-10-19T22:46:19.785Z"
+            },
+            {
+              "supplierId": "U24-A",
+              "roundNo": 1,
+              "revisionNo": 2,
+              "status": "confirmed",
+              "lines": [
+                {
+                  "lineId": "RFQ-L00001",
+                  "itemId": "UAT24-SHAFT",
+                  "price": 9,
+                  "tiers": [],
+                  "lead": 10,
+                  "moq": 1,
+                  "status": "quoted",
+                  "remark": "虚构修订：价格9元",
+                  "source": "manual",
+                  "original": {
+                    "price": "10",
+                    "lead": "10",
+                    "moq": "1",
+                    "status": "quoted"
+                  },
+                  "updatedAt": "2026-10-19T22:46:22.814Z"
+                },
+                {
+                  "lineId": "RFQ-L00002",
+                  "itemId": "UAT24-SHAFT",
+                  "price": 20,
+                  "tiers": [],
+                  "lead": 10,
+                  "moq": 1,
+                  "status": "quoted",
+                  "remark": "虚构报价凭证",
+                  "source": "revision-copy",
+                  "original": {
+                    "price": "20",
+                    "lead": "10",
+                    "moq": "1",
+                    "status": "quoted"
+                  },
+                  "updatedAt": "2026-10-19T22:46:15.964Z"
+                },
+                {
+                  "lineId": "RFQ-L00003",
+                  "itemId": "UAT24-BASE",
+                  "price": null,
+                  "tiers": [],
+                  "lead": null,
+                  "moq": null,
+                  "status": "cannot",
+                  "remark": "虚构报价凭证",
+                  "source": "revision-copy",
+                  "original": {
+                    "price": "",
+                    "lead": "10",
+                    "moq": "1",
+                    "status": "cannot"
+                  },
+                  "updatedAt": "2026-10-19T22:46:15.964Z"
+                }
+              ],
+              "expectedLineIds": [
+                "RFQ-L00001",
+                "RFQ-L00002",
+                "RFQ-L00003"
+              ],
+              "evidenceType": "manual_other",
+              "evidenceNote": "完全虚构 R10 A 同轮修订凭证",
+              "termsNote": "人民币，含税同口径；虚构验收",
+              "createdAt": "2026-10-19T22:46:22.477Z",
+              "confirmedAt": "2026-10-19T22:46:24.337Z"
+            }
+          ],
+          "awards": [
+            {
+              "key": "RFQ-L00001",
+              "value": "U24-B"
+            },
+            {
+              "key": "RFQ-L00002",
+              "value": "U24-B"
+            }
+          ],
+          "awardReasons": [
+            {
+              "key": "RFQ-L00001",
+              "value": "虚构采购决策：乙方4天交付满足测试期限"
+            },
+            {
+              "key": "RFQ-L00002",
+              "value": "虚构采购决策：并列20元时选择乙方4天交付"
+            }
+          ],
+          "manualAwards": [
+            "RFQ-L00001",
+            "RFQ-L00002"
+          ],
+          "awardReviewIds": [],
+          "supplierPool": [
+            "U24-A",
+            "U24-B"
+          ],
+          "selectedCompareSuppliers": [
+            "U24-A",
+            "U24-B"
+          ],
+          "customFields": [],
+          "lineSeq": 3,
+          "createdSeq": 3,
+          "quoteComparisonMode": "returned"
+        }
+      }
+    }
+  },
+  "pdf": {
+    "assets/a2/a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41.pdf": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41"
+  }
+}
