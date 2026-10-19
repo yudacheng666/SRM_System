@@ -45,9 +45,9 @@ const sizes=[
 test('UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归',async({page})=>{
   const errors=[];
   page.on('pageerror',e=>errors.push(e.message));
-  const cssResponse=await page.request.get(ROOT_URL+'/ui-v3-integration.css');
-  expect(cssResponse.status()).toBe(200);
-  expect(await cssResponse.text()).toContain('Apply the approved V3.1 visual hierarchy');
+  const stylePresent=await page.locator('#ui-v3-integration-styles').count();
+  expect(stylePresent).toBe(1);
+  expect(await page.locator('#ui-v3-integration-styles').textContent()).toContain('Apply the approved V3.1 visual hierarchy');
   const theme=await page.evaluate(()=>{
     const primary=document.querySelector('#pilotSaveWorkspace');
     return{
@@ -55,7 +55,7 @@ test('UI V3 integration: theme, active navigation and responsive workspace / 视
       bodyBackground:getComputedStyle(document.body).backgroundColor,
       bodyFont:getComputedStyle(document.body).fontFamily,
       primaryBackground:getComputedStyle(primary).backgroundColor,
-      stylesheet:[...document.styleSheets].some(s=>s.href&&s.href.endsWith('/ui-v3-integration.css'))
+      stylesheet:!!document.querySelector('#ui-v3-integration-styles')
     };
   });
   expect(theme.title).toContain('UI V3');
