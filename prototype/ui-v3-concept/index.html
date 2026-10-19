@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SRM · 采购工作台交互原型 V3</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./app.js"></script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" aria-label="工作台主导航">
+    <div class="brand"><div class="brandmark">S</div><div><strong>SRM <em>Workspace</em></strong><small>PROCUREMENT DESK</small></div></div>
+    <div class="side-group-label">采购工作流 / WORKFLOW</div>
+    <nav id="sidebarNav">
+      <button type="button" data-view="projects" class="navlink"><span class="navicon">▤</span><span>询价项目</span><span class="navindex">01</span></button>
+      <button type="button" data-view="items" class="navlink"><span class="navicon">▦</span><span>物料与图纸</span><span class="navindex">02</span></button>
+      <button type="button" data-view="assign" class="navlink active" aria-current="page"><span class="navicon">⇄</span><span>供应商分配</span><span class="navindex">03</span></button>
+      <button type="button" data-view="quotes" class="navlink"><span class="navicon">▣</span><span>报价回收</span><span class="navindex">04</span></button>
+      <button type="button" data-view="compare" class="navlink"><span class="navicon">▥</span><span>比价与议价</span><span class="navindex">05</span></button>
+    </nav>
+    <div class="side-group-label lower">系统 / ADMIN</div>
+    <nav><button type="button" data-view="settings" class="navlink"><span class="navicon">⚙</span><span>设置与数据管理</span></button></nav>
+    <div class="side-bottom"><span class="demo-dot"></span><div><strong>独立交互原型</strong><small>无 SQLite · 不保存真实业务</small></div></div>
+  </aside>
+
+  <div class="mainframe">
+    <header class="topbar">
+      <div class="topbar-left"><span class="top-kicker">工作台</span><span class="top-sep">›</span><strong id="topPage">供应商分配</strong><span class="status neutral"><span class="status-dot"></span> 原型 · 离线演示</span></div>
+      <div class="top-actions"><div class="rfq-identity"><small>当前项目 · 询价处理中</small><strong>RFQ-20261019-001</strong></div><button class="btn btn-guide" id="guidedTour" type="button"><span aria-hidden="true">◈</span> 查看典型场景</button><button class="btn btn-quiet" id="feedbackBtn" type="button">记录意见</button><button class="btn btn-outline" id="resetBtn" type="button">重置</button></div>
+    </header>
+
+    <main class="workspace">
+      <div class="workflow-context"><div class="workflow-label"><span class="workflow-mini-icon">◉</span><span>业务流程</span></div><div class="workflow-path"><span data-step="items">物料清单</span><span class="workflow-arrow">→</span><span data-step="assign">供应商分配</span><span class="workflow-arrow">→</span><span data-step="quotes">报价回收</span><span class="workflow-arrow">→</span><span data-step="compare">比价决策</span></div><div class="workflow-meta">DEMO / 2026.10.19</div></div>
+      <section id="projects" data-panel class="screen" hidden>
+        <div class="page-header"><div><p class="eyebrow">01 / PROJECT WORKSPACE</p><h1>询价项目</h1><p class="lead">项目身份始终可见，数据管理与采购操作明确分离。</p></div><span class="notice-pill">概念演示</span></div>
+        <div class="overview-cards">
+          <div class="card overview-card"><span>业务单号</span><strong>RFQ-20261019-001</strong><small>可读业务单号；内部身份独立保留</small></div>
+          <div class="card overview-card"><span>当前阶段</span><strong>供应商分配</strong><small>可随时返回已完成步骤</small></div>
+          <div class="card overview-card"><span>持久化</span><strong>未启用</strong><small>仅为 UI 评审，刷新会重置</small></div>
+        </div>
+        <div class="card content-card"><div class="card-heading"><h2>完成当前询价的五个环节</h2><span class="muted">步骤可点击跳转</span></div><div class="journey">
+          <button data-go="items"><b>02</b><strong>物料与图纸</strong><small>物料基础信息与关联</small></button>
+          <button data-go="assign"><b>03</b><strong>供应商分配</strong><small>添加、去重、分配与询价单</small></button>
+          <button data-go="quotes"><b>04</b><strong>报价回收</strong><small>收集、校验、确认及版本</small></button>
+          <button data-go="compare"><b>05</b><strong>比价与议价</strong><small>比较、决策和报告</small></button>
+        </div></div>
+      </section>
+
+      <section id="items" data-panel class="screen" hidden>
+        <div class="page-header"><div><p class="eyebrow">02 / ITEMS & DRAWINGS</p><h1>物料与图纸</h1><p class="lead">物料表格优先，图纸管理从当前物料进入，避免堆叠大量工具面板。</p></div><button class="btn btn-primary" data-go="assign">继续分配供应商 →</button></div>
+        <div class="card content-card"><div class="card-heading"><h2>本次询价物料</h2><span class="muted" id="itemsCount"></span></div><div class="table-scroll"><table class="data-table"><thead><tr><th>RFQ 行号</th><th>物料编码 / 名称</th><th>规格</th><th class="num">数量</th><th>图纸</th><th>操作</th></tr></thead><tbody id="itemsPreviewBody"></tbody></table></div></div>
+      </section>
+
+      <section id="assign" data-panel class="screen">
+        <div class="page-header"><div><p class="eyebrow">SUPPLIER MANAGEMENT <span class="eyebrow-rule"></span> STEP 03</p><h1>供应商分配 <span class="page-title-note">/ 物料范围管理</span></h1><p class="lead">建立询价范围，统一供应商入口。关联是追加操作，不会覆盖其他供应商。</p></div><div class="page-header-actions"><span class="step-progress"><b>03</b> / 05</span><button id="exportRfq" type="button" class="btn btn-primary"><span class="btn-arrow">↧</span> 导出该供应商询价清单</button></div></div>
+        <div class="metrics" id="assignMetrics"></div><div class="inline-overview"><div><strong>分配工作区</strong><span>先选择左侧供应商，再勾选对应物料；右侧会显示每个物料已分配给哪些供应商。</span></div><span class="inline-overview-icon" aria-hidden="true">↗</span></div>
+        <div class="assignment-layout">
+          <section class="card supplier-rail"><div class="rail-heading"><div><h2>本次供应商</h2><small id="supplierCount"></small></div><button class="iconbutton" id="newSupplier" type="button" aria-label="新增供应商" title="新增供应商">＋</button></div>
+            <div class="rail-search"><span class="input-icon" aria-hidden="true">⌕</span><input id="supplierSearch" type="search" placeholder="搜索供应商" aria-label="搜索供应商"></div>
+            <div id="supplierList" class="supplier-list" role="listbox" aria-label="本次供应商列表"></div>
+            <div class="rail-footer"><button class="btn btn-outline full" id="simulateImport" type="button">模拟 Excel 导入 / 去重预览</button><small>新增供应商与批量导入统一在本模块</small></div>
+          </section>
+          <section class="card allocation-table-card">
+            <div class="table-toolbar"><div><h2>物料分配明细</h2><p id="activeSupplierLabel" class="section-sub"></p></div><div class="table-toolbar-right"><div class="search-field"><span class="input-icon" aria-hidden="true">⌕</span><input id="itemSearch" type="search" placeholder="搜索编码、名称、规格" aria-label="搜索物料"></div><div class="density-control" role="group" aria-label="表格密度"><button type="button" class="density-option active" data-density="compact" aria-pressed="true" title="紧凑行高">紧凑</button><button type="button" class="density-option" data-density="comfortable" aria-pressed="false" title="舒适行高">舒适</button></div><button id="clearSelection" class="btn btn-quiet" type="button">清空</button></div></div>
+            <div class="actionstrip"><span id="selectedCount">已选 0 项</span><button id="selectFiltered" class="textbutton" type="button">选中全部筛选结果</button><span class="strip-divider"></span><button id="bulkLink" class="btn btn-primary btn-small" type="button">关联到当前供应商</button><button id="bulkUnlink" class="btn btn-outline btn-small" type="button">取消当前供应商关联</button></div>
+            <div class="table-scroll fill"><table class="data-table dense"><thead><tr><th class="check-col"><input type="checkbox" id="pageSelect" aria-label="勾选或取消当前页"></th><th>物料 / RFQ Line ID</th><th>规格型号</th><th class="num">询价数量</th><th>当前分配供应商（全部显示）</th><th class="center">当前供应商</th></tr></thead><tbody id="assignBody"></tbody></table></div>
+            <div class="table-footer"><span id="assignFooter"></span><div class="pager"><button class="btn btn-quiet btn-small" id="prevPage">上一页</button><span id="pageNo"></span><button class="btn btn-quiet btn-small" id="nextPage">下一页</button></div></div>
+          </section>
+        </div>
+        <div class="inline-note"><strong>操作规则</strong> 跨页选择保留；供应商关联是追加，不会覆盖其他供应商。取消关联必须显式操作。</div>
+      </section>
+
+      <section id="quotes" data-panel class="screen" hidden>
+        <div class="page-header"><div><p class="eyebrow">QUOTATION MANAGEMENT <span class="eyebrow-rule"></span> STEP 04</p><h1>报价回收 <span class="page-title-note">/ 轮次与修订</span></h1><p class="lead">报价接收、覆盖核查、差异审核到版本确认，每一步可追溯。</p></div><div class="header-actions"><span class="step-progress"><b>04</b> / 05</span><button id="newRound" class="btn btn-outline" type="button">新建下一轮</button><button id="newRevision" class="btn btn-primary" type="button">创建修订版本 ＋</button></div></div>
+        <div class="quote-context card"><label>供应商<select id="quoteSupplier"></select></label><label>轮次 / 版本<select id="quoteVersion"></select></label><div class="quote-context-status"><span id="quoteVersionStatus" class="status"></span><small id="quoteMeta"></small></div><button class="btn btn-outline" id="quotePasteBtn">模拟报价导入</button></div>
+        <div class="metrics" id="quoteMetrics"></div><div class="inline-overview is-quote"><div><strong>版本核查</strong><span>已确认的报价只能查看；新增修订会突出显示变更项目，并保留原始版本。</span></div><span class="inline-overview-icon" aria-hidden="true">↗</span></div>
+        <div class="card content-card">
+          <div class="card-heading"><div><h2>本次应报价清单与版本差异</h2><p class="section-sub">正常报价、明确未报价、不供货及缺报是不同状态</p></div><div class="header-actions"><span id="quoteDiffSummary" class="notice-pill"></span><button id="confirmVersion" class="btn btn-primary">确认并锁定版本</button></div></div>
+          <div class="table-scroll"><table class="data-table dense"><thead><tr><th>物料 / 规格</th><th class="num">询价数量</th><th>报价状态</th><th>单价 / 阶梯价格</th><th>上版本价格</th><th>本次变化</th></tr></thead><tbody id="quoteBody"></tbody></table></div>
+          <div class="table-footer"><span id="quoteFooter"></span><span class="muted">已确认版本只读；新修订将保留原版</span></div>
+        </div>
+        <div class="inline-note"><strong>版本规则</strong> V2 草稿沿用 V1，只有真正变化的行标记「已调整」。点击确认后该版本锁定；演示仍采用完整快照以保证可还原。</div>
+      </section>
+
+      <section id="compare" data-panel class="screen" hidden>
+        <div class="page-header"><div><p class="eyebrow">COMMERCIAL ANALYSIS <span class="eyebrow-rule"></span> STEP 05</p><h1>比价与议价 <span class="page-title-note">/ 供应商决策</span></h1><p class="lead">对齐询价范围与有效报价，用价格辅助决策，但由采购员作出最终选择。</p></div><div class="page-header-actions"><span class="step-progress"><b>05</b> / 05</span><button id="exportComparison" class="btn btn-primary" type="button"><span class="btn-arrow">↧</span> 导出逐项决策清单</button></div></div>
+        <div class="metrics" id="compareMetrics"></div><div id="analysisInsight" class="analysis-insight"></div>
+        <div class="card compare-control"><div class="control-head"><div><h2>指定供应商组 · 同范围比较</h2><p class="section-sub">至少两家供应商；缺报及不供货不自动按零元参与</p></div><div class="segmented" id="compareFilters"><button data-filter="all" class="selected">全部物料</button><button data-filter="ties">并列最低</button><button data-filter="open">待决定</button></div></div><div id="comparisonSuppliers" class="supplier-picks"></div></div>
+        <section class="card content-card comparison-table-card"><div class="card-heading"><div><h2>逐物料最低价决策清单</h2><p class="section-sub">相同 RFQ 数量与适用单价比较，金额展示只用于原型演示</p></div><span id="compareScope" class="muted"></span></div>
+          <div class="table-scroll"><table class="data-table dense matrix"><thead id="compareHead"></thead><tbody id="compareBody"></tbody></table></div>
+          <div class="table-footer"><span id="compareFooter"></span><span class="muted">供应商决定与理由在右侧对话框完成</span></div>
+        </section>
+      </section>
+
+      <section id="settings" data-panel class="screen" hidden>
+        <div class="page-header"><div><p class="eyebrow">ADMIN / SETTINGS & DATA</p><h1>设置与数据管理</h1><p class="lead">正式版这里放置字段设置、导入模板、S4 完整备份恢复，避免挤占采购主工作区。</p></div><span class="notice-pill">信息架构展示</span></div>
+        <div class="overview-cards"><div class="card overview-card"><strong>字段与模板</strong><small>统一红色必填标识、Excel 提示和系统二次校验</small></div><div class="card overview-card"><strong>数据备份</strong><small>未来直接复用已验证的 SQLite + PDF 完整备份</small></div><div class="card overview-card"><strong>操作规范</strong><small>与项目切换、权限、历史归档独立维护</small></div></div>
+      </section>
+      <footer class="footer"><span>SRM UI V3 · 交互概念版本，仅供设计评审，所有数据均为虚构。</span><span>不连接数据库 · 刷新即重置 · 不影响正式 SRM</span></footer>
+    </main>
+  </div>
+</div>
+<div class="toast-stack" id="toasts" aria-live="polite"></div>
+<dialog id="modal" class="modal"><form method="dialog"><div class="modal-head"><div><p id="modalEyebrow" class="eyebrow"></p><h2 id="modalTitle"></h2></div><button type="button" id="modalClose" class="iconbutton" aria-label="关闭">×</button></div><div id="modalBody" class="modal-body"></div><div id="modalFooter" class="modal-footer"></div></form></dialog>
+</body>
+</html>
