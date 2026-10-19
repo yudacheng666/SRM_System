@@ -20,6 +20,19 @@
 **请勿**将原型的 CSV 上传至实际业务工作区，或把原型“确认报价”当作持久化操作。
 **Do not** use exported demo CSVs as actual business records or assume quote confirmation writes anything to SQLite.
 
+## V3.1：不需要先做逐项人工测试 / Guided visual review
+
+这次优先把页面做得更像完整的企业采购工作台，而不是再让采购管理人员充当测试工程师：
+
+- 打开页面默认显示 **比价与议价**，包含整齐的指标、业务提醒、供应商对比矩阵，以及并列最低价决策入口。
+- 右上角点击 **「查看典型场景」**，直接选择 **「跨页分配」/「报价修订」/「并列最低价」**，页面会自动进入对应演示状态；不必手工导入 Excel 或维护测试数据。
+- 在供应商分配表格上方切换 **「紧凑 / 舒适」**，观察不同内容密度。
+- 在 GitHub [SRM UI V3 Design Preview](https://github.com/yudacheng666/SRM_System/actions/workflows/srm-ui-v3-design-preview.yml) 自动检查中，Playwright 会在 **1024×768、1366×768、1600×900** 下真实截图。用户可以先看自动截图和独立 UX 审核报告，再决定是否做人工评审。
+
+- The page opens directly into the comparison workbench; a guided tour prepares realistic scenarios automatically.
+- Dense/comfortable row modes let reviewers assess data readability without importing real files.
+- Automated Chromium screenshots capture three desktop viewports; static checks alone never count as actual usability acceptance.
+
 ## 先按这份清单评审 / Review in this order
 
 | 步骤 / Step | 实际操作 / Try | 预期 / Expected |
