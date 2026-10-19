@@ -4382,8 +4382,20 @@ function quoteMetaFor(it,sup,i=0,si=0){
   if((i+si)%9===0)return null;
   return{price:80+((i*13+si*17)%70)+((si+1)*0.35),lead:3+((i+si)%18),moq:1+((i+si)%5)*5,roundNo:0,revisionNo:0,source:"demo",tiers:[]};
 }
+/* 中文：系统自动建议仍可选择最低价集合中的首位供应商，但人工确认允许任何同价最低方。
+ * English: Deterministic defaults choose one tied supplier; buyer awards accept ANY equal-lowest offer.
+ * Monetary tolerance avoids float artifacts but does not treat a materially higher offer as equal. */
+const QUOTE_PRICE_TIE_EPSILON=1e-8;
+function isLowestApplicableOffer(it,sid,i=0,sups=comparisonSuppliers()){
+  const selectedIndex=sups.findIndex(s=>s.id===sid);
+  if(selectedIndex<0)return false;
+  const chosen=quoteMetaFor(it,sups[selectedIndex],i,selectedIndex)?.price;
+  if(!Number.isFinite(chosen))return false;
+  const prices=sups.map((s,si)=>quoteMetaFor(it,s,i,si)?.price).filter(Number.isFinite);
+  return prices.length>0&&chosen<=Math.min(...prices)+QUOTE_PRICE_TIE_EPSILON;
+}
 function lowestSupplierForItem(it,i=0){
-  return comparisonSuppliers().map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v)[0]?.sid||null;
+  return comparisonSuppliers().map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>Number.isFinite(x.v)).sort((a,b)=>a.v-b.v)[0]?.sid||null;
 }
 /** 中文：报价确认后保留人工选择及原因，自动选择只针对未手动指定的行重算。
  * English: Preserve manual awards and reasons; recalculate only automatic defaults. */
@@ -4404,7 +4416,7 @@ function reconcileAwardsAfterQuote(){
     if(!it){awardReviewIds.add(lineId);return}
     const i=its.indexOf(it),sid=awards.get(lineId),sup=sups.find(x=>x.id===sid),si=sups.indexOf(sup);
     const price=sup?quoteMetaFor(it,sup,i,si)?.price:null;
-    if(price==null||lowestSupplierForItem(it,i)!==sid)awardReviewIds.add(lineId);
+    if(price==null||!isLowestApplicableOffer(it,sid,i,sups))awardReviewIds.add(lineId);
     else awardReviewIds.delete(lineId);
   });
 }
@@ -4554,7 +4566,9 @@ function renderV31DecisionBoard(sups,its){
     if(!prices.length){missing++;return}
     quoted++;
     const low=Math.min(...prices);
-    if(prices.filter(v=>Math.abs(v-low)<1e-8).length>1)ties++;
+    const tiedMinimum=prices.filter(v=>Math.abs(v-low)<=QUOTE_PRICE_TIE_EPSILON).length>1;
+    const awaitingBuyer=!manualAwards.has(it.lineId)||!awards.has(it.lineId)||awardReviewIds.has(it.lineId);
+    if(tiedMinimum&&awaitingBuyer)ties++;
     if(awardReviewIds.has(it.lineId)){review++;pending++}
     else if(manualAwards.has(it.lineId)&&awards.has(it.lineId))manual++;
     else pending++;
@@ -4567,7 +4581,7 @@ function renderV31DecisionBoard(sups,its){
       '<div><span>人工已选</span><strong>'+manual+'</strong></div>'+
       '<div class="'+(ties?'pending':'')+'"><span>并列最低待核对</span><strong>'+ties+'</strong></div>'+
       '<div class="'+(review?'pending':'')+'"><span>新报价后待复核</span><strong>'+review+'</strong></div>'+
-    '</div><div class="srm-v31-decisionFooter">无有效报价 '+missing+' 项；默认最低价仅为建议。明确选定某家供应商后才记为人工已选。</div>';
+    '</div><div class="srm-v31-decisionFooter">无有效报价 '+missing+' 项；并列最低待核对仅统计尚未完成明确选择或需重新复核的项目。默认最低价仅为建议。</div>';
 }
 function renderQuotes(){
   const sups=comparisonSuppliers(),its=comparisonItems(),QUOTE_PAGE=10,pages=Math.max(1,Math.ceil(its.length/QUOTE_PAGE));quotePage=Math.min(quotePage,pages-1);const start=quotePage*QUOTE_PAGE,slice=its.slice(start,start+QUOTE_PAGE);
@@ -4577,10 +4591,10 @@ function renderQuotes(){
     const terms=supplierSubmissions(s.id).filter(r=>r.status==="confirmed").sort((a,b)=>b.roundNo-a.roundNo||b.revisionNo-a.revisionNo)[0]?.termsNote||"";
     return `<th>${esc(s.name)}${terms?`<div class="small warn" title="${esc(terms)}">本轮商务备注：${esc(terms.slice(0,90))}${terms.length>90?"…":""}</div>`:""}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`;
   }).join("")+`<th>系统建议 / 人工决定</th></tr></thead><tbody>`;
-  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>${window.SRMPilot?.isBuyer()?"—":"¥"+prev}<span class="small muted">（${window.SRMPilot?.isBuyer()?"未接入":"虚构"}）</span></td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=s.id===low?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell ":""}${v!=null?"awardSelectable":""}" ${v!=null?`data-award="${esc(it.lineId+"|"+s.id)}" tabindex="0" role="button" aria-label="选择此供应商报价"`:""}>${v==null?'<span class="muted">'+esc(quoteUnpricedStateLabel(it,s))+'</span>':`<button class="btn quotePrice ${cls}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>${meta.rawLine?.remark?`<div class="small warn">物料备注：${esc(meta.rawLine.remark)}</div>`:""}`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?(manualAwards.has(it.lineId)?'<span class="srm-v31-decision manual">采购员已选择</span>':'<span class="srm-v31-decision suggested">系统建议 · 待人工确认</span>')+'<br>'+esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("#quoteTable td[data-award]").forEach(cell=>{
+  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>${window.SRMPilot?.isBuyer()?"—":"¥"+prev}<span class="small muted">（${window.SRMPilot?.isBuyer()?"未接入":"虚构"}）</span></td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=v!=null&&vals.length&&Math.abs(v-vals[0].v)<=QUOTE_PRICE_TIE_EPSILON?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell ":""}${v!=null?"awardSelectable":""}" ${v!=null?`data-award="${esc(it.lineId+"|"+s.id)}" tabindex="0" role="button" aria-label="选择此供应商报价"`:""}>${v==null?'<span class="muted">'+esc(quoteUnpricedStateLabel(it,s))+'</span>':`<button class="btn quotePrice ${cls}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>${meta.rawLine?.remark?`<div class="small warn">物料备注：${esc(meta.rawLine.remark)}</div>`:""}`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?(manualAwards.has(it.lineId)?'<span class="srm-v31-decision manual">采购员已选择</span>':'<span class="srm-v31-decision suggested">系统建议 · 待人工确认</span>')+'<br>'+esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("#quoteTable td[data-award]").forEach(cell=>{
     cell.onclick=()=>{const [lineId,sid]=cell.dataset.award.split("|");chooseAward(lineId,sid)};
     cell.onkeydown=e=>{if(e.target===cell&&(e.key==="Enter"||e.key===" ")){e.preventDefault();cell.click()}};
-  });document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter((it,i)=>lowestSupplierForItem(it,its.indexOf(it))!==sid);requestAwardSelection(eligible.map(it=>it.lineId),sid)});renderQuoteAnalysis();renderV31DecisionBoard(sups,its);
+  });document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter(it=>!isLowestApplicableOffer(it,sid,its.indexOf(it),sups));requestAwardSelection(eligible.map(it=>it.lineId),sid)});renderQuoteAnalysis();renderV31DecisionBoard(sups,its);
 }
 /** 中文：统一单条与批量比价选择，非最低报价必经页面内原因确认，不依赖浏览器原生 prompt。
  * English: Route single and bulk award selections through an in-page reason dialog. */
@@ -4593,10 +4607,10 @@ function applyAwardSelection(lineIds,sid,reason=""){
   // 中文：若没有有效报价，禁止把供应商当作“已选择”。
   // English: Never award a supplier that lacks a valid applicable quote.
   if(eligible.some(it=>quoteMetaFor(it,sup,its.indexOf(it),sups.indexOf(sup))?.price==null))return false;
-  if(eligible.some(it=>lowestSupplierForItem(it,its.indexOf(it))!==sid)&&!reason.trim())return false;
+  if(eligible.some(it=>!isLowestApplicableOffer(it,sid,its.indexOf(it),sups))&&!reason.trim())return false;
   eligible.forEach(it=>{
     awards.set(it.lineId,sid);manualAwards.add(it.lineId);awardReviewIds.delete(it.lineId);
-    if(lowestSupplierForItem(it,its.indexOf(it))!==sid)awardReasons.set(it.lineId,reason.trim());
+    if(!isLowestApplicableOffer(it,sid,its.indexOf(it),sups))awardReasons.set(it.lineId,reason.trim());
     else awardReasons.delete(it.lineId);
   });
   renderQuotes();return true;
@@ -4608,7 +4622,7 @@ function closeAwardReasonModal(){
 }
 function requestAwardSelection(lineIds,sid){
   const its=comparisonItems(),nonLowest=lineIds.filter(id=>{
-    const it=its.find(x=>x.lineId===id);return it&&lowestSupplierForItem(it,its.indexOf(it))!==sid;
+    const it=its.find(x=>x.lineId===id);return it&&!isLowestApplicableOffer(it,sid,its.indexOf(it));
   });
   if(!nonLowest.length){applyAwardSelection(lineIds,sid);return}
   const supplier=suppliers.find(x=>x.id===sid);
