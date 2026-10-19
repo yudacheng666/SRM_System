@@ -1,0 +1,596 @@
+{
+  "pr": {
+    "url": "https://github.com/yudacheng666/SRM_System/pull/24",
+    "number": 24,
+    "state": "open",
+    "merged": false,
+    "mergeable": true,
+    "draft": true,
+    "body": "## 目标 / Goal\n\n将用户已确认的 SRM UI V3.1 视觉层级接入现有 M1-Lite，而不是用概念原型替换正式业务页面。\n\n用户确认了界面清晰度、信息主次与采购操作流程，并反馈“进步了很多”。本 PR 是第一批低风险的呈现层接入。\n\n## 本批变更 / Changes\n\n- 在 `prototype/m1-lite/index.html` 中内嵌独立 V3 样式块，统一工作区留白、深色导航、活动模块标记、RFQ 身份区、工作流步骤、表格层级、按钮主次、输入焦点与响应式布局。\n- 更新页面标题/候选标识；不新增静态资源路由或外部依赖。\n- 新增 `prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs`，验证样式实际加载、导航状态同步、1024×768 / 1366×768 / 1600×900 下工作区与侧栏几何关系。\n- 保留现有业务 DOM ID、事件处理器、报价轮次与锁定、SQLite/API、PDF 图纸、导入导出、S4 完整备份恢复等实现；不把概念原型的内存状态或 CSV 导出移植到正式业务。\n\n## 验收门槛 / Acceptance\n\n- GitHub Actions 必须对该 PR 的准确 HEAD 完成现有 Chromium、Node、Python/SQLite、S3/S4 回归。\n- Codex Cloud 随后独立检查视觉、真实点击流程、响应布局与数据持久化；只测试和报告，不改产品代码。\n- 如果 CSS 路径或页面布局导致既有测试失败，修复后再申请独立验收。\n- 仅第一批视觉层接入，不宣称整个产品已完成 V3。后续仍需根据实际浏览器截图逐页精修。\n\n**安全边界：** 仅修改设计分支与 M1-Lite 展示层/新测试；不改 `main`，不合并任何 PR，不迁移或清理用户本机数据。样例数据保持虚构。\n\n## CI 证据上传策略 / CI artifact policy\n\n- 仓库 GitHub Actions artifact 存储配额已满，因此 UI V2 与 S3/S4 两套工作流中的截图/日志附件上传均为 best-effort（`continue-on-error: true`）。\n- **浏览器、Node、Python/SQLite、S3/S4 业务测试仍是阻断门槛**；此设置仅避免附件上传故障覆盖真实测试结果，不跳过测试。\n",
+    "title": "feat(ui): integrate approved V3 visual layer into M1-Lite",
+    "base": "draft/20261013-m1-storage-ui-audit",
+    "base_sha": "457edcf4214220deacb4288b372ea78f144e5333",
+    "head": "feat/20261019-srm-ui-v3-integration",
+    "head_sha": "076561a1d3e1c14a6bbe405f0867cbb323b0a36c",
+    "head_repo_id": 1392690011,
+    "head_repo_full_name": "yudacheng666/SRM_System",
+    "merge_commit_sha": "7ed083372c12d584f3c1a25a5b61789fe0c5248a",
+    "user": {
+      "login": "yudacheng666",
+      "name": "yudacheng666",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+      "id": 227731428
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "created_at": "2026-10-19T08:41:31Z",
+    "updated_at": "2026-10-19T13:05:02Z",
+    "closed_at": null,
+    "merged_at": null,
+    "commits": 15,
+    "changed_files": 5,
+    "additions": 810,
+    "deletions": 12,
+    "display_url": "https://github.com/yudacheng666/SRM_System/pull/24",
+    "display_title": "feat(ui): integrate approved V3 visual layer into M1-Lite"
+  },
+  "comments": [
+    {
+      "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6263313787",
+      "body": "## Codex Cloud — TEST-ONLY independent review task / 独立验收任务\n\n**Target candidate HEAD:** `67b1a7625db229e36ef4054127539e830d12079f`  \n**Current required Actions:** [UI V2 Unified Acceptance #36](https://github.com/yudacheng666/SRM_System/actions/runs/39228203050) · [S3/S4 Regression #123](https://github.com/yudacheng666/SRM_System/actions/runs/39228203069)  \n**Start only after both Actions finish successfully on this exact HEAD.** Do not edit source code, tests, workflows or this PR.\n\n1. Confirm both Actions' final conclusions are success and the tested HEAD matches exactly. Record the run URLs and results.\n2. Use a fresh cloud Chromium session and isolated temporary `SRM_DATA_DIR`. Start the real local Python/SQLite backend from this branch, not the static concept prototype.\n3. Review `1024×768`, `1366×768`, and `1600×900` screenshots for visual hierarchy, typography, spacing, table readability, clipped controls, document overflow, sidebar overlap and navigation discoverability.\n4. Click through items/drawings → supplier allocation → quote intake/revision → comparison/award → settings. Check that active sidebar and workflow tabs remain synchronized and existing controls are visible/reachable.\n5. Run one synthetic business path with temporary data: create RFQ, import synthetic items/suppliers, allocate items, confirm a quote round, compare/record an award, save/reload, and inspect backup/restore controls. Confirm no real user data or main branch changes.\n6. Explicitly check that the V3 CSS is embedded in `index.html`, with no new static-server route or external dependency. Capture screenshots, console/page errors and traces. Report concrete P1/P2/P3 issues honestly.\n7. Write the bilingual report and evidence to a separate anonymous evidence branch and Draft evidence PR; comment here with PASS/FAIL/NOT TESTED, exact SHA and artifact links. **TEST ONLY: no product changes, no merges, no main changes.**\n\nExisting business functions and data safety take precedence over visual polish. If a visual change breaks an old workflow, report it as a failure rather than adapting the test to fit.",
+      "user": {
+        "login": "yudacheng666",
+        "name": "yudacheng666",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+        "id": 227731428
+      },
+      "id": 6263313787,
+      "pull_request_review_id": null,
+      "in_reply_to_id": null,
+      "created_at": "2026-10-19T08:46:08Z",
+      "updated_at": "2026-10-19T09:16:16Z",
+      "review": null,
+      "side": null,
+      "line": null,
+      "start_line": null,
+      "path": null,
+      "body_html": "<h2 dir=\"auto\">Codex Cloud — TEST-ONLY independent review task / 独立验收任务</h2>\n<p dir=\"auto\"><strong>Target candidate HEAD:</strong> <code class=\"notranslate\">67b1a7625db229e36ef4054127539e830d12079f</code><br>\n<strong>Current required Actions:</strong> <a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39228203050\">UI V2 Unified Acceptance #36</a> · <a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39228203069\">S3/S4 Regression #123</a><br>\n<strong>Start only after both Actions finish successfully on this exact HEAD.</strong> Do not edit source code, tests, workflows or this PR.</p>\n<ol dir=\"auto\">\n<li>Confirm both Actions' final conclusions are success and the tested HEAD matches exactly. Record the run URLs and results.</li>\n<li>Use a fresh cloud Chromium session and isolated temporary <code class=\"notranslate\">SRM_DATA_DIR</code>. Start the real local Python/SQLite backend from this branch, not the static concept prototype.</li>\n<li>Review <code class=\"notranslate\">1024×768</code>, <code class=\"notranslate\">1366×768</code>, and <code class=\"notranslate\">1600×900</code> screenshots for visual hierarchy, typography, spacing, table readability, clipped controls, document overflow, sidebar overlap and navigation discoverability.</li>\n<li>Click through items/drawings → supplier allocation → quote intake/revision → comparison/award → settings. Check that active sidebar and workflow tabs remain synchronized and existing controls are visible/reachable.</li>\n<li>Run one synthetic business path with temporary data: create RFQ, import synthetic items/suppliers, allocate items, confirm a quote round, compare/record an award, save/reload, and inspect backup/restore controls. Confirm no real user data or main branch changes.</li>\n<li>Explicitly check that the V3 CSS is embedded in <code class=\"notranslate\">index.html</code>, with no new static-server route or external dependency. Capture screenshots, console/page errors and traces. Report concrete P1/P2/P3 issues honestly.</li>\n<li>Write the bilingual report and evidence to a separate anonymous evidence branch and Draft evidence PR; comment here with PASS/FAIL/NOT TESTED, exact SHA and artifact links. <strong>TEST ONLY: no product changes, no merges, no main changes.</strong></li>\n</ol>\n<p dir=\"auto\">Existing business functions and data safety take precedence over visual polish. If a visual change breaks an old workflow, report it as a failure rather than adapting the test to fit.</p>"
+    },
+    {
+      "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6263488361",
+      "body": "### First CI findings and corrections / 首轮回归发现与修正\n\n首轮 Chromium 回归未通过，未将其判为成功：\n- 1024×768 供应商分配页首条完整数据行 bottom=806.7px，超出 768px 首屏。\n- 新增 UI V3 测试使用了与既有 UAT 测试相同的本地端口，导致读到的页面不是当前候选。\n\n已在当前分支修正：为 1024×768 增加纵向紧凑规则（不隐藏业务操作），并将新测试改用独立端口 8793。当前候选 HEAD 为 `9b8e5fea7503bb7baef7de5a222326d3a62f46fc`，两套完整 GitHub Actions 正在重新运行；只有最新 HEAD 全部成功后才交给 Codex Cloud 独立验收。",
+      "user": {
+        "login": "yudacheng666",
+        "name": "yudacheng666",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+        "id": 227731428
+      },
+      "id": 6263488361,
+      "pull_request_review_id": null,
+      "in_reply_to_id": null,
+      "created_at": "2026-10-19T08:56:29Z",
+      "updated_at": "2026-10-19T08:56:29Z",
+      "review": null,
+      "side": null,
+      "line": null,
+      "start_line": null,
+      "path": null,
+      "body_html": "<h3 dir=\"auto\">First CI findings and corrections / 首轮回归发现与修正</h3>\n<p dir=\"auto\">首轮 Chromium 回归未通过，未将其判为成功：</p>\n<ul dir=\"auto\">\n<li>1024×768 供应商分配页首条完整数据行 bottom=806.7px，超出 768px 首屏。</li>\n<li>新增 UI V3 测试使用了与既有 UAT 测试相同的本地端口，导致读到的页面不是当前候选。</li>\n</ul>\n<p dir=\"auto\">已在当前分支修正：为 1024×768 增加纵向紧凑规则（不隐藏业务操作），并将新测试改用独立端口 8793。当前候选 HEAD 为 <code class=\"notranslate\">9b8e5fea7503bb7baef7de5a222326d3a62f46fc</code>，两套完整 GitHub Actions 正在重新运行；只有最新 HEAD 全部成功后才交给 Codex Cloud 独立验收。</p>"
+    },
+    {
+      "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6263586351",
+      "body": "### Test-fixture correction / 测试夹具补正\n\n复核首轮失败后进一步确认：新 UI V3 测试函数没有显式请求 `app` fixture，因此本地服务初始化步骤没有执行，导致样式节点计数为 0；并非样式文件缺失。已补上 fixture 依赖，同时将测试端口设为独立的 8793，避免与既有 UAT 测试共享端口。上一条评论中将样式检查失败归因于端口复用不够准确，现予以更正。最新提交 `056dfedf9c7aa09ebac79b08a1085409ba1fc509` 将重新运行完整 Actions。",
+      "user": {
+        "login": "yudacheng666",
+        "name": "yudacheng666",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+        "id": 227731428
+      },
+      "id": 6263586351,
+      "pull_request_review_id": null,
+      "in_reply_to_id": null,
+      "created_at": "2026-10-19T09:02:25Z",
+      "updated_at": "2026-10-19T09:02:25Z",
+      "review": null,
+      "side": null,
+      "line": null,
+      "start_line": null,
+      "path": null,
+      "body_html": "<h3 dir=\"auto\">Test-fixture correction / 测试夹具补正</h3>\n<p dir=\"auto\">复核首轮失败后进一步确认：新 UI V3 测试函数没有显式请求 <code class=\"notranslate\">app</code> fixture，因此本地服务初始化步骤没有执行，导致样式节点计数为 0；并非样式文件缺失。已补上 fixture 依赖，同时将测试端口设为独立的 8793，避免与既有 UAT 测试共享端口。上一条评论中将样式检查失败归因于端口复用不够准确，现予以更正。最新提交 <code class=\"notranslate\">056dfedf9c7aa09ebac79b08a1085409ba1fc509</code> 将重新运行完整 Actions。</p>"
+    },
+    {
+      "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6263897355",
+      "body": "## 开发者回归结果 / Developer regression result — exact HEAD `67b1a7625db229e36ef4054127539e830d12079f`\n\n- [UI V2 Unified Candidate Acceptance #36](https://github.com/yudacheng666/SRM_System/actions/runs/39228203050)：**SUCCESS**（Windows safety + Linux real Chromium）。\n- [S3/S4 Regression #123](https://github.com/yudacheng666/SRM_System/actions/runs/39228203069)：**SUCCESS**（Windows SQLite/full backup restore + Linux real Chromium）。\n- 两套真实 Chromium E2E 均为 **41 passed / 0 failed**；新增 UI V3 接入检查通过，1024×768 分配页首条完整数据行 bottom=714.7px，位于 768px 首屏内。\n- GitHub artifact 存储配额仍满，S3/S4 的证据 ZIP 上传步骤记录失败；已由 `continue-on-error: true` 设为非阻断。**测试步骤本身 SUCCESS，没有跳过测试。**\n- 下一步按本 PR 前一条 Codex Cloud 任务执行独立 TEST-ONLY 审查，固定以上 SHA；不得改代码或合并。PR 保持 Draft，main 未修改。",
+      "user": {
+        "login": "yudacheng666",
+        "name": "yudacheng666",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+        "id": 227731428
+      },
+      "id": 6263897355,
+      "pull_request_review_id": null,
+      "in_reply_to_id": null,
+      "created_at": "2026-10-19T09:20:07Z",
+      "updated_at": "2026-10-19T09:20:07Z",
+      "review": null,
+      "side": null,
+      "line": null,
+      "start_line": null,
+      "path": null,
+      "body_html": "<h2 dir=\"auto\">开发者回归结果 / Developer regression result — exact HEAD <code class=\"notranslate\">67b1a7625db229e36ef4054127539e830d12079f</code></h2>\n<ul dir=\"auto\">\n<li><a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39228203050\">UI V2 Unified Candidate Acceptance #36</a>：<strong>SUCCESS</strong>（Windows safety + Linux real Chromium）。</li>\n<li><a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39228203069\">S3/S4 Regression #123</a>：<strong>SUCCESS</strong>（Windows SQLite/full backup restore + Linux real Chromium）。</li>\n<li>两套真实 Chromium E2E 均为 <strong>41 passed / 0 failed</strong>；新增 UI V3 接入检查通过，1024×768 分配页首条完整数据行 bottom=714.7px，位于 768px 首屏内。</li>\n<li>GitHub artifact 存储配额仍满，S3/S4 的证据 ZIP 上传步骤记录失败；已由 <code class=\"notranslate\">continue-on-error: true</code> 设为非阻断。<strong>测试步骤本身 SUCCESS，没有跳过测试。</strong></li>\n<li>下一步按本 PR 前一条 Codex Cloud 任务执行独立 TEST-ONLY 审查，固定以上 SHA；不得改代码或合并。PR 保持 Draft，main 未修改。</li>\n</ul>"
+    },
+    {
+      "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6266828017",
+      "body": "## Codex Cloud — PR #24 TEST-ONLY 独立验收报告\n\n**核心业务与 V3 接入 PASS，附 1 个非阻断 P3 视觉问题。26 PASS / 1 FAIL（P3）/ 3 NOT TESTED；P1=0、P2=0、P3=1。**\n\n依据[本 PR 独立验收任务](https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6263313787)，已阅读说明、全部 4 条评论及候选提交，完成云端真实 GUI 验收。\n\n**精确产品 HEAD：`67b1a7625db229e36ef4054127539e830d12079f`**。开始/结束均一致，PR 仍 Draft/未合并。开发基线仍 `457edcf4214220deacb4288b372ea78f144e5333`，main 仍 `f330de510f97c552629052ff1841d7223194e7f8`。\n\n### 报告与原始证据\n\n- **[中英双语完整报告](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/REPORT.md)**：30 项逐项结果、视觉矩阵、问题复现、CI 原始依据、限制。\n- **[Draft 证据 PR #25](https://github.com/yudacheng666/SRM_System/pull/25)**；独立证据分支 `test/20261019-pr24-independent-uat`，证据提交 `e7319706522708c9e7c6b7c326a9f8950ffb3c29`。\n- [截图、日志和 trace 索引](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/EVIDENCE.md) · [实际下载文件](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/DOWNLOADS.md) · [结果统计](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/RESULTS.json) · [文件/金额/快照检查](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/artifact-inspection.json)。\n- [完整主 trace](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/independent-browser-trace.zip) · [有效 PDF 补验 trace](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/valid-PDF-supplement-trace.zip)，原样保存；主 trace 已实际在 Trace Viewer 打开。归档提供 SHA256SUMS。\n\n### 真实浏览器结果\n\nChromium `154.0.8037.57` + Playwright `1.58.2`，正式 M1-Lite Python/SQLite/S4 程序，3 套全新临时数据目录，全部虚构采购资料。没有静态概念原型、API 灌入业务状态、force-click 或 CSS/DOM 伪造。未重复运行现有 41 项测试来代替独立验收。\n\n| 范围 | 结果 |\n|---|---|\n| UI/响应布局 | **PASS（P3 另列）**：五页面 × 1024×768、1366×768、1600×900 共 15 张矩阵截图已独立查看；页面无整体横向溢出，侧栏不覆盖业务面板，宽表格实际滚动到右侧操作，首列 RFQ 身份保留。 |\n| 导航/键盘/弹窗 | **PASS**：物料→分配→报价→比价→设置及原始 tab 反向操作，aria-current / active tab / 实际 panel 同步；1024 下键盘焦点明确、Enter 可激活，Escape 可关闭弹窗。 |\n| V3 真正接入 | **PASS**：HTML 内嵌单个 V3 style，浏览器实际加载 84 rules、计算字体/深色侧栏匹配；无外部 script/stylesheet；git diff 显示 backend 路由、依赖清单未新增/改变。[审计](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/source-integration-audit.json)。 |\n| 物料/供应商/图纸 | **PASS**：3 物料（同码 M16/M20 分行）、2 供应商、双向追加共 6 关联，ERP 字段保留；真实 PDF 上传/关联/持久化，另用无警告有效 PDF 实际显示内容。[有效 PDF 图](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/18-valid-PDF-after-15s.png)。 |\n| 报价/修订/历史 | **PASS**：两供应商 Excel 录入/确认，A 首行从 R1V1=10 修订至 R1V2=9；草稿不进入比价，确认后生效，原 V1 不变；确认锁定功能正确，不供货/明确未报价未按零元计算。 |\n| 比价/定标/导出 | **PASS**：A 同范围590、B570、逐项最低540；选非最低价 B 首行，空原因阻止保存，填虚构交付原因后记录。两项选 B 合计570；实际 CSV/3-sheet业务表/2-sheet比价表的身份、金额、选择原因、ROUND/SUMIF 引用核对。[定标图](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/07-comparison-award.png)。 |\n| 保存/隔离/恢复 | **PASS**：保存/F5、已选 B 时新建空白 RFQ再返回、实际终止并重启服务，报价历史/定标原因/物料关系/版本/raw snapshot SHA/PDF 哈希均保持；完整 S4 恢复至另一空白目录精确相等，非空目录恢复被明确拒绝。[重启](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/11-real-restart-awards.png) · [恢复](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/12-restored-awards.png) · [拒绝覆盖](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/13-nonempty-restore-refused.png)。 |\n| 异常/副作用 | **PASS**：非法 XLSX 表头及清空预览不会改变版本、RFQ 行号、业务快照；CSV/报表/模板/备份下载均无保存副作用。[非法导入](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/16-invalid-import.png)。 |\n\n主路径：`RFQ-1792410575283-YUKBP3`；第二 RFQ `RFQ-1792410881813-D0F535` 为空；第三独立目录仅补验有效 PDF。91 个辅助业务/导航/保存断言均通过，统计没有把这些辅助断言当成91个独立业务场景。\n\n**首屏实测说明：** 本轮长名称/关联 PDF 数据下，分配首行 bottom=768.69 / 769.03 / 804.03px（对应三分辨率），1024/1366 需微小纵向滚动才完整看到下边缘。CI 的714.7px是其夹具结果，不能推广成任何数据都首屏完整；建议后续减少分配页上方固定状态区占用。实际操作可达，没有数据/按钮丢失。\n\n### P3-01：已确认的主要按钮仍像可点击\n\n**UI 视觉/操作体验，报价回收页，非阻断。**\n\n复现：导入 A 报价并确认 → 新增本轮新版本 → 修改首行9元并填凭证 → 确认 R1V2 → 滚动到“03 完成异常核验后确认本轮”。\n\n预期：已锁定的确认动作有明显禁用样式或“已确认/锁定”标签，避免误导采购员。实际：`#confirmQuoteRound.disabled=true`，仍亮蓝 `rgb(36,91,215)`、白字、opacity=1、cursor=pointer，文字仍为“确认本次提交”，无 title 解释。[截图](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/17-disabled-confirm-looks-active.png)，原始日志保留计算样式与锁定徽标。\n\n影响：用户滚离上方状态后容易反复尝试不可操作的按钮。**锁定逻辑本身正确，无历史覆盖。** 建议由 ChatGPT 统一 disabled/hover/cursor 样式及锁定提示。本轮没有基线 GUI 对照，不断言是 PR #24 首次引入；没有自行修复。\n\n### GitHub Actions：两个所需运行均成功\n\n- [UI V2 #36 / 39228203050](https://github.com/yudacheng666/SRM_System/actions/runs/39228203050)：completed/success；**41 Chromium PASS / 0 FAIL / 0 SKIP**；Python43、Node10；Windows safety成功。\n- [S3/S4 #123 / 39228203069](https://github.com/yudacheng666/SRM_System/actions/runs/39228203069)：completed/success；**41 Chromium PASS / 0 FAIL / 0 SKIP**；Python43、Node10；Windows SQLite/backup/supplier ZIP成功。\n\n两套关联精确候选，但 CI 实际 checkout 为合成 merge commit `c8b2b5d4070b9243d53f6d36fe8485a91c246391`；本轮独立 GUI 直接 checkout 产品 HEAD。两套是同一41场景执行两次，不是82个不同业务场景。\n\n**两套原始日志均有 artifact 配额上传错误**，仅上传步骤被设为非阻断，测试本身成功。未声称 CI 附件上传成功；本轮证据已另存 Git 分支。\n\n### NOT TESTED 与原始异常说明\n\n- **NOT TESTED ×3：Windows 本机 GUI、Windows 原生 Excel 重算/打印/安全提示、真实企业采购员生产 UAT。** 文件及公式检查、CI Windows smoke 不能代替上述验收。\n- 完整保留 **5 条独立驱动错误**：summary/入口定位假设、一次脚本语法错误、非当前页关闭图纸抽屉及新建后未重新展开项目抽屉。后续经可见入口完成，未改产品/既有测试，原始失败未删除。\n- 最初自制 PDF 有 stream-length 警告，早期空白预览未标 PASS；原件及截图保留。另生成无警告有效 PDF，在第三隔离目录真实上传并等待原生查看器加载后，截图可见内容，没有把补验冒充原件渲染。\n- 浏览器 **0 pageerror**；三个 origin 各一条 favicon.ico 404，如实归档。\n\n### English summary\n\n**Core V3 integration and buyer flow PASS with one non-blocking P3: 26 PASS / 1 P3 FAIL / 3 NOT TESTED on exact candidate 67b1a7625db229e36ef4054127539e830d12079f.** Real Chromium operated the real isolated SQLite backend, independently reviewing five pages at all three sizes and executing imports, additive allocation, confirmed quotes/revision history, comparison, justified award, real downloads, F5, RFQ switching, actual server restart and full S4 restore/overwrite protection. A well-formed real PDF was uploaded and visibly rendered in a separate directory. No P1/P2 found.\n\nP3-01: a functionally disabled confirmation button still appears saturated blue with pointer cursor; improve disabled/locked affordance. Both required CI runs succeeded with 41 Chromium passes each; raw artifact-quota failures and synthetic merge checkout identity are explicitly documented. Raw independent-driver mistakes and the initial imperfect PDF/blank frame are preserved. Windows GUI/native Excel and production buyer UAT are NOT TESTED.\n\n**建议继续开发基线试用，P3 交由 ChatGPT 修复。仅提交新增证据/报告/独立工具；未修改产品代码、原有测试、CI 或 PR 开发分支，未修改 main、未合并任何 PR。**",
+      "user": {
+        "login": "yudacheng666",
+        "name": "yudacheng666",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+        "id": 227731428
+      },
+      "id": 6266828017,
+      "pull_request_review_id": null,
+      "in_reply_to_id": null,
+      "created_at": "2026-10-19T12:07:46Z",
+      "updated_at": "2026-10-19T12:07:46Z",
+      "review": null,
+      "side": null,
+      "line": null,
+      "start_line": null,
+      "path": null,
+      "body_html": "<h2 dir=\"auto\">Codex Cloud — PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5920648813\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/24\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/24\">#24</a> TEST-ONLY 独立验收报告</h2>\n<p dir=\"auto\"><strong>核心业务与 V3 接入 PASS，附 1 个非阻断 P3 视觉问题。26 PASS / 1 FAIL（P3）/ 3 NOT TESTED；P1=0、P2=0、P3=1。</strong></p>\n<p dir=\"auto\">依据<a href=\"https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6263313787\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\">本 PR 独立验收任务</a>，已阅读说明、全部 4 条评论及候选提交，完成云端真实 GUI 验收。</p>\n<p dir=\"auto\"><strong>精确产品 HEAD：<code class=\"notranslate\">67b1a7625db229e36ef4054127539e830d12079f</code></strong>。开始/结束均一致，PR 仍 Draft/未合并。开发基线仍 <code class=\"notranslate\">457edcf4214220deacb4288b372ea78f144e5333</code>，main 仍 <code class=\"notranslate\">f330de510f97c552629052ff1841d7223194e7f8</code>。</p>\n<h3 dir=\"auto\">报告与原始证据</h3>\n<ul dir=\"auto\">\n<li><strong><a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/REPORT.md\">中英双语完整报告</a></strong>：30 项逐项结果、视觉矩阵、问题复现、CI 原始依据、限制。</li>\n<li><strong><a href=\"https://github.com/yudacheng666/SRM_System/pull/25\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/25/hovercard\">Draft 证据 PR #25</a></strong>；独立证据分支 <code class=\"notranslate\">test/20261019-pr24-independent-uat</code>，证据提交 <code class=\"notranslate\">e7319706522708c9e7c6b7c326a9f8950ffb3c29</code>。</li>\n<li><a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/EVIDENCE.md\">截图、日志和 trace 索引</a> · <a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/DOWNLOADS.md\">实际下载文件</a> · <a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/RESULTS.json\">结果统计</a> · <a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/artifact-inspection.json\">文件/金额/快照检查</a>。</li>\n<li><a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/independent-browser-trace.zip\">完整主 trace</a> · <a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/valid-PDF-supplement-trace.zip\">有效 PDF 补验 trace</a>，原样保存；主 trace 已实际在 Trace Viewer 打开。归档提供 SHA256SUMS。</li>\n</ul>\n<h3 dir=\"auto\">真实浏览器结果</h3>\n<p dir=\"auto\">Chromium <code class=\"notranslate\">154.0.8037.57</code> + Playwright <code class=\"notranslate\">1.58.2</code>，正式 M1-Lite Python/SQLite/S4 程序，3 套全新临时数据目录，全部虚构采购资料。没有静态概念原型、API 灌入业务状态、force-click 或 CSS/DOM 伪造。未重复运行现有 41 项测试来代替独立验收。</p>\n<markdown-accessiblity-table><table role=\"table\">\n<thead>\n<tr>\n<th>范围</th>\n<th>结果</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>UI/响应布局</td>\n<td><strong>PASS（P3 另列）</strong>：五页面 × 1024×768、1366×768、1600×900 共 15 张矩阵截图已独立查看；页面无整体横向溢出，侧栏不覆盖业务面板，宽表格实际滚动到右侧操作，首列 RFQ 身份保留。</td>\n</tr>\n<tr>\n<td>导航/键盘/弹窗</td>\n<td><strong>PASS</strong>：物料→分配→报价→比价→设置及原始 tab 反向操作，aria-current / active tab / 实际 panel 同步；1024 下键盘焦点明确、Enter 可激活，Escape 可关闭弹窗。</td>\n</tr>\n<tr>\n<td>V3 真正接入</td>\n<td><strong>PASS</strong>：HTML 内嵌单个 V3 style，浏览器实际加载 84 rules、计算字体/深色侧栏匹配；无外部 script/stylesheet；git diff 显示 backend 路由、依赖清单未新增/改变。<a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/source-integration-audit.json\">审计</a>。</td>\n</tr>\n<tr>\n<td>物料/供应商/图纸</td>\n<td><strong>PASS</strong>：3 物料（同码 M16/M20 分行）、2 供应商、双向追加共 6 关联，ERP 字段保留；真实 PDF 上传/关联/持久化，另用无警告有效 PDF 实际显示内容。<a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/18-valid-PDF-after-15s.png\">有效 PDF 图</a>。</td>\n</tr>\n<tr>\n<td>报价/修订/历史</td>\n<td><strong>PASS</strong>：两供应商 Excel 录入/确认，A 首行从 R1V1=10 修订至 R1V2=9；草稿不进入比价，确认后生效，原 V1 不变；确认锁定功能正确，不供货/明确未报价未按零元计算。</td>\n</tr>\n<tr>\n<td>比价/定标/导出</td>\n<td><strong>PASS</strong>：A 同范围590、B570、逐项最低540；选非最低价 B 首行，空原因阻止保存，填虚构交付原因后记录。两项选 B 合计570；实际 CSV/3-sheet业务表/2-sheet比价表的身份、金额、选择原因、ROUND/SUMIF 引用核对。<a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/07-comparison-award.png\">定标图</a>。</td>\n</tr>\n<tr>\n<td>保存/隔离/恢复</td>\n<td><strong>PASS</strong>：保存/F5、已选 B 时新建空白 RFQ再返回、实际终止并重启服务，报价历史/定标原因/物料关系/版本/raw snapshot SHA/PDF 哈希均保持；完整 S4 恢复至另一空白目录精确相等，非空目录恢复被明确拒绝。<a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/11-real-restart-awards.png\">重启</a> · <a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/12-restored-awards.png\">恢复</a> · <a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/13-nonempty-restore-refused.png\">拒绝覆盖</a>。</td>\n</tr>\n<tr>\n<td>异常/副作用</td>\n<td><strong>PASS</strong>：非法 XLSX 表头及清空预览不会改变版本、RFQ 行号、业务快照；CSV/报表/模板/备份下载均无保存副作用。<a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/16-invalid-import.png\">非法导入</a>。</td>\n</tr>\n</tbody>\n</table></markdown-accessiblity-table>\n<p dir=\"auto\">主路径：<code class=\"notranslate\">RFQ-1792410575283-YUKBP3</code>；第二 RFQ <code class=\"notranslate\">RFQ-1792410881813-D0F535</code> 为空；第三独立目录仅补验有效 PDF。91 个辅助业务/导航/保存断言均通过，统计没有把这些辅助断言当成91个独立业务场景。</p>\n<p dir=\"auto\"><strong>首屏实测说明：</strong> 本轮长名称/关联 PDF 数据下，分配首行 bottom=768.69 / 769.03 / 804.03px（对应三分辨率），1024/1366 需微小纵向滚动才完整看到下边缘。CI 的714.7px是其夹具结果，不能推广成任何数据都首屏完整；建议后续减少分配页上方固定状态区占用。实际操作可达，没有数据/按钮丢失。</p>\n<h3 dir=\"auto\">P3-01：已确认的主要按钮仍像可点击</h3>\n<p dir=\"auto\"><strong>UI 视觉/操作体验，报价回收页，非阻断。</strong></p>\n<p dir=\"auto\">复现：导入 A 报价并确认 → 新增本轮新版本 → 修改首行9元并填凭证 → 确认 R1V2 → 滚动到“03 完成异常核验后确认本轮”。</p>\n<p dir=\"auto\">预期：已锁定的确认动作有明显禁用样式或“已确认/锁定”标签，避免误导采购员。实际：<code class=\"notranslate\">#confirmQuoteRound.disabled=true</code>，仍亮蓝 <code class=\"notranslate\">rgb(36,91,215)<span class=\"ml-1 d-inline-block border circle color-border-subtle\" style=\"background-color: rgb(36,91,215); height: 8px; width: 8px;\"></span></code>、白字、opacity=1、cursor=pointer，文字仍为“确认本次提交”，无 title 解释。<a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/evidence/17-disabled-confirm-looks-active.png\">截图</a>，原始日志保留计算样式与锁定徽标。</p>\n<p dir=\"auto\">影响：用户滚离上方状态后容易反复尝试不可操作的按钮。<strong>锁定逻辑本身正确，无历史覆盖。</strong> 建议由 ChatGPT 统一 disabled/hover/cursor 样式及锁定提示。本轮没有基线 GUI 对照，不断言是 PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5920648813\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/24\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/24\">#24</a> 首次引入；没有自行修复。</p>\n<h3 dir=\"auto\">GitHub Actions：两个所需运行均成功</h3>\n<ul dir=\"auto\">\n<li><a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39228203050\">UI V2 #36 / 39228203050</a>：completed/success；<strong>41 Chromium PASS / 0 FAIL / 0 SKIP</strong>；Python43、Node10；Windows safety成功。</li>\n<li><a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39228203069\">S3/S4 #123 / 39228203069</a>：completed/success；<strong>41 Chromium PASS / 0 FAIL / 0 SKIP</strong>；Python43、Node10；Windows SQLite/backup/supplier ZIP成功。</li>\n</ul>\n<p dir=\"auto\">两套关联精确候选，但 CI 实际 checkout 为合成 merge commit <code class=\"notranslate\">c8b2b5d4070b9243d53f6d36fe8485a91c246391</code>；本轮独立 GUI 直接 checkout 产品 HEAD。两套是同一41场景执行两次，不是82个不同业务场景。</p>\n<p dir=\"auto\"><strong>两套原始日志均有 artifact 配额上传错误</strong>，仅上传步骤被设为非阻断，测试本身成功。未声称 CI 附件上传成功；本轮证据已另存 Git 分支。</p>\n<h3 dir=\"auto\">NOT TESTED 与原始异常说明</h3>\n<ul dir=\"auto\">\n<li><strong>NOT TESTED ×3：Windows 本机 GUI、Windows 原生 Excel 重算/打印/安全提示、真实企业采购员生产 UAT。</strong> 文件及公式检查、CI Windows smoke 不能代替上述验收。</li>\n<li>完整保留 <strong>5 条独立驱动错误</strong>：summary/入口定位假设、一次脚本语法错误、非当前页关闭图纸抽屉及新建后未重新展开项目抽屉。后续经可见入口完成，未改产品/既有测试，原始失败未删除。</li>\n<li>最初自制 PDF 有 stream-length 警告，早期空白预览未标 PASS；原件及截图保留。另生成无警告有效 PDF，在第三隔离目录真实上传并等待原生查看器加载后，截图可见内容，没有把补验冒充原件渲染。</li>\n<li>浏览器 <strong>0 pageerror</strong>；三个 origin 各一条 favicon.ico 404，如实归档。</li>\n</ul>\n<h3 dir=\"auto\">English summary</h3>\n<p dir=\"auto\"><strong>Core V3 integration and buyer flow PASS with one non-blocking P3: 26 PASS / 1 P3 FAIL / 3 NOT TESTED on exact candidate <a class=\"commit-link\" data-hovercard-type=\"commit\" data-hovercard-url=\"https://github.com/yudacheng666/SRM_System/commit/67b1a7625db229e36ef4054127539e830d12079f/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/commit/67b1a7625db229e36ef4054127539e830d12079f\"><tt>67b1a76</tt></a>.</strong> Real Chromium operated the real isolated SQLite backend, independently reviewing five pages at all three sizes and executing imports, additive allocation, confirmed quotes/revision history, comparison, justified award, real downloads, F5, RFQ switching, actual server restart and full S4 restore/overwrite protection. A well-formed real PDF was uploaded and visibly rendered in a separate directory. No P1/P2 found.</p>\n<p dir=\"auto\">P3-01: a functionally disabled confirmation button still appears saturated blue with pointer cursor; improve disabled/locked affordance. Both required CI runs succeeded with 41 Chromium passes each; raw artifact-quota failures and synthetic merge checkout identity are explicitly documented. Raw independent-driver mistakes and the initial imperfect PDF/blank frame are preserved. Windows GUI/native Excel and production buyer UAT are NOT TESTED.</p>\n<p dir=\"auto\"><strong>建议继续开发基线试用，P3 交由 ChatGPT 修复。仅提交新增证据/报告/独立工具；未修改产品代码、原有测试、CI 或 PR 开发分支，未修改 main、未合并任何 PR。</strong></p>"
+    },
+    {
+      "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6267415829",
+      "body": "## 用户复核：PR #24 视觉仍混有 V2 与 V3.1 元素 / UI parity gap (2026-10-19)\n\n用户对 **PR #23 的 SRM UI V3.1** 视觉和交互设计已明确认可，但在查看 Codex Cloud 对 PR #24 的截图时指出：**正式候选界面同时存在原版 M1-Lite / UI V2 与 V3.1 设计风格，未达到整体统一的 V3.1 外观。**\n\n### 事实边界 / What is verified\n- PR #23 是独立的、内存型设计原型；PR #24 目前仅在正式 `prototype/m1-lite/index.html` 上叠加 V3 样式层，未完整替换原版页面结构和组件。PR #24 自述是“第一批低风险呈现层接入”，而不是 V3.1 完整移植。\n- Codex 独立业务验收 [报告](https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/REPORT.md) 为 26 PASS / 1 P3 FAIL / 3 NOT TESTED。它证明所测核心采购功能与第一批 CSS 接入没有阻断性故障，**不构成 PR #24 与 PR #23 视觉/布局/信息架构一致性验收**。审美标准不可被“功能测试通过”替代。\n- 独立测试 P3-01：已锁定的报价确认按钮依然显示亮蓝、指针光标，造成可操作错觉；另有密集真实数据下首行略超出 768px 首屏的观察。\n\n### 下一阶段必须完成 / Required before visual sign-off\n1. **以 PR #23 V3.1 为目标设计基线**，建立逐模块的截图对照和差距清单：导航与顶部 RFQ 身份、项目总览、物料/图纸、供应商分配、报价回收/版本、比价议价、设置。\n2. **不满足于继续叠加颜色/圆角 CSS**：逐页改造正式页面的内容分组、卡片/表格层级、按钮主次、采购步骤位置和状态可视化，消除明显的新旧样式混杂；按照实际 M1-Lite 功能处理 V3.1 原型没有覆盖的复杂业务入口。\n3. 保留所有真实业务 DOM/行为契约、SQLite/API、RFQ、报价历史锁定、PDF/图纸匹配、导入导出和 S4 备份恢复；必要的 UI 结构重构需配套真实浏览器回归。\n4. 修复 P3-01 禁用/锁定按钮状态；复查 1024×768 / 1366×768 首屏密度。\n5. 由 ChatGPT 负责设计与产品代码，Codex Cloud **TEST-ONLY** 做新一轮独立对照和业务回归，并将对照截图、差距完成情况与 PASS/FAIL 写回 GitHub。**不得以当前 PR #24 的功能 PASS 宣称整体 V3.1 视觉已完成。**\n\n**安全边界：** PR #23、PR #24、Codex 证据 PR 保持 Draft；不合并 main，不动用户真实数据。此评论只记录设计差距和下一阶段验收标准，不修改产品代码。\n\n### English summary\nOwner approves the independent PR #23 V3.1 design but observes a mixed legacy/V3 visual language in PR #24 Chromium captures. This is expected from a first-phase style overlay, but **visual parity with PR #23 has NOT been established** by the functional Codex pass. Treat parity as a separate gate: compare real rendered pages against approved concept per module, refactor presentation structure without replacing purchasing/SQLite/PDF/backup semantics, fix disabled-state affordance, then obtain independent TEST-ONLY screenshot and business regression evidence.",
+      "user": {
+        "login": "yudacheng666",
+        "name": "yudacheng666",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+        "id": 227731428
+      },
+      "id": 6267415829,
+      "pull_request_review_id": null,
+      "in_reply_to_id": null,
+      "created_at": "2026-10-19T12:39:32Z",
+      "updated_at": "2026-10-19T12:39:32Z",
+      "review": null,
+      "side": null,
+      "line": null,
+      "start_line": null,
+      "path": null,
+      "body_html": "<h2 dir=\"auto\">用户复核：PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5920648813\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/24\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/24\">#24</a> 视觉仍混有 V2 与 V3.1 元素 / UI parity gap (2026-10-19)</h2>\n<p dir=\"auto\">用户对 <strong>PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5917689554\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/23\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/23/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/23\">#23</a> 的 SRM UI V3.1</strong> 视觉和交互设计已明确认可，但在查看 Codex Cloud 对 PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5920648813\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/24\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/24\">#24</a> 的截图时指出：<strong>正式候选界面同时存在原版 M1-Lite / UI V2 与 V3.1 设计风格，未达到整体统一的 V3.1 外观。</strong></p>\n<h3 dir=\"auto\">事实边界 / What is verified</h3>\n<ul dir=\"auto\">\n<li>PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5917689554\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/23\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/23/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/23\">#23</a> 是独立的、内存型设计原型；PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5920648813\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/24\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/24\">#24</a> 目前仅在正式 <code class=\"notranslate\">prototype/m1-lite/index.html</code> 上叠加 V3 样式层，未完整替换原版页面结构和组件。PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5920648813\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/24\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/24\">#24</a> 自述是“第一批低风险呈现层接入”，而不是 V3.1 完整移植。</li>\n<li>Codex 独立业务验收 <a href=\"https://github.com/yudacheng666/SRM_System/blob/e7319706522708c9e7c6b7c326a9f8950ffb3c29/docs/uat/20261019-pr24-independent-uat/REPORT.md\">报告</a> 为 26 PASS / 1 P3 FAIL / 3 NOT TESTED。它证明所测核心采购功能与第一批 CSS 接入没有阻断性故障，<strong>不构成 PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5920648813\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/24\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/24\">#24</a> 与 PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5917689554\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/23\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/23/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/23\">#23</a> 视觉/布局/信息架构一致性验收</strong>。审美标准不可被“功能测试通过”替代。</li>\n<li>独立测试 P3-01：已锁定的报价确认按钮依然显示亮蓝、指针光标，造成可操作错觉；另有密集真实数据下首行略超出 768px 首屏的观察。</li>\n</ul>\n<h3 dir=\"auto\">下一阶段必须完成 / Required before visual sign-off</h3>\n<ol dir=\"auto\">\n<li><strong>以 PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5917689554\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/23\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/23/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/23\">#23</a> V3.1 为目标设计基线</strong>，建立逐模块的截图对照和差距清单：导航与顶部 RFQ 身份、项目总览、物料/图纸、供应商分配、报价回收/版本、比价议价、设置。</li>\n<li><strong>不满足于继续叠加颜色/圆角 CSS</strong>：逐页改造正式页面的内容分组、卡片/表格层级、按钮主次、采购步骤位置和状态可视化，消除明显的新旧样式混杂；按照实际 M1-Lite 功能处理 V3.1 原型没有覆盖的复杂业务入口。</li>\n<li>保留所有真实业务 DOM/行为契约、SQLite/API、RFQ、报价历史锁定、PDF/图纸匹配、导入导出和 S4 备份恢复；必要的 UI 结构重构需配套真实浏览器回归。</li>\n<li>修复 P3-01 禁用/锁定按钮状态；复查 1024×768 / 1366×768 首屏密度。</li>\n<li>由 ChatGPT 负责设计与产品代码，Codex Cloud <strong>TEST-ONLY</strong> 做新一轮独立对照和业务回归，并将对照截图、差距完成情况与 PASS/FAIL 写回 GitHub。<strong>不得以当前 PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5920648813\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/24\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/24\">#24</a> 的功能 PASS 宣称整体 V3.1 视觉已完成。</strong></li>\n</ol>\n<p dir=\"auto\"><strong>安全边界：</strong> PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5917689554\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/23\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/23/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/23\">#23</a>、PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5920648813\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/24\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/24\">#24</a>、Codex 证据 PR 保持 Draft；不合并 main，不动用户真实数据。此评论只记录设计差距和下一阶段验收标准，不修改产品代码。</p>\n<h3 dir=\"auto\">English summary</h3>\n<p dir=\"auto\">Owner approves the independent PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5917689554\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/23\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/23/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/23\">#23</a> V3.1 design but observes a mixed legacy/V3 visual language in PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5920648813\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/24\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/24\">#24</a> Chromium captures. This is expected from a first-phase style overlay, but <strong>visual parity with PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5917689554\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/23\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/23/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/23\">#23</a> has NOT been established</strong> by the functional Codex pass. Treat parity as a separate gate: compare real rendered pages against approved concept per module, refactor presentation structure without replacing purchasing/SQLite/PDF/backup semantics, fix disabled-state affordance, then obtain independent TEST-ONLY screenshot and business regression evidence.</p>"
+    },
+    {
+      "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6267740377",
+      "body": "## UI V3.1 结构一致性整改 · 第一批已提交 / Parity improvement batch 1 — 2026-10-19\n\n**新候选 HEAD**：`4b63b81675f19909d7db925a407bab1b2af1528d`，开发分支 `feat/20261019-srm-ui-v3-integration`。**PR 仍 Draft，没有合并 main。**\n\n依据用户对 [PR #23](https://github.com/yudacheng666/SRM_System/pull/23) 设计的认可及[新旧 UI 混搭的整改要求](https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6267415829)，在正式 M1-Lite 实施：\n- 重新整理左侧导航品牌层级、工作台顶栏、当前 RFQ 身份区和可交互采购步骤导航，靠近 V3.1 已确认设计；\n- 五个正式业务页面使用统一的阶段标识、页面标题、副标题和信息层级；保留原有业务控件而不是用 V3.1 内存原型替换正式页面；\n- 项目切换、供应商、备份恢复等沿用既有真实 DOM 和事件的抽屉管理，降低日常工作区视觉干扰；\n- 统一高密度表格、按钮危险/主要操作分级与 768 高度紧凑布局；\n- 修复前次 Codex P3-01 的可操作错觉：禁用确认按钮淡化且不显示手形光标，附近同步“已确认并锁定 · 修改请新建版本”提示；\n- 扩展现有真实浏览器 E2E 对结构性呈现的断言；新增[双语视觉差距/验收清单](https://github.com/yudacheng666/SRM_System/blob/4b63b81675f19909d7db925a407bab1b2af1528d/docs/ui/20261019-v31-integration-parity.md)。\n\n**本批文件**：\n`prototype/m1-lite/index.html` · `prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs` · `docs/ui/20261019-v31-integration-parity.md`。\n\n**正在对新 SHA 执行开发者 CI**：\n- [UI V2 Unified Acceptance #39255768884](https://github.com/yudacheng666/SRM_System/actions/runs/39255768884)\n- [S3/S4 Regression #39255768830](https://github.com/yudacheng666/SRM_System/actions/runs/39255768830)\n\n### 验收门槛 / Gates\n以上两套工作流对**新 HEAD** 全部 SUCCESS 后，才交由 Codex Cloud **TEST-ONLY** 独立验收。Codex 必须同时给出：**(A) 真实业务功能回归结论**，**(B) 与 PR #23 V3.1 的视觉与信息架构差距结论**，不可用“新 CSS 已加载”代表整体视觉一致；需附 1024×768、1366×768、1600×900 三分辨率实拍及旧版残留清单，复验 P3-01 报价锁定状态。仅用虚构数据、临时 SQLite，截图/证据写独立测试分支与 Draft 证据 PR，结论回评此 PR。\n\n**阶段边界：** 这是第一批结构整改，不宣称正式 M1-Lite 与 PR #23 逐像素相同；完整模块布局深度一致性仍待独立截图对照。CI 若失败先修复，不得报告成功或申请合并。\n\n### English summary\nFirst structural visual-alignment batch landed at exact HEAD `4b63b816…`. Harmonizes real five-screen page hierarchy, purchasing flow, project controls and locked-button affordance while retaining the existing business DOM, SQLite, PDF, Excel and backup semantics. Fresh Linux/Windows E2E CI is running. TEST-ONLY Codex assessment is gated on SUCCESS and must separately assess buyer workflows and parity with approved PR #23. No merge.",
+      "user": {
+        "login": "yudacheng666",
+        "name": "yudacheng666",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+        "id": 227731428
+      },
+      "id": 6267740377,
+      "pull_request_review_id": null,
+      "in_reply_to_id": null,
+      "created_at": "2026-10-19T12:56:57Z",
+      "updated_at": "2026-10-19T12:56:57Z",
+      "review": null,
+      "side": null,
+      "line": null,
+      "start_line": null,
+      "path": null,
+      "body_html": "<h2 dir=\"auto\">UI V3.1 结构一致性整改 · 第一批已提交 / Parity improvement batch 1 — 2026-10-19</h2>\n<p dir=\"auto\"><strong>新候选 HEAD</strong>：<code class=\"notranslate\">4b63b81675f19909d7db925a407bab1b2af1528d</code>，开发分支 <code class=\"notranslate\">feat/20261019-srm-ui-v3-integration</code>。<strong>PR 仍 Draft，没有合并 main。</strong></p>\n<p dir=\"auto\">依据用户对 <a href=\"https://github.com/yudacheng666/SRM_System/pull/23\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/23/hovercard\">PR #23</a> 设计的认可及<a href=\"https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6267415829\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\">新旧 UI 混搭的整改要求</a>，在正式 M1-Lite 实施：</p>\n<ul dir=\"auto\">\n<li>重新整理左侧导航品牌层级、工作台顶栏、当前 RFQ 身份区和可交互采购步骤导航，靠近 V3.1 已确认设计；</li>\n<li>五个正式业务页面使用统一的阶段标识、页面标题、副标题和信息层级；保留原有业务控件而不是用 V3.1 内存原型替换正式页面；</li>\n<li>项目切换、供应商、备份恢复等沿用既有真实 DOM 和事件的抽屉管理，降低日常工作区视觉干扰；</li>\n<li>统一高密度表格、按钮危险/主要操作分级与 768 高度紧凑布局；</li>\n<li>修复前次 Codex P3-01 的可操作错觉：禁用确认按钮淡化且不显示手形光标，附近同步“已确认并锁定 · 修改请新建版本”提示；</li>\n<li>扩展现有真实浏览器 E2E 对结构性呈现的断言；新增<a href=\"https://github.com/yudacheng666/SRM_System/blob/4b63b81675f19909d7db925a407bab1b2af1528d/docs/ui/20261019-v31-integration-parity.md\">双语视觉差距/验收清单</a>。</li>\n</ul>\n<p dir=\"auto\"><strong>本批文件</strong>：<br>\n<code class=\"notranslate\">prototype/m1-lite/index.html</code> · <code class=\"notranslate\">prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs</code> · <code class=\"notranslate\">docs/ui/20261019-v31-integration-parity.md</code>。</p>\n<p dir=\"auto\"><strong>正在对新 SHA 执行开发者 CI</strong>：</p>\n<ul dir=\"auto\">\n<li><a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39255768884\">UI V2 Unified Acceptance #39255768884</a></li>\n<li><a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39255768830\">S3/S4 Regression #39255768830</a></li>\n</ul>\n<h3 dir=\"auto\">验收门槛 / Gates</h3>\n<p dir=\"auto\">以上两套工作流对<strong>新 HEAD</strong> 全部 SUCCESS 后，才交由 Codex Cloud <strong>TEST-ONLY</strong> 独立验收。Codex 必须同时给出：<strong>(A) 真实业务功能回归结论</strong>，<strong>(B) 与 PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5917689554\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/23\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/23/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/23\">#23</a> V3.1 的视觉与信息架构差距结论</strong>，不可用“新 CSS 已加载”代表整体视觉一致；需附 1024×768、1366×768、1600×900 三分辨率实拍及旧版残留清单，复验 P3-01 报价锁定状态。仅用虚构数据、临时 SQLite，截图/证据写独立测试分支与 Draft 证据 PR，结论回评此 PR。</p>\n<p dir=\"auto\"><strong>阶段边界：</strong> 这是第一批结构整改，不宣称正式 M1-Lite 与 PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5917689554\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/23\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/23/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/23\">#23</a> 逐像素相同；完整模块布局深度一致性仍待独立截图对照。CI 若失败先修复，不得报告成功或申请合并。</p>\n<h3 dir=\"auto\">English summary</h3>\n<p dir=\"auto\">First structural visual-alignment batch landed at exact HEAD <code class=\"notranslate\">4b63b816…</code>. Harmonizes real five-screen page hierarchy, purchasing flow, project controls and locked-button affordance while retaining the existing business DOM, SQLite, PDF, Excel and backup semantics. Fresh Linux/Windows E2E CI is running. TEST-ONLY Codex assessment is gated on SUCCESS and must separately assess buyer workflows and parity with approved PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5917689554\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/23\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/23/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/23\">#23</a>. No merge.</p>"
+    },
+    {
+      "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6267898797",
+      "body": "## 开发者回归失败复盘 + 定点修复（2026-10-19） / CI failure triage and correction\n\n在上一批结构性 V3.1 调整候选 `4b63b81675f19909d7db925a407bab1b2af1528d` 上，两套新 CI 均 **FAIL**，没有将其视为通过：\n- [UI V2 Unified #39255768884](https://github.com/yudacheng666/SRM_System/actions/runs/39255768884)：40 个 Chromium E2E PASS / 1 FAIL；\n- [S3/S4 #39255768830](https://github.com/yudacheng666/SRM_System/actions/runs/39255768830)：对应 Linux E2E 同一 1 个失败；Windows 业务安全 + SQLite/S4 检查均 PASS。\n\n**共同根因：** `prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:63` 仍写死旧过渡版背景 `rgb(243, 246, 250)`；新版 UI V3.1 workspace 实际已统一使用 `#f6f8fb` 即 `rgb(246, 248, 251)`。日志明确是主题 CSS 断言不匹配，不是采购数据、SQLite 或恢复逻辑异常。新添的结构性标题检查因这条前置断言失败，在该次 CI 中**尚未实际运行**，不能因此宣称其 PASS。\n\n**已针对性修复测试旧断言，不改变新版实际 UI 与业务代码**。当前开发 HEAD `076561a1d3e1c14a6bbe405f0867cbb323b0a36c`，提交 `test(ui): align Chromium background assertion with approved V3.1 workspace token`。\n\n新 SHA 的两套回归已启动：\n- [UI Unified #39257002067](https://github.com/yudacheng666/SRM_System/actions/runs/39257002067)\n- [S3/S4 #39257001999](https://github.com/yudacheng666/SRM_System/actions/runs/39257001999)\n\n**Gate：** 两套在准确 HEAD `076561a1d3e1c14a6bbe405f0867cbb323b0a36c` 全部 SUCCESS 后，再向 Codex Cloud 下发 TEST-ONLY 独立视觉一致性 + 真实采购业务验收；若再次失败，先分析准确失败原因并修复。报告需区分视觉 parity 与业务功能。PR 保持 Draft、main 未改动。",
+      "user": {
+        "login": "yudacheng666",
+        "name": "yudacheng666",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+        "id": 227731428
+      },
+      "id": 6267898797,
+      "pull_request_review_id": null,
+      "in_reply_to_id": null,
+      "created_at": "2026-10-19T13:05:02Z",
+      "updated_at": "2026-10-19T13:05:02Z",
+      "review": null,
+      "side": null,
+      "line": null,
+      "start_line": null,
+      "path": null,
+      "body_html": "<h2 dir=\"auto\">开发者回归失败复盘 + 定点修复（2026-10-19） / CI failure triage and correction</h2>\n<p dir=\"auto\">在上一批结构性 V3.1 调整候选 <code class=\"notranslate\">4b63b81675f19909d7db925a407bab1b2af1528d</code> 上，两套新 CI 均 <strong>FAIL</strong>，没有将其视为通过：</p>\n<ul dir=\"auto\">\n<li><a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39255768884\">UI V2 Unified #39255768884</a>：40 个 Chromium E2E PASS / 1 FAIL；</li>\n<li><a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39255768830\">S3/S4 #39255768830</a>：对应 Linux E2E 同一 1 个失败；Windows 业务安全 + SQLite/S4 检查均 PASS。</li>\n</ul>\n<p dir=\"auto\"><strong>共同根因：</strong> <code class=\"notranslate\">prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:63</code> 仍写死旧过渡版背景 <code class=\"notranslate\">rgb(243, 246, 250)<span class=\"ml-1 d-inline-block border circle color-border-subtle\" style=\"background-color: rgb(243, 246, 250); height: 8px; width: 8px;\"></span></code>；新版 UI V3.1 workspace 实际已统一使用 <code class=\"notranslate\">#f6f8fb<span class=\"ml-1 d-inline-block border circle color-border-subtle\" style=\"background-color: #f6f8fb; height: 8px; width: 8px;\"></span></code> 即 <code class=\"notranslate\">rgb(246, 248, 251)<span class=\"ml-1 d-inline-block border circle color-border-subtle\" style=\"background-color: rgb(246, 248, 251); height: 8px; width: 8px;\"></span></code>。日志明确是主题 CSS 断言不匹配，不是采购数据、SQLite 或恢复逻辑异常。新添的结构性标题检查因这条前置断言失败，在该次 CI 中<strong>尚未实际运行</strong>，不能因此宣称其 PASS。</p>\n<p dir=\"auto\"><strong>已针对性修复测试旧断言，不改变新版实际 UI 与业务代码</strong>。当前开发 HEAD <code class=\"notranslate\">076561a1d3e1c14a6bbe405f0867cbb323b0a36c</code>，提交 <code class=\"notranslate\">test(ui): align Chromium background assertion with approved V3.1 workspace token</code>。</p>\n<p dir=\"auto\">新 SHA 的两套回归已启动：</p>\n<ul dir=\"auto\">\n<li><a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39257002067\">UI Unified #39257002067</a></li>\n<li><a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39257001999\">S3/S4 #39257001999</a></li>\n</ul>\n<p dir=\"auto\"><strong>Gate：</strong> 两套在准确 HEAD <code class=\"notranslate\">076561a1d3e1c14a6bbe405f0867cbb323b0a36c</code> 全部 SUCCESS 后，再向 Codex Cloud 下发 TEST-ONLY 独立视觉一致性 + 真实采购业务验收；若再次失败，先分析准确失败原因并修复。报告需区分视觉 parity 与业务功能。PR 保持 Draft、main 未改动。</p>"
+    }
+  ],
+  "ci": {
+    "workflow_runs": [
+      {
+        "id": 39257001999,
+        "name": "SRM S3/S4 Regression",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 125,
+        "jobs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39257001999/jobs",
+        "logs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39257001999/logs",
+        "workflow_id": 383906368
+      },
+      {
+        "id": 39257002067,
+        "name": "SRM UI V2 Unified Candidate Acceptance",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 38,
+        "jobs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39257002067/jobs",
+        "logs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39257002067/logs",
+        "workflow_id": 385464786
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "jobs": [
+        {
+          "id": 118074695983,
+          "name": "windows-business-safety",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 39257002067,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Verify Windows SQLite and backup restore",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Verify supplier packages and autosave rules",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Validate Windows local launcher's encoding and relative path",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Validate isolated V2 pilot launcher does not use normal data directory",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            }
+          ]
+        },
+        {
+          "id": 118074696353,
+          "name": "linux-real-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 39257002067,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Install locked Node dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Install real Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Check Python SQLite, complete backup and restoration logic",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Check supplier quotation and workbook business rules",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run complete real Chromium M1-Lite and UI V2 end-to-end acceptance",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Archive screenshots, database test logs, HTML report and traces",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "jobs": [
+        {
+          "id": 118074699539,
+          "name": "Synthetic Chromium acceptance on Linux",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 39257001999,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run npm ci",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run npx playwright install --with-deps chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run python -m unittest discover -v -s prototype/m1-lite/backend -p \"test_*.py\"",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Run npm test",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run npm run test:e2e",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Retain synthetic browser evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        },
+        {
+          "id": 118074700381,
+          "name": "SQLite S4 restore and supplier ZIP regression on Windows",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 39257001999,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Checkout the tested branch",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Set up Node.js",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run SQLite, full backup/restore and local API tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run supplier ZIP and PDF regression",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Verify launcher is ASCII and points to backend",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Set up Node.js",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Post Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Checkout the tested branch",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,958 @@
+Playwright
+0
+50.0s
+1.7m
+2.5m
+3.3m
+4.2m
+5.0m
+5.8m
+6.7m
+7.5m
+8.3m
+9.2m
+10.0m
+10.8m
+Action
+Before
+After
+http://127.0.0.1:8960/
+Actions
+Metadata
+173 hidden
+Create page
+3.9s
+Navigate to "/"
+7.0s
+1
+Screenshot
+448ms
+Evaluate
+121ms
+locator('#uiProjectDetails')
+Click
+324ms
+locator('#pilotNewWorkspace')
+Wait for timeout
+4.2s
+Click
+233ms
+locator('[data-srm-v2-tab="items"]')
+Click
+251ms
+locator('#toggleItemIntake')
+Set input files
+134ms
+locator('#importFile')
+Screenshot
+525ms
+Click
+315ms
+locator('#confirmImportRows')
+Accept dialog
+33ms
+Accept dialog
+11ms
+Evaluate
+199ms
+locator('#uiSupplierTools')
+Click
+151ms
+locator('#uiSupplierTools > summary')
+Set input files
+69ms
+locator('#pilotSupplierExcel')
+Click
+325ms
+locator('#pilotImportSupplierConfirm')
+Click
+316ms
+locator('[data-srm-v2-tab="assign"]')
+Click
+203ms
+locator('.modebtn[data-mode="itemFirst"]')
+Check
+260ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00001' }).getByRole('checkbox')
+Check
+287ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00002' }).getByRole('checkbox')
+Check
+244ms
+locator('#assignItemBody tr').filter({ hasText: 'RFQ-L00003' }).getByRole('checkbox')
+Click
+258ms
+locator('[data-add="U24-A"]')
+Accept dialog
+38ms
+Click
+203ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Click
+186ms
+locator('[data-sf-s="U24-B"]')
+Check
+308ms
+locator('[data-sfi="RFQ-L00001"]')
+Check
+196ms
+locator('[data-sfi="RFQ-L00002"]')
+Check
+237ms
+locator('[data-sfi="RFQ-L00003"]')
+Evaluate
+50ms
+locator('#uiProjectDetails')
+Click
+193ms
+locator('#uiProjectDetails > summary')
+Click
+243ms
+locator('#pilotSaveWorkspace')
+Wait for function
+51ms
+Wait for timeout
+725ms
+Wait for timeout
+4.2s
+Screenshot
+261ms
+Click
+234ms
+locator('[data-srm-v2-tab="items"]')
+Click
+185ms
+locator('#uiOpenDrawings')
+Set input files
+2.9s
+locator('#pilotBatchDrawingFiles')
+Click
+1.0s
+locator('#pilotBatchDrawingAnalyze')
+Wait for timeout
+1.5s
+Screenshot
+6.7s
+Click
+3.8s
+locator('#pilotBatchDrawingConfirm')
+Accept dialog
+207ms
+Wait for timeout
+2.7s
+Evaluate
+1.1s
+locator('#uiProjectDetails')
+Click
+2.0s
+locator('#pilotSaveWorkspace')
+Wait for function
+2.1s
+Wait for timeout
+1.9s
+Screenshot
+3.5s
+Click
+2.1s
+locator('[data-srm-v2-tab="quoteImport"]')
+Select option
+2.2s
+locator('#quoteImportSupplier')
+Select option
+775ms
+locator('#quoteEvidenceType')
+Fill "完全虚构验收 U24 A Excel来源凭证"
+1.0s
+locator('#quoteEvidenceNote')
+Fill "人民币，含税同口径；虚构验收"
+1.1s
+locator('#quoteTermsNote')
+Set input files
+211ms
+locator('#quoteImportFile')
+Screenshot
+2.1s
+Click
+1.0s
+locator('#commitQuoteImport')
+Click
+697ms
+locator('#confirmQuoteRound')
+Evaluate
+83ms
+locator('#uiProjectDetails')
+Click
+599ms
+locator('#pilotSaveWorkspace')
+Wait for function
+280ms
+Wait for timeout
+757ms
+Select option
+195ms
+locator('#quoteImportSupplier')
+Select option
+387ms
+locator('#quoteEvidenceType')
+Fill "完全虚构验收 U24 B Excel来源凭证"
+752ms
+locator('#quoteEvidenceNote')
+Fill "人民币，含税同口径；虚构验收"
+498ms
+locator('#quoteTermsNote')
+Set input files
+583ms
+locator('#quoteImportFile')
+Screenshot
+739ms
+Click
+316ms
+locator('#commitQuoteImport')
+Click
+250ms
+locator('#confirmQuoteRound')
+Evaluate
+188ms
+locator('#uiProjectDetails')
+Click
+446ms
+locator('#pilotSaveWorkspace')
+Wait for function
+197ms
+Wait for timeout
+785ms
+Select option
+149ms
+locator('#quoteImportSupplier')
+Click
+459ms
+locator('#newQuoteRevision')
+Fill "完全虚构 U24 A 修订凭证 R1V2"
+385ms
+locator('#quoteEvidenceNote')
+Click
+598ms
+locator('[data-edit-quote="0"]')
+Accept dialog
+16ms
+Accept dialog
+78ms
+Accept dialog
+17ms
+Accept dialog
+38ms
+Accept dialog
+54ms
+Screenshot
+509ms
+Click
+243ms
+locator('[data-srm-v2-tab="quotes"]')
+Click
+2.0s
+locator('.ui-workNav [data-tab="quoteImport"]')
+Click
+2.2s
+locator('#confirmQuoteRound')
+Evaluate
+268ms
+locator('#uiProjectDetails')
+Click
+479ms
+locator('#pilotSaveWorkspace')
+Wait for function
+103ms
+Wait for timeout
+1.4s
+Click
+302ms
+locator('[data-srm-v2-tab="quotes"]')
+Check
+825ms
+locator('[data-common-supplier="U24-A"]')
+Check
+496ms
+locator('[data-common-supplier="U24-B"]')
+Click
+740ms
+locator('[data-award="RFQ-L00001|U24-B"]')
+Click
+256ms
+locator('#awardReasonConfirm')
+Screenshot
+688ms
+Fill "虚构采购决策：乙方4天交付满足测试项目期限"
+219ms
+locator('#awardReasonInput')
+Click
+322ms
+locator('#awardReasonConfirm')
+Click
+267ms
+locator('[data-award="RFQ-L00002|U24-B"]')
+Evaluate
+364ms
+locator('#uiProjectDetails')
+Click
+180ms
+locator('#pilotSaveWorkspace')
+Wait for function
+73ms
+Wait for timeout
+748ms
+Wait for timeout
+4.2s
+Screenshot
+610ms
+Click
+894ms
+locator('[data-srm-v2-tab="items"]')
+Evaluate
+111ms
+locator('#uiProjectDetails')
+Click
+223ms
+locator('#uiProjectDetails > summary')
+Evaluate
+488ms
+locator('#uiSupplierTools')
+Click
+257ms
+locator('#uiSupplierTools > summary')
+Evaluate
+1.2s
+locator('#uiDataTools')
+Evaluate
+300ms
+locator('#uiDrawingTools')
+Click
+497ms
+locator('#uiDrawingTools > summary')
+Set viewport size
+144ms
+Click
+374ms
+locator('[data-srm-v2-action="project"]')
+Wait for timeout
+508ms
+Evaluate
+59ms
+Screenshot
+2.1s
+Evaluate
+420ms
+locator('#pilotControls details')
+Click
+476ms
+locator('#uiProjectDetails > summary')
+Click
+740ms
+locator('[data-srm-v2-tab="items"]')
+Wait for timeout
+472ms
+Evaluate
+49ms
+Wait for timeout
+181ms
+Evaluate
+114ms
+Screenshot
+685ms
+Click
+767ms
+locator('[data-srm-v2-tab="assign"]')
+Click
+439ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Click
+502ms
+locator('[data-sf-s="U24-B"]')
+Wait for timeout
+492ms
+Evaluate
+66ms
+Wait for timeout
+141ms
+Evaluate
+41ms
+Screenshot
+572ms
+Click
+832ms
+locator('.modebtn[data-mode="itemFirst"]')
+Evaluate
+82ms
+Screenshot
+576ms
+Click
+969ms
+locator('[data-srm-v2-tab="quoteImport"]')
+Wait for timeout
+495ms
+Evaluate
+120ms
+Wait for timeout
+182ms
+Evaluate
+117ms
+Screenshot
+492ms
+Scroll into view
+933ms
+locator('#confirmQuoteRound')
+Hover
+260ms
+locator('#confirmQuoteRound')
+Screenshot
+457ms
+Evaluate
+62ms
+locator('#confirmQuoteRound')
+Scroll into view
+85ms
+locator('#quoteRoundBody')
+Hover
+148ms
+locator('#quoteRoundBody')
+Mouse wheel
+38ms
+Wait for timeout
+216ms
+Screenshot
+238ms
+Click
+220ms
+locator('[data-srm-v2-tab="quotes"]')
+Wait for timeout
+441ms
+Evaluate
+47ms
+Wait for timeout
+131ms
+Evaluate
+42ms
+Screenshot
+363ms
+Click
+197ms
+locator('[data-srm-v2-tab="settings"]')
+Wait for timeout
+549ms
+Evaluate
+15ms
+Wait for timeout
+122ms
+Evaluate
+98ms
+Screenshot
+307ms
+Set viewport size
+114ms
+Click
+192ms
+locator('[data-srm-v2-action="project"]')
+Wait for timeout
+419ms
+Evaluate
+18ms
+Screenshot
+744ms
+Evaluate
+71ms
+locator('#pilotControls details')
+Click
+191ms
+locator('#uiProjectDetails > summary')
+Click
+397ms
+locator('[data-srm-v2-tab="items"]')
+Wait for timeout
+448ms
+Evaluate
+102ms
+Wait for timeout
+127ms
+Evaluate
+88ms
+Screenshot
+378ms
+Click
+204ms
+locator('[data-srm-v2-tab="assign"]')
+Click
+199ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Click
+214ms
+locator('[data-sf-s="U24-B"]')
+Wait for timeout
+427ms
+Evaluate
+14ms
+Wait for timeout
+119ms
+Evaluate
+24ms
+Screenshot
+404ms
+Click
+233ms
+locator('.modebtn[data-mode="itemFirst"]')
+Evaluate
+38ms
+Screenshot
+310ms
+Click
+188ms
+locator('[data-srm-v2-tab="quoteImport"]')
+Wait for timeout
+424ms
+Evaluate
+35ms
+Wait for timeout
+151ms
+Evaluate
+26ms
+Screenshot
+330ms
+Scroll into view
+55ms
+locator('#confirmQuoteRound')
+Hover
+154ms
+locator('#confirmQuoteRound')
+Screenshot
+315ms
+Evaluate
+26ms
+locator('#confirmQuoteRound')
+Scroll into view
+52ms
+locator('#quoteRoundBody')
+Hover
+137ms
+locator('#quoteRoundBody')
+Mouse wheel
+185ms
+Wait for timeout
+183ms
+Screenshot
+252ms
+Click
+143ms
+locator('[data-srm-v2-tab="quotes"]')
+Wait for timeout
+432ms
+Evaluate
+34ms
+Wait for timeout
+124ms
+Evaluate
+51ms
+Screenshot
+588ms
+Click
+170ms
+locator('[data-srm-v2-tab="settings"]')
+Wait for timeout
+414ms
+Evaluate
+61ms
+Wait for timeout
+114ms
+Evaluate
+51ms
+Screenshot
+250ms
+Set viewport size
+88ms
+Click
+209ms
+locator('[data-srm-v2-action="project"]')
+Wait for timeout
+450ms
+Evaluate
+42ms
+Screenshot
+508ms
+Evaluate
+37ms
+locator('#pilotControls details')
+Click
+124ms
+locator('#uiProjectDetails > summary')
+Click
+195ms
+locator('[data-srm-v2-tab="items"]')
+Wait for timeout
+415ms
+Evaluate
+15ms
+Wait for timeout
+131ms
+Evaluate
+31ms
+Screenshot
+346ms
+Click
+191ms
+locator('[data-srm-v2-tab="assign"]')
+Click
+193ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Click
+280ms
+locator('[data-sf-s="U24-B"]')
+Wait for timeout
+446ms
+Evaluate
+61ms
+Wait for timeout
+163ms
+Evaluate
+115ms
+Screenshot
+465ms
+Click
+429ms
+locator('.modebtn[data-mode="itemFirst"]')
+Evaluate
+238ms
+Screenshot
+636ms
+Click
+298ms
+locator('[data-srm-v2-tab="quoteImport"]')
+Wait for timeout
+420ms
+Evaluate
+26ms
+Wait for timeout
+117ms
+Evaluate
+29ms
+Screenshot
+499ms
+Scroll into view
+61ms
+locator('#confirmQuoteRound')
+Hover
+195ms
+locator('#confirmQuoteRound')
+Screenshot
+354ms
+Evaluate
+34ms
+locator('#confirmQuoteRound')
+Scroll into view
+44ms
+locator('#quoteRoundBody')
+Hover
+139ms
+locator('#quoteRoundBody')
+Mouse wheel
+49ms
+Wait for timeout
+188ms
+Screenshot
+452ms
+Click
+152ms
+locator('[data-srm-v2-tab="quotes"]')
+Wait for timeout
+423ms
+Evaluate
+24ms
+Wait for timeout
+131ms
+Evaluate
+17ms
+Screenshot
+279ms
+Click
+163ms
+locator('[data-srm-v2-tab="settings"]')
+Wait for timeout
+413ms
+Evaluate
+18ms
+Wait for timeout
+659ms
+Evaluate
+52ms
+Screenshot
+481ms
+Set viewport size
+134ms
+Click
+342ms
+locator('[data-srm-v2-tab="quoteImport"]')
+Select option
+75ms
+locator('#quoteRoundSelect')
+Screenshot
+1.3s
+Select option
+93ms
+locator('#quoteRoundSelect')
+Scroll into view
+82ms
+locator('#quoteRoundBody')
+Screenshot
+313ms
+Click
+151ms
+locator('[data-srm-v2-tab="quotes"]')
+Set viewport size
+51ms
+Click
+282ms
+locator('[data-srm-v2-tab="quotes"]')
+Wait for timeout
+4.3s
+Wait for event "download"
+652ms
+Click
+673ms
+getByRole('button', { name: '导出本比较组全部共同项目 CSV', exact: true })
+Click
+243ms
+locator('[data-srm-v2-action="admin"]')
+Wait for event "download"
+1.3s
+Click
+1.1s
+locator('#pilotExportExcel')
+Click
+383ms
+locator('#pilotReportOpen')
+Select option
+402ms
+locator('#pilotReportType')
+Check
+323ms
+locator('#pilotReportSupplierGroup input[value="U24-A"]')
+Check
+308ms
+locator('#pilotReportSupplierGroup input[value="U24-B"]')
+Screenshot
+718ms
+Wait for event "download"
+635ms
+Click
+625ms
+locator('#pilotReportDownload')
+Click
+545ms
+locator('[data-srm-v2-tab="settings"]')
+Wait for event "download"
+296ms
+Click
+509ms
+locator('[data-template-download="items"]')
+Wait for timeout
+4.3s
+Reload
+893ms
+Wait for timeout
+1.6s
+Click
+513ms
+locator('[data-srm-v2-tab="quotes"]')
+Screenshot
+752ms
+Click
+512ms
+locator('[data-srm-v2-tab="assign"]')
+Click
+291ms
+locator('.modebtn[data-mode="supplierFirst"]')
+Click
+319ms
+locator('[data-sf-s="U24-B"]')
+Evaluate
+223ms
+locator('#uiProjectDetails')
+Click
+329ms
+locator('#uiProjectDetails > summary')
+Click
+476ms
+locator('#pilotNewWorkspace')
+Accept dialog
+34ms
+Wait for timeout
+4.3s
+Evaluate
+120ms
+locator('#uiProjectDetails')
+Click
+445ms
+locator('#uiProjectDetails > summary')
+Select option
+194ms
+locator('#pilotHistoryWorkspace')
+Click
+1.0s
+locator('#pilotSwitchWorkspace')
+Wait for timeout
+1.7s
+Click
+287ms
+locator('[data-srm-v2-action="admin"]')
+Screenshot
+753ms
+Wait for event "download"
+681ms
+Click
+439ms
+locator('#pilotS4DownloadFull')
+Close page
+89ms
+Create page
+968ms
+Navigate to "/"
+6.3s
+Wait for timeout
+1.5s
+Click
+461ms
+locator('[data-srm-v2-tab="quotes"]')
+Screenshot
+1.4s
+Create page
+292ms
+Navigate to "/"
+1.6s
+1
+Click
+1.0s
+locator('[data-srm-v2-action="admin"]')
+Set input files
+294ms
+locator('#pilotS4BackupFile')
+Click
+395ms
+locator('#pilotS4RestoreFull')
+Accept dialog
+16ms
+Wait for timeout
+2.0s
+Click
+419ms
+locator('[data-srm-v2-tab="quotes"]')
+Screenshot
+440ms
+Click
+167ms
+locator('[data-srm-v2-action="admin"]')
+Set input files
+244ms
+locator('#pilotS4BackupFile')
+Click
+299ms
+locator('#pilotS4RestoreFull')
+Wait for timeout
+597ms
+Screenshot
+3.3s
+Close page
+102ms
+Click
+312ms
+locator('[data-srm-v2-tab="assign"]')
+Click
+195ms
+locator('#generateBtn')
+Select option
+433ms
+locator('#pilotReportSupplier')
+Wait for event "download"
+749ms
+Click
+565ms
+locator('#pilotReportDownload')
+Accept dialog
+27ms
+Select option
+264ms
+locator('#pilotReportSupplier')
+Wait for event "download"
+743ms
+Click
+472ms
+locator('#pilotReportDownload')
+Accept dialog
+13ms
+Wait for event "download"
+889ms
+Click
+545ms
+locator('#pilotReportDownloadAll')
+Accept dialog
+38ms
+Wait for timeout
+4.4s
+Click
+3.7s
+locator('[data-srm-v2-tab="items"]')
+Click
+2.6s
+locator('#itemBody [data-drawing="RFQ-L00001"]')
+Wait for timeout
+15.9s
+Screenshot
+9.0s
+Press "Escape"
+591ms
+Click
+823ms
+locator('#toggleItemIntake')
+Set input files
+414ms
+locator('#importFile')
+Wait for timeout
+4.5s
+Accept dialog
+97ms
+Screenshot
+1.4s
+Click
+319ms
+locator('#clearPastePreview')
+Wait for timeout
+4.3s
+Click
+601ms
+locator('[data-srm-v2-tab="quoteImport"]')
+Select option
+600ms
+locator('#quoteImportSupplier')
+Scroll into view
+167ms
+locator('#confirmQuoteRound')
+Hover
+317ms
+locator('#confirmQuoteRound')
+Screenshot
+608ms
+Evaluate
+81ms
+Close page
+269ms
+Locator
+Call
+Log
+Errors
+Console
+2
+Network
+299
+Source
+Attachments
+Close page
+TIME
+start:
+9.9m
+duration:
+269ms

@@ -1,0 +1,34 @@
+{
+  "product_SHA": "076561a1d3e1c14a6bbe405f0867cbb323b0a36c",
+  "reference_PR23_SHA": "67a3a7ca02465306c514da5fc2ac61409495a3ae",
+  "business_regression": {
+    "conclusion": "PASS within tested legacy business scope",
+    "PASS": 23,
+    "FAIL": 0,
+    "NOT_TESTED": 3
+  },
+  "visual_parity": {
+    "conclusion": "FAIL; not ready for full V3.1 sign-off",
+    "PASS": 4,
+    "FAIL_P2": 5,
+    "NOT_TESTED_reference_detail": 2
+  },
+  "original_P3_01": "PASS fixed at all three resolutions and after restart",
+  "severity_counts": {
+    "P1": 0,
+    "P2": 5,
+    "P3_outstanding": 0
+  },
+  "raw_main_browser_events": {
+    "request": 299,
+    "console": 2,
+    "command": 6,
+    "screenshot": 48,
+    "step": 6,
+    "check": 94,
+    "observation": 17,
+    "dialog": 15,
+    "download": 8
+  },
+  "note": "Axes are separately counted; do not sum them or use 94 helper checks/CI passes as visual acceptance."
+}
