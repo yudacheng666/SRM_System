@@ -60,7 +60,9 @@ test('UI V3 integration: theme, active navigation and responsive workspace / 视
     };
   });
   expect(theme.title).toContain('UI V3');
-  expect(theme.bodyBackground).toBe('rgb(243, 246, 250)');
+  // 中文：V3.1 的浅灰背景来自已确认的结构层，而非旧版 V3 首批色值。
+  // English: Expect the approved V3.1 workspace token, not the earlier transitional theme.
+  expect(theme.bodyBackground).toBe('rgb(246, 248, 251)');
   expect(theme.bodyFont).toContain('Segoe UI');
   expect(theme.stylesheet).toBeTruthy();
   // 中文：保证所有正式业务面板具有 V3.1 层级，而不是仅修改导航颜色。
