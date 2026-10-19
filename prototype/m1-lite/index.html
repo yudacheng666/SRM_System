@@ -1092,6 +1092,158 @@ body.srm-v2 .footerNote{padding:12px 0;color:#718198}
   body.srm-v2 #assign .table td{padding:5px 7px}
 }
 
+
+/* =============================================================================
+   UI V3.1 STRUCTURAL PARITY — purchase-first hierarchy, not a skin-only update.
+   中文：统一业务标题、流程导航、项目折叠区与表格层级；保留所有正式业务 DOM ID。
+   English: Harmonize real purchasing screens while preserving every business contract.
+   ============================================================================= */
+body.srm-v2{--srm-v31-navy:#111c2d;--srm-v31-ink:#172c46;--srm-v31-muted:#71839a;--srm-v31-blue:#285eb7;--srm-v31-border:#e3eaf2;background:#f6f8fb;color:var(--srm-v31-ink)}
+body.srm-v2 .srm-v2-sidebar{background:linear-gradient(165deg,#111c2d 0%,#152b44 100%);width:224px;padding:22px 12px 17px;border-right:1px solid #223950}
+body.srm-v2 .srm-v2-brand{display:flex;align-items:center;gap:11px;padding:0 9px 19px;font-size:15px;letter-spacing:-.2px;border-bottom:1px solid #304158}
+body.srm-v2 .srm-v3-brandmark{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:8px;color:#193c68;background:#d0e1ff;font-size:19px;font-weight:850}
+body.srm-v2 .srm-v3-brandcopy{display:grid;gap:2px;font-size:15px;font-weight:800;line-height:1.1}
+body.srm-v2 .srm-v2-brand small{display:block;margin:0;letter-spacing:1.1px;font-size:9px;font-weight:640;color:#91aaca}
+body.srm-v2 .srm-v2-descriptor{font-size:10.5px;margin:10px 10px 25px;color:#a8b9d1}
+body.srm-v2 .srm-v2-navlabel{font-size:9.5px;letter-spacing:1.2px;margin:0 10px 9px;color:#809ab7}
+body.srm-v2 .srm-v2-sideitem{min-height:40px;margin:2px 0;padding:10px 11px;gap:10px;font-size:12.5px;font-weight:610;border-radius:6px;color:#becbdc}
+body.srm-v2 .srm-v2-sideitem[aria-current="page"]{background:#203c5e;box-shadow:inset 3px 0 #77adff;color:#fff}
+body.srm-v2 .srm-v2-sideitem[aria-current="page"] .srm-v2-icon{color:#c9dfff}
+body.srm-v2 .srm-v2-sidefooter{margin-top:auto;padding-top:14px;border-top:1px solid #32485e;color:#96aac3;font-size:10px;line-height:1.65}
+body.srm-v2 .srm-v3-statusDot{display:inline-block;width:7px;height:7px;background:#51b69a;border-radius:50%;margin-right:5px}
+body.srm-v2 .app{padding-left:251px;background:#f6f8fb}
+body.srm-v2 .ui-appHeader{min-height:71px;margin-bottom:9px;padding-top:12px;padding-bottom:11px;background:#fff}
+body.srm-v2 .ui-eyebrow{font-size:9px;letter-spacing:1.2px;color:#6b8cb6}
+body.srm-v2 .srm-v3-headline-divider{display:inline-block;height:10px;width:1px;margin:0 7px;background:#c4d4e8;vertical-align:middle}
+body.srm-v2 .ui-appHeader h1{font-size:20px;letter-spacing:-.7px;color:#173250}
+body.srm-v2 .srm-v3-appname{font-size:20px;font-weight:650;letter-spacing:-.6px}
+body.srm-v2 #pilotSubtitle{font-size:10.5px;color:#8895a5;line-height:1.25}
+body.srm-v2 .ui-headActions{gap:6px}
+body.srm-v2 .ui-headActions .btn,
+body.srm-v2 .ui-headActions .tab{font-size:10.5px;padding:6px 9px;min-height:31px;border-radius:5px}
+body.srm-v2 .ui-context{min-height:44px;margin-bottom:7px;padding:7px 12px;border:1px solid #e4eaf2;border-left:3px solid #6c9ddb;border-radius:6px;background:#fff}
+body.srm-v2 .ui-context small{font-size:10px;color:#758aa2}
+body.srm-v2 .ui-context b{font-size:14px;color:#1c4168;font-weight:780}
+body.srm-v2 .srm-v3-contextHelp{color:#8091a5!important;letter-spacing:.02em}
+body.srm-v2 #pilotNotice{padding:5px 9px;margin-bottom:7px!important;font-size:10.5px;border-radius:5px}
+body.srm-v2 #pilotControls{border:0!important;background:transparent;box-shadow:none!important;padding:0;margin-bottom:7px!important}
+body.srm-v2 #pilotControls>.ui-workspaceHead{padding:3px 1px 5px}
+body.srm-v2 #pilotControls>.ui-workspaceHead b{font-size:11px;font-weight:800;color:#47617e}
+body.srm-v2 #pilotControls>.ui-workspaceHead .muted{font-size:10px}
+body.srm-v2 #pilotControls>.cardbody{padding:0;display:flex;flex-wrap:wrap;align-items:stretch;gap:5px;background:transparent}
+body.srm-v2 #pilotControls>.cardbody>.ui-projectDetails,
+body.srm-v2 #pilotControls>.cardbody>.ui-drawer{flex:1 1 250px;min-width:210px;border:1px solid #e0e8f1;border-radius:6px;background:#fff;box-shadow:0 1px 2px #21365307}
+body.srm-v2 #pilotControls .ui-projectDetails>summary,
+body.srm-v2 #pilotControls .ui-drawer>summary{min-height:32px;padding:7px 10px;font-size:10.5px;font-weight:730;color:#415a77}
+body.srm-v2 #pilotControls .ui-projectDetails .ui-projectStatus,
+body.srm-v2 #pilotControls .ui-drawer .ui-summaryHint{font-size:9.5px;color:#9aa6b6}
+body.srm-v2 #pilotControls .ui-projectBody,
+body.srm-v2 #pilotControls .ui-drawerBody{padding:10px}
+body.srm-v2 #pilotControls .ui-statusStrip{flex-wrap:wrap;gap:6px;font-size:10px}
+/* Project management is an on-demand drawer, not a second dashboard competing with the RFQ table. */
+body.srm-v2 .ui-workNav{position:relative;top:auto;z-index:9;margin:0 0 9px;padding:0;display:flex;align-items:center;gap:15px;border-bottom:1px solid #e3eaf2;background:transparent;backdrop-filter:none}
+body.srm-v2 .srm-v3-flow-label{display:flex;align-items:center;gap:6px;white-space:nowrap;min-width:115px}
+body.srm-v2 .srm-v3-flow-label strong{font-size:10px;font-weight:780;color:#527293}
+body.srm-v2 .srm-v3-flow-label strong:before{content:"◉";margin-right:6px;color:#6b95c9}
+body.srm-v2 .srm-v3-flow-label span{display:none}
+body.srm-v2 .ui-workNav .tabs{flex:1;min-width:0;align-items:center;border:0;overflow-x:auto;scrollbar-width:thin}
+body.srm-v2 .ui-workNav .tab{min-height:41px;padding:10px 14px;color:#718398;font-size:11px;letter-spacing:.02em}
+body.srm-v2 .ui-workNav .tab:not(:last-child):before{position:absolute;right:-4px;top:12px;content:"›";color:#bbc8d8;font-size:14px}
+body.srm-v2 .ui-workNav .tab.active{color:#205ca8;font-weight:800}
+body.srm-v2 .ui-workNav .tab.active:after{height:2px;background:#427cd1;left:11px;right:11px}
+body.srm-v2 .panel>.srm-v3-pageIntro,
+body.srm-v2 .panel>.ui-panelLead.srm-v3-pageIntro{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:78px;padding:8px 0 12px;margin:0 0 10px;background:transparent;border:0;box-shadow:none}
+body.srm-v2 .srm-v3-pageMain{min-width:0}
+body.srm-v2 .srm-v3-pageKicker{font-size:9.5px;font-weight:800;letter-spacing:1.1px;color:#6b88aa;line-height:1.3;margin-bottom:5px}
+body.srm-v2 .srm-v3-pageMain h2{margin:0;color:#172f4b;font-size:23px;font-weight:790;line-height:1.23;letter-spacing:-.7px}
+body.srm-v2 .srm-v3-pageMain h2 span{font-size:14px;font-weight:500;color:#a0adbd;letter-spacing:-.25px}
+body.srm-v2 .srm-v3-pageMain p{margin:5px 0 0;color:#8291a3;font-size:11px;line-height:1.45}
+body.srm-v2 .srm-v3-pageMeta{max-width:250px;color:#7e92aa;font-size:10px;text-align:right;line-height:1.6}
+body.srm-v2 .srm-v3-pageIntro .toolbar{justify-content:flex-end;gap:7px;margin:0;flex-wrap:wrap}
+body.srm-v2 .srm-v3-pageIntro .toolbar .btn{min-height:30px;font-size:10.5px}
+body.srm-v2 .panel>.stats{gap:8px;margin-bottom:10px}
+body.srm-v2 .panel .card{border-color:#e1e8f1;border-radius:7px;box-shadow:0 3px 13px #17375406}
+body.srm-v2 .panel .cardhead{min-height:51px;padding:10px 14px;background:#fff;border-bottom:1px solid #e7edf4}
+body.srm-v2 .panel .cardhead b{font-size:13px;font-weight:760;color:#2a415e}
+body.srm-v2 .panel .cardhead .muted{color:#8796a8;font-size:10.5px}
+body.srm-v2 .panel .cardhead .toolbar{gap:5px;flex-wrap:wrap;justify-content:flex-end}
+body.srm-v2 .panel .cardbody{padding:11px 13px}
+body.srm-v2 #items>.card>.cardhead{align-items:center;gap:11px}
+body.srm-v2 #items>.card>.cardhead #pilotRfqHead{font-size:12px;color:#1f548d;font-variant-numeric:tabular-nums}
+body.srm-v2 #items>.card>.cardhead .toolbar .btn{font-size:10.5px;padding:6px 8px;min-height:31px}
+body.srm-v2 #items>.card>.cardhead #deleteSelectedItems{background:#fff;color:#b13427;border-color:#ead8d5}
+body.srm-v2 #items>.card>.cardhead #toggleItemIntake{background:#2a60b5;color:#fff;border-color:#2a60b5}
+body.srm-v2 #items>.card>.cardhead #toggleItemIntake:hover{background:#2355a3}
+body.srm-v2 .panel .tablewrap{border-color:#e3eaf2;border-radius:5px}
+body.srm-v2 .panel .table th{background:#f6f8fb;color:#677e97;font-size:10.5px;letter-spacing:.015em}
+body.srm-v2 .panel .table td{font-size:11.5px;color:#344b65}
+body.srm-v2 .panel .table tbody tr:nth-child(even){background:#fcfdff}
+body.srm-v2 .panel .table tbody tr:hover td{background:#eef5ff}
+body.srm-v2 .panel .btn{border-radius:5px}
+body.srm-v2 .panel .stat{border-radius:7px;border-color:#e3eaf2;box-shadow:0 2px 5px #24395504}
+body.srm-v2 .panel .stat b{color:#234464;font-size:23px;letter-spacing:-.4px}
+body.srm-v2 .panel .stat small{font-size:10.5px;color:#7a8da4}
+body.srm-v2 .panel .notice{background:#f4f8fd;border-color:#dce7f4;color:#49617d;font-size:11px;border-radius:5px}
+body.srm-v2 #quoteImport .srm-v2-quote-controls{gap:6px;flex-wrap:wrap}
+body.srm-v2 #quoteImport .srm-v2-quote-section-label{font-weight:800;color:#55789b;font-size:10px}
+body.srm-v2 #quoteImport #confirmQuoteRound:disabled,
+body.srm-v2 :is(.btn.primary,.btn.soft,.btn):disabled,
+body.srm-v2 :is(.btn.primary,.btn.soft,.btn)[aria-disabled="true"]{
+  border-color:#dbe3ec!important;background:#e8edf3!important;color:#8190a3!important;
+  box-shadow:none!important;opacity:1!important;cursor:not-allowed!important;transform:none!important;
+}
+body.srm-v2 :is(.btn.primary,.btn.soft,.btn):disabled:hover{border-color:#dbe3ec!important;background:#e8edf3!important;color:#8190a3!important}
+body.srm-v2 #quoteImport .srm-v3-lockHint{display:inline-flex;align-items:center;gap:5px;margin-left:6px;padding:5px 8px;border:1px solid #cce5d9;background:#eff9f4;border-radius:4px;color:#247c60;font-size:10px;font-weight:700}
+body.srm-v2 #quoteImport .srm-v3-lockHint[hidden]{display:none!important}
+body.srm-v2 #quoteImport .srm-v3-lockHint:before{content:"✓";font-weight:850}
+body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar{gap:10px;flex-wrap:wrap;border-radius:6px;background:#f7fafc;border-color:#e4eaf2}
+body.srm-v2 #settings #importTemplatesCard .cardbody>.toolbar{border:1px solid #edf1f6;border-radius:5px;padding:10px 12px;margin-bottom:6px!important;background:#fafbfd}
+body.srm-v2 #settings #importTemplatesCard .cardbody>.toolbar:hover{background:#f4f8fd}
+body.srm-v2 #settings #importTemplatesCard .cardbody>.toolbar .btn{min-width:168px}
+body.srm-v2 #settings .settingsGrid{gap:12px}
+body.srm-v2 #settings .settingsGrid>.card{border-color:#e2e9f1}
+@media(max-width:1210px){
+  body.srm-v2 .srm-v3-pageMeta{display:none}
+  body.srm-v2 .ui-workNav{gap:6px}
+  body.srm-v2 .ui-workNav .tab{padding:9px 10px}
+}
+@media(max-width:1090px){
+  body.srm-v2 .app{padding-left:82px;padding-right:16px}
+  body.srm-v2 .srm-v2-sidebar{width:62px;padding:18px 6px}
+  body.srm-v2 .srm-v2-brand{padding:0 2px 15px;justify-content:center}
+  body.srm-v2 .srm-v3-brandmark{width:34px;height:34px}
+  body.srm-v2 .srm-v3-brandcopy{display:none}
+  body.srm-v2 .srm-v2-descriptor{display:none}
+  body.srm-v2 .srm-v3-flow-label{display:none}
+  body.srm-v2 .srm-v3-pageMain h2{font-size:20px}
+}
+@media(max-width:700px){
+  body.srm-v2 .app{padding:0 11px 20px}
+  body.srm-v2 .srm-v3-pageIntro{flex-wrap:wrap}
+  body.srm-v2 .ui-workNav .tabs{width:100%}
+  body.srm-v2 .srm-v3-pageMain h2 span{display:none}
+}
+@media(min-width:701px) and (max-height:820px){
+  body.srm-v2 .ui-appHeader{min-height:56px;padding-top:7px;padding-bottom:7px}
+  body.srm-v2 .ui-appHeader h1{font-size:17px}
+  body.srm-v2 .srm-v3-appname{font-size:17px}
+  body.srm-v2 #pilotSubtitle{font-size:10px}
+  body.srm-v2 .ui-context{min-height:38px;padding:5px 10px;margin-bottom:5px}
+  body.srm-v2 #pilotControls>.ui-workspaceHead{padding:1px 0 3px}
+  body.srm-v2 #pilotControls .ui-projectDetails>summary,
+  body.srm-v2 #pilotControls .ui-drawer>summary{min-height:28px;padding:5px 9px}
+  body.srm-v2 .ui-workNav{margin-bottom:6px}
+  body.srm-v2 .ui-workNav .tab{min-height:35px;padding-top:7px;padding-bottom:7px}
+  body.srm-v2 .panel>.srm-v3-pageIntro,
+  body.srm-v2 .panel>.ui-panelLead.srm-v3-pageIntro{min-height:55px;padding:3px 0 6px;margin-bottom:5px}
+  body.srm-v2 .srm-v3-pageKicker{font-size:8.5px;margin-bottom:2px}
+  body.srm-v2 .srm-v3-pageMain h2{font-size:18px}
+  body.srm-v2 .srm-v3-pageMain h2 span{font-size:12px}
+  body.srm-v2 .srm-v3-pageMain p{font-size:10px;margin-top:2px}
+  body.srm-v2 .panel .cardhead{min-height:40px;padding:6px 10px}
+  body.srm-v2 .panel .cardbody{padding:7px 10px}
+}
+
 </style>
 </head>
 <body class="srm-v2">
@@ -1099,7 +1251,7 @@ body.srm-v2 .footerNote{padding:12px 0;color:#718198}
   <!-- 中文：可见侧边导航只代理既有按钮，不复制 RFQ 或数据模型。 -->
   <!-- English: The visible sidebar delegates to existing tab/action controls; no duplicated business state. -->
   <aside class="srm-v2-sidebar" aria-label="SRM 功能导航">
-    <div class="srm-v2-brand">SRM <small>STUDIO</small></div>
+    <div class="srm-v2-brand"><span class="srm-v3-brandmark">S</span><span class="srm-v3-brandcopy">SRM <small>PROCUREMENT</small></span></div>
     <div class="srm-v2-descriptor">采购协同 · 内部工作台</div>
     <div class="srm-v2-navlabel">工作空间</div>
     <button type="button" class="srm-v2-sideitem" data-srm-v2-action="project" aria-label="打开询价项目" title="打开询价项目"><span class="srm-v2-icon" aria-hidden="true">▤</span><span class="srm-v2-word">询价项目</span></button>
@@ -1111,13 +1263,13 @@ body.srm-v2 .footerNote{padding:12px 0;color:#718198}
     <div class="srm-v2-navlabel">管理工具</div>
     <button type="button" class="srm-v2-sideitem" data-srm-v2-action="admin" aria-label="数据与备份" title="数据与备份"><span class="srm-v2-icon" aria-hidden="true">◫</span><span class="srm-v2-word">数据与备份</span></button>
     <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="settings" aria-label="字段设置" title="字段设置"><span class="srm-v2-icon" aria-hidden="true">⚙</span><span class="srm-v2-word">字段设置</span></button>
-    <div class="srm-v2-sidefooter">● 本地工作台<br>UI V3 · 接入候选版</div>
+    <div class="srm-v2-sidefooter"><span class="srm-v3-statusDot" aria-hidden="true"></span> 本地业务工作台<br>V3.1 风格接入 · 待验收</div>
   </aside>
 
   <header class="top ui-appHeader">
     <div class="ui-brand">
-      <div class="ui-eyebrow">SRM / RFQ WORKSPACE</div>
-      <h1>采购询价工作台</h1>
+      <div class="ui-eyebrow">PURCHASING WORKSPACE <span class="srm-v3-headline-divider"></span> 询价与比价</div>
+      <h1>SRM <span class="srm-v3-appname">采购工作台</span></h1>
       <div class="sub" id="pilotSubtitle">演示模式：请从空白正式工作开始。</div>
     </div>
     <div class="ui-headActions">
@@ -1131,11 +1283,11 @@ body.srm-v2 .footerNote{padding:12px 0;color:#718198}
 
   <div class="ui-context" aria-label="当前询价工作摘要">
     <div><small>当前工作 / Current RFQ</small><div><b id="uiCurrentRfq">演示数据</b></div></div>
-    <div class="ui-contextRight"><small>操作顺序：物料与图纸 → 供应商分配 → 报价回收 → 比价议价</small></div>
+    <div class="ui-contextRight"><small class="srm-v3-contextHelp">当前询价项目 · 实际业务数据以本机已保存记录为准</small></div>
   </div>
   <div class="notice" id="pilotNotice" style="margin:0 0 12px">演示模式不会保存；请新建空白正式询价后开始操作。</div>
 <div class="card" id="pilotControls" style="margin-bottom:14px">
-  <div class="ui-workspaceHead"><div><b>询价项目</b><span class="muted">　新建、切换与保存当前项目</span></div></div>
+  <div class="ui-workspaceHead"><div><b>询价项目与数据操作</b><span class="muted">　项目切换、供应商管理和备份按需展开</span></div></div>
   <div class="cardbody">
  <div class="toolbar" style="margin-bottom:8px">
   <button type="button" class="btn primary" id="pilotNewWorkspace" disabled>新建空白正式工作</button>
@@ -1255,6 +1407,7 @@ body.srm-v2 .footerNote{padding:12px 0;color:#718198}
       </div>
     </div>
     <nav class="ui-workNav" aria-label="询价业务流程">
+    <div class="srm-v3-flow-label"><strong>采购业务流程</strong><span>点击步骤切换</span></div>
     <div class="tabs" role="tablist">
       <button class="tab active" data-tab="items" role="tab" aria-selected="true">① 物料与图纸</button>
       <button class="tab" data-tab="assign" role="tab" aria-selected="false">② 供应商与分配</button>
@@ -1507,6 +1660,7 @@ body.srm-v2 .footerNote{padding:12px 0;color:#718198}
   </section>
 
   <section id="quoteImport" class="panel">
+    <div id="srmV3PageStage-quoteImport" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">04 / QUOTE INTAKE</div><h2>报价回收 <span>/ 轮次与版本</span></h2><p>选择供应商与轮次，录入并核验报价；已确认的历史版本保持只读。</p></div><div class="srm-v3-pageMeta">报价录入 · 异常核验 · 版本确认</div></div>
     <div class="card" style="margin-bottom:14px">
       <div class="cardhead">
         <div><b>报价回收与核验</b> <span class="muted small">先选供应商与轮次，再导入报价、检查异常并确认</span></div>
@@ -1617,6 +1771,7 @@ body.srm-v2 .footerNote{padding:12px 0;color:#718198}
   </section>
 
   <section id="quotes" class="panel">
+    <div id="srmV3PageStage-quotes" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">05 / COMMERCIAL REVIEW</div><h2>比价与议价 <span>/ 采购决策</span></h2><p>在可比口径下检查报价与最低价建议；非最低价决策需保留人工依据。</p></div><div class="srm-v3-pageMeta">共同报价范围 · 价格对照 · 决策理由</div></div>
     <div class="card">
       <div class="cardhead">
         <div><b>报价比较</b> <span class="muted small">支持共同报价范围、最低价提示与非最低价选择说明；演示历史采购价为虚构示例</span></div>
@@ -1657,6 +1812,7 @@ body.srm-v2 .footerNote{padding:12px 0;color:#718198}
   </section>
 
   <section id="settings" class="panel">
+    <div id="srmV3PageStage-settings" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">ADMIN / FIELD & TEMPLATES</div><h2>设置与数据管理 <span>/ 标准模板</span></h2><p>统一下载正式导入模板、维护字段结构；备份恢复操作留在项目与数据管理区。</p></div><div class="srm-v3-pageMeta">模板结构 · 字段维护 · 数据安全</div></div>
     <!-- 中文：标准模板统一放在设置页，直接复用实际导入表头及本机 XLSX 生成器。 -->
     <!-- English: Centralize canonical upload templates; use the same native XLSX writer as business exports. -->
     <div class="card" id="importTemplatesCard" style="margin-bottom:16px">
@@ -5663,8 +5819,9 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
 
   const item = one("items");
   const itemLead = document.createElement("div");
-  itemLead.className = "ui-panelLead";
-  itemLead.innerHTML = '<div><b>物料与图纸</b><div class="muted">管理拟询价清单、批量导入及 PDF 关联</div></div>'+
+  itemLead.className = "ui-panelLead srm-v3-pageIntro";
+  itemLead.id="srmV3PageStage-items";
+  itemLead.innerHTML = '<div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">02 / ITEMS & DRAWINGS</div><h2>物料与图纸 <span>/ 清单与技术资料</span></h2><p>优先核对物料清单；图纸匹配与批量导入从对应工具入口进行。</p></div>'+
     '<div class="toolbar"><button class="btn soft" id="uiOpenDrawings" type="button">图纸匹配与管理</button></div>';
   item.prepend(itemLead);
   // 中文：按钮移入日常物料工具栏，避免重复标题/工具占满首屏。
@@ -5697,9 +5854,10 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
 
   const assign = one("assign");
   const assignLead = document.createElement("div");
-  assignLead.className = "ui-panelLead";
-  assignLead.innerHTML = '<div><b>供应商与分配</b><div class="muted">支持按物料或按供应商双向分配；新增关系不会覆盖已有关系</div></div>'+
-    '<div class="toolbar"><button class="btn" id="uiJumpSupplierList" type="button">查看供应商分配操作 ↓</button><button class="btn soft" id="uiOpenSupplierTools" type="button">添加 / 导入供应商</button></div>';
+  assignLead.className = "ui-panelLead srm-v3-pageIntro";
+  assignLead.id="srmV3PageStage-assign";
+  assignLead.innerHTML = '<div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">03 / SUPPLIER ALLOCATION</div><h2>供应商分配 <span>/ 询价范围管理</span></h2><p>先明确目标供应商，再关联物料；追加分配不会覆盖其他供应商的询价范围。</p></div>'+
+    '<div class="toolbar"><button class="btn" id="uiJumpSupplierList" type="button">查看分配操作 ↓</button><button class="btn soft" id="uiOpenSupplierTools" type="button">添加 / 导入供应商</button></div>';
   assign.prepend(assignLead);
   one("uiOpenSupplierTools").addEventListener("click",()=>reveal("uiSupplierTools"));
   one("uiJumpSupplierList").addEventListener("click",()=>one("supplierSearch").scrollIntoView({block:"center",behavior:"smooth"}));
@@ -5767,6 +5925,25 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   }
   if(statusSource)new MutationObserver(syncRealSaveStatus).observe(statusSource,{childList:true,characterData:true,subtree:true});
   syncRealSaveStatus();
+  // 中文：已确认版本同时显示不可操作样式与锁定说明，不修改原按钮的业务事件处理器。
+  // English: Add a visible locked affordance without touching quotation confirmation logic.
+  const quoteConfirm=document.getElementById("confirmQuoteRound");
+  if(quoteConfirm){
+    const hint=document.createElement("span");
+    hint.className="srm-v3-lockHint";
+    hint.id="srmV3QuoteLockHint";
+    hint.textContent="已确认并锁定 · 修改请新建版本";
+    hint.hidden=true;
+    quoteConfirm.insertAdjacentElement("afterend",hint);
+    function syncLock(){
+      const locked=quoteConfirm.disabled;
+      hint.hidden=!locked;
+      quoteConfirm.title=locked?"报价版本已确认并锁定，修改请新建修订版本。":"检查本轮报价后确认提交";
+      quoteConfirm.setAttribute("aria-description",quoteConfirm.title);
+    }
+    new MutationObserver(syncLock).observe(quoteConfirm,{attributes:true,attributeFilter:["disabled"]});
+    syncLock();
+  }
   sync();
 })();
 </script>

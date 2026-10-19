@@ -63,6 +63,19 @@ test('UI V3 integration: theme, active navigation and responsive workspace / 视
   expect(theme.bodyBackground).toBe('rgb(243, 246, 250)');
   expect(theme.bodyFont).toContain('Segoe UI');
   expect(theme.stylesheet).toBeTruthy();
+  // 中文：保证所有正式业务面板具有 V3.1 层级，而不是仅修改导航颜色。
+  // English: Verify stage-level structure on real panels, not merely themed sidebar colors.
+  for(const stage of ['items','assign','quoteImport','quotes','settings']){
+    const nav=page.locator('.srm-v2-sideitem[data-srm-v2-tab="'+stage+'"]');
+    await nav.click();
+    const intro=page.locator('#srmV3PageStage-'+stage);
+    await expect(intro).toBeVisible();
+    await expect(intro.locator('h2')).not.toBeEmpty();
+    expect(await intro.locator('.srm-v3-pageKicker').textContent()).toMatch(/\d\d|ADMIN/);
+  }
+  await expect(page.locator('.srm-v3-flow-label')).toContainText('采购业务流程');
+  await expect(page.locator('#srmV3QuoteLockHint')).toHaveCount(1);
+  expect(await page.locator('#ui-v3-integration-styles').textContent()).toContain('STRUCTURAL PARITY');
   for(const size of sizes){
     await page.setViewportSize(size);
     for(const stage of ['items','assign','quoteImport','quotes','settings']){
