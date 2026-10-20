@@ -608,3 +608,40 @@ test('44 S4 blocked-download reason stays visible beside the action / 备份阻�
   await expect(feedback).toBeHidden();
   await expect(button).toBeEnabled();
 });
+
+// 中文：回归 P2/P3：首次供应商询价导出和纯界面导航均不得制造虚假的未保存状态。
+// English: Regress P2/P3: first supplier RFQ export and UI-only navigation must not create false dirty state.
+test('46 UI-only navigation and first supplier export do not dirty RFQ / 导航与首次供应商导出状态',async({page,app})=>{
+  await allocated(page,app);
+  const isDirty=()=>page.evaluate(()=>window.SRMPilot.dirty());
+  expect(await isDirty()).toBe(false);
+
+  // 中文：只切换页面不应触发未保存提示或阻止后续新建/导出。
+  // English: Page navigation alone must not raise an unsaved-change state.
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
+  expect(await isDirty()).toBe(false);
+  await page.locator('#uiFieldSettings').click();
+  expect(await isDirty()).toBe(false);
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="assign"]').click();
+  expect(await isDirty()).toBe(false);
+
+  // 中文：首次通过正式询价入口打开导出面板，并选择供应商后，必须仍可下载。
+  // English: Opening the real RFQ export route and choosing a supplier must still permit the first download.
+  await page.locator('#generateBtn').click();
+  await expect(page.locator('#pilotReportPanel')).toBeVisible();
+  expect(await isDirty()).toBe(false);
+  await page.locator('#pilotReportSupplier').selectOption('SUP-A');
+  expect(await isDirty()).toBe(false);
+  const downloadPromise=page.waitForEvent('download');
+  await page.locator('#pilotReportDownload').click();
+  const downloaded=await downloadPromise;
+  expect(downloaded.suggestedFilename()).toMatch(/\.xlsx$/i);
+  await expect(page.locator('#pilotReportHint')).toContainText('已发起供应商询价');
+  expect(await isDirty()).toBe(false);
+
+  // 中文：打开数据与备份管理入口属于界面操作，不应改变询价保存状态。
+  // English: Opening the admin drawer is UI-only and must not dirty the RFQ.
+  await page.locator('#uiAdminToggle').click();
+  expect(await isDirty()).toBe(false);
+});
+

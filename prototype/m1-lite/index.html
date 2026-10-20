@@ -5427,11 +5427,15 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     // 中文：程序触发的下载链接等非用户点击不代表业务发生修改；操作按钮中的真实修改仍提示保存。
     // English: Programmatic download clicks must not mark a saved workspace dirty.
     // English: Dirty indicator errs on the safe side; UI events do not automatically persist.
-    if(e.target.closest("#pilotControls,#pilotDrawingPanel,#drawingModal,#pilotReportPanel,#rfqPreviewModal,.tabs,[data-drawing],[data-srm-v2-action=\"admin\"]"))return;
+    // 中文：导航、抽屉、预览和导出只改变界面，不得伪造业务数据修改。
+    // English: Navigation, drawers, previews and exports are UI-only and must not dirty business data.
+    if(e.target.closest("#pilotControls,#pilotDrawingPanel,#drawingModal,#pilotReportPanel,#rfqPreviewModal,.tabs,.ui-appHeader,.srm-v2-sidebar,.srm-v2-sideitem,[data-srm-v2-tab],[data-srm-v2-action],summary,#uiFieldSettings,#uiProjectJump,#uiAdminToggle,#pilotReportOpen,#generateBtn,#exportQuoteMissing,#uiOpenDrawings,#uiOpenSupplierTools,[data-drawing]"))return;
     dirty=true;status("工作内容可能有未保存修改；系统只对实际业务变化自动保存。");
   },true);
   document.addEventListener("input",e=>{
-    if(!buyerMode||busy||e.target.closest("#pilotControls"))return;
+    // 中文：报表字段/供应商选择属于导出选项，不是询价业务数据。
+    // English: Report field/supplier selection configures an export, not the RFQ business state.
+    if(!buyerMode||busy||e.target.closest("#pilotControls,#pilotReportPanel"))return;
     dirty=true;status("输入中，业务数据将在停止修改后自动保存。");
   },true);
 
