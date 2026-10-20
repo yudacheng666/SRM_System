@@ -5404,7 +5404,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     // 中文：程序触发的下载链接等非用户点击不代表业务发生修改；操作按钮中的真实修改仍提示保存。
     // English: Programmatic download clicks must not mark a saved workspace dirty.
     // English: Dirty indicator errs on the safe side; UI events do not automatically persist.
-    if(e.target.closest("#pilotControls,#pilotDrawingPanel,#drawingModal,#pilotReportPanel,#rfqPreviewModal,.tabs,[data-drawing]"))return;
+    if(e.target.closest("#pilotControls,#pilotDrawingPanel,#drawingModal,#pilotReportPanel,#rfqPreviewModal,.tabs,[data-drawing],[data-srm-v2-action=\"admin\"]"))return;
     dirty=true;status("工作内容可能有未保存修改；系统只对实际业务变化自动保存。");
   },true);
   document.addEventListener("input",e=>{
@@ -5456,7 +5456,15 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   /* 中文：S4 ZIP 同时包含 SQLite 历史快照和全部已登记的 PDF 原件。
    * English: Download a versioned SQLite backup plus every indexed original PDF. */
   async function downloadS4Full(){
-    if(!s4Available||busy||dirty||blocked)return;
+    if(!s4Available){status("S4 完整备份暂不可用，请检查本机服务状态。",true);return;}
+    if(busy){status("系统正在处理其他操作，请稍后再下载完整备份。",true);return;}
+    if(blocked){status("当前工作区存在数据冲突或安全阻止，已暂停备份。请先处理冲突提示。",true);return;}
+    if(dirty){
+      status("检测到尚未保存的业务修改，暂不能生成完整备份。请先保存或恢复最新版本。",true);
+      autosaveLabel("存在未保存修改，完整备份已暂停",true);
+      buttons();
+      return;
+    }
     busy=true;buttons();status("正在生成并校验 S4 完整备份……");
     try{
       const created=await api("/api/backups/full",jsonRequest("POST",{}));
