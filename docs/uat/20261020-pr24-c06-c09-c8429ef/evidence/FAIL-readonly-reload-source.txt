@@ -1,0 +1,22 @@
+5542:         created.backup.pdfCount+" 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。");
+5543:     }catch(e){const message="S4 完整备份失败："+e.message;status(message,true);s4DownloadNotice(message,true)}
+5544:     finally{busy=false;buttons()}
+5545:   }
+5546:   /* 中文：先人工确认再提交；服务端保证只向空白数据目录恢复。
+5547:    * English: Explicit confirmation and server-side empty-target enforcement. */
+5548:   async function restoreS4Full(){
+5549:     if(!s4Available||busy||blocked)return;
+5550:     const file=s4FileInput.files?.[0];
+5551:     if(!file){restoreNotice("请先选择由 S4 生成的完整 ZIP 备份。",true);return}
+5552:     if(buyerMode){restoreNotice("当前电脑已有询价，禁止直接恢复覆盖。请在新电脑或独立空白数据目录运行 S4 再恢复。",true);return}
+5553:     if(!confirm("确定向当前【空白】数据库恢复完整 ZIP？系统将校验所有文件；已有数据时拒绝恢复。"))return;
+5554:     busy=true;buttons();restoreNotice("正在核验完整 ZIP 并恢复空白数据目录……");
+5555:     try{
+5556:       const result=await api("/api/backups/full/restore",
+5557:         {method:"POST",headers:{"Content-Type":"application/zip"},body:file});
+5558:       if(!result.verified||!result.restored)throw Error("服务器未确认完整恢复");
+5559:       restoreNotice("完整恢复成功："+result.workspaceCount+" 笔询价、"+result.pdfCount+" 个 PDF；正在重新读取……");
+5560:       location.reload();
+5561:     }catch(e){restoreNotice("完整恢复未成功："+e.message,true)}
+5562:     finally{busy=false;buttons()}
+5563:   }

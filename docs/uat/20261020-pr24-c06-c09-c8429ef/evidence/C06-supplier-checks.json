@@ -1,0 +1,462 @@
+[
+  {
+    "label": "U24-A ZIP CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "U24-A assigned row count",
+    "actual": 4,
+    "expected": 4,
+    "pass": true
+  },
+  {
+    "label": "U24-A RFQ identities",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-A correct RFQ quantities",
+    "actual": [
+      10,
+      25,
+      4,
+      6
+    ],
+    "expected": [
+      10,
+      25,
+      4,
+      6
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-A supplier requested prices blank",
+    "actual": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "expected": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-A no competing party data",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  },
+  {
+    "label": "U24-A no buyer award/reason exported",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  },
+  {
+    "label": "U24-A assigned PDFs exact bytes and scope",
+    "actual": {
+      "U24-D16_A.pdf": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+      "UAT24-SHAFT_A.pdf": "bf95f46283d2c534c23c828508f5b05d1ef01706956e61efd9d35587225e2a15",
+      "NO-MATCH_U24.pdf": "abf6494382900653ad2e08c3f2b26cd5eb78f4fd4355f57012716ef6a670ec02"
+    },
+    "expected": {
+      "U24-D16_A.pdf": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+      "UAT24-SHAFT_A.pdf": "bf95f46283d2c534c23c828508f5b05d1ef01706956e61efd9d35587225e2a15",
+      "NO-MATCH_U24.pdf": "abf6494382900653ad2e08c3f2b26cd5eb78f4fd4355f57012716ef6a670ec02"
+    },
+    "pass": true
+  },
+  {
+    "label": "U24-B ZIP CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "U24-B assigned row count",
+    "actual": 4,
+    "expected": 4,
+    "pass": true
+  },
+  {
+    "label": "U24-B RFQ identities",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-B correct RFQ quantities",
+    "actual": [
+      10,
+      25,
+      4,
+      6
+    ],
+    "expected": [
+      10,
+      25,
+      4,
+      6
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-B supplier requested prices blank",
+    "actual": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "expected": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-B no competing party data",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  },
+  {
+    "label": "U24-B no buyer award/reason exported",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  },
+  {
+    "label": "U24-B assigned PDFs exact bytes and scope",
+    "actual": {
+      "U24-D16_A.pdf": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+      "UAT24-SHAFT_A.pdf": "bf95f46283d2c534c23c828508f5b05d1ef01706956e61efd9d35587225e2a15",
+      "NO-MATCH_U24.pdf": "abf6494382900653ad2e08c3f2b26cd5eb78f4fd4355f57012716ef6a670ec02"
+    },
+    "expected": {
+      "U24-D16_A.pdf": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+      "UAT24-SHAFT_A.pdf": "bf95f46283d2c534c23c828508f5b05d1ef01706956e61efd9d35587225e2a15",
+      "NO-MATCH_U24.pdf": "abf6494382900653ad2e08c3f2b26cd5eb78f4fd4355f57012716ef6a670ec02"
+    },
+    "pass": true
+  },
+  {
+    "label": "all supplier outer CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "all supplier members",
+    "actual": [
+      "RFQ_U24-A.zip",
+      "RFQ_U24-B.zip",
+      "RFQ_U24-CP-C.zip"
+    ],
+    "expected": [
+      "RFQ_U24-A.zip",
+      "RFQ_U24-B.zip",
+      "RFQ_U24-CP-C.zip"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-A nested ZIP CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "U24-A nested assigned row count",
+    "actual": 4,
+    "expected": 4,
+    "pass": true
+  },
+  {
+    "label": "U24-A nested RFQ identities",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-A nested correct RFQ quantities",
+    "actual": [
+      10,
+      25,
+      4,
+      6
+    ],
+    "expected": [
+      10,
+      25,
+      4,
+      6
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-A nested supplier requested prices blank",
+    "actual": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "expected": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-A nested no competing party data",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  },
+  {
+    "label": "U24-A nested no buyer award/reason exported",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  },
+  {
+    "label": "U24-A nested assigned PDFs exact bytes and scope",
+    "actual": {
+      "U24-D16_A.pdf": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+      "UAT24-SHAFT_A.pdf": "bf95f46283d2c534c23c828508f5b05d1ef01706956e61efd9d35587225e2a15",
+      "NO-MATCH_U24.pdf": "abf6494382900653ad2e08c3f2b26cd5eb78f4fd4355f57012716ef6a670ec02"
+    },
+    "expected": {
+      "U24-D16_A.pdf": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+      "UAT24-SHAFT_A.pdf": "bf95f46283d2c534c23c828508f5b05d1ef01706956e61efd9d35587225e2a15",
+      "NO-MATCH_U24.pdf": "abf6494382900653ad2e08c3f2b26cd5eb78f4fd4355f57012716ef6a670ec02"
+    },
+    "pass": true
+  },
+  {
+    "label": "U24-B nested ZIP CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "U24-B nested assigned row count",
+    "actual": 4,
+    "expected": 4,
+    "pass": true
+  },
+  {
+    "label": "U24-B nested RFQ identities",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-B nested correct RFQ quantities",
+    "actual": [
+      10,
+      25,
+      4,
+      6
+    ],
+    "expected": [
+      10,
+      25,
+      4,
+      6
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-B nested supplier requested prices blank",
+    "actual": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "expected": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-B nested no competing party data",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  },
+  {
+    "label": "U24-B nested no buyer award/reason exported",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  },
+  {
+    "label": "U24-B nested assigned PDFs exact bytes and scope",
+    "actual": {
+      "U24-D16_A.pdf": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+      "UAT24-SHAFT_A.pdf": "bf95f46283d2c534c23c828508f5b05d1ef01706956e61efd9d35587225e2a15",
+      "NO-MATCH_U24.pdf": "abf6494382900653ad2e08c3f2b26cd5eb78f4fd4355f57012716ef6a670ec02"
+    },
+    "expected": {
+      "U24-D16_A.pdf": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+      "UAT24-SHAFT_A.pdf": "bf95f46283d2c534c23c828508f5b05d1ef01706956e61efd9d35587225e2a15",
+      "NO-MATCH_U24.pdf": "abf6494382900653ad2e08c3f2b26cd5eb78f4fd4355f57012716ef6a670ec02"
+    },
+    "pass": true
+  },
+  {
+    "label": "U24-CP-C nested ZIP CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "U24-CP-C nested assigned row count",
+    "actual": 1,
+    "expected": 1,
+    "pass": true
+  },
+  {
+    "label": "U24-CP-C nested RFQ identities",
+    "actual": [
+      "RFQ-L00002"
+    ],
+    "expected": [
+      "RFQ-L00002"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-CP-C nested correct RFQ quantities",
+    "actual": [
+      25
+    ],
+    "expected": [
+      25
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-CP-C nested supplier requested prices blank",
+    "actual": [
+      null
+    ],
+    "expected": [
+      null
+    ],
+    "pass": true
+  },
+  {
+    "label": "U24-CP-C nested no competing party data",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  },
+  {
+    "label": "U24-CP-C nested no buyer award/reason exported",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  },
+  {
+    "label": "U24-CP-C nested assigned PDFs exact bytes and scope",
+    "actual": {
+      "UAT24-SHAFT_A.pdf": "bf95f46283d2c534c23c828508f5b05d1ef01706956e61efd9d35587225e2a15"
+    },
+    "expected": {
+      "UAT24-SHAFT_A.pdf": "bf95f46283d2c534c23c828508f5b05d1ef01706956e61efd9d35587225e2a15"
+    },
+    "pass": true
+  },
+  {
+    "label": "CSV exact common lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00004"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00004"
+    ],
+    "pass": true
+  },
+  {
+    "label": "CSV A/B total real quantity",
+    "actual": [
+      "612.00",
+      "692.00"
+    ],
+    "expected": [
+      "612.00",
+      "692.00"
+    ],
+    "pass": true
+  },
+  {
+    "label": "CSV every quantity x effective unit price",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  }
+]
