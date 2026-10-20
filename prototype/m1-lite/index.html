@@ -5468,6 +5468,12 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     if(!buyerMode||busy||!e.isTrusted)return;
     checkBusinessStateAfterEvent();
   },true);
+  // 中文：复选框的业务变更通常在 change 事件完成；必须同步真实分配状态。
+  // English: Checkbox allocations may finalize on change rather than click/input.
+  document.addEventListener("change",e=>{
+    if(!buyerMode||busy||!e.isTrusted)return;
+    checkBusinessStateAfterEvent();
+  },true);
 
 
   function downloadFile(blob,name){
