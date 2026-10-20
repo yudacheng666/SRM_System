@@ -1,0 +1,23 @@
+{
+  "productSHA": "c8429ef51731da570c7a556d7cdce89e7123e739",
+  "category": "TEST PRECONDITION / operation-path error, not confirmed product defect or environment failure",
+  "failure": "selectOption RFQ-L00003 in unmatched file per-row candidate-only dropdown; option does not exist",
+  "facts": [
+    "First two phase assertions passed; first unexpected action timeout stops all expansion",
+    "Unmatched per-row dropdown has no candidates; intended manual override controls visible but file was not focused",
+    "Multiple-candidate staged line2 chosen but batch confirm was never reached",
+    "No browser retry and no test correction/reexecution after stop"
+  ],
+  "correctUnexecutedRoute": [
+    "Click unmatched file row 指定此文件 (data-batch-focus=2)",
+    "Choose RFQ-L00003 in pilotBatchDrawingManualLine",
+    "Click pilotBatchDrawingManualAssign then inspect and confirm batch"
+  ],
+  "routeStatus": "NOT TESTED; visible/source entry does not prove successful functional behavior",
+  "savedCurrentAndPDFUnchangedSinceBeforePreview": true,
+  "capturedMemoryEqualsSaved": true,
+  "stopRecord": "failure-stop.json",
+  "rawFailurePreserved": true,
+  "expansionResumed": false,
+  "newConfirmedProductP1P2P3": 0
+}

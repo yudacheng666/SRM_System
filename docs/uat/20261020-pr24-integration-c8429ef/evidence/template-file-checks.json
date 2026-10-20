@@ -1,0 +1,124 @@
+[
+  {
+    "label": "items standard single sheet",
+    "actual": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "items header only",
+    "actual": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "items exact native headers",
+    "actual": [
+      "存货编码",
+      "存货名称",
+      "规格型号",
+      "所属类别",
+      "参考编码1",
+      "参考编码2",
+      "采购常用单位",
+      "询价数量",
+      "询价单位",
+      "图号"
+    ],
+    "expected": [
+      "存货编码",
+      "存货名称",
+      "规格型号",
+      "所属类别",
+      "参考编码1",
+      "参考编码2",
+      "采购常用单位",
+      "询价数量",
+      "询价单位",
+      "图号"
+    ],
+    "passed": true
+  },
+  {
+    "label": "suppliers standard single sheet",
+    "actual": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "suppliers header only",
+    "actual": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "suppliers exact native headers",
+    "actual": [
+      "往来单位编码",
+      "供应商编码",
+      "往来单位名称"
+    ],
+    "expected": [
+      "往来单位编码",
+      "供应商编码",
+      "往来单位名称"
+    ],
+    "passed": true
+  },
+  {
+    "label": "quotes standard single sheet",
+    "actual": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "quotes header only",
+    "actual": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "quotes exact native headers",
+    "actual": [
+      "RFQ Line ID",
+      "存货编码",
+      "报价单价",
+      "交期",
+      "MOQ",
+      "报价状态",
+      "物料备注"
+    ],
+    "expected": [
+      "RFQ Line ID",
+      "存货编码",
+      "报价单价",
+      "交期",
+      "MOQ",
+      "报价状态",
+      "物料备注"
+    ],
+    "passed": true
+  },
+  {
+    "label": "matched UTF8 BOM",
+    "actual": "efbbbf",
+    "expected": "efbbbf",
+    "passed": true
+  },
+  {
+    "label": "matched native header",
+    "actual": [
+      [
+        "匹配值",
+        "新值"
+      ]
+    ],
+    "expected": [
+      [
+        "匹配值",
+        "新值"
+      ]
+    ],
+    "passed": true
+  }
+]

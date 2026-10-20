@@ -1,0 +1,114 @@
+{
+  "productSHA": "c8429ef51731da570c7a556d7cdce89e7123e739",
+  "overall": "NOT-READY: independent integration coverage incomplete after first operation failure",
+  "wholeSoftwareAcceptance": false,
+  "mergeRecommendation": "Do not use this incomplete run to approve PR24 merge. ChatGPT review required.",
+  "browserChecks": {
+    "total": 13,
+    "pass": 13,
+    "false": 0
+  },
+  "separateBrowserOperationFailure": {
+    "count": 1,
+    "category": "TEST PRECONDITION / wrong UI operation path",
+    "message": "Unmatched per-row candidate select lacks RFQ-L00003;20s timeout"
+  },
+  "offlineTemplateChecks": {
+    "total": 11,
+    "pass": 11
+  },
+  "firstFailureUTC": "2026-10-20T09:02:34.135Z",
+  "expansionResumed": false,
+  "browserRetryAfterStop": false,
+  "independentTestScriptModifiedAfterFailure": false,
+  "newConfirmedProductDefects": {
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "screenshots": 5,
+  "traces": 1,
+  "actualTemplateDownloads": 4,
+  "actualS4Downloads": 0,
+  "actualRestores": 0,
+  "cases": [
+    {
+      "id": "GATE",
+      "status": "PASS",
+      "scope": "PR24准确HEAD及两项CI全部Windows/Linux作业 / Exact HEAD and both CI workflows",
+      "evidence": "evidence/github-gate.json"
+    },
+    {
+      "id": "C01",
+      "status": "PASS",
+      "scope": "4个真实模板下载，XLSX/CSV表头与格式，下载不改工作区 / Actual template files and non-mutating downloads",
+      "evidence": "evidence/template-file-checks.json"
+    },
+    {
+      "id": "C02a",
+      "status": "PASS",
+      "scope": "填写真实物料模板后正式导入，4行/同编码不同规格/数量准确 / Filled downloaded material template imports real4lines",
+      "evidence": "evidence/01-filled-material-template-preview.png"
+    },
+    {
+      "id": "C02b",
+      "status": "PASS",
+      "scope": "CSV歧义更新阻止/取消不变，唯一匹配预览不写入、确认只更新目标行 / Ambiguous and unique matched-update safety",
+      "evidence": "evidence/01-valid-preview-no-write.json"
+    },
+    {
+      "id": "C03a",
+      "status": "PASS",
+      "scope": "图纸唯一/多候选/未匹配预览、无自动目标、预览不改业务 / Three matching states and non-mutating preview",
+      "evidence": "evidence/03-three-drawing-match-states.png"
+    },
+    {
+      "id": "C03b",
+      "status": "FAIL operation; TEST PRECONDITION",
+      "scope": "未匹配文件行内下拉不存在RFQ-L00003，selectOption20秒超时 / Attempting nonexistent candidate option times out",
+      "evidence": "FAILURE-C03-UNMATCHED-SELECT.md"
+    },
+    {
+      "id": "C03c",
+      "status": "NOT TESTED",
+      "scope": "多候选/未匹配实际人工指定、确认保存、真实PDF预览 / Actual manual override, committed association and PDF viewer",
+      "evidence": "REPORT.en.md"
+    },
+    {
+      "id": "C04",
+      "status": "NOT TESTED",
+      "scope": "供应商模板填充导入、多对多分配/追加/删除/视角 / Supplier import and assignment integration",
+      "evidence": "TEST-SCOPE.md"
+    },
+    {
+      "id": "C05",
+      "status": "NOT TESTED",
+      "scope": "完整多轮报价、同轮修订、阶梯、范围、明确沿用、历史与定标 / Multiround, revisions, tiers, scope, carry and awards",
+      "evidence": "TEST-SCOPE.md"
+    },
+    {
+      "id": "C06",
+      "status": "NOT TESTED",
+      "scope": "实际供应商询价包、业务Excel/比价CSV及数量金额核对 / Supplier package/business workbook/comparison output",
+      "evidence": "TEST-SCOPE.md"
+    },
+    {
+      "id": "C07",
+      "status": "NOT TESTED",
+      "scope": "跨RFQ/F5/真实服务重启一致性 / Cross-RFQ, refresh and restart persistence",
+      "evidence": "TEST-SCOPE.md"
+    },
+    {
+      "id": "C08",
+      "status": "NOT TESTED",
+      "scope": "单次S4冒烟及空目录/非空恢复 / One S4 smoke and empty/nonempty restore",
+      "evidence": "TEST-SCOPE.md"
+    },
+    {
+      "id": "C09",
+      "status": "NOT TESTED",
+      "scope": "完整三尺寸UI V3兼容和P2/P3合并后冒烟 / Three-size V3 compatibility and P2/P3 smoke",
+      "evidence": "TEST-SCOPE.md"
+    }
+  ]
+}

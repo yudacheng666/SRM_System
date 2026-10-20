@@ -1,0 +1,61 @@
+1436:          <label class="small">无法识别版本时采用 <input id="pilotBatchDrawingVersion" type="text" value="A" maxlength="80" style="width:70px"></label>
+1437:          <button type="button" class="btn soft" id="pilotBatchDrawingAnalyze">执行匹配预览</button>
+1438:          <button type="button" class="btn" id="pilotBatchDrawingClear">清空预览</button>
+1439:         </div>
+1440:         <div class="toolbar" style="gap:8px;margin:8px 0">
+1441:          <span class="small muted" id="pilotBatchDrawingFocus">未选择待人工指定的 PDF</span>
+1442:          <label class="small">手工指定到 <select id="pilotBatchDrawingManualLine"></select></label>
+1443:          <button type="button" class="btn" id="pilotBatchDrawingManualAssign" disabled>指定给选中文件</button>
+1444:          <button type="button" class="btn primary" id="pilotBatchDrawingConfirm" disabled>确认建立选中关联</button>
+1445:         </div>
+1446:         <div id="pilotBatchDrawingSummary" class="small muted" aria-live="polite">请选择 PDF 并执行匹配预览。每行的匹配对象与版本可修改。</div>
+1447:         <div style="overflow:auto;max-height:340px"><table id="pilotBatchDrawingPreview" style="width:100%"></table></div>
+
+4807:    invalid:"文件校验失败",duplicate:"重复内容"};
+4808:   const head='<thead><tr><th>选中</th><th>PDF 文件／检测结果</th><th>关联的物料行</th><th>图纸版本</th><th>人工复核</th></tr></thead>';
+4809:   const body=staged.map((r,i)=>{
+4810:    const options=['<option value="">— 尚未指定 —</option>'];
+4811:    for(const candidate of r.match.candidates){
+4812:     const item=items.find(x=>x.lineId===candidate.lineId);
+4813:     if(item)options.push('<option value="'+esc(item.lineId)+'" '+
+4814:       (r.lineId===item.lineId?'selected':'')+'>'+esc(lineName(item))+' ['+esc(candidate.source)+']</option>');
+4815:    }
+4816:    // 中文：手动指定的行不一定原属于文件名候选，需要显示完整且可追溯的目标。
+4817:    // English: Explicit manual override may refer to a non-candidate RFQ line.
+4818:    if(r.lineId&&!r.match.candidates.some(c=>c.lineId===r.lineId)){
+4819:     const target=items.find(x=>x.lineId===r.lineId);
+4820:     if(target)options.push('<option value="'+esc(target.lineId)+'" selected>'+esc(lineName(target))+' [人工指定]</option>');
+4821:    }
+4822:    const selectable=!!r.data&&!r.duplicate;
+4823:    return '<tr data-batch-row="'+i+'">'+
+4824:     '<td><input type="checkbox" data-batch-check="'+i+'" '+(r.checked?'checked':'')+
+4825:       (selectable?'':' disabled')+'></td>'+
+4826:     '<td><b>'+esc(r.file.name)+'</b><div class="pdfMeta">'+esc(labels[r.duplicate?'duplicate':r.status]||r.status)+
+4827:     ' · '+esc(r.reason)+'</div></td>'+
+4828:     '<td><select data-batch-target="'+i+'" '+(selectable?'':'disabled')+'>'+options.join("")+'</select></td>'+
+4829:     '<td><input type="text" data-batch-version="'+i+'" maxlength="80" style="width:90px" value="'+esc(r.version)+'" '+(selectable?'':'disabled')+'></td>'+
+4830:     '<td><button type="button" class="btn '+(focused===i?'soft':'')+'" data-batch-focus="'+i+'">指定此文件</button></td>'+
+4831:     '</tr>';
+4832:   }).join("");
+4833:   table.innerHTML=head+'<tbody>'+body+'</tbody>';
+
+4958:   else if(el.hasAttribute("data-batch-version"))staged[i].version=el.value;
+4959:   render();
+4960:  });
+4961:  table.addEventListener("click",e=>{
+4962:   const btn=e.target.closest("[data-batch-focus]");if(!btn)return;
+4963:   focused=Number(btn.dataset.batchFocus);
+4964:   const row=staged[focused];manualFocus.textContent=row?"待指定："+row.file.name:"未选择";
+4965:   if(row?.lineId)manualLine.value=row.lineId;
+4966:   render();
+4967:  });
+4968:  manualSet.addEventListener("click",()=>{
+4969:   const row=staged[focused];
+4970:   if(!row?.data||row.duplicate)return;
+4971:   if(!items.some(it=>it.lineId===manualLine.value))return;
+4972:   row.lineId=manualLine.value;row.checked=true;
+4973:   row.reason="采购员手工指定 RFQ 行（非自动匹配）";
+4974:   row.status="manual";render();
+4975:  });
+4976:  window.SRMBatchDrawUI=Object.freeze({reset,preview});
+4977: }
