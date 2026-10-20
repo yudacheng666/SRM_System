@@ -1,0 +1,18 @@
+{
+  "productSHA": "c8429ef51731da570c7a556d7cdce89e7123e739",
+  "classification": "TEST PRECONDITION / report panel state assumption",
+  "observedFailure": "selectOption comparison on pilotReportType while hidden;20s timeout",
+  "cause": "C06 opened RFQ report panel via generateBtn; after downloads+navigation panel remained open. Independent driver clicked pilotReportOpen unconditionally; this control toggles, so it closed the panel then attempted hidden selection.",
+  "evidence": [
+    "Existing final screenshot shows export action but no report picker",
+    "Trace records panel display:block earlier and display:none after final click",
+    "Read-only reportOpen handler toggles showing -> none"
+  ],
+  "notConfirmed": "No product P1/P2/P3 or environment failure confirmed",
+  "C03C04C05": "Completed before new failure; no old-SHA PASS inherited",
+  "afterStop": "No browser action, no retry, no test repair/reexecution; only existing evidence/readonly DB/version reads",
+  "currentDataAndPDFEqualPreExport": true,
+  "capturedMemoryEqualSaved": true,
+  "remainingRoute": "NOT TESTED: next reviewed run should inspect panel.isVisible and avoid toggling an open panel; no workaround executed now",
+  "newProductDefects": 0
+}

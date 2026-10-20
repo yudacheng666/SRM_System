@@ -1,0 +1,7 @@
+from pathlib import Path
+import json,openpyxl
+R=Path('/tmp/c842r2');w=openpyxl.load_workbook(R/'downloads/C04-supplier-template.xlsx');h=[x.value for x in w.active[1]];assert h==['往来单位编码','供应商编码','往来单位名称'];assert w.active.max_row==1
+src=openpyxl.load_workbook(R/'fixtures/suppliers.xlsx');rr=list(src.active.values)
+for values in rr[1:]:
+ d=dict(zip(rr[0],values));w.active.append([d.get(k)for k in h])
+w.save(R/'fixtures/C04-filled-native-supplier.xlsx');(R/'evidence/C04-template-file.json').write_text(json.dumps({'nativeHeaders':h,'filledRows':len(rr)-1,'downloadedFile':'downloads/C04-supplier-template.xlsx','filledFile':'fixtures/C04-filled-native-supplier.xlsx'},ensure_ascii=False,indent=2))

@@ -1,0 +1,61 @@
+4350:   if(!c.covered){alert("尚未分配任何物料，请先分配供应商。");return}
+4351:   const exportOpen=document.getElementById("pilotReportOpen");
+4352:   if(exportOpen.disabled){alert("当前数据尚未保存或本机服务不可用。请等待自动保存成功后再导出。");return}
+4353:   // 中文：直接打开已实现的正式导出面板，不使用原型占位弹窗。
+4354:   // English: Route the visible action to the working supplier export panel, not a placeholder alert.
+4355:   const admin=document.getElementById("uiDataTools");
+4356:   if(admin)admin.open=true;
+4357:   const panel=document.getElementById("pilotReportPanel");
+4358:   const type=document.getElementById("pilotReportType");
+4359:   type.value="rfq";
+4360:   if(panel.style.display==="none")exportOpen.click();
+4361:   else type.dispatchEvent(new Event("change",{bubbles:true}));
+4362:   const hint=document.getElementById("pilotReportHint");
+4363:   hint.textContent="本次已分配 "+c.covered+"/"+items.length+" 项；未分配 "+c.none+" 项不参与外发。请选择供应商并检查图纸后下载。";
+4364:   panel.scrollIntoView({block:"start",behavior:"smooth"});
+4365: };
+4366: 
+4367: const awards=new Map(), awardReasons=new Map(),manualAwards=new Set(),awardReviewIds=new Set();
+4368: /** 中文：浏览器演示报价与实际报价回收互斥，避免假价格影响真实比价。
+
+5820:   const allowed=reportCore.fields[kind];
+5821:   return '<fieldset style="border:1px solid #e5e7eb;border-radius:6px;padding:9px;min-width:210px">'+
+5822:    '<legend class="small"><b>'+name+'</b></legend>'+
+5823:    allowed.map(f=>'<label style="display:inline-flex;align-items:center;gap:4px;min-width:145px;margin:4px 8px 4px 0">'+
+5824:     '<input type="checkbox" data-report-group="'+kind+'" data-report-field="'+f.key+'" checked '+
+5825:      (f.required?'disabled title="必要的身份/追溯字段，不可取消"':'')+'> '+
+5826:     f.name+(f.required?' *':'')+'</label>').join("")+'</fieldset>';
+5827:  }
+5828:  function render(){
+5829:   if(box.style.display==="none")return;
+5830:   const candidates=getParticipating();
+5831:   const previous=supplierEl.value;
+5832:   supplierEl.innerHTML=candidates.map(s=>'<option value="'+escapeHtml(s.id)+'">'+escapeHtml(s.name)+' ('+escapeHtml(s.id)+')</option>').join("");
+5833:   if(candidates.some(x=>x.id===previous))supplierEl.value=previous;
+5834:   const isComparison=type.value==="comparison";
+5835:   batchBtn.style.display=isComparison?"none":"inline-flex";
+5836:   exportBtn.textContent=isComparison?"下载内部比价议价单 Excel（仅内部）":"下载当前供应商询价 Excel";
+5837:   document.getElementById("pilotReportSinglePicker").style.display=isComparison?"none":"flex";
+5838:   document.getElementById("pilotReportMultiPicker").style.display=isComparison?"block":"none";
+5839:   const selected=new Set([...group.querySelectorAll("[data-report-supplier]:checked")].map(x=>x.value));
+5840:   group.innerHTML=candidates.map(s=>'<label class="chip" style="margin:4px">'+
+5841:    '<input type="checkbox" data-report-supplier="'+escapeHtml(s.id)+'" value="'+escapeHtml(s.id)+'" '+
+5842:     (selected.has(s.id)?'checked':'')+'> '+escapeHtml(s.name)+' ('+escapeHtml(s.id)+')</label>').join("");
+5843:   fieldsBox.innerHTML=isComparison?
+5844:    fieldGroup("比价汇总列","summary")+fieldGroup("报价议价明细列","history"):
+5845:    fieldGroup("供应商询价单列","rfq");
+5846:   warning.textContent=isComparison?
+5847:    "仅内部使用：先勾选至少两家供应商。金额只对共同有效报价行比较；草稿不会参与比价，但会在议价明细中清楚标注。":
+5848:    "供应商专用：仅导出分配给这家供应商的物料与空白报价列，不含其他供应商报价、内部选择和比价信息。全部导出 ZIP 仅供采购员内部拆分，切勿直接发送整个压缩包给供应商。";
+5849:  }
+5850:  function escapeHtml(x){return String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+5851:  function selected(kind){return [...fieldsBox.querySelectorAll('[data-report-group="'+kind+'"]:checked')].map(x=>x.dataset.reportField)}
+5852:  reportOpen.addEventListener("click",()=>{
+5853:   if(!window.SRMPilot?.isBuyer())return;
+5854:   const showing=box.style.display!=="none";
+5855:   box.style.display=showing?"none":"block";
+5856:   if(!showing)render();
+5857:  });
+5858:  type.addEventListener("change",render);
+5859:  // 中文：切换询价后清除供应商、文件类型/选择和下载成功消息；如果面板打开立即重新绑定。
+5860:  // English: Remove stale supplier/report selections and export success after an RFQ switch.
