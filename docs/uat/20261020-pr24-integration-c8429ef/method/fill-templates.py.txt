@@ -1,0 +1,15 @@
+from pathlib import Path
+import openpyxl,csv,json,hashlib
+R=Path('/tmp/c842');checks=[]
+def ck(label,a,b):
+ ok=a==b;checks.append({'label':label,'actual':a,'expected':b,'passed':ok});assert ok,label
+for kind,expect in [('items',['存货编码','存货名称','规格型号','所属类别','参考编码1','参考编码2','采购常用单位','询价数量','询价单位','图号']),('suppliers',['往来单位编码','供应商编码','往来单位名称']),('quotes',['RFQ Line ID','存货编码','报价单价','交期','MOQ','报价状态','物料备注'])]:
+ w=openpyxl.load_workbook(R/f'downloads/template-{kind}.xlsx');ck(kind+' standard single sheet',len(w.sheetnames),1);ck(kind+' header only',w.active.max_row,1);ck(kind+' exact native headers',[c.value for c in w.active[1]],expect)
+ for suffix in (['A','B']if kind=='quotes'else ['']):
+  src=openpyxl.load_workbook(R/'fixtures'/({'items':'materials','suppliers':'suppliers','quotes':'quote-'+suffix}[kind]+'.xlsx'));rr=list(src.active.values);d=[dict(zip(rr[0],v))for v in rr[1:]];out=openpyxl.load_workbook(R/f'downloads/template-{kind}.xlsx');s=out.active
+  for row in d:s.append([row.get(h)for h in expect])
+  out.save(R/'fixtures'/('filled-'+kind+('-'+suffix if suffix else '')+'.xlsx'))
+p=R/'downloads/template-matched.csv';ck('matched UTF8 BOM',p.read_bytes()[:3].hex(),'efbbbf');ck('matched native header',list(csv.reader(p.read_text(encoding='utf-8-sig').splitlines())),[['匹配值','新值']])
+for name,key,value in [('valid','UAT24-BASE','虚构CSV更新类别'),('ambiguous','UAT24-SHAFT','不得写入的虚构类别')]:
+ (R/f'fixtures/filled-matched-{name}.csv').write_bytes(p.read_bytes()+(key+','+value+'\r\n').encode())
+(R/'evidence/template-file-checks.json').write_text(json.dumps(checks,ensure_ascii=False,indent=2))
