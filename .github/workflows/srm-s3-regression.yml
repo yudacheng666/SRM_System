@@ -7,10 +7,12 @@ on:
       - draft/20261013-m1-storage-ui-audit
       - test/20261014-issue3-playwright
       - fix/20261020-s4-backup-dirty-guard
+      - fix/20261020-s4-visible-block-feedback
   pull_request:
     branches:
       - draft/20261013-m1-storage-ui-audit
       - feat/20261019-srm-ui-v3-integration
+      - fix/20261020-s4-backup-dirty-guard
   workflow_dispatch:
 
 permissions:
