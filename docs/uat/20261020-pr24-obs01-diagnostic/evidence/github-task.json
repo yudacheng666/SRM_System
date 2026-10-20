@@ -1,0 +1,36 @@
+{
+  "product": {
+    "sha": "0cd1278468d0471b862e16ca4ffcac41aead5e6d",
+    "head": "feat/20261019-srm-ui-v3-integration",
+    "base": "draft/20261013-m1-storage-ui-audit",
+    "base_sha": "457edcf4214220deacb4288b372ea78f144e5333",
+    "draft": true,
+    "merged": false
+  },
+  "priorEvidence": {
+    "pr": 28,
+    "sha": "5660a02075677a5b1b03d7d3c32ae75de5302586",
+    "base_sha": "0cd1278468d0471b862e16ca4ffcac41aead5e6d"
+  },
+  "task": {
+    "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6281881981",
+    "body": "## 后续独立诊断任务：OBS-01 首次 S4 备份下载等待超时（TEST-ONLY）\n\n目标产品 SHA 固定为 `0cd1278468d0471b862e16ca4ffcac41aead5e6d`。本任务不重新打开已 PASS 的 P2-B01、P3-U01、V05；只调查 PR #28 报告中单列的 OBS-01。\n\n### 已知事实\n- 首次超时发生于切换 RFQ 后，点击“下载 S4 完整备份 ZIP”。\n- 20 秒内没有观察到浏览器 download 事件；日志中没有对应备份 API 请求或业务 HTTP 错误。\n- 正常重试成功；真实进程重启后又连续下载两份成功；43 项最终文件检查通过。\n- 当前根因未知。不能因为后续重试成功就把首次异常写成 PASS，也没有足够证据直接认定为已确认产品缺陷。\n\n### 执行要求\n1. **TEST-ONLY**，在全新隔离目录和虚构数据上，直接使用上述准确产品 SHA；不要用 PR 原型替代正式 M1-Lite。\n2. 重现“在两个 RFQ 间切换，返回目标 RFQ 后下载 S4 ZIP”的实际时序。建议至少重复 10 次，并额外覆盖自动保存刚显示同步/仍在保存的状态（若可在不改产品代码的情况下触发）。\n3. 通过测试运行时监听和现有日志记录：点击前后的按钮 disabled/busy 状态、自动保存状态、点击时间、备份请求是否发出、请求/响应状态及耗时、浏览器 download 事件、服务端日志。不要为观测而修改产品、测试或 CI 文件。\n4. 将结果分类为：点击未触发/被界面状态阻止、触发但未发请求、请求已发出但响应异常或超时、响应完成但浏览器未收到下载，或本轮未复现。若现有证据无法定位，明确报告 **ROOT CAUSE UNKNOWN**。\n5. 保存必要的匿名截图、trace、browser/server 日志与每次尝试的结果，写入独立测试证据分支 + Draft PR，并回评本 PR。报告应同时保留失败/超时尝试，不能只提交成功样本。\n6. 不修复产品、不修改测试/CI、不改开发分支或 `main`，不合并任何 PR；不要因有限次数未复现而宣称下载可靠性已通过。\n\n### 关闭标准\n只有找到有证据支持的原因，并完成针对原因的复验，才建议关闭 OBS-01。若 10 次未复现，结论应是 **NOT REPRODUCED; ROOT CAUSE UNKNOWN**，作为已记录的可靠性观察保留，不要把它升级为已确认产品缺陷。\n\nEnglish: Diagnose only OBS-01 against the exact product SHA. TEST-ONLY; no code, tests, CI, development branch, main, or merges. Preserve raw failures as well as successful retries.",
+    "user": {
+      "login": "yudacheng666",
+      "name": "yudacheng666",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+      "id": 227731428
+    },
+    "id": 6281881981,
+    "pull_request_review_id": null,
+    "in_reply_to_id": null,
+    "created_at": "2026-10-20T02:25:21Z",
+    "updated_at": "2026-10-20T02:25:21Z",
+    "review": null,
+    "side": null,
+    "line": null,
+    "start_line": null,
+    "path": null
+  }
+}

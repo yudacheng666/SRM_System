@@ -1,0 +1,3616 @@
+[
+  {
+    "id": "D01",
+    "mode": "RFQ-return-1500ms-admin-immediate",
+    "action": "locator",
+    "start": "2026-10-20T02:34:48.207Z",
+    "elapsedMs": 400,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:34:48.199Z",
+      "mono": 46394.70000000112,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 279.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：已启用；首次保存后生成完整 SQLite+PDF ZIP，每日最多一次",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:34:48.458Z",
+      "mono": 46653.800000000745,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": true,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "正在生成并校验 S4 完整备份……",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：已启用；首次保存后生成完整 SQLite+PDF ZIP，每日最多一次",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:34:48.503Z",
+      "mono": 46698.20000000112,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：已启用；首次保存后生成完整 SQLite+PDF ZIP，每日最多一次",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "D01.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:34:48.428Z",
+        "trial": "D01",
+        "kind": "gate",
+        "trialAtEvent": "D01",
+        "date": "2026-10-20T02:34:48.424Z",
+        "mono": 46619,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:34:48.431Z",
+        "trial": "D01",
+        "kind": "request",
+        "id": 12,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:34:48.458Z",
+        "trial": "D01",
+        "kind": "request",
+        "id": 13,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023448_cdf0c658.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 12,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 23
+      },
+      {
+        "id": 13,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023448_cdf0c658.zip",
+        "status": 200,
+        "headersMs": 7
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:34:48.458Z",
+        "trial": "D01",
+        "kind": "requestfinished",
+        "id": 12,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "D01",
+        "totalMs": 27
+      },
+      {
+        "time": "2026-10-20T02:34:48.468Z",
+        "trial": "D01",
+        "kind": "requestfinished",
+        "id": 13,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023448_cdf0c658.zip",
+        "requestTrial": "D01",
+        "totalMs": 10
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "d3eaaf666eac415d61eee31d044510acb99ef0ea3a53d7b38ac21971c80d0851",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 1,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  },
+  {
+    "id": "D02",
+    "mode": "natural-RFQ-return-1500ms-admin-immediate",
+    "action": "locator",
+    "start": "2026-10-20T02:35:31.963Z",
+    "elapsedMs": 20124,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:35:31.958Z",
+      "mono": 90153.20000000112,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:35:32.091Z",
+      "mono": 90286.30000000075,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:35:51.986Z",
+      "mono": 110181.09999999963,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [
+      {
+        "time": "2026-10-20T02:35:32.064Z",
+        "trial": "D02",
+        "kind": "gate",
+        "trialAtEvent": "D02",
+        "date": "2026-10-20T02:35:32.048Z",
+        "mono": 90243,
+        "s4Available": true,
+        "busy": false,
+        "dirty": true,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "HANDLER_GUARD_DIRTY_NO_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "D03",
+    "mode": "natural-RFQ-return-1500ms-admin-immediate",
+    "action": "locator",
+    "start": "2026-10-20T02:35:54.803Z",
+    "elapsedMs": 20120,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:35:54.797Z",
+      "mono": 112992.70000000112,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:35:54.886Z",
+      "mono": 113081.5,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:36:14.819Z",
+      "mono": 133014,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [
+      {
+        "time": "2026-10-20T02:35:54.871Z",
+        "trial": "D03",
+        "kind": "gate",
+        "trialAtEvent": "D03",
+        "date": "2026-10-20T02:35:54.865Z",
+        "mono": 113060.5,
+        "s4Available": true,
+        "busy": false,
+        "dirty": true,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "HANDLER_GUARD_DIRTY_NO_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "D04",
+    "mode": "natural-RFQ-return-1500ms-admin-immediate",
+    "action": "locator",
+    "start": "2026-10-20T02:36:18.130Z",
+    "elapsedMs": 20136,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:36:18.115Z",
+      "mono": 136310.59999999963,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:36:18.257Z",
+      "mono": 136451.90000000037,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:36:38.155Z",
+      "mono": 156350.70000000112,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [
+      {
+        "time": "2026-10-20T02:36:18.229Z",
+        "trial": "D04",
+        "kind": "gate",
+        "trialAtEvent": "D04",
+        "date": "2026-10-20T02:36:18.219Z",
+        "mono": 136414.5,
+        "s4Available": true,
+        "busy": false,
+        "dirty": true,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "HANDLER_GUARD_DIRTY_NO_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "D05",
+    "mode": "natural-RFQ-return-1500ms-admin-immediate",
+    "action": "locator",
+    "start": "2026-10-20T02:36:41.038Z",
+    "elapsedMs": 20158,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:36:41.032Z",
+      "mono": 159226.90000000037,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:36:41.137Z",
+      "mono": 159332.59999999963,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:37:01.065Z",
+      "mono": 179260.70000000112,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [
+      {
+        "time": "2026-10-20T02:36:41.115Z",
+        "trial": "D05",
+        "kind": "gate",
+        "trialAtEvent": "D05",
+        "date": "2026-10-20T02:36:41.108Z",
+        "mono": 159303,
+        "s4Available": true,
+        "busy": false,
+        "dirty": true,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "HANDLER_GUARD_DIRTY_NO_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "D06",
+    "mode": "natural-RFQ-return-1500ms-admin-immediate",
+    "action": "locator",
+    "start": "2026-10-20T02:37:03.947Z",
+    "elapsedMs": 20115,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:37:03.941Z",
+      "mono": 182135.90000000037,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:37:04.066Z",
+      "mono": 182261,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:37:23.964Z",
+      "mono": 202159,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [
+      {
+        "time": "2026-10-20T02:37:04.035Z",
+        "trial": "D06",
+        "kind": "gate",
+        "trialAtEvent": "D06",
+        "date": "2026-10-20T02:37:04.021Z",
+        "mono": 182216.59999999963,
+        "s4Available": true,
+        "busy": false,
+        "dirty": true,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "HANDLER_GUARD_DIRTY_NO_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "D07",
+    "mode": "natural-RFQ-return-1500ms-admin-immediate",
+    "action": "locator",
+    "start": "2026-10-20T02:37:26.857Z",
+    "elapsedMs": 20115,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:37:26.851Z",
+      "mono": 205046.30000000075,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:37:26.994Z",
+      "mono": 205188.90000000037,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:37:46.871Z",
+      "mono": 225066.30000000075,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [
+      {
+        "time": "2026-10-20T02:37:26.975Z",
+        "trial": "D07",
+        "kind": "gate",
+        "trialAtEvent": "D07",
+        "date": "2026-10-20T02:37:26.961Z",
+        "mono": 205156.40000000037,
+        "s4Available": true,
+        "busy": false,
+        "dirty": true,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "HANDLER_GUARD_DIRTY_NO_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "D08",
+    "mode": "natural-RFQ-return-1500ms-admin-immediate",
+    "action": "locator",
+    "start": "2026-10-20T02:37:49.724Z",
+    "elapsedMs": 20123,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:37:49.713Z",
+      "mono": 227908.40000000037,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:37:49.823Z",
+      "mono": 228019.20000000112,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:38:09.745Z",
+      "mono": 247940.30000000075,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [
+      {
+        "time": "2026-10-20T02:37:49.799Z",
+        "trial": "D08",
+        "kind": "gate",
+        "trialAtEvent": "D08",
+        "date": "2026-10-20T02:37:49.791Z",
+        "mono": 227986.30000000075,
+        "s4Available": true,
+        "busy": false,
+        "dirty": true,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "HANDLER_GUARD_DIRTY_NO_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "D09",
+    "mode": "natural-RFQ-return-1500ms-admin-immediate",
+    "action": "locator",
+    "start": "2026-10-20T02:38:12.761Z",
+    "elapsedMs": 20123,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:38:12.742Z",
+      "mono": 250937,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:38:12.867Z",
+      "mono": 251062.09999999963,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:38:32.784Z",
+      "mono": 270979.5,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [
+      {
+        "time": "2026-10-20T02:38:12.842Z",
+        "trial": "D09",
+        "kind": "gate",
+        "trialAtEvent": "D09",
+        "date": "2026-10-20T02:38:12.838Z",
+        "mono": 251033.20000000112,
+        "s4Available": true,
+        "busy": false,
+        "dirty": true,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "HANDLER_GUARD_DIRTY_NO_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "D10",
+    "mode": "natural-RFQ-return-1500ms-admin-immediate",
+    "action": "locator",
+    "start": "2026-10-20T02:38:35.591Z",
+    "elapsedMs": 278,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:38:35.584Z",
+      "mono": 273779.80000000075,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:38:35.726Z",
+      "mono": 273921,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:38:35.762Z",
+      "mono": 273957.2000000011,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "D10.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:38:35.670Z",
+        "trial": "D10",
+        "kind": "gate",
+        "trialAtEvent": "D10",
+        "date": "2026-10-20T02:38:35.657Z",
+        "mono": 273852.5,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:38:35.676Z",
+        "trial": "D10",
+        "kind": "request",
+        "id": 54,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:38:35.686Z",
+        "trial": "D10",
+        "kind": "request",
+        "id": 55,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023835_16be1da1.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 54,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 9
+      },
+      {
+        "id": 55,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023835_16be1da1.zip",
+        "status": 200,
+        "headersMs": 2
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:38:35.685Z",
+        "trial": "D10",
+        "kind": "requestfinished",
+        "id": 54,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "D10",
+        "totalMs": 9
+      },
+      {
+        "time": "2026-10-20T02:38:35.690Z",
+        "trial": "D10",
+        "kind": "requestfinished",
+        "id": 55,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023835_16be1da1.zip",
+        "requestTrial": "D10",
+        "totalMs": 4
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "af2d1746b45781b046b06f8bd26146add979081517a8e5c645256d0da0887a70",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 1,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  },
+  {
+    "id": "D11",
+    "mode": "same-RFQ-return-admin-wait1000ms",
+    "action": "locator",
+    "start": "2026-10-20T02:38:39.566Z",
+    "elapsedMs": 216,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:38:39.561Z",
+      "mono": 277756,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:38:39.667Z",
+      "mono": 277862.0999999996,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:38:39.680Z",
+      "mono": 277875.30000000075,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "D11.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:38:39.625Z",
+        "trial": "D11",
+        "kind": "gate",
+        "trialAtEvent": "D11",
+        "date": "2026-10-20T02:38:39.622Z",
+        "mono": 277817.7000000011,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:38:39.628Z",
+        "trial": "D11",
+        "kind": "request",
+        "id": 60,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:38:39.645Z",
+        "trial": "D11",
+        "kind": "request",
+        "id": 61,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023839_0ffe6aa7.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 60,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 14
+      },
+      {
+        "id": 61,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023839_0ffe6aa7.zip",
+        "status": 200,
+        "headersMs": 5
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:38:39.645Z",
+        "trial": "D11",
+        "kind": "requestfinished",
+        "id": 60,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "D11",
+        "totalMs": 17
+      },
+      {
+        "time": "2026-10-20T02:38:39.650Z",
+        "trial": "D11",
+        "kind": "requestfinished",
+        "id": 61,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023839_0ffe6aa7.zip",
+        "requestTrial": "D11",
+        "totalMs": 5
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "e1f1e316e2f358e4990232d9618c55a601481fe6e774c664bb8dad042b3e5349",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 1,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  },
+  {
+    "id": "D12",
+    "mode": "same-RFQ-return-admin-wait1000ms",
+    "action": "locator",
+    "start": "2026-10-20T02:38:43.653Z",
+    "elapsedMs": 393,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:38:43.642Z",
+      "mono": 281837.80000000075,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:38:43.806Z",
+      "mono": 282001.2000000011,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": true,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "正在生成并校验 S4 完整备份……",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:38:43.911Z",
+      "mono": 282106.0999999996,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "D12.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:38:43.745Z",
+        "trial": "D12",
+        "kind": "gate",
+        "trialAtEvent": "D12",
+        "date": "2026-10-20T02:38:43.736Z",
+        "mono": 281931,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:38:43.751Z",
+        "trial": "D12",
+        "kind": "request",
+        "id": 66,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:38:43.770Z",
+        "trial": "D12",
+        "kind": "request",
+        "id": 67,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023843_c412fd43.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 66,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 15
+      },
+      {
+        "id": 67,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023843_c412fd43.zip",
+        "status": 200,
+        "headersMs": 13
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:38:43.769Z",
+        "trial": "D12",
+        "kind": "requestfinished",
+        "id": 66,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "D12",
+        "totalMs": 18
+      },
+      {
+        "time": "2026-10-20T02:38:43.799Z",
+        "trial": "D12",
+        "kind": "requestfinished",
+        "id": 67,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023843_c412fd43.zip",
+        "requestTrial": "D12",
+        "totalMs": 29
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "7f6244bb051b10f730c03abf20af3bc1823c0e27da77333c6cab810e1ca55806",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 1,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  },
+  {
+    "id": "D13",
+    "mode": "same-RFQ-return-admin-wait1000ms",
+    "action": "locator",
+    "start": "2026-10-20T02:38:48.320Z",
+    "elapsedMs": 327,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:38:48.310Z",
+      "mono": 286505.30000000075,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:38:48.513Z",
+      "mono": 286708.2000000011,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:38:48.548Z",
+      "mono": 286743,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "D13.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:38:48.394Z",
+        "trial": "D13",
+        "kind": "gate",
+        "trialAtEvent": "D13",
+        "date": "2026-10-20T02:38:48.386Z",
+        "mono": 286581.5999999996,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:38:48.404Z",
+        "trial": "D13",
+        "kind": "request",
+        "id": 72,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:38:48.424Z",
+        "trial": "D13",
+        "kind": "request",
+        "id": 73,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023848_38d582b0.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 72,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 13
+      },
+      {
+        "id": 73,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023848_38d582b0.zip",
+        "status": 200,
+        "headersMs": 49
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:38:48.424Z",
+        "trial": "D13",
+        "kind": "requestfinished",
+        "id": 72,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "D13",
+        "totalMs": 20
+      },
+      {
+        "time": "2026-10-20T02:38:48.501Z",
+        "trial": "D13",
+        "kind": "requestfinished",
+        "id": 73,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023848_38d582b0.zip",
+        "requestTrial": "D13",
+        "totalMs": 77
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "b3a462941ab2acc135777eedee4c215f05b21f3fbf784e1f51407b7398a424a0",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 1,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  },
+  {
+    "id": "D14",
+    "mode": "same-RFQ-return-admin-wait1000ms",
+    "action": "locator",
+    "start": "2026-10-20T02:38:52.375Z",
+    "elapsedMs": 301,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:38:52.369Z",
+      "mono": 290564.9000000004,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:38:52.550Z",
+      "mono": 290745.7000000011,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:38:52.574Z",
+      "mono": 290769.0999999996,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "D14.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:38:52.423Z",
+        "trial": "D14",
+        "kind": "gate",
+        "trialAtEvent": "D14",
+        "date": "2026-10-20T02:38:52.418Z",
+        "mono": 290613.30000000075,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:38:52.427Z",
+        "trial": "D14",
+        "kind": "request",
+        "id": 78,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:38:52.453Z",
+        "trial": "D14",
+        "kind": "request",
+        "id": 79,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023852_3ab3a296.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 78,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 10
+      },
+      {
+        "id": 79,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023852_3ab3a296.zip",
+        "status": 200,
+        "headersMs": 6
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:38:52.449Z",
+        "trial": "D14",
+        "kind": "requestfinished",
+        "id": 78,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "D14",
+        "totalMs": 22
+      },
+      {
+        "time": "2026-10-20T02:38:52.459Z",
+        "trial": "D14",
+        "kind": "requestfinished",
+        "id": 79,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_023852_3ab3a296.zip",
+        "requestTrial": "D14",
+        "totalMs": 6
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "ad8da236da36383922ab4ba95c85ca41bef36a60f61ef699aa2214dd613f77c0",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 1,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  },
+  {
+    "id": "D15",
+    "mode": "natural-return-admin-immediate-no-CDP-logpoint",
+    "action": "locator",
+    "start": "2026-10-20T02:38:55.321Z",
+    "elapsedMs": 20131,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:38:55.312Z",
+      "mono": 293507.5999999996,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:38:55.425Z",
+      "mono": 293620.2000000011,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:39:15.347Z",
+      "mono": 313542,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "CLICK_WITHOUT_BACKUP_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "D16",
+    "mode": "natural-return-admin-immediate-no-CDP-logpoint",
+    "action": "locator",
+    "start": "2026-10-20T02:39:18.047Z",
+    "elapsedMs": 20158,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:39:18.039Z",
+      "mono": 316234.2000000011,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:39:18.123Z",
+      "mono": 316318.5,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:39:38.088Z",
+      "mono": 336283.0999999996,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "CLICK_WITHOUT_BACKUP_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "D17",
+    "mode": "natural-return-admin-immediate-no-CDP-logpoint",
+    "action": "locator",
+    "start": "2026-10-20T02:39:41.756Z",
+    "elapsedMs": 20123,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:39:41.749Z",
+      "mono": 339944.2000000011,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:39:41.836Z",
+      "mono": 340031,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:40:01.772Z",
+      "mono": 359966.9000000004,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "CLICK_WITHOUT_BACKUP_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "D18",
+    "mode": "natural-return-admin-immediate-no-CDP-logpoint",
+    "action": "locator",
+    "start": "2026-10-20T02:40:04.998Z",
+    "elapsedMs": 20127,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:40:04.992Z",
+      "mono": 363187.2000000011,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:40:05.101Z",
+      "mono": 363296.2000000011,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:40:25.015Z",
+      "mono": 383210.0999999996,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 1 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 1 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "CLICK_WITHOUT_BACKUP_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "S01",
+    "mode": "controlled-3000ms-auto-save-in-flight-disabled-click",
+    "action": "mouse",
+    "start": "2026-10-20T02:40:32.308Z",
+    "elapsedMs": 1110,
+    "waitMs": 1000,
+    "before": {
+      "date": "2026-10-20T02:40:32.298Z",
+      "mono": 390493.5999999996,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": true,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：正在自动保存……",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：正在自动保存……",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:40:32.390Z",
+      "mono": 390585.5999999996,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": true,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：正在自动保存……",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：正在自动保存……",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:40:33.320Z",
+      "mono": 391515.7000000011,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 1,
+      "button": {
+        "disabled": true,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：正在自动保存……",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：正在自动保存……",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [],
+    "backupRequests": [],
+    "trustedClicks": 0,
+    "classification": "UI_CLICK_BLOCKED_OR_NOT_DELIVERED",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "PASS_EXPECTED_BLOCK",
+    "expectation": "blocked while saving"
+  },
+  {
+    "id": "S02",
+    "mode": "same-state-after-delayed-autosave-completes",
+    "action": "locator",
+    "start": "2026-10-20T02:40:33.850Z",
+    "elapsedMs": 263,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:40:33.842Z",
+      "mono": 392037.80000000075,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 2,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "SQLite 自动保存成功：RFQ-1792463684235-YYBMRM（第 2 版）。",
+      "auto": "自动保存：已自动保存第 2 版（2:40:33 AM）",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已自动保存第 2 版（2:40:33 AM）",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:40:33.998Z",
+      "mono": 392193.5,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 2,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已自动保存第 2 版（2:40:33 AM）",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已自动保存第 2 版（2:40:33 AM）",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:40:34.016Z",
+      "mono": 392211.5999999996,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 2,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已自动保存第 2 版（2:40:33 AM）",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已自动保存第 2 版（2:40:33 AM）",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "S02.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:40:33.922Z",
+        "trial": "S02",
+        "kind": "gate",
+        "trialAtEvent": "S02",
+        "date": "2026-10-20T02:40:33.917Z",
+        "mono": 392112.30000000075,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:40:33.929Z",
+        "trial": "S02",
+        "kind": "request",
+        "id": 104,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:40:33.944Z",
+        "trial": "S02",
+        "kind": "request",
+        "id": 105,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024033_114dc18c.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 104,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 5
+      },
+      {
+        "id": 105,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024033_114dc18c.zip",
+        "status": 200,
+        "headersMs": 17
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:40:33.942Z",
+        "trial": "S02",
+        "kind": "requestfinished",
+        "id": 104,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "S02",
+        "totalMs": 13
+      },
+      {
+        "time": "2026-10-20T02:40:33.961Z",
+        "trial": "S02",
+        "kind": "requestfinished",
+        "id": 105,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024033_114dc18c.zip",
+        "requestTrial": "S02",
+        "totalMs": 17
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "1a179d4edd1b84f38ea01f6da21441d6f1fb139b7e8987fb2b687450b650aa86",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 2,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  },
+  {
+    "id": "S03",
+    "mode": "natural-autosave-just-completed-admin-immediate",
+    "action": "locator",
+    "start": "2026-10-20T02:42:18.453Z",
+    "elapsedMs": 20154,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:42:18.442Z",
+      "mono": 51960.39999999851,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 279.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已自动保存第 3 版（2:42:18 AM）",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已自动保存第 3 版（2:42:18 AM）",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:42:18.758Z",
+      "mono": 52275.79999999888,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": -0.15625,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已自动保存第 3 版（2:42:18 AM）",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已自动保存第 3 版（2:42:18 AM）",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:42:38.496Z",
+      "mono": 72014.19999999925,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": -0.15625,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已自动保存第 3 版（2:42:18 AM）",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已自动保存第 3 版（2:42:18 AM）",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [
+      {
+        "time": "2026-10-20T02:42:18.730Z",
+        "trial": "S03",
+        "kind": "gate",
+        "trialAtEvent": "S03",
+        "date": "2026-10-20T02:42:18.727Z",
+        "mono": 52245.09999999963,
+        "s4Available": true,
+        "busy": false,
+        "dirty": true,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [],
+    "trustedClicks": 1,
+    "classification": "HANDLER_GUARD_DIRTY_NO_REQUEST",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "FAIL",
+    "expectation": "one click should start backup and download"
+  },
+  {
+    "id": "S04",
+    "mode": "retry-after-one-poll-no-business-change",
+    "action": "locator",
+    "start": "2026-10-20T02:42:39.855Z",
+    "elapsedMs": 510,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:42:39.842Z",
+      "mono": 73360.69999999925,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": -0.15625,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已自动保存第 3 版（2:42:18 AM）",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已自动保存第 3 版（2:42:18 AM）",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:42:40.184Z",
+      "mono": 73702.09999999963,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": -0.15625,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已自动保存第 3 版（2:42:18 AM）",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已自动保存第 3 版（2:42:18 AM）",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:42:40.240Z",
+      "mono": 73758.5,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": -0.15625,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已自动保存第 3 版（2:42:18 AM）",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已自动保存第 3 版（2:42:18 AM）",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "S04.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:42:40.026Z",
+        "trial": "S04",
+        "kind": "gate",
+        "trialAtEvent": "S04",
+        "date": "2026-10-20T02:42:40.005Z",
+        "mono": 73523.39999999851,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:42:40.141Z",
+        "trial": "S04",
+        "kind": "request",
+        "id": 11,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:42:40.164Z",
+        "trial": "S04",
+        "kind": "request",
+        "id": 12,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024240_e7a9cca6.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 11,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 21
+      },
+      {
+        "id": 12,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024240_e7a9cca6.zip",
+        "status": 200,
+        "headersMs": 11
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:42:40.164Z",
+        "trial": "S04",
+        "kind": "requestfinished",
+        "id": 11,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "S04",
+        "totalMs": 23
+      },
+      {
+        "time": "2026-10-20T02:42:40.181Z",
+        "trial": "S04",
+        "kind": "requestfinished",
+        "id": 12,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024240_e7a9cca6.zip",
+        "requestTrial": "S04",
+        "totalMs": 17
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "c78429313641f0513a67270f5ca37dd258ead43823ff1b3cd364fb78c9403a9d",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 3,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  },
+  {
+    "id": "C01",
+    "mode": "same-RFQ-return-open-native-details-no-header-admin",
+    "action": "locator",
+    "start": "2026-10-20T02:42:43.651Z",
+    "elapsedMs": 386,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:42:43.644Z",
+      "mono": 77162.29999999888,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 294.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792463684235-YYBMRM（第 3 版）。",
+      "auto": "自动保存：已同步第 3 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 3 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:42:43.912Z",
+      "mono": 77429.89999999851,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 294.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 3 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 3 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:42:43.939Z",
+      "mono": 77457,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 294.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 3 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 3 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "C01.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:42:43.689Z",
+        "trial": "C01",
+        "kind": "gate",
+        "trialAtEvent": "C01",
+        "date": "2026-10-20T02:42:43.687Z",
+        "mono": 77205.5,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:42:43.693Z",
+        "trial": "C01",
+        "kind": "request",
+        "id": 17,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:42:43.710Z",
+        "trial": "C01",
+        "kind": "request",
+        "id": 18,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024243_65f8fb33.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 17,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 10
+      },
+      {
+        "id": 18,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024243_65f8fb33.zip",
+        "status": 200,
+        "headersMs": 4
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:42:43.708Z",
+        "trial": "C01",
+        "kind": "requestfinished",
+        "id": 17,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "C01",
+        "totalMs": 15
+      },
+      {
+        "time": "2026-10-20T02:42:43.721Z",
+        "trial": "C01",
+        "kind": "requestfinished",
+        "id": 18,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024243_65f8fb33.zip",
+        "requestTrial": "C01",
+        "totalMs": 11
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "e07aa85fcae72118ce6c50041a00370b79fc315e08632cd71e4dc61aa84b73da",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 3,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  },
+  {
+    "id": "C02",
+    "mode": "same-RFQ-return-open-native-details-no-header-admin",
+    "action": "locator",
+    "start": "2026-10-20T02:42:46.793Z",
+    "elapsedMs": 244,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:42:46.787Z",
+      "mono": 80305.39999999851,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 294.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792463684235-YYBMRM（第 3 版）。",
+      "auto": "自动保存：已同步第 3 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 3 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:42:46.892Z",
+      "mono": 80410.39999999851,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 294.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 3 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 3 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:42:46.930Z",
+      "mono": 80448,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 294.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 3 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 3 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "C02.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:42:46.845Z",
+        "trial": "C02",
+        "kind": "gate",
+        "trialAtEvent": "C02",
+        "date": "2026-10-20T02:42:46.841Z",
+        "mono": 80358.69999999925,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:42:46.850Z",
+        "trial": "C02",
+        "kind": "request",
+        "id": 23,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:42:46.860Z",
+        "trial": "C02",
+        "kind": "request",
+        "id": 24,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024246_2959ce65.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 23,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 6
+      },
+      {
+        "id": 24,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024246_2959ce65.zip",
+        "status": 200,
+        "headersMs": 13
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:42:46.860Z",
+        "trial": "C02",
+        "kind": "requestfinished",
+        "id": 23,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "C02",
+        "totalMs": 10
+      },
+      {
+        "time": "2026-10-20T02:42:46.874Z",
+        "trial": "C02",
+        "kind": "requestfinished",
+        "id": 24,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024246_2959ce65.zip",
+        "requestTrial": "C02",
+        "totalMs": 14
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "d5e5285122d311215c9d382725d051e8fcf1eddee411d90fb6fd2e6de519c9e2",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 3,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  },
+  {
+    "id": "R01",
+    "mode": "header-immediate-trace-reproduction",
+    "action": "locator",
+    "start": "2026-10-20T02:42:49.703Z",
+    "elapsedMs": 466,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:42:49.694Z",
+      "mono": 83212.59999999963,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 279.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 3 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 3 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:42:50.026Z",
+      "mono": 83544.29999999888,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": -0.15625,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 3 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 3 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:42:50.060Z",
+      "mono": 83578.59999999963,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": -0.15625,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 3 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 3 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "R01.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:42:49.984Z",
+        "trial": "R01",
+        "kind": "gate",
+        "trialAtEvent": "R01",
+        "date": "2026-10-20T02:42:49.979Z",
+        "mono": 83496.79999999888,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:42:49.988Z",
+        "trial": "R01",
+        "kind": "request",
+        "id": 29,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:42:50.004Z",
+        "trial": "R01",
+        "kind": "request",
+        "id": 30,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024249_1b9b2177.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 29,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 5
+      },
+      {
+        "id": 30,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024249_1b9b2177.zip",
+        "status": 200,
+        "headersMs": 3
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:42:49.999Z",
+        "trial": "R01",
+        "kind": "requestfinished",
+        "id": 29,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "R01",
+        "totalMs": 11
+      },
+      {
+        "time": "2026-10-20T02:42:50.015Z",
+        "trial": "R01",
+        "kind": "requestfinished",
+        "id": 30,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024249_1b9b2177.zip",
+        "requestTrial": "R01",
+        "totalMs": 11
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "7bdc1d4344a2c5cb4af1ab59166e1a315e9b913c3512349e533dcaf4cdf9272b",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 3,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  },
+  {
+    "id": "R02",
+    "mode": "same-header-path-wait1000ms-trace-control",
+    "action": "locator",
+    "start": "2026-10-20T02:42:53.856Z",
+    "elapsedMs": 238,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:42:53.848Z",
+      "mono": 87365.79999999888,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：已同步第 3 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 3 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:42:53.954Z",
+      "mono": 87472,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 3 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 3 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:42:53.994Z",
+      "mono": 87512.5,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 3 版；无待保存修改",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已同步第 3 版；无待保存修改",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "R02.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:42:53.911Z",
+        "trial": "R02",
+        "kind": "gate",
+        "trialAtEvent": "R02",
+        "date": "2026-10-20T02:42:53.905Z",
+        "mono": 87423,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:42:53.915Z",
+        "trial": "R02",
+        "kind": "request",
+        "id": 35,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:42:53.935Z",
+        "trial": "R02",
+        "kind": "request",
+        "id": 36,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024253_743c9573.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 35,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 12
+      },
+      {
+        "id": 36,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024253_743c9573.zip",
+        "status": 200,
+        "headersMs": 11
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:42:53.935Z",
+        "trial": "R02",
+        "kind": "requestfinished",
+        "id": 35,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "R02",
+        "totalMs": 20
+      },
+      {
+        "time": "2026-10-20T02:42:53.952Z",
+        "trial": "R02",
+        "kind": "requestfinished",
+        "id": 36,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024253_743c9573.zip",
+        "requestTrial": "R02",
+        "totalMs": 17
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "cbd45715caebaa87cdda128fe133d8c5252a652bd60e88ab125cc9fc54bf5926",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 3,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  },
+  {
+    "id": "S05",
+    "mode": "controlled-auto-save-in-flight-repeat",
+    "action": "mouse",
+    "start": "2026-10-20T02:43:01.580Z",
+    "elapsedMs": 1112,
+    "waitMs": 1000,
+    "before": {
+      "date": "2026-10-20T02:43:01.573Z",
+      "mono": 95091.59999999963,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": true,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：正在自动保存……",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：正在自动保存……",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:43:01.665Z",
+      "mono": 95182.89999999851,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": true,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：正在自动保存……",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：正在自动保存……",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:43:02.593Z",
+      "mono": 96110.89999999851,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 3,
+      "button": {
+        "disabled": true,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+      "auto": "自动保存：正在自动保存……",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：正在自动保存……",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": null,
+    "downloadError": null,
+    "downloadTimedOut": true,
+    "gate": [],
+    "backupRequests": [],
+    "trustedClicks": 0,
+    "classification": "UI_CLICK_BLOCKED_OR_NOT_DELIVERED",
+    "responses": [],
+    "finished": [],
+    "events_download": 0,
+    "result": "PASS_EXPECTED_BLOCK",
+    "expectation": "blocked while saving"
+  },
+  {
+    "id": "S06",
+    "mode": "after-delayed-autosave-complete-cleanup-awaited",
+    "action": "locator",
+    "start": "2026-10-20T02:43:04.299Z",
+    "elapsedMs": 214,
+    "waitMs": 20000,
+    "before": {
+      "date": "2026-10-20T02:43:04.293Z",
+      "mono": 97810.89999999851,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 4,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "SQLite 自动保存成功：RFQ-1792463684235-YYBMRM（第 4 版）。",
+      "auto": "自动保存：已自动保存第 4 版（2:43:04 AM）",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已自动保存第 4 版（2:43:04 AM）",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "immediate": {
+      "date": "2026-10-20T02:43:04.403Z",
+      "mono": 97921.09999999963,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 4,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已自动保存第 4 版（2:43:04 AM）",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已自动保存第 4 版（2:43:04 AM）",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "after": {
+      "date": "2026-10-20T02:43:04.415Z",
+      "mono": 97933.59999999963,
+      "active": "RFQ-1792463684235-YYBMRM",
+      "revision": 4,
+      "button": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "display": "block",
+        "visibility": "visible",
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，0 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已自动保存第 4 版（2:43:04 AM）",
+      "autoBackup": "自动备份：最近 10/20/2026, 2:34:44 AM，保留 1 份（上限 7 份）",
+      "status": "自动保存：已自动保存第 4 版（2:43:04 AM）",
+      "projectOpen": false,
+      "dataOpen": true
+    },
+    "actionError": null,
+    "download": "S06.zip",
+    "downloadError": null,
+    "downloadTimedOut": false,
+    "gate": [
+      {
+        "time": "2026-10-20T02:43:04.365Z",
+        "trial": "S06",
+        "kind": "gate",
+        "trialAtEvent": "S06",
+        "date": "2026-10-20T02:43:04.351Z",
+        "mono": 97868.79999999888,
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T02:43:04.368Z",
+        "trial": "S06",
+        "kind": "request",
+        "id": 43,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T02:43:04.380Z",
+        "trial": "S06",
+        "kind": "request",
+        "id": 44,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024304_750e12a8.zip",
+        "method": "GET"
+      }
+    ],
+    "trustedClicks": 1,
+    "classification": "DOWNLOAD_SUCCESS",
+    "responses": [
+      {
+        "id": 43,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "status": 201,
+        "headersMs": 3
+      },
+      {
+        "id": 44,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024304_750e12a8.zip",
+        "status": 200,
+        "headersMs": 3
+      }
+    ],
+    "finished": [
+      {
+        "time": "2026-10-20T02:43:04.373Z",
+        "trial": "S06",
+        "kind": "requestfinished",
+        "id": 43,
+        "url": "http://127.0.0.1:8990/api/backups/full",
+        "requestTrial": "S06",
+        "totalMs": 5
+      },
+      {
+        "time": "2026-10-20T02:43:04.383Z",
+        "trial": "S06",
+        "kind": "requestfinished",
+        "id": 44,
+        "url": "http://127.0.0.1:8990/api/backups/full/SRM_FULL_20261020_024304_750e12a8.zip",
+        "requestTrial": "S06",
+        "totalMs": 3
+      }
+    ],
+    "events_download": 1,
+    "result": "PASS",
+    "expectation": "one click should start backup and download",
+    "fileSha256": "b2182d0ecd5890eb6c1cb9cd325e9ef9d9f6ad940d2ecdcb9a36b909d7cafb10",
+    "zipWorkspaceRevisions": {
+      "RFQ-1792463684235-YYBMRM": 4,
+      "RFQ-1792463685459-778Z5Y": 1
+    }
+  }
+]

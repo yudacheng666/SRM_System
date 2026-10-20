@@ -1,0 +1,1 @@
+for(let i=1;i<=2;i++){await switchTo(idB,250);await switchTo(idA,1500);if(await p.locator('#uiDataTools').evaluate(e=>e.open))await p.locator('#uiDataTools > summary').click();await openD('#uiDataTools');await attempt('C0'+i,'same-RFQ-return-open-native-details-no-header-admin');}global.finalState=fp('03-final-after-controls');console.log('ALL_24_ATTEMPTS_EXECUTED');

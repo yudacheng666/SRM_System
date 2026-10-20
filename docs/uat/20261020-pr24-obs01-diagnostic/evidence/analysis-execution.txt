@@ -1,0 +1,144 @@
+PASS 28 distinct recorded attempts
+PASS D01 ZIP integrity
+PASS D01 SQLite integrity
+PASS D01 two RFQs
+PASS D01 active saved revision
+PASS D01 other RFQ untouched
+PASS D01 HTTP chain
+PASS D02 no backup request
+PASS D03 no backup request
+PASS D04 no backup request
+PASS D05 no backup request
+PASS D06 no backup request
+PASS D07 no backup request
+PASS D08 no backup request
+PASS D09 no backup request
+PASS D10 ZIP integrity
+PASS D10 SQLite integrity
+PASS D10 two RFQs
+PASS D10 active saved revision
+PASS D10 other RFQ untouched
+PASS D10 HTTP chain
+PASS D11 ZIP integrity
+PASS D11 SQLite integrity
+PASS D11 two RFQs
+PASS D11 active saved revision
+PASS D11 other RFQ untouched
+PASS D11 HTTP chain
+PASS D12 ZIP integrity
+PASS D12 SQLite integrity
+PASS D12 two RFQs
+PASS D12 active saved revision
+PASS D12 other RFQ untouched
+PASS D12 HTTP chain
+PASS D13 ZIP integrity
+PASS D13 SQLite integrity
+PASS D13 two RFQs
+PASS D13 active saved revision
+PASS D13 other RFQ untouched
+PASS D13 HTTP chain
+PASS D14 ZIP integrity
+PASS D14 SQLite integrity
+PASS D14 two RFQs
+PASS D14 active saved revision
+PASS D14 other RFQ untouched
+PASS D14 HTTP chain
+PASS D15 no backup request
+PASS D16 no backup request
+PASS D17 no backup request
+PASS D18 no backup request
+PASS S01 no backup request
+PASS S02 ZIP integrity
+PASS S02 SQLite integrity
+PASS S02 two RFQs
+PASS S02 active saved revision
+PASS S02 other RFQ untouched
+PASS S02 HTTP chain
+PASS S03 no backup request
+PASS S04 ZIP integrity
+PASS S04 SQLite integrity
+PASS S04 two RFQs
+PASS S04 active saved revision
+PASS S04 other RFQ untouched
+PASS S04 HTTP chain
+PASS C01 ZIP integrity
+PASS C01 SQLite integrity
+PASS C01 two RFQs
+PASS C01 active saved revision
+PASS C01 other RFQ untouched
+PASS C01 HTTP chain
+PASS C02 ZIP integrity
+PASS C02 SQLite integrity
+PASS C02 two RFQs
+PASS C02 active saved revision
+PASS C02 other RFQ untouched
+PASS C02 HTTP chain
+PASS R01 ZIP integrity
+PASS R01 SQLite integrity
+PASS R01 two RFQs
+PASS R01 active saved revision
+PASS R01 other RFQ untouched
+PASS R01 HTTP chain
+PASS R02 ZIP integrity
+PASS R02 SQLite integrity
+PASS R02 two RFQs
+PASS R02 active saved revision
+PASS R02 other RFQ untouched
+PASS R02 HTTP chain
+PASS S05 no backup request
+PASS S06 ZIP integrity
+PASS S06 SQLite integrity
+PASS S06 two RFQs
+PASS S06 active saved revision
+PASS S06 other RFQ untouched
+PASS S06 HTTP chain
+{
+  "attempts": 28,
+  "download_success": 13,
+  "unexpected_timeout_failures": 13,
+  "expected_disabled_controls": 2,
+  "download_event_wait_expiries_including_expected_blocks": 15,
+  "backup_http_errors": [],
+  "request_failures": [],
+  "raw_pageerrors": [
+    {
+      "time": "2026-10-20T02:34:02.761Z",
+      "trial": null,
+      "kind": "pageerror",
+      "message": "Cannot read properties of null (reading 'workspaceId')",
+      "stack": "TypeError: Cannot read properties of null (reading 'workspaceId')\n    at window.__obsState (<anonymous>:2:295)\n    at <anonymous>:4:361"
+    },
+    {
+      "time": "2026-10-20T02:34:02.957Z",
+      "trial": null,
+      "kind": "pageerror",
+      "message": "Cannot read properties of null (reading 'workspaceId')",
+      "stack": "TypeError: Cannot read properties of null (reading 'workspaceId')\n    at window.__obsState (<anonymous>:2:295)\n    at <anonymous>:4:361"
+    }
+  ],
+  "checks_passed": 94,
+  "checks_total": 94,
+  "groups": {
+    "natural10": {
+      "PASS": 2,
+      "FAIL": 8
+    },
+    "wait1000": {
+      "PASS": 4
+    },
+    "no_gate_logpoint": {
+      "FAIL": 4
+    },
+    "timing": {
+      "PASS_EXPECTED_BLOCK": 2,
+      "PASS": 3,
+      "FAIL": 1
+    },
+    "native_details": {
+      "PASS": 2
+    },
+    "extra_trace_control": {
+      "PASS": 2
+    }
+  }
+}

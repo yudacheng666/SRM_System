@@ -1,0 +1,22 @@
+from pathlib import Path
+import json,csv,collections,zipfile,sqlite3,hashlib,io
+r=Path('/tmp/obs01');e=r/'evidence';a=json.load(open(e/'attempts.json'));ev=[json.loads(x)for x in open(e/'browser.jsonl')];checks=[]
+def ck(n,actual,expected):
+ passed=actual==expected;checks.append(dict(label=n,actual=actual,expected=expected,passed=passed));print('PASS'if passed else'FAIL',n)
+ck('28 distinct recorded attempts',len({x['id']for x in a}),28)
+for x in a:
+ rows=[v for v in ev if v.get('trial')==x['id']];x['responses']=[{k:v[k]for k in['id','url','status','headersMs']if k in v}for v in rows if v['kind']=='response'and'/api/backups/full'in v['url']];x['finished']=[v for v in rows if v['kind']=='requestfinished'and'/api/backups/full'in v['url']];x['events_download']=sum(v['kind']=='download-event'for v in rows);x['result']='PASS'if x['download']and not x['downloadError']else'PASS_EXPECTED_BLOCK'if x['id']in['S01','S05']and x['before']['button']['disabled']and not x['trustedClicks']else'FAIL';x['expectation']='blocked while saving'if x['id']in['S01','S05']else'one click should start backup and download'
+ if x['download']:
+  p=r/'downloads'/x['download'];x['fileSha256']=hashlib.sha256(p.read_bytes()).hexdigest()
+  with zipfile.ZipFile(p)as z:
+   ck(x['id']+' ZIP integrity',z.testzip(),None);db=r/('validate-'+x['id']+'.sqlite3');db.write_bytes(z.read('database/srm.sqlite3'));c=sqlite3.connect('file:'+str(db)+'?mode=ro',uri=True);ck(x['id']+' SQLite integrity',c.execute('pragma integrity_check').fetchone()[0],'ok');work={k:{'revision':v,'sha':hashlib.sha256(s.encode()).hexdigest(),'items':json.loads(s)['state']['items']}for k,v,s in c.execute('select workspace_id,revision,snapshot_json from workspaces')};ck(x['id']+' two RFQs',len(work),2);ck(x['id']+' active saved revision',work[x['before']['active']]['revision'],x['before']['revision']);other=next(v for k,v in work.items()if k!=x['before']['active']);seed=json.load(open(e/'01-seed.json'));b=next(v for v in seed['workspaces'].values()if not v['snapshot']['state']['items']);ck(x['id']+' other RFQ untouched',other['sha'],b['sha256']);x['zipWorkspaceRevisions']={k:v['revision']for k,v in work.items()};ck(x['id']+' HTTP chain',[v['status']for v in x['responses']],[201,200])
+ else:
+  ck(x['id']+' no backup request',len(x['backupRequests']),0)
+(e/'attempts-enriched.json').write_text(json.dumps(a,ensure_ascii=False,indent=2));(e/'file-validation.json').write_text(json.dumps(checks,ensure_ascii=False,indent=2))
+summary={'attempts':len(a),'download_success':sum(x['result']=='PASS'for x in a),'unexpected_timeout_failures':sum(x['result']=='FAIL'for x in a),'expected_disabled_controls':sum(x['result']=='PASS_EXPECTED_BLOCK'for x in a),'download_event_wait_expiries_including_expected_blocks':sum(x['downloadTimedOut']for x in a),'backup_http_errors':[v for v in ev if v['kind']=='response'and'/api/backups/full'in v['url']and v['status']>=400],'request_failures':[v for v in ev if v['kind']=='requestfailed'],'raw_pageerrors':[v for v in ev if v['kind']=='pageerror'],'checks_passed':sum(x['passed']for x in checks),'checks_total':len(checks),'groups':{}}
+for k,ids in [('natural10',[f'D{i:02}'for i in range(1,11)]),('wait1000',[f'D{i}'for i in range(11,15)]),('no_gate_logpoint',[f'D{i}'for i in range(15,19)]),('timing',[f'S{i:02}'for i in range(1,7)]),('native_details',['C01','C02']),('extra_trace_control',['R01','R02'])]:summary['groups'][k]=dict(collections.Counter(x['result']for x in a if x['id']in ids))
+(e/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2));print(json.dumps(summary,ensure_ascii=False,indent=2))
+with(e/'attempts.csv').open('w',encoding='utf-8-sig',newline='')as f:
+ w=csv.writer(f);w.writerow(['id','mode','startUTC','result','downloadTimedOut','elapsedMs','before_disabled','before_autosave','trustedClicks','gate_dirty','gate_busy','backup_request_count','response_statuses','download_file']);
+ for x in a:w.writerow([x['id'],x['mode'],x['start'],x['result'],x['downloadTimedOut'],x['elapsedMs'],x['before']['button']['disabled'],x['before']['auto'],x['trustedClicks'],'|'.join(str(v['dirty'])for v in x['gate']),'|'.join(str(v['busy'])for v in x['gate']),len(x['backupRequests']),'|'.join(str(v['status'])for v in x['responses']),x['download']or''])
+(e/'file-validation-source.txt').write_text(Path(__file__).read_text());assert all(x['passed']for x in checks)

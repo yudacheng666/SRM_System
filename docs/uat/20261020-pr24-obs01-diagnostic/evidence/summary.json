@@ -1,0 +1,50 @@
+{
+  "attempts": 28,
+  "download_success": 13,
+  "unexpected_timeout_failures": 13,
+  "expected_disabled_controls": 2,
+  "download_event_wait_expiries_including_expected_blocks": 15,
+  "backup_http_errors": [],
+  "request_failures": [],
+  "raw_pageerrors": [
+    {
+      "time": "2026-10-20T02:34:02.761Z",
+      "trial": null,
+      "kind": "pageerror",
+      "message": "Cannot read properties of null (reading 'workspaceId')",
+      "stack": "TypeError: Cannot read properties of null (reading 'workspaceId')\n    at window.__obsState (<anonymous>:2:295)\n    at <anonymous>:4:361"
+    },
+    {
+      "time": "2026-10-20T02:34:02.957Z",
+      "trial": null,
+      "kind": "pageerror",
+      "message": "Cannot read properties of null (reading 'workspaceId')",
+      "stack": "TypeError: Cannot read properties of null (reading 'workspaceId')\n    at window.__obsState (<anonymous>:2:295)\n    at <anonymous>:4:361"
+    }
+  ],
+  "checks_passed": 94,
+  "checks_total": 94,
+  "groups": {
+    "natural10": {
+      "PASS": 2,
+      "FAIL": 8
+    },
+    "wait1000": {
+      "PASS": 4
+    },
+    "no_gate_logpoint": {
+      "FAIL": 4
+    },
+    "timing": {
+      "PASS_EXPECTED_BLOCK": 2,
+      "PASS": 3,
+      "FAIL": 1
+    },
+    "native_details": {
+      "PASS": 2
+    },
+    "extra_trace_control": {
+      "PASS": 2
+    }
+  }
+}
