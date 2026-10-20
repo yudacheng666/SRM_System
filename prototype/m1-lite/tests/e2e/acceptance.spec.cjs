@@ -689,7 +689,9 @@ test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与�
   await expect(allocatedBox).toBeChecked();
   await allocatedBox.uncheck();
   expect((await snapshot(page)).state.assignments).not.toEqual(before.state.assignments);
-  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(true);
+  // 中文：change 事件与捕获阶段结束后应识别真修改；不用点击返回同一瞬间作脆弱断言。
+  // English: Wait for post-change signature reconciliation; never infer a dirty flag from clicks.
+  await expect.poll(()=>page.evaluate(()=>window.SRMPilot.dirty()),{timeout:2000}).toBe(true);
   const guard=await page.evaluate(async()=>{
     try{await window.SRMPilot.committedWorkspaceForReport();return 'NOT BLOCKED'}
     catch(e){return e.message}
