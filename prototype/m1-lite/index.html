@@ -1363,6 +1363,7 @@ body.srm-v2 .srm-v31-decision.suggested{color:#356fae;background:#eaf2fc}
   <button type="button" class="btn soft" id="pilotExportBackupAll" disabled>备份全部询价 JSON</button>
   <button type="button" class="btn soft" id="pilotExportComplete" disabled>旧版 JSON+PDF 资料 ZIP（不可用于 S4 恢复）</button>
   <button type="button" class="btn primary" id="pilotS4DownloadFull" disabled>下载 S4 完整备份（SQLite + PDF）</button>
+  <div id="pilotS4DownloadFeedback" role="alert" aria-live="assertive" hidden style="flex-basis:100%;width:100%;padding:9px 12px;border:1px solid #efc0bb;border-radius:6px;background:#fff1f0;color:#a32922;font-size:12px"></div>
   <label class="small">选择 S4 完整备份 ZIP <input type="file" id="pilotS4BackupFile" accept=".zip,application/zip"></label>
   <button type="button" class="btn" id="pilotS4RestoreFull" disabled>恢复完整备份（仅空白数据）</button>
   <div id="pilotS4RestoreFeedback" role="alert" aria-live="assertive" hidden style="flex-basis:100%;width:100%;padding:9px 12px;border:1px solid #efc0bb;border-radius:6px;background:#fff1f0;color:#a32922;font-size:12px"></div>
@@ -5034,6 +5035,23 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   function autosaveLabel(message,isError=false){
     autosaveStatus.textContent="自动保存："+message;
     autosaveStatus.className=isError?"small dangertext":"small muted";
+    // 中文：待保存修改一旦同步成功，清除备份操作区的过期阻止提示。
+    // English: Clear stale backup-block feedback after pending changes are safely saved.
+    if(!isError && message.includes("无待保存修改")) s4DownloadNotice("");
+  }
+  /* 中文：备份阻止原因必须显示在备份按钮附近，不能只写入可能已折叠/滚出视口的状态栏。
+   * English: Keep backup-block reasons beside the backup action, independent of collapsed or off-screen status panels. */
+  function s4DownloadNotice(message,isError=true){
+    const notice=document.getElementById("pilotS4DownloadFeedback");
+    if(!notice)return;
+    notice.textContent=message;
+    notice.hidden=!message;
+    notice.style.background=isError?"#fff1f0":"#edf7f0";
+    notice.style.color=isError?"#a32922":"#116143";
+    notice.style.borderColor=isError?"#efc0bb":"#bce2c9";
+    // 中文：操作区滚动到备份按钮时，阻止原因必须进入当前视口，不能仅存在于 DOM 中。
+    // English: Bring actionable backup-block feedback into view even if the drawer is scrolled.
+    if(message&&isError)notice.scrollIntoView({block:"nearest",behavior:"auto"});
   }
   async function refreshAutoBackupStatus(){
     if(!localReady||!s4Available)return;
@@ -5267,7 +5285,12 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       }
       autosaveLabel(dirty?"保存第 "+revision+" 版成功，仍有新修改等待保存":
         "已"+(automatic?"自动":"手动")+"保存第 "+revision+" 版（"+new Date().toLocaleTimeString()+"）");
-      if(!dirty)status("SQLite "+(automatic?"自动":"手动")+"保存成功："+workspaceId+"（第 "+revision+" 版）。");
+      // 中文：仅在 SQLite 已确认保存且没有新输入时，移除旧的备份阻止提示；不能依赖 UI 文案。
+      // English: Clear the S4 pending-edit warning only after a confirmed clean save; never depend on status wording.
+      if(!dirty){
+        s4DownloadNotice("");
+        status("SQLite "+(automatic?"自动":"手动")+"保存成功："+workspaceId+"（第 "+revision+" 版）。");
+      }
       // 中文：只报告真实 SQLite PUT 成功的版本；仍有输入时标记待保存。
       // English: Acknowledge only a real successful SQLite commit, marking pending edits.
       window.dispatchEvent(new CustomEvent("srm:workspace-saved",{detail:{workspaceId,revision,dirty}}));
@@ -5456,15 +5479,17 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   /* 中文：S4 ZIP 同时包含 SQLite 历史快照和全部已登记的 PDF 原件。
    * English: Download a versioned SQLite backup plus every indexed original PDF. */
   async function downloadS4Full(){
-    if(!s4Available){status("S4 完整备份暂不可用，请检查本机服务状态。",true);return;}
-    if(busy){status("系统正在处理其他操作，请稍后再下载完整备份。",true);return;}
-    if(blocked){status("当前工作区存在数据冲突或安全阻止，已暂停备份。请先处理冲突提示。",true);return;}
+    if(!s4Available){const message="S4 完整备份暂不可用，请检查本机服务状态。";status(message,true);s4DownloadNotice(message);return;}
+    if(busy){const message="系统正在处理其他操作，请稍后再下载完整备份。";status(message,true);s4DownloadNotice(message);return;}
+    if(blocked){const message="当前工作区存在数据冲突或安全阻止，已暂停备份。请先处理冲突提示。";status(message,true);s4DownloadNotice(message);return;}
     if(dirty){
-      status("检测到尚未保存的业务修改，暂不能生成完整备份。请先保存或恢复最新版本。",true);
+      const message="检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。";
+      status(message,true);s4DownloadNotice(message,true);
       autosaveLabel("存在未保存修改，完整备份已暂停",true);
       buttons();
       return;
     }
+    s4DownloadNotice("");
     busy=true;buttons();status("正在生成并校验 S4 完整备份……");
     try{
       const created=await api("/api/backups/full",jsonRequest("POST",{}));
@@ -5475,7 +5500,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       downloadFile(data,created.backup.fileName);
       status("已下载 S4 完整备份："+created.backup.workspaceCount+" 笔询价，"+
         created.backup.pdfCount+" 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。");
-    }catch(e){status("S4 完整备份失败："+e.message,true)}
+    }catch(e){const message="S4 完整备份失败："+e.message;status(message,true);s4DownloadNotice(message,true)}
     finally{busy=false;buttons()}
   }
   /* 中文：先人工确认再提交；服务端保证只向空白数据目录恢复。
