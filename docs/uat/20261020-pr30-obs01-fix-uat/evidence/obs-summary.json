@@ -1,0 +1,120 @@
+{
+  "attempts": 27,
+  "download_success": 26,
+  "unexpected_failures": 0,
+  "expected_blocks": 1,
+  "raw_wait_expiries_including_controls": 1,
+  "gate_dirty_false": 21,
+  "min_admin_to_backup_ms": 252,
+  "max_admin_to_backup_ms": 368.0999999977648,
+  "checks": 292,
+  "checks_passed": 291,
+  "supplemental_controls": [
+    {
+      "id": "F01",
+      "before": {
+        "buttonDisabled": false,
+        "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+        "auto": "自动保存：已手动保存第 1 版（3:48:34 AM）",
+        "live": "自动保存：已手动保存第 1 版（3:48:34 AM）",
+        "liveRect": {
+          "top": -151.65625,
+          "bottom": -124.265625
+        },
+        "liveOnScreen": false,
+        "viewportHeight": 768,
+        "scrollY": 172,
+        "revision": 1
+      },
+      "immediate": {
+        "buttonDisabled": true,
+        "save": "检测到尚未保存的业务修改，暂不能生成完整备份。请先保存或恢复最新版本。",
+        "auto": "自动保存：存在未保存修改，完整备份已暂停",
+        "live": "自动保存：存在未保存修改，完整备份已暂停",
+        "liveRect": {
+          "top": -151.65625,
+          "bottom": -124.265625
+        },
+        "liveOnScreen": false,
+        "viewportHeight": 768,
+        "scrollY": 172,
+        "revision": 1
+      },
+      "scrolled": {
+        "buttonDisabled": true,
+        "save": "检测到尚未保存的业务修改，暂不能生成完整备份。请先保存或恢复最新版本。",
+        "auto": "自动保存：存在未保存修改，完整备份已暂停",
+        "live": "自动保存：存在未保存修改，完整备份已暂停",
+        "liveRect": {
+          "top": 20.34375,
+          "bottom": 47.734375
+        },
+        "liveOnScreen": true,
+        "viewportHeight": 768,
+        "scrollY": 0,
+        "revision": 1
+      },
+      "backupRequests": 0
+    },
+    {
+      "id": "B01",
+      "before": {
+        "buttonDisabled": true,
+        "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+        "auto": "自动保存：正在自动保存……",
+        "live": "自动保存：正在自动保存……",
+        "liveRect": {
+          "top": -151.65625,
+          "bottom": -124.265625
+        },
+        "liveOnScreen": false,
+        "viewportHeight": 768,
+        "scrollY": 172,
+        "revision": 2
+      },
+      "immediate": {
+        "buttonDisabled": true,
+        "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+        "auto": "自动保存：正在自动保存……",
+        "live": "自动保存：正在自动保存……",
+        "liveRect": {
+          "top": -151.65625,
+          "bottom": -124.265625
+        },
+        "liveOnScreen": false,
+        "viewportHeight": 768,
+        "scrollY": 172,
+        "revision": 2
+      },
+      "scrolled": {
+        "buttonDisabled": true,
+        "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。",
+        "auto": "自动保存：正在自动保存……",
+        "live": "自动保存：正在自动保存……",
+        "liveRect": {
+          "top": 20.34375,
+          "bottom": 47.734375
+        },
+        "liveOnScreen": true,
+        "viewportHeight": 768,
+        "scrollY": 0,
+        "revision": 2
+      },
+      "backupRequests": 0
+    }
+  ],
+  "total_physical_backup_attempts_in_obs_recorded_series": 29,
+  "downloads_in_obs_recorded_series": 26,
+  "legitimate_guarded_clicks_in_obs_recorded_series": 3,
+  "unexpected_positive_path_download_timeouts": 0,
+  "raw_main_checks": 194,
+  "raw_main_checks_pass": 191,
+  "raw_main_checks_false": 3,
+  "false_check_interpretation": {
+    "N01 visible feedback": "confirmed conditional UI defect; project drawer collapsed and header outside viewport",
+    "N02 no API and visible busy (2 checks)": "invalid intended timing; actual save already finished, clean gate, legitimate download; busy safety reverified using held request B01"
+  },
+  "supplemental_visible_feedback_scope": "F01 and B01 project drawer open: left-side status is visible even though top indicator is above viewport; these controls do not reproduce the collapsed-drawer UI condition",
+  "gate_clean_positive_actuals_including_N02": 22,
+  "archive_count_validated_including_initial_fullS4": 27
+}

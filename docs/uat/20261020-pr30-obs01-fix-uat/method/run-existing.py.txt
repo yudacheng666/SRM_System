@@ -1,0 +1,8 @@
+import subprocess,os,json,time
+from pathlib import Path
+r=Path('/tmp/r69/evidence');results=[]
+for name,cmd in [('python',['python','-m','unittest','discover','-v','-s','prototype/m1-lite/backend','-p','test_*.py']),('node',['npm','test']),('playwright',['npm','run','test:e2e'])]:
+ t=time.time()
+ with(r/('existing-'+name+'.txt')).open('w')as f:p=subprocess.run(cmd,cwd='/tmp/srm-r69',stdout=f,stderr=subprocess.STDOUT,env={**os.environ,'SRM_CHROMIUM_PATH':'/usr/bin/chromium'})
+ results.append({'suite':name,'command':cmd,'exit':p.returncode,'seconds':round(time.time()-t,3)});(r/'existing-suite-results.json').write_text(json.dumps(results,indent=2));print(name,p.returncode,flush=True)
+ if p.returncode:break
