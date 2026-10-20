@@ -608,3 +608,80 @@ test('44 S4 blocked-download reason stays visible beside the action / 备份阻�
   await expect(feedback).toBeHidden();
   await expect(button).toBeEnabled();
 });
+
+
+// 中文：Codex PR #36 P2-EXPORT-01，已保存工作区的供应商选择/字段筛选不是业务编辑。
+// English: A first supplier export must not be blocked by view-only report controls.
+test('45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出',async({page,app},info)=>{
+  await allocated(page,app);
+  await drawings(page,app);
+  await page.reload();
+  await saved(page);
+  const before=await snapshot(page);
+  await tab(page,'assign');
+  await page.locator('[data-mode="supplierFirst"]').click();
+  await page.locator('[data-sf-s="SUP-A"]').click();
+  await page.locator('#generateBtn').click();
+  await expect(page.locator('#pilotReportPanel')).toBeVisible();
+  await page.locator('#pilotReportSupplier').selectOption('SUP-A');
+  const optional=page.locator('#pilotReportFields input:not([disabled])').first();
+  await expect(optional).toBeVisible();
+  await optional.uncheck();
+  expect((await snapshot(page)).state).toEqual(before.state);
+  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
+  await expect(page.locator('#pilotAutosaveStatus')).toContainText('无待保存修改');
+  const waiting=page.waitForEvent('download',{timeout:15000});
+  await page.locator('#pilotReportDownload').click();
+  const result=await waiting;
+  const file=info.outputPath('P2-EXPORT-01-first-supplier.zip');
+  await result.saveAs(file);
+  const zip=inspectZip(file);
+  expect(Object.keys(zip).some(n=>n.endsWith('.xlsx'))).toBe(true);
+  expect(Object.keys(zip).some(n=>n.endsWith('.pdf'))).toBe(true);
+  expect(Object.keys(zip).some(n=>n.endsWith('.json'))).toBe(false);
+  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
+  expect((await snapshot(page)).state).toEqual(before.state);
+  await info.attach('P2-first-supplier-package',{path:file,contentType:'application/zip'});
+});
+
+// 中文：Codex PR #36 P3-NAV-01，只读导航不得发出放弃未保存警告；真正修改仍严禁未保存导出。
+// English: Navigation must remain clean, while actual edits retain the unsaved-data safety barrier.
+test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分',async({page,app})=>{
+  await allocated(page,app);
+  await page.reload();
+  await saved(page);
+  const before=await snapshot(page);
+  page.removeAllListeners('dialog');
+  const dialogs=[];
+  page.on('dialog',async d=>{dialogs.push(d.message());await d.dismiss()});
+  await tab(page,'assign');
+  await page.locator('[data-mode="supplierFirst"]').click();
+  await page.locator('[data-sf-s="SUP-B"]').click();
+  expect((await snapshot(page)).state).toEqual(before.state);
+  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
+  await openProject(page);
+  await page.locator('#pilotNewWorkspace').click();
+  expect(dialogs).toHaveLength(1);
+  expect(dialogs[0]).toContain('新建一笔空白询价');
+  expect(dialogs[0]).not.toContain('未保存修改');
+  expect((await snapshot(page)).state).toEqual(before.state);
+
+  await tab(page,'assign');
+  await page.locator('[data-mode="itemFirst"]').click();
+  await page.locator('#selectAssignAll').click();
+  await page.locator('[data-rem="SUP-B"]').click();
+  expect((await snapshot(page)).state.assignments).not.toEqual(before.state.assignments);
+  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(true);
+  const guard=await page.evaluate(async()=>{
+    try{await window.SRMPilot.committedWorkspaceForReport();return 'NOT BLOCKED'}
+    catch(e){return e.message}
+  });
+  expect(guard).toContain('未保存的修改');
+  expect(dialogs).toHaveLength(1);
+  await page.locator('#pilotNewWorkspace').click();
+  expect(dialogs).toHaveLength(2);
+  expect(dialogs[1]).toContain('未保存修改');
+  expect((await snapshot(page)).workspaceId).toBe(before.workspaceId);
+  await saved(page);
+  await expect.poll(()=>page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
+});
