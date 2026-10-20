@@ -1,0 +1,141 @@
+{
+  "productSHA": "a0edd9a753733c738360fc437d0a3ee4a29144e4",
+  "overall": "PASS within explicitly tested scope; not full-product certification",
+  "visual_P3_S4_01": "PASS",
+  "business_and_backup_safety": "PASS",
+  "counts": {
+    "PASS": 19,
+    "NOT TESTED": 4,
+    "FAIL": 0
+  },
+  "groups": [
+    {
+      "id": "C01",
+      "target": "准确版本、HTTP字节、两条CI / Identity and both CI gates",
+      "result": "PASS"
+    },
+    {
+      "id": "C02",
+      "target": "P3原1366折叠滚动提示 / Original collapsed-scrolled1366 notice",
+      "result": "PASS"
+    },
+    {
+      "id": "C03",
+      "target": "1024/1600提示在视口 / Additional viewport notice visibility",
+      "result": "PASS"
+    },
+    {
+      "id": "C04",
+      "target": "真实自动保存后清除并能下载 / Clear after committed autosave then download",
+      "result": "PASS"
+    },
+    {
+      "id": "C05",
+      "target": "真实保存进行中保护与警告保留 / Genuine busy-save protection",
+      "result": "PASS"
+    },
+    {
+      "id": "C06",
+      "target": "保存HTTP500失败不清除 / Save500 failure retains warning",
+      "result": "PASS"
+    },
+    {
+      "id": "C07",
+      "target": "网络失败及真实服务停止不清除 / Aborted request and real service outage",
+      "result": "PASS"
+    },
+    {
+      "id": "C08",
+      "target": "真实双窗口409保留警告与数据 / Real two-window409 safety and warning",
+      "result": "PASS"
+    },
+    {
+      "id": "C09",
+      "target": "OBS快速下载24次 /24 rapid OBS repeats",
+      "result": "PASS"
+    },
+    {
+      "id": "C10",
+      "target": "28ZIP全量SQLite历史与PDF校验 /28 actual archives full history/PDF integrity",
+      "result": "PASS"
+    },
+    {
+      "id": "C11",
+      "target": "两次空目录恢复 / Two empty-directory restores",
+      "result": "PASS"
+    },
+    {
+      "id": "C12",
+      "target": "两次非空拒绝覆盖 / Two nonempty overwrite refusals",
+      "result": "PASS"
+    },
+    {
+      "id": "C13",
+      "target": "并列最低单项选择 / Single tied-lowest awards",
+      "result": "PASS"
+    },
+    {
+      "id": "C14",
+      "target": "批量定标与真正高价理由 / Bulk awards and genuine higher-price reasons",
+      "result": "PASS"
+    },
+    {
+      "id": "C15",
+      "target": "人工待核对与新报价复核 / Manual pending and new-quote review",
+      "result": "PASS"
+    },
+    {
+      "id": "C16",
+      "target": "同轮修订、草稿与锁定历史 / Same-round revision, draft and locked history",
+      "result": "PASS"
+    },
+    {
+      "id": "C17",
+      "target": "保存、刷新、切RFQ与真实服务重启 / Save,F5,RFQ switch and real restart",
+      "result": "PASS"
+    },
+    {
+      "id": "C18",
+      "target": "图纸、实际导出金额和取消预览 / Drawings,actual export totals,invalid/canceled previews",
+      "result": "PASS"
+    },
+    {
+      "id": "C19",
+      "target": "三尺寸原V01–V04与禁用按钮回归 / Three-resolution prior UI/disabled-control regression",
+      "result": "PASS"
+    },
+    {
+      "id": "C20",
+      "target": "Windows本机人工操作 / Native Windows manual use",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "C21",
+      "target": "桌面Excel重算打印 / Desktop Excel recalculation/printing",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "C22",
+      "target": "生产磁盘断电、全负载并发 / Production disk/power/full-load concurrency",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "C23",
+      "target": "PR23完整逐像素重认证与所有业务组合 / Full PR23 pixel recertification/every business combination",
+      "result": "NOT TESTED"
+    }
+  ],
+  "newConfirmedProductDefects": [],
+  "rawFalseChecksRetained": 1,
+  "rawPreparationOrObserverDriverErrorsRetained": 2,
+  "rawLimitations": "Original real409 attempt never established notice before click; barrier recheck passed; see summary classifications",
+  "fastDownloads": 24,
+  "unexpectedFastTimeouts": 0,
+  "validatedS4ZIPs": 28,
+  "archiveChecks": 311,
+  "archiveChecksPassed": 311,
+  "businessExportChecks": 37,
+  "businessExportChecksPassed": 37,
+  "existingBrowserBaseline": "44 passes in each CI run; full existing suite was not rerun locally this round",
+  "boundary": "TEST-ONLY; only new docs/evidence; no product/original tests/CI/development/main edits; no merge/closure"
+}

@@ -1,0 +1,13 @@
+PASS REAL409 backend returned actual HTTP409
+FAIL REAL409 warning remains visible
+PASS REAL409 no backup API
+PASS REAL409 winner SQLite state not overwritten
+PASS REAL409 explicit reload resolves stale local state
+PASS REAL409 warning cleared after safe recovery
+PASS REAL-SERVICE-DOWN notice still visible
+PASS REAL-SERVICE-DOWN warning not cleared
+PASS REAL-SERVICE-DOWN backup disabled
+PASS REAL-SERVICE-DOWN no backup API
+PASS REAL-SERVICE-DOWN database unchanged
+PASS REAL-SERVICE-DOWN server restarted
+PASS REAL-SERVICE-DOWN genuine recovery save clears notice
