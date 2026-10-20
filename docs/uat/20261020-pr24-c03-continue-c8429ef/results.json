@@ -1,0 +1,96 @@
+{
+  "productSHA": "c8429ef51731da570c7a556d7cdce89e7123e739",
+  "taskComment": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6287590146",
+  "overall": "NOT-READY: C03-C05 passed, C06 first operation failure stops remaining integration",
+  "ChatGPTReviewRequired": true,
+  "wholeSoftwareAccepted": false,
+  "mergeApproved": false,
+  "rawBrowserChecks": {
+    "total": 61,
+    "true": 61,
+    "false": 0,
+    "note": "Includes setup/navigation, not number of independent business cases"
+  },
+  "separateOperationTimeouts": 1,
+  "firstFailureUTC": "2026-10-20T09:21:24.648Z",
+  "classification": "TEST PRECONDITION / failed to inspect report panel toggle state",
+  "expansionResumed": false,
+  "failedDriverRepairedOrRetried": false,
+  "supplierBusinessFileValidatorExecuted": false,
+  "supplierPackageDownloads": 3,
+  "CSVDownloads": 1,
+  "supplierTemplateDownloads": 1,
+  "newS4Downloads": 0,
+  "restores": 0,
+  "screenshots": 17,
+  "traceCount": 1,
+  "newConfirmedProductDefects": {
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "priorPR40Unchanged": true,
+  "priorSHAPassInherited": false,
+  "scopes": [
+    {
+      "scope": "SETUP",
+      "status": "SETUP ONLY",
+      "detail": "重建4物料及虚构PDF，非重新验收C01/C02 / Minimum synthetic RFQ only",
+      "evidence": "method/00-minimum-setup-C03.js.txt"
+    },
+    {
+      "scope": "C03",
+      "status": "PASS",
+      "detail": "两份人工指定、确认前不写入、保存关系/三PDF哈希、真实PDF查看器 / Manual overrides, save and PDF bytes/viewer",
+      "evidence": "evidence/C03-unmatched-now-real-PDF-viewer.png"
+    },
+    {
+      "scope": "C04",
+      "status": "PASS",
+      "detail": "新下载供应商模板填写导入、追加多对多与视角保持关系 / Native supplier template import and additive relationships",
+      "evidence": "evidence/05-additive-supplier-allocation.png"
+    },
+    {
+      "scope": "C05",
+      "status": "PASS",
+      "detail": "同轮修订/历史、第二轮限制范围、阶梯、明确沿用、比较与定标 / Revisions, restricted round2, tiers, carry and awards",
+      "evidence": "evidence/09-round2-decisions.png"
+    },
+    {
+      "scope": "C06 downloads",
+      "status": "PARTIAL PASS",
+      "detail": "A/B询价ZIP、三家总ZIP及共同范围CSV实际下载；首次A成功 / Actual package/CSV downloads, first A success",
+      "evidence": "evidence/C06-first-supplier-A-export.png"
+    },
+    {
+      "scope": "C06 export picker",
+      "status": "FAIL operation: TEST PRECONDITION",
+      "detail": "误将已打开报表面板切为关闭，选择隐藏类型20s超时 / Toggling an open panel closed then selecting hidden type",
+      "evidence": "FAILURE-C06-REPORT-PANEL.md"
+    },
+    {
+      "scope": "C06 full content",
+      "status": "NOT TESTED",
+      "detail": "单家/总包完整行数量金额及隔离校验、比较/业务Excel实际导出 / Full output/content/isolation checks and report/business XLSX",
+      "evidence": "TEST-SCOPE.md"
+    },
+    {
+      "scope": "C07",
+      "status": "NOT TESTED",
+      "detail": "跨RFQ、F5及真实服务重启数据一致性 / Cross-RFQ, refresh and actual restart",
+      "evidence": "TEST-SCOPE.md"
+    },
+    {
+      "scope": "C08",
+      "status": "NOT TESTED",
+      "detail": "单份S4/内容校验、空目录恢复和非空拒绝 / Single S4 and empty/nonempty restore",
+      "evidence": "TEST-SCOPE.md"
+    },
+    {
+      "scope": "C09",
+      "status": "NOT TESTED",
+      "detail": "三尺寸关键V3兼容和P3冒烟 / Three-size V3 compatibility and P3 smoke",
+      "evidence": "TEST-SCOPE.md"
+    }
+  ]
+}
