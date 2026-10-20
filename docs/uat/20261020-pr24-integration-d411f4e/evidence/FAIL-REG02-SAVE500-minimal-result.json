@@ -1,0 +1,65 @@
+{
+  "case": "REG-02/SAVE500",
+  "attemptLimit": 1,
+  "scope": "same failed case evidence only; no unrelated cases or manual save retry",
+  "before": {
+    "revision": 5,
+    "projectOpen": false,
+    "buttonDisabled": false,
+    "notice": {
+      "hidden": true,
+      "text": "",
+      "top": 0,
+      "bottom": 0,
+      "inViewport": false
+    },
+    "auto": "自动保存：检测到业务数据修改，等待操作结束",
+    "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。"
+  },
+  "established": {
+    "revision": 5,
+    "projectOpen": false,
+    "buttonDisabled": true,
+    "notice": {
+      "hidden": false,
+      "text": "检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。",
+      "top": 164.84375,
+      "bottom": 220.84375,
+      "inViewport": true
+    },
+    "auto": "自动保存：存在未保存修改，完整备份已暂停",
+    "save": "检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。"
+  },
+  "held": {
+    "revision": 5,
+    "projectOpen": false,
+    "buttonDisabled": true,
+    "notice": {
+      "hidden": false,
+      "text": "检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。",
+      "top": 164.84375,
+      "bottom": 220.84375,
+      "inViewport": true
+    },
+    "auto": "自动保存：正在自动保存……",
+    "save": "检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。"
+  },
+  "actualSaveHeld": true,
+  "failed": {
+    "revision": 5,
+    "projectOpen": false,
+    "buttonDisabled": true,
+    "notice": {
+      "hidden": false,
+      "text": "检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。",
+      "top": 164.921875,
+      "bottom": 220.921875,
+      "inViewport": true
+    },
+    "auto": "自动保存：保存失败，已停止自动重试；请检查并手动保存。TEST_ONLY same-case controlled HTTP500（HTTP 500）",
+    "save": "未保存成功，请不要关闭页面：TEST_ONLY same-case controlled HTTP500（HTTP 500）"
+  },
+  "backupRequests": 0,
+  "databaseUnchanged": true,
+  "outcome": "PASS: established warning retained on controlled failed save"
+}

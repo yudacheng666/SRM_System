@@ -1,0 +1,20 @@
+from pathlib import Path
+import json,zipfile,subprocess,datetime
+E=Path('/tmp/d4/evidence')
+def val(v):
+ if not isinstance(v,dict):return v
+ if'o'in v:return {x['k']:val(x['v'])for x in v['o']}
+ if'a'in v:return [val(x)for x in v['a']]
+ for k in ['s','b','n']: 
+  if k in v:return v[k]
+ if v.get('v')=='null':return None
+ return v
+z=zipfile.ZipFile(E/'feedback-browser-trace.zip');rows=[]
+for l in z.read('trace.trace').splitlines():
+ x=json.loads(l)
+ if x.get('type')=='after'and'result'in x:
+  v=val(x['result'].get('value',{}))
+  if isinstance(v,dict)and'buttonDisabled'in v:rows.append({'callId':x['callId'],'traceMonotonicEndMs':x['endTime'],'state':v})
+(E/'FAIL-REG02-SAVE500-trace-states.json').write_text(json.dumps(rows,ensure_ascii=False,indent=2))
+subprocess.run(['python','/tmp/d4/db_history.py','/tmp/d4/feedback-data',str(E/'SAVE500-after-stop.json')],check=True)
+a=json.load(open(E/'SAVE500-before.json'));b=json.load(open(E/'SAVE500-after-stop.json'));out={'databaseUnchangedAfterInjectedFailedSave':a==b,'lastStates':rows[-3:],'classification':'Original backup click occurred after autosave failure; native button was already disabled and local notice never established. Cannot infer an existing notice was cleared. First false preserved, expansion stopped.'};(E/'FAIL-REG02-SAVE500-classification.json').write_text(json.dumps(out,ensure_ascii=False,indent=2));print('Database unchanged',a==b)

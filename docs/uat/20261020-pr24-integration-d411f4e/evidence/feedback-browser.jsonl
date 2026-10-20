@@ -1,0 +1,86 @@
+{"time":"2026-10-20T06:23:11.132Z","trial":null,"kind":"request","url":"http://127.0.0.1:9073/api/health","method":"GET"}
+{"time":"2026-10-20T06:23:11.216Z","trial":null,"kind":"response","url":"http://127.0.0.1:9073/api/health","status":200}
+{"time":"2026-10-20T06:23:11.341Z","trial":null,"kind":"request","url":"http://127.0.0.1:9073/api/active","method":"GET"}
+{"time":"2026-10-20T06:23:11.500Z","trial":null,"kind":"response","url":"http://127.0.0.1:9073/api/active","status":200}
+{"time":"2026-10-20T06:23:11.501Z","trial":null,"kind":"request","url":"http://127.0.0.1:9073/api/workspaces","method":"GET"}
+{"time":"2026-10-20T06:23:11.501Z","trial":null,"kind":"response","url":"http://127.0.0.1:9073/api/workspaces","status":200}
+{"time":"2026-10-20T06:23:11.501Z","trial":null,"kind":"request","url":"http://127.0.0.1:9073/api/backups/auto/status","method":"GET"}
+{"time":"2026-10-20T06:23:11.501Z","trial":null,"kind":"response","url":"http://127.0.0.1:9073/api/backups/auto/status","status":200}
+{"time":"2026-10-20T06:23:12.225Z","trial":null,"kind":"dialog","message":"有 1 条相同编码存在属性或业务冲突，不能自动合并。是否明确保留为独立 RFQ 询价行？取消则本批次不导入。"}
+{"time":"2026-10-20T06:23:12.297Z","trial":null,"kind":"dialog","message":"新增 4 行；自动合并 0 行；冲突确认分行 1 行。合并前原始需求行已留存。"}
+{"time":"2026-10-20T06:23:12.632Z","trial":null,"kind":"request","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ","method":"PUT"}
+{"time":"2026-10-20T06:23:12.643Z","trial":null,"kind":"response","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ","status":200}
+{"time":"2026-10-20T06:23:12.647Z","trial":null,"kind":"request","url":"http://127.0.0.1:9073/api/workspaces","method":"GET"}
+{"time":"2026-10-20T06:23:12.661Z","trial":null,"kind":"response","url":"http://127.0.0.1:9073/api/workspaces","status":200}
+{"time":"2026-10-20T06:23:13.578Z","trial":"P3-1366","kind":"dialog","message":"新增 1 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
+{"time":"2026-10-20T06:23:14.476Z","trial":"P3-1366","kind":"check","label":"P3-1366 project drawer remains collapsed","actual":false,"expected":false,"pass":true}
+{"time":"2026-10-20T06:23:14.477Z","trial":"P3-1366","kind":"check","label":"P3-1366 backup was actually enabled before physical click","actual":false,"expected":false,"pass":true}
+{"time":"2026-10-20T06:23:14.477Z","trial":"P3-1366","kind":"check","label":"P3-1366 real dirty explanation at action","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:14.477Z","trial":"P3-1366","kind":"check","label":"P3-1366 entire reason within viewport","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:14.477Z","trial":"P3-1366","kind":"check","label":"P3-1366 action disabled after protection","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:14.477Z","trial":"P3-1366","kind":"check","label":"P3-1366 no backup API before save","actual":0,"expected":0,"pass":true}
+{"time":"2026-10-20T06:23:16.741Z","trial":"P3-1366","kind":"request","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ","method":"PUT"}
+{"time":"2026-10-20T06:23:16.753Z","trial":"P3-1366","kind":"response","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ","status":200}
+{"time":"2026-10-20T06:23:16.764Z","trial":"P3-1366","kind":"request","url":"http://127.0.0.1:9073/api/workspaces","method":"GET"}
+{"time":"2026-10-20T06:23:16.766Z","trial":"P3-1366","kind":"response","url":"http://127.0.0.1:9073/api/workspaces","status":200}
+{"time":"2026-10-20T06:23:16.884Z","trial":"P3-1366","kind":"check","label":"P3-1366 SQLite save acknowledged","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:16.884Z","trial":"P3-1366","kind":"check","label":"P3-1366 stale notice cleared","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:17.368Z","trial":"P3-1366","kind":"request","url":"http://127.0.0.1:9073/api/backups/full","method":"POST"}
+{"time":"2026-10-20T06:23:17.563Z","trial":"P3-1366","kind":"response","url":"http://127.0.0.1:9073/api/backups/full","status":201}
+{"time":"2026-10-20T06:23:17.574Z","trial":"P3-1366","kind":"request","url":"http://127.0.0.1:9073/api/backups/full/SRM_FULL_20261020_062317_e2ec0d53.zip","method":"GET"}
+{"time":"2026-10-20T06:23:17.687Z","trial":"P3-1366","kind":"response","url":"http://127.0.0.1:9073/api/backups/full/SRM_FULL_20261020_062317_e2ec0d53.zip","status":200}
+{"time":"2026-10-20T06:23:17.718Z","trial":"P3-1366","kind":"download-event","url":"blob:http://127.0.0.1:9073/ef50aa5b-d511-44c9-80ab-be7b38390074"}
+{"time":"2026-10-20T06:23:19.136Z","trial":"P3-1024","kind":"dialog","message":"新增 1 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
+{"time":"2026-10-20T06:23:19.932Z","trial":"P3-1024","kind":"check","label":"P3-1024 project drawer remains collapsed","actual":false,"expected":false,"pass":true}
+{"time":"2026-10-20T06:23:19.932Z","trial":"P3-1024","kind":"check","label":"P3-1024 backup was actually enabled before physical click","actual":false,"expected":false,"pass":true}
+{"time":"2026-10-20T06:23:19.932Z","trial":"P3-1024","kind":"check","label":"P3-1024 real dirty explanation at action","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:19.933Z","trial":"P3-1024","kind":"check","label":"P3-1024 entire reason within viewport","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:19.933Z","trial":"P3-1024","kind":"check","label":"P3-1024 action disabled after protection","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:19.933Z","trial":"P3-1024","kind":"check","label":"P3-1024 no backup API before save","actual":0,"expected":0,"pass":true}
+{"time":"2026-10-20T06:23:22.407Z","trial":"P3-1024","kind":"request","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ","method":"PUT"}
+{"time":"2026-10-20T06:23:22.411Z","trial":"P3-1024","kind":"response","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ","status":200}
+{"time":"2026-10-20T06:23:23.074Z","trial":"P3-1024","kind":"request","url":"http://127.0.0.1:9073/api/workspaces","method":"GET"}
+{"time":"2026-10-20T06:23:23.091Z","trial":"P3-1024","kind":"response","url":"http://127.0.0.1:9073/api/workspaces","status":200}
+{"time":"2026-10-20T06:23:23.691Z","trial":"P3-1024","kind":"check","label":"P3-1024 SQLite save acknowledged","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:23.692Z","trial":"P3-1024","kind":"check","label":"P3-1024 stale notice cleared","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:28.231Z","trial":"P3-1024","kind":"request","url":"http://127.0.0.1:9073/api/backups/full","method":"POST"}
+{"time":"2026-10-20T06:23:28.234Z","trial":"P3-1024","kind":"response","url":"http://127.0.0.1:9073/api/backups/full","status":201}
+{"time":"2026-10-20T06:23:28.640Z","trial":"P3-1024","kind":"request","url":"http://127.0.0.1:9073/api/backups/full/SRM_FULL_20261020_062328_d2ce4fde.zip","method":"GET"}
+{"time":"2026-10-20T06:23:29.474Z","trial":"P3-1024","kind":"response","url":"http://127.0.0.1:9073/api/backups/full/SRM_FULL_20261020_062328_d2ce4fde.zip","status":200}
+{"time":"2026-10-20T06:23:29.511Z","trial":"P3-1024","kind":"download-event","url":"blob:http://127.0.0.1:9073/ed3a3ae7-339a-4525-a2d3-9bf046e1d2c1"}
+{"time":"2026-10-20T06:23:35.321Z","trial":"P3-1600","kind":"dialog","message":"新增 1 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
+{"time":"2026-10-20T06:23:36.047Z","trial":"P3-1600","kind":"check","label":"P3-1600 project drawer remains collapsed","actual":false,"expected":false,"pass":true}
+{"time":"2026-10-20T06:23:36.048Z","trial":"P3-1600","kind":"check","label":"P3-1600 backup was actually enabled before physical click","actual":false,"expected":false,"pass":true}
+{"time":"2026-10-20T06:23:36.048Z","trial":"P3-1600","kind":"check","label":"P3-1600 real dirty explanation at action","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:36.048Z","trial":"P3-1600","kind":"check","label":"P3-1600 entire reason within viewport","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:36.048Z","trial":"P3-1600","kind":"check","label":"P3-1600 action disabled after protection","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:36.048Z","trial":"P3-1600","kind":"check","label":"P3-1600 no backup API before save","actual":0,"expected":0,"pass":true}
+{"time":"2026-10-20T06:23:38.899Z","trial":"P3-1600","kind":"request","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ","method":"PUT"}
+{"time":"2026-10-20T06:23:38.900Z","trial":"P3-1600","kind":"response","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ","status":200}
+{"time":"2026-10-20T06:23:38.905Z","trial":"P3-1600","kind":"request","url":"http://127.0.0.1:9073/api/workspaces","method":"GET"}
+{"time":"2026-10-20T06:23:38.908Z","trial":"P3-1600","kind":"response","url":"http://127.0.0.1:9073/api/workspaces","status":200}
+{"time":"2026-10-20T06:23:38.940Z","trial":"P3-1600","kind":"check","label":"P3-1600 SQLite save acknowledged","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:38.940Z","trial":"P3-1600","kind":"check","label":"P3-1600 stale notice cleared","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:39.233Z","trial":"P3-1600","kind":"request","url":"http://127.0.0.1:9073/api/backups/full","method":"POST"}
+{"time":"2026-10-20T06:23:39.240Z","trial":"P3-1600","kind":"response","url":"http://127.0.0.1:9073/api/backups/full","status":201}
+{"time":"2026-10-20T06:23:39.240Z","trial":"P3-1600","kind":"request","url":"http://127.0.0.1:9073/api/backups/full/SRM_FULL_20261020_062339_0e11048f.zip","method":"GET"}
+{"time":"2026-10-20T06:23:39.243Z","trial":"P3-1600","kind":"response","url":"http://127.0.0.1:9073/api/backups/full/SRM_FULL_20261020_062339_0e11048f.zip","status":200}
+{"time":"2026-10-20T06:23:39.250Z","trial":"P3-1600","kind":"download-event","url":"blob:http://127.0.0.1:9073/300291f9-d36b-492c-9523-9d9188ab25bf"}
+{"time":"2026-10-20T06:23:43.966Z","trial":"BUSY","kind":"dialog","message":"新增 1 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
+{"time":"2026-10-20T06:23:47.166Z","trial":"BUSY","kind":"request","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ","method":"PUT"}
+{"time":"2026-10-20T06:23:47.660Z","trial":"BUSY","kind":"real-autosave-held","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ"}
+{"time":"2026-10-20T06:23:49.531Z","trial":"BUSY","kind":"check","label":"BUSY real pending PUT intercepted","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:49.532Z","trial":"BUSY","kind":"check","label":"BUSY existing warning not cleared before save","actual":false,"expected":false,"pass":true}
+{"time":"2026-10-20T06:23:49.532Z","trial":"BUSY","kind":"check","label":"BUSY action disabled","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:49.563Z","trial":"BUSY","kind":"check","label":"BUSY no backup API","actual":0,"expected":0,"pass":true}
+{"time":"2026-10-20T06:23:49.682Z","trial":"BUSY","kind":"response","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ","status":200}
+{"time":"2026-10-20T06:23:49.686Z","trial":"BUSY","kind":"request","url":"http://127.0.0.1:9073/api/workspaces","method":"GET"}
+{"time":"2026-10-20T06:23:49.690Z","trial":"BUSY","kind":"response","url":"http://127.0.0.1:9073/api/workspaces","status":200}
+{"time":"2026-10-20T06:23:49.729Z","trial":"BUSY","kind":"check","label":"BUSY clear only after successful PUT","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:50.508Z","trial":"SAVE500","kind":"dialog","message":"新增 1 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
+{"time":"2026-10-20T06:23:54.656Z","trial":"SAVE500","kind":"request","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ","method":"PUT"}
+{"time":"2026-10-20T06:23:54.657Z","trial":"SAVE500","kind":"HTTP error response; real request not sent to database","mode":"SAVE500","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ"}
+{"time":"2026-10-20T06:23:54.720Z","trial":"SAVE500","kind":"response","url":"http://127.0.0.1:9073/api/workspaces/RFQ-1792477391765-W1ZELJ","status":500}
+{"time":"2026-10-20T06:23:59.072Z","trial":"SAVE500","kind":"check","label":"SAVE500 genuine autosave request attempted","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T06:23:59.072Z","trial":"SAVE500","kind":"check","label":"SAVE500 warning not incorrectly cleared","actual":true,"expected":false,"pass":false}
+{"time":"2026-10-20T06:23:59.073Z","trial":"SAVE500","kind":"stopped-execution","message":"UAT_STOP: SAVE500 warning not incorrectly cleared","stack":"Error: UAT_STOP: SAVE500 warning not incorrectly cleared\n    at ck (/tmp/d4/feedback.cjs:1:710)\n    at /tmp/d4/feedback.cjs:6:978"}

@@ -1,0 +1,92 @@
+{
+  "productSHA": "d411f4e17a0ab8e75412e5c91a91ccba6abbbc0e",
+  "overall": "NOT-READY",
+  "reason": "Stopped at first failed independent assertion; original SAVE500 precondition unmet; one same-case recheck passes; no expansion resumed, required integration business remains untested",
+  "CI": {
+    "SRM UI V2 Unified Candidate Acceptance": "PASS",
+    "SRM S3/S4 Regression": "PASS"
+  },
+  "originalCheckCount": 31,
+  "originalChecksTrue": 30,
+  "originalChecksFalse": [
+    {
+      "time": "2026-10-20T06:23:59.072Z",
+      "trial": "SAVE500",
+      "kind": "check",
+      "label": "SAVE500 warning not incorrectly cleared",
+      "actual": true,
+      "expected": false,
+      "pass": false
+    }
+  ],
+  "singleAllowedSameCaseRecheck": {
+    "case": "REG-02/SAVE500",
+    "attemptLimit": 1,
+    "scope": "same failed case evidence only; no unrelated cases or manual save retry",
+    "before": {
+      "revision": 5,
+      "projectOpen": false,
+      "buttonDisabled": false,
+      "notice": {
+        "hidden": true,
+        "text": "",
+        "top": 0,
+        "bottom": 0,
+        "inViewport": false
+      },
+      "auto": "自动保存：检测到业务数据修改，等待操作结束",
+      "save": "工作内容可能有未保存修改；系统只对实际业务变化自动保存。"
+    },
+    "established": {
+      "revision": 5,
+      "projectOpen": false,
+      "buttonDisabled": true,
+      "notice": {
+        "hidden": false,
+        "text": "检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。",
+        "top": 164.84375,
+        "bottom": 220.84375,
+        "inViewport": true
+      },
+      "auto": "自动保存：存在未保存修改，完整备份已暂停",
+      "save": "检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。"
+    },
+    "held": {
+      "revision": 5,
+      "projectOpen": false,
+      "buttonDisabled": true,
+      "notice": {
+        "hidden": false,
+        "text": "检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。",
+        "top": 164.84375,
+        "bottom": 220.84375,
+        "inViewport": true
+      },
+      "auto": "自动保存：正在自动保存……",
+      "save": "检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。"
+    },
+    "actualSaveHeld": true,
+    "failed": {
+      "revision": 5,
+      "projectOpen": false,
+      "buttonDisabled": true,
+      "notice": {
+        "hidden": false,
+        "text": "检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。",
+        "top": 164.921875,
+        "bottom": 220.921875,
+        "inViewport": true
+      },
+      "auto": "自动保存：保存失败，已停止自动重试；请检查并手动保存。TEST_ONLY same-case controlled HTTP500（HTTP 500）",
+      "save": "未保存成功，请不要关闭页面：TEST_ONLY same-case controlled HTTP500（HTTP 500）"
+    },
+    "backupRequests": 0,
+    "databaseUnchanged": true,
+    "outcome": "PASS: established warning retained on controlled failed save"
+  },
+  "confirmedProductDefect": false,
+  "observation": "When autosave fails before the attempted backup click, native button already disabled and local feedback never established; error text remains offscreen/collapsed. Do not misclassify as established-warning clearing. Developer may assess visibility separately.",
+  "untested": "REG02 remaining fault modes and REG03–REG14; no procurement/quote comparison/restore/repeat/full content validation run",
+  "evidenceSnapshots": 10,
+  "boundary": "First false preserved; same-case read-only state/DB inspection and ONE controlled same-case execution only; no further independent cases."
+}
