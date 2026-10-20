@@ -187,10 +187,12 @@ test('B3 tied-lowest manual award semantics and persistence / 并列最低定标
  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');
  await expect(metrics.nth(2).locator('strong')).toHaveText('1');
  await expect(metrics.nth(3).locator('strong')).toHaveText('0');
+ // 中文：M1-Lite 快照的 Map 记录为 {key,value}，Set 记录为值数组；严禁以二元组检查 Map。
+ // English: Snapshot Map entries are {key,value} objects; Set entries remain scalar arrays.
  let current=await snap(page);
  expect(current.state.manualAwards).toContain(tieItem.lineId);
- expect(current.state.awards).toContainEqual([tieItem.lineId,'SUP-B']);
- expect(current.state.awardReasons.some(x=>x[0]===tieItem.lineId)).toBe(false);
+ expect(current.state.awards).toContainEqual({key:tieItem.lineId,value:'SUP-B'});
+ expect(current.state.awardReasons.some(x=>x.key===tieItem.lineId)).toBe(false);
  // A truly higher quote (12 vs 8) still needs an explicit reason, including in bulk logic.
  const higherB=page.locator('#quoteTable td[data-award="'+dearerItem.lineId+'|SUP-B"]');
  await higherB.click();
@@ -207,8 +209,8 @@ test('B3 tied-lowest manual award semantics and persistence / 并列最低定标
  await expect(metrics.nth(2).locator('strong')).toHaveText('2');
  await expect(metrics.nth(3).locator('strong')).toHaveText('0');
  current=await snap(page);
- expect(current.state.awardReasons.some(x=>x[0]===tieItem.lineId)).toBe(false);
- expect(current.state.awardReasons.some(x=>x[0]===dearerItem.lineId&&x[1].includes('交期'))).toBe(true);
+ expect(current.state.awardReasons.some(x=>x.key===tieItem.lineId)).toBe(false);
+ expect(current.state.awardReasons.some(x=>x.key===dearerItem.lineId&&x.value.includes('交期'))).toBe(true);
  // Real persisted state and F5 must preserve selected equal-minimum semantics.
  await expect.poll(async()=>{
    const ws=await snap(page);
@@ -224,6 +226,6 @@ test('B3 tied-lowest manual award semantics and persistence / 并列最低定标
  await expect(metrics.nth(3).locator('strong')).toHaveText('0');
  const reloaded=await snap(page);
  expect(reloaded.state.manualAwards).toContain(tieItem.lineId);
- expect(reloaded.state.awardReasons.some(x=>x[0]===tieItem.lineId)).toBe(false);
+ expect(reloaded.state.awardReasons.some(x=>x.key===tieItem.lineId)).toBe(false);
  expect(errors).toEqual([]);
 });
