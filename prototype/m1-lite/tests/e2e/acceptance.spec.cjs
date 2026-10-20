@@ -576,3 +576,21 @@ test('15 new RFQ clears stale supplier-first context without corrupting saved RF
   await page.screenshot({path:shot,fullPage:true});
   await info.attach('supplier-context-cross-rfq',{path:shot,contentType:'image/png'});
 });
+
+
+test('44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见', async ({page,app})=>{
+  await fresh(page); await items(page,app);
+  // 中文：在自动保存前通过真实 UI 点击 S4；阻止原因必须显示在按钮附近。
+  // English: Click S4 through the real UI before autosave; the reason must remain beside the action.
+  await openTools(page,'#uiDataTools');
+  await page.locator('#pilotS4DownloadFull').click();
+  const feedback=page.locator('#pilotS4DownloadFeedback');
+  await expect(feedback).toBeVisible();
+  await expect(feedback).toContainText('尚未保存');
+  await expect(feedback).toContainText('再重新下载');
+  await expect(page.locator('#pilotS4DownloadFull')).toBeDisabled();
+  // 中文：等待自动保存完成后，旧的阻止提示应清除，避免误导采购员。
+  // English: Once autosave finishes, clear stale blocking feedback so it cannot mislead the buyer.
+  await expect.poll(async()=> (await snapshot(page)).revision).toBeGreaterThan(0);
+  await expect(feedback).toBeHidden({timeout:6000});
+});
