@@ -1,0 +1,30 @@
+from pathlib import Path
+import json,sqlite3,zipfile,hashlib,collections,csv
+r=Path('/tmp/r69');e=r/'evidence';a=json.load(open(e/'obs-attempts.json'));events=[json.loads(s)for s in open(e/'obs-browser.jsonl')];checks=[]
+def ck(n,actual,expected):
+ passed=actual==expected;checks.append(dict(label=n,actual=actual,expected=expected,passed=passed));print('PASS'if passed else'FAIL',n)
+def archive(name,expected):
+ p=r/'downloads'/name;expected=json.load(open(e/expected))
+ with zipfile.ZipFile(p)as z:
+  ck(name+' zip integrity',z.testzip(),None);m=json.loads(z.read('manifest.json'));db=z.read(m['database']['path']);ck(name+' database sha256',hashlib.sha256(db).hexdigest(),m['database']['sha256']);q=r/('check-'+name+'.sqlite3');q.write_bytes(db);c=sqlite3.connect('file:'+str(q)+'?mode=ro',uri=True);ck(name+' SQLite integrity',c.execute('pragma integrity_check').fetchone()[0],'ok')
+  for t in ['workspaces','workspace_versions']:ck(name+' full '+t,[list(x)for x in c.execute('select * from '+t+' order by workspace_id,revision')],expected[t])
+  pdf={Path(v['path']).name:hashlib.sha256(z.read(v['path'])).hexdigest()for v in m['assets']};ck(name+' PDF bytes',pdf,expected['pdf']);ck(name+' PDF count',len(pdf),1)
+  return {'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'historyRows':len(expected['workspace_versions']),'currentRows':len(expected['workspaces']),'pdf':pdf}
+ck('24 distinct original-path repeats',len([x for x in a if x['id'].startswith('O')]),24)
+for x in a:
+ es=[v for v in events if v.get('trial')==x['id']];x['finished']=[v for v in es if v['kind']=='requestfinished'and'/api/backups/full'in v['url']];x['downloadEvents']=[v for v in es if v['kind']=='download-event'];x['expected']='blocked with visible feedback'if x['options'].get('expectedBlock')and x['id']!='N02'else'download'
+ if x['id']=='N02':x['timingClassification']='MISSED WINDOW: requested in-flight control, actual gate dirty=false/busy=false after save; classify actual download, not a busy protection pass'
+ if x['expected']=='download':
+  ck(x['id']+' actual download',x['outcome'],'DOWNLOAD_SUCCESS');ck(x['id']+' HTTP chain',[v['status']for v in x['responses']],[201,200]);ck(x['id']+' one browser download event',len(x['downloadEvents']),1)
+  if x['gate']:ck(x['id']+' admin did not dirty snapshot',x['gate'][0]['dirty'],False)
+  if x['file']:x['validation']=archive(x['file'],'history-final.json'if x['id']in ['N02','N03']else'history-obs-baseline.json')
+ else:
+  ck(x['id']+' no backup API',len(x['backupRequests']),0);ck(x['id']+' visible saving feedback',x['feedback']['visible']and any(t in x['feedback']['text']for t in ['保存','暂停','等待']),True)
+archive('full-S4.zip','history-first.json')
+summary={'attempts':len(a),'download_success':sum(x['outcome']=='DOWNLOAD_SUCCESS'for x in a),'unexpected_failures':sum(x['outcome']=='FAIL'for x in a),'expected_blocks':sum(x['outcome']=='EXPECTED_BLOCK'for x in a),'raw_wait_expiries_including_controls':sum(x['downloadTimedOut']for x in a),'gate_dirty_false':sum(bool(x['gate'])and x['gate'][0]['dirty']is False for x in a if not x['options'].get('expectedBlock')),'min_admin_to_backup_ms':min(x['adminToBackupMs']for x in a if x['id'].startswith('O')and x['adminToBackupMs']is not None),'max_admin_to_backup_ms':max(x['adminToBackupMs']for x in a if x['id'].startswith('O')and x['adminToBackupMs']is not None),'checks':len(checks),'checks_passed':sum(x['passed']for x in checks)}
+(e/'obs-attempts-enriched.json').write_text(json.dumps(a,ensure_ascii=False,indent=2));(e/'obs-file-validation.json').write_text(json.dumps(checks,ensure_ascii=False,indent=2));(e/'obs-summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2));(e/'obs-validation-source.txt').write_text(Path(__file__).read_text());print(json.dumps(summary,ensure_ascii=False,indent=2))
+with(e/'obs-attempts.csv').open('w',encoding='utf-8-sig',newline='')as f:
+ w=csv.writer(f);w.writerow(['id','mode','timeUTC','outcome','adminToBackupMs','beforeDisabled','gateDirty','status','backupRequests','HTTP','download'])
+ for x in a:w.writerow([x['id'],x['mode'],x['start'],x['outcome'],x['adminToBackupMs'],x['before']['button']['disabled'],'|'.join(str(g['dirty'])for g in x['gate']),x['feedback']['text'],len(x['backupRequests']),'|'.join(str(v['status'])for v in x['responses']),x['file']or''])
+
+assert all(x['passed']for x in checks if x['label']!='N01 visible saving feedback')

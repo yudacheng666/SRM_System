@@ -1,0 +1,28 @@
+{"time":"2026-10-20T03:48:33.472Z","trial":null,"kind":"request","url":"http://127.0.0.1:9013/api/health","method":"GET"}
+{"time":"2026-10-20T03:48:33.687Z","trial":null,"kind":"response","url":"http://127.0.0.1:9013/api/health","status":200}
+{"time":"2026-10-20T03:48:33.693Z","trial":null,"kind":"request","url":"http://127.0.0.1:9013/api/active","method":"GET"}
+{"time":"2026-10-20T03:48:33.699Z","trial":null,"kind":"response","url":"http://127.0.0.1:9013/api/active","status":200}
+{"time":"2026-10-20T03:48:33.699Z","trial":null,"kind":"request","url":"http://127.0.0.1:9013/api/workspaces","method":"GET"}
+{"time":"2026-10-20T03:48:33.718Z","trial":null,"kind":"response","url":"http://127.0.0.1:9013/api/workspaces","status":200}
+{"time":"2026-10-20T03:48:33.839Z","trial":null,"kind":"request","url":"http://127.0.0.1:9013/api/backups/auto/status","method":"GET"}
+{"time":"2026-10-20T03:48:33.841Z","trial":null,"kind":"response","url":"http://127.0.0.1:9013/api/backups/auto/status","status":200}
+{"time":"2026-10-20T03:48:34.426Z","trial":null,"kind":"dialog","message":"新增 1 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
+{"time":"2026-10-20T03:48:34.659Z","trial":null,"kind":"request","url":"http://127.0.0.1:9013/api/workspaces/RFQ-1792468114063-DSOQ0S","method":"PUT"}
+{"time":"2026-10-20T03:48:34.661Z","trial":null,"kind":"response","url":"http://127.0.0.1:9013/api/workspaces/RFQ-1792468114063-DSOQ0S","status":200}
+{"time":"2026-10-20T03:48:34.666Z","trial":null,"kind":"request","url":"http://127.0.0.1:9013/api/workspaces","method":"GET"}
+{"time":"2026-10-20T03:48:34.680Z","trial":null,"kind":"response","url":"http://127.0.0.1:9013/api/workspaces","status":200}
+{"time":"2026-10-20T03:48:35.246Z","trial":"F01","kind":"dialog","message":"新增 1 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
+{"time":"2026-10-20T03:48:36.034Z","trial":"F01","kind":"feedback-before-user-scroll","buttonDisabled":true,"save":"检测到尚未保存的业务修改，暂不能生成完整备份。请先保存或恢复最新版本。","auto":"自动保存：存在未保存修改，完整备份已暂停","live":"自动保存：存在未保存修改，完整备份已暂停","liveRect":{"top":-151.65625,"bottom":-124.265625},"liveOnScreen":false,"viewportHeight":768,"scrollY":172,"revision":1}
+{"time":"2026-10-20T03:48:36.468Z","trial":"F01","kind":"feedback-after-user-scroll","buttonDisabled":true,"save":"检测到尚未保存的业务修改，暂不能生成完整备份。请先保存或恢复最新版本。","auto":"自动保存：存在未保存修改，完整备份已暂停","live":"自动保存：存在未保存修改，完整备份已暂停","liveRect":{"top":20.34375,"bottom":47.734375},"liveOnScreen":true,"viewportHeight":768,"scrollY":0,"revision":1}
+{"time":"2026-10-20T03:48:38.713Z","trial":"F01","kind":"request","url":"http://127.0.0.1:9013/api/workspaces/RFQ-1792468114063-DSOQ0S","method":"PUT"}
+{"time":"2026-10-20T03:48:38.714Z","trial":"F01","kind":"response","url":"http://127.0.0.1:9013/api/workspaces/RFQ-1792468114063-DSOQ0S","status":200}
+{"time":"2026-10-20T03:48:38.715Z","trial":"F01","kind":"request","url":"http://127.0.0.1:9013/api/workspaces","method":"GET"}
+{"time":"2026-10-20T03:48:38.719Z","trial":"F01","kind":"response","url":"http://127.0.0.1:9013/api/workspaces","status":200}
+{"time":"2026-10-20T03:48:39.294Z","trial":"B01","kind":"dialog","message":"新增 1 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
+{"time":"2026-10-20T03:48:42.459Z","trial":"B01","kind":"request","url":"http://127.0.0.1:9013/api/workspaces/RFQ-1792468114063-DSOQ0S","method":"PUT"}
+{"time":"2026-10-20T03:48:42.462Z","trial":"B01","kind":"controlled-save-gate-held","url":"http://127.0.0.1:9013/api/workspaces/RFQ-1792468114063-DSOQ0S"}
+{"time":"2026-10-20T03:48:43.200Z","trial":"B01","kind":"busy-guard-before-scroll","buttonDisabled":true,"save":"工作内容可能有未保存修改；系统只对实际业务变化自动保存。","auto":"自动保存：正在自动保存……","live":"自动保存：正在自动保存……","liveRect":{"top":-151.65625,"bottom":-124.265625},"liveOnScreen":false,"viewportHeight":768,"scrollY":172,"revision":2}
+{"time":"2026-10-20T03:48:43.708Z","trial":"B01","kind":"response","url":"http://127.0.0.1:9013/api/workspaces/RFQ-1792468114063-DSOQ0S","status":200}
+{"time":"2026-10-20T03:48:43.711Z","trial":"B01","kind":"request","url":"http://127.0.0.1:9013/api/workspaces","method":"GET"}
+{"time":"2026-10-20T03:48:43.714Z","trial":"B01","kind":"response","url":"http://127.0.0.1:9013/api/workspaces","status":200}
+{"time":"2026-10-20T03:48:43.754Z","trial":"B01","kind":"controlled-save-completed","state":{"buttonDisabled":false,"save":"SQLite 自动保存成功：RFQ-1792468114063-DSOQ0S（第 3 版）。","auto":"自动保存：已自动保存第 3 版（3:48:43 AM）","live":"自动保存：已自动保存第 3 版（3:48:43 AM）","liveRect":{"top":20.34375,"bottom":47.734375},"liveOnScreen":true,"viewportHeight":768,"scrollY":0,"revision":3}}

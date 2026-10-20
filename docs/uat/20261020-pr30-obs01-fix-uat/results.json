@@ -1,0 +1,178 @@
+{
+  "product_sha": "69f660cb2944e278a1e12b4824d8532b0fe6c7c3",
+  "overall": "FAIL",
+  "original_OBS01_trigger": "PASS in24/24 rapid samples, bounded scope",
+  "business_and_data_safety": "PASS within executed scope",
+  "issues": [
+    {
+      "id": "P3-S4-01",
+      "severity": "P3",
+      "type": "UI/interaction feedback",
+      "condition": "project operations drawer collapsed and header above viewport",
+      "safety": "correctly blocked; no backup request",
+      "actual": "reason exists in DOM but is not currently visible",
+      "evidence": "evidence/OBS-N01-after.png"
+    }
+  ],
+  "group_counts": {
+    "PASS": 21,
+    "FAIL": 1,
+    "NOT TESTED": 5
+  },
+  "groups": [
+    {
+      "id": "C01",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C02",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C03",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C04",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C05",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C06",
+      "result": "FAIL",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C07",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C08",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C09",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C10",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C11",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C12",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C13",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C14",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C15",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C16",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C17",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C18",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C19",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C20",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C21",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C22",
+      "result": "PASS",
+      "detail": "see corresponding bilingual report table"
+    },
+    {
+      "id": "C23",
+      "result": "NOT TESTED",
+      "detail": "Native Windows manual use"
+    },
+    {
+      "id": "C24",
+      "result": "NOT TESTED",
+      "detail": "Desktop Excel recalculation/printing"
+    },
+    {
+      "id": "C25",
+      "result": "NOT TESTED",
+      "detail": "Production conflict/disaster/concurrency/offline conditions"
+    },
+    {
+      "id": "C26",
+      "result": "NOT TESTED",
+      "detail": "Renewed full pixel parity to PR23"
+    },
+    {
+      "id": "C27",
+      "result": "NOT TESTED",
+      "detail": "Exhaustive large independent input matrix/all entry modes"
+    }
+  ],
+  "directed_attempts": 29,
+  "directed_downloads": 26,
+  "directed_guarded_clicks": 3,
+  "initial_business_S4_download": 1,
+  "all_S4_clicks": 30,
+  "all_S4_files_checked": 27,
+  "unexpected_positive_path_timeouts": 0,
+  "expected_negative_wait_expiries": 1,
+  "raw_browser_assertions": {
+    "true": 191,
+    "false": 3,
+    "classification": "one conditional UI failure; two invalid N02 timing expectations retained; B01 rechecks real busy safety"
+  },
+  "existing_suites": {
+    "python": 43,
+    "node": 10,
+    "chromium": 43
+  },
+  "boundary": "TEST-ONLY; no product,existing-test,CI,development/main edits or PR merge/closure"
+}

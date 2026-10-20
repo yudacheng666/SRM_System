@@ -1,0 +1,27 @@
+
+> srm_system@1.0.0 test
+> node --test prototype/m1-lite/tests/*.test.cjs
+
+✔ real changes save after idle; navigation/no-op does not save (6.766486ms)
+✔ new empty workspace needs an initial SQLite commit (5.533853ms)
+✔ busy, blocked, missing backend or halted failure prevent autosave (4.645493ms)
+✔ revision does not influence unchanged snapshot fingerprints (4.883619ms)
+✔ supplier ZIPs preserve original names/bytes, isolate contents, and omit JSON (30.826611ms)
+✔ reused same PDF appears once per supplier ZIP (12.117263ms)
+✔ case-insensitive same-name different-content conflict is rejected (9.720878ms)
+✔ same filename in separate supplier ZIPs still contains the right bytes (13.67723ms)
+✔ unsafe names and corrupt PDF content block export (7.248558ms)
+✔ internal complete backup retains its separate private JSON index (7.122209ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 299.204348
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

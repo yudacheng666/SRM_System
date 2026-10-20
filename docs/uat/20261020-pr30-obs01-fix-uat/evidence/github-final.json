@@ -1,0 +1,30 @@
+{
+  "head": "69f660cb2944e278a1e12b4824d8532b0fe6c7c3",
+  "draft": true,
+  "merged": false,
+  "base": "feat/20261019-srm-ui-v3-integration",
+  "base_sha": "0cd1278468d0471b862e16ca4ffcac41aead5e6d",
+  "comments": [
+    {
+      "id": 6282337461,
+      "body": "## Codex Cloud TEST-ONLY — CI门槛未满足，独立验收尚未启动\n\n核对时间：**2026-10-20 11:02 北京时间（03:02 UTC）**。已读取本PR说明、两文件diff、评论（当前为空）及[PR #24完整验收交接](https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6282227958)。\n\n**当前HEAD与指定目标一致：`8d073e803c9b71b809d15cf059f5202994c6fe43`**。\n分支 `fix/20261020-s4-backup-dirty-guard`；base为 `feat/20261019-srm-ui-v3-integration` / `0cd1278468d0471b862e16ca4ffcac41aead5e6d`。PR仍open/Draft、未合并。\n\n### GitHub查询事实\n- 按准确HEAD查询PR触发的GitHub Actions，返回 **`workflow_runs: []`**。\n- 查询该提交的combined status列表，返回 **`statuses: []`**。\n- 当前**没有可用于证明该候选完整CI成功的运行链接或结果**。这些查询不是所有类型check-runs的穷尽证明，但明确不足以满足“所有阻断性CI成功”的开始条件。\n- 不能把0cd12784的旧CI成功、PR #28的旧业务PASS、PR #29的诊断或代码diff当作此修复候选通过证据；也不能把“未找到运行”记成FAIL或PASS。\n\n### 当前独立结果\n| 项目 | 本HEAD状态 |\n|---|---|\n| 完整S3/S4、业务回归本地执行 | **NOT TESTED** |\n| 至少20次原始时序快速备份复验 | **NOT TESTED** |\n| admin不误设dirty、真修改阻止及可见提示 | **NOT TESTED** |\n| ZIP/SQLite历史/PDF完整性、空目录恢复/非空拒绝 | **NOT TESTED** |\n| P2-B01、P3-U01、V05及原核心业务持续回归 | **NOT TESTED** |\n\n根据交接明确要求“CI失败、仍运行或HEAD变化先报告并停止；仅全部成功后开始”，本次**停止在CI证据门槛**，不启动独立程序/浏览器、不创建虚假的验收截图或证据PR、不宣布OBS-01已解决。请先由开发者确保该准确HEAD运行完整CI并全部成功；HEAD若改变，应更新固定待测版本后重新核对。\n\n**English:** Exact HEAD matches the handoff. The current connector queries returned no PR-triggered workflow runs and no commit statuses, so there is no evidence of the required all-success CI gate. This is not a test failure or a PASS. All independent retest targets remain NOT TESTED for 8d073e80. No browser UAT or new evidence PR was created. Await complete exact-candidate CI success before the authorized independent retest.\n\nTEST-ONLY只读核查与状态回报；未改产品、原测试、CI、开发分支或main，未合并/关闭任何PR。PR #24/#29/#30继续保持未合并。",
+      "url": "https://github.com/yudacheng666/SRM_System/pull/30#issuecomment-6282337461"
+    },
+    {
+      "id": 6282391828,
+      "body": "## CI 触发问题已定位并修正（状态更新）\n\n检查确认此前没有运行记录的原因是工作流分支过滤不匹配：PR #30 的目标分支为 `feat/20261019-srm-ui-v3-integration`，但原 `.github/workflows/srm-s3-regression.yml` 仅监听旧的 `draft/20261013-m1-storage-ui-audit` PR 目标分支，push 过滤也未包含修复分支。\n\n已在本 PR 分支修正该工作流的 push / pull_request 分支过滤，并添加修复分支的 push 触发。没有修改 `main` 或目标开发分支。\n\n- **当前验收 HEAD：** `69f660cb2944e278a1e12b4824d8532b0fe6c7c3`\n- **GitHub Actions：** https://github.com/yudacheng666/SRM_System/actions/runs/39362505327\n- **当前状态：** `in_progress`；Windows SQLite/S4 作业和 Linux Chromium 作业均已启动，尚无最终结论。\n\n先前交接中的 HEAD `8d073e803c9b71b809d15cf059f5202994c6fe43` 已被新提交取代，不得用于本轮验收。CI 全部成功前，Codex Cloud 独立验收仍保持 NOT TESTED；不要合并或关闭 PR。",
+      "url": "https://github.com/yudacheng666/SRM_System/pull/30#issuecomment-6282391828"
+    },
+    {
+      "id": 6282405023,
+      "body": "## CI 状态快照（69f660cb2944）\n\nGitHub Actions run #135： https://github.com/yudacheng666/SRM_System/actions/runs/39362505327\n\n- Windows：`SQLite S4 restore and supplier ZIP regression` — **SUCCESS**\n- Linux：`Synthetic Chromium acceptance` — **IN PROGRESS**，当前执行 `npm run test:e2e`\n- 整个 workflow：尚未完成，因此 **CI 门槛尚未满足**。\n- Codex Cloud 独立验收：继续保持 **NOT TESTED**，不得提前开始。\n\n请以完整 workflow 对准确 HEAD `69f660cb2944e278a1e12b4824d8532b0fe6c7c3` 的最终结论为准。",
+      "url": "https://github.com/yudacheng666/SRM_System/pull/30#issuecomment-6282405023"
+    },
+    {
+      "id": 6282605340,
+      "body": "## CI 最终结果 / Final CI result\n\n已轮询至 GitHub Actions 完成，准确 HEAD `69f660cb2944e278a1e12b4824d8532b0fe6c7c3` 的两个作业均已成功：\n- Windows — SQLite S4 restore and supplier ZIP regression: **SUCCESS**\n- Linux — Synthetic Chromium acceptance: **SUCCESS**\n\n完整运行记录：https://github.com/yudacheng666/SRM_System/actions/runs/39362505327\n\n这满足开始 Codex Cloud TEST-ONLY 独立验收的 CI 前置条件。请按本 PR/PR #24 中的验收交接要求，以该准确 HEAD 开始独立复验；若开始前 HEAD 已变化，先停止并重新确认门槛。仍不得修改代码、测试或 CI，不得更改开发分支或 main，不得合并/关闭任何 PR。",
+      "url": "https://github.com/yudacheng666/SRM_System/pull/30#issuecomment-6282605340"
+    }
+  ],
+  "verifiedUTC": "2026-10-20T03:52:27.028Z"
+}

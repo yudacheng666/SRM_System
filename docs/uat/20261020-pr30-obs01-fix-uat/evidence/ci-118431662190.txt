@@ -1,0 +1,782 @@
+﻿2026-10-20T03:06:13.9788351Z Current runner version: '2.337.0'
+2026-10-20T03:06:13.9865792Z ##[group]Runner Image Provisioner
+2026-10-20T03:06:13.9867237Z Hosted Compute Agent
+2026-10-20T03:06:13.9868324Z Version: 20261012.601
+2026-10-20T03:06:13.9869336Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-20T03:06:13.9871856Z Build Date: 2026-10-12T17:48:21Z
+2026-10-20T03:06:13.9873053Z Worker ID: {36508f7d-ed2e-42f6-9247-1816965668b0}
+2026-10-20T03:06:13.9874358Z Region: eastus
+2026-10-20T03:06:13.9875344Z Cloud: Azure
+2026-10-20T03:06:13.9876189Z ##[endgroup]
+2026-10-20T03:06:13.9878621Z ##[group]Operating System
+2026-10-20T03:06:13.9879629Z Ubuntu
+2026-10-20T03:06:13.9880439Z 24.04.5
+2026-10-20T03:06:13.9881842Z LTS
+2026-10-20T03:06:13.9882696Z ##[endgroup]
+2026-10-20T03:06:13.9883636Z ##[group]Runner Image
+2026-10-20T03:06:13.9884647Z Image: ubuntu-24.04
+2026-10-20T03:06:13.9885638Z Version: 20261012.334.1
+2026-10-20T03:06:13.9887776Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-20T03:06:13.9890546Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-20T03:06:13.9912798Z ##[endgroup]
+2026-10-20T03:06:13.9914646Z ##[group]GITHUB_TOKEN Permissions
+2026-10-20T03:06:13.9917807Z Contents: read
+2026-10-20T03:06:13.9918856Z Metadata: read
+2026-10-20T03:06:13.9919884Z ##[endgroup]
+2026-10-20T03:06:13.9923599Z Secret source: Actions
+2026-10-20T03:06:13.9925158Z Cache mode: write
+2026-10-20T03:06:13.9929261Z Prepare workflow directory
+2026-10-20T03:06:14.0816544Z Prepare all required actions
+2026-10-20T03:06:14.0947822Z Getting action download info
+2026-10-20T03:06:14.3007141Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-20T03:06:14.3905130Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-20T03:06:14.4903048Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-20T03:06:14.5836898Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-20T03:06:14.8509446Z Complete job name: Synthetic Chromium acceptance on Linux
+2026-10-20T03:06:14.9952411Z ##[group]Run actions/checkout@v4
+2026-10-20T03:06:14.9955615Z with:
+2026-10-20T03:06:14.9957494Z   repository: yudacheng666/SRM_System
+2026-10-20T03:06:14.9974982Z   token: ***
+2026-10-20T03:06:14.9976460Z   ssh-strict: true
+2026-10-20T03:06:14.9977884Z   ssh-user: git
+2026-10-20T03:06:14.9979409Z   persist-credentials: true
+2026-10-20T03:06:14.9981616Z   clean: true
+2026-10-20T03:06:14.9983144Z   sparse-checkout-cone-mode: true
+2026-10-20T03:06:14.9984902Z   fetch-depth: 1
+2026-10-20T03:06:14.9986344Z   fetch-tags: false
+2026-10-20T03:06:14.9987811Z   show-progress: true
+2026-10-20T03:06:14.9989294Z   lfs: false
+2026-10-20T03:06:14.9990637Z   submodules: false
+2026-10-20T03:06:14.9992448Z   set-safe-directory: true
+2026-10-20T03:06:14.9994121Z   allow-unsafe-pr-checkout: false
+2026-10-20T03:06:14.9996404Z ##[endgroup]
+2026-10-20T03:06:15.1591839Z Syncing repository: yudacheng666/SRM_System
+2026-10-20T03:06:15.1596813Z ##[group]Getting Git version info
+2026-10-20T03:06:15.1599555Z Working directory is '/home/runner/work/SRM_System/SRM_System'
+2026-10-20T03:06:15.1613714Z [command]/usr/bin/git version
+2026-10-20T03:06:15.1773097Z git version 2.55.0
+2026-10-20T03:06:15.1821922Z ##[endgroup]
+2026-10-20T03:06:15.1847770Z Temporarily overriding HOME='/home/runner/work/_temp/b764064e-dd73-4035-815a-0e98cfded462' before making global git config changes
+2026-10-20T03:06:15.1867223Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-20T03:06:15.1871533Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SRM_System/SRM_System
+2026-10-20T03:06:15.1990496Z Deleting the contents of '/home/runner/work/SRM_System/SRM_System'
+2026-10-20T03:06:15.1994599Z ##[group]Initializing the repository
+2026-10-20T03:06:15.1998079Z [command]/usr/bin/git init /home/runner/work/SRM_System/SRM_System
+2026-10-20T03:06:15.2078479Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-20T03:06:15.2104165Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-20T03:06:15.2115648Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-20T03:06:15.2118152Z hint: call:
+2026-10-20T03:06:15.2119812Z hint:
+2026-10-20T03:06:15.2121935Z hint: 	git config --global init.defaultBranch <name>
+2026-10-20T03:06:15.2124138Z hint:
+2026-10-20T03:06:15.2126069Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-20T03:06:15.2129256Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-20T03:06:15.2132148Z hint:
+2026-10-20T03:06:15.2133537Z hint: 	git branch -m <name>
+2026-10-20T03:06:15.2135092Z hint:
+2026-10-20T03:06:15.2137236Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-20T03:06:15.2140900Z Initialized empty Git repository in /home/runner/work/SRM_System/SRM_System/.git/
+2026-10-20T03:06:15.2152098Z [command]/usr/bin/git remote add origin https://github.com/yudacheng666/SRM_System
+2026-10-20T03:06:15.2224105Z ##[endgroup]
+2026-10-20T03:06:15.2249252Z ##[group]Disabling automatic garbage collection
+2026-10-20T03:06:15.2256718Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-20T03:06:15.2297650Z ##[endgroup]
+2026-10-20T03:06:15.2333334Z ##[group]Setting up auth
+2026-10-20T03:06:15.2339542Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-20T03:06:15.2392229Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-20T03:06:15.2912752Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-20T03:06:15.2992141Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-20T03:06:15.3258037Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-20T03:06:15.3298285Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-20T03:06:15.3551843Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-20T03:06:15.3598035Z ##[endgroup]
+2026-10-20T03:06:15.3601609Z ##[group]Fetching the repository
+2026-10-20T03:06:15.3612935Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +69f660cb2944e278a1e12b4824d8532b0fe6c7c3:refs/remotes/origin/fix/20261020-s4-backup-dirty-guard
+2026-10-20T03:06:15.6744391Z From https://github.com/yudacheng666/SRM_System
+2026-10-20T03:06:15.6747593Z  * [new ref]         69f660cb2944e278a1e12b4824d8532b0fe6c7c3 -> origin/fix/20261020-s4-backup-dirty-guard
+2026-10-20T03:06:15.6755188Z ##[endgroup]
+2026-10-20T03:06:15.6757057Z ##[group]Determining the checkout info
+2026-10-20T03:06:15.6759419Z ##[endgroup]
+2026-10-20T03:06:15.6761413Z [command]/usr/bin/git sparse-checkout disable
+2026-10-20T03:06:15.6791531Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-20T03:06:15.6830243Z ##[group]Checking out the ref
+2026-10-20T03:06:15.6837034Z [command]/usr/bin/git checkout --progress --force -B fix/20261020-s4-backup-dirty-guard refs/remotes/origin/fix/20261020-s4-backup-dirty-guard
+2026-10-20T03:06:15.7025744Z Switched to a new branch 'fix/20261020-s4-backup-dirty-guard'
+2026-10-20T03:06:15.7043130Z branch 'fix/20261020-s4-backup-dirty-guard' set up to track 'origin/fix/20261020-s4-backup-dirty-guard'.
+2026-10-20T03:06:15.7049089Z ##[endgroup]
+2026-10-20T03:06:15.7085479Z [command]/usr/bin/git log -1 --format=%H
+2026-10-20T03:06:15.7117119Z 69f660cb2944e278a1e12b4824d8532b0fe6c7c3
+2026-10-20T03:06:15.7549691Z ##[group]Run actions/setup-python@v5
+2026-10-20T03:06:15.7550332Z with:
+2026-10-20T03:06:15.7550729Z   python-version: 3.12
+2026-10-20T03:06:15.7551668Z   check-latest: false
+2026-10-20T03:06:15.7559219Z   token: ***
+2026-10-20T03:06:15.7559667Z   update-environment: true
+2026-10-20T03:06:15.7560227Z   allow-prereleases: false
+2026-10-20T03:06:15.7560760Z   freethreaded: false
+2026-10-20T03:06:15.7561622Z ##[endgroup]
+2026-10-20T03:06:15.9146296Z ##[group]Installed versions
+2026-10-20T03:06:15.9240403Z (node:2063) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-20T03:06:15.9243269Z Successfully set up CPython (3.12.15)
+2026-10-20T03:06:15.9245093Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-20T03:06:15.9246573Z ##[endgroup]
+2026-10-20T03:06:15.9632997Z ##[group]Run actions/setup-node@v4
+2026-10-20T03:06:15.9634027Z with:
+2026-10-20T03:06:15.9634746Z   node-version: 22
+2026-10-20T03:06:15.9635519Z   cache: npm
+2026-10-20T03:06:15.9636252Z   always-auth: false
+2026-10-20T03:06:15.9637089Z   check-latest: false
+2026-10-20T03:06:15.9649977Z   token: ***
+2026-10-20T03:06:15.9650646Z env:
+2026-10-20T03:06:15.9651722Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:15.9653484Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-20T03:06:15.9655254Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:15.9656803Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:15.9658377Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:15.9659969Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-20T03:06:15.9661461Z ##[endgroup]
+2026-10-20T03:06:16.1333389Z (node:2074) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-20T03:06:16.1338258Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-20T03:06:16.1347191Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+2026-10-20T03:06:16.1349395Z ##[group]Environment details
+2026-10-20T03:06:16.6874719Z node: v22.23.3
+2026-10-20T03:06:16.6876024Z npm: 10.9.9
+2026-10-20T03:06:16.6883013Z yarn: 1.22.22
+2026-10-20T03:06:16.6884408Z ##[endgroup]
+2026-10-20T03:06:16.6885513Z [command]/opt/hostedtoolcache/node/22.23.3/x64/bin/npm config get cache
+2026-10-20T03:06:16.8677720Z /home/runner/.npm
+2026-10-20T03:06:16.9436651Z npm cache is not found
+2026-10-20T03:06:16.9589968Z ##[group]Run npm ci
+2026-10-20T03:06:16.9590483Z [36;1mnpm ci[0m
+2026-10-20T03:06:16.9853176Z shell: /usr/bin/bash -e {0}
+2026-10-20T03:06:16.9853793Z env:
+2026-10-20T03:06:16.9854417Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:16.9855589Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-20T03:06:16.9856778Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:16.9857814Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:16.9858734Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:16.9859618Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-20T03:06:16.9860331Z ##[endgroup]
+2026-10-20T03:06:18.3032138Z 
+2026-10-20T03:06:18.3040815Z added 3 packages, and audited 4 packages in 1s
+2026-10-20T03:06:18.3061688Z 
+2026-10-20T03:06:18.3081837Z found 0 vulnerabilities
+2026-10-20T03:06:18.3506937Z ##[group]Run npx playwright install --with-deps chromium
+2026-10-20T03:06:18.3507436Z [36;1mnpx playwright install --with-deps chromium[0m
+2026-10-20T03:06:18.3574991Z shell: /usr/bin/bash -e {0}
+2026-10-20T03:06:18.3575272Z env:
+2026-10-20T03:06:18.3575558Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:18.3576031Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-20T03:06:18.3576695Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:18.3577115Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:18.3577541Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:18.3577941Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-20T03:06:18.3578276Z ##[endgroup]
+2026-10-20T03:06:19.5497736Z Installing dependencies...
+2026-10-20T03:06:19.5594907Z Switching to root user to install dependencies...
+2026-10-20T03:06:19.7082479Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-20T03:06:19.7539529Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-10-20T03:06:19.7790546Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-10-20T03:06:19.7823491Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-10-20T03:06:19.7910405Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-10-20T03:06:19.7982443Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-10-20T03:06:19.9428704Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [618 kB]
+2026-10-20T03:06:19.9789325Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [12.4 kB]
+2026-10-20T03:06:19.9894291Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [557 kB]
+2026-10-20T03:06:20.0987544Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1397 kB]
+2026-10-20T03:06:20.1096468Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [308 kB]
+2026-10-20T03:06:20.1172491Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1704 kB]
+2026-10-20T03:06:20.1332783Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [342 kB]
+2026-10-20T03:06:20.1394010Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1805 kB]
+2026-10-20T03:06:20.1572598Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [411 kB]
+2026-10-20T03:06:20.2743307Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1145 kB]
+2026-10-20T03:06:20.2799975Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [231 kB]
+2026-10-20T03:06:20.2833549Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1222 kB]
+2026-10-20T03:06:20.2912147Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [246 kB]
+2026-10-20T03:06:20.3432928Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1713 kB]
+2026-10-20T03:06:20.3692889Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [392 kB]
+2026-10-20T03:06:23.3650145Z Fetched 12.5 MB in 2s (7930 kB/s)
+2026-10-20T03:06:24.3579156Z Reading package lists...
+2026-10-20T03:06:24.3884476Z Reading package lists...
+2026-10-20T03:06:24.5898168Z Building dependency tree...
+2026-10-20T03:06:24.5908820Z Reading state information...
+2026-10-20T03:06:24.7370711Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+2026-10-20T03:06:24.7372446Z libasound2t64 set to manually installed.
+2026-10-20T03:06:24.7373758Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-20T03:06:24.7382326Z libatk-bridge2.0-0t64 set to manually installed.
+2026-10-20T03:06:24.7387786Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-20T03:06:24.7388917Z libatk1.0-0t64 set to manually installed.
+2026-10-20T03:06:24.7390053Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-20T03:06:24.7393442Z libatspi2.0-0t64 set to manually installed.
+2026-10-20T03:06:24.7394372Z libcairo2 is already the newest version (1.18.0-3build1).
+2026-10-20T03:06:24.7407046Z libcairo2 set to manually installed.
+2026-10-20T03:06:24.7408426Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.14).
+2026-10-20T03:06:24.7409449Z libcups2t64 set to manually installed.
+2026-10-20T03:06:24.7410408Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+2026-10-20T03:06:24.7411595Z libdbus-1-3 set to manually installed.
+2026-10-20T03:06:24.7412570Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.2).
+2026-10-20T03:06:24.7413496Z libdrm2 set to manually installed.
+2026-10-20T03:06:24.7414418Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.4).
+2026-10-20T03:06:24.7415345Z libgbm1 set to manually installed.
+2026-10-20T03:06:24.7416266Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.9).
+2026-10-20T03:06:24.7417200Z libglib2.0-0t64 set to manually installed.
+2026-10-20T03:06:24.7418128Z libnspr4 is already the newest version (2:4.35-1.1build1).
+2026-10-20T03:06:24.7418993Z libnspr4 set to manually installed.
+2026-10-20T03:06:24.7419868Z libnss3 is already the newest version (2:3.98-1ubuntu0.2).
+2026-10-20T03:06:24.7420898Z libnss3 set to manually installed.
+2026-10-20T03:06:24.7422308Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+2026-10-20T03:06:24.7440640Z libpango-1.0-0 set to manually installed.
+2026-10-20T03:06:24.7441920Z libx11-6 is already the newest version (2:1.8.7-1ubuntu0.1).
+2026-10-20T03:06:24.7442702Z libx11-6 set to manually installed.
+2026-10-20T03:06:24.7443437Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2026-10-20T03:06:24.7444184Z libxcb1 set to manually installed.
+2026-10-20T03:06:24.7445080Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2026-10-20T03:06:24.7445955Z libxcomposite1 set to manually installed.
+2026-10-20T03:06:24.7448128Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+2026-10-20T03:06:24.7449018Z libxdamage1 set to manually installed.
+2026-10-20T03:06:24.7468949Z libxext6 is already the newest version (2:1.3.4-1build2).
+2026-10-20T03:06:24.7469789Z libxext6 set to manually installed.
+2026-10-20T03:06:24.7470601Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+2026-10-20T03:06:24.7471789Z libxfixes3 set to manually installed.
+2026-10-20T03:06:24.7472671Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2026-10-20T03:06:24.7473473Z libxkbcommon0 set to manually installed.
+2026-10-20T03:06:24.7474264Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2026-10-20T03:06:24.7475034Z libxrandr2 set to manually installed.
+2026-10-20T03:06:24.7475959Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+2026-10-20T03:06:24.7477020Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2026-10-20T03:06:24.7477842Z libfontconfig1 set to manually installed.
+2026-10-20T03:06:24.7478711Z libfreetype6 is already the newest version (2.13.2+dfsg-1ubuntu0.2).
+2026-10-20T03:06:24.7479539Z libfreetype6 set to manually installed.
+2026-10-20T03:06:24.7480347Z fonts-liberation is already the newest version (1:2.1.5-3).
+2026-10-20T03:06:24.7481346Z fonts-liberation set to manually installed.
+2026-10-20T03:06:24.7482161Z The following additional packages will be installed:
+2026-10-20T03:06:24.7482925Z   xfonts-encodings xfonts-utils xserver-common
+2026-10-20T03:06:24.7483649Z Recommended packages:
+2026-10-20T03:06:24.7484285Z   fonts-ipafont-mincho fonts-tlwg-loma xfonts-base
+2026-10-20T03:06:24.7600735Z The following NEW packages will be installed:
+2026-10-20T03:06:24.7602237Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2026-10-20T03:06:24.7609116Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2026-10-20T03:06:24.7610067Z   xfonts-utils
+2026-10-20T03:06:24.7619516Z The following packages will be upgraded:
+2026-10-20T03:06:24.7620259Z   xserver-common xvfb
+2026-10-20T03:06:24.7788868Z 2 upgraded, 9 newly installed, 0 to remove and 79 not upgraded.
+2026-10-20T03:06:24.7789957Z Need to get 22.0 MB of archives.
+2026-10-20T03:06:24.7791856Z After this operation, 79.5 MB of additional disk space will be used.
+2026-10-20T03:06:24.7793355Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-20T03:06:24.8813422Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+2026-10-20T03:06:25.0543257Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+2026-10-20T03:06:25.2472729Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+2026-10-20T03:06:25.3312566Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+2026-10-20T03:06:25.4906729Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+2026-10-20T03:06:25.7690179Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2026-10-20T03:06:25.8659508Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+2026-10-20T03:06:25.9501704Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+2026-10-20T03:06:26.0436658Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+2026-10-20T03:06:26.1359518Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 xserver-common all 2:21.1.12-1ubuntu1.9 [35.0 kB]
+2026-10-20T03:06:26.2183349Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 xvfb amd64 2:21.1.12-1ubuntu1.9 [877 kB]
+2026-10-20T03:06:26.5017544Z Fetched 22.0 MB in 1s (14.9 MB/s)
+2026-10-20T03:06:26.5261419Z Selecting previously unselected package fonts-ipafont-gothic.
+2026-10-20T03:06:26.5507269Z (Reading database ... 
+2026-10-20T03:06:26.5508715Z (Reading database ... 5%
+2026-10-20T03:06:26.5509419Z (Reading database ... 10%
+2026-10-20T03:06:26.5510440Z (Reading database ... 15%
+2026-10-20T03:06:26.5510792Z (Reading database ... 20%
+2026-10-20T03:06:26.5511508Z (Reading database ... 25%
+2026-10-20T03:06:26.5511786Z (Reading database ... 30%
+2026-10-20T03:06:26.5512057Z (Reading database ... 35%
+2026-10-20T03:06:26.5512475Z (Reading database ... 40%
+2026-10-20T03:06:26.5513025Z (Reading database ... 45%
+2026-10-20T03:06:26.5513651Z (Reading database ... 50%
+2026-10-20T03:06:26.5552182Z (Reading database ... 55%
+2026-10-20T03:06:26.6719852Z (Reading database ... 60%
+2026-10-20T03:06:26.8646075Z (Reading database ... 65%
+2026-10-20T03:06:27.0724060Z (Reading database ... 70%
+2026-10-20T03:06:27.2750867Z (Reading database ... 75%
+2026-10-20T03:06:28.0683510Z (Reading database ... 80%
+2026-10-20T03:06:28.2686199Z (Reading database ... 85%
+2026-10-20T03:06:28.4328397Z (Reading database ... 90%
+2026-10-20T03:06:28.6232170Z (Reading database ... 95%
+2026-10-20T03:06:28.6232854Z (Reading database ... 100%
+2026-10-20T03:06:28.6242070Z (Reading database ... 203540 files and directories currently installed.)
+2026-10-20T03:06:28.6265366Z Preparing to unpack .../00-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+2026-10-20T03:06:28.6371950Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-10-20T03:06:28.8772806Z Selecting previously unselected package fonts-freefont-ttf.
+2026-10-20T03:06:28.8889407Z Preparing to unpack .../01-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+2026-10-20T03:06:28.8901965Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-10-20T03:06:29.2323071Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2026-10-20T03:06:29.2452600Z Preparing to unpack .../02-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+2026-10-20T03:06:29.2460788Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-10-20T03:06:29.2674364Z Selecting previously unselected package fonts-unifont.
+2026-10-20T03:06:29.2803312Z Preparing to unpack .../03-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+2026-10-20T03:06:29.2812725Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+2026-10-20T03:06:29.4011921Z Selecting previously unselected package fonts-wqy-zenhei.
+2026-10-20T03:06:29.4142053Z Preparing to unpack .../04-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+2026-10-20T03:06:29.4249848Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+2026-10-20T03:06:29.8998120Z Selecting previously unselected package xfonts-encodings.
+2026-10-20T03:06:29.9128674Z Preparing to unpack .../05-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+2026-10-20T03:06:29.9142600Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-10-20T03:06:29.9440768Z Selecting previously unselected package xfonts-utils.
+2026-10-20T03:06:29.9567224Z Preparing to unpack .../06-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+2026-10-20T03:06:29.9575639Z Unpacking xfonts-utils (1:7.7+6build3) ...
+2026-10-20T03:06:29.9922586Z Selecting previously unselected package xfonts-cyrillic.
+2026-10-20T03:06:30.0050802Z Preparing to unpack .../07-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+2026-10-20T03:06:30.0069129Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-10-20T03:06:30.0441931Z Selecting previously unselected package xfonts-scalable.
+2026-10-20T03:06:30.0554335Z Preparing to unpack .../08-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+2026-10-20T03:06:30.0567213Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+2026-10-20T03:06:30.0951433Z Preparing to unpack .../09-xserver-common_2%3a21.1.12-1ubuntu1.9_all.deb ...
+2026-10-20T03:06:30.0972246Z Unpacking xserver-common (2:21.1.12-1ubuntu1.9) over (2:21.1.12-1ubuntu1.8) ...
+2026-10-20T03:06:30.1328418Z Preparing to unpack .../10-xvfb_2%3a21.1.12-1ubuntu1.9_amd64.deb ...
+2026-10-20T03:06:30.1354470Z Unpacking xvfb (2:21.1.12-1ubuntu1.9) over (2:21.1.12-1ubuntu1.8) ...
+2026-10-20T03:06:30.1893375Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+2026-10-20T03:06:30.2020493Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-10-20T03:06:30.2041704Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-10-20T03:06:30.2064711Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-10-20T03:06:30.2084019Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-10-20T03:06:30.2158264Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2026-10-20T03:06:30.2174408Z Setting up xserver-common (2:21.1.12-1ubuntu1.9) ...
+2026-10-20T03:06:30.2195971Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+2026-10-20T03:06:30.2216046Z Setting up xvfb (2:21.1.12-1ubuntu1.9) ...
+2026-10-20T03:06:30.2235378Z Setting up xfonts-utils (1:7.7+6build3) ...
+2026-10-20T03:06:30.2291923Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-10-20T03:06:30.2598091Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+2026-10-20T03:06:30.2889697Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-10-20T03:06:30.2912901Z Not building database; man-db/auto-update is not 'true'.
+2026-10-20T03:06:30.2927169Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+2026-10-20T03:06:30.9932381Z 
+2026-10-20T03:06:30.9933233Z Running kernel seems to be up-to-date.
+2026-10-20T03:06:30.9933979Z 
+2026-10-20T03:06:30.9934450Z No services need to be restarted.
+2026-10-20T03:06:30.9934948Z 
+2026-10-20T03:06:30.9935377Z No containers need to be restarted.
+2026-10-20T03:06:30.9935854Z 
+2026-10-20T03:06:30.9936308Z No user sessions are running outdated binaries.
+2026-10-20T03:06:30.9936887Z 
+2026-10-20T03:06:30.9937532Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-10-20T03:06:32.0523735Z Downloading Chrome for Testing 145.0.7632.6 (playwright chromium v1208) from https://cdn.playwright.dev/builds/cft/145.0.7632.6/linux64/chrome-linux64.zip
+2026-10-20T03:06:32.2233254Z |                                                                                |   0% of 167.3 MiB
+2026-10-20T03:06:32.4669671Z |■■■■■■■■                                                                        |  10% of 167.3 MiB
+2026-10-20T03:06:32.5849701Z |■■■■■■■■■■■■■■■■                                                                |  20% of 167.3 MiB
+2026-10-20T03:06:32.7068996Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 167.3 MiB
+2026-10-20T03:06:32.8297596Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 167.3 MiB
+2026-10-20T03:06:32.9214902Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 167.3 MiB
+2026-10-20T03:06:33.0310837Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 167.3 MiB
+2026-10-20T03:06:33.1199908Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 167.3 MiB
+2026-10-20T03:06:33.2116007Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 167.3 MiB
+2026-10-20T03:06:33.3007843Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 167.3 MiB
+2026-10-20T03:06:33.3906148Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 167.3 MiB
+2026-10-20T03:06:36.8367432Z Chrome for Testing 145.0.7632.6 (playwright chromium v1208) downloaded to /home/runner/.cache/ms-playwright/chromium-1208
+2026-10-20T03:06:36.8372201Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+2026-10-20T03:06:36.9832583Z |                                                                                |   0% of 2.3 MiB
+2026-10-20T03:06:36.9859841Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+2026-10-20T03:06:36.9898830Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+2026-10-20T03:06:36.9922383Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+2026-10-20T03:06:36.9950226Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+2026-10-20T03:06:36.9979539Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+2026-10-20T03:06:37.0003395Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+2026-10-20T03:06:37.0025347Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+2026-10-20T03:06:37.0044034Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+2026-10-20T03:06:37.0065281Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+2026-10-20T03:06:37.0081449Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+2026-10-20T03:06:37.0753174Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+2026-10-20T03:06:37.0758404Z Downloading Chrome Headless Shell 145.0.7632.6 (playwright chromium-headless-shell v1208) from https://cdn.playwright.dev/builds/cft/145.0.7632.6/linux64/chrome-headless-shell-linux64.zip
+2026-10-20T03:06:37.2613416Z |                                                                                |   0% of 110.9 MiB
+2026-10-20T03:06:37.4457785Z |■■■■■■■■                                                                        |  10% of 110.9 MiB
+2026-10-20T03:06:37.5352828Z |■■■■■■■■■■■■■■■■                                                                |  20% of 110.9 MiB
+2026-10-20T03:06:37.6103355Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 110.9 MiB
+2026-10-20T03:06:37.6981892Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 110.9 MiB
+2026-10-20T03:06:37.7603148Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 110.9 MiB
+2026-10-20T03:06:37.8229696Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 110.9 MiB
+2026-10-20T03:06:37.9069220Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 110.9 MiB
+2026-10-20T03:06:37.9727681Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 110.9 MiB
+2026-10-20T03:06:38.0488258Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 110.9 MiB
+2026-10-20T03:06:38.1162719Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 110.9 MiB
+2026-10-20T03:06:41.1203701Z Chrome Headless Shell 145.0.7632.6 (playwright chromium-headless-shell v1208) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1208
+2026-10-20T03:06:41.1619862Z ##[group]Run python -m unittest discover -v -s prototype/m1-lite/backend -p "test_*.py"
+2026-10-20T03:06:41.1621163Z [36;1mpython -m unittest discover -v -s prototype/m1-lite/backend -p "test_*.py"[0m
+2026-10-20T03:06:41.1722516Z shell: /usr/bin/bash -e {0}
+2026-10-20T03:06:41.1722926Z env:
+2026-10-20T03:06:41.1723359Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:41.1724105Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-20T03:06:41.1724883Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:41.1725534Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:41.1726190Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:41.1726845Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-20T03:06:41.1727394Z ##[endgroup]
+2026-10-20T03:06:41.5261973Z test_boolean_manifest_version_rejected_by_backup_and_restore (test_auto_backup.AutoBackupPolicyTests.test_boolean_manifest_version_rejected_by_backup_and_restore)
+2026-10-20T03:06:41.5656763Z 中文：版本 true 不能当作整型 1，完整恢复同样不得接受。 ... ok
+2026-10-20T03:06:41.5658103Z test_changes_after_a_day_create_new_copy (test_auto_backup.AutoBackupPolicyTests.test_changes_after_a_day_create_new_copy)
+2026-10-20T03:06:41.5917793Z 中文：间隔到期且内容变化时才新增备份。English: A later edit creates next daily copy. ... ok
+2026-10-20T03:06:41.5923383Z test_corrupted_recent_backup_creates_replacement_after_due (test_auto_backup.AutoBackupPolicyTests.test_corrupted_recent_backup_creates_replacement_after_due)
+2026-10-20T03:06:41.6201735Z 中文：损坏旧备份不能阻止新备份，或删除之前的健康备份。 ... ok
+2026-10-20T03:06:41.6209005Z test_first_save_makes_full_zip_but_repeated_checks_do_not (test_auto_backup.AutoBackupPolicyTests.test_first_save_makes_full_zip_but_repeated_checks_do_not)
+2026-10-20T03:06:41.6386224Z 中文：首次备份成功；短间隔和无变更不会重复。English: Throttle and changed-only. ... ok
+2026-10-20T03:06:41.6393956Z test_hash_consistent_non_sqlite_is_replaced_and_original_preserved (test_auto_backup.AutoBackupPolicyTests.test_hash_consistent_non_sqlite_is_replaced_and_original_preserved)
+2026-10-20T03:06:41.6758327Z 中文：ZIP CRC 和清单 SHA 即使自洽，也不能绕过 SQLite 完整性验证。 ... ok
+2026-10-20T03:06:41.6766662Z test_missing_or_invalid_manifest_never_claims_unchanged (test_auto_backup.AutoBackupPolicyTests.test_missing_or_invalid_manifest_never_claims_unchanged)
+2026-10-20T03:06:41.7412506Z 中文：无清单或伪造清单不能导致自动备份误判。 ... ok
+2026-10-20T03:06:41.7422951Z test_no_workspace_does_not_create_backup (test_auto_backup.AutoBackupPolicyTests.test_no_workspace_does_not_create_backup)
+2026-10-20T03:06:41.7469183Z 中文：无询价不产生空备份。English: No empty archive loops. ... ok
+2026-10-20T03:06:41.7476716Z test_pdf_upload_without_workspace_save_is_a_change (test_auto_backup.AutoBackupPolicyTests.test_pdf_upload_without_workspace_save_is_a_change)
+2026-10-20T03:06:41.7762755Z 中文：附件落盘后尚未保存关联，也必须进入到期完整备份。 ... ok
+2026-10-20T03:06:41.7764547Z test_retention_never_deletes_manual_backups (test_auto_backup.AutoBackupPolicyTests.test_retention_never_deletes_manual_backups)
+2026-10-20T03:06:41.9207832Z 中文：保留 7 份自动备份，手动备份永不删除。English: Auto-only pruning. ... ok
+2026-10-20T03:06:41.9212983Z test_valid_zip_with_tampered_database_is_not_trusted (test_auto_backup.AutoBackupPolicyTests.test_valid_zip_with_tampered_database_is_not_trusted)
+2026-10-20T03:06:41.9452475Z 中文：即使 ZIP 本身 CRC 正常，数据库哈希变化也应拒绝。 ... ok
+2026-10-20T03:06:41.9453985Z test_asset_cannot_be_read_from_another_workspace (test_s3_regression.S3FailurePathTests.test_asset_cannot_be_read_from_another_workspace)
+2026-10-20T03:06:41.9577392Z 中文：供应商及询价资料不能串单。English: Keep assets isolated by RFQ. ... ok
+2026-10-20T03:06:41.9585611Z test_bad_workspace_update_does_not_create_new_revision (test_s3_regression.S3FailurePathTests.test_bad_workspace_update_does_not_create_new_revision)
+2026-10-20T03:06:41.9665908Z 中文：验证失败不得污染上一有效版本。English: Invalid update stays atomic. ... ok
+2026-10-20T03:06:41.9674022Z test_corrupted_pdf_fails_integrity_check (test_s3_regression.S3FailurePathTests.test_corrupted_pdf_fails_integrity_check)
+2026-10-20T03:06:41.9790799Z 中文：即使长度不变也能发现 PDF 被修改。English: Detect same-length corruption. ... ok
+2026-10-20T03:06:41.9798711Z test_missing_pdf_fails_closed (test_s3_regression.S3FailurePathTests.test_missing_pdf_fails_closed)
+2026-10-20T03:06:41.9915962Z 中文：原件被删除时，读取不得伪装成功。English: Missing original must fail. ... ok
+2026-10-20T03:06:41.9929842Z test_same_pdf_cannot_silently_change_original_name (test_s3_regression.S3FailurePathTests.test_same_pdf_cannot_silently_change_original_name)
+2026-10-20T03:06:42.0073474Z 中文：相同 SHA 不允许静默改变原始文件身份。English: Reject identity reassignment. ... ok
+2026-10-20T03:06:42.0080881Z test_sqlite_backup_is_not_full_pdf_restore (test_s3_regression.S3FailurePathTests.test_sqlite_backup_is_not_full_pdf_restore)
+2026-10-20T03:06:42.0239486Z 中文：数据库备份不等于含 PDF 的完整恢复包。English: DB backup excludes binary PDFs. ... ok
+2026-10-20T03:06:42.0247460Z test_stale_tab_cannot_change_active_workspace (test_s3_regression.S3FailurePathTests.test_stale_tab_cannot_change_active_workspace)
+2026-10-20T03:06:42.0358326Z 中文：旧页面不得覆盖其他窗口选择。English: Reject stale tab selection. ... ok
+2026-10-20T03:06:42.0366057Z test_unsaved_workspace_must_not_accept_pdf (test_s3_regression.S3FailurePathTests.test_unsaved_workspace_must_not_accept_pdf)
+2026-10-20T03:06:42.0425784Z 中文：禁止未提交的询价上传图纸。English: Reject asset writes before RFQ save. ... ok
+2026-10-20T03:06:42.0434399Z test_backup_refuses_existing_filename (test_s4_backup.S4FullBackupTests.test_backup_refuses_existing_filename)
+2026-10-20T03:06:42.0654348Z 中文：备份不会覆盖现有同名文件。English: No overwrite of existing archives. ... ok
+2026-10-20T03:06:42.0662163Z test_empty_workspace_without_pdfs_is_counted (test_s4_backup.S4FullBackupTests.test_empty_workspace_without_pdfs_is_counted)
+2026-10-20T03:06:42.0888385Z 中文：没有 PDF 的询价也在数据库历史里。English: Count RFQs with zero PDF links. ... ok
+2026-10-20T03:06:42.0896658Z test_existing_business_data_cannot_be_overwritten (test_s4_backup.S4FullBackupTests.test_existing_business_data_cannot_be_overwritten)
+2026-10-20T03:06:42.1210165Z 中文：有数据的目标必须拒绝恢复。English: Existing RFQs are never overwritten. ... ok
+2026-10-20T03:06:42.1217998Z test_invalid_database_hash_rejected (test_s4_backup.S4FullBackupTests.test_invalid_database_hash_rejected)
+2026-10-20T03:06:42.1516547Z 中文：数据库快照被改写时不得恢复。English: Reject modified SQLite bytes. ... ok
+2026-10-20T03:06:42.1524494Z test_missing_file_and_extra_entry_rejected (test_s4_backup.S4FullBackupTests.test_missing_file_and_extra_entry_rejected)
+2026-10-20T03:06:42.1842432Z 中文：缺失/夹带文件不允许恢复。English: Reject incomplete and unexpected entries. ... ok
+2026-10-20T03:06:42.1852456Z test_missing_source_pdf_rejects_backup_without_output (test_s4_backup.S4FullBackupTests.test_missing_source_pdf_rejects_backup_without_output)
+2026-10-20T03:06:42.2076189Z 中文：原始 PDF 缺失不能生成虚假的完整备份。English: No false complete backup. ... ok
+2026-10-20T03:06:42.2079710Z test_modified_pdf_rejected_without_touching_target (test_s4_backup.S4FullBackupTests.test_modified_pdf_rejected_without_touching_target)
+2026-10-20T03:06:42.2404596Z 中文：文件长度可相同，但哈希一变即拒绝。English: SHA protects even CRC-valid tampering. ... ok
+2026-10-20T03:06:42.2407590Z test_roundtrip_two_rfqs_revisions_and_pdf_bytes (test_s4_backup.S4FullBackupTests.test_roundtrip_two_rfqs_revisions_and_pdf_bytes)
+2026-10-20T03:06:42.2813698Z 中文：真实 ZIP 完整往返包含历史与原件。English: End-to-end archive roundtrip. ... ok
+2026-10-20T03:06:42.2816701Z test_automatic_backup_status_is_read_only (test_s4_server.S4HttpTests.test_automatic_backup_status_is_read_only)
+2026-10-20T03:06:42.2996251Z 中文：本机接口只显示自动备份元信息。English: Read-only backup metadata. ... 127.0.0.1 - - [20/Oct/2026 03:06:42] "GET /api/backups/auto/status HTTP/1.1" 200 -
+2026-10-20T03:06:42.8014030Z ok
+2026-10-20T03:06:42.8023783Z test_backup_endpoint_requires_same_origin_and_no_data_loss (test_s4_server.S4HttpTests.test_backup_endpoint_requires_same_origin_and_no_data_loss)
+2026-10-20T03:06:42.8159618Z 中文：跨站不应触发完整备份。English: Cross-origin backup denied. ... 127.0.0.1 - - [20/Oct/2026 03:06:42] "POST /api/backups/full HTTP/1.1" 403 -
+2026-10-20T03:06:42.8217064Z 127.0.0.1 - - [20/Oct/2026 03:06:42] "POST /api/backups/full HTTP/1.1" 201 -
+2026-10-20T03:06:43.3190481Z ok
+2026-10-20T03:06:43.3196990Z test_full_restore_rejects_cross_origin_and_invalid_archive (test_s4_server.S4HttpTests.test_full_restore_rejects_cross_origin_and_invalid_archive)
+2026-10-20T03:06:43.3318940Z 中文：非法来源与坏 ZIP 均应拒绝。English: Origin and malformed uploads fail. ... 127.0.0.1 - - [20/Oct/2026 03:06:43] "POST /api/backups/full/restore HTTP/1.1" 403 -
+2026-10-20T03:06:43.3345212Z 127.0.0.1 - - [20/Oct/2026 03:06:43] "POST /api/backups/full/restore HTTP/1.1" 400 -
+2026-10-20T03:06:43.3363744Z 127.0.0.1 - - [20/Oct/2026 03:06:43] "GET /api/workspaces HTTP/1.1" 200 -
+2026-10-20T03:06:44.3288263Z ok
+2026-10-20T03:06:44.3289853Z test_http_backup_download_restore_and_reject_overwrite (test_s4_server.S4HttpTests.test_http_backup_download_restore_and_reject_overwrite)
+2026-10-20T03:06:44.3643038Z 中文：下载 ZIP，并恢复到不同端口的空库。English: Real HTTP roundtrip. ... 127.0.0.1 - - [20/Oct/2026 03:06:44] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+2026-10-20T03:06:44.3693633Z 127.0.0.1 - - [20/Oct/2026 03:06:44] "POST /api/backups/full HTTP/1.1" 201 -
+2026-10-20T03:06:44.3705864Z 127.0.0.1 - - [20/Oct/2026 03:06:44] "GET /api/backups/full/SRM_FULL_20261020_030644_031b5bbd.zip HTTP/1.1" 200 -
+2026-10-20T03:06:44.3714328Z 127.0.0.1 - - [20/Oct/2026 03:06:44] "GET /api/health HTTP/1.1" 200 -
+2026-10-20T03:06:44.3778367Z 127.0.0.1 - - [20/Oct/2026 03:06:44] "POST /api/backups/full/restore HTTP/1.1" 200 -
+2026-10-20T03:06:44.3790580Z 127.0.0.1 - - [20/Oct/2026 03:06:44] "GET /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+2026-10-20T03:06:44.3809955Z 127.0.0.1 - - [20/Oct/2026 03:06:44] "POST /api/backups/full/restore HTTP/1.1" 409 -
+2026-10-20T03:06:45.3727182Z ok
+2026-10-20T03:06:45.3847572Z test_conflict_and_previous_revision (test_server.LocalApiTests.test_conflict_and_previous_revision) ... 127.0.0.1 - - [20/Oct/2026 03:06:45] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+2026-10-20T03:06:45.3877445Z 127.0.0.1 - - [20/Oct/2026 03:06:45] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+2026-10-20T03:06:45.3896950Z 127.0.0.1 - - [20/Oct/2026 03:06:45] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 409 -
+2026-10-20T03:06:45.3918351Z 127.0.0.1 - - [20/Oct/2026 03:06:45] "GET /api/workspaces/RFQ-DEMO-001?revision=1 HTTP/1.1" 200 -
+2026-10-20T03:06:45.3923059Z ok
+2026-10-20T03:06:45.4013206Z test_db_only_backup (test_server.LocalApiTests.test_db_only_backup) ... 127.0.0.1 - - [20/Oct/2026 03:06:45] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+2026-10-20T03:06:45.4043676Z 127.0.0.1 - - [20/Oct/2026 03:06:45] "POST /api/backups/database HTTP/1.1" 201 -
+2026-10-20T03:06:45.9046326Z ok
+2026-10-20T03:06:45.9110288Z test_health_static_and_roundtrip (test_server.LocalApiTests.test_health_static_and_roundtrip) ... 127.0.0.1 - - [20/Oct/2026 03:06:45] "GET /api/health HTTP/1.1" 200 -
+2026-10-20T03:06:45.9119012Z 127.0.0.1 - - [20/Oct/2026 03:06:45] "GET / HTTP/1.1" 200 -
+2026-10-20T03:06:45.9144935Z 127.0.0.1 - - [20/Oct/2026 03:06:45] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+2026-10-20T03:06:45.9157322Z 127.0.0.1 - - [20/Oct/2026 03:06:45] "GET /api/workspaces HTTP/1.1" 200 -
+2026-10-20T03:06:45.9170238Z 127.0.0.1 - - [20/Oct/2026 03:06:45] "GET /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+2026-10-20T03:06:46.4182242Z ok
+2026-10-20T03:06:46.4252754Z test_host_and_origin_rejected (test_server.LocalApiTests.test_host_and_origin_rejected) ... 127.0.0.1 - - [20/Oct/2026 03:06:46] "GET /api/workspaces HTTP/1.1" 403 -
+2026-10-20T03:06:46.4263292Z 127.0.0.1 - - [20/Oct/2026 03:06:46] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 403 -
+2026-10-20T03:06:46.4273245Z 127.0.0.1 - - [20/Oct/2026 03:06:46] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 403 -
+2026-10-20T03:06:46.9292058Z ok
+2026-10-20T03:06:46.9356840Z test_reject_path_traversal_and_bad_json (test_server.LocalApiTests.test_reject_path_traversal_and_bad_json) ... 127.0.0.1 - - [20/Oct/2026 03:06:46] "GET /../../store.py HTTP/1.1" 404 -
+2026-10-20T03:06:46.9368848Z 127.0.0.1 - - [20/Oct/2026 03:06:46] "GET /api/workspaces/RFQ%2FOTHER HTTP/1.1" 404 -
+2026-10-20T03:06:46.9376643Z 127.0.0.1 - - [20/Oct/2026 03:06:46] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 400 -
+2026-10-20T03:06:47.4394369Z ok
+2026-10-20T03:06:47.4395637Z test_s3_active_rfqs_and_pdf_disk (test_server.LocalApiTests.test_s3_active_rfqs_and_pdf_disk)
+2026-10-20T03:06:47.4485001Z 中文：真实 HTTP PDF 写入后重新读取。English: HTTP PDF survives disk read. ... 127.0.0.1 - - [20/Oct/2026 03:06:47] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+2026-10-20T03:06:47.4505013Z 127.0.0.1 - - [20/Oct/2026 03:06:47] "GET /api/active HTTP/1.1" 200 -
+2026-10-20T03:06:47.4532358Z 127.0.0.1 - - [20/Oct/2026 03:06:47] "PUT /api/workspaces/RFQ-DEMO-002 HTTP/1.1" 200 -
+2026-10-20T03:06:47.4559978Z 127.0.0.1 - - [20/Oct/2026 03:06:47] "POST /api/active/select HTTP/1.1" 200 -
+2026-10-20T03:06:47.4605057Z 127.0.0.1 - - [20/Oct/2026 03:06:47] "PUT /api/assets/RFQ-DEMO-001/a0b99f9032780126063185186d2d3238114be4c82bff85948181d144555936fb HTTP/1.1" 200 -
+2026-10-20T03:06:47.4616630Z 127.0.0.1 - - [20/Oct/2026 03:06:47] "GET /api/assets/RFQ-DEMO-001/a0b99f9032780126063185186d2d3238114be4c82bff85948181d144555936fb HTTP/1.1" 200 -
+2026-10-20T03:06:47.4629511Z 127.0.0.1 - - [20/Oct/2026 03:06:47] "GET /api/assets/RFQ-DEMO-002/a0b99f9032780126063185186d2d3238114be4c82bff85948181d144555936fb HTTP/1.1" 404 -
+2026-10-20T03:06:47.9652688Z ok
+2026-10-20T03:06:47.9653539Z test_s3_checksum_mismatch_rejected (test_server.LocalApiTests.test_s3_checksum_mismatch_rejected)
+2026-10-20T03:06:47.9734854Z 中文：图纸错误哈希不得落盘。English: Reject mismatched asset hashes. ... 127.0.0.1 - - [20/Oct/2026 03:06:47] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+2026-10-20T03:06:47.9755607Z 127.0.0.1 - - [20/Oct/2026 03:06:47] "PUT /api/assets/RFQ-DEMO-001/0000000000000000000000000000000000000000000000000000000000000000 HTTP/1.1" 400 -
+2026-10-20T03:06:48.4775545Z ok
+2026-10-20T03:06:48.4776921Z test_active_workspace_after_new_and_switch (test_store.SnapshotStoreTests.test_active_workspace_after_new_and_switch)
+2026-10-20T03:06:48.4888131Z 中文：多询价保留并切换。English: Preserve and select independent RFQs. ... ok
+2026-10-20T03:06:48.4958893Z test_confirmed_round_cannot_be_mutated (test_store.SnapshotStoreTests.test_confirmed_round_cannot_be_mutated) ... ok
+2026-10-20T03:06:48.5007820Z test_malformed_and_demo_rejected (test_store.SnapshotStoreTests.test_malformed_and_demo_rejected) ... ok
+2026-10-20T03:06:48.5115395Z test_revision_conflict_preserves_existing_data (test_store.SnapshotStoreTests.test_revision_conflict_preserves_existing_data) ... ok
+2026-10-20T03:06:48.5176753Z test_round_trip_after_reopen (test_store.SnapshotStoreTests.test_round_trip_after_reopen) ... ok
+2026-10-20T03:06:48.5261883Z test_verified_backup (test_store.SnapshotStoreTests.test_verified_backup) ... ok
+2026-10-20T03:06:48.5262850Z 
+2026-10-20T03:06:48.5264936Z ----------------------------------------------------------------------
+2026-10-20T03:06:48.5265548Z Ran 43 tests in 7.001s
+2026-10-20T03:06:48.5265772Z 
+2026-10-20T03:06:48.5266217Z OK
+2026-10-20T03:06:48.5481825Z ##[group]Run npm test
+2026-10-20T03:06:48.5482320Z [36;1mnpm test[0m
+2026-10-20T03:06:48.5576015Z shell: /usr/bin/bash -e {0}
+2026-10-20T03:06:48.5576453Z env:
+2026-10-20T03:06:48.5576899Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:48.5577669Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-20T03:06:48.5578461Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:48.5579176Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:48.5579861Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:48.5580548Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-20T03:06:48.5581406Z ##[endgroup]
+2026-10-20T03:06:48.6749878Z 
+2026-10-20T03:06:48.6750853Z > srm_system@1.0.0 test
+2026-10-20T03:06:48.6751900Z > node --test prototype/m1-lite/tests/*.test.cjs
+2026-10-20T03:06:48.6752818Z 
+2026-10-20T03:06:48.7239231Z TAP version 13
+2026-10-20T03:06:48.7769875Z # Subtest: real changes save after idle; navigation/no-op does not save
+2026-10-20T03:06:48.7770807Z ok 1 - real changes save after idle; navigation/no-op does not save
+2026-10-20T03:06:48.7771959Z   ---
+2026-10-20T03:06:48.7772375Z   duration_ms: 4.308214
+2026-10-20T03:06:48.7772817Z   type: 'test'
+2026-10-20T03:06:48.7773141Z   ...
+2026-10-20T03:06:48.7773797Z # Subtest: new empty workspace needs an initial SQLite commit
+2026-10-20T03:06:48.7774993Z ok 2 - new empty workspace needs an initial SQLite commit
+2026-10-20T03:06:48.7775542Z   ---
+2026-10-20T03:06:48.7775903Z   duration_ms: 3.456241
+2026-10-20T03:06:48.7776306Z   type: 'test'
+2026-10-20T03:06:48.7776659Z   ...
+2026-10-20T03:06:48.7777399Z # Subtest: busy, blocked, missing backend or halted failure prevent autosave
+2026-10-20T03:06:48.7778463Z ok 3 - busy, blocked, missing backend or halted failure prevent autosave
+2026-10-20T03:06:48.7779163Z   ---
+2026-10-20T03:06:48.7779517Z   duration_ms: 3.805744
+2026-10-20T03:06:48.7779932Z   type: 'test'
+2026-10-20T03:06:48.7780253Z   ...
+2026-10-20T03:06:48.7784878Z # Subtest: revision does not influence unchanged snapshot fingerprints
+2026-10-20T03:06:48.7786061Z ok 4 - revision does not influence unchanged snapshot fingerprints
+2026-10-20T03:06:48.7786729Z   ---
+2026-10-20T03:06:48.7787198Z   duration_ms: 2.6803
+2026-10-20T03:06:48.7787611Z   type: 'test'
+2026-10-20T03:06:48.7787939Z   ...
+2026-10-20T03:06:48.8429637Z # Subtest: supplier ZIPs preserve original names/bytes, isolate contents, and omit JSON
+2026-10-20T03:06:48.8431927Z ok 5 - supplier ZIPs preserve original names/bytes, isolate contents, and omit JSON
+2026-10-20T03:06:48.8437060Z   ---
+2026-10-20T03:06:48.8437812Z   duration_ms: 15.71656
+2026-10-20T03:06:48.8438786Z   type: 'test'
+2026-10-20T03:06:48.8439401Z   ...
+2026-10-20T03:06:48.8480600Z # Subtest: reused same PDF appears once per supplier ZIP
+2026-10-20T03:06:48.8482119Z ok 6 - reused same PDF appears once per supplier ZIP
+2026-10-20T03:06:48.8483465Z   ---
+2026-10-20T03:06:48.8486177Z   duration_ms: 5.059228
+2026-10-20T03:06:48.8486605Z   type: 'test'
+2026-10-20T03:06:48.8486942Z   ...
+2026-10-20T03:06:48.8536089Z # Subtest: case-insensitive same-name different-content conflict is rejected
+2026-10-20T03:06:48.8539671Z ok 7 - case-insensitive same-name different-content conflict is rejected
+2026-10-20T03:06:48.8540408Z   ---
+2026-10-20T03:06:48.8540784Z   duration_ms: 5.204819
+2026-10-20T03:06:48.8541698Z   type: 'test'
+2026-10-20T03:06:48.8542071Z   ...
+2026-10-20T03:06:48.8600773Z # Subtest: same filename in separate supplier ZIPs still contains the right bytes
+2026-10-20T03:06:48.8612175Z ok 8 - same filename in separate supplier ZIPs still contains the right bytes
+2026-10-20T03:06:48.8612990Z   ---
+2026-10-20T03:06:48.8613416Z   duration_ms: 6.240846
+2026-10-20T03:06:48.8614493Z   type: 'test'
+2026-10-20T03:06:48.8615114Z   ...
+2026-10-20T03:06:48.8684348Z # Subtest: unsafe names and corrupt PDF content block export
+2026-10-20T03:06:48.8686172Z ok 9 - unsafe names and corrupt PDF content block export
+2026-10-20T03:06:48.8687011Z   ---
+2026-10-20T03:06:48.8687533Z   duration_ms: 4.930815
+2026-10-20T03:06:48.8688111Z   type: 'test'
+2026-10-20T03:06:48.8688614Z   ...
+2026-10-20T03:06:48.8689577Z # Subtest: internal complete backup retains its separate private JSON index
+2026-10-20T03:06:48.8690840Z ok 10 - internal complete backup retains its separate private JSON index
+2026-10-20T03:06:48.8692010Z   ---
+2026-10-20T03:06:48.8692525Z   duration_ms: 6.133198
+2026-10-20T03:06:48.8693676Z   type: 'test'
+2026-10-20T03:06:48.8694346Z   ...
+2026-10-20T03:06:48.8764379Z 1..10
+2026-10-20T03:06:48.8781786Z # tests 10
+2026-10-20T03:06:48.8782697Z # suites 0
+2026-10-20T03:06:48.8783746Z # pass 10
+2026-10-20T03:06:48.8784608Z # fail 0
+2026-10-20T03:06:48.8788955Z # cancelled 0
+2026-10-20T03:06:48.8793312Z # skipped 0
+2026-10-20T03:06:48.8794070Z # todo 0
+2026-10-20T03:06:48.8795138Z # duration_ms 168.990157
+2026-10-20T03:06:48.8938435Z ##[group]Run npm run test:e2e
+2026-10-20T03:06:48.8938937Z [36;1mnpm run test:e2e[0m
+2026-10-20T03:06:48.9022101Z shell: /usr/bin/bash -e {0}
+2026-10-20T03:06:48.9022372Z env:
+2026-10-20T03:06:48.9022645Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:48.9023085Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-20T03:06:48.9023530Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:48.9024119Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:48.9024500Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:06:48.9024884Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-20T03:06:48.9025204Z ##[endgroup]
+2026-10-20T03:06:49.0228643Z 
+2026-10-20T03:06:49.0228958Z > srm_system@1.0.0 test:e2e
+2026-10-20T03:06:49.0229466Z > playwright test
+2026-10-20T03:06:49.0229712Z 
+2026-10-20T03:06:51.0701744Z 
+2026-10-20T03:06:51.0712733Z Running 43 tests using 1 worker
+2026-10-20T03:06:51.0761453Z 
+2026-10-20T03:07:09.0049023Z 
+2026-10-20T03:07:09.0051578Z   ✓   1 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:134:1 › 01 startup, demo isolation, autosave, navigation and restart / 启动与隔离 (16.0s)
+2026-10-20T03:07:20.4880684Z 
+2026-10-20T03:07:20.4893230Z   ✓   2 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:153:1 › 02 XLSX 12/100, duplicates and invalid format / 物料 (11.1s)
+2026-10-20T03:07:32.2166138Z 
+2026-10-20T03:07:32.2170414Z   ✓   3 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:170:1 › 03 suppliers and bidirectional additive allocation / 供应商与分配 (11.3s)
+2026-10-20T03:07:48.1294843Z 
+2026-10-20T03:07:48.1297046Z   ✓   4 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:185:1 › 04 real quote imports, rounds, tiers, immutable confirmation and comparison XLSX / 报价比价 (15.1s)
+2026-10-20T03:08:01.5202589Z 
+2026-10-20T03:08:01.5208674Z   ✓   5 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:230:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 (12.4s)
+2026-10-20T03:08:22.2625169Z 
+2026-10-20T03:08:22.2628616Z   ✓   6 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:261:1 › 06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复 (19.6s)
+2026-10-20T03:08:38.3770510Z 
+2026-10-20T03:08:38.3772763Z   ✓   7 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:297:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 (15.7s)
+2026-10-20T03:08:47.0873454Z 
+2026-10-20T03:08:47.0881520Z   ✓   8 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:314:1 › 08 bad PDF and damaged ZIP never contaminate saved data / 异常回归 (8.4s)
+2026-10-20T03:08:59.1811859Z 
+2026-10-20T03:08:59.1814106Z   ✓   9 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:329:1 › 09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台操作 (11.8s)
+2026-10-20T03:09:06.5276791Z 
+2026-10-20T03:09:06.5285282Z   ✓  10 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:358:1 › 10 buyer continuous allocation to items and drawing select without reload / 跨步骤实时同步 (7.0s)
+2026-10-20T03:09:15.3147907Z 
+2026-10-20T03:09:15.3150808Z   ✓  11 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:383:1 › 11 formal RFQ identity in missing-quote CSV and working export shortcut / 单据追溯 (8.3s)
+2026-10-20T03:09:34.0809404Z 
+2026-10-20T03:09:34.0812199Z   ✓  12 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:415:1 › 12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离 (18.3s)
+2026-10-20T03:09:44.4817984Z 
+2026-10-20T03:09:44.4819961Z   ✓  13 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:445:1 › 13 compact laptop item table after import / 1366首屏物料可见 (10.2s)
+2026-10-20T03:10:08.3416007Z 
+2026-10-20T03:10:08.3418316Z   ✓  14 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:476:1 › 14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯 (22.4s)
+2026-10-20T03:10:24.8559167Z 
+2026-10-20T03:10:24.8561957Z   ✓  15 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:537:1 › 15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离 (15.9s)
+2026-10-20T03:10:25.9668064Z 
+2026-10-20T03:10:25.9672235Z   ✓  16 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:40:1 › ERP01: canonical aliases, optional original columns and conflicting identities are explicit (997ms)
+2026-10-20T03:10:32.2809204Z 
+2026-10-20T03:10:32.2812340Z   ✓  17 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:57:1 › ERP02: real XLSX keeps metadata, separates same code with different specs, and survives SQLite refresh (6.1s)
+2026-10-20T03:10:34.1674102Z 
+2026-10-20T03:10:34.1677616Z   ✓  18 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:89:1 › ERP03: equal specifications merge quantity; conflicting canonical and alias header blocks commit (1.7s)
+2026-10-20T03:10:36.0989628Z 
+2026-10-20T03:10:36.0992254Z   ✓  19 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:110:1 › ERP05: wide 220-column ERP source survives native XLSX importer and remains internal metadata (1.8s)
+2026-10-20T03:10:43.5785306Z 
+2026-10-20T03:10:43.5789112Z   ✓  20 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:133:1 › ERP04: new ERP fields are searchable/editable, internal-vs-supplier export boundaries hold (7.2s)
+2026-10-20T03:10:59.5115158Z 
+2026-10-20T03:10:59.5118696Z   ✓  21 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:206:1 › ERP06: repeated internal XLSX export and UI import keep current/source RFQ IDs distinct (15.6s)
+2026-10-20T03:11:02.4425756Z 
+2026-10-20T03:11:02.4428031Z   ✓  22 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:257:1 › ERP07: specifications visibly distinguish drawing candidates and supplier allocation (2.7s)
+2026-10-20T03:11:10.9433215Z 
+2026-10-20T03:11:10.9436451Z   ✓  23 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:285:1 › ERP08: confirmed cannot supply remains visible in comparison, not a zero-priced offer (8.1s)
+2026-10-20T03:11:16.4131585Z 
+2026-10-20T03:11:16.4154679Z   ✓  24 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:332:1 › ERP09: second-round scope shows specification and preserves selected line identities (4.9s)
+2026-10-20T03:11:23.2468485Z 
+2026-10-20T03:11:23.2494402Z   ✓  25 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:405:1 › ERP10: settings provide three correct XLSX import templates and one header-aware CSV template (6.4s)
+2026-10-20T03:11:42.4998609Z 
+2026-10-20T03:11:42.5000748Z   ✓  26 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:519:1 › ERP11: rejected and canceled material previews do not alter line sequence or saved workspace (19.0s)
+2026-10-20T03:11:45.3720282Z 
+2026-10-20T03:11:45.3722716Z   ✓  27 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:60:1 › UAT-01 categories follow active imported RFQ in both allocation views (2.7s)
+2026-10-20T03:11:53.4003240Z 
+2026-10-20T03:11:53.4005576Z   ✓  28 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:85:1 › UAT-02 manual, pasted and CSV file quotation sources remain distinct in stored state (7.7s)
+2026-10-20T03:11:55.4495715Z 
+2026-10-20T03:11:55.4497805Z   ✓  29 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:134:1 › UAT-03 refused restore is visible within current backup section while project drawer collapsed (1.9s)
+2026-10-20T03:11:58.1176833Z 
+2026-10-20T03:11:58.1179000Z   ✓  30 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:146:1 › UAT-04 item editor Escape, dirty cancel and keyboard focus confinement (2.5s)
+2026-10-20T03:12:00.0417172Z 
+2026-10-20T03:12:00.0419223Z   ✓  31 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:173:1 › UAT-07 drawing guidance reflects currently selected formal RFQ material (1.8s)
+2026-10-20T03:12:07.2263821Z SRM_UI_V2_B1_METRIC={"viewport":{"width":1366,"height":768},"documentWidth":1366,"scrollY":0,"sidebar":{"width":224,"height":768},"tableTop":0,"firstRowTop":547.90625,"firstRowBottom":616.84375,"bodyFont":"14px","tableFont":"12.5px"}
+2026-10-20T03:12:08.2642094Z   ✓  32 prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:53:3 › UI V2 B1 real workspace and visual layout 1366x768 (7.9s)
+2026-10-20T03:12:15.6462856Z SRM_UI_V2_B1_METRIC={"viewport":{"width":1600,"height":900},"documentWidth":1600,"scrollY":0,"sidebar":{"width":224,"height":900},"tableTop":0,"firstRowTop":611.328125,"firstRowBottom":680.265625,"bodyFont":"14px","tableFont":"12.5px"}
+2026-10-20T03:12:16.7125744Z   ✓  33 prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:53:3 › UI V2 B1 real workspace and visual layout 1600x900 (8.2s)
+2026-10-20T03:12:19.5962927Z SRM_UI_V2_B2_METRIC={"width":1366,"height":768,"documentWidth":1366,"scrollY":0,"navBottom":255.84375,"rowTop":642.546875,"rowBottom":730.5625}
+2026-10-20T03:12:23.3428574Z   ✓  34 prototype/m1-lite/tests/e2e/ui-v2-b2.spec.cjs:41:1 › B2 allocation real-browser 1366x768 (6.3s)
+2026-10-20T03:12:26.4653315Z SRM_UI_V2_B2_METRIC={"width":1600,"height":900,"documentWidth":1600,"scrollY":0,"navBottom":274.375,"rowTop":678.96875,"rowBottom":766.984375}
+2026-10-20T03:12:30.4823932Z   ✓  35 prototype/m1-lite/tests/e2e/ui-v2-b2.spec.cjs:41:1 › B2 allocation real-browser 1600x900 (6.7s)
+2026-10-20T03:12:34.3580155Z SRM_UI_V2_B3_QUOTE_METRIC={"viewport":{"width":1366,"height":768},"documentWidth":1366,"roundTop":1347.6875,"coverageTop":914.796875,"firstImportTop":463.515625,"primaryVisible":["confirmQuoteRound"]}
+2026-10-20T03:12:34.8722515Z SRM_UI_V2_B3_COMPARE_METRIC={"width":1366,"height":768,"documentWidth":1366,"tableTop":764.03125,"comparableScopeTop":639.03125}
+2026-10-20T03:12:39.2403566Z   ✓  36 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:46:1 › B3 quote and comparison with real SQLite 1366x768 (8.2s)
+2026-10-20T03:12:43.0620654Z SRM_UI_V2_B3_QUOTE_METRIC={"viewport":{"width":1600,"height":900},"documentWidth":1600,"roundTop":1361.109375,"coverageTop":924.21875,"firstImportTop":534.9375,"primaryVisible":["confirmQuoteRound"]}
+2026-10-20T03:12:43.5822812Z SRM_UI_V2_B3_COMPARE_METRIC={"width":1600,"height":900,"documentWidth":1600,"tableTop":827.453125,"comparableScopeTop":702.453125}
+2026-10-20T03:12:47.9223254Z   ✓  37 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:46:1 › B3 quote and comparison with real SQLite 1600x900 (8.0s)
+2026-10-20T03:12:57.9501311Z 
+2026-10-20T03:12:57.9503313Z   ✓  38 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:138:1 › B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态 (9.5s)
+2026-10-20T03:12:59.9378219Z SRM_V2_EXPLORE_METRIC={"stage":"items","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1268.015625,"bottom":1268.015625,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":268.34375,"width":926,"height":915.671875,"bottom":1184.015625,"right":1008},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":57,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:00.3379232Z SRM_V2_EXPLORE_METRIC={"stage":"assign","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1217.90625,"bottom":1217.90625,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":268.34375,"width":926,"height":865.5625,"bottom":1133.90625,"right":1008},"table":{"x":92,"y":603.90625,"width":577.390625,"height":1035.578125,"bottom":1639.484375,"right":669.390625},"tablewrap":{"x":91,"y":602.90625,"width":579.390625,"height":480,"bottom":1082.90625,"right":670.390625},"firstDataRow":{"x":92,"y":632.296875,"width":577.390625,"height":84.015625,"bottom":716.3125,"right":669.390625},"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":49,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:00.7000027Z SRM_V2_EXPLORE_METRIC={"stage":"quoteImport","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1670.03125,"bottom":1670.03125,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":268.34375,"width":926,"height":1317.6875,"bottom":1586.03125,"right":1008},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":{"x":82,"y":481.015625,"width":926,"height":458,"bottom":939.015625,"right":1008},"quoteReview":{"x":82,"y":951.015625,"width":926,"height":440.78125,"bottom":1391.796875,"right":1008},"confirmButton":{"x":878,"y":1339.796875,"width":114,"height":38,"bottom":1377.796875,"right":992},"tableScrollable":false,"panelButtons":21,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:01.1002724Z SRM_V2_EXPLORE_METRIC={"stage":"quotes","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1232.359375,"bottom":1232.359375,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":268.34375,"width":926,"height":880.015625,"bottom":1148.359375,"right":1008},"table":{"x":101,"y":776.78125,"width":888,"height":38.390625,"bottom":815.171875,"right":989},"tablewrap":{"x":100,"y":775.78125,"width":890,"height":40.390625,"bottom":816.171875,"right":990},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":5,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:01.5471911Z SRM_V2_EXPLORE_METRIC={"stage":"settings","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1378.546875,"bottom":1378.546875,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":268.34375,"width":926,"height":1026.203125,"bottom":1294.546875,"right":1008},"table":null,"tablewrap":null,"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":7,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:03.5994259Z   ✓  39 prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:77:1 › EXPLORATORY: desktop stages, control visibility and geometry 1024x768 (5.0s)
+2026-10-20T03:13:05.5694176Z SRM_V2_EXPLORE_METRIC={"stage":"items","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1250.515625,"bottom":1250.515625,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":250.84375,"width":1088,"height":915.671875,"bottom":1166.515625,"right":1339},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":57,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:06.0179352Z SRM_V2_EXPLORE_METRIC={"stage":"assign","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1225.40625,"bottom":1225.40625,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":261.84375,"width":1088,"height":879.5625,"bottom":1141.40625,"right":1339},"table":{"x":267,"y":604.40625,"width":701.03125,"height":1087.578125,"bottom":1691.984375,"right":968.03125},"tablewrap":{"x":266,"y":603.40625,"width":703.03125,"height":480,"bottom":1083.40625,"right":969.03125},"firstDataRow":{"x":267,"y":636.796875,"width":701.03125,"height":88.015625,"bottom":724.8125,"right":968.03125},"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":49,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:06.4692185Z SRM_V2_EXPLORE_METRIC={"stage":"quoteImport","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1463.53125,"bottom":1463.53125,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":250.84375,"width":1088,"height":1128.6875,"bottom":1379.53125,"right":1339},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":{"x":251,"y":463.515625,"width":1088,"height":348.5,"bottom":812.015625,"right":1339},"quoteReview":{"x":251,"y":824.015625,"width":1088,"height":361.28125,"bottom":1185.296875,"right":1339},"confirmButton":{"x":1209,"y":1133.296875,"width":114,"height":38,"bottom":1171.296875,"right":1323},"tableScrollable":false,"panelButtons":21,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:06.8598637Z SRM_V2_EXPLORE_METRIC={"stage":"quotes","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1219.609375,"bottom":1219.609375,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":250.84375,"width":1088,"height":884.765625,"bottom":1135.609375,"right":1339},"table":{"x":270,"y":764.03125,"width":1050,"height":38.390625,"bottom":802.421875,"right":1320},"tablewrap":{"x":269,"y":763.03125,"width":1052,"height":40.390625,"bottom":803.421875,"right":1321},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":5,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:07.2699851Z SRM_V2_EXPLORE_METRIC={"stage":"settings","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1361.046875,"bottom":1361.046875,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":250.84375,"width":1088,"height":1026.203125,"bottom":1277.046875,"right":1339},"table":null,"tablewrap":null,"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":7,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:08.8989362Z   ✓  40 prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:77:1 › EXPLORATORY: desktop stages, control visibility and geometry 1366x768 (4.7s)
+2026-10-20T03:13:10.8696706Z SRM_V2_EXPLORE_METRIC={"stage":"items","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1313.9375,"bottom":1313.9375,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":283.375,"width":1322,"height":946.5625,"bottom":1229.9375,"right":1573},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":57,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:11.3082321Z SRM_V2_EXPLORE_METRIC={"stage":"assign","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1261.828125,"bottom":1261.828125,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":283.375,"width":1322,"height":894.453125,"bottom":1177.828125,"right":1573},"table":{"x":267,"y":640.828125,"width":860.15625,"height":1087.578125,"bottom":1728.40625,"right":1127.15625},"tablewrap":{"x":266,"y":639.828125,"width":862.15625,"height":480,"bottom":1119.828125,"right":1128.15625},"firstDataRow":{"x":267,"y":673.21875,"width":860.15625,"height":88.015625,"bottom":761.234375,"right":1127.15625},"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":49,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:11.7278440Z SRM_V2_EXPLORE_METRIC={"stage":"quoteImport","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1480.953125,"bottom":1480.953125,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":283.375,"width":1322,"height":1113.578125,"bottom":1396.953125,"right":1573},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":{"x":251,"y":534.9375,"width":1322,"height":286.5,"bottom":821.4375,"right":1573},"quoteReview":{"x":251,"y":833.4375,"width":1322,"height":361.28125,"bottom":1194.71875,"right":1573},"confirmButton":{"x":1443,"y":1142.71875,"width":114,"height":38,"bottom":1180.71875,"right":1557},"tableScrollable":false,"panelButtons":21,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:12.1312836Z SRM_V2_EXPLORE_METRIC={"stage":"quotes","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1283.03125,"bottom":1283.03125,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":283.375,"width":1322,"height":915.65625,"bottom":1199.03125,"right":1573},"table":{"x":270,"y":827.453125,"width":1284,"height":38.390625,"bottom":865.84375,"right":1554},"tablewrap":{"x":269,"y":826.453125,"width":1286,"height":40.390625,"bottom":866.84375,"right":1555},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":5,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:12.6004435Z SRM_V2_EXPLORE_METRIC={"stage":"settings","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1444.46875,"bottom":1444.46875,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":283.375,"width":1322,"height":1077.09375,"bottom":1360.46875,"right":1573},"table":null,"tablewrap":null,"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":7,"hiddenOffscreenControls":[],"saveMessage":"自动保存：检测到业务数据修改，等待操作结束"}
+2026-10-20T03:13:14.0803337Z   ✓  41 prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:77:1 › EXPLORATORY: desktop stages, control visibility and geometry 1600x900 (4.6s)
+2026-10-20T03:13:22.5033524Z   ✓  42 prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:45:1 › UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归 (7.9s)
+2026-10-20T03:13:26.5406090Z   ✓  43 prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:111:1 › UI V3.1 P2 buyer layout and semantic controls / 正式 RFQ 标题、抽屉、分配与决策 (3.6s)
+2026-10-20T03:13:26.8999264Z 
+2026-10-20T03:13:26.9005479Z   43 passed (6.6m)
+2026-10-20T03:13:27.5427700Z ##[group]Run actions/upload-artifact@v4
+2026-10-20T03:13:27.5428017Z with:
+2026-10-20T03:13:27.5428230Z   name: srm-playwright-evidence
+2026-10-20T03:13:27.5428520Z   path: playwright-report/
+test-results/
+
+2026-10-20T03:13:27.5428808Z   retention-days: 14
+2026-10-20T03:13:27.5429028Z   if-no-files-found: warn
+2026-10-20T03:13:27.5429257Z   compression-level: 6
+2026-10-20T03:13:27.5429470Z   overwrite: false
+2026-10-20T03:13:27.5429691Z   include-hidden-files: false
+2026-10-20T03:13:27.5429919Z env:
+2026-10-20T03:13:27.5430179Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:13:27.5430824Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-20T03:13:27.5431472Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:13:27.5431854Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:13:27.5432221Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T03:13:27.5432631Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-20T03:13:27.5432953Z ##[endgroup]
+2026-10-20T03:13:27.7242457Z (node:4676) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-20T03:13:27.7252204Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-20T03:13:27.9412277Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-20T03:13:27.9414219Z The least common ancestor is /home/runner/work/SRM_System/SRM_System. This will be the root directory of the artifact
+2026-10-20T03:13:27.9415460Z With the provided path, there will be 356 files uploaded
+2026-10-20T03:13:27.9416348Z Artifact name is valid!
+2026-10-20T03:13:27.9416821Z Root directory input is valid!
+2026-10-20T03:13:27.9753578Z ##[error]Failed to CreateArtifact: Artifact storage quota has been hit. Unable to upload any new artifacts. Usage is recalculated every 6-12 hours.
+More info on storage limits: https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#calculating-minute-and-storage-spending
+2026-10-20T03:13:28.0038327Z Post job cleanup.
+2026-10-20T03:13:28.1616974Z (node:4690) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-20T03:13:28.1618675Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-20T03:13:28.1934584Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/SRM_System/SRM_System --files-from manifest.txt --use-compress-program zstdmt
+2026-10-20T03:13:28.3303530Z (node:4690) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-20T03:13:28.4280838Z Sent 3067293 of 3067293 (100.0%), 23.8 MBs/sec
+2026-10-20T03:13:28.5033234Z Cache saved with the key: node-cache-Linux-x64-npm-b93f3a72d71ff38f567d3c6b02a3a8e5b3a0d07477ee1e9cb3b1591995107b64
+2026-10-20T03:13:28.5172411Z Post job cleanup.
+2026-10-20T03:13:28.6518564Z (node:4710) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-20T03:13:28.6520391Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-20T03:13:28.6778675Z Post job cleanup.
+2026-10-20T03:13:28.8223907Z [command]/usr/bin/git version
+2026-10-20T03:13:28.8400703Z git version 2.55.0
+2026-10-20T03:13:28.8502117Z Temporarily overriding HOME='/home/runner/work/_temp/5b2438cc-5fb4-4350-82cb-77629f056df4' before making global git config changes
+2026-10-20T03:13:28.8515036Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-20T03:13:28.8529618Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SRM_System/SRM_System
+2026-10-20T03:13:28.8674653Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-20T03:13:28.8822941Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-20T03:13:28.9592498Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-20T03:13:28.9653552Z http.https://github.com/.extraheader
+2026-10-20T03:13:28.9698048Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-20T03:13:28.9825262Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-20T03:13:29.0561798Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-20T03:13:29.0670761Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-20T03:13:29.1311682Z Cleaning up orphan processes
+2026-10-20T03:13:29.1729631Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

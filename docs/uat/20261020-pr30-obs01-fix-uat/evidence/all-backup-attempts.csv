@@ -1,0 +1,30 @@
+﻿id,timeUTC,expected_or_intended,actual_outcome,backup_request_count,HTTP,real_download_file,gate_dirty,gate_busy,interpretation
+O01,2026-10-20T03:45:02.039Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O01.zip,False,False,
+O02,2026-10-20T03:45:03.953Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O02.zip,False,False,
+O03,2026-10-20T03:45:05.927Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O03.zip,False,False,
+O04,2026-10-20T03:45:08.506Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O04.zip,False,False,
+O05,2026-10-20T03:45:10.300Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O05.zip,False,False,
+O06,2026-10-20T03:45:12.182Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O06.zip,False,False,
+O07,2026-10-20T03:45:14.278Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O07.zip,False,False,
+O08,2026-10-20T03:45:16.716Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O08.zip,False,False,
+O09,2026-10-20T03:45:18.456Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O09.zip,False,False,
+O10,2026-10-20T03:45:20.348Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O10.zip,False,False,
+O11,2026-10-20T03:45:22.509Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O11.zip,False,False,
+O12,2026-10-20T03:45:24.877Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O12.zip,False,False,
+O13,2026-10-20T03:45:26.784Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O13.zip,False,False,
+O14,2026-10-20T03:45:28.721Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O14.zip,False,False,
+O15,2026-10-20T03:45:30.836Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O15.zip,False,False,
+O16,2026-10-20T03:45:33.242Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O16.zip,False,False,
+O17,2026-10-20T03:45:35.141Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O17.zip,False,False,
+O18,2026-10-20T03:45:37.544Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O18.zip,False,False,
+O19,2026-10-20T03:45:39.822Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O19.zip,False,False,
+O20,2026-10-20T03:45:42.259Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O20.zip,False,False,
+O21,2026-10-20T03:45:44.014Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O21.zip,not instrumented,not instrumented,
+O22,2026-10-20T03:45:45.907Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O22.zip,not instrumented,not instrumented,
+O23,2026-10-20T03:45:49.283Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O23.zip,not instrumented,not instrumented,
+O24,2026-10-20T03:45:52.054Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-O24.zip,not instrumented,not instrumented,
+N01,2026-10-20T03:45:54.063Z,blocked with visible feedback,EXPECTED_BLOCK,0,,,True,False,"N01 UI visibility FAIL, safety PASS"
+N02,2026-10-20T03:46:26.277Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-N02.zip,False,False,"MISSED WINDOW: requested in-flight control, actual gate dirty=false/busy=false after save; classify actual download, not a busy protection pass"
+N03,2026-10-20T03:46:27.951Z,download,DOWNLOAD_SUCCESS,2,201/200,obs-N03.zip,False,False,
+F01,see feedback-browser.jsonl,real unsaved edit,EXPECTED_BLOCK,0,,,not instrumented,not instrumented,Project drawer open: left-side feedback visible; top indicator offscreen before scroll
+B01,see feedback-browser.jsonl,held genuine autosave,EXPECTED_BLOCK,0,,,not instrumented,native disabled=true,Project drawer open: left-side feedback visible; top indicator offscreen before scroll
