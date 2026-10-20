@@ -1,0 +1,1 @@
+await check('confirmed quoted line drawing version locked',await n.locator('#pilotDrawingVersion').isDisabled(),true);await n.locator('#pilotDrawingInfo').scrollIntoViewIfNeeded();await shot('new-P1-confirmed-line-drawing-controls-locked',n);global.r1Saved=fp('/tmp/srm-pr20-data','new-P1-R1-before-R2');
