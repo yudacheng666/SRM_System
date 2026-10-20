@@ -591,6 +591,6 @@ test('44 S4 blocked-download reason stays visible beside the action / 备份阻�
   await expect(page.locator('#pilotS4DownloadFull')).toBeDisabled();
   // 中文：等待自动保存完成后，旧的阻止提示应清除，避免误导采购员。
   // English: Once autosave finishes, clear stale blocking feedback so it cannot mislead the buyer.
-  await expect.poll(async()=> (await snapshot(page)).revision).toBeGreaterThan(0);
-  await expect(feedback).toBeHidden({timeout:6000});
+  await expect(page.locator('#pilotAutosaveStatus')).toContainText('无待保存修改',{timeout:6000});
+  await expect(feedback).toBeHidden();
 });
