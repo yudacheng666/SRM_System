@@ -1,0 +1,139 @@
+{
+  "productSHA": "d411f4e17a0ab8e75412e5c91a91ccba6abbbc0e",
+  "overall": "NOT-READY",
+  "basis": "Independent integrated regression incomplete after first false assertion triggered mandatory stop; not proof of an integration product regression",
+  "CI": "Both required workflows SUCCESS",
+  "rawInitialAssertions": {
+    "total": 31,
+    "true": 30,
+    "false": 1
+  },
+  "firstFailedCase": "REG-02/SAVE500",
+  "classification": "PRECONDITION NOT MET in original trial; cannot prove existing warning cleared",
+  "sameCaseEvidenceFollowupCount": 1,
+  "sameCaseFollowupOutcome": "PASS: established warning retained on controlled failed save",
+  "confirmedNewP1P2P3": [],
+  "needsDeveloperAssessment": "Save failure can precede attempted backup click; native action already disabled and local warning never established, status offscreen/collapsed. Visibility observation only, not independently classified as a new defect.",
+  "expansionResumedAfterStop": false,
+  "requiredUntested": [
+    "REG-02 remainder",
+    "REG-03",
+    "REG-04",
+    "REG-05",
+    "REG-06",
+    "REG-07",
+    "REG-08",
+    "REG-09",
+    "REG-10",
+    "REG-11",
+    "REG-12",
+    "REG-13",
+    "REG-14"
+  ],
+  "cases": [
+    {
+      "id": "CI-UI",
+      "target": "UI Unified Candidate Acceptance",
+      "result": "PASS"
+    },
+    {
+      "id": "CI-S4",
+      "target": "S3/S4 Regression",
+      "result": "PASS"
+    },
+    {
+      "id": "REG-01",
+      "target": "三尺寸折叠/滚动警告、真实autosave清除、随后实际下载 / Three-size notice,clean-save clearing,actual downloads",
+      "result": "PASS"
+    },
+    {
+      "id": "REG-02-BUSY",
+      "target": "真实PUT进行中保持既有警告、禁用备份 / Genuine pending PUT protection",
+      "result": "PASS"
+    },
+    {
+      "id": "REG-02-SAVE500-ORIGINAL",
+      "target": "原警告保留断言false；点击前已失败/禁用，警告未建立 / Original assertion false,precondition unmet",
+      "result": "FAIL (assertion; product verdict INCONCLUSIVE)"
+    },
+    {
+      "id": "REG-02-SAVE500-MINIMAL",
+      "target": "仅一次同例补验，先建立警告再500，保持警告/禁用/无备份请求/DB不变 / One same-case controlled recheck",
+      "result": "PASS (limited evidence)"
+    },
+    {
+      "id": "REG-02-REMAINDER",
+      "target": "网络/409/真实双窗口/实际断服及成功重试 / Remaining failure modes and recovery",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "REG-03",
+      "target": "完整物料/供应商/多对多/图纸 / Full material,supplier,assignment,drawing flow",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "REG-04",
+      "target": "确认报价、同轮修订、锁定历史 / Confirmed quote/revision/locked history",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "REG-05",
+      "target": "并列最低、高价理由、批量和人工状态 / Ties,higher-price reasons,bulk/manual awards",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "REG-06",
+      "target": "逐页三尺寸布局、导航、旧UI兼容 / Page layout/navigation/prior UI compatibility",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "REG-07",
+      "target": "采购CSV/Excel/比较单实际金额 / Actual purchasing exports and totals",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "REG-08",
+      "target": "跨RFQ、F5、真实主服务重启 / RFQ/F5/main-service restart",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "REG-09",
+      "target": "空目录S4恢复与非空拒绝 / First empty restore/nonempty refusal",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "REG-10",
+      "target": "新报价复核、刷新、重新选择 / New-quote review persistence/reselection",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "REG-11",
+      "target": "OBS快速重复24次 /24 rapid OBS repeats",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "REG-12",
+      "target": "最新ZIP完整历史恢复与安全 / Latest full-history restore",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "REG-13",
+      "target": "供应商包/原生PDF/非法取消预览 / Supplier package,PDF,invalid/canceled preview",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "REG-14",
+      "target": "全部S4 ZIP/SQLite/PDF业务完整性 / Full S4 archive/database/PDF validation",
+      "result": "NOT TESTED"
+    }
+  ],
+  "outsideScopeNOTTESTED": [
+    "Native Windows manual use",
+    "Desktop Excel recalculation/printing",
+    "Production physical failures/long full-load concurrency",
+    "Exhaustive pixel parity and every business combination"
+  ],
+  "naming": "20261020-pr24-integration-d411f4e/REPORT.zh-CN.md,REPORT.en.md,FAILURE-REG02-SAVE500.md",
+  "productOriginalTestCIOrDevelopmentChanges": false,
+  "PRsMergedOrClosed": false
+}

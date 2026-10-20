@@ -1,0 +1,160 @@
+{
+  "productSHA": "d411f4e17a0ab8e75412e5c91a91ccba6abbbc0e",
+  "overall": "NOT-READY: confirmed P2 export and P3 view warning; not whole-product acceptance",
+  "statuses": [
+    {
+      "id": "GATE",
+      "status": "PASS",
+      "scope": "准确产品SHA、两项Windows/Linux CI及HTTP文件字节 / Exact product, CI gate and served bytes",
+      "evidence": "evidence/runtime-identity.json"
+    },
+    {
+      "id": "B01",
+      "status": "PASS",
+      "scope": "真实XLSX物料/供应商导入、同编码不同规格、追加多对多关联 / Real XLSX imports and additive relationships",
+      "evidence": "evidence/02-supplier-multi-allocation.png"
+    },
+    {
+      "id": "B02",
+      "status": "PASS",
+      "scope": "图纸唯一/多候选/未匹配预览、确认、重启后真实PDF / Drawing matching and native PDF after restart",
+      "evidence": "evidence/PDF-real-preview-after-restart.png"
+    },
+    {
+      "id": "B03",
+      "status": "PASS",
+      "scope": "报价V1锁定、同轮V2草稿不生效、确认后差异及V1保留 / Quote history, locks and effective revision",
+      "evidence": "evidence/V04-V2-confirmed-diff.png"
+    },
+    {
+      "id": "B04",
+      "status": "PASS",
+      "scope": "20/20单行键盘及批量定标不需理由；8/12真正高价拒绝空白理由 / Tied-lowest vs genuine higher-price reasons",
+      "evidence": "evidence/T04-bulk-B-tie-has-no-exception.png"
+    },
+    {
+      "id": "B05",
+      "status": "PASS",
+      "scope": "人工选择清除待核对；C20不误重开，B21重开，F5保留，改选C20清除 / Review lifecycle with new confirmed prices",
+      "evidence": "evidence/T09-reconfirmed-C-no-pending.png"
+    },
+    {
+      "id": "B06",
+      "status": "PASS",
+      "scope": "CSV实际数量金额/共同范围、报价报表/业务Excel内容 / CSV and business/comparison workbook contents",
+      "evidence": "evidence/business-file-validation.json"
+    },
+    {
+      "id": "B07",
+      "status": "PASS",
+      "scope": "手动保存、F5、跨RFQ、真实服务重启、非法/取消预览不变更业务 / Save, refresh, RFQ switch, service restart and invalid preview safety",
+      "evidence": "evidence/19-final.json"
+    },
+    {
+      "id": "S01",
+      "status": "PASS",
+      "scope": "24次RFQ切换+顶部管理入口立即S4下载：24成功、0失败、0超时 / 24 rapid S4 downloads after RFQ switch",
+      "evidence": "evidence/obs-attempts.csv"
+    },
+    {
+      "id": "S02",
+      "status": "PASS",
+      "scope": "本轮25份新S4及3份PR35同SHA历史输入，完整ZIP/SQLite历史/PDF校验 / 25 new plus3 historical archive content checks",
+      "evidence": "evidence/archive-validation.json"
+    },
+    {
+      "id": "S03",
+      "status": "PASS",
+      "scope": "两份不同阶段备份恢复到两个空目录；两个非空拒绝且不覆盖 / Two empty restores and two nonempty refusals",
+      "evidence": "evidence/history-final-restored.json"
+    },
+    {
+      "id": "S04",
+      "status": "PASS",
+      "scope": "真实后端409及实际断服保持警告/不备份/数据不覆盖，重载或真保存后清除 / Actual409 and service outage safety",
+      "evidence": "evidence/final-fault-results.json"
+    },
+    {
+      "id": "U01",
+      "status": "PASS",
+      "scope": "三尺寸页面、导航、V01–V04、禁用报价按钮和解释提示 / Three-size layout and disabled quote controls",
+      "evidence": "evidence/prod-1024-items.png"
+    },
+    {
+      "id": "F01",
+      "status": "FAIL P2",
+      "scope": "供应商A首轮询价包导出被“未保存”误阻止，20秒无下载 / First supplier RFQ export falsely refused",
+      "evidence": "ISSUE-P2-EXPORT-01.md"
+    },
+    {
+      "id": "F02",
+      "status": "FAIL P3",
+      "scope": "只读界面切换后新建RFQ误报未保存，快照相同 / View-only navigation falsely warns of unsaved edits",
+      "evidence": "ISSUE-P3-NAV-01.md"
+    },
+    {
+      "id": "H01",
+      "status": "PASS prior / 原有证据",
+      "scope": "PR35同SHA三尺寸S4邻近原因/自动保存清除、BUSY及有限500补验；本轮不重算原31断言 / Prior bounded same-SHA evidence only",
+      "evidence": "https://github.com/yudacheng666/SRM_System/blob/f3274a8f0e25b02b8108bfdbb597d839750ab3eb/docs/uat/20261020-pr24-integration-d411f4e/REPORT.en.md"
+    },
+    {
+      "id": "N01",
+      "status": "NOT TESTED",
+      "scope": "Windows本机、桌面Excel重算打印、生产物理故障/长期负载 / Native Windows, desktop Excel and physical/long-duration failures",
+      "evidence": "REPORT.en.md"
+    },
+    {
+      "id": "N02",
+      "status": "NOT TESTED",
+      "scope": "PR23完整像素一致性、所有业务组合/多轮阶梯价/全部模板重新填充导入 / Full design pixel parity and every business/import combination",
+      "evidence": "REPORT.en.md"
+    },
+    {
+      "id": "N03",
+      "status": "NOT TESTED this continuation",
+      "scope": "受控HTTP500与route.abort不在本轮重跑；500仅引用PR35有限补验 / Controlled500 and route.abort not rerun",
+      "evidence": "REPORT.en.md"
+    }
+  ],
+  "freshRawMainChecks": {
+    "total": 189,
+    "pass": 188,
+    "false": 1
+  },
+  "freshFaultChecks": {
+    "total": 15,
+    "pass": 15
+  },
+  "separateDriverFailures": 1,
+  "driverFailureMeaning": "Supplier-A first download wait20s; product unsaved refusal captured; separate successful retry preserved",
+  "fileEventChecks": {
+    "total": 311,
+    "pass": 311
+  },
+  "businessFileChecks": {
+    "total": 37,
+    "pass": 37
+  },
+  "rapidDownloads": {
+    "attempts": 24,
+    "success": 24,
+    "fail": 0,
+    "timeout": 0
+  },
+  "newFullS4Files": 25,
+  "historicalSameSHAInputs": 3,
+  "newConfirmedFindings": [
+    {
+      "id": "P2-EXPORT-01",
+      "severity": "P2"
+    },
+    {
+      "id": "P3-NAV-01",
+      "severity": "P3"
+    }
+  ],
+  "newP1": 0,
+  "historicalEvidencePR35Preserved": true,
+  "note": "Checks count assertions, not independent business scenarios. P2 driver error is not included in the189 raw boolean checks."
+}
