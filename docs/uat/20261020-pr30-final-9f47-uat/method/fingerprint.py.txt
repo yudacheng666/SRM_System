@@ -1,0 +1,7 @@
+from pathlib import Path
+import json,sqlite3,hashlib,sys
+r=Path(sys.argv[1]);o=Path(sys.argv[2]);d={'workspaces':{},'pdf':{}};c=sqlite3.connect(f'file:{r}/srm.sqlite3?mode=ro',uri=True)
+for k,v,s in c.execute('select workspace_id,revision,snapshot_json from workspaces order by workspace_id'):
+ d['workspaces'][k]={'revision':v,'sha256':hashlib.sha256(s.encode()).hexdigest(),'snapshot':json.loads(s)};(o.parent/(o.stem+'-'+k+'-original.json')).write_text(s)
+for p in r.rglob('*.pdf'):d['pdf'][str(p.relative_to(r))]=hashlib.sha256(p.read_bytes()).hexdigest()
+o.write_text(json.dumps(d,ensure_ascii=False,indent=2))

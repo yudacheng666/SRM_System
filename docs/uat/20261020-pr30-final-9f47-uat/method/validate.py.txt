@@ -1,0 +1,32 @@
+from pathlib import Path
+import json,sqlite3,zipfile,hashlib,csv,collections,datetime
+R=Path('/tmp/f9');E=R/'evidence';out=[]
+def ck(n,a,e):
+ p=a==e;out.append({'label':n,'actual':a,'expected':e,'pass':p});print('PASS'if p else'FAIL',n)
+def archive(file,phase):
+ p=R/'downloads'/file;expected=json.load(open(E/phase))
+ with zipfile.ZipFile(p)as z:
+  ck(file+' CRC',z.testzip(),None);m=json.loads(z.read('manifest.json'));db=z.read(m['database']['path']);ck(file+' manifest DB SHA',hashlib.sha256(db).hexdigest(),m['database']['sha256']);temp=R/('check-'+file+'.sqlite3');temp.write_bytes(db);c=sqlite3.connect('file:'+str(temp)+'?mode=ro',uri=True);ck(file+' SQLite integrity',c.execute('pragma integrity_check').fetchone()[0],'ok')
+  for t in ['workspaces','workspace_versions']:ck(file+' full '+t,[list(x)for x in c.execute('select * from '+t+' order by workspace_id,revision')],expected[t])
+  pdf={Path(x['path']).name:hashlib.sha256(z.read(x['path'])).hexdigest()for x in m['assets']};ck(file+' PDF bytes',pdf,expected['pdf'])
+  for a in m['assets']:ck(file+' PDF manifest SHA '+a['path'],hashlib.sha256(z.read(a['path'])).hexdigest(),a['sha256'])
+ return {'file':file,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'phase':phase,'currentRows':len(expected['workspaces']),'historyRows':len(expected['workspace_versions']),'pdfCount':len(expected['pdf'])}
+a=json.load(open(E/'obs-attempts.json'));events=[json.loads(l)for l in open(E/'obs-browser.jsonl')];archives=[]
+ck('24 exact positive fast repeats',len(a),24)
+for x in a:
+ es=[v for v in events if v.get('trial')==x['id']];x['downloadEvents']=[v for v in es if v['kind']=='download-event'];ck(x['id']+' successful real download',x['outcome'],'DOWNLOAD_SUCCESS');ck(x['id']+' request-response chain',[v['status']for v in x['responses']],[201,200]);ck(x['id']+' one download event',len(x['downloadEvents']),1);ck(x['id']+' trusted click',x['trustedClicks'],1)
+ if x['gate']:ck(x['id']+' admin clean entry',[x['gate'][0]['dirty'],x['gate'][0]['busy'],x['gate'][0]['blocked']],[False,False,False])
+ archives.append(archive(x['file'],'history-obs-baseline.json'))
+archives.append(archive('full-S4.zip','history-first.json'))
+for w in [1366,1024,1600]:archives.append(archive('p3-'+str(w)+'.zip','history-p3-'+str(w)+'.json'))
+ck('latest full history restore',json.load(open(E/'history-final-restored.json')),json.load(open(E/'history-final.json')))
+allchecks={};rawerrors={}
+for fn in ['browser.jsonl','feedback-browser.jsonl','conflict-recheck-browser.jsonl']:
+ es=[json.loads(l)for l in open(E/fn)];allchecks[fn]=[x for x in es if x['kind']=='check'];rawerrors[fn]=[x for x in es if x['kind']=='driver-error']
+classification={'note':'Final-candidate checks recorded directly; prior PR33 driver/precondition limitations are historical evidence, not reused as final tests.'}
+summary={'productSHA':'9f47a238bc9b3015f713c4e075977d98c1cb9ca1','timeUTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'fastRepeats':24,'fastDownloads':sum(x['outcome']=='DOWNLOAD_SUCCESS'for x in a),'fastUnexpectedTimeouts':sum(x['downloadTimedOut']for x in a),'instrumentedPositiveEntries':sum(bool(x['gate'])for x in a),'adminToBackupMs':{'min':min(x['adminToBackupMs']for x in a),'max':max(x['adminToBackupMs']for x in a)},'archiveCount':len(archives),'archives':archives,'fileValidationChecks':len(out),'fileValidationPassed':sum(x['pass']for x in out),'rawIndependentChecks':{fn:{'total':len(v),'passed':sum(x['pass']for x in v)}for fn,v in allchecks.items()},'rawErrors':rawerrors,'rawFalseChecks':[x for v in allchecks.values()for x in v if not x['pass']],'classification':classification,'P3_resolutions':[{'id':x['id'],'blockedNoticeInViewport':x['after']['notice']['inViewport'],'savedNoticeHidden':x['saved']['notice']['hidden'],'beforeScrollY':x['before']['scrollY'],'noticeRect':x['after']['notice']['rect']}for x in json.load(open(E/'feedback-results.json'))if x['id'].startswith('P3-')]}
+(E/'archive-validation.json').write_text(json.dumps(out,ensure_ascii=False,indent=2));(E/'obs-attempts-enriched.json').write_text(json.dumps(a,ensure_ascii=False,indent=2));(E/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2));(E/'independent-checks.json').write_text(json.dumps(allchecks,ensure_ascii=False,indent=2));(E/'validation-source.txt').write_text(Path(__file__).read_text())
+with(E/'obs-attempts.csv').open('w',encoding='utf-8-sig',newline='')as f:
+ w=csv.writer(f);w.writerow(['id','timeUTC','outcome','adminToBackupMs','buttonBeforeDisabled','gateDirty','HTTP','actualFile','timeout'])
+ for x in a:w.writerow([x['id'],x['start'],x['outcome'],x['adminToBackupMs'],x['before']['button']['disabled'],x['gate'][0]['dirty']if x['gate']else'not instrumented','/'.join(str(v['status'])for v in x['responses']),x['file'],x['downloadTimedOut']])
+print({k:summary[k]for k in ['fastRepeats','fastDownloads','fastUnexpectedTimeouts','archiveCount','fileValidationChecks','fileValidationPassed','adminToBackupMs','rawIndependentChecks']});assert all(x['pass']for x in out)

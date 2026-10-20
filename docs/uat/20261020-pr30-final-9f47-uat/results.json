@@ -1,0 +1,187 @@
+{
+  "verdict": "RELEASE-READY",
+  "scope": "PR #30 into feat/20261019-srm-ui-v3-integration at0cd1278468d0471b862e16ca4ffcac41aead5e6d; not a main/production deployment decision",
+  "productSHA": "9f47a238bc9b3015f713c4e075977d98c1cb9ca1",
+  "unresolvedConfirmedP1": [],
+  "unresolvedConfirmedP2": [],
+  "unresolvedConfirmedP3": [],
+  "unfinishedMandatoryTargets": [],
+  "mandatoryEvidenceGaps": [],
+  "historicalIssues": [
+    {
+      "id": "P2-OBS01",
+      "priorEvidence": "PR29 diagnosis,PR31 original-path pass",
+      "finalResult": "PASS",
+      "evidence": "evidence/obs-attempts.csv",
+      "unresolved": false
+    },
+    {
+      "id": "P3-S4-01",
+      "priorEvidence": "PR31 FAIL at69f660cb; PR33 PASS ata0edd9a",
+      "finalResult": "PASS",
+      "evidence": "evidence/feedback-results.json",
+      "unresolved": false
+    },
+    {
+      "id": "P2-B01",
+      "priorEvidence": "PR27 tied-lowest award issue; prior verified business behavior",
+      "finalResult": "PASS",
+      "evidence": "evidence/T01-tied-B-no-reason.png",
+      "unresolved": false
+    },
+    {
+      "id": "P3-U01",
+      "priorEvidence": "manual/tied pending count issue",
+      "finalResult": "PASS",
+      "evidence": "evidence/T09-reconfirmed-C-no-pending.png",
+      "unresolved": false
+    }
+  ],
+  "nonblockingLimitations": [
+    "Native Windows,desktop Excel,production disk/power/load,full pixel/all-combination coverage NOT TESTED",
+    "CI artifact quota errors persist; independent evidence is archived in this Git branch instead",
+    "PR30 description still contains outdated pre-CI wording; final CI and this report supply current status"
+  ],
+  "sourceEvidence": "evidence/historical-evidence-audit.json",
+  "counts": {
+    "PASS": 21,
+    "NOT TESTED": 4,
+    "FAIL": 0
+  },
+  "groups": [
+    {
+      "id": "R01",
+      "target": "准确HEAD、运行字节、结束未变化 / Exact identity and unchanged HEAD",
+      "result": "PASS"
+    },
+    {
+      "id": "R02",
+      "target": "最终CI Windows/Linux / Final Windows/Linux CI gate",
+      "result": "PASS"
+    },
+    {
+      "id": "R03",
+      "target": "OBS与PR32修复均包含、tree一致 / Fix inclusion and identical reviewed tree",
+      "result": "PASS"
+    },
+    {
+      "id": "R04",
+      "target": "折叠滚动未保存提示三尺寸 / Collapsed-scrolled dirty warning at3 resolutions",
+      "result": "PASS"
+    },
+    {
+      "id": "R05",
+      "target": "真实保存成功清除并可下载 / Clear after actual successful save,then download",
+      "result": "PASS"
+    },
+    {
+      "id": "R06",
+      "target": "保存中及受控500/网络/409保护 / Pending-save and injected-failure safety",
+      "result": "PASS"
+    },
+    {
+      "id": "R07",
+      "target": "真实SQLite双窗口409 / Actual two-window SQLite409",
+      "result": "PASS"
+    },
+    {
+      "id": "R08",
+      "target": "真实独立服务停止及安全恢复 / Actual owned-service outage and recovery",
+      "result": "PASS"
+    },
+    {
+      "id": "R09",
+      "target": "原OBS快速重复24次 /24 original-path rapid repeats",
+      "result": "PASS"
+    },
+    {
+      "id": "R10",
+      "target": "28ZIP SQLite全部历史/PDF /28ZIP full SQLite history/PDF integrity",
+      "result": "PASS"
+    },
+    {
+      "id": "R11",
+      "target": "两次空目录恢复 / Two empty-target restores",
+      "result": "PASS"
+    },
+    {
+      "id": "R12",
+      "target": "两次非空安全拒绝 / Two nonempty overwrite refusals",
+      "result": "PASS"
+    },
+    {
+      "id": "R13",
+      "target": "并列最低价单项及键盘 / Single/keyboard tied-lowest choice",
+      "result": "PASS"
+    },
+    {
+      "id": "R14",
+      "target": "批量同价与真正高价理由 / Bulk ties and genuine higher-price reasons",
+      "result": "PASS"
+    },
+    {
+      "id": "R15",
+      "target": "人工待核对及新报价复核 / Manual/tie and new-quote review state",
+      "result": "PASS"
+    },
+    {
+      "id": "R16",
+      "target": "报价草稿、修订及历史锁定 / Drafts,revisions and locked quote history",
+      "result": "PASS"
+    },
+    {
+      "id": "R17",
+      "target": "保存/F5/RFQ切换/真实进程重启 / Persistence,F5,RFQ switch,actual restart",
+      "result": "PASS"
+    },
+    {
+      "id": "R18",
+      "target": "图纸匹配/原生PDF及追加分配 / Drawing/native PDF/additive allocation",
+      "result": "PASS"
+    },
+    {
+      "id": "R19",
+      "target": "CSV/XLSX/供应商包金额与安全 / Actual export amounts and supplier package safety",
+      "result": "PASS"
+    },
+    {
+      "id": "R20",
+      "target": "非法/取消预览及三尺寸旧UI回归 / Invalid/canceled previews and prior UI checks",
+      "result": "PASS"
+    },
+    {
+      "id": "R21",
+      "target": "必测证据、历史缺陷闭环及权限审计 / Mandatory evidence,defect closure,boundary audit",
+      "result": "PASS"
+    },
+    {
+      "id": "N01",
+      "target": "Windows本机人工使用 / Native Windows manual use",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "N02",
+      "target": "桌面Excel重算打印 / Desktop Excel recalculation/printing",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "N03",
+      "target": "生产磁盘/断电/长期全负载并发 / Physical production failure/long full-load concurrency",
+      "result": "NOT TESTED"
+    },
+    {
+      "id": "N04",
+      "target": "完整PR23逐像素重认证及全部业务组合 / Full PR23 pixel recertification/every business combination",
+      "result": "NOT TESTED"
+    }
+  ],
+  "fastRepeats": 24,
+  "actualS4ZIPs": 28,
+  "rawChecks": 249,
+  "rawChecksPassed": 249,
+  "archiveChecks": 311,
+  "archiveChecksPassed": 311,
+  "exportChecks": 37,
+  "productOrOriginalTestsOrCIChanged": false,
+  "mergedOrClosedPRs": false
+}
