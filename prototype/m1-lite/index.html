@@ -5032,6 +5032,13 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     // English: Exclude revision number so commit increments cannot cause infinite saves.
     return JSON.stringify(readState().state);
   }
+  // 中文：使用真实业务快照做即时安全核对，避免点击到下次轮询之间漏检未保存修改。
+  // English: Recheck the actual persisted-state signature at critical user actions.
+  function hasUnsavedBusinessChanges(){
+    if(!buyerMode)return false;
+    if(dirty||revision===0||autosaveHalted)return true;
+    try{return signature()!==savedSignature}catch(_){return true}
+  }
   function autosaveLabel(message,isError=false){
     autosaveStatus.textContent="自动保存："+message;
     autosaveStatus.className=isError?"small dangertext":"small muted";
@@ -5217,8 +5224,8 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   }
   function beginBuyer(){
     if(!localReady||busy||blocked)return;
-    if(buyerMode&&dirty&&!confirm("当前询价尚有未保存修改，新建将放弃这些修改。继续？"))return;
-    if(buyerMode&&!dirty&&!confirm("新建一笔空白询价？原来已保存的数据仍保存在 SQLite。"))return;
+    if(buyerMode&&hasUnsavedBusinessChanges()&&!confirm("当前询价尚有未保存修改，新建将放弃这些修改。继续？"))return;
+    if(buyerMode&&!hasUnsavedBusinessChanges()&&!confirm("新建一笔空白询价？原来已保存的数据仍保存在 SQLite。"))return;
     const fresh=model.createEmptyWorkspace("RFQ-"+Date.now()+"-"+Math.random().toString(36).slice(2,8).toUpperCase());
     applyWorkspace(fresh);dirty=true;lastChangeAt=Date.now();buttons();
     autosaveLabel("新询价尚未保存，将在操作空闲后自动创建；图纸上传前仍需完成首次保存");
@@ -5414,7 +5421,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   // English: Supplier reports read committed buyer snapshots only.
   async function committedWorkspaceForReport(){
     if(!buyerMode||!localReady||busy)throw Error("请先进入可用的正式工作区");
-    if(dirty)throw Error("有未保存的修改，请先点击“保存到本机”，成功后再导出单据");
+    if(hasUnsavedBusinessChanges())throw Error("有未保存的修改，请先点击“保存到本机”，成功后再导出单据");
     const saved=await readSaved();
     if(!saved||saved.workspaceId!==workspaceId||saved.revision!==revision)
       throw Error("本机保存版本与当前页面不同，请先恢复最新版本");
@@ -5422,17 +5429,38 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     if(saved.origin!=="buyer")throw Error("禁止导出演示工作数据");
     return saved;
   }
+  // 中文：任何界面点击/输入都不能凭事件类型直接标记 dirty。只比较持久化业务快照。
+  // English: View, report-picker and navigation events must never create phantom unsaved edits.
+  function checkBusinessStateAfterEvent(){
+    // 中文：捕获阶段早于实际按钮业务处理；在事件派发结束后再读取快照。
+    // English: Run after the event dispatch so synchronous business handlers have finished.
+    queueMicrotask(()=>{
+      if(!buyerMode||busy)return;
+      try{
+        const observed=signature();
+        if(revision===0||observed!==savedSignature){
+          if(observed!==lastObservedSignature){
+            lastObservedSignature=observed;
+            lastChangeAt=Date.now();
+          }
+          dirty=true;
+          buttons();
+        }
+      }catch(e){
+        // 中文：正在输入无效或不完整值时保守禁止导出，直到数据完成校验。
+        // English: An invalid intermediate state must not bypass the unsaved-data safety guard.
+        dirty=true;
+        buttons();
+      }
+    });
+  }
   document.addEventListener("click",e=>{
     if(!buyerMode||busy||!e.isTrusted)return;
-    // 中文：程序触发的下载链接等非用户点击不代表业务发生修改；操作按钮中的真实修改仍提示保存。
-    // English: Programmatic download clicks must not mark a saved workspace dirty.
-    // English: Dirty indicator errs on the safe side; UI events do not automatically persist.
-    if(e.target.closest("#pilotControls,#pilotDrawingPanel,#drawingModal,#pilotReportPanel,#rfqPreviewModal,.tabs,[data-drawing],[data-srm-v2-action=\"admin\"]"))return;
-    dirty=true;status("工作内容可能有未保存修改；系统只对实际业务变化自动保存。");
+    checkBusinessStateAfterEvent();
   },true);
   document.addEventListener("input",e=>{
-    if(!buyerMode||busy||e.target.closest("#pilotControls"))return;
-    dirty=true;status("输入中，业务数据将在停止修改后自动保存。");
+    if(!buyerMode||busy||!e.isTrusted)return;
+    checkBusinessStateAfterEvent();
   },true);
 
 
