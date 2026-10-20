@@ -1,0 +1,8 @@
+{
+  "classification": "INITIAL DIAGNOSTIC ASSERTION FAIL; product safety PASS evidence exists, not a confirmed product failure",
+  "rawFalseRetained": true,
+  "cause": "innerText on pilotSaveStatus inside collapsed project Details returns empty while textContent and visible pilotReportHint contain expected refusal",
+  "traceEvidence": "RAW-first-safety-message-trace.json contains2 events: exact report hint text and locator resolves expected message",
+  "beforeAfterDatabaseEqual": true,
+  "correction": "Only new independent outside-repo observer changed innerText to textContent, new isolated fault-data-r2, full sequence passes. Original product/original tests/CI unchanged."
+}

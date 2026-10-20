@@ -1,0 +1,23 @@
+{"time":"2026-10-20T08:19:24.950Z","trial":null,"kind":"request","url":"http://127.0.0.1:9383/api/health","method":"GET"}
+{"time":"2026-10-20T08:19:25.074Z","trial":null,"kind":"response","url":"http://127.0.0.1:9383/api/health","status":200}
+{"time":"2026-10-20T08:19:25.369Z","trial":null,"kind":"request","url":"http://127.0.0.1:9383/api/active","method":"GET"}
+{"time":"2026-10-20T08:19:25.370Z","trial":null,"kind":"response","url":"http://127.0.0.1:9383/api/active","status":200}
+{"time":"2026-10-20T08:19:25.370Z","trial":null,"kind":"request","url":"http://127.0.0.1:9383/api/workspaces","method":"GET"}
+{"time":"2026-10-20T08:19:25.370Z","trial":null,"kind":"response","url":"http://127.0.0.1:9383/api/workspaces","status":200}
+{"time":"2026-10-20T08:19:25.442Z","trial":null,"kind":"request","url":"http://127.0.0.1:9383/api/backups/auto/status","method":"GET"}
+{"time":"2026-10-20T08:19:25.461Z","trial":null,"kind":"response","url":"http://127.0.0.1:9383/api/backups/auto/status","status":200}
+{"time":"2026-10-20T08:19:26.365Z","trial":null,"kind":"dialog","message":"有 1 条相同编码存在属性或业务冲突，不能自动合并。是否明确保留为独立 RFQ 询价行？取消则本批次不导入。"}
+{"time":"2026-10-20T08:19:26.407Z","trial":null,"kind":"dialog","message":"新增 4 行；自动合并 0 行；冲突确认分行 1 行。合并前原始需求行已留存。"}
+{"time":"2026-10-20T08:19:26.829Z","trial":null,"kind":"request","url":"http://127.0.0.1:9383/api/workspaces/RFQ-1792484365762-Y43KWZ","method":"PUT"}
+{"time":"2026-10-20T08:19:26.839Z","trial":null,"kind":"response","url":"http://127.0.0.1:9383/api/workspaces/RFQ-1792484365762-Y43KWZ","status":200}
+{"time":"2026-10-20T08:19:26.847Z","trial":null,"kind":"request","url":"http://127.0.0.1:9383/api/workspaces","method":"GET"}
+{"time":"2026-10-20T08:19:26.878Z","trial":null,"kind":"response","url":"http://127.0.0.1:9383/api/workspaces","status":200}
+{"time":"2026-10-20T08:19:28.941Z","trial":null,"kind":"dialog","message":"为选中物料添加供应商：即将变更 4 条物料与“虚构甲方精密制造有限公司”的实际关联。\n涉及物料：UAT24-SHAFT（规格：M16 / 220 mm，RFQ-L00001）、UAT24-SHAFT（规格：M20 / 350 mm，RFQ-L00002）、UAT24-BASE（规格：L型 90×120，RFQ-L00003）、UAT28-HIGH（规格：M8 / 60mm，RFQ-L00004）\n注意：筛选后仍选中的隐藏物料也包含在内。\n确认后立即生效，是否继续？"}
+{"time":"2026-10-20T08:19:29.298Z","trial":null,"kind":"request","url":"http://127.0.0.1:9383/api/workspaces/RFQ-1792484365762-Y43KWZ","method":"PUT"}
+{"time":"2026-10-20T08:19:29.306Z","trial":null,"kind":"response","url":"http://127.0.0.1:9383/api/workspaces/RFQ-1792484365762-Y43KWZ","status":200}
+{"time":"2026-10-20T08:19:29.310Z","trial":null,"kind":"request","url":"http://127.0.0.1:9383/api/workspaces","method":"GET"}
+{"time":"2026-10-20T08:19:29.320Z","trial":null,"kind":"response","url":"http://127.0.0.1:9383/api/workspaces","status":200}
+{"time":"2026-10-20T08:19:31.369Z","trial":"TRUE-DIRTY-SAFETY","kind":"dialog","message":"新增 1 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。"}
+{"time":"2026-10-20T08:19:31.492Z","trial":"TRUE-DIRTY-SAFETY","kind":"check","label":"TRUE-DIRTY actual business line exists only in memory","actual":true,"expected":true,"pass":true}
+{"time":"2026-10-20T08:19:32.797Z","trial":"TRUE-DIRTY-SAFETY","kind":"check","label":"TRUE-DIRTY supplier export explicitly refuses unsaved business","actual":false,"expected":true,"pass":false}
+{"time":"2026-10-20T08:19:32.798Z","trial":"TRUE-DIRTY-SAFETY","kind":"driver-error","message":"INDEPENDENT_CHECK_FAILED: TRUE-DIRTY supplier export explicitly refuses unsaved business","stack":"Error: INDEPENDENT_CHECK_FAILED: TRUE-DIRTY supplier export explicitly refuses unsaved business\n    at ck (/tmp/r38/faults.cjs:1:540)\n    at /tmp/r38/faults.cjs:9:437"}
