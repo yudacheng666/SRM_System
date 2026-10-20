@@ -580,21 +580,37 @@ test('15 new RFQ clears stale supplier-first context without corrupting saved RF
 
 test('44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见', async ({page,app})=>{
   await page.setViewportSize({width:1366,height:768});
-  await fresh(page); await items(page,app);
+  await fresh(page); await items(page,app); await saved(page);
+  // 中文：先完成真实保存，再新增供应商使业务快照真正变化；不能依赖导航误设 dirty。
+  // English: Create a genuine unsaved supplier edit, not an artificial navigation click.
+  let releaseSave;
+  const saveGate=new Promise(resolve=>{releaseSave=resolve});
+  await page.route('**/api/workspaces/**',async route=>{
+    if(route.request().method()==='PUT')await saveGate;
+    await route.continue();
+  });
+  await openTools(page,'#uiSupplierTools');
+  await page.locator('#pilotCounterpartyCode').fill('VIRTUAL-CP44');
+  await page.locator('#pilotSupplierCode').fill('VIRTUAL-S44');
+  await page.locator('#pilotSupplierName').fill('虚构供应商44');
+  await page.locator('#pilotAddSupplier').click();
+  await expect.poll(async()=>(await snapshot(page)).state.suppliers.some(x=>x.id==='VIRTUAL-S44')).toBe(true);
+  await expect.poll(()=>page.evaluate(()=>window.SRMPilot.dirty())).toBe(true);
   // 中文：按 Codex P3-S4-01 原场景：项目操作区收起，页面滚动至备份按钮。
-  // English: Reproduce the real P3 state: collapsed project operations, S4 action in the current viewport.
+  // English: Keep the project drawer collapsed and require a real warning beside disabled S4.
   await openTools(page,'#uiDataTools');
   const projectDrawer=page.locator('#uiProjectDetails');
   if(await projectDrawer.evaluate(node=>node.open)) await projectDrawer.locator('summary').click();
   await expect(projectDrawer).not.toHaveAttribute('open','');
   const button=page.locator('#pilotS4DownloadFull');
   await button.scrollIntoViewIfNeeded();
-  await button.click();
+  // 中文：dirty 时禁用 S4 是安全闸门；应被动显示可见原因，禁止假装点击禁用按钮。
+  // English: A disabled S4 guard must display the reason without a fake disabled-button click.
+  await expect(button).toBeDisabled();
   const feedback=page.locator('#pilotS4DownloadFeedback');
   await expect(feedback).toBeVisible();
   await expect(feedback).toContainText('尚未保存');
   await expect(feedback).toContainText('再重新下载');
-  await expect(button).toBeDisabled();
   // 中文：文本存在还不够，提示必须真正处在用户当前的可视区域内。
   // English: DOM visibility alone is insufficient; the notice must lie within the browser viewport.
   const visible=await feedback.evaluate(el=>{
@@ -602,8 +618,9 @@ test('44 S4 blocked-download reason stays visible beside the action / 备份阻�
     return rect.height>0&&rect.top>=0&&rect.bottom<=window.innerHeight;
   });
   expect(visible,'backup block notice must be visible within the viewport').toBe(true);
-  // 中文：完成真实 SQLite 自动保存才可清除旧阻止提示；文案允许包含版本和时间。
-  // English: Wait for a confirmed autosave, not a fragile literal message without the revision.
+  // 中文：释放真正被暂扣的 SQLite PUT 后，只有真实保存完成才能清除警告。
+  // English: Release the real SQLite PUT; only an acknowledged clean save may clear feedback.
+  releaseSave();
   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已自动保存第',{timeout:12000});
   await expect(feedback).toBeHidden();
   await expect(button).toBeEnabled();
@@ -666,10 +683,11 @@ test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与�
   expect(dialogs[0]).not.toContain('未保存修改');
   expect((await snapshot(page)).state).toEqual(before.state);
 
-  await tab(page,'assign');
-  await page.locator('[data-mode="itemFirst"]').click();
-  await page.locator('#selectAssignAll').click();
-  await page.locator('[data-rem="SUP-B"]').click();
+  // 中文：在供应商视角真正撤销一条已分配的业务关联，再检验未保存保护。
+  // English: Uncheck a genuinely persisted allocation to exercise the real dirty guard.
+  const allocatedBox=page.locator('#sfItemBody input[data-sfi]').first();
+  await expect(allocatedBox).toBeChecked();
+  await allocatedBox.uncheck();
   expect((await snapshot(page)).state.assignments).not.toEqual(before.state.assignments);
   expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(true);
   const guard=await page.evaluate(async()=>{
