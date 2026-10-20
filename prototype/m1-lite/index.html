@@ -5049,6 +5049,9 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     notice.style.background=isError?"#fff1f0":"#edf7f0";
     notice.style.color=isError?"#a32922":"#116143";
     notice.style.borderColor=isError?"#efc0bb":"#bce2c9";
+    // 中文：操作区滚动到备份按钮时，阻止原因必须进入当前视口，不能仅存在于 DOM 中。
+    // English: Bring actionable backup-block feedback into view even if the drawer is scrolled.
+    if(message&&isError)notice.scrollIntoView({block:"nearest",behavior:"auto"});
   }
   async function refreshAutoBackupStatus(){
     if(!localReady||!s4Available)return;
