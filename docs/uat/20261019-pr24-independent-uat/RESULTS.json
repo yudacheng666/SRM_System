@@ -1,0 +1,31 @@
+{
+  "candidate_sha": "67b1a7625db229e36ef4054127539e830d12079f",
+  "case_results": {
+    "PASS": 26,
+    "FAIL_P3": 1,
+    "NOT_TESTED": 3
+  },
+  "raw_event_counts": {
+    "request": 515,
+    "console": 3,
+    "command": 15,
+    "screenshot": 44,
+    "observation": 26,
+    "step": 12,
+    "check": 91,
+    "dialog": 12,
+    "driver-error": 5,
+    "download": 5
+  },
+  "auxiliary_checks": {
+    "PASS": 91,
+    "FAIL": 0
+  },
+  "http_external_request_hosts": [
+    "127.0.0.1:8950",
+    "127.0.0.1:8951",
+    "127.0.0.1:8952"
+  ],
+  "source_code_modified_by_test_agent": false,
+  "note": "Five raw independent-driver errors are retained and explained; they are not business case failures."
+}

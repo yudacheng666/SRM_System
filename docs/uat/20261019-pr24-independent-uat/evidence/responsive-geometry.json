@@ -1,0 +1,2855 @@
+[
+  {
+    "page": "items",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "documentWidth": 1024,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 64,
+      "height": 768,
+      "right": 64,
+      "bottom": 768
+    },
+    "panel": {
+      "x": 86,
+      "y": 287.390625,
+      "width": 922,
+      "height": 543.203125,
+      "right": 1008,
+      "bottom": 830.59375
+    },
+    "firstMaterial": {
+      "x": 103,
+      "y": 518.78125,
+      "width": 1100.09375,
+      "height": 68.9375,
+      "right": 1203.09375,
+      "bottom": 587.71875
+    },
+    "firstAssign": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "runItemSearch",
+        "text": "搜索",
+        "left": 551.921875,
+        "right": 595.9375,
+        "top": 302.390625,
+        "bottom": 335.390625
+      },
+      {
+        "id": "clearItemSearch",
+        "text": "清空搜索",
+        "left": 602.9375,
+        "right": 670.953125,
+        "top": 302.390625,
+        "bottom": 335.390625
+      },
+      {
+        "id": "toggleItemIntake",
+        "text": "+ 添加询价物料",
+        "left": 102,
+        "right": 203.8125,
+        "top": 302.390625,
+        "bottom": 335.390625
+      },
+      {
+        "id": "deleteSelectedItems",
+        "text": "删除选中物料",
+        "left": 677.953125,
+        "right": 769.96875,
+        "top": 302.390625,
+        "bottom": 335.390625
+      },
+      {
+        "id": "toggleFieldTools",
+        "text": "批量更新字段值",
+        "left": 776.96875,
+        "right": 880.984375,
+        "top": 302.390625,
+        "bottom": 335.390625
+      },
+      {
+        "id": "uiOpenDrawings",
+        "text": "图纸匹配与管理",
+        "left": 887.984375,
+        "right": 992,
+        "top": 302.390625,
+        "bottom": 335.390625
+      },
+      {
+        "id": "itemSelectAll",
+        "text": "全选",
+        "left": 161.015625,
+        "right": 205.03125,
+        "top": 370.390625,
+        "bottom": 403.390625
+      },
+      {
+        "id": "itemSelectPage",
+        "text": "本页全选",
+        "left": 210.03125,
+        "right": 278.046875,
+        "top": 370.390625,
+        "bottom": 403.390625
+      },
+      {
+        "id": "itemInvertAll",
+        "text": "反选",
+        "left": 283.046875,
+        "right": 327.0625,
+        "top": 370.390625,
+        "bottom": 403.390625
+      },
+      {
+        "id": "itemInvertPage",
+        "text": "本页反选",
+        "left": 332.0625,
+        "right": 400.078125,
+        "top": 370.390625,
+        "bottom": 403.390625
+      },
+      {
+        "id": "clearItemSelection",
+        "text": "取消选择",
+        "left": 405.078125,
+        "right": 473.09375,
+        "top": 370.390625,
+        "bottom": 403.390625
+      },
+      {
+        "id": "",
+        "text": "RFQ Line ID",
+        "left": 225.03125,
+        "right": 314.5625,
+        "top": 422.6875,
+        "bottom": 456.078125
+      },
+      {
+        "id": "",
+        "text": "存货编码",
+        "left": 334.5625,
+        "right": 404.578125,
+        "top": 422.6875,
+        "bottom": 456.078125
+      },
+      {
+        "id": "",
+        "text": "存货名称",
+        "left": 500.5625,
+        "right": 570.578125,
+        "top": 422.6875,
+        "bottom": 456.078125
+      },
+      {
+        "id": "",
+        "text": "规格型号",
+        "left": 683.078125,
+        "right": 753.09375,
+        "top": 422.6875,
+        "bottom": 456.078125
+      },
+      {
+        "id": "",
+        "text": "所属类别",
+        "left": 787.078125,
+        "right": 857.09375,
+        "top": 422.6875,
+        "bottom": 456.078125
+      },
+      {
+        "id": "",
+        "text": "询价数量",
+        "left": 891.078125,
+        "right": 961.09375,
+        "top": 422.6875,
+        "bottom": 456.078125
+      },
+      {
+        "id": "",
+        "text": "询价单位",
+        "left": 995.078125,
+        "right": 1065.09375,
+        "top": 422.6875,
+        "bottom": 456.078125
+      },
+      {
+        "id": "",
+        "text": "已分配供应商",
+        "left": 1099.078125,
+        "right": 1193.09375,
+        "top": 422.6875,
+        "bottom": 456.078125
+      },
+      {
+        "id": "applyColumnSearch",
+        "text": "搜索",
+        "left": 113,
+        "right": 159.015625,
+        "top": 475.390625,
+        "bottom": 508.78125
+      },
+      {
+        "id": "clearColumnSearch",
+        "text": "清空",
+        "left": 159.015625,
+        "right": 205.03125,
+        "top": 475.390625,
+        "bottom": 508.78125
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 438.5625,
+        "right": 480.5625,
+        "top": 527.78125,
+        "bottom": 559.78125
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 438.5625,
+        "right": 480.5625,
+        "top": 596.71875,
+        "bottom": 628.71875
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 438.5625,
+        "right": 480.5625,
+        "top": 665.65625,
+        "bottom": 697.65625
+      },
+      {
+        "id": "",
+        "text": "上一页",
+        "left": 821.953125,
+        "right": 879.96875,
+        "top": 735.59375,
+        "bottom": 769.59375
+      },
+      {
+        "id": "",
+        "text": "1",
+        "left": 899.984375,
+        "right": 929.984375,
+        "top": 737.59375,
+        "bottom": 767.59375
+      },
+      {
+        "id": "",
+        "text": "下一页",
+        "left": 933.984375,
+        "right": 992,
+        "top": 735.59375,
+        "bottom": 769.59375
+      }
+    ]
+  },
+  {
+    "page": "assign",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "documentWidth": 1024,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 64,
+      "height": 768,
+      "right": 64,
+      "bottom": 768
+    },
+    "panel": {
+      "x": 86,
+      "y": 287.390625,
+      "width": 922,
+      "height": 1063.828125,
+      "right": 1008,
+      "bottom": 1351.21875
+    },
+    "firstMaterial": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "firstAssign": {
+      "x": 96,
+      "y": 684.671875,
+      "width": 902,
+      "height": 84.015625,
+      "right": 998,
+      "bottom": 768.6875
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "uiJumpSupplierList",
+        "text": "查看供应商分配操作 ↓",
+        "left": 754.234375,
+        "right": 884.734375,
+        "top": 293.390625,
+        "bottom": 322.390625
+      },
+      {
+        "id": "uiOpenSupplierTools",
+        "text": "添加 / 导入供应商",
+        "left": 892.734375,
+        "right": 997,
+        "top": 293.390625,
+        "bottom": 322.390625
+      },
+      {
+        "id": "",
+        "text": "按物料",
+        "left": 98,
+        "right": 151,
+        "top": 403.1875,
+        "bottom": 433.1875
+      },
+      {
+        "id": "",
+        "text": "按供应商",
+        "left": 153,
+        "right": 217,
+        "top": 403.1875,
+        "bottom": 433.1875
+      },
+      {
+        "id": "previewBtn",
+        "text": "预览询价单",
+        "left": 812,
+        "right": 885,
+        "top": 403.1875,
+        "bottom": 433.1875
+      },
+      {
+        "id": "generateBtn",
+        "text": "导出已分配询价单",
+        "left": 893,
+        "right": 999,
+        "top": 403.1875,
+        "bottom": 433.1875
+      },
+      {
+        "id": "runAssignSearch",
+        "text": "搜索",
+        "left": 894,
+        "right": 932,
+        "top": 540.1875,
+        "bottom": 569.1875
+      },
+      {
+        "id": "clearAssignSearch",
+        "text": "清空条件",
+        "left": 937,
+        "right": 997,
+        "top": 540.1875,
+        "bottom": 569.1875
+      },
+      {
+        "id": "selectAssignAll",
+        "text": "全选",
+        "left": 146,
+        "right": 184,
+        "top": 579.6875,
+        "bottom": 608.6875
+      },
+      {
+        "id": "selectAssignPage",
+        "text": "本页全选",
+        "left": 189,
+        "right": 249,
+        "top": 579.6875,
+        "bottom": 608.6875
+      },
+      {
+        "id": "invertAssignAll",
+        "text": "反选",
+        "left": 254,
+        "right": 292,
+        "top": 579.6875,
+        "bottom": 608.6875
+      },
+      {
+        "id": "invertAssignPage",
+        "text": "本页反选",
+        "left": 297,
+        "right": 357,
+        "top": 579.6875,
+        "bottom": 608.6875
+      },
+      {
+        "id": "clearAssignSelection",
+        "text": "清空选择",
+        "left": 362,
+        "right": 422,
+        "top": 579.6875,
+        "bottom": 608.6875
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 150.0625,
+        "right": 192.0625,
+        "top": 700.75,
+        "bottom": 732.75
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 150.0625,
+        "right": 192.0625,
+        "top": 784.765625,
+        "bottom": 816.765625
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 150.0625,
+        "right": 192.0625,
+        "top": 868.78125,
+        "bottom": 900.78125
+      },
+      {
+        "id": "",
+        "text": "上一页",
+        "left": 828.953125,
+        "right": 886.96875,
+        "top": 947.71875,
+        "bottom": 981.71875
+      },
+      {
+        "id": "",
+        "text": "1",
+        "left": 906.984375,
+        "right": 936.984375,
+        "top": 949.71875,
+        "bottom": 979.71875
+      },
+      {
+        "id": "",
+        "text": "下一页",
+        "left": 940.984375,
+        "right": 999,
+        "top": 947.71875,
+        "bottom": 981.71875
+      },
+      {
+        "id": "runSupplierSearch",
+        "text": "搜索",
+        "left": 241,
+        "right": 279,
+        "top": 1030.21875,
+        "bottom": 1059.21875
+      },
+      {
+        "id": "clearSupplierSearch",
+        "text": "清空条件",
+        "left": 284,
+        "right": 344,
+        "top": 1030.21875,
+        "bottom": 1059.21875
+      },
+      {
+        "id": "",
+        "text": "给所选物料添加此供应商",
+        "left": 109,
+        "right": 263.015625,
+        "top": 1135.21875,
+        "bottom": 1169.21875
+      },
+      {
+        "id": "",
+        "text": "从所选物料移除此供应商",
+        "left": 271.015625,
+        "right": 425.03125,
+        "top": 1135.21875,
+        "bottom": 1169.21875
+      },
+      {
+        "id": "",
+        "text": "给所选物料添加此供应商",
+        "left": 109,
+        "right": 263.015625,
+        "top": 1253.21875,
+        "bottom": 1287.21875
+      },
+      {
+        "id": "",
+        "text": "从所选物料移除此供应商",
+        "left": 271.015625,
+        "right": 425.03125,
+        "top": 1253.21875,
+        "bottom": 1287.21875
+      },
+      {
+        "id": "",
+        "text": "上一页",
+        "left": 828.953125,
+        "right": 886.96875,
+        "top": 1311.21875,
+        "bottom": 1345.21875
+      },
+      {
+        "id": "",
+        "text": "1",
+        "left": 906.984375,
+        "right": 936.984375,
+        "top": 1313.21875,
+        "bottom": 1343.21875
+      },
+      {
+        "id": "",
+        "text": "下一页",
+        "left": 940.984375,
+        "right": 999,
+        "top": 1311.21875,
+        "bottom": 1345.21875
+      }
+    ]
+  },
+  {
+    "page": "quoteImport",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "documentWidth": 1024,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 64,
+      "height": 768,
+      "right": 64,
+      "bottom": 768
+    },
+    "panel": {
+      "x": 86,
+      "y": 287.390625,
+      "width": 922,
+      "height": 1445.8125,
+      "right": 1008,
+      "bottom": 1733.203125
+    },
+    "firstMaterial": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "firstAssign": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "newQuoteRound",
+        "text": "+ 新增下一轮",
+        "left": 647.359375,
+        "right": 739.171875,
+        "top": 357.96875,
+        "bottom": 391.96875
+      },
+      {
+        "id": "newQuoteRevision",
+        "text": "+ 新增本轮新版本",
+        "left": 748.171875,
+        "right": 863.984375,
+        "top": 357.96875,
+        "bottom": 391.96875
+      },
+      {
+        "id": "editRoundScope",
+        "text": "设置本轮议价范围",
+        "left": 872.984375,
+        "right": 991,
+        "top": 357.96875,
+        "bottom": 391.96875
+      },
+      {
+        "id": "quoteManualAdd",
+        "text": "加入预览",
+        "left": 280,
+        "right": 350.015625,
+        "top": 672.46875,
+        "bottom": 706.46875
+      },
+      {
+        "id": "quoteReadClipboard",
+        "text": "读取剪贴板",
+        "left": 569,
+        "right": 651.015625,
+        "top": 644.46875,
+        "bottom": 678.46875
+      },
+      {
+        "id": "quoteParsePaste",
+        "text": "解析预览",
+        "left": 659.015625,
+        "right": 729.03125,
+        "top": 644.46875,
+        "bottom": 678.46875
+      },
+      {
+        "id": "quoteClearInput",
+        "text": "清空输入",
+        "left": 737.03125,
+        "right": 807.046875,
+        "top": 644.46875,
+        "bottom": 678.46875
+      },
+      {
+        "id": "quoteClearPreview",
+        "text": "清空预览",
+        "left": 815.046875,
+        "right": 885.0625,
+        "top": 644.46875,
+        "bottom": 678.46875
+      },
+      {
+        "id": "toggleQuoteMapping",
+        "text": "字段映射",
+        "left": 102,
+        "right": 172.015625,
+        "top": 880.96875,
+        "bottom": 914.96875
+      },
+      {
+        "id": "demoQuoteExcel",
+        "text": "仅模拟：查看虚构报价",
+        "left": 175.15625,
+        "right": 317.171875,
+        "top": 880.96875,
+        "bottom": 914.96875
+      },
+      {
+        "id": "exportQuoteMissing",
+        "text": "导出本供应商本轮漏报 CSV",
+        "left": 102,
+        "right": 269.15625,
+        "top": 1277.75,
+        "bottom": 1311.75
+      },
+      {
+        "id": "confirmQuoteRound",
+        "text": "确认本次提交",
+        "left": 877.984375,
+        "right": 992,
+        "top": 1336.75,
+        "bottom": 1374.75
+      },
+      {
+        "id": "carryForwardMissing",
+        "text": "选择沿用上轮项目…",
+        "left": 861.984375,
+        "right": 992,
+        "top": 1413.75,
+        "bottom": 1447.75
+      },
+      {
+        "id": "",
+        "text": "修改",
+        "left": 1136.0625,
+        "right": 1182.078125,
+        "top": 1551.28125,
+        "bottom": 1584.671875
+      },
+      {
+        "id": "",
+        "text": "修改",
+        "left": 1136.0625,
+        "right": 1182.078125,
+        "top": 1611.96875,
+        "bottom": 1645.359375
+      },
+      {
+        "id": "",
+        "text": "修改",
+        "left": 1136.0625,
+        "right": 1182.078125,
+        "top": 1672.65625,
+        "bottom": 1706.046875
+      }
+    ]
+  },
+  {
+    "page": "quotes",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "documentWidth": 1024,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 64,
+      "height": 768,
+      "right": 64,
+      "bottom": 768
+    },
+    "panel": {
+      "x": 86,
+      "y": 287.390625,
+      "width": 922,
+      "height": 1262.375,
+      "right": 1008,
+      "bottom": 1549.765625
+    },
+    "firstMaterial": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "firstAssign": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "resetAwards",
+        "text": "恢复默认最低价",
+        "left": 883.984375,
+        "right": 990,
+        "top": 308.171875,
+        "bottom": 342.171875
+      },
+      {
+        "id": "clearCommonSupplierGroup",
+        "text": "清空比较组",
+        "left": 614.4375,
+        "right": 696.453125,
+        "top": 520.15625,
+        "bottom": 554.15625
+      },
+      {
+        "id": "",
+        "text": "选择全部适用",
+        "left": 470.71875,
+        "right": 564.734375,
+        "top": 641.328125,
+        "bottom": 674.71875
+      },
+      {
+        "id": "",
+        "text": "选择全部适用",
+        "left": 747.25,
+        "right": 841.265625,
+        "top": 641.328125,
+        "bottom": 674.71875
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 116,
+        "right": 158,
+        "top": 707.796875,
+        "bottom": 739.796875
+      },
+      {
+        "id": "",
+        "text": "¥9.00",
+        "left": 470.71875,
+        "right": 524.953125,
+        "top": 698.40625,
+        "bottom": 731.796875
+      },
+      {
+        "id": "",
+        "text": "¥12.00",
+        "left": 747.25,
+        "right": 808.5625,
+        "top": 698.40625,
+        "bottom": 731.796875
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 116,
+        "right": 158,
+        "top": 803.8125,
+        "bottom": 835.8125
+      },
+      {
+        "id": "",
+        "text": "¥20.00",
+        "left": 470.71875,
+        "right": 532.03125,
+        "top": 794.421875,
+        "bottom": 827.8125
+      },
+      {
+        "id": "",
+        "text": "¥18.00",
+        "left": 747.25,
+        "right": 808.5625,
+        "top": 794.421875,
+        "bottom": 827.8125
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 116,
+        "right": 158,
+        "top": 899.828125,
+        "bottom": 931.828125
+      },
+      {
+        "id": "",
+        "text": "上一页",
+        "left": 819.953125,
+        "right": 877.96875,
+        "top": 983.765625,
+        "bottom": 1017.765625
+      },
+      {
+        "id": "",
+        "text": "1",
+        "left": 897.984375,
+        "right": 927.984375,
+        "top": 985.765625,
+        "bottom": 1015.765625
+      },
+      {
+        "id": "",
+        "text": "下一页",
+        "left": 931.984375,
+        "right": 990,
+        "top": 983.765625,
+        "bottom": 1017.765625
+      },
+      {
+        "id": "exportSelectedCommonScope",
+        "text": "导出本比较组全部共同项目 CSV",
+        "left": 122,
+        "right": 313.15625,
+        "top": 1430.765625,
+        "bottom": 1464.765625
+      }
+    ]
+  },
+  {
+    "page": "settings",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "documentWidth": 1024,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 64,
+      "height": 768,
+      "right": 64,
+      "bottom": 768
+    },
+    "panel": {
+      "x": 86,
+      "y": 287.390625,
+      "width": 922,
+      "height": 938.109375,
+      "right": 1008,
+      "bottom": 1225.5
+    },
+    "firstMaterial": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "firstAssign": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "",
+        "text": "下载询价物料模板 .xlsx",
+        "left": 102,
+        "right": 249.84375,
+        "top": 376.390625,
+        "bottom": 410.390625
+      },
+      {
+        "id": "",
+        "text": "下载供应商模板 .xlsx",
+        "left": 102,
+        "right": 237.84375,
+        "top": 420.390625,
+        "bottom": 454.390625
+      },
+      {
+        "id": "",
+        "text": "下载供应商报价模板 .xlsx",
+        "left": 102,
+        "right": 261.84375,
+        "top": 464.390625,
+        "bottom": 498.390625
+      },
+      {
+        "id": "",
+        "text": "下载匹配更新模板 .csv",
+        "left": 102,
+        "right": 245.8125,
+        "top": 508.390625,
+        "bottom": 542.390625
+      },
+      {
+        "id": "addCustomField",
+        "text": "+ 添加字段",
+        "left": 102,
+        "right": 181.8125,
+        "top": 708.390625,
+        "bottom": 742.390625
+      },
+      {
+        "id": "deleteCustomField",
+        "text": "删除字段",
+        "left": 393.8125,
+        "right": 463.828125,
+        "top": 708.390625,
+        "bottom": 742.390625
+      }
+    ]
+  },
+  {
+    "page": "items",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "documentWidth": 1366,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 226,
+      "height": 768,
+      "right": 226,
+      "bottom": 768
+    },
+    "panel": {
+      "x": 253,
+      "y": 341.984375,
+      "width": 1086,
+      "height": 543.203125,
+      "right": 1339,
+      "bottom": 885.1875
+    },
+    "firstMaterial": {
+      "x": 270,
+      "y": 573.375,
+      "width": 1100.09375,
+      "height": 68.9375,
+      "right": 1370.09375,
+      "bottom": 642.3125
+    },
+    "firstAssign": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "runItemSearch",
+        "text": "搜索",
+        "left": 784.8125,
+        "right": 828.828125,
+        "top": 356.984375,
+        "bottom": 389.984375
+      },
+      {
+        "id": "clearItemSearch",
+        "text": "清空搜索",
+        "left": 835.828125,
+        "right": 903.84375,
+        "top": 356.984375,
+        "bottom": 389.984375
+      },
+      {
+        "id": "toggleItemIntake",
+        "text": "+ 添加询价物料",
+        "left": 269,
+        "right": 370.8125,
+        "top": 356.984375,
+        "bottom": 389.984375
+      },
+      {
+        "id": "deleteSelectedItems",
+        "text": "删除选中物料",
+        "left": 910.84375,
+        "right": 1002.859375,
+        "top": 356.984375,
+        "bottom": 389.984375
+      },
+      {
+        "id": "toggleFieldTools",
+        "text": "批量更新字段值",
+        "left": 1009.859375,
+        "right": 1113.875,
+        "top": 356.984375,
+        "bottom": 389.984375
+      },
+      {
+        "id": "uiOpenDrawings",
+        "text": "图纸匹配与管理",
+        "left": 1120.875,
+        "right": 1224.890625,
+        "top": 356.984375,
+        "bottom": 389.984375
+      },
+      {
+        "id": "itemSelectAll",
+        "text": "全选",
+        "left": 328.015625,
+        "right": 372.03125,
+        "top": 424.984375,
+        "bottom": 457.984375
+      },
+      {
+        "id": "itemSelectPage",
+        "text": "本页全选",
+        "left": 377.03125,
+        "right": 445.046875,
+        "top": 424.984375,
+        "bottom": 457.984375
+      },
+      {
+        "id": "itemInvertAll",
+        "text": "反选",
+        "left": 450.046875,
+        "right": 494.0625,
+        "top": 424.984375,
+        "bottom": 457.984375
+      },
+      {
+        "id": "itemInvertPage",
+        "text": "本页反选",
+        "left": 499.0625,
+        "right": 567.078125,
+        "top": 424.984375,
+        "bottom": 457.984375
+      },
+      {
+        "id": "clearItemSelection",
+        "text": "取消选择",
+        "left": 572.078125,
+        "right": 640.09375,
+        "top": 424.984375,
+        "bottom": 457.984375
+      },
+      {
+        "id": "",
+        "text": "RFQ Line ID",
+        "left": 392.03125,
+        "right": 481.5625,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "存货编码",
+        "left": 501.5625,
+        "right": 571.578125,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "存货名称",
+        "left": 667.5625,
+        "right": 737.578125,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "规格型号",
+        "left": 850.078125,
+        "right": 920.09375,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "所属类别",
+        "left": 954.078125,
+        "right": 1024.09375,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "询价数量",
+        "left": 1058.078125,
+        "right": 1128.09375,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "询价单位",
+        "left": 1162.078125,
+        "right": 1232.09375,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "已分配供应商",
+        "left": 1266.078125,
+        "right": 1360.09375,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "applyColumnSearch",
+        "text": "搜索",
+        "left": 280,
+        "right": 326.015625,
+        "top": 529.984375,
+        "bottom": 563.375
+      },
+      {
+        "id": "clearColumnSearch",
+        "text": "清空",
+        "left": 326.015625,
+        "right": 372.03125,
+        "top": 529.984375,
+        "bottom": 563.375
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 605.5625,
+        "right": 647.5625,
+        "top": 582.375,
+        "bottom": 614.375
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 605.5625,
+        "right": 647.5625,
+        "top": 651.3125,
+        "bottom": 683.3125
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 605.5625,
+        "right": 647.5625,
+        "top": 720.25,
+        "bottom": 752.25
+      },
+      {
+        "id": "",
+        "text": "上一页",
+        "left": 1152.953125,
+        "right": 1210.96875,
+        "top": 790.1875,
+        "bottom": 824.1875
+      },
+      {
+        "id": "",
+        "text": "1",
+        "left": 1230.984375,
+        "right": 1260.984375,
+        "top": 792.1875,
+        "bottom": 822.1875
+      },
+      {
+        "id": "",
+        "text": "下一页",
+        "left": 1264.984375,
+        "right": 1323,
+        "top": 790.1875,
+        "bottom": 824.1875
+      }
+    ]
+  },
+  {
+    "page": "assign",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "documentWidth": 1366,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 226,
+      "height": 768,
+      "right": 226,
+      "bottom": 768
+    },
+    "panel": {
+      "x": 253,
+      "y": 306.984375,
+      "width": 1086,
+      "height": 696.078125,
+      "right": 1339,
+      "bottom": 1003.0625
+    },
+    "firstMaterial": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "firstAssign": {
+      "x": 269,
+      "y": 681.015625,
+      "width": 667.484375,
+      "height": 88.015625,
+      "right": 936.484375,
+      "bottom": 769.03125
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "uiJumpSupplierList",
+        "text": "查看供应商分配操作 ↓",
+        "left": 1056.171875,
+        "right": 1200.90625,
+        "top": 318.984375,
+        "bottom": 352.984375
+      },
+      {
+        "id": "uiOpenSupplierTools",
+        "text": "添加 / 导入供应商",
+        "left": 1208.90625,
+        "right": 1325,
+        "top": 318.984375,
+        "bottom": 352.984375
+      },
+      {
+        "id": "",
+        "text": "按物料",
+        "left": 895.546875,
+        "right": 946.546875,
+        "top": 383.984375,
+        "bottom": 412.984375
+      },
+      {
+        "id": "",
+        "text": "按供应商",
+        "left": 946.546875,
+        "right": 1008.546875,
+        "top": 383.984375,
+        "bottom": 412.984375
+      },
+      {
+        "id": "previewBtn",
+        "text": "预览询价单",
+        "left": 1145,
+        "right": 1218,
+        "top": 383.484375,
+        "bottom": 413.484375
+      },
+      {
+        "id": "generateBtn",
+        "text": "导出已分配询价单",
+        "left": 1223,
+        "right": 1329,
+        "top": 383.484375,
+        "bottom": 413.484375
+      },
+      {
+        "id": "runAssignSearch",
+        "text": "搜索",
+        "left": 761,
+        "right": 803.015625,
+        "top": 504.234375,
+        "bottom": 534.234375
+      },
+      {
+        "id": "clearAssignSearch",
+        "text": "清空条件",
+        "left": 808.015625,
+        "right": 874.03125,
+        "top": 504.234375,
+        "bottom": 534.234375
+      },
+      {
+        "id": "selectAssignAll",
+        "text": "全选",
+        "left": 315,
+        "right": 357.015625,
+        "top": 549.234375,
+        "bottom": 579.234375
+      },
+      {
+        "id": "selectAssignPage",
+        "text": "本页全选",
+        "left": 362.015625,
+        "right": 428.03125,
+        "top": 549.234375,
+        "bottom": 579.234375
+      },
+      {
+        "id": "invertAssignAll",
+        "text": "反选",
+        "left": 433.03125,
+        "right": 475.046875,
+        "top": 549.234375,
+        "bottom": 579.234375
+      },
+      {
+        "id": "invertAssignPage",
+        "text": "本页反选",
+        "left": 480.046875,
+        "right": 546.0625,
+        "top": 549.234375,
+        "bottom": 579.234375
+      },
+      {
+        "id": "clearAssignSelection",
+        "text": "清空选择",
+        "left": 551.0625,
+        "right": 617.078125,
+        "top": 549.234375,
+        "bottom": 579.234375
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 316,
+        "right": 358,
+        "top": 699.09375,
+        "bottom": 731.09375
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 316,
+        "right": 358,
+        "top": 787.109375,
+        "bottom": 819.109375
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 316,
+        "right": 358,
+        "top": 875.125,
+        "bottom": 907.125
+      },
+      {
+        "id": "",
+        "text": "上一页",
+        "left": 701.984375,
+        "right": 760,
+        "top": 956.0625,
+        "bottom": 990.0625
+      },
+      {
+        "id": "",
+        "text": "1",
+        "left": 780.015625,
+        "right": 810.015625,
+        "top": 958.0625,
+        "bottom": 988.0625
+      },
+      {
+        "id": "",
+        "text": "下一页",
+        "left": 814.015625,
+        "right": 872.03125,
+        "top": 956.0625,
+        "bottom": 990.0625
+      },
+      {
+        "id": "runSupplierSearch",
+        "text": "搜索",
+        "left": 1096.03125,
+        "right": 1138.046875,
+        "top": 503.734375,
+        "bottom": 533.734375
+      },
+      {
+        "id": "clearSupplierSearch",
+        "text": "清空条件",
+        "left": 1143.046875,
+        "right": 1209.0625,
+        "top": 503.734375,
+        "bottom": 533.734375
+      },
+      {
+        "id": "",
+        "text": "给所选物料添加此供应商",
+        "left": 929.03125,
+        "right": 1083.046875,
+        "top": 623.234375,
+        "bottom": 657.234375
+      },
+      {
+        "id": "",
+        "text": "从所选物料移除此供应商",
+        "left": 1091.046875,
+        "right": 1245.0625,
+        "top": 623.234375,
+        "bottom": 657.234375
+      },
+      {
+        "id": "",
+        "text": "给所选物料添加此供应商",
+        "left": 929.03125,
+        "right": 1083.046875,
+        "top": 741.234375,
+        "bottom": 775.234375
+      },
+      {
+        "id": "",
+        "text": "从所选物料移除此供应商",
+        "left": 1091.046875,
+        "right": 1245.0625,
+        "top": 741.234375,
+        "bottom": 775.234375
+      },
+      {
+        "id": "",
+        "text": "上一页",
+        "left": 1153.953125,
+        "right": 1211.96875,
+        "top": 799.234375,
+        "bottom": 833.234375
+      },
+      {
+        "id": "",
+        "text": "1",
+        "left": 1231.984375,
+        "right": 1261.984375,
+        "top": 801.234375,
+        "bottom": 831.234375
+      },
+      {
+        "id": "",
+        "text": "下一页",
+        "left": 1265.984375,
+        "right": 1324,
+        "top": 799.234375,
+        "bottom": 833.234375
+      }
+    ]
+  },
+  {
+    "page": "quoteImport",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "documentWidth": 1366,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 226,
+      "height": 768,
+      "right": 226,
+      "bottom": 768
+    },
+    "panel": {
+      "x": 253,
+      "y": 341.984375,
+      "width": 1086,
+      "height": 1256.8125,
+      "right": 1339,
+      "bottom": 1598.796875
+    },
+    "firstMaterial": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "firstAssign": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "newQuoteRound",
+        "text": "+ 新增下一轮",
+        "left": 978.359375,
+        "right": 1070.171875,
+        "top": 412.5625,
+        "bottom": 446.5625
+      },
+      {
+        "id": "newQuoteRevision",
+        "text": "+ 新增本轮新版本",
+        "left": 1079.171875,
+        "right": 1194.984375,
+        "top": 412.5625,
+        "bottom": 446.5625
+      },
+      {
+        "id": "editRoundScope",
+        "text": "设置本轮议价范围",
+        "left": 1203.984375,
+        "right": 1322,
+        "top": 412.5625,
+        "bottom": 446.5625
+      },
+      {
+        "id": "quoteManualAdd",
+        "text": "加入预览",
+        "left": 447,
+        "right": 517.015625,
+        "top": 789.0625,
+        "bottom": 823.0625
+      },
+      {
+        "id": "quoteReadClipboard",
+        "text": "读取剪贴板",
+        "left": 635,
+        "right": 717.015625,
+        "top": 699.0625,
+        "bottom": 733.0625
+      },
+      {
+        "id": "quoteParsePaste",
+        "text": "解析预览",
+        "left": 725.015625,
+        "right": 795.03125,
+        "top": 699.0625,
+        "bottom": 733.0625
+      },
+      {
+        "id": "quoteClearInput",
+        "text": "清空输入",
+        "left": 803.03125,
+        "right": 873.046875,
+        "top": 699.0625,
+        "bottom": 733.0625
+      },
+      {
+        "id": "quoteClearPreview",
+        "text": "清空预览",
+        "left": 881.046875,
+        "right": 951.0625,
+        "top": 699.0625,
+        "bottom": 733.0625
+      },
+      {
+        "id": "toggleQuoteMapping",
+        "text": "字段映射",
+        "left": 1001,
+        "right": 1071.015625,
+        "top": 654.0625,
+        "bottom": 688.0625
+      },
+      {
+        "id": "demoQuoteExcel",
+        "text": "仅模拟：查看虚构报价",
+        "left": 1074.15625,
+        "right": 1216.171875,
+        "top": 654.0625,
+        "bottom": 688.0625
+      },
+      {
+        "id": "exportQuoteMissing",
+        "text": "导出本供应商本轮漏报 CSV",
+        "left": 269,
+        "right": 436.15625,
+        "top": 1143.34375,
+        "bottom": 1177.34375
+      },
+      {
+        "id": "confirmQuoteRound",
+        "text": "确认本次提交",
+        "left": 1208.984375,
+        "right": 1323,
+        "top": 1202.34375,
+        "bottom": 1240.34375
+      },
+      {
+        "id": "carryForwardMissing",
+        "text": "选择沿用上轮项目…",
+        "left": 1192.984375,
+        "right": 1323,
+        "top": 1279.34375,
+        "bottom": 1313.34375
+      },
+      {
+        "id": "",
+        "text": "修改",
+        "left": 1265.0625,
+        "right": 1311.078125,
+        "top": 1416.875,
+        "bottom": 1450.265625
+      },
+      {
+        "id": "",
+        "text": "修改",
+        "left": 1265.0625,
+        "right": 1311.078125,
+        "top": 1477.5625,
+        "bottom": 1510.953125
+      },
+      {
+        "id": "",
+        "text": "修改",
+        "left": 1265.0625,
+        "right": 1311.078125,
+        "top": 1538.25,
+        "bottom": 1571.640625
+      }
+    ]
+  },
+  {
+    "page": "quotes",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "documentWidth": 1366,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 226,
+      "height": 768,
+      "right": 226,
+      "bottom": 768
+    },
+    "panel": {
+      "x": 253,
+      "y": 341.984375,
+      "width": 1086,
+      "height": 1262.375,
+      "right": 1339,
+      "bottom": 1604.359375
+    },
+    "firstMaterial": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "firstAssign": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "resetAwards",
+        "text": "恢复默认最低价",
+        "left": 1214.984375,
+        "right": 1321,
+        "top": 362.765625,
+        "bottom": 396.765625
+      },
+      {
+        "id": "clearCommonSupplierGroup",
+        "text": "清空比较组",
+        "left": 781.4375,
+        "right": 863.453125,
+        "top": 574.75,
+        "bottom": 608.75
+      },
+      {
+        "id": "",
+        "text": "选择全部适用",
+        "left": 637.71875,
+        "right": 731.734375,
+        "top": 695.921875,
+        "bottom": 729.3125
+      },
+      {
+        "id": "",
+        "text": "选择全部适用",
+        "left": 914.25,
+        "right": 1008.265625,
+        "top": 695.921875,
+        "bottom": 729.3125
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 283,
+        "right": 325,
+        "top": 762.390625,
+        "bottom": 794.390625
+      },
+      {
+        "id": "",
+        "text": "¥9.00",
+        "left": 637.71875,
+        "right": 691.953125,
+        "top": 753,
+        "bottom": 786.390625
+      },
+      {
+        "id": "",
+        "text": "¥12.00",
+        "left": 914.25,
+        "right": 975.5625,
+        "top": 753,
+        "bottom": 786.390625
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 283,
+        "right": 325,
+        "top": 858.40625,
+        "bottom": 890.40625
+      },
+      {
+        "id": "",
+        "text": "¥20.00",
+        "left": 637.71875,
+        "right": 699.03125,
+        "top": 849.015625,
+        "bottom": 882.40625
+      },
+      {
+        "id": "",
+        "text": "¥18.00",
+        "left": 914.25,
+        "right": 975.5625,
+        "top": 849.015625,
+        "bottom": 882.40625
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 283,
+        "right": 325,
+        "top": 954.421875,
+        "bottom": 986.421875
+      },
+      {
+        "id": "",
+        "text": "上一页",
+        "left": 1150.953125,
+        "right": 1208.96875,
+        "top": 1038.359375,
+        "bottom": 1072.359375
+      },
+      {
+        "id": "",
+        "text": "1",
+        "left": 1228.984375,
+        "right": 1258.984375,
+        "top": 1040.359375,
+        "bottom": 1070.359375
+      },
+      {
+        "id": "",
+        "text": "下一页",
+        "left": 1262.984375,
+        "right": 1321,
+        "top": 1038.359375,
+        "bottom": 1072.359375
+      },
+      {
+        "id": "exportSelectedCommonScope",
+        "text": "导出本比较组全部共同项目 CSV",
+        "left": 289,
+        "right": 480.15625,
+        "top": 1485.359375,
+        "bottom": 1519.359375
+      }
+    ]
+  },
+  {
+    "page": "settings",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "documentWidth": 1366,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 226,
+      "height": 768,
+      "right": 226,
+      "bottom": 768
+    },
+    "panel": {
+      "x": 253,
+      "y": 341.984375,
+      "width": 1086,
+      "height": 938.109375,
+      "right": 1339,
+      "bottom": 1280.09375
+    },
+    "firstMaterial": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "firstAssign": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "",
+        "text": "下载询价物料模板 .xlsx",
+        "left": 269,
+        "right": 416.84375,
+        "top": 430.984375,
+        "bottom": 464.984375
+      },
+      {
+        "id": "",
+        "text": "下载供应商模板 .xlsx",
+        "left": 269,
+        "right": 404.84375,
+        "top": 474.984375,
+        "bottom": 508.984375
+      },
+      {
+        "id": "",
+        "text": "下载供应商报价模板 .xlsx",
+        "left": 269,
+        "right": 428.84375,
+        "top": 518.984375,
+        "bottom": 552.984375
+      },
+      {
+        "id": "",
+        "text": "下载匹配更新模板 .csv",
+        "left": 269,
+        "right": 412.8125,
+        "top": 562.984375,
+        "bottom": 596.984375
+      },
+      {
+        "id": "addCustomField",
+        "text": "+ 添加字段",
+        "left": 269,
+        "right": 348.8125,
+        "top": 762.984375,
+        "bottom": 796.984375
+      },
+      {
+        "id": "deleteCustomField",
+        "text": "删除字段",
+        "left": 560.8125,
+        "right": 630.828125,
+        "top": 762.984375,
+        "bottom": 796.984375
+      }
+    ]
+  },
+  {
+    "page": "items",
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "documentWidth": 1600,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 226,
+      "height": 900,
+      "right": 226,
+      "bottom": 900
+    },
+    "panel": {
+      "x": 253,
+      "y": 341.984375,
+      "width": 1320,
+      "height": 543.203125,
+      "right": 1573,
+      "bottom": 885.1875
+    },
+    "firstMaterial": {
+      "x": 270,
+      "y": 573.375,
+      "width": 1286,
+      "height": 68.9375,
+      "right": 1556,
+      "bottom": 642.3125
+    },
+    "firstAssign": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "runItemSearch",
+        "text": "搜索",
+        "left": 784.8125,
+        "right": 828.828125,
+        "top": 356.984375,
+        "bottom": 389.984375
+      },
+      {
+        "id": "clearItemSearch",
+        "text": "清空搜索",
+        "left": 835.828125,
+        "right": 903.84375,
+        "top": 356.984375,
+        "bottom": 389.984375
+      },
+      {
+        "id": "toggleItemIntake",
+        "text": "+ 添加询价物料",
+        "left": 269,
+        "right": 370.8125,
+        "top": 356.984375,
+        "bottom": 389.984375
+      },
+      {
+        "id": "deleteSelectedItems",
+        "text": "删除选中物料",
+        "left": 910.84375,
+        "right": 1002.859375,
+        "top": 356.984375,
+        "bottom": 389.984375
+      },
+      {
+        "id": "toggleFieldTools",
+        "text": "批量更新字段值",
+        "left": 1009.859375,
+        "right": 1113.875,
+        "top": 356.984375,
+        "bottom": 389.984375
+      },
+      {
+        "id": "uiOpenDrawings",
+        "text": "图纸匹配与管理",
+        "left": 1120.875,
+        "right": 1224.890625,
+        "top": 356.984375,
+        "bottom": 389.984375
+      },
+      {
+        "id": "itemSelectAll",
+        "text": "全选",
+        "left": 328.015625,
+        "right": 372.03125,
+        "top": 424.984375,
+        "bottom": 457.984375
+      },
+      {
+        "id": "itemSelectPage",
+        "text": "本页全选",
+        "left": 377.03125,
+        "right": 445.046875,
+        "top": 424.984375,
+        "bottom": 457.984375
+      },
+      {
+        "id": "itemInvertAll",
+        "text": "反选",
+        "left": 450.046875,
+        "right": 494.0625,
+        "top": 424.984375,
+        "bottom": 457.984375
+      },
+      {
+        "id": "itemInvertPage",
+        "text": "本页反选",
+        "left": 499.0625,
+        "right": 567.078125,
+        "top": 424.984375,
+        "bottom": 457.984375
+      },
+      {
+        "id": "clearItemSelection",
+        "text": "取消选择",
+        "left": 572.078125,
+        "right": 640.09375,
+        "top": 424.984375,
+        "bottom": 457.984375
+      },
+      {
+        "id": "",
+        "text": "RFQ Line ID",
+        "left": 392.03125,
+        "right": 481.5625,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "存货编码",
+        "left": 525.640625,
+        "right": 595.65625,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "存货名称",
+        "left": 716.46875,
+        "right": 786.484375,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "规格型号",
+        "left": 913.109375,
+        "right": 983.125,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "所属类别",
+        "left": 1041.9375,
+        "right": 1111.953125,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "询价数量",
+        "left": 1170.765625,
+        "right": 1240.78125,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "询价单位",
+        "left": 1299.59375,
+        "right": 1369.609375,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "",
+        "text": "已分配供应商",
+        "left": 1428.421875,
+        "right": 1522.4375,
+        "top": 477.28125,
+        "bottom": 510.671875
+      },
+      {
+        "id": "applyColumnSearch",
+        "text": "搜索",
+        "left": 280,
+        "right": 326.015625,
+        "top": 529.984375,
+        "bottom": 563.375
+      },
+      {
+        "id": "clearColumnSearch",
+        "text": "清空",
+        "left": 326.015625,
+        "right": 372.03125,
+        "top": 529.984375,
+        "bottom": 563.375
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 654.46875,
+        "right": 696.46875,
+        "top": 582.375,
+        "bottom": 614.375
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 654.46875,
+        "right": 696.46875,
+        "top": 651.3125,
+        "bottom": 683.3125
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 654.46875,
+        "right": 696.46875,
+        "top": 720.25,
+        "bottom": 752.25
+      },
+      {
+        "id": "",
+        "text": "上一页",
+        "left": 1386.953125,
+        "right": 1444.96875,
+        "top": 790.1875,
+        "bottom": 824.1875
+      },
+      {
+        "id": "",
+        "text": "1",
+        "left": 1464.984375,
+        "right": 1494.984375,
+        "top": 792.1875,
+        "bottom": 822.1875
+      },
+      {
+        "id": "",
+        "text": "下一页",
+        "left": 1498.984375,
+        "right": 1557,
+        "top": 790.1875,
+        "bottom": 824.1875
+      }
+    ]
+  },
+  {
+    "page": "assign",
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "documentWidth": 1600,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 226,
+      "height": 900,
+      "right": 226,
+      "bottom": 900
+    },
+    "panel": {
+      "x": 253,
+      "y": 341.984375,
+      "width": 1320,
+      "height": 696.078125,
+      "right": 1573,
+      "bottom": 1038.0625
+    },
+    "firstMaterial": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "firstAssign": {
+      "x": 269,
+      "y": 716.015625,
+      "width": 740.3125,
+      "height": 88.015625,
+      "right": 1009.3125,
+      "bottom": 804.03125
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "uiJumpSupplierList",
+        "text": "查看供应商分配操作 ↓",
+        "left": 1290.171875,
+        "right": 1434.90625,
+        "top": 353.984375,
+        "bottom": 387.984375
+      },
+      {
+        "id": "uiOpenSupplierTools",
+        "text": "添加 / 导入供应商",
+        "left": 1442.90625,
+        "right": 1559,
+        "top": 353.984375,
+        "bottom": 387.984375
+      },
+      {
+        "id": "",
+        "text": "按物料",
+        "left": 1030.09375,
+        "right": 1081.09375,
+        "top": 418.984375,
+        "bottom": 447.984375
+      },
+      {
+        "id": "",
+        "text": "按供应商",
+        "left": 1081.09375,
+        "right": 1143.09375,
+        "top": 418.984375,
+        "bottom": 447.984375
+      },
+      {
+        "id": "previewBtn",
+        "text": "预览询价单",
+        "left": 1379,
+        "right": 1452,
+        "top": 418.484375,
+        "bottom": 448.484375
+      },
+      {
+        "id": "generateBtn",
+        "text": "导出已分配询价单",
+        "left": 1457,
+        "right": 1563,
+        "top": 418.484375,
+        "bottom": 448.484375
+      },
+      {
+        "id": "runAssignSearch",
+        "text": "搜索",
+        "left": 899.28125,
+        "right": 941.296875,
+        "top": 539.234375,
+        "bottom": 569.234375
+      },
+      {
+        "id": "clearAssignSearch",
+        "text": "清空条件",
+        "left": 946.296875,
+        "right": 1012.3125,
+        "top": 539.234375,
+        "bottom": 569.234375
+      },
+      {
+        "id": "selectAssignAll",
+        "text": "全选",
+        "left": 315,
+        "right": 357.015625,
+        "top": 584.234375,
+        "bottom": 614.234375
+      },
+      {
+        "id": "selectAssignPage",
+        "text": "本页全选",
+        "left": 362.015625,
+        "right": 428.03125,
+        "top": 584.234375,
+        "bottom": 614.234375
+      },
+      {
+        "id": "invertAssignAll",
+        "text": "反选",
+        "left": 433.03125,
+        "right": 475.046875,
+        "top": 584.234375,
+        "bottom": 614.234375
+      },
+      {
+        "id": "invertAssignPage",
+        "text": "本页反选",
+        "left": 480.046875,
+        "right": 546.0625,
+        "top": 584.234375,
+        "bottom": 614.234375
+      },
+      {
+        "id": "clearAssignSelection",
+        "text": "清空选择",
+        "left": 551.0625,
+        "right": 617.078125,
+        "top": 584.234375,
+        "bottom": 614.234375
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 320.140625,
+        "right": 362.140625,
+        "top": 734.09375,
+        "bottom": 766.09375
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 320.140625,
+        "right": 362.140625,
+        "top": 822.109375,
+        "bottom": 854.109375
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 320.140625,
+        "right": 362.140625,
+        "top": 910.125,
+        "bottom": 942.125
+      },
+      {
+        "id": "",
+        "text": "上一页",
+        "left": 840.265625,
+        "right": 898.28125,
+        "top": 991.0625,
+        "bottom": 1025.0625
+      },
+      {
+        "id": "",
+        "text": "1",
+        "left": 918.296875,
+        "right": 948.296875,
+        "top": 993.0625,
+        "bottom": 1023.0625
+      },
+      {
+        "id": "",
+        "text": "下一页",
+        "left": 952.296875,
+        "right": 1010.3125,
+        "top": 991.0625,
+        "bottom": 1025.0625
+      },
+      {
+        "id": "runSupplierSearch",
+        "text": "搜索",
+        "left": 1234.3125,
+        "right": 1276.328125,
+        "top": 538.734375,
+        "bottom": 568.734375
+      },
+      {
+        "id": "clearSupplierSearch",
+        "text": "清空条件",
+        "left": 1281.328125,
+        "right": 1347.34375,
+        "top": 538.734375,
+        "bottom": 568.734375
+      },
+      {
+        "id": "",
+        "text": "给所选物料添加此供应商",
+        "left": 1067.3125,
+        "right": 1221.328125,
+        "top": 658.234375,
+        "bottom": 692.234375
+      },
+      {
+        "id": "",
+        "text": "从所选物料移除此供应商",
+        "left": 1229.328125,
+        "right": 1383.34375,
+        "top": 658.234375,
+        "bottom": 692.234375
+      },
+      {
+        "id": "",
+        "text": "给所选物料添加此供应商",
+        "left": 1067.3125,
+        "right": 1221.328125,
+        "top": 776.234375,
+        "bottom": 810.234375
+      },
+      {
+        "id": "",
+        "text": "从所选物料移除此供应商",
+        "left": 1229.328125,
+        "right": 1383.34375,
+        "top": 776.234375,
+        "bottom": 810.234375
+      },
+      {
+        "id": "",
+        "text": "上一页",
+        "left": 1387.953125,
+        "right": 1445.96875,
+        "top": 834.234375,
+        "bottom": 868.234375
+      },
+      {
+        "id": "",
+        "text": "1",
+        "left": 1465.984375,
+        "right": 1495.984375,
+        "top": 836.234375,
+        "bottom": 866.234375
+      },
+      {
+        "id": "",
+        "text": "下一页",
+        "left": 1499.984375,
+        "right": 1558,
+        "top": 834.234375,
+        "bottom": 868.234375
+      }
+    ]
+  },
+  {
+    "page": "quoteImport",
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "documentWidth": 1600,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 226,
+      "height": 900,
+      "right": 226,
+      "bottom": 900
+    },
+    "panel": {
+      "x": 253,
+      "y": 341.984375,
+      "width": 1320,
+      "height": 1194.8125,
+      "right": 1573,
+      "bottom": 1536.796875
+    },
+    "firstMaterial": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "firstAssign": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "newQuoteRound",
+        "text": "+ 新增下一轮",
+        "left": 1048.46875,
+        "right": 1140.28125,
+        "top": 412.5625,
+        "bottom": 446.5625
+      },
+      {
+        "id": "newQuoteRevision",
+        "text": "+ 新增本轮新版本",
+        "left": 1149.28125,
+        "right": 1265.09375,
+        "top": 412.5625,
+        "bottom": 446.5625
+      },
+      {
+        "id": "editRoundScope",
+        "text": "设置本轮议价范围",
+        "left": 1274.09375,
+        "right": 1392.109375,
+        "top": 412.5625,
+        "bottom": 446.5625
+      },
+      {
+        "id": "quoteManualAdd",
+        "text": "加入预览",
+        "left": 447,
+        "right": 517.015625,
+        "top": 727.0625,
+        "bottom": 761.0625
+      },
+      {
+        "id": "quoteReadClipboard",
+        "text": "读取剪贴板",
+        "left": 713,
+        "right": 795.015625,
+        "top": 699.0625,
+        "bottom": 733.0625
+      },
+      {
+        "id": "quoteParsePaste",
+        "text": "解析预览",
+        "left": 803.015625,
+        "right": 873.03125,
+        "top": 699.0625,
+        "bottom": 733.0625
+      },
+      {
+        "id": "quoteClearInput",
+        "text": "清空输入",
+        "left": 881.03125,
+        "right": 951.046875,
+        "top": 699.0625,
+        "bottom": 733.0625
+      },
+      {
+        "id": "quoteClearPreview",
+        "text": "清空预览",
+        "left": 959.046875,
+        "right": 1029.0625,
+        "top": 699.0625,
+        "bottom": 733.0625
+      },
+      {
+        "id": "toggleQuoteMapping",
+        "text": "字段映射",
+        "left": 1157,
+        "right": 1227.015625,
+        "top": 654.0625,
+        "bottom": 688.0625
+      },
+      {
+        "id": "demoQuoteExcel",
+        "text": "仅模拟：查看虚构报价",
+        "left": 1230.15625,
+        "right": 1372.171875,
+        "top": 654.0625,
+        "bottom": 688.0625
+      },
+      {
+        "id": "exportQuoteMissing",
+        "text": "导出本供应商本轮漏报 CSV",
+        "left": 269,
+        "right": 436.15625,
+        "top": 1081.34375,
+        "bottom": 1115.34375
+      },
+      {
+        "id": "confirmQuoteRound",
+        "text": "确认本次提交",
+        "left": 1442.984375,
+        "right": 1557,
+        "top": 1140.34375,
+        "bottom": 1178.34375
+      },
+      {
+        "id": "carryForwardMissing",
+        "text": "选择沿用上轮项目…",
+        "left": 1426.984375,
+        "right": 1557,
+        "top": 1217.34375,
+        "bottom": 1251.34375
+      },
+      {
+        "id": "",
+        "text": "修改",
+        "left": 1499.0625,
+        "right": 1545.078125,
+        "top": 1354.875,
+        "bottom": 1388.265625
+      },
+      {
+        "id": "",
+        "text": "修改",
+        "left": 1499.0625,
+        "right": 1545.078125,
+        "top": 1415.5625,
+        "bottom": 1448.953125
+      },
+      {
+        "id": "",
+        "text": "修改",
+        "left": 1499.0625,
+        "right": 1545.078125,
+        "top": 1476.25,
+        "bottom": 1509.640625
+      }
+    ]
+  },
+  {
+    "page": "quotes",
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "documentWidth": 1600,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 226,
+      "height": 900,
+      "right": 226,
+      "bottom": 900
+    },
+    "panel": {
+      "x": 253,
+      "y": 341.984375,
+      "width": 1320,
+      "height": 1244.375,
+      "right": 1573,
+      "bottom": 1586.359375
+    },
+    "firstMaterial": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "firstAssign": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "resetAwards",
+        "text": "恢复默认最低价",
+        "left": 1448.984375,
+        "right": 1555,
+        "top": 362.765625,
+        "bottom": 396.765625
+      },
+      {
+        "id": "clearCommonSupplierGroup",
+        "text": "清空比较组",
+        "left": 781.4375,
+        "right": 863.453125,
+        "top": 574.75,
+        "bottom": 608.75
+      },
+      {
+        "id": "",
+        "text": "选择全部适用",
+        "left": 673.03125,
+        "right": 767.046875,
+        "top": 695.921875,
+        "bottom": 729.3125
+      },
+      {
+        "id": "",
+        "text": "选择全部适用",
+        "left": 977.09375,
+        "right": 1071.109375,
+        "top": 695.921875,
+        "bottom": 729.3125
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 283,
+        "right": 325,
+        "top": 762.390625,
+        "bottom": 794.390625
+      },
+      {
+        "id": "",
+        "text": "¥9.00",
+        "left": 673.03125,
+        "right": 727.265625,
+        "top": 753,
+        "bottom": 786.390625
+      },
+      {
+        "id": "",
+        "text": "¥12.00",
+        "left": 977.09375,
+        "right": 1038.40625,
+        "top": 753,
+        "bottom": 786.390625
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 283,
+        "right": 325,
+        "top": 858.40625,
+        "bottom": 890.40625
+      },
+      {
+        "id": "",
+        "text": "¥20.00",
+        "left": 673.03125,
+        "right": 734.34375,
+        "top": 849.015625,
+        "bottom": 882.40625
+      },
+      {
+        "id": "",
+        "text": "¥18.00",
+        "left": 977.09375,
+        "right": 1038.40625,
+        "top": 849.015625,
+        "bottom": 882.40625
+      },
+      {
+        "id": "",
+        "text": "PDF",
+        "left": 283,
+        "right": 325,
+        "top": 954.421875,
+        "bottom": 986.421875
+      },
+      {
+        "id": "",
+        "text": "上一页",
+        "left": 1384.953125,
+        "right": 1442.96875,
+        "top": 1038.359375,
+        "bottom": 1072.359375
+      },
+      {
+        "id": "",
+        "text": "1",
+        "left": 1462.984375,
+        "right": 1492.984375,
+        "top": 1040.359375,
+        "bottom": 1070.359375
+      },
+      {
+        "id": "",
+        "text": "下一页",
+        "left": 1496.984375,
+        "right": 1555,
+        "top": 1038.359375,
+        "bottom": 1072.359375
+      },
+      {
+        "id": "exportSelectedCommonScope",
+        "text": "导出本比较组全部共同项目 CSV",
+        "left": 289,
+        "right": 480.15625,
+        "top": 1467.359375,
+        "bottom": 1501.359375
+      }
+    ]
+  },
+  {
+    "page": "settings",
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "documentWidth": 1600,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 226,
+      "height": 900,
+      "right": 226,
+      "bottom": 900
+    },
+    "panel": {
+      "x": 253,
+      "y": 341.984375,
+      "width": 1320,
+      "height": 920.109375,
+      "right": 1573,
+      "bottom": 1262.09375
+    },
+    "firstMaterial": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "firstAssign": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "font": "14px / 21px \"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "visibleButtons": [
+      {
+        "id": "",
+        "text": "下载询价物料模板 .xlsx",
+        "left": 269,
+        "right": 416.84375,
+        "top": 430.984375,
+        "bottom": 464.984375
+      },
+      {
+        "id": "",
+        "text": "下载供应商模板 .xlsx",
+        "left": 269,
+        "right": 404.84375,
+        "top": 474.984375,
+        "bottom": 508.984375
+      },
+      {
+        "id": "",
+        "text": "下载供应商报价模板 .xlsx",
+        "left": 269,
+        "right": 428.84375,
+        "top": 518.984375,
+        "bottom": 552.984375
+      },
+      {
+        "id": "",
+        "text": "下载匹配更新模板 .csv",
+        "left": 269,
+        "right": 412.8125,
+        "top": 562.984375,
+        "bottom": 596.984375
+      },
+      {
+        "id": "addCustomField",
+        "text": "+ 添加字段",
+        "left": 269,
+        "right": 348.8125,
+        "top": 744.984375,
+        "bottom": 778.984375
+      },
+      {
+        "id": "deleteCustomField",
+        "text": "删除字段",
+        "left": 560.8125,
+        "right": 630.828125,
+        "top": 744.984375,
+        "bottom": 778.984375
+      }
+    ]
+  }
+]
