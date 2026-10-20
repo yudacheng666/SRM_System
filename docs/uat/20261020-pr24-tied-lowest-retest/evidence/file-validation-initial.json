@@ -1,0 +1,448 @@
+[
+  {
+    "label": "common-scope.csv BOM",
+    "actual": "efbbbf",
+    "expected": "efbbbf",
+    "passed": true
+  },
+  {
+    "label": "common-scope.csv RFQ line identity",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00004"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00004"
+    ],
+    "passed": true
+  },
+  {
+    "label": "common-scope.csv totals",
+    "actual": [
+      "638.00",
+      "692.00"
+    ],
+    "expected": [
+      "638.00",
+      "692.00"
+    ],
+    "passed": true
+  },
+  {
+    "label": "common-scope.csv qty times actual price",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "label": "common-scope-after-review.csv BOM",
+    "actual": "efbbbf",
+    "expected": "efbbbf",
+    "passed": true
+  },
+  {
+    "label": "common-scope-after-review.csv RFQ line identity",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00004"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00004"
+    ],
+    "passed": true
+  },
+  {
+    "label": "common-scope-after-review.csv totals",
+    "actual": [
+      "638.00",
+      "717.00"
+    ],
+    "expected": [
+      "638.00",
+      "717.00"
+    ],
+    "passed": true
+  },
+  {
+    "label": "common-scope-after-review.csv qty times actual price",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "label": "business sheets",
+    "actual": [
+      "询价物料",
+      "供应商",
+      "报价明细"
+    ],
+    "expected": [
+      "询价物料",
+      "供应商",
+      "报价明细"
+    ],
+    "passed": true
+  },
+  {
+    "label": "business counts",
+    "actual": [
+      4,
+      3,
+      12
+    ],
+    "expected": [
+      4,
+      3,
+      12
+    ],
+    "passed": true
+  },
+  {
+    "label": "exported A V1 and V2",
+    "actual": [
+      10,
+      9
+    ],
+    "expected": [
+      10,
+      9
+    ],
+    "passed": true
+  },
+  {
+    "label": "comparison-report.xlsx shape",
+    "actual": [
+      [
+        6,
+        22
+      ],
+      [
+        13,
+        26
+      ]
+    ],
+    "expected": [
+      [
+        6,
+        22
+      ],
+      [
+        13,
+        26
+      ]
+    ],
+    "passed": true
+  },
+  {
+    "label": "comparison-report.xlsx tied buyer choice",
+    "actual": "虚构乙方，快速交付测试供应商",
+    "expected": "虚构乙方，快速交付测试供应商",
+    "passed": true
+  },
+  {
+    "label": "comparison-report.xlsx tied exception reason absent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "label": "comparison-report.xlsx higher reason retained",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "label": "comparison-report.xlsx noquote not zero",
+    "actual": [
+      null,
+      null
+    ],
+    "expected": [
+      null,
+      null
+    ],
+    "passed": true
+  },
+  {
+    "label": "comparison-report.xlsx real formulas",
+    "actual": [
+      "=ROUND(Q2*C2,2)",
+      "=ROUND(T5*C5,2)",
+      "=SUMIF(K2:K5,\"是\",R2:R5)"
+    ],
+    "expected": [
+      "=ROUND(Q2*C2,2)",
+      "=ROUND(T5*C5,2)",
+      "=SUMIF(K2:K5,\"是\",R2:R5)"
+    ],
+    "passed": true
+  },
+  {
+    "label": "comparison-report.xlsx price8vs12",
+    "actual": [
+      8,
+      12
+    ],
+    "expected": [
+      8,
+      12
+    ],
+    "passed": true
+  },
+  {
+    "label": "comparison-after-review.xlsx shape",
+    "actual": [
+      [
+        6,
+        22
+      ],
+      [
+        17,
+        26
+      ]
+    ],
+    "expected": [
+      [
+        6,
+        22
+      ],
+      [
+        18,
+        26
+      ]
+    ],
+    "passed": false
+  },
+  {
+    "label": "comparison-after-review.xlsx tied buyer choice",
+    "actual": "虚构丙方同价复核供应商",
+    "expected": "虚构丙方同价复核供应商",
+    "passed": true
+  },
+  {
+    "label": "comparison-after-review.xlsx tied exception reason absent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "label": "comparison-after-review.xlsx higher reason retained",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "label": "comparison-after-review.xlsx noquote not zero",
+    "actual": [
+      null,
+      null
+    ],
+    "expected": [
+      null,
+      null
+    ],
+    "passed": true
+  },
+  {
+    "label": "comparison-after-review.xlsx real formulas",
+    "actual": [
+      "=ROUND(Q2*C2,2)",
+      "=ROUND(T5*C5,2)",
+      "=SUMIF(K2:K5,\"是\",R2:R5)"
+    ],
+    "expected": [
+      "=ROUND(Q2*C2,2)",
+      "=ROUND(T5*C5,2)",
+      "=SUMIF(K2:K5,\"是\",R2:R5)"
+    ],
+    "passed": true
+  },
+  {
+    "label": "comparison-after-review.xlsx price8vs12",
+    "actual": [
+      8,
+      12
+    ],
+    "expected": [
+      8,
+      12
+    ],
+    "passed": true
+  },
+  {
+    "label": "A supplier rows",
+    "actual": 4,
+    "expected": 4,
+    "passed": true
+  },
+  {
+    "label": "A blank prices",
+    "actual": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "expected": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "passed": true
+  },
+  {
+    "label": "A private ERP absent",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "label": "A competitor absent",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "label": "A unchanged PDF",
+    "actual": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+    "expected": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+    "passed": true
+  },
+  {
+    "label": "B supplier rows",
+    "actual": 4,
+    "expected": 4,
+    "passed": true
+  },
+  {
+    "label": "B blank prices",
+    "actual": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "expected": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "passed": true
+  },
+  {
+    "label": "B private ERP absent",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "label": "B competitor absent",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "label": "B unchanged PDF",
+    "actual": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+    "expected": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+    "passed": true
+  },
+  {
+    "label": "full-S4.zip integrity",
+    "actual": "ok",
+    "expected": "ok",
+    "passed": true
+  },
+  {
+    "label": "full-S4.zip exact saved snapshots",
+    "actual": {
+      "RFQ-1792459298134-26MAFU": {
+        "revision": 8,
+        "sha256": "96ffdc12865b59212212b2d91c86e20a6cae356614019fab651659a5b476514b"
+      },
+      "RFQ-1792459436300-2JCO5C": {
+        "revision": 1,
+        "sha256": "11ce2f1a3e57419e5b58e10cc467288633a4663fcbb8b2e22e1724be8fb45c19"
+      }
+    },
+    "expected": {
+      "RFQ-1792459298134-26MAFU": {
+        "revision": 8,
+        "sha256": "96ffdc12865b59212212b2d91c86e20a6cae356614019fab651659a5b476514b"
+      },
+      "RFQ-1792459436300-2JCO5C": {
+        "revision": 1,
+        "sha256": "11ce2f1a3e57419e5b58e10cc467288633a4663fcbb8b2e22e1724be8fb45c19"
+      }
+    },
+    "passed": true
+  },
+  {
+    "label": "full-S4-after-review.zip integrity",
+    "actual": "ok",
+    "expected": "ok",
+    "passed": true
+  },
+  {
+    "label": "full-S4-after-review.zip exact saved snapshots",
+    "actual": {
+      "RFQ-1792459298134-26MAFU": {
+        "revision": 11,
+        "sha256": "feaf7dd1dafd84e43002aee104f808c4869d75ffcb835aa3fbeb454d8cdd1e5d"
+      },
+      "RFQ-1792459436300-2JCO5C": {
+        "revision": 1,
+        "sha256": "11ce2f1a3e57419e5b58e10cc467288633a4663fcbb8b2e22e1724be8fb45c19"
+      }
+    },
+    "expected": {
+      "RFQ-1792459298134-26MAFU": {
+        "revision": 11,
+        "sha256": "feaf7dd1dafd84e43002aee104f808c4869d75ffcb835aa3fbeb454d8cdd1e5d"
+      },
+      "RFQ-1792459436300-2JCO5C": {
+        "revision": 1,
+        "sha256": "11ce2f1a3e57419e5b58e10cc467288633a4663fcbb8b2e22e1724be8fb45c19"
+      }
+    },
+    "passed": true
+  },
+  {
+    "label": "full-S4-repeat.zip integrity",
+    "actual": "ok",
+    "expected": "ok",
+    "passed": true
+  },
+  {
+    "label": "full-S4-repeat.zip exact saved snapshots",
+    "actual": {
+      "RFQ-1792459298134-26MAFU": {
+        "revision": 11,
+        "sha256": "feaf7dd1dafd84e43002aee104f808c4869d75ffcb835aa3fbeb454d8cdd1e5d"
+      },
+      "RFQ-1792459436300-2JCO5C": {
+        "revision": 1,
+        "sha256": "11ce2f1a3e57419e5b58e10cc467288633a4663fcbb8b2e22e1724be8fb45c19"
+      }
+    },
+    "expected": {
+      "RFQ-1792459298134-26MAFU": {
+        "revision": 11,
+        "sha256": "feaf7dd1dafd84e43002aee104f808c4869d75ffcb835aa3fbeb454d8cdd1e5d"
+      },
+      "RFQ-1792459436300-2JCO5C": {
+        "revision": 1,
+        "sha256": "11ce2f1a3e57419e5b58e10cc467288633a4663fcbb8b2e22e1724be8fb45c19"
+      }
+    },
+    "passed": true
+  }
+]

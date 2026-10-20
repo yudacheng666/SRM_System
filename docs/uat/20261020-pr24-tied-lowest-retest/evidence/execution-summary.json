@@ -1,0 +1,45 @@
+{
+  "browser.jsonl": {
+    "events": {
+      "request": 303,
+      "console": 2,
+      "command": 8,
+      "screenshot": 70,
+      "step": 9,
+      "check": 179,
+      "observation": 41,
+      "dialog": 21,
+      "driver-error": 2,
+      "download": 12
+    },
+    "checks": {
+      "True": 179
+    },
+    "errors": [
+      {
+        "time": "2026-10-20T01:22:04.975Z",
+        "kind": "driver-error",
+        "message": "locator.click: Timeout 20000ms exceeded."
+      },
+      {
+        "time": "2026-10-20T01:24:22.759Z",
+        "kind": "driver-error",
+        "message": "page.waitForEvent: Timeout 20000ms exceeded while waiting for event \"download\""
+      }
+    ]
+  },
+  "aux-browser.jsonl": {
+    "events": {
+      "dialog": 2,
+      "check": 5
+    },
+    "checks": {
+      "True": 5
+    },
+    "errors": []
+  },
+  "download_checks": {
+    "total": 43,
+    "passed": 43
+  }
+}
