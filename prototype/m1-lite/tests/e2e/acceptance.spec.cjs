@@ -266,6 +266,10 @@ test('06 full backup restore: actual imported quotes, history, PDFs, overwrite r
     for(let r=1;r<=w.revision;r++) originals[row.workspaceId].push((await (await fetch(baseURL+'/api/workspaces/'+row.workspaceId+'?revision='+r)).json()).workspace);
   }
   await openTools(page,'#uiDataTools');
+  // 中文：顶部管理入口只负责导航，不应将已保存工作区误标为 dirty 并吞掉备份点击。
+  // English: Admin navigation must not dirty a saved workspace or silently swallow the S4 download.
+  await page.locator('[data-srm-v2-action="admin"]').click();
+  await openTools(page,'#uiDataTools');
   const file=await download(page,'#pilotS4DownloadFull',info,'full-backup.zip'); const z=inspectZip(file); expect(z['database/srm.sqlite3']).toBeTruthy();
   await app.start(8766,path.join(app.root,'restored')); const other=await browser.newPage(); other.on('dialog',d=>d.accept());
   try {
