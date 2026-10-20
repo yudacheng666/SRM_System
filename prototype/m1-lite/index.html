@@ -5282,7 +5282,12 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       }
       autosaveLabel(dirty?"保存第 "+revision+" 版成功，仍有新修改等待保存":
         "已"+(automatic?"自动":"手动")+"保存第 "+revision+" 版（"+new Date().toLocaleTimeString()+"）");
-      if(!dirty)status("SQLite "+(automatic?"自动":"手动")+"保存成功："+workspaceId+"（第 "+revision+" 版）。");
+      // 中文：仅在 SQLite 已确认保存且没有新输入时，移除旧的备份阻止提示；不能依赖 UI 文案。
+      // English: Clear the S4 pending-edit warning only after a confirmed clean save; never depend on status wording.
+      if(!dirty){
+        s4DownloadNotice("");
+        status("SQLite "+(automatic?"自动":"手动")+"保存成功："+workspaceId+"（第 "+revision+" 版）。");
+      }
       // 中文：只报告真实 SQLite PUT 成功的版本；仍有输入时标记待保存。
       // English: Acknowledge only a real successful SQLite commit, marking pending edits.
       window.dispatchEvent(new CustomEvent("srm:workspace-saved",{detail:{workspaceId,revision,dirty}}));
