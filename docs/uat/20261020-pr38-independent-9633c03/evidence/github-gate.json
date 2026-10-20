@@ -1,0 +1,444 @@
+{
+  "checkedAt": "2026-10-20T08:18:22.218Z",
+  "pr": {
+    "url": "https://github.com/yudacheng666/SRM_System/pull/38",
+    "number": 38,
+    "state": "open",
+    "merged": false,
+    "mergeable": true,
+    "draft": true,
+    "body": "## Scope / 范围\nFix the two independently confirmed defects from [TEST-ONLY PR #36](https://github.com/yudacheng666/SRM_System/pull/36), against the exact PR #24 base `d411f4e17a0ab8e75412e5c91a91ccba6abbbc0e`.\n\n- **P2-EXPORT-01**: Supplier report controls and the first export must not manufacture unsaved changes and block a committed RFQ.\n- **P3-NAV-01**: Navigation, supplier-view mode, and selecting a supplier must not warn that a clean RFQ has unsaved changes.\n- **Safety invariant**: Real business changes, invalid intermediate inputs, autosave failures and stale versions remain protected. Saved supplier reports still read validated SQLite snapshots.\n\n## Implementation / 实现\n- Replace global capture-phase `click`/`input` `dirty=true` heuristic with a deferred post-event comparison of the real persisted workspace state (not transient UI state).\n- Recheck actual unsaved business state at New RFQ and committed-report export boundaries.\n- Add regression tests 45/46 in real Chromium + isolated SQLite: supplier first ZIP with PDFs, read-only navigation/no false warning, genuinely dirty edit must block reports and warn before discarding it.\n\n## Validation gate / 测试门槛\nThis is **development code**, not a Codex test-only PR. GitHub Actions CI must complete successfully for the exact final HEAD before handoff to Codex Cloud for independent real-browser acceptance. A new branch/commit alone does not establish PASS.\n\nKeep PR #24 Draft, leave `main` untouched. Do not merge this fix before its CI and independent UAT pass.",
+    "title": "fix(srm): prevent phantom dirty on supplier export and view navigation (P2/P3)",
+    "base": "feat/20261019-srm-ui-v3-integration",
+    "base_sha": "d411f4e17a0ab8e75412e5c91a91ccba6abbbc0e",
+    "head": "fix/20261020-p2-export-p3-nav-dirty",
+    "head_sha": "9633c03948b1763f99dfa8c2f2f5edc5aa87ba70",
+    "head_repo_id": 1392690011,
+    "head_repo_full_name": "yudacheng666/SRM_System",
+    "merge_commit_sha": "60ae962da8afda114f55755176812b55da8203ff",
+    "user": {
+      "login": "yudacheng666",
+      "name": "yudacheng666",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+      "id": 227731428
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "diff": "@@ -5,6 +5,9 @@ on:\n   pull_request:\n     branches:\n       - draft/20261013-m1-storage-ui-audit\n+      # 中文：PR24 集成候选的修复 PR 也必须执行完整 UI 验收。\n+      # English: Gate fixes targeting the PR24 integration branch with the full UI suite.\n+      - feat/20261019-srm-ui-v3-integration\n   workflow_dispatch:\n permissions:\n   contents: read\n@@ -5032,6 +5032,13 @@ <h3>文件导入</h3>\n     // English: Exclude revision number so commit increments cannot cause infinite saves.\n     return JSON.stringify(readState().state);\n   }\n+  // 中文：使用真实业务快照做即时安全核对，避免点击到下次轮询之间漏检未保存修改。\n+  // English: Recheck the actual persisted-state signature at critical user actions.\n+  function hasUnsavedBusinessChanges(){\n+    if(!buyerMode)return false;\n+    if(dirty||revision===0||autosaveHalted)return true;\n+    try{return signature()!==savedSignature}catch(_){return true}\n+  }\n   function autosaveLabel(message,isError=false){\n     autosaveStatus.textContent=\"自动保存：\"+message;\n     autosaveStatus.className=isError?\"small dangertext\":\"small muted\";\n@@ -5041,7 +5048,7 @@ <h3>文件导入</h3>\n   }\n   /* 中文：备份阻止原因必须显示在备份按钮附近，不能只写入可能已折叠/滚出视口的状态栏。\n    * English: Keep backup-block reasons beside the backup action, independent of collapsed or off-screen status panels. */\n-  function s4DownloadNotice(message,isError=true){\n+  function s4DownloadNotice(message,isError=true,bringIntoView=true){\n     const notice=document.getElementById(\"pilotS4DownloadFeedback\");\n     if(!notice)return;\n     notice.textContent=message;\n@@ -5051,7 +5058,7 @@ <h3>文件导入</h3>\n     notice.style.borderColor=isError?\"#efc0bb\":\"#bce2c9\";\n     // 中文：操作区滚动到备份按钮时，阻止原因必须进入当前视口，不能仅存在于 DOM 中。\n     // English: Bring actionable backup-block feedback into view even if the drawer is scrolled.\n-    if(message&&isError)notice.scrollIntoView({block:\"nearest\",behavior:\"auto\"});\n+    if(message&&isError&&bringIntoView)notice.scrollIntoView({block:\"nearest\",behavior:\"auto\"});\n   }\n   async function refreshAutoBackupStatus(){\n     if(!localReady||!s4Available)return;\n@@ -5126,6 +5133,12 @@ <h3>文件导入</h3>\n     exportAllBtn.disabled=!localReady||busy||dirty||blocked;\n     exportCompleteBtn.disabled=!localReady||busy||dirty||blocked;\n     s4DownloadBtn.disabled=!s4Available||busy||dirty||blocked;\n+    // 中文：真正有未保存修改时，禁用备份按钮也须在其旁边被动展示原因，不自动跳转页面。\n+    // English: A disabled S4 button still needs an adjacent reason, without unexpected scrolling.\n+    if(buyerMode&&dirty&&localReady&&!busy&&!blocked&&\n+       !document.getElementById(\"pilotS4DownloadFeedback\")?.textContent){\n+      s4DownloadNotice(\"检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。\",true,false);\n+    }\n     s4RestoreBtn.disabled=!s4Available||busy||blocked||!s4FileInput.files?.length;\n     document.getElementById(\"pilotExportExcel\").disabled=!buyerMode||busy||!localReady||dirty;\n     document.getElementById(\"pilotReportOpen\").disabled=!buyerMode||busy||!localReady||dirty;\n@@ -5217,8 +5230,8 @@ <h3>文件导入</h3>\n   }\n   function beginBuyer(){\n     if(!localReady||busy||blocked)return;\n-    if(buyerMode&&dirty&&!confirm(\"当前询价尚有未保存修改，新建将放弃这些修改。继续？\"))return;\n-    if(buyerMode&&!dirty&&!confirm(\"新建一笔空白询价？原来已保存的数据仍保存在 SQLite。\"))return;\n+    if(buyerMode&&hasUnsavedBusinessChanges()&&!confirm(\"当前询价尚有未保存修改，新建将放弃这些修改。继续？\"))return;\n+    if(buyerMode&&!hasUnsavedBusinessChanges()&&!confirm(\"新建一笔空白询价？原来已保存的数据仍保存在 SQLite。\"))return;\n     const fresh=model.createEmptyWorkspace(\"RFQ-\"+Date.now()+\"-\"+Math.random().toString(36).slice(2,8).toUpperCase());\n     applyWorkspace(fresh);dirty=true;lastChangeAt=Date.now();buttons();\n     autosaveLabel(\"新询价尚未保存，将在操作空闲后自动创建；图纸上传前仍需完成首次保存\");\n@@ -5414,25 +5427,52 @@ <h3>文件导入</h3>\n   // English: Supplier reports read committed buyer snapshots only.\n   async function committedWorkspaceForReport(){\n     if(!buyerMode||!localReady||busy)throw Error(\"请先进入可用的正式工作区\");\n-    if(dirty)throw Error(\"有未保存的修改，请先点击“保存到本机”，成功后再导出单据\");\n+    if(hasUnsavedBusinessChanges())throw Error(\"有未保存的修改，请先点击“保存到本机”，成功后再导出单据\");\n     const saved=await readSaved();\n     if(!saved||saved.workspaceId!==workspaceId||saved.revision!==revision)\n       throw Error(\"本机保存版本与当前页面不同，请先恢复最新版本\");\n     model.validate(saved);\n     if(saved.origin!==\"buyer\")throw Error(\"禁止导出演示工作数据\");\n     return saved;\n   }\n+  // 中文：任何界面点击/输入都不能凭事件类型直接标记 dirty。只比较持久化业务快照。\n+  // English: View, report-picker and navigation events must never create phantom unsaved edits.\n+  function checkBusinessStateAfterEvent(){\n+    // 中文：捕获阶段早于实际按钮业务处理；在事件派发结束后再读取快照。\n+    // English: Run after the event dispatch so synchronous business handlers have finished.\n+    queueMicrotask(()=>{\n+      if(!buyerMode||busy)return;\n+      try{\n+        const observed=signature();\n+        if(revision===0||observed!==savedSignature){\n+          if(observed!==lastObservedSignature){\n+            lastObservedSignature=observed;\n+            lastChangeAt=Date.now();\n+          }\n+          dirty=true;\n+          buttons();\n+        }\n+      }catch(e){\n+        // 中文：正在输入无效或不完整值时保守禁止导出，直到数据完成校验。\n+        // English: An invalid intermediate state must not bypass the unsaved-data safety guard.\n+        dirty=true;\n+        buttons();\n+      }\n+    });\n+  }\n   document.addEventListener(\"click\",e=>{\n     if(!buyerMode||busy||!e.isTrusted)return;\n-    // 中文：程序触发的下载链接等非用户点击不代表业务发生修改；操作按钮中的真实修改仍提示保存。\n-    // English: Programmatic download clicks must not mark a saved workspace dirty.\n-    // English: Dirty indicator errs on the safe side; UI events do not automatically persist.\n-    if(e.target.closest(\"#pilotControls,#pilotDrawingPanel,#drawingModal,#pilotReportPanel,#rfqPreviewModal,.tabs,[data-drawing],[data-srm-v2-action=\\\"admin\\\"]\"))return;\n-    dirty=true;status(\"工作内容可能有未保存修改；系统只对实际业务变化自动保存。\");\n+    checkBusinessStateAfterEvent();\n   },true);\n   document.addEventListener(\"input\",e=>{\n-    if(!buyerMode||busy||e.target.closest(\"#pilotControls\"))return;\n-    dirty=true;status(\"输入中，业务数据将在停止修改后自动保存。\");\n+    if(!buyerMode||busy||!e.isTrusted)return;\n+    checkBusinessStateAfterEvent();\n+  },true);\n+  // 中文：复选框的业务变更通常在 change 事件完成；必须同步真实分配状态。\n+  // English: Checkbox allocations may finalize on change rather than click/input.\n+  document.addEventListener(\"change\",e=>{\n+    if(!buyerMode||busy||!e.isTrusted)return;\n+    checkBusinessStateAfterEvent();\n   },true);\n \n \n@@ -580,31 +580,128 @@ test('15 new RFQ clears stale supplier-first context without corrupting saved RF\n \n test('44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见', async ({page,app})=>{\n   await page.setViewportSize({width:1366,height:768});\n-  await fresh(page); await items(page,app);\n+  await fresh(page); await items(page,app); await saved(page);\n+  // 中文：先完成真实保存，再新增供应商使业务快照真正变化；不能依赖导航误设 dirty。\n+  // English: Create a genuine unsaved supplier edit, not an artificial navigation click.\n+  let releaseSave;\n+  const saveGate=new Promise(resolve=>{releaseSave=resolve});\n+  await page.route('**/api/workspaces/**',async route=>{\n+    if(route.request().method()==='PUT')await saveGate;\n+    await route.continue();\n+  });\n+  await openTools(page,'#uiSupplierTools');\n+  await page.locator('#pilotCounterpartyCode').fill('VIRTUAL-CP44');\n+  await page.locator('#pilotSupplierCode').fill('VIRTUAL-S44');\n+  await page.locator('#pilotSupplierName').fill('虚构供应商44');\n+  await page.locator('#pilotAddSupplier').click();\n+  await expect.poll(async()=>(await snapshot(page)).state.suppliers.some(x=>x.id==='VIRTUAL-S44')).toBe(true);\n+  await expect.poll(()=>page.evaluate(()=>window.SRMPilot.dirty())).toBe(true);\n   // 中文：按 Codex P3-S4-01 原场景：项目操作区收起，页面滚动至备份按钮。\n-  // English: Reproduce the real P3 state: collapsed project operations, S4 action in the current viewport.\n+  // English: Keep the project drawer collapsed and require a real warning beside disabled S4.\n   await openTools(page,'#uiDataTools');\n   const projectDrawer=page.locator('#uiProjectDetails');\n   if(await projectDrawer.evaluate(node=>node.open)) await projectDrawer.locator('summary').click();\n   await expect(projectDrawer).not.toHaveAttribute('open','');\n   const button=page.locator('#pilotS4DownloadFull');\n   await button.scrollIntoViewIfNeeded();\n-  await button.click();\n+  // 中文：dirty 时禁用 S4 是安全闸门；应被动显示可见原因，禁止假装点击禁用按钮。\n+  // English: A disabled S4 guard must display the reason without a fake disabled-button click.\n+  await expect(button).toBeDisabled();\n   const feedback=page.locator('#pilotS4DownloadFeedback');\n   await expect(feedback).toBeVisible();\n   await expect(feedback).toContainText('尚未保存');\n   await expect(feedback).toContainText('再重新下载');\n-  await expect(button).toBeDisabled();\n   // 中文：文本存在还不够，提示必须真正处在用户当前的可视区域内。\n   // English: DOM visibility alone is insufficient; the notice must lie within the browser viewport.\n   const visible=await feedback.evaluate(el=>{\n     const rect=el.getBoundingClientRect();\n     return rect.height>0&&rect.top>=0&&rect.bottom<=window.innerHeight;\n   });\n   expect(visible,'backup block notice must be visible within the viewport').toBe(true);\n-  // 中文：完成真实 SQLite 自动保存才可清除旧阻止提示；文案允许包含版本和时间。\n-  // English: Wait for a confirmed autosave, not a fragile literal message without the revision.\n+  // 中文：释放真正被暂扣的 SQLite PUT 后，只有真实保存完成才能清除警告。\n+  // English: Release the real SQLite PUT; only an acknowledged clean save may clear feedback.\n+  releaseSave();\n   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已自动保存第',{timeout:12000});\n   await expect(feedback).toBeHidden();\n   await expect(button).toBeEnabled();\n });\n+\n+\n+// 中文：Codex PR #36 P2-EXPORT-01，已保存工作区的供应商选择/字段筛选不是业务编辑。\n+// English: A first supplier export must not be blocked by view-only report controls.\n+test('45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出',async({page,app},info)=>{\n+  await allocated(page,app);\n+  await drawings(page,app);\n+  await page.reload();\n+  await saved(page);\n+  const before=await snapshot(page);\n+  await tab(page,'assign');\n+  await page.locator('[data-mode=\"supplierFirst\"]').click();\n+  await page.locator('[data-sf-s=\"SUP-A\"]').click();\n+  await page.locator('#generateBtn').click();\n+  await expect(page.locator('#pilotReportPanel')).toBeVisible();\n+  await page.locator('#pilotReportSupplier').selectOption('SUP-A');\n+  const optional=page.locator('#pilotReportFields input:not([disabled])').first();\n+  await expect(optional).toBeVisible();\n+  await optional.uncheck();\n+  expect((await snapshot(page)).state).toEqual(before.state);\n+  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);\n+  await expect(page.locator('#pilotAutosaveStatus')).toContainText('无待保存修改');\n+  const waiting=page.waitForEvent('download',{timeout:15000});\n+  await page.locator('#pilotReportDownload').click();\n+  const result=await waiting;\n+  const file=info.outputPath('P2-EXPORT-01-first-supplier.zip');\n+  await result.saveAs(file);\n+  const zip=inspectZip(file);\n+  expect(Object.keys(zip).some(n=>n.endsWith('.xlsx'))).toBe(true);\n+  expect(Object.keys(zip).some(n=>n.endsWith('.pdf'))).toBe(true);\n+  expect(Object.keys(zip).some(n=>n.endsWith('.json'))).toBe(false);\n+  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);\n+  expect((await snapshot(page)).state).toEqual(before.state);\n+  await info.attach('P2-first-supplier-package',{path:file,contentType:'application/zip'});\n+});\n+\n+// 中文：Codex PR #36 P3-NAV-01，只读导航不得发出放弃未保存警告；真正修改仍严禁未保存导出。\n+// English: Navigation must remain clean, while actual edits retain the unsaved-data safety barrier.\n+test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分',async({page,app})=>{\n+  await allocated(page,app);\n+  await page.reload();\n+  await saved(page);\n+  const before=await snapshot(page);\n+  page.removeAllListeners('dialog');\n+  const dialogs=[];\n+  page.on('dialog',async d=>{dialogs.push(d.message());await d.dismiss()});\n+  await tab(page,'assign');\n+  await page.locator('[data-mode=\"supplierFirst\"]').click();\n+  await page.locator('[data-sf-s=\"SUP-B\"]').click();\n+  expect((await snapshot(page)).state).toEqual(before.state);\n+  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);\n+  await openProject(page);\n+  await page.locator('#pilotNewWorkspace').click();\n+  expect(dialogs).toHaveLength(1);\n+  expect(dialogs[0]).toContain('新建一笔空白询价');\n+  expect(dialogs[0]).not.toContain('未保存修改');\n+  expect((await snapshot(page)).state).toEqual(before.state);\n+\n+  // 中文：在供应商视角真正撤销一条已分配的业务关联，再检验未保存保护。\n+  // English: Uncheck a genuinely persisted allocation to exercise the real dirty guard.\n+  const allocatedBox=page.locator('#sfItemBody input[data-sfi]').first();\n+  await expect(allocatedBox).toBeChecked();\n+  await allocatedBox.uncheck();\n+  expect((await snapshot(page)).state.assignments).not.toEqual(before.state.assignments);\n+  // 中文：change 事件与捕获阶段结束后应识别真修改；不用点击返回同一瞬间作脆弱断言。\n+  // English: Wait for post-change signature reconciliation; never infer a dirty flag from clicks.\n+  await expect.poll(()=>page.evaluate(()=>window.SRMPilot.dirty()),{timeout:2000}).toBe(true);\n+  const guard=await page.evaluate(async()=>{\n+    try{await window.SRMPilot.committedWorkspaceForReport();return 'NOT BLOCKED'}\n+    catch(e){return e.message}\n+  });\n+  expect(guard).toContain('未保存的修改');\n+  expect(dialogs).toHaveLength(1);\n+  await page.locator('#pilotNewWorkspace').click();\n+  expect(dialogs).toHaveLength(2);\n+  expect(dialogs[1]).toContain('未保存修改');\n+  expect((await snapshot(page)).workspaceId).toBe(before.workspaceId);\n+  await saved(page);\n+  await expect.poll(()=>page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);\n+});",
+    "comments": [
+      {
+        "url": "https://github.com/yudacheng666/SRM_System/pull/38#issuecomment-6286347988",
+        "body": "## ChatGPT development validation complete / 开发者自动化验收完成\n\n**Exact product SHA / 唯一候选:** `9633c03948b1763f99dfa8c2f2f5edc5aa87ba70` (PR #38 HEAD). This is the development fix for two confirmed issues from [PR #36](https://github.com/yudacheng666/SRM_System/pull/36), not independent Codex acceptance.\n\n### CI gates — PASS on exact SHA\n- [SRM UI V2 Unified Candidate Acceptance — run 39389547065](https://github.com/yudacheng666/SRM_System/actions/runs/39389547065): **SUCCESS**, Windows business safety and Linux Chromium; **46/46** Chromium tests passed.\n- [SRM S3/S4 Regression — run 39389547071](https://github.com/yudacheng666/SRM_System/actions/runs/39389547071): **SUCCESS**, Windows S4/supplier ZIP and Linux Chromium; **46/46** Chromium tests passed.\n- Independent new regression scenarios 45 (P2 first supplier report/package, report-picker controls) and 46 (P3 read-only supplier navigation vs genuinely edited allocation) **both PASS**. Existing S4 warning test 44 was strengthened to create an actual unsaved business edit, rather than rely on a spurious navigation dirty flag.\n- Artifact storage quota warning remains; evidence/upload failure does not override or replace the business test status.\n\n### Fix scope / 修复范围\nGlobal click/input/change handlers now reconcile persisted business-state signatures instead of marking all view interactions dirty. New RFQ/report guards recheck actual unsaved state, and disabled S4 backup shows adjacent passive reason without auto-scrolling. SQLite schema, price/award rules, quote history and archive content were not changed.\n\n### Gate and handoff / 后续\n**DEVELOPMENT-CI-PASS, INDEPENDENT-UAT-PENDING.** Maintain PR #38 and PR #24 as Draft; do not merge to PR #24 or main until Codex Cloud independently reproduces and passes both original business paths plus true-unsaved, S4, save, and supplier-package safety checks. Codex is TEST-ONLY: no product, existing tests, workflow, branch, or merge mutations. Save bilingual reports and real screenshots/download/file checks to its own Draft evidence PR.",
+        "user": {
+          "login": "yudacheng666",
+          "name": "yudacheng666",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+          "id": 227731428
+        },
+        "id": 6286347988,
+        "pull_request_review_id": null,
+        "in_reply_to_id": null,
+        "created_at": "2026-10-20T08:02:47Z",
+        "updated_at": "2026-10-20T08:02:47Z",
+        "review": null,
+        "side": null,
+        "line": null,
+        "start_line": null,
+        "path": null,
+        "body_html": "<h2 dir=\"auto\">ChatGPT development validation complete / 开发者自动化验收完成</h2>\n<p dir=\"auto\"><strong>Exact product SHA / 唯一候选:</strong> <code class=\"notranslate\">9633c03948b1763f99dfa8c2f2f5edc5aa87ba70</code> (PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5937779027\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/38\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/38/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/38\">#38</a> HEAD). This is the development fix for two confirmed issues from <a href=\"https://github.com/yudacheng666/SRM_System/pull/36\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/36/hovercard\">PR #36</a>, not independent Codex acceptance.</p>\n<h3 dir=\"auto\">CI gates — PASS on exact SHA</h3>\n<ul dir=\"auto\">\n<li><a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39389547065\">SRM UI V2 Unified Candidate Acceptance — run 39389547065</a>: <strong>SUCCESS</strong>, Windows business safety and Linux Chromium; <strong>46/46</strong> Chromium tests passed.</li>\n<li><a href=\"https://github.com/yudacheng666/SRM_System/actions/runs/39389547071\">SRM S3/S4 Regression — run 39389547071</a>: <strong>SUCCESS</strong>, Windows S4/supplier ZIP and Linux Chromium; <strong>46/46</strong> Chromium tests passed.</li>\n<li>Independent new regression scenarios 45 (P2 first supplier report/package, report-picker controls) and 46 (P3 read-only supplier navigation vs genuinely edited allocation) <strong>both PASS</strong>. Existing S4 warning test 44 was strengthened to create an actual unsaved business edit, rather than rely on a spurious navigation dirty flag.</li>\n<li>Artifact storage quota warning remains; evidence/upload failure does not override or replace the business test status.</li>\n</ul>\n<h3 dir=\"auto\">Fix scope / 修复范围</h3>\n<p dir=\"auto\">Global click/input/change handlers now reconcile persisted business-state signatures instead of marking all view interactions dirty. New RFQ/report guards recheck actual unsaved state, and disabled S4 backup shows adjacent passive reason without auto-scrolling. SQLite schema, price/award rules, quote history and archive content were not changed.</p>\n<h3 dir=\"auto\">Gate and handoff / 后续</h3>\n<p dir=\"auto\"><strong>DEVELOPMENT-CI-PASS, INDEPENDENT-UAT-PENDING.</strong> Maintain PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5937779027\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/38\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/38/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/38\">#38</a> and PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5920648813\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/24\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/24\">#24</a> as Draft; do not merge to PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5920648813\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/24\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/24/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/24\">#24</a> or main until Codex Cloud independently reproduces and passes both original business paths plus true-unsaved, S4, save, and supplier-package safety checks. Codex is TEST-ONLY: no product, existing tests, workflow, branch, or merge mutations. Save bilingual reports and real screenshots/download/file checks to its own Draft evidence PR.</p>"
+      }
+    ],
+    "created_at": "2026-10-20T07:33:02Z",
+    "updated_at": "2026-10-20T08:02:47Z",
+    "closed_at": null,
+    "merged_at": null,
+    "commits": 7,
+    "changed_files": 3,
+    "additions": 158,
+    "deletions": 18,
+    "display_url": "https://github.com/yudacheng666/SRM_System/pull/38",
+    "display_title": "fix(srm): prevent phantom dirty on supplier export and view navigation (P2/P3)"
+  },
+  "runs": {
+    "workflow_runs": [
+      {
+        "id": 39389547065,
+        "name": "SRM UI V2 Unified Candidate Acceptance",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 54,
+        "jobs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39389547065/jobs",
+        "logs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39389547065/logs",
+        "workflow_id": 385464786
+      },
+      {
+        "id": 39389547071,
+        "name": "SRM S3/S4 Regression",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 157,
+        "jobs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39389547071/jobs",
+        "logs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39389547071/logs",
+        "workflow_id": 383906368
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "jobs": [
+        {
+          "id": 118517460442,
+          "name": "linux-real-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 39389547065,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Install locked Node dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Install real Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Check Python SQLite, complete backup and restoration logic",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Check supplier quotation and workbook business rules",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run complete real Chromium M1-Lite and UI V2 end-to-end acceptance",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Archive screenshots, database test logs, HTML report and traces",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        },
+        {
+          "id": 118517460797,
+          "name": "windows-business-safety",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 39389547065,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Verify Windows SQLite and backup restore",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Verify supplier packages and autosave rules",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Validate Windows local launcher's encoding and relative path",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Validate isolated V2 pilot launcher does not use normal data directory",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "jobs": [
+        {
+          "id": 118517460648,
+          "name": "Synthetic Chromium acceptance on Linux",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 39389547071,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run npm ci",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run npx playwright install --with-deps chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run python -m unittest discover -v -s prototype/m1-lite/backend -p \"test_*.py\"",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Run npm test",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run npm run test:e2e",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Retain synthetic browser evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        },
+        {
+          "id": 118517460793,
+          "name": "SQLite S4 restore and supplier ZIP regression on Windows",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 39389547071,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Checkout the tested branch",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Set up Node.js",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run SQLite, full backup/restore and local API tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run supplier ZIP and PDF regression",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Verify launcher is ASCII and points to backend",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Set up Node.js",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Post Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Checkout the tested branch",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "productSHA": "9633c03948b1763f99dfa8c2f2f5edc5aa87ba70",
+  "overall": "PASS within PR38 targeted independent scope; recommend merge to its development target only",
+  "wholeProductAcceptance": "NOT ESTABLISHED",
+  "recommendation": {
+    "PR38ToDevelopmentTarget": "RECOMMENDED within tested scope",
+    "target": "feat/20261019-srm-ui-v3-integration",
+    "automaticMergePerformed": false,
+    "mainMergeApproval": false
+  },
+  "originalFindings": {
+    "P2-EXPORT-01": "PASS; original first path downloaded once, no retry",
+    "P3-NAV-01": "PASS; normal New RFQ confirmation, no unsaved warning"
+  },
+  "newConfirmedProductDefects": {
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "rawMainAssertions": {
+    "total": 207,
+    "pass": 207
+  },
+  "correctedFreshSafetyAssertions": {
+    "total": 31,
+    "pass": 31
+  },
+  "originalObserverAttempt": {
+    "total": 2,
+    "pass": 1,
+    "false": 1,
+    "driverError": 1,
+    "retained": true,
+    "classification": "innerText of collapsed status read empty; trace contains correct product refusal; not a product failure"
+  },
+  "archiveEventAssertions": {
+    "total": 293,
+    "pass": 293
+  },
+  "businessFileAssertions": {
+    "total": 37,
+    "pass": 37
+  },
+  "extraFileAndPathAssertions": {
+    "total": 40,
+    "pass": 40
+  },
+  "newS4Downloads": 25,
+  "rapidAttempts": {
+    "total": 24,
+    "success": 24,
+    "fail": 0,
+    "timeout": 0
+  },
+  "historicalBackupsCounted": 0,
+  "emptyRestores": 2,
+  "nonemptyRefusals": 2,
+  "screenshots": 106,
+  "traces": 3,
+  "cases": [
+    {
+      "id": "G01",
+      "status": "PASS",
+      "scope": "唯一SHA及两项CI Windows/Linux；HTTP产品字节与checkout一致 / Exact SHA, CI and HTTP byte identity",
+      "evidence": "evidence/runtime-identity.json"
+    },
+    {
+      "id": "P2",
+      "status": "PASS",
+      "scope": "重走原分配→生成询价单→选A→首次下载，无重试即成功 / Original first supplier ZIP path, no retry",
+      "evidence": "evidence/P2-original-path-result.json"
+    },
+    {
+      "id": "P3",
+      "status": "PASS",
+      "scope": "只读分配视角/供应商导航不误报未保存，完整前后快照相同 / No false dirty warning after view-only navigation",
+      "evidence": "evidence/P3-original-path-result.json"
+    },
+    {
+      "id": "S01",
+      "status": "PASS",
+      "scope": "真实新物料未保存时：导出拒绝、新建丢弃警告、S4禁用/邻近原因可见 / Real unsaved edit protects export, New RFQ, S4",
+      "evidence": "evidence/safety-retest/dirty-safety-results.json"
+    },
+    {
+      "id": "S02",
+      "status": "PASS",
+      "scope": "真实PUT进行中及受控500后保护；真保存后清除提示并允许导出 / In-flight PUT/controlled500 preserve protection, true save clears",
+      "evidence": "evidence/safety-retest/final-fault-results.json"
+    },
+    {
+      "id": "S03",
+      "status": "PASS",
+      "scope": "双浏览器真实后端409和实际断服，数据不覆盖，重载/真保存恢复 / Actual backend409 and service outage safety",
+      "evidence": "evidence/safety-retest/final-fault-results.json"
+    },
+    {
+      "id": "B01",
+      "status": "PASS",
+      "scope": "真实XLSX物料/供应商、同编码两规格、追加多对多分配、既有报价防解除 / Imports and additive assignments/history guard",
+      "evidence": "evidence/02-supplier-multi-allocation.png"
+    },
+    {
+      "id": "B02",
+      "status": "PASS",
+      "scope": "图纸唯一/多候选/未匹配预览、人工确认、重启后原生PDF显示 / Drawing preview, match confirmation and PDF",
+      "evidence": "evidence/PDF-real-preview-after-restart.png"
+    },
+    {
+      "id": "B03",
+      "status": "PASS",
+      "scope": "同轮V1/V2锁定、草稿不生效、历史不变及差异展示 / Quote version history and effective-state rules",
+      "evidence": "evidence/V04-V2-confirmed-diff.png"
+    },
+    {
+      "id": "B04",
+      "status": "PASS",
+      "scope": "20/20并列单项/键盘/批量定标；8/12高价理由，重开/清除待核对 / Tied-lowest and higher-price awards/review lifecycle",
+      "evidence": "evidence/T09-reconfirmed-C-no-pending.png"
+    },
+    {
+      "id": "B05",
+      "status": "PASS",
+      "scope": "真实第2轮7/19/7录入、确认、定标、金额587/717、历史和F5保持 / Real round2 and persisted decisions/history",
+      "evidence": "evidence/R2-final-decision.png"
+    },
+    {
+      "id": "B06",
+      "status": "PASS",
+      "scope": "实际CSV/XLSX/单家和三家嵌套ZIP内容/隐私/PDF校验 / Actual exports, scope, blank prices and PDFs",
+      "evidence": "evidence/extra-file-validation.json"
+    },
+    {
+      "id": "D01",
+      "status": "PASS",
+      "scope": "保存/F5/跨RFQ/实际主服务重启；非法取消预览不改业务 / Save, refresh, RFQ switch, restart and invalid preview safety",
+      "evidence": "evidence/19-final.json"
+    },
+    {
+      "id": "D02",
+      "status": "PASS",
+      "scope": "24次RFQ返回/顶部管理/S4快速下载，24成功0失败0超时 / 24 rapid S4 downloads after RFQ switch",
+      "evidence": "evidence/obs-attempts.csv"
+    },
+    {
+      "id": "D03",
+      "status": "PASS",
+      "scope": "25本轮新S4，CRC、manifest、SQLite当前/历史全行及PDF /25new archives with complete DB and PDF validation",
+      "evidence": "evidence/archive-validation.json"
+    },
+    {
+      "id": "D04",
+      "status": "PASS",
+      "scope": "两个空目录恢复、两个非空拒绝且数据不变 / Two empty restores, two nonempty refusals",
+      "evidence": "evidence/history-final-restored.json"
+    },
+    {
+      "id": "U01",
+      "status": "PASS",
+      "scope": "1024×768/1366×768/1600×900导航布局、V01–V04/禁用按钮提示 / Three viewport layout and disabled-control checks",
+      "evidence": "SCREENSHOTS.md"
+    },
+    {
+      "id": "OBS",
+      "status": "FAIL assertion; product PASS / 观察断言失败，产品保护有证据",
+      "scope": "初次安全诊断误读折叠状态innerText为空；原trace已有正确拒绝，独立观察修正后复验31/31 / Initial observer failure preserved, corrected fresh run31/31",
+      "evidence": "evidence/RAW-first-safety-classification.json"
+    },
+    {
+      "id": "N01",
+      "status": "NOT TESTED",
+      "scope": "Windows本机、桌面Excel重算/打印、物理磁盘满/断电及长期负载 / Native Windows, desktop Excel and physical failures/long load",
+      "evidence": "REPORT.en.md"
+    },
+    {
+      "id": "N02",
+      "status": "NOT TESTED",
+      "scope": "完整PR23像素一致性、所有业务组合/阶梯价/所有模板填充重导入 / Full design parity, all tier-price/import combinations",
+      "evidence": "REPORT.en.md"
+    }
+  ]
+}
