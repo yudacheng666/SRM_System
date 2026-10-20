@@ -5048,7 +5048,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   }
   /* 中文：备份阻止原因必须显示在备份按钮附近，不能只写入可能已折叠/滚出视口的状态栏。
    * English: Keep backup-block reasons beside the backup action, independent of collapsed or off-screen status panels. */
-  function s4DownloadNotice(message,isError=true){
+  function s4DownloadNotice(message,isError=true,bringIntoView=true){
     const notice=document.getElementById("pilotS4DownloadFeedback");
     if(!notice)return;
     notice.textContent=message;
@@ -5058,7 +5058,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     notice.style.borderColor=isError?"#efc0bb":"#bce2c9";
     // 中文：操作区滚动到备份按钮时，阻止原因必须进入当前视口，不能仅存在于 DOM 中。
     // English: Bring actionable backup-block feedback into view even if the drawer is scrolled.
-    if(message&&isError)notice.scrollIntoView({block:"nearest",behavior:"auto"});
+    if(message&&isError&&bringIntoView)notice.scrollIntoView({block:"nearest",behavior:"auto"});
   }
   async function refreshAutoBackupStatus(){
     if(!localReady||!s4Available)return;
@@ -5133,6 +5133,12 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     exportAllBtn.disabled=!localReady||busy||dirty||blocked;
     exportCompleteBtn.disabled=!localReady||busy||dirty||blocked;
     s4DownloadBtn.disabled=!s4Available||busy||dirty||blocked;
+    // 中文：真正有未保存修改时，禁用备份按钮也须在其旁边被动展示原因，不自动跳转页面。
+    // English: A disabled S4 button still needs an adjacent reason, without unexpected scrolling.
+    if(buyerMode&&dirty&&localReady&&!busy&&!blocked&&
+       !document.getElementById("pilotS4DownloadFeedback")?.textContent){
+      s4DownloadNotice("检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。",true,false);
+    }
     s4RestoreBtn.disabled=!s4Available||busy||blocked||!s4FileInput.files?.length;
     document.getElementById("pilotExportExcel").disabled=!buyerMode||busy||!localReady||dirty;
     document.getElementById("pilotReportOpen").disabled=!buyerMode||busy||!localReady||dirty;
