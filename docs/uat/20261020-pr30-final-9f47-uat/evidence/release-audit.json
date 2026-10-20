@@ -1,0 +1,51 @@
+{
+  "verdict": "RELEASE-READY",
+  "scope": "PR #30 into feat/20261019-srm-ui-v3-integration at0cd1278468d0471b862e16ca4ffcac41aead5e6d; not a main/production deployment decision",
+  "productSHA": "9f47a238bc9b3015f713c4e075977d98c1cb9ca1",
+  "unresolvedConfirmedP1": [],
+  "unresolvedConfirmedP2": [],
+  "unresolvedConfirmedP3": [],
+  "unfinishedMandatoryTargets": [],
+  "mandatoryEvidenceGaps": [],
+  "historicalIssues": [
+    {
+      "id": "P2-OBS01",
+      "priorEvidence": "PR29 diagnosis,PR31 original-path pass",
+      "finalResult": "PASS",
+      "evidence": "evidence/obs-attempts.csv",
+      "unresolved": false
+    },
+    {
+      "id": "P3-S4-01",
+      "priorEvidence": "PR31 FAIL at69f660cb; PR33 PASS ata0edd9a",
+      "finalResult": "PASS",
+      "evidence": "evidence/feedback-results.json",
+      "unresolved": false
+    },
+    {
+      "id": "P2-B01",
+      "priorEvidence": "PR27 tied-lowest award issue; prior verified business behavior",
+      "finalResult": "PASS",
+      "evidence": "evidence/T01-tied-B-no-reason.png",
+      "unresolved": false
+    },
+    {
+      "id": "P3-U01",
+      "priorEvidence": "manual/tied pending count issue",
+      "finalResult": "PASS",
+      "evidence": "evidence/T09-reconfirmed-C-no-pending.png",
+      "unresolved": false
+    }
+  ],
+  "nonblockingLimitations": [
+    "Native Windows,desktop Excel,production disk/power/load,full pixel/all-combination coverage NOT TESTED",
+    "CI artifact quota errors persist; independent evidence is archived in this Git branch instead",
+    "PR30 description still contains outdated pre-CI wording; final CI and this report supply current status"
+  ],
+  "sourceEvidence": "evidence/historical-evidence-audit.json",
+  "counts": {
+    "PASS": 21,
+    "NOT TESTED": 4,
+    "FAIL": 0
+  }
+}

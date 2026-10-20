@@ -1,0 +1,15 @@
+PASS REAL409-BARRIER warning established before pending PUT
+PASS REAL409-BARRIER actual stale PUT held
+PASS REAL409-BARRIER actual backend409
+PASS REAL409-BARRIER established warning remains
+PASS REAL409-BARRIER warning stays in viewport
+PASS REAL409-BARRIER no backup request
+PASS REAL409-BARRIER winning database intact
+PASS REAL409-BARRIER safe reload clears obsolete warning
+PASS REAL-SERVICE-DOWN notice still visible
+PASS REAL-SERVICE-DOWN warning not cleared
+PASS REAL-SERVICE-DOWN backup disabled
+PASS REAL-SERVICE-DOWN no backup API
+PASS REAL-SERVICE-DOWN database unchanged
+PASS REAL-SERVICE-DOWN server restarted
+PASS REAL-SERVICE-DOWN genuine recovery save clears notice

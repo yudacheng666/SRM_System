@@ -1,0 +1,188 @@
+{
+  "verifiedUTC": "2026-10-20T05:59:47.738Z",
+  "pr": {
+    "url": "https://github.com/yudacheng666/SRM_System/pull/30",
+    "number": 30,
+    "state": "open",
+    "merged": false,
+    "mergeable": true,
+    "draft": true,
+    "body": "## Summary / 摘要\n\nFixes the confirmed P2-OBS01 from PR #29 on top of the exact tested product SHA `0cd1278468d0471b862e16ca4ffcac41aead5e6d`.\n\n- Excludes the V3 admin navigation action from the global trusted-click dirty heuristic. Opening the admin/backup area is navigation, not a business-data edit.\n- Replaces the silent S4 download guard return with explicit user-visible status for unavailable, busy, blocked, or dirty states.\n- Adds a regression step to the existing real-browser full-backup/restore acceptance test: click the top admin navigation action, reopen the backup area normally, then verify a real S4 ZIP download.\n\n## Validation / 验证\n\n- CI and browser tests have **not yet been run for this candidate**. Await the exact-HEAD GitHub Actions results.\n- Independent Codex Cloud verification is required after CI succeeds.\n- Keep PR #24 and PR #29 open pending review and independent validation.\n\n## Safety boundary / 安全边界\n\nNo main changes, no merges, no real-user data. Existing S4 archive/restore logic is otherwise unchanged. This PR is Draft until CI and independent acceptance complete.",
+    "title": "fix(s4): prevent admin navigation from blocking full backup",
+    "base": "feat/20261019-srm-ui-v3-integration",
+    "base_sha": "0cd1278468d0471b862e16ca4ffcac41aead5e6d",
+    "head": "fix/20261020-s4-backup-dirty-guard",
+    "head_sha": "9f47a238bc9b3015f713c4e075977d98c1cb9ca1",
+    "head_repo_id": 1392690011,
+    "head_repo_full_name": "yudacheng666/SRM_System",
+    "merge_commit_sha": "75a65c68998521ef6418123440c4abb0330dcbe2",
+    "user": {
+      "login": "yudacheng666",
+      "name": "yudacheng666",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+      "id": 227731428
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "comments": [
+      {
+        "url": "https://github.com/yudacheng666/SRM_System/pull/30#issuecomment-6282337461",
+        "body": "## Codex Cloud TEST-ONLY — CI门槛未满足，独立验收尚未启动\n\n核对时间：**2026-10-20 11:02 北京时间（03:02 UTC）**。已读取本PR说明、两文件diff、评论（当前为空）及[PR #24完整验收交接](https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6282227958)。\n\n**当前HEAD与指定目标一致：`8d073e803c9b71b809d15cf059f5202994c6fe43`**。\n分支 `fix/20261020-s4-backup-dirty-guard`；base为 `feat/20261019-srm-ui-v3-integration` / `0cd1278468d0471b862e16ca4ffcac41aead5e6d`。PR仍open/Draft、未合并。\n\n### GitHub查询事实\n- 按准确HEAD查询PR触发的GitHub Actions，返回 **`workflow_runs: []`**。\n- 查询该提交的combined status列表，返回 **`statuses: []`**。\n- 当前**没有可用于证明该候选完整CI成功的运行链接或结果**。这些查询不是所有类型check-runs的穷尽证明，但明确不足以满足“所有阻断性CI成功”的开始条件。\n- 不能把0cd12784的旧CI成功、PR #28的旧业务PASS、PR #29的诊断或代码diff当作此修复候选通过证据；也不能把“未找到运行”记成FAIL或PASS。\n\n### 当前独立结果\n| 项目 | 本HEAD状态 |\n|---|---|\n| 完整S3/S4、业务回归本地执行 | **NOT TESTED** |\n| 至少20次原始时序快速备份复验 | **NOT TESTED** |\n| admin不误设dirty、真修改阻止及可见提示 | **NOT TESTED** |\n| ZIP/SQLite历史/PDF完整性、空目录恢复/非空拒绝 | **NOT TESTED** |\n| P2-B01、P3-U01、V05及原核心业务持续回归 | **NOT TESTED** |\n\n根据交接明确要求“CI失败、仍运行或HEAD变化先报告并停止；仅全部成功后开始”，本次**停止在CI证据门槛**，不启动独立程序/浏览器、不创建虚假的验收截图或证据PR、不宣布OBS-01已解决。请先由开发者确保该准确HEAD运行完整CI并全部成功；HEAD若改变，应更新固定待测版本后重新核对。\n\n**English:** Exact HEAD matches the handoff. The current connector queries returned no PR-triggered workflow runs and no commit statuses, so there is no evidence of the required all-success CI gate. This is not a test failure or a PASS. All independent retest targets remain NOT TESTED for 8d073e80. No browser UAT or new evidence PR was created. Await complete exact-candidate CI success before the authorized independent retest.\n\nTEST-ONLY只读核查与状态回报；未改产品、原测试、CI、开发分支或main，未合并/关闭任何PR。PR #24/#29/#30继续保持未合并。",
+        "user": {
+          "login": "yudacheng666",
+          "name": "yudacheng666",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+          "id": 227731428
+        },
+        "id": 6282337461,
+        "pull_request_review_id": null,
+        "in_reply_to_id": null,
+        "created_at": "2026-10-20T03:02:41Z",
+        "updated_at": "2026-10-20T03:02:41Z",
+        "review": null,
+        "side": null,
+        "line": null,
+        "start_line": null,
+        "path": null
+      },
+      {
+        "url": "https://github.com/yudacheng666/SRM_System/pull/30#issuecomment-6282391828",
+        "body": "## CI 触发问题已定位并修正（状态更新）\n\n检查确认此前没有运行记录的原因是工作流分支过滤不匹配：PR #30 的目标分支为 `feat/20261019-srm-ui-v3-integration`，但原 `.github/workflows/srm-s3-regression.yml` 仅监听旧的 `draft/20261013-m1-storage-ui-audit` PR 目标分支，push 过滤也未包含修复分支。\n\n已在本 PR 分支修正该工作流的 push / pull_request 分支过滤，并添加修复分支的 push 触发。没有修改 `main` 或目标开发分支。\n\n- **当前验收 HEAD：** `69f660cb2944e278a1e12b4824d8532b0fe6c7c3`\n- **GitHub Actions：** https://github.com/yudacheng666/SRM_System/actions/runs/39362505327\n- **当前状态：** `in_progress`；Windows SQLite/S4 作业和 Linux Chromium 作业均已启动，尚无最终结论。\n\n先前交接中的 HEAD `8d073e803c9b71b809d15cf059f5202994c6fe43` 已被新提交取代，不得用于本轮验收。CI 全部成功前，Codex Cloud 独立验收仍保持 NOT TESTED；不要合并或关闭 PR。",
+        "user": {
+          "login": "yudacheng666",
+          "name": "yudacheng666",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+          "id": 227731428
+        },
+        "id": 6282391828,
+        "pull_request_review_id": null,
+        "in_reply_to_id": null,
+        "created_at": "2026-10-20T03:06:57Z",
+        "updated_at": "2026-10-20T03:06:57Z",
+        "review": null,
+        "side": null,
+        "line": null,
+        "start_line": null,
+        "path": null
+      },
+      {
+        "url": "https://github.com/yudacheng666/SRM_System/pull/30#issuecomment-6282405023",
+        "body": "## CI 状态快照（69f660cb2944）\n\nGitHub Actions run #135： https://github.com/yudacheng666/SRM_System/actions/runs/39362505327\n\n- Windows：`SQLite S4 restore and supplier ZIP regression` — **SUCCESS**\n- Linux：`Synthetic Chromium acceptance` — **IN PROGRESS**，当前执行 `npm run test:e2e`\n- 整个 workflow：尚未完成，因此 **CI 门槛尚未满足**。\n- Codex Cloud 独立验收：继续保持 **NOT TESTED**，不得提前开始。\n\n请以完整 workflow 对准确 HEAD `69f660cb2944e278a1e12b4824d8532b0fe6c7c3` 的最终结论为准。",
+        "user": {
+          "login": "yudacheng666",
+          "name": "yudacheng666",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+          "id": 227731428
+        },
+        "id": 6282405023,
+        "pull_request_review_id": null,
+        "in_reply_to_id": null,
+        "created_at": "2026-10-20T03:07:47Z",
+        "updated_at": "2026-10-20T03:07:47Z",
+        "review": null,
+        "side": null,
+        "line": null,
+        "start_line": null,
+        "path": null
+      },
+      {
+        "url": "https://github.com/yudacheng666/SRM_System/pull/30#issuecomment-6282605340",
+        "body": "## CI 最终结果 / Final CI result\n\n已轮询至 GitHub Actions 完成，准确 HEAD `69f660cb2944e278a1e12b4824d8532b0fe6c7c3` 的两个作业均已成功：\n- Windows — SQLite S4 restore and supplier ZIP regression: **SUCCESS**\n- Linux — Synthetic Chromium acceptance: **SUCCESS**\n\n完整运行记录：https://github.com/yudacheng666/SRM_System/actions/runs/39362505327\n\n这满足开始 Codex Cloud TEST-ONLY 独立验收的 CI 前置条件。请按本 PR/PR #24 中的验收交接要求，以该准确 HEAD 开始独立复验；若开始前 HEAD 已变化，先停止并重新确认门槛。仍不得修改代码、测试或 CI，不得更改开发分支或 main，不得合并/关闭任何 PR。",
+        "user": {
+          "login": "yudacheng666",
+          "name": "yudacheng666",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+          "id": 227731428
+        },
+        "id": 6282605340,
+        "pull_request_review_id": null,
+        "in_reply_to_id": null,
+        "created_at": "2026-10-20T03:24:53Z",
+        "updated_at": "2026-10-20T03:24:53Z",
+        "review": null,
+        "side": null,
+        "line": null,
+        "start_line": null,
+        "path": null
+      },
+      {
+        "url": "https://github.com/yudacheng666/SRM_System/pull/30#issuecomment-6283043506",
+        "body": "## Codex Cloud TEST-ONLY 独立复验完成 / Independent retest completed\n\n**准确产品 HEAD：`69f660cb2944e278a1e12b4824d8532b0fe6c7c3`**，测试前后 PR #30 HEAD 一致，仍 Draft/open/unmerged。实际云端 Chromium 运行的正式 M1-Lite HTTP字节与该提交相符，独立隔离SQLite及虚构采购数据；未使用PR23原型或CI合成merge。\n\n**证据 Draft PR：[PR #31](https://github.com/yudacheng666/SRM_System/pull/31)**，仅报告/证据及审阅用方法TXT，目标为本修复分支。\n[中文完整报告](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/REPORT.zh-CN.md) · [English report](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/REPORT.en.md) · [102张截图索引](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/SCREENSHOTS.md)\n\n### 结论\n\n| 项目 | 结果 |\n|---|---|\n| 原 OBS-01：切回RFQ→顶部admin→立即S4 | **PASS，24/24真实下载；正向意外超时0** |\n| admin不误设dirty | **PASS**，20次入口探针+4次关闭探针仍成功；正向有探针入口均clean |\n| 真实未保存/正在保存的数据保护 | **PASS**，无备份API/文件；正在保存使用真实PUT闸门独立补验 |\n| 阻止原因必须清楚可见 | **FAIL，P3-S4-01，条件见下** |\n| 27份实际ZIP：CRC/manifest/SQLite全部当前及历史行/PDF | **PASS** |\n| 两次空目录恢复、两次非空拒绝覆盖 | **PASS** |\n| 并列最低价/单项批量/8对12高价理由/待核对/新报价复核/保存刷新重启/历史锁定 | **PASS** |\n| 图纸、真实CSV/XLSX及供应商包、非法/取消预览 | **PASS，详见报告范围** |\n| Windows本机、原生Excel重算打印、生产故障并发、PR23全像素重认证、大型全独立矩阵 | **NOT TESTED** |\n\n**分组总计21 PASS /1 FAIL /5 NOT TESTED。业务及数据安全通过；PR #30整体验收不判PASS。** 没有发现新的已确认P0/P1/P2。\n\n### 全部样本及失败保留\n\n- 定向序列29次物理点击：**26次下载+3次安全阻止**；另有首次业务备份1份，全程30次S4点击、27个实际S4 ZIP均已解析校验。\n- 24个原始时序样本的可信admin→backup点击间隔252–368.1ms，admin后没有固定等待；RFQ切回后交替0/100/350/650ms。\n- N01负向下载监听到期1次属于预期无下载观察，**仍保留原始记录**；正向超时为0。\n- N02原计划“进行中”时序实际已错过，记录dirty=false/busy=false后的合法下载；两条false断言完整保留，不当作绕过保护，也不当作进行中通过。随后B01暂扣真实autosave PUT重新验证，按钮disabled=true、无备份API，释放后保存完成。\n- 主独立浏览器原始194条检查：191 true /3 false。1条是下述UI缺陷，2条是N02无效时序预期。不是“全部独立断言通过”。\n\n[逐次29行CSV](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/all-backup-attempts.csv) · [原始27条](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/obs-attempts.json) · [补充控制](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/feedback-controls.json) · [全部检查与分类](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/independent-checks.json)\n\n### P3-S4-01：项目操作区收起且顶部状态不在视口时，保护原因不可见\n\n1366×768，项目操作区收起；新增虚构物料`PR30-DIRTY-N01`数量2并确认，在autosave前点击顶部数据与备份，正常滚动到S4并物理点击仍启用的按钮。\n\n入口证实dirty=true/busy=false/blocked=false；**保护正确阻止，没有备份请求，按钮随后disabled**。但原因写入收起的项目状态区，顶部live status又位于top=-151.65625、bottom=-124.265625，当前视口看不到任何暂停说明。用户看到的仍可能是“点击无文件、按钮变灰”。\n\n[实际失败截图N01](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/OBS-N01-after.png) · [OBS事件日志](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/obs-browser.jsonl)\n\n对照F01/B01：**项目区展开时，左侧提示可见**，即使顶部indicator在视口上方；因此不是所有状态无提示，也不能只凭header越界判其他控制失败。[展开对照](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/SUP-F01-before-scroll.png) / [上滚后](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/SUP-F01-after-scroll.png)。\n\n预期：阻止原因在备份按钮附近或可靠可见通知中出现，或主动揭示状态区。建议开发者处理这个条件性体验缺口后定向复验；**未自行修复**。原admin误置dirty故障本次没有重现；本P3不等于原根因仍在。\n\n### CI及独立业务证据\n\n开始门槛：[push run39362505327](https://github.com/yudacheng666/SRM_System/actions/runs/39362505327)、[PR run39362512675](https://github.com/yudacheng666/SRM_System/actions/runs/39362512675) Windows/Linux均success。是同一S3/S4工作流的两个触发，未冒称两套不同UI工作流。先本地完整执行Python43/Node10/Chromium43，全部通过，再自主GUI验收。\n\n实际比较合计A/B原638/692，B修订后638/717，理论638、人工662；无报价不当0。A/B20任一不需要高价理由，B改21后复核恢复、选择C20清零，SQLite/刷新/真实重启/完整历史恢复保持。\n\n[主trace](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/independent-v31-browser-trace.zip) · [控制trace](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/feedback-control-trace.zip) · [主浏览器](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/browser.jsonl) · [服务器](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/server.log) · [文件校验](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/obs-file-validation.json) · [业务导出校验](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/evidence/business-file-validation.json) · [SHA256](https://github.com/yudacheng666/SRM_System/blob/e289c79346d9417ae9acf3cc8eb1ee247e27b81c/docs/uat/20261020-pr30-obs01-fix-uat/SHA256SUMS.txt)\n\n**English:** Known OBS-01 admin→S4 trigger passed24/24 rapid real downloads. Integrity, safe restore, awards/ties/reasons/review/history and tested purchasing flows passed. Overall acceptance remains **FAIL** for one P3 conditional visibility defect: with Project operations collapsed and the header scrolled away, a correctly blocked backup has no currently visible reason. Open-drawer controls do show left-side feedback.29 directed clicks yielded26 files and3 safe blocks; one earlier baseline backup makes27 validated S4 ZIPs. Original raw failures and N02's missed timing are preserved; true in-flight safety was rechecked in B01. Native Windows/desktop Excel/production fault load/full reference pixel parity/exhaustive independent matrix are NOT TESTED. Finite samples do not prove every race absent.\n\n严格TEST-ONLY：只推送独立证据分支，产品/原测试/CI/修复分支/开发基线/main未改，引用前后核对一致；未合并或关闭PR。PR #24/#29/#30继续未合并。本报告不批准合并。\n",
+        "user": {
+          "login": "yudacheng666",
+          "name": "yudacheng666",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+          "id": 227731428
+        },
+        "id": 6283043506,
+        "pull_request_review_id": null,
+        "in_reply_to_id": null,
+        "created_at": "2026-10-20T03:59:14Z",
+        "updated_at": "2026-10-20T03:59:14Z",
+        "review": null,
+        "side": null,
+        "line": null,
+        "start_line": null,
+        "path": null
+      },
+      {
+        "url": "https://github.com/yudacheng666/SRM_System/pull/30#issuecomment-6283410597",
+        "body": "PR #32 的 P3-S4-01 修复更新：准确 HEAD `a0edd9a753733c738360fc437d0a3ee4a29144e4` 已经在 [PR CI #39369250226](https://github.com/yudacheng666/SRM_System/actions/runs/39369250226) 与 [Push CI #39369245980](https://github.com/yudacheng666/SRM_System/actions/runs/39369245980) 的 Windows/Linux 作业全部 SUCCESS。已把 Codex TEST-ONLY 的详细定向复验门槛写到 PR #32。PR #30 本身保持 Draft；P3 独立验收尚未完成，未合并。",
+        "user": {
+          "login": "yudacheng666",
+          "name": "yudacheng666",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+          "id": 227731428
+        },
+        "id": 6283410597,
+        "pull_request_review_id": null,
+        "in_reply_to_id": null,
+        "created_at": "2026-10-20T04:30:12Z",
+        "updated_at": "2026-10-20T04:30:12Z",
+        "review": null,
+        "side": null,
+        "line": null,
+        "start_line": null,
+        "path": null
+      },
+      {
+        "url": "https://github.com/yudacheng666/SRM_System/pull/30#issuecomment-6284314866",
+        "body": "## PR #32 已纳入 PR #30 修复分支（2026-10-20）\n\n按批准的合并顺序，已将已独立验收通过的 PR #32 合入 PR #30 的修复分支（**不是 main**）。\n\n- PR #32 merge commit / PR #30 当前候选 HEAD：`9f47a238bc9b3015f713c4e075977d98c1cb9ca1`\n- PR #32 状态：已合并到 `fix/20261020-s4-backup-dirty-guard`\n- PR #30：仍为 Draft，base SHA `0cd1278468d0471b862e16ca4ffcac41aead5e6d)，当前 HEAD 已更新。\n- 独立验收证据仍在 [PR #33](https://github.com/yudacheng666/SRM_System/pull/33)，该 PR 仅报告/截图/trace，未合入产品分支。\n\n因最终组合形成新 SHA，正在对新 HEAD 重新跑完整 CI，不能直接把旧 SHA `a0edd9a753733c738360fc437d0a3ee4a29144e4` 的 CI 当成最终组合的 CI。\n\n- [PR CI #39376379481](https://github.com/yudacheng666/SRM_System/actions/runs/39376379481)：Windows SUCCESS；Linux Chromium 仍在运行。\n- [Push CI #39376374837](https://github.com/yudacheng666/SRM_System/actions/runs/39376374837)：Windows SUCCESS；Linux Chromium 仍在运行。\n\nCI 全部成功后再进行最终合并前检查。**尚未合入 main；PR #30 仍 Draft；没有关闭 PR #33。**",
+        "user": {
+          "login": "yudacheng666",
+          "name": "yudacheng666",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+          "id": 227731428
+        },
+        "id": 6284314866,
+        "pull_request_review_id": null,
+        "in_reply_to_id": null,
+        "created_at": "2026-10-20T05:45:23Z",
+        "updated_at": "2026-10-20T05:45:23Z",
+        "review": null,
+        "side": null,
+        "line": null,
+        "start_line": null,
+        "path": null
+      }
+    ],
+    "created_at": "2026-10-20T02:53:21Z",
+    "updated_at": "2026-10-20T05:45:23Z",
+    "closed_at": null,
+    "merged_at": null,
+    "commits": 11,
+    "changed_files": 3,
+    "additions": 77,
+    "deletions": 4,
+    "display_url": "https://github.com/yudacheng666/SRM_System/pull/30",
+    "display_title": "fix(s4): prevent admin navigation from blocking full backup"
+  }
+}
