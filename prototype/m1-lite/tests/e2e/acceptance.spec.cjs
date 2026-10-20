@@ -266,6 +266,10 @@ test('06 full backup restore: actual imported quotes, history, PDFs, overwrite r
     for(let r=1;r<=w.revision;r++) originals[row.workspaceId].push((await (await fetch(baseURL+'/api/workspaces/'+row.workspaceId+'?revision='+r)).json()).workspace);
   }
   await openTools(page,'#uiDataTools');
+  // 中文：顶部管理入口只负责导航，不应将已保存工作区误标为 dirty 并吞掉备份点击。
+  // English: Admin navigation must not dirty a saved workspace or silently swallow the S4 download.
+  await page.locator('[data-srm-v2-action="admin"]').click();
+  await openTools(page,'#uiDataTools');
   const file=await download(page,'#pilotS4DownloadFull',info,'full-backup.zip'); const z=inspectZip(file); expect(z['database/srm.sqlite3']).toBeTruthy();
   await app.start(8766,path.join(app.root,'restored')); const other=await browser.newPage(); other.on('dialog',d=>d.accept());
   try {
@@ -571,4 +575,133 @@ test('15 new RFQ clears stale supplier-first context without corrupting saved RF
   const shot=info.outputPath('supplier-context-cross-rfq.png');
   await page.screenshot({path:shot,fullPage:true});
   await info.attach('supplier-context-cross-rfq',{path:shot,contentType:'image/png'});
+});
+
+
+test('44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见', async ({page,app})=>{
+  await page.setViewportSize({width:1366,height:768});
+  await fresh(page); await items(page,app); await saved(page);
+  // 中文：先完成真实保存，再新增供应商使业务快照真正变化；不能依赖导航误设 dirty。
+  // English: Create a genuine unsaved supplier edit, not an artificial navigation click.
+  let releaseSave;
+  const saveGate=new Promise(resolve=>{releaseSave=resolve});
+  await page.route('**/api/workspaces/**',async route=>{
+    if(route.request().method()==='PUT')await saveGate;
+    await route.continue();
+  });
+  await openTools(page,'#uiSupplierTools');
+  await page.locator('#pilotCounterpartyCode').fill('VIRTUAL-CP44');
+  await page.locator('#pilotSupplierCode').fill('VIRTUAL-S44');
+  await page.locator('#pilotSupplierName').fill('虚构供应商44');
+  await page.locator('#pilotAddSupplier').click();
+  await expect.poll(async()=>(await snapshot(page)).state.suppliers.some(x=>x.id==='VIRTUAL-S44')).toBe(true);
+  await expect.poll(()=>page.evaluate(()=>window.SRMPilot.dirty())).toBe(true);
+  // 中文：按 Codex P3-S4-01 原场景：项目操作区收起，页面滚动至备份按钮。
+  // English: Keep the project drawer collapsed and require a real warning beside disabled S4.
+  await openTools(page,'#uiDataTools');
+  const projectDrawer=page.locator('#uiProjectDetails');
+  if(await projectDrawer.evaluate(node=>node.open)) await projectDrawer.locator('summary').click();
+  await expect(projectDrawer).not.toHaveAttribute('open','');
+  const button=page.locator('#pilotS4DownloadFull');
+  await button.scrollIntoViewIfNeeded();
+  // 中文：dirty 时禁用 S4 是安全闸门；应被动显示可见原因，禁止假装点击禁用按钮。
+  // English: A disabled S4 guard must display the reason without a fake disabled-button click.
+  await expect(button).toBeDisabled();
+  const feedback=page.locator('#pilotS4DownloadFeedback');
+  await expect(feedback).toBeVisible();
+  await expect(feedback).toContainText('尚未保存');
+  await expect(feedback).toContainText('再重新下载');
+  // 中文：文本存在还不够，提示必须真正处在用户当前的可视区域内。
+  // English: DOM visibility alone is insufficient; the notice must lie within the browser viewport.
+  const visible=await feedback.evaluate(el=>{
+    const rect=el.getBoundingClientRect();
+    return rect.height>0&&rect.top>=0&&rect.bottom<=window.innerHeight;
+  });
+  expect(visible,'backup block notice must be visible within the viewport').toBe(true);
+  // 中文：释放真正被暂扣的 SQLite PUT 后，只有真实保存完成才能清除警告。
+  // English: Release the real SQLite PUT; only an acknowledged clean save may clear feedback.
+  releaseSave();
+  await expect(page.locator('#pilotAutosaveStatus')).toContainText('已自动保存第',{timeout:12000});
+  await expect(feedback).toBeHidden();
+  await expect(button).toBeEnabled();
+});
+
+
+// 中文：Codex PR #36 P2-EXPORT-01，已保存工作区的供应商选择/字段筛选不是业务编辑。
+// English: A first supplier export must not be blocked by view-only report controls.
+test('45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出',async({page,app},info)=>{
+  await allocated(page,app);
+  await drawings(page,app);
+  await page.reload();
+  await saved(page);
+  const before=await snapshot(page);
+  await tab(page,'assign');
+  await page.locator('[data-mode="supplierFirst"]').click();
+  await page.locator('[data-sf-s="SUP-A"]').click();
+  await page.locator('#generateBtn').click();
+  await expect(page.locator('#pilotReportPanel')).toBeVisible();
+  await page.locator('#pilotReportSupplier').selectOption('SUP-A');
+  const optional=page.locator('#pilotReportFields input:not([disabled])').first();
+  await expect(optional).toBeVisible();
+  await optional.uncheck();
+  expect((await snapshot(page)).state).toEqual(before.state);
+  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
+  await expect(page.locator('#pilotAutosaveStatus')).toContainText('无待保存修改');
+  const waiting=page.waitForEvent('download',{timeout:15000});
+  await page.locator('#pilotReportDownload').click();
+  const result=await waiting;
+  const file=info.outputPath('P2-EXPORT-01-first-supplier.zip');
+  await result.saveAs(file);
+  const zip=inspectZip(file);
+  expect(Object.keys(zip).some(n=>n.endsWith('.xlsx'))).toBe(true);
+  expect(Object.keys(zip).some(n=>n.endsWith('.pdf'))).toBe(true);
+  expect(Object.keys(zip).some(n=>n.endsWith('.json'))).toBe(false);
+  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
+  expect((await snapshot(page)).state).toEqual(before.state);
+  await info.attach('P2-first-supplier-package',{path:file,contentType:'application/zip'});
+});
+
+// 中文：Codex PR #36 P3-NAV-01，只读导航不得发出放弃未保存警告；真正修改仍严禁未保存导出。
+// English: Navigation must remain clean, while actual edits retain the unsaved-data safety barrier.
+test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分',async({page,app})=>{
+  await allocated(page,app);
+  await page.reload();
+  await saved(page);
+  const before=await snapshot(page);
+  page.removeAllListeners('dialog');
+  const dialogs=[];
+  page.on('dialog',async d=>{dialogs.push(d.message());await d.dismiss()});
+  await tab(page,'assign');
+  await page.locator('[data-mode="supplierFirst"]').click();
+  await page.locator('[data-sf-s="SUP-B"]').click();
+  expect((await snapshot(page)).state).toEqual(before.state);
+  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
+  await openProject(page);
+  await page.locator('#pilotNewWorkspace').click();
+  expect(dialogs).toHaveLength(1);
+  expect(dialogs[0]).toContain('新建一笔空白询价');
+  expect(dialogs[0]).not.toContain('未保存修改');
+  expect((await snapshot(page)).state).toEqual(before.state);
+
+  // 中文：在供应商视角真正撤销一条已分配的业务关联，再检验未保存保护。
+  // English: Uncheck a genuinely persisted allocation to exercise the real dirty guard.
+  const allocatedBox=page.locator('#sfItemBody input[data-sfi]').first();
+  await expect(allocatedBox).toBeChecked();
+  await allocatedBox.uncheck();
+  expect((await snapshot(page)).state.assignments).not.toEqual(before.state.assignments);
+  // 中文：change 事件与捕获阶段结束后应识别真修改；不用点击返回同一瞬间作脆弱断言。
+  // English: Wait for post-change signature reconciliation; never infer a dirty flag from clicks.
+  await expect.poll(()=>page.evaluate(()=>window.SRMPilot.dirty()),{timeout:2000}).toBe(true);
+  const guard=await page.evaluate(async()=>{
+    try{await window.SRMPilot.committedWorkspaceForReport();return 'NOT BLOCKED'}
+    catch(e){return e.message}
+  });
+  expect(guard).toContain('未保存的修改');
+  expect(dialogs).toHaveLength(1);
+  await page.locator('#pilotNewWorkspace').click();
+  expect(dialogs).toHaveLength(2);
+  expect(dialogs[1]).toContain('未保存修改');
+  expect((await snapshot(page)).workspaceId).toBe(before.workspaceId);
+  await saved(page);
+  await expect.poll(()=>page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
 });

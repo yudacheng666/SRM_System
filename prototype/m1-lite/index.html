@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SRM-Lite · 采购询价工作台 UI V2</title>
+<title>SRM-Lite · 采购询价工作台 UI V3</title>
 <style>
 :root{--bg:#f5f7fb;--panel:#fff;--line:#dfe4ec;--text:#1f2937;--muted:#6b7280;--primary:#2563eb;--soft:#eff6ff;--warn:#b45309;--danger:#b91c1c;--ok:#047857}
 *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
@@ -617,13 +617,703 @@ body.srm-v2 #quoteImport .tablewrap:has(#quoteRoundBody) table tr:hover td:first
 body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
 
 </style>
+<style id="ui-v3-integration-styles">
+/* 中文：将已确认的 V3.1 视觉层级接入 M1-Lite；仅覆盖呈现，不改业务逻辑。 */
+/* English: Apply the approved V3.1 visual hierarchy to M1-Lite without changing business logic. */
+body.srm-v2{
+  --bg:#f3f6fa;
+  --panel:#ffffff;
+  --line:#dce4ee;
+  --text:#1d2b40;
+  --muted:#61728a;
+  --primary:#245bd7;
+  --soft:#edf4ff;
+  --warn:#a66300;
+  --danger:#b42318;
+  --ok:#087f5b;
+  background:var(--bg);
+  color:var(--text);
+  font:14px/1.5 "Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+}
+/* 中文：左侧导航固定、深色低干扰；活动模块用蓝色标记而非大块高饱和色。 */
+/* English: Keep the dark, quiet sidebar and mark the active section with a restrained blue accent. */
+body.srm-v2 .srm-v2-sidebar{
+  width:226px;
+  padding:25px 13px 17px;
+  background:#13243a;
+  border-right:1px solid #263b55;
+}
+body.srm-v2 .srm-v2-brand{
+  padding:0 10px;
+  margin-bottom:1px;
+  color:#f7faff;
+  font-size:21px;
+  font-weight:800;
+  letter-spacing:-.04em;
+}
+body.srm-v2 .srm-v2-brand small{
+  color:#9fb2c9;
+  font-size:10px;
+  letter-spacing:.13em;
+}
+body.srm-v2 .srm-v2-descriptor{
+  margin:3px 10px 29px;
+  color:#9aadc3;
+  font-size:11px;
+}
+body.srm-v2 .srm-v2-navlabel{
+  margin:0 10px 9px;
+  color:#8298b2;
+  font-size:10px;
+  letter-spacing:.13em;
+}
+body.srm-v2 .srm-v2-sideitem{
+  position:relative;
+  min-height:41px;
+  margin:2px 0;
+  padding:10px 11px;
+  gap:11px;
+  border-radius:6px;
+  color:#c1cddd;
+  font-size:13px;
+  font-weight:600;
+  transition:background-color .12s,color .12s;
+}
+body.srm-v2 .srm-v2-sideitem:hover{
+  background:#1d3551;
+  color:#fff;
+}
+body.srm-v2 .srm-v2-sideitem[aria-current="page"]{
+  background:#203b5b;
+  color:#fff;
+  box-shadow:inset 3px 0 #79aaff;
+}
+body.srm-v2 .srm-v2-icon{
+  font-size:16px;
+  color:#9db8dc;
+}
+body.srm-v2 .srm-v2-sideitem[aria-current="page"] .srm-v2-icon{color:#c9ddff}
+body.srm-v2 .srm-v2-sidedivider{border-color:#344961}
+body.srm-v2 .srm-v2-sidefooter{
+  padding:13px 10px 0;
+  color:#9aadc3;
+  font-size:11px;
+  line-height:1.7;
+}
+/* 中文：主工作区统一留白和内容宽度；保留已有侧栏响应式折叠规则。 */
+/* English: Normalize workspace spacing while preserving the existing responsive sidebar behavior. */
+body.srm-v2 .app{
+  max-width:none;
+  margin:0;
+  padding:0 27px 28px 253px;
+  min-width:0;
+}
+body.srm-v2 .ui-appHeader{
+  margin:0 -27px 13px;
+  padding:15px 27px 14px;
+  min-height:76px;
+  gap:15px;
+  background:#fff;
+  border-bottom:1px solid #dce4ee;
+}
+body.srm-v2 .ui-brand{min-width:205px}
+body.srm-v2 .ui-eyebrow{
+  color:#3568b8;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.13em;
+}
+body.srm-v2 .ui-appHeader h1{
+  margin:0 0 4px;
+  color:#17263e;
+  font-size:22px;
+  font-weight:760;
+  letter-spacing:-.035em;
+  line-height:1.3;
+}
+body.srm-v2 #pilotSubtitle{font-size:12px;line-height:1.45;color:#64758b}
+body.srm-v2 .ui-headActions{gap:7px}
+body.srm-v2 .ui-headActions .btn,
+body.srm-v2 .ui-headActions .tab{
+  min-height:34px;
+  padding:7px 10px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:650;
+}
+body.srm-v2 #pilotModeBadge{
+  padding:5px 8px;
+  border:1px solid #e2e8f0;
+  border-radius:5px;
+  background:#f4f6fa;
+  color:#52647d;
+}
+body.srm-v2 .srm-v2-live-status{
+  max-width:285px;
+  padding:5px 8px;
+  border-radius:5px;
+  font-size:11px;
+  line-height:1.4;
+}
+body.srm-v2 .ui-context{
+  min-height:54px;
+  margin:0 0 9px;
+  padding:10px 15px;
+  border:1px solid #dce5f0;
+  border-left:3px solid #4d83df;
+  border-radius:7px;
+  background:linear-gradient(105deg,#fff 0%,#f8fbff 100%);
+  box-shadow:0 1px 2px #243b5308;
+}
+body.srm-v2 .ui-context b{
+  color:#1b2d46;
+  font-size:16px;
+  font-weight:780;
+  font-variant-numeric:tabular-nums;
+}
+body.srm-v2 .ui-context small{font-size:11px;color:#65768c}
+body.srm-v2 #pilotNotice{
+  margin-bottom:9px!important;
+  padding:7px 11px;
+  border:1px solid #f1dfb5;
+  border-left:3px solid #d69a2d;
+  border-radius:6px;
+  background:#fffaf0;
+  color:#7b5a1b;
+  font-size:12px;
+  line-height:1.5;
+}
+/* 中文：项目和备份控件与日常工作分层；卡片标题和展开区保持同一套样式。 */
+/* English: Visually separate project/backup administration from daily purchasing actions. */
+body.srm-v2 #pilotControls{
+  margin-bottom:10px!important;
+  border:1px solid #dce4ee!important;
+  border-radius:7px;
+  box-shadow:none;
+}
+body.srm-v2 #pilotControls .ui-workspaceHead{
+  padding:9px 13px 3px;
+}
+body.srm-v2 #pilotControls .ui-workspaceHead b{color:#253852;font-size:14px}
+body.srm-v2 #pilotControls .ui-projectDetails,
+body.srm-v2 #pilotControls .ui-drawer{
+  border-color:#dfe6ef;
+  border-radius:6px;
+  background:#fff;
+}
+body.srm-v2 #pilotControls .ui-projectDetails>summary,
+body.srm-v2 #pilotControls .ui-drawer>summary{
+  min-height:34px;
+  color:#435670;
+  font-size:12px;
+  font-weight:700;
+}
+body.srm-v2 #pilotControls .ui-projectDetails[open]>summary,
+body.srm-v2 #pilotControls .ui-drawer[open]>summary{
+  background:#f3f7fd;
+  color:#234c87;
+}
+body.srm-v2 #pilotControls .ui-drawerBody{padding:12px}
+body.srm-v2 #pilotSaveStatus,
+body.srm-v2 #pilotAutosaveStatus,
+body.srm-v2 #pilotAutoBackupStatus{line-height:1.55}
+/* 中文：工作流导航使用步骤式信息层级，不再让导航按钮看起来像一排孤立的大圆角块。 */
+/* English: Style the existing interactive workflow tabs as connected process steps, not oversized isolated pills. */
+body.srm-v2 .ui-workNav{
+  position:sticky;
+  top:0;
+  z-index:10;
+  padding:5px 0 0;
+  background:rgba(243,246,250,.97);
+  border-bottom:1px solid #dce4ee;
+  backdrop-filter:blur(8px);
+}
+body.srm-v2 .ui-workNav .tabs{
+  display:flex;
+  align-items:stretch;
+  gap:0;
+  margin:0;
+  border-bottom:0;
+}
+body.srm-v2 .ui-workNav .tab{
+  position:relative;
+  flex:0 1 auto;
+  min-height:43px;
+  padding:10px 17px 11px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:#687990;
+  font-size:13px;
+  font-weight:650;
+  white-space:nowrap;
+  box-shadow:none;
+}
+body.srm-v2 .ui-workNav .tab:hover{background:#eaf0f8;color:#294c7d}
+body.srm-v2 .ui-workNav .tab.active{
+  background:transparent;
+  color:#1c57b7;
+  font-weight:780;
+  box-shadow:none;
+}
+body.srm-v2 .ui-workNav .tab.active:after{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:0;
+  height:3px;
+  border-radius:2px 2px 0 0;
+  background:#2b65d9;
+}
+/* 中文：标题、卡片、表格形成稳定层级；高密度业务表格仍保留完整数据和滚动能力。 */
+/* English: Establish a consistent hierarchy for section headings, cards and dense business tables. */
+body.srm-v2 .panel{min-width:0}
+body.srm-v2 .card{
+  border:1px solid #dce4ee;
+  border-radius:7px;
+  background:#fff;
+  box-shadow:0 1px 2px #1f355008;
+}
+body.srm-v2 .cardhead{
+  padding:12px 15px;
+  gap:10px;
+  border-bottom:1px solid #e6ebf2;
+  background:#fff;
+}
+body.srm-v2 .cardhead>b,
+body.srm-v2 .cardhead>div:first-child>b{
+  color:#1b2b42;
+  font-size:14px;
+  font-weight:760;
+}
+body.srm-v2 .cardbody{padding:12px 15px}
+body.srm-v2 .tablewrap{
+  max-width:100%;
+  border:1px solid #e1e7ef;
+  border-radius:6px;
+  background:#fff;
+  scrollbar-color:#b8c5d7 #f4f6f9;
+}
+body.srm-v2 .table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  color:#2b3a4f;
+  font-size:12.5px;
+  line-height:1.45;
+  font-variant-numeric:tabular-nums;
+}
+body.srm-v2 .table th{
+  padding:9px 10px;
+  border-bottom:1px solid #dce4ee;
+  background:#f4f7fb;
+  color:#5d6f86;
+  font-size:11.5px;
+  font-weight:780;
+  letter-spacing:.01em;
+}
+body.srm-v2 .table td{
+  padding:9px 10px;
+  border-bottom:1px solid #edf1f6;
+  vertical-align:middle;
+}
+body.srm-v2 .table tbody tr:last-child td{border-bottom:0}
+body.srm-v2 .table tbody tr:hover td{background:#f5f9ff}
+body.srm-v2 .table :is(input,select,button){font-size:12px}
+body.srm-v2 .muted,
+body.srm-v2 .small.muted{color:#66778e}
+body.srm-v2 .pager{
+  gap:9px;
+  padding-top:10px;
+  color:#62738a;
+  font-size:12px;
+}
+body.srm-v2 .pageNum{
+  min-width:30px;
+  padding:5px 8px;
+  border-radius:5px;
+}
+body.srm-v2 .pageNum.active{
+  border-color:#c7daf8;
+  background:#eaf2ff;
+  color:#1d59bd;
+  font-weight:750;
+}
+/* 中文：按钮按主要操作、普通操作、风险操作区分；避免所有按钮具有同等视觉重量。 */
+/* English: Separate primary, neutral and destructive actions through restrained, consistent emphasis. */
+body.srm-v2 .btn{
+  min-height:33px;
+  padding:7px 10px;
+  border:1px solid #d6e0eb;
+  border-radius:5px;
+  background:#fff;
+  color:#34465d;
+  font-size:12px;
+  font-weight:650;
+  box-shadow:none;
+  transition:background-color .12s,border-color .12s,color .12s;
+}
+body.srm-v2 .btn:hover{border-color:#aebed2;background:#f7f9fc}
+body.srm-v2 .btn.primary{
+  border-color:#245bd7;
+  background:#245bd7;
+  color:#fff;
+}
+body.srm-v2 .btn.primary:hover{border-color:#1d4fbf;background:#1d4fbf}
+body.srm-v2 .btn.soft{
+  border-color:#d6e4fa;
+  background:#f1f6ff;
+  color:#2458a9;
+}
+body.srm-v2 .btn.soft:hover{background:#e6f0ff;border-color:#bfd4f4}
+body.srm-v2 .btn.danger{
+  border-color:#efd9d5;
+  background:#fff;
+  color:#b42318;
+}
+body.srm-v2 .btn.danger:hover{background:#fff4f2;border-color:#e8bdb6}
+body.srm-v2 :is(input[type=text],input[type=number],input[type=search],select,textarea){
+  border-color:#d2dce8;
+  border-radius:5px;
+  color:#26374e;
+  background:#fff;
+}
+body.srm-v2 :is(input,select,textarea):focus-visible,
+body.srm-v2 :is(button,summary,[tabindex]):focus-visible{
+  outline:2px solid #91b8f6;
+  outline-offset:2px;
+}
+body.srm-v2 .notice{
+  border:1px solid #dce7f6;
+  border-left:3px solid #4d83df;
+  border-radius:6px;
+  background:#f4f8ff;
+  color:#405c7d;
+  font-size:12px;
+  line-height:1.6;
+}
+body.srm-v2 .intakeBox{
+  border:1px solid #dfe6ef;
+  border-radius:7px;
+  background:#fff;
+}
+body.srm-v2 .intakeBox h3{
+  color:#1d2d45;
+  font-size:14px;
+  font-weight:780;
+}
+body.srm-v2 .coverageDetails{
+  border-color:#e0e7f0;
+  border-radius:6px;
+  background:#fafcff;
+}
+body.srm-v2 .stat{
+  border:1px solid #dfe6ef;
+  border-radius:6px;
+  background:#fff;
+  box-shadow:none;
+}
+body.srm-v2 .stat small{color:#62748b;font-size:11.5px}
+body.srm-v2 .stat b{color:#1d2d45;font-weight:780;font-variant-numeric:tabular-nums}
+body.srm-v2 .supplierList .srow{border-radius:6px;border-color:#dce4ee}
+body.srm-v2 .supplierList .srow.selected{
+  border-color:#8db4f2;
+  background:#eff5ff;
+  box-shadow:inset 3px 0 #245bd7;
+}
+body.srm-v2 .roundBadge{border-radius:4px;font-weight:700}
+body.srm-v2 .modalCard{
+  border:1px solid #d9e2ed;
+  border-radius:8px;
+  box-shadow:0 22px 64px #14243a35;
+}
+body.srm-v2 .modalHead{background:#f9fbfe;border-bottom-color:#e0e7f0}
+body.srm-v2 .footerNote{padding:12px 0;color:#718198}
+/* 中文：中等屏幕优先保留工作区；小屏将导航、工具条和表格适配为可滚动布局。 */
+/* English: Preserve the workspace on medium screens and keep small-screen navigation and tables reachable. */
+@media(max-width:1090px){
+  body.srm-v2 .app{padding-left:86px;padding-right:16px}
+  body.srm-v2 .srm-v2-sidebar{width:64px;padding:22px 7px 16px}
+  body.srm-v2 .srm-v2-brand{font-size:14px;padding:0 4px}
+  body.srm-v2 .srm-v2-brand small,
+  body.srm-v2 .srm-v2-descriptor,
+  body.srm-v2 .srm-v2-navlabel,
+  body.srm-v2 .srm-v2-sideitem .srm-v2-word,
+  body.srm-v2 .srm-v2-sidefooter{display:none}
+  body.srm-v2 .srm-v2-sideitem{justify-content:center;padding:11px 7px}
+  body.srm-v2 .srm-v2-sidedivider{margin:12px 6px}
+  body.srm-v2 .ui-appHeader{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}
+  body.srm-v2 .ui-headActions{gap:5px}
+  body.srm-v2 .srm-v2-live-status{max-width:190px}
+}
+@media(max-width:700px){
+  body.srm-v2 .app{padding:0 11px 20px}
+  body.srm-v2 .srm-v2-sidebar{display:none}
+  body.srm-v2 .ui-appHeader{margin:0 -11px 9px;padding:11px;flex-wrap:wrap}
+  body.srm-v2 .ui-appHeader h1{font-size:19px}
+  body.srm-v2 .ui-headActions{width:100%;flex-wrap:wrap}
+  body.srm-v2 .ui-workNav .tabs{overflow-x:auto;white-space:nowrap}
+  body.srm-v2 .ui-workNav .tab{padding:9px 12px;font-size:12px}
+  body.srm-v2 .ui-context{padding:8px 10px}
+  body.srm-v2 #assign .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* 中文：尊重减少动态效果偏好；不隐藏任何业务操作或状态反馈。 */
+/* English: Respect reduced-motion preferences without hiding actions or status feedback. */
+@media(prefers-reduced-motion:reduce){
+  body.srm-v2 *,
+  body.srm-v2 *::before,
+  body.srm-v2 *::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+
+
+/* 中文：1024×768 笔记本首屏优化；压缩纵向留白但不隐藏流程或业务操作。 */
+/* English: Recover the first data row at 1024×768 by tightening vertical spacing, never hiding actions. */
+@media (min-width:701px) and (max-width:1090px) and (max-height:820px){
+  body.srm-v2 .ui-appHeader{min-height:65px;padding:8px 16px}
+  body.srm-v2 .ui-appHeader h1{font-size:18px}
+  body.srm-v2 .ui-context{min-height:44px;padding:6px 10px;margin-bottom:5px}
+  body.srm-v2 #pilotNotice{font-size:10px;padding:3px 8px;margin-bottom:5px!important}
+  body.srm-v2 #pilotControls{margin-bottom:5px!important}
+  body.srm-v2 #pilotControls .ui-projectDetails>summary,
+  body.srm-v2 #pilotControls .ui-drawer>summary{min-height:30px;max-height:30px;padding:5px 8px;font-size:11px}
+  body.srm-v2 .ui-workNav .tab{min-height:36px;padding:7px 11px}
+  body.srm-v2 .ui-workNav .tabs{margin-bottom:5px}
+  body.srm-v2 #assign .ui-panelLead{padding:5px 10px;min-height:36px;margin-bottom:5px}
+  body.srm-v2 #assign .stats{gap:5px;margin-bottom:5px}
+  body.srm-v2 #assign .stat{padding:5px 8px}
+  body.srm-v2 #assign .stat b{font-size:17px}
+  body.srm-v2 #assign>.card{margin-bottom:5px!important}
+  body.srm-v2 #assign>.card>.cardhead{padding:4px 8px;min-height:32px}
+  body.srm-v2 #assign>.card>.cardbody{padding:0 8px 3px}
+  body.srm-v2 #assign .grid2{gap:6px}
+  body.srm-v2 #assign .grid2>.card>.cardbody{padding:5px 8px}
+  body.srm-v2 #assign .table th,
+  body.srm-v2 #assign .table td{padding:5px 7px}
+}
+
+
+/* =============================================================================
+   UI V3.1 STRUCTURAL PARITY — purchase-first hierarchy, not a skin-only update.
+   中文：统一业务标题、流程导航、项目折叠区与表格层级；保留所有正式业务 DOM ID。
+   English: Harmonize real purchasing screens while preserving every business contract.
+   ============================================================================= */
+body.srm-v2{--srm-v31-navy:#111c2d;--srm-v31-ink:#172c46;--srm-v31-muted:#71839a;--srm-v31-blue:#285eb7;--srm-v31-border:#e3eaf2;background:#f6f8fb;color:var(--srm-v31-ink)}
+body.srm-v2 .srm-v2-sidebar{background:linear-gradient(165deg,#111c2d 0%,#152b44 100%);width:224px;padding:22px 12px 17px;border-right:1px solid #223950}
+body.srm-v2 .srm-v2-brand{display:flex;align-items:center;gap:11px;padding:0 9px 19px;font-size:15px;letter-spacing:-.2px;border-bottom:1px solid #304158}
+body.srm-v2 .srm-v3-brandmark{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:8px;color:#193c68;background:#d0e1ff;font-size:19px;font-weight:850}
+body.srm-v2 .srm-v3-brandcopy{display:grid;gap:2px;font-size:15px;font-weight:800;line-height:1.1}
+body.srm-v2 .srm-v2-brand small{display:block;margin:0;letter-spacing:1.1px;font-size:9px;font-weight:640;color:#91aaca}
+body.srm-v2 .srm-v2-descriptor{font-size:10.5px;margin:10px 10px 25px;color:#a8b9d1}
+body.srm-v2 .srm-v2-navlabel{font-size:9.5px;letter-spacing:1.2px;margin:0 10px 9px;color:#809ab7}
+body.srm-v2 .srm-v2-sideitem{min-height:40px;margin:2px 0;padding:10px 11px;gap:10px;font-size:12.5px;font-weight:610;border-radius:6px;color:#becbdc}
+body.srm-v2 .srm-v2-sideitem[aria-current="page"]{background:#203c5e;box-shadow:inset 3px 0 #77adff;color:#fff}
+body.srm-v2 .srm-v2-sideitem[aria-current="page"] .srm-v2-icon{color:#c9dfff}
+body.srm-v2 .srm-v2-sidefooter{margin-top:auto;padding-top:14px;border-top:1px solid #32485e;color:#96aac3;font-size:10px;line-height:1.65}
+body.srm-v2 .srm-v3-statusDot{display:inline-block;width:7px;height:7px;background:#51b69a;border-radius:50%;margin-right:5px}
+body.srm-v2 .app{padding-left:251px;background:#f6f8fb}
+body.srm-v2 .ui-appHeader{min-height:71px;margin-bottom:9px;padding-top:12px;padding-bottom:11px;background:#fff}
+body.srm-v2 .ui-eyebrow{font-size:9px;letter-spacing:1.2px;color:#6b8cb6}
+body.srm-v2 .srm-v3-headline-divider{display:inline-block;height:10px;width:1px;margin:0 7px;background:#c4d4e8;vertical-align:middle}
+body.srm-v2 .ui-appHeader h1{font-size:20px;letter-spacing:-.7px;color:#173250}
+body.srm-v2 .srm-v3-appname{font-size:20px;font-weight:650;letter-spacing:-.6px}
+body.srm-v2 #pilotSubtitle{font-size:10.5px;color:#8895a5;line-height:1.25}
+body.srm-v2 .ui-headActions{gap:6px}
+body.srm-v2 .ui-headActions .btn,
+body.srm-v2 .ui-headActions .tab{font-size:10.5px;padding:6px 9px;min-height:31px;border-radius:5px}
+body.srm-v2 .ui-context{min-height:44px;margin-bottom:7px;padding:7px 12px;border:1px solid #e4eaf2;border-left:3px solid #6c9ddb;border-radius:6px;background:#fff}
+body.srm-v2 .ui-context small{font-size:10px;color:#758aa2}
+body.srm-v2 .ui-context b{font-size:14px;color:#1c4168;font-weight:780}
+body.srm-v2 .srm-v3-contextHelp{color:#8091a5!important;letter-spacing:.02em}
+body.srm-v2 #pilotNotice{padding:5px 9px;margin-bottom:7px!important;font-size:10.5px;border-radius:5px}
+body.srm-v2 #pilotControls{border:0!important;background:transparent;box-shadow:none!important;padding:0;margin-bottom:7px!important}
+body.srm-v2 #pilotControls>.ui-workspaceHead{padding:3px 1px 5px}
+body.srm-v2 #pilotControls>.ui-workspaceHead b{font-size:11px;font-weight:800;color:#47617e}
+body.srm-v2 #pilotControls>.ui-workspaceHead .muted{font-size:10px}
+body.srm-v2 #pilotControls>.cardbody{padding:0;display:flex;flex-wrap:wrap;align-items:stretch;gap:5px;background:transparent}
+body.srm-v2 #pilotControls>.cardbody>.ui-projectDetails,
+body.srm-v2 #pilotControls>.cardbody>.ui-drawer{flex:1 1 250px;min-width:210px;border:1px solid #e0e8f1;border-radius:6px;background:#fff;box-shadow:0 1px 2px #21365307}
+body.srm-v2 #pilotControls .ui-projectDetails>summary,
+body.srm-v2 #pilotControls .ui-drawer>summary{min-height:32px;padding:7px 10px;font-size:10.5px;font-weight:730;color:#415a77}
+body.srm-v2 #pilotControls .ui-projectDetails .ui-projectStatus,
+body.srm-v2 #pilotControls .ui-drawer .ui-summaryHint{font-size:9.5px;color:#9aa6b6}
+body.srm-v2 #pilotControls .ui-projectBody,
+body.srm-v2 #pilotControls .ui-drawerBody{padding:10px}
+body.srm-v2 #pilotControls .ui-statusStrip{flex-wrap:wrap;gap:6px;font-size:10px}
+/* Project management is an on-demand drawer, not a second dashboard competing with the RFQ table. */
+body.srm-v2 .ui-workNav{position:relative;top:auto;z-index:9;margin:0 0 9px;padding:0;display:flex;align-items:center;gap:15px;border-bottom:1px solid #e3eaf2;background:transparent;backdrop-filter:none}
+body.srm-v2 .srm-v3-flow-label{display:flex;align-items:center;gap:6px;white-space:nowrap;min-width:115px}
+body.srm-v2 .srm-v3-flow-label strong{font-size:10px;font-weight:780;color:#527293}
+body.srm-v2 .srm-v3-flow-label strong:before{content:"◉";margin-right:6px;color:#6b95c9}
+body.srm-v2 .srm-v3-flow-label span{display:none}
+body.srm-v2 .ui-workNav .tabs{flex:1;min-width:0;align-items:center;border:0;overflow-x:auto;scrollbar-width:thin}
+body.srm-v2 .ui-workNav .tab{min-height:41px;padding:10px 14px;color:#718398;font-size:11px;letter-spacing:.02em}
+body.srm-v2 .ui-workNav .tab:not(:last-child):before{position:absolute;right:-4px;top:12px;content:"›";color:#bbc8d8;font-size:14px}
+body.srm-v2 .ui-workNav .tab.active{color:#205ca8;font-weight:800}
+body.srm-v2 .ui-workNav .tab.active:after{height:2px;background:#427cd1;left:11px;right:11px}
+body.srm-v2 .panel>.srm-v3-pageIntro,
+body.srm-v2 .panel>.ui-panelLead.srm-v3-pageIntro{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:78px;padding:8px 0 12px;margin:0 0 10px;background:transparent;border:0;box-shadow:none}
+body.srm-v2 .srm-v3-pageMain{min-width:0}
+body.srm-v2 .srm-v3-pageKicker{font-size:9.5px;font-weight:800;letter-spacing:1.1px;color:#6b88aa;line-height:1.3;margin-bottom:5px}
+body.srm-v2 .srm-v3-pageMain h2{margin:0;color:#172f4b;font-size:23px;font-weight:790;line-height:1.23;letter-spacing:-.7px}
+body.srm-v2 .srm-v3-pageMain h2 span{font-size:14px;font-weight:500;color:#a0adbd;letter-spacing:-.25px}
+body.srm-v2 .srm-v3-pageMain p{margin:5px 0 0;color:#8291a3;font-size:11px;line-height:1.45}
+body.srm-v2 .srm-v3-pageMeta{max-width:250px;color:#7e92aa;font-size:10px;text-align:right;line-height:1.6}
+body.srm-v2 .srm-v3-pageIntro .toolbar{justify-content:flex-end;gap:7px;margin:0;flex-wrap:wrap}
+body.srm-v2 .srm-v3-pageIntro .toolbar .btn{min-height:30px;font-size:10.5px}
+body.srm-v2 .panel>.stats{gap:8px;margin-bottom:10px}
+body.srm-v2 .panel .card{border-color:#e1e8f1;border-radius:7px;box-shadow:0 3px 13px #17375406}
+body.srm-v2 .panel .cardhead{min-height:51px;padding:10px 14px;background:#fff;border-bottom:1px solid #e7edf4}
+body.srm-v2 .panel .cardhead b{font-size:13px;font-weight:760;color:#2a415e}
+body.srm-v2 .panel .cardhead .muted{color:#8796a8;font-size:10.5px}
+body.srm-v2 .panel .cardhead .toolbar{gap:5px;flex-wrap:wrap;justify-content:flex-end}
+body.srm-v2 .panel .cardbody{padding:11px 13px}
+body.srm-v2 #items>.card>.cardhead{align-items:center;gap:11px}
+body.srm-v2 #items>.card>.cardhead #pilotRfqHead{font-size:12px;color:#1f548d;font-variant-numeric:tabular-nums}
+body.srm-v2 #items>.card>.cardhead .toolbar .btn{font-size:10.5px;padding:6px 8px;min-height:31px}
+body.srm-v2 #items>.card>.cardhead #deleteSelectedItems{background:#fff;color:#b13427;border-color:#ead8d5}
+body.srm-v2 #items>.card>.cardhead #toggleItemIntake{background:#2a60b5;color:#fff;border-color:#2a60b5}
+body.srm-v2 #items>.card>.cardhead #toggleItemIntake:hover{background:#2355a3}
+body.srm-v2 .panel .tablewrap{border-color:#e3eaf2;border-radius:5px}
+body.srm-v2 .panel .table th{background:#f6f8fb;color:#677e97;font-size:10.5px;letter-spacing:.015em}
+body.srm-v2 .panel .table td{font-size:11.5px;color:#344b65}
+body.srm-v2 .panel .table tbody tr:nth-child(even){background:#fcfdff}
+body.srm-v2 .panel .table tbody tr:hover td{background:#eef5ff}
+body.srm-v2 .panel .btn{border-radius:5px}
+body.srm-v2 .panel .stat{border-radius:7px;border-color:#e3eaf2;box-shadow:0 2px 5px #24395504}
+body.srm-v2 .panel .stat b{color:#234464;font-size:23px;letter-spacing:-.4px}
+body.srm-v2 .panel .stat small{font-size:10.5px;color:#7a8da4}
+body.srm-v2 .panel .notice{background:#f4f8fd;border-color:#dce7f4;color:#49617d;font-size:11px;border-radius:5px}
+body.srm-v2 #quoteImport .srm-v2-quote-controls{gap:6px;flex-wrap:wrap}
+body.srm-v2 #quoteImport .srm-v2-quote-section-label{font-weight:800;color:#55789b;font-size:10px}
+body.srm-v2 #quoteImport #confirmQuoteRound:disabled,
+body.srm-v2 :is(.btn.primary,.btn.soft,.btn):disabled,
+body.srm-v2 :is(.btn.primary,.btn.soft,.btn)[aria-disabled="true"]{
+  border-color:#dbe3ec!important;background:#e8edf3!important;color:#8190a3!important;
+  box-shadow:none!important;opacity:1!important;cursor:not-allowed!important;transform:none!important;
+}
+body.srm-v2 :is(.btn.primary,.btn.soft,.btn):disabled:hover{border-color:#dbe3ec!important;background:#e8edf3!important;color:#8190a3!important}
+body.srm-v2 #quoteImport .srm-v3-lockHint{display:inline-flex;align-items:center;gap:5px;margin-left:6px;padding:5px 8px;border:1px solid #cce5d9;background:#eff9f4;border-radius:4px;color:#247c60;font-size:10px;font-weight:700}
+body.srm-v2 #quoteImport .srm-v3-lockHint[hidden]{display:none!important}
+body.srm-v2 #quoteImport .srm-v3-lockHint:before{content:"✓";font-weight:850}
+body.srm-v2 #quoteImport .srm-v2-quote-confirm-bar{gap:10px;flex-wrap:wrap;border-radius:6px;background:#f7fafc;border-color:#e4eaf2}
+body.srm-v2 #settings #importTemplatesCard .cardbody>.toolbar{border:1px solid #edf1f6;border-radius:5px;padding:10px 12px;margin-bottom:6px!important;background:#fafbfd}
+body.srm-v2 #settings #importTemplatesCard .cardbody>.toolbar:hover{background:#f4f8fd}
+body.srm-v2 #settings #importTemplatesCard .cardbody>.toolbar .btn{min-width:168px}
+body.srm-v2 #settings .settingsGrid{gap:12px}
+body.srm-v2 #settings .settingsGrid>.card{border-color:#e2e9f1}
+@media(max-width:1210px){
+  body.srm-v2 .srm-v3-pageMeta{display:none}
+  body.srm-v2 .ui-workNav{gap:6px}
+  body.srm-v2 .ui-workNav .tab{padding:9px 10px}
+}
+@media(max-width:1090px){
+  body.srm-v2 .app{padding-left:82px;padding-right:16px}
+  body.srm-v2 .srm-v2-sidebar{width:62px;padding:18px 6px}
+  body.srm-v2 .srm-v2-brand{padding:0 2px 15px;justify-content:center}
+  body.srm-v2 .srm-v3-brandmark{width:34px;height:34px}
+  body.srm-v2 .srm-v3-brandcopy{display:none}
+  body.srm-v2 .srm-v2-descriptor{display:none}
+  body.srm-v2 .srm-v3-flow-label{display:none}
+  body.srm-v2 .srm-v3-pageMain h2{font-size:20px}
+}
+@media(max-width:700px){
+  body.srm-v2 .app{padding:0 11px 20px}
+  body.srm-v2 .srm-v3-pageIntro{flex-wrap:wrap}
+  body.srm-v2 .ui-workNav .tabs{width:100%}
+  body.srm-v2 .srm-v3-pageMain h2 span{display:none}
+}
+@media(min-width:701px) and (max-height:820px){
+  body.srm-v2 .ui-appHeader{min-height:56px;padding-top:7px;padding-bottom:7px}
+  body.srm-v2 .ui-appHeader h1{font-size:17px}
+  body.srm-v2 .srm-v3-appname{font-size:17px}
+  body.srm-v2 #pilotSubtitle{font-size:10px}
+  body.srm-v2 .ui-context{min-height:38px;padding:5px 10px;margin-bottom:5px}
+  body.srm-v2 #pilotControls>.ui-workspaceHead{padding:1px 0 3px}
+  body.srm-v2 #pilotControls .ui-projectDetails>summary,
+  body.srm-v2 #pilotControls .ui-drawer>summary{min-height:28px;padding:5px 9px}
+  body.srm-v2 .ui-workNav{margin-bottom:6px}
+  body.srm-v2 .ui-workNav .tab{min-height:35px;padding-top:7px;padding-bottom:7px}
+  body.srm-v2 .panel>.srm-v3-pageIntro,
+  body.srm-v2 .panel>.ui-panelLead.srm-v3-pageIntro{min-height:55px;padding:3px 0 6px;margin-bottom:5px}
+  body.srm-v2 .srm-v3-pageKicker{font-size:8.5px;margin-bottom:2px}
+  body.srm-v2 .srm-v3-pageMain h2{font-size:18px}
+  body.srm-v2 .srm-v3-pageMain h2 span{font-size:12px}
+  body.srm-v2 .srm-v3-pageMain p{font-size:10px;margin-top:2px}
+  body.srm-v2 .panel .cardhead{min-height:40px;padding:6px 10px}
+  body.srm-v2 .panel .cardbody{padding:7px 10px}
+}
+
+
+/* PR26 P2-V01: legacy buyer selector hid the approved V3.1 Items title. */
+body.srm-v2.ui-buyer-mode #items #srmV3PageStage-items,
+body.srm-v2 #items #srmV3PageStage-items{display:flex!important;visibility:visible!important}
+/* PR26 P2-V02: closed drawers must not stretch to the height of the open drawer. */
+body.srm-v2 #pilotControls>.cardbody{align-items:flex-start!important;align-content:start}
+body.srm-v2 #pilotControls>.cardbody>details{align-self:flex-start!important;height:fit-content!important}
+body.srm-v2 #pilotControls>.cardbody>details:not([open]){overflow:hidden}
+body.srm-v2 #pilotControls>.cardbody>details:not([open]) .ui-projectBody,
+body.srm-v2 #pilotControls>.cardbody>details:not([open]) .ui-drawerBody{display:none!important}
+/* PR26 P2-V03: list navigation narrow, material business data prominent even at 1024px. */
+body.srm-v2 #assign #itemFirstView{grid-template-columns:minmax(0,1.7fr) minmax(255px,.8fr);align-items:start;gap:10px}
+body.srm-v2 #assign #supplierFirstView{grid-template-columns:minmax(240px,.68fr) minmax(0,1.7fr);align-items:start;gap:10px}
+body.srm-v2 #assign #supplierFirstView>.card,
+body.srm-v2 #assign #itemFirstView>.card{min-width:0}
+body.srm-v2 #assign #supplierFirstList{max-height:220px;overflow-y:auto;scrollbar-width:thin}
+body.srm-v2 #assign #supplierFirstView>.card:first-child>.cardhead .toolbar input{max-width:100%;min-width:0}
+body.srm-v2 #assign #sfItemBody .srm-v31-allSuppliers{font-size:11px;color:#476786}
+body.srm-v2 #assign #sfItemBody .srm-v31-relationCheck{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;cursor:pointer}
+body.srm-v2 #assign #sfItemBody .srm-v31-relation{border-radius:4px;padding:3px 5px;font-size:10px;font-weight:700}
+body.srm-v2 #assign #sfItemBody .srm-v31-relation.linked{background:#e5f5ee;color:#18744f}
+body.srm-v2 #assign #sfItemBody .srm-v31-relation.unlinked{background:#f0f3f8;color:#66798c}
+@media(min-width:701px) and (max-width:1140px){
+body.srm-v2 #assign #itemFirstView{grid-template-columns:minmax(0,1.5fr) minmax(250px,.8fr)}
+body.srm-v2 #assign #supplierFirstView{grid-template-columns:minmax(240px,.7fr) minmax(0,1.5fr)}
+}
+@media(max-width:760px){
+body.srm-v2 #assign #itemFirstView,body.srm-v2 #assign #supplierFirstView{grid-template-columns:minmax(0,1fr)}
+}
+
+/* PR26 P2-V04: real same-round V1/V2 revision comparison displayed above table. */
+body.srm-v2 #quoteImport #srmV31RevisionDiff{margin-bottom:10px;border:1px solid #d8e6f5;border-radius:7px;background:#f7fbff;padding:10px 12px}
+body.srm-v2 #quoteImport #srmV31RevisionDiff[hidden]{display:none!important}
+body.srm-v2 #quoteImport .srm-v31-revisionHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+body.srm-v2 #quoteImport .srm-v31-revisionHeader strong{font-size:12px;color:#284c73}
+body.srm-v2 #quoteImport .srm-v31-revisionCount{font-size:11px;font-weight:740;color:#285fa7}
+body.srm-v2 #quoteImport #srmV31RevisionDiff .table td,
+body.srm-v2 #quoteImport #srmV31RevisionDiff .table th{padding:7px 9px;font-size:11px}
+
+/* PR26 P2-V05: decision hierarchy before dense matrix; recommendation is not a manual award. */
+body.srm-v2 #quotes #srmV31DecisionBoard{margin-bottom:12px;border:1px solid #dce6f0;border-radius:8px;background:#fff;box-shadow:0 2px 9px #16365309;overflow:hidden}
+body.srm-v2 .srm-v31-decisionHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px}
+body.srm-v2 .srm-v31-decisionHeader>div{display:flex;align-items:center;gap:10px}
+body.srm-v2 .srm-v31-decisionHeader small{font-size:9px;letter-spacing:1px;font-weight:800;color:#6792bc}
+body.srm-v2 .srm-v31-decisionHeader strong{font-size:14px;color:#1e3d60}
+body.srm-v2 .srm-v31-decisionContext{font-size:10.5px;color:#74879d}
+body.srm-v2 .srm-v31-decisionMetrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+body.srm-v2 .srm-v31-decisionMetrics>div{padding:9px 14px;border-top:1px solid #f0f4f8;border-right:1px solid #eef1f6}
+body.srm-v2 .srm-v31-decisionMetrics>div:last-child{border-right:0}
+body.srm-v2 .srm-v31-decisionMetrics>div.pending{background:#fffbf4}
+body.srm-v2 .srm-v31-decisionMetrics span{display:block;font-size:10.5px;color:#7d8da1;margin-bottom:4px}
+body.srm-v2 .srm-v31-decisionMetrics strong{font-size:22px;color:#21426a;font-variant-numeric:tabular-nums}
+body.srm-v2 .srm-v31-decisionMetrics .pending strong{color:#ad6d1a}
+body.srm-v2 .srm-v31-decisionFooter{padding:7px 14px;background:#f7f9fc;color:#7890a9;font-size:10px}
+body.srm-v2 .srm-v31-decision{display:inline-block;border-radius:4px;padding:3px 6px;margin-bottom:4px;font-size:10px;font-weight:760}
+body.srm-v2 .srm-v31-decision.manual{color:#1b8053;background:#e7f6ed}
+body.srm-v2 .srm-v31-decision.suggested{color:#356fae;background:#eaf2fc}
+@media(max-width:760px){body.srm-v2 .srm-v31-decisionMetrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:761px) and (max-width:1210px){
+ body.srm-v2 .srm-v31-decisionMetrics>div{padding:7px 9px}
+ body.srm-v2 .srm-v31-decisionMetrics span{font-size:10px}
+}
+</style>
 </head>
 <body class="srm-v2">
 <div class="app">
   <!-- 中文：可见侧边导航只代理既有按钮，不复制 RFQ 或数据模型。 -->
   <!-- English: The visible sidebar delegates to existing tab/action controls; no duplicated business state. -->
   <aside class="srm-v2-sidebar" aria-label="SRM 功能导航">
-    <div class="srm-v2-brand">SRM <small>STUDIO</small></div>
+    <div class="srm-v2-brand"><span class="srm-v3-brandmark">S</span><span class="srm-v3-brandcopy">SRM <small>PROCUREMENT</small></span></div>
     <div class="srm-v2-descriptor">采购协同 · 内部工作台</div>
     <div class="srm-v2-navlabel">工作空间</div>
     <button type="button" class="srm-v2-sideitem" data-srm-v2-action="project" aria-label="打开询价项目" title="打开询价项目"><span class="srm-v2-icon" aria-hidden="true">▤</span><span class="srm-v2-word">询价项目</span></button>
@@ -635,13 +1325,13 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
     <div class="srm-v2-navlabel">管理工具</div>
     <button type="button" class="srm-v2-sideitem" data-srm-v2-action="admin" aria-label="数据与备份" title="数据与备份"><span class="srm-v2-icon" aria-hidden="true">◫</span><span class="srm-v2-word">数据与备份</span></button>
     <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="settings" aria-label="字段设置" title="字段设置"><span class="srm-v2-icon" aria-hidden="true">⚙</span><span class="srm-v2-word">字段设置</span></button>
-    <div class="srm-v2-sidefooter">● 本地工作台<br>UI V2 · 候选验收版</div>
+    <div class="srm-v2-sidefooter"><span class="srm-v3-statusDot" aria-hidden="true"></span> 本地业务工作台<br>V3.1 风格接入 · 待验收</div>
   </aside>
 
   <header class="top ui-appHeader">
     <div class="ui-brand">
-      <div class="ui-eyebrow">SRM / RFQ WORKSPACE</div>
-      <h1>采购询价工作台</h1>
+      <div class="ui-eyebrow">PURCHASING WORKSPACE <span class="srm-v3-headline-divider"></span> 询价与比价</div>
+      <h1>SRM <span class="srm-v3-appname">采购工作台</span></h1>
       <div class="sub" id="pilotSubtitle">演示模式：请从空白正式工作开始。</div>
     </div>
     <div class="ui-headActions">
@@ -655,11 +1345,11 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
 
   <div class="ui-context" aria-label="当前询价工作摘要">
     <div><small>当前工作 / Current RFQ</small><div><b id="uiCurrentRfq">演示数据</b></div></div>
-    <div class="ui-contextRight"><small>操作顺序：物料与图纸 → 供应商分配 → 报价回收 → 比价议价</small></div>
+    <div class="ui-contextRight"><small class="srm-v3-contextHelp">当前询价项目 · 实际业务数据以本机已保存记录为准</small></div>
   </div>
   <div class="notice" id="pilotNotice" style="margin:0 0 12px">演示模式不会保存；请新建空白正式询价后开始操作。</div>
 <div class="card" id="pilotControls" style="margin-bottom:14px">
-  <div class="ui-workspaceHead"><div><b>询价项目</b><span class="muted">　新建、切换与保存当前项目</span></div></div>
+  <div class="ui-workspaceHead"><div><b>询价项目与数据操作</b><span class="muted">　项目切换、供应商管理和备份按需展开</span></div></div>
   <div class="cardbody">
  <div class="toolbar" style="margin-bottom:8px">
   <button type="button" class="btn primary" id="pilotNewWorkspace" disabled>新建空白正式工作</button>
@@ -673,6 +1363,7 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
   <button type="button" class="btn soft" id="pilotExportBackupAll" disabled>备份全部询价 JSON</button>
   <button type="button" class="btn soft" id="pilotExportComplete" disabled>旧版 JSON+PDF 资料 ZIP（不可用于 S4 恢复）</button>
   <button type="button" class="btn primary" id="pilotS4DownloadFull" disabled>下载 S4 完整备份（SQLite + PDF）</button>
+  <div id="pilotS4DownloadFeedback" role="alert" aria-live="assertive" hidden style="flex-basis:100%;width:100%;padding:9px 12px;border:1px solid #efc0bb;border-radius:6px;background:#fff1f0;color:#a32922;font-size:12px"></div>
   <label class="small">选择 S4 完整备份 ZIP <input type="file" id="pilotS4BackupFile" accept=".zip,application/zip"></label>
   <button type="button" class="btn" id="pilotS4RestoreFull" disabled>恢复完整备份（仅空白数据）</button>
   <div id="pilotS4RestoreFeedback" role="alert" aria-live="assertive" hidden style="flex-basis:100%;width:100%;padding:9px 12px;border:1px solid #efc0bb;border-radius:6px;background:#fff1f0;color:#a32922;font-size:12px"></div>
@@ -779,6 +1470,7 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
       </div>
     </div>
     <nav class="ui-workNav" aria-label="询价业务流程">
+    <div class="srm-v3-flow-label"><strong>采购业务流程</strong><span>点击步骤切换</span></div>
     <div class="tabs" role="tablist">
       <button class="tab active" data-tab="items" role="tab" aria-selected="true">① 物料与图纸</button>
       <button class="tab" data-tab="assign" role="tab" aria-selected="false">② 供应商与分配</button>
@@ -1022,7 +1714,7 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
         </div>
         <div class="cardbody">
           <div class="tablewrap">
-            <table class="table"><thead><tr><th>已关联（勾选即生效）</th><th>物料</th><th>分类</th></tr></thead><tbody id="sfItemBody"></tbody></table>
+            <table class="table"><thead><tr><th>当前供应商</th><th>物料 / RFQ行</th><th>询价数量</th><th>分类</th><th>全部关联方</th></tr></thead><tbody id="sfItemBody"></tbody></table>
           </div>
           <div class="pager"><span id="sfItemCount"></span><div id="sfPager"></div></div>
         </div>
@@ -1031,6 +1723,7 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
   </section>
 
   <section id="quoteImport" class="panel">
+    <div id="srmV3PageStage-quoteImport" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">04 / QUOTE INTAKE</div><h2>报价回收 <span>/ 轮次与版本</span></h2><p>选择供应商与轮次，录入并核验报价；已确认的历史版本保持只读。</p></div><div class="srm-v3-pageMeta">报价录入 · 异常核验 · 版本确认</div></div>
     <div class="card" style="margin-bottom:14px">
       <div class="cardhead">
         <div><b>报价回收与核验</b> <span class="muted small">先选供应商与轮次，再导入报价、检查异常并确认</span></div>
@@ -1133,14 +1826,17 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
     <div class="card" style="margin-top:14px">
       <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small">导入后可点击“修改”逐行修正</span></div><div class="toolbar"><button class="btn" id="carryForwardMissing">选择沿用上轮项目…</button></div></div>
       <div class="cardbody">
+        <div id="srmV31RevisionDiff" class="srm-v31-revisionDiff" aria-live="polite" hidden></div>
         <div id="quoteRoundHint" class="small muted" style="margin-bottom:8px"></div>
         <div id="carryForwardPreview" class="coverageDetails" style="display:none"></div>
-        <div class="tablewrap"><table class="table"><thead><tr><th>存货编码 / RFQ Line ID / 存货名称</th><th>询价数量（询价单位）</th><th>上轮单价（元/单位）</th><th>本轮单价 / 阶梯价（元/单位）</th><th>本轮适用单价（元/单位）</th><th>单价变化</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>报价来源</th><th>物料备注</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
+        <div class="tablewrap"><table class="table"><thead><tr><th>存货编码 / RFQ Line ID / 存货名称</th><th>询价数量（询价单位）</th><th id="srmV31PreviousPriceHeading">上轮单价（元/单位）</th><th>本轮单价 / 阶梯价（元/单位）</th><th>本轮适用单价（元/单位）</th><th>单价变化</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>报价来源</th><th>物料备注</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
       </div>
     </div>
   </section>
 
   <section id="quotes" class="panel">
+    <div id="srmV3PageStage-quotes" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">05 / COMMERCIAL REVIEW</div><h2>比价与议价 <span>/ 采购决策</span></h2><p>在可比口径下检查报价与最低价建议；非最低价决策需保留人工依据。</p></div><div class="srm-v3-pageMeta">共同报价范围 · 价格对照 · 决策理由</div></div>
+    <div id="srmV31DecisionBoard" class="srm-v31-decisionBoard" role="status" aria-live="polite"></div>
     <div class="card">
       <div class="cardhead">
         <div><b>报价比较</b> <span class="muted small">支持共同报价范围、最低价提示与非最低价选择说明；演示历史采购价为虚构示例</span></div>
@@ -1181,6 +1877,7 @@ body.srm-v2 #quotes #quoteTable tr:hover td:first-child{background:#edf4ff}
   </section>
 
   <section id="settings" class="panel">
+    <div id="srmV3PageStage-settings" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">ADMIN / FIELD & TEMPLATES</div><h2>设置与数据管理 <span>/ 标准模板</span></h2><p>统一下载正式导入模板、维护字段结构；备份恢复操作留在项目与数据管理区。</p></div><div class="srm-v3-pageMeta">模板结构 · 字段维护 · 数据安全</div></div>
     <!-- 中文：标准模板统一放在设置页，直接复用实际导入表头及本机 XLSX 生成器。 -->
     <!-- English: Centralize canonical upload templates; use the same native XLSX writer as business exports. -->
     <div class="card" id="importTemplatesCard" style="margin-bottom:16px">
@@ -3165,14 +3862,53 @@ function latestConfirmedQuoteLine(lineId,sid){
   for(const rn of rounds){const sub=latestConfirmedSubmissionForRound(sid,rn);if(!sub||!expectedIdsForRound(sub).includes(lineId))continue;const line=sub.lines.find(x=>x.lineId===lineId);if(!line)return null;if(line.status==="quoted")return{...line,roundNo:rn,revisionNo:sub.revisionNo};return null}
   return null;
 }
+
+/* 中文：从真实已确认报价中读取同轮前一版，只生成只读差异呈现，绝不改写业务历史。
+ * English: Project a read-only same-round revision diff from confirmed submissions only. */
+function renderV31RevisionDiff(round){
+  const box=document.getElementById("srmV31RevisionDiff");
+  const heading=document.getElementById("srmV31PreviousPriceHeading");
+  const previous=supplierSubmissions(round.supplierId)
+    .filter(x=>x.roundNo===round.roundNo&&x.revisionNo<round.revisionNo&&x.status==="confirmed")
+    .sort((a,b)=>b.revisionNo-a.revisionNo)[0];
+  heading.textContent=previous?"同轮上版 V"+previous.revisionNo+" 适用单价":"上轮单价（元/单位）";
+  if(!previous){box.hidden=true;box.innerHTML="";return null}
+  const before=new Map(previous.lines.map(l=>[l.lineId,l]));
+  const after=new Map(round.lines.map(l=>[l.lineId,l]));
+  const keys=[...new Set([...before.keys(),...after.keys()])];
+  const rows=[];let unchanged=0;
+  for(const key of keys){
+    const old=before.get(key),now=after.get(key),it=items.find(x=>x.lineId===key);
+    // revision-copy is provenance only; unchanged commercial terms do not count as differences.
+    const signature=l=>l?[
+      String(l.status||""),String(tierText(l)),String(l.lead??""),
+      String(l.moq??""),String(l.remark??"")
+    ].join("\u001f"):"";
+    if(old&&now&&signature(old)===signature(now)){unchanged++;continue}
+    const effective=l=>{const p=effectivePriceForLine(l,it?.qty);return p==null?"—":"¥"+p.toFixed(2)};
+    const kind=old&&now?"修订":old?"上版存在 / 本版删除":"本版新增";
+    const status=l=>l?quoteStatusLabel(l.status):"无记录";
+    rows.push('<tr><td>'+esc(it?.id||key)+'<div class="small muted">'+esc(key)+'</div></td>'+
+      '<td>'+esc(kind)+'</td><td>'+esc(effective(old))+'</td><td>'+esc(effective(now))+'</td>'+
+      '<td>'+esc(status(old))+' → '+esc(status(now))+'</td></tr>');
+  }
+  box.hidden=false;
+  box.innerHTML='<div class="srm-v31-revisionHeader"><div><strong>同轮报价版本对照 · V'+previous.revisionNo+' → V'+round.revisionNo+'</strong>'+
+    '<div class="small muted">上版已确认且只读；本版修订应逐项核验后再确认</div></div>'+
+    '<span class="srm-v31-revisionCount">变化 '+rows.length+' 项 · 未变 '+unchanged+' 项</span></div>'+
+    (rows.length?'<div class="tablewrap"><table class="table"><thead><tr><th>物料</th><th>变更</th><th>上版适用价</th><th>本版适用价</th><th>报价状态</th></tr></thead><tbody>'+
+      rows.join("")+'</tbody></table></div>':'<div class="small muted">本版与上一个已确认版本的报价明细一致。</div>');
+  return previous;
+}
 function renderQuoteRound(){
   carryForwardPreview.style.display="none";carryForwardPreview.innerHTML="";
   const round=currentQuoteRound();if(!round)return;const sup=suppliers.find(s=>s.id===round.supplierId),expected=expectedIdsForRound(round);
   quoteEvidenceType.value=round.evidenceType||"email_attachment";quoteEvidenceNote.value=round.evidenceNote||"";quoteTermsNote.value=round.termsNote||"";
   for(const el of [quoteEvidenceType,quoteEvidenceNote,quoteTermsNote])el.disabled=round.status==="confirmed";
   quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮 · 第${round.revisionNo}版</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认/锁定":"草稿"}</span><div class="small" style="margin-top:5px">轮次表示议价阶段；版本表示同一轮报价的更正提交。已确认提交不可覆盖修改。</div>`;
+  const previousV31=renderV31RevisionDiff(round);
   quoteRoundHint.textContent=`本轮应报价范围 ${expected.length} 项；当前提交已记录 ${round.lines.length} 项。`;renderCoverageResult(coverageFromRows(round,round.lines));
-  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=({carry:"明确沿用上轮",manual:"手工录入/修正",paste:"表格粘贴",file:"文件导入",demo:"虚构演示","revision-copy":"复制自上一版",import:"旧记录（来源未细分）"})[l.source]||"历史记录（来源未知）",prev=round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)} · 规格：${esc(it?.spec||"未填写")}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td>${esc(l.remark||"")}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="12" class="muted">当前提交还没有报价记录。</td></tr>';
+  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=({carry:"明确沿用上轮",manual:"手工录入/修正",paste:"表格粘贴",file:"文件导入",demo:"虚构演示","revision-copy":"复制自上一版",import:"旧记录（来源未细分）"})[l.source]||"历史记录（来源未知）",prev=previousV31?previousV31.lines.find(x=>x.lineId===l.lineId):round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)} · 规格：${esc(it?.spec||"未填写")}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td>${esc(l.remark||"")}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="12" class="muted">当前提交还没有报价记录。</td></tr>';
   document.querySelectorAll("[data-edit-quote]").forEach(b=>b.onclick=()=>editQuoteLine(Number(b.dataset.editQuote)));
   carryForwardMissing.disabled=round.roundNo===1||round.status==="confirmed";editRoundScope.disabled=round.roundNo===1||round.status==="confirmed";confirmQuoteRound.disabled=round.status==="confirmed";commitQuoteImport.disabled=round.status==="confirmed";renderQuotes();
 }
@@ -3547,7 +4283,11 @@ function renderSfItems(){
   supplierFirstTitle.textContent=sup.name+"：选择物料";
   const list=filteredSfItems(),pages=Math.max(1,Math.ceil(list.length/PAGE));sfPage=Math.min(sfPage,pages-1);
   const slice=list.slice(sfPage*PAGE,sfPage*PAGE+PAGE);
-  sfItemBody.innerHTML=slice.map(it=>`<tr><td><input type="checkbox" data-sfi="${it.lineId}" ${getSet(it.lineId).has(activeSupplier)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td></tr>`).join("");
+  sfItemBody.innerHTML=slice.map(it=>{
+    const linked=[...getSet(it.lineId)].map(id=>suppliers.find(s=>s.id===id)?.name||id);
+    const selected=getSet(it.lineId).has(activeSupplier);
+    return `<tr><td><label class="srm-v31-relationCheck"><input type="checkbox" data-sfi="${esc(it.lineId)}" ${selected?"checked":""}><span class="srm-v31-relation ${selected?"linked":"unlinked"}">${selected?"已关联":"未关联"}</span></label></td><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>${esc(String(it.qty))} ${esc(it.unit||"")}</td><td>${esc(it.cat||"—")}</td><td><span class="srm-v31-allSuppliers">${linked.length?esc(linked.join("、")):"尚未分配"}</span></td></tr>`;
+  }).join("");
   bindDrawingThumbs();
   bindShiftRange("#sfItemBody input[data-sfi]","supplier-items","sfi",(id,checked)=>{const set=getSet(id);checked?set.add(activeSupplier):set.delete(activeSupplier)},renderAssignAll,(ids,checked)=>guardMutableLines(ids.filter(id=>getSet(id).has(activeSupplier)!==checked),"修改供应商物料关联"));
   const related=list.filter(it=>getSet(it.lineId).has(activeSupplier)).length;
@@ -3643,8 +4383,20 @@ function quoteMetaFor(it,sup,i=0,si=0){
   if((i+si)%9===0)return null;
   return{price:80+((i*13+si*17)%70)+((si+1)*0.35),lead:3+((i+si)%18),moq:1+((i+si)%5)*5,roundNo:0,revisionNo:0,source:"demo",tiers:[]};
 }
+/* 中文：系统自动建议仍可选择最低价集合中的首位供应商，但人工确认允许任何同价最低方。
+ * English: Deterministic defaults choose one tied supplier; buyer awards accept ANY equal-lowest offer.
+ * Monetary tolerance avoids float artifacts but does not treat a materially higher offer as equal. */
+const QUOTE_PRICE_TIE_EPSILON=1e-8;
+function isLowestApplicableOffer(it,sid,i=0,sups=comparisonSuppliers()){
+  const selectedIndex=sups.findIndex(s=>s.id===sid);
+  if(selectedIndex<0)return false;
+  const chosen=quoteMetaFor(it,sups[selectedIndex],i,selectedIndex)?.price;
+  if(!Number.isFinite(chosen))return false;
+  const prices=sups.map((s,si)=>quoteMetaFor(it,s,i,si)?.price).filter(Number.isFinite);
+  return prices.length>0&&chosen<=Math.min(...prices)+QUOTE_PRICE_TIE_EPSILON;
+}
 function lowestSupplierForItem(it,i=0){
-  return comparisonSuppliers().map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v)[0]?.sid||null;
+  return comparisonSuppliers().map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>Number.isFinite(x.v)).sort((a,b)=>a.v-b.v)[0]?.sid||null;
 }
 /** 中文：报价确认后保留人工选择及原因，自动选择只针对未手动指定的行重算。
  * English: Preserve manual awards and reasons; recalculate only automatic defaults. */
@@ -3665,7 +4417,7 @@ function reconcileAwardsAfterQuote(){
     if(!it){awardReviewIds.add(lineId);return}
     const i=its.indexOf(it),sid=awards.get(lineId),sup=sups.find(x=>x.id===sid),si=sups.indexOf(sup);
     const price=sup?quoteMetaFor(it,sup,i,si)?.price:null;
-    if(price==null||lowestSupplierForItem(it,i)!==sid)awardReviewIds.add(lineId);
+    if(price==null||!isLowestApplicableOffer(it,sid,i,sups))awardReviewIds.add(lineId);
     else awardReviewIds.delete(lineId);
   });
 }
@@ -3779,7 +4531,7 @@ function renderQuoteAnalysis(){
   }
   quoteAnalysis.innerHTML='<div class="sline"><div><b>报价金额分析（M0）</b>'+
     '<div class="small muted">三种口径分别统计：自身报价范围、指定供应商组共同范围、逐物料最低价组合。仅演示同币种同税口径。</div></div>'+
-    '<div><b>逐物料理论最低价组合：</b>¥'+theoretical.toFixed(2)+'（'+theoreticalCount+' 项）　<b>已选择金额：</b>¥'+finalTotal.toFixed(2)+'（'+finalCount+' 项；待复核 '+awardReviewIds.size+' 项不计入）</div></div>'+
+    '<div><b>逐物料理论最低价组合：</b>¥'+theoretical.toFixed(2)+'（'+theoreticalCount+' 项）　<b>当前建议/已选组合：</b>¥'+finalTotal.toFixed(2)+'（'+finalCount+' 项，含自动建议；待复核 '+awardReviewIds.size+' 项不计入）</div></div>'+
     '<div style="margin-top:10px"><b>A. 各供应商自身报价金额（不同范围，不可直接排名）</b></div>'+
     '<table class="analysisTable"><thead><tr><th>供应商</th><th>自身有效报价项数</th><th>自身报价范围金额（元）</th></tr></thead><tbody>'+ownRows+'</tbody></table>'+
     '<div style="margin-top:12px"><b>B. 采购员指定供应商组的同范围金额</b></div>'+sharedBody+
@@ -3804,6 +4556,34 @@ function quoteUnpricedStateLabel(it,sup){
   }
   return"未报价";
 }
+
+/* 中文：最低价推荐与人工选择分离，只投影现有确认报价/定标状态，不更改比价算法。
+ * English: Show actual comparison status separately from explicit buyer awards. */
+function renderV31DecisionBoard(sups,its){
+  const board=document.getElementById("srmV31DecisionBoard");
+  let quoted=0,pending=0,manual=0,ties=0,review=0,missing=0;
+  its.forEach((it,i)=>{
+    const prices=sups.map((s,si)=>quoteMetaFor(it,s,i,si)?.price).filter(v=>v!=null);
+    if(!prices.length){missing++;return}
+    quoted++;
+    const low=Math.min(...prices);
+    const tiedMinimum=prices.filter(v=>Math.abs(v-low)<=QUOTE_PRICE_TIE_EPSILON).length>1;
+    const awaitingBuyer=!manualAwards.has(it.lineId)||!awards.has(it.lineId)||awardReviewIds.has(it.lineId);
+    if(tiedMinimum&&awaitingBuyer)ties++;
+    if(awardReviewIds.has(it.lineId)){review++;pending++}
+    else if(manualAwards.has(it.lineId)&&awards.has(it.lineId))manual++;
+    else pending++;
+  });
+  board.innerHTML='<div class="srm-v31-decisionHeader"><div><small>DECISION OVERVIEW</small><strong>采购决策概览</strong></div>'+
+    '<span class="srm-v31-decisionContext">系统计算最低价 ≠ 采购员人工决定</span></div>'+
+    '<div class="srm-v31-decisionMetrics">'+
+      '<div><span>有效报价物料</span><strong>'+quoted+'</strong></div>'+
+      '<div class="pending"><span>待人工决定</span><strong>'+pending+'</strong></div>'+
+      '<div><span>人工已选</span><strong>'+manual+'</strong></div>'+
+      '<div class="'+(ties?'pending':'')+'"><span>并列最低待核对</span><strong>'+ties+'</strong></div>'+
+      '<div class="'+(review?'pending':'')+'"><span>新报价后待复核</span><strong>'+review+'</strong></div>'+
+    '</div><div class="srm-v31-decisionFooter">无有效报价 '+missing+' 项；并列最低待核对仅统计尚未完成明确选择或需重新复核的项目。默认最低价仅为建议。</div>';
+}
 function renderQuotes(){
   const sups=comparisonSuppliers(),its=comparisonItems(),QUOTE_PAGE=10,pages=Math.max(1,Math.ceil(its.length/QUOTE_PAGE));quotePage=Math.min(quotePage,pages-1);const start=quotePage*QUOTE_PAGE,slice=its.slice(start,start+QUOTE_PAGE);
   let h=`<thead><tr><th>存货</th><th>历史采购价（未接入）</th>`+sups.map(s=>{
@@ -3811,11 +4591,11 @@ function renderQuotes(){
     // English: Surface confirmed commercial terms beside quote comparisons.
     const terms=supplierSubmissions(s.id).filter(r=>r.status==="confirmed").sort((a,b)=>b.roundNo-a.roundNo||b.revisionNo-a.revisionNo)[0]?.termsNote||"";
     return `<th>${esc(s.name)}${terms?`<div class="small warn" title="${esc(terms)}">本轮商务备注：${esc(terms.slice(0,90))}${terms.length>90?"…":""}</div>`:""}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`;
-  }).join("")+`<th>最终选择</th></tr></thead><tbody>`;
-  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>${window.SRMPilot?.isBuyer()?"—":"¥"+prev}<span class="small muted">（${window.SRMPilot?.isBuyer()?"未接入":"虚构"}）</span></td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=s.id===low?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell ":""}${v!=null?"awardSelectable":""}" ${v!=null?`data-award="${esc(it.lineId+"|"+s.id)}" tabindex="0" role="button" aria-label="选择此供应商报价"`:""}>${v==null?'<span class="muted">'+esc(quoteUnpricedStateLabel(it,s))+'</span>':`<button class="btn quotePrice ${cls}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>${meta.rawLine?.remark?`<div class="small warn">物料备注：${esc(meta.rawLine.remark)}</div>`:""}`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("#quoteTable td[data-award]").forEach(cell=>{
+  }).join("")+`<th>系统建议 / 人工决定</th></tr></thead><tbody>`;
+  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>${window.SRMPilot?.isBuyer()?"—":"¥"+prev}<span class="small muted">（${window.SRMPilot?.isBuyer()?"未接入":"虚构"}）</span></td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=v!=null&&vals.length&&Math.abs(v-vals[0].v)<=QUOTE_PRICE_TIE_EPSILON?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell ":""}${v!=null?"awardSelectable":""}" ${v!=null?`data-award="${esc(it.lineId+"|"+s.id)}" tabindex="0" role="button" aria-label="选择此供应商报价"`:""}>${v==null?'<span class="muted">'+esc(quoteUnpricedStateLabel(it,s))+'</span>':`<button class="btn quotePrice ${cls}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>${meta.rawLine?.remark?`<div class="small warn">物料备注：${esc(meta.rawLine.remark)}</div>`:""}`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?(manualAwards.has(it.lineId)?'<span class="srm-v31-decision manual">采购员已选择</span>':'<span class="srm-v31-decision suggested">系统建议 · 待人工确认</span>')+'<br>'+esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("#quoteTable td[data-award]").forEach(cell=>{
     cell.onclick=()=>{const [lineId,sid]=cell.dataset.award.split("|");chooseAward(lineId,sid)};
     cell.onkeydown=e=>{if(e.target===cell&&(e.key==="Enter"||e.key===" ")){e.preventDefault();cell.click()}};
-  });document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter((it,i)=>lowestSupplierForItem(it,its.indexOf(it))!==sid);requestAwardSelection(eligible.map(it=>it.lineId),sid)});renderQuoteAnalysis();
+  });document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter(it=>!isLowestApplicableOffer(it,sid,its.indexOf(it),sups));requestAwardSelection(eligible.map(it=>it.lineId),sid)});renderQuoteAnalysis();renderV31DecisionBoard(sups,its);
 }
 /** 中文：统一单条与批量比价选择，非最低报价必经页面内原因确认，不依赖浏览器原生 prompt。
  * English: Route single and bulk award selections through an in-page reason dialog. */
@@ -3828,10 +4608,10 @@ function applyAwardSelection(lineIds,sid,reason=""){
   // 中文：若没有有效报价，禁止把供应商当作“已选择”。
   // English: Never award a supplier that lacks a valid applicable quote.
   if(eligible.some(it=>quoteMetaFor(it,sup,its.indexOf(it),sups.indexOf(sup))?.price==null))return false;
-  if(eligible.some(it=>lowestSupplierForItem(it,its.indexOf(it))!==sid)&&!reason.trim())return false;
+  if(eligible.some(it=>!isLowestApplicableOffer(it,sid,its.indexOf(it),sups))&&!reason.trim())return false;
   eligible.forEach(it=>{
     awards.set(it.lineId,sid);manualAwards.add(it.lineId);awardReviewIds.delete(it.lineId);
-    if(lowestSupplierForItem(it,its.indexOf(it))!==sid)awardReasons.set(it.lineId,reason.trim());
+    if(!isLowestApplicableOffer(it,sid,its.indexOf(it),sups))awardReasons.set(it.lineId,reason.trim());
     else awardReasons.delete(it.lineId);
   });
   renderQuotes();return true;
@@ -3843,7 +4623,7 @@ function closeAwardReasonModal(){
 }
 function requestAwardSelection(lineIds,sid){
   const its=comparisonItems(),nonLowest=lineIds.filter(id=>{
-    const it=its.find(x=>x.lineId===id);return it&&lowestSupplierForItem(it,its.indexOf(it))!==sid;
+    const it=its.find(x=>x.lineId===id);return it&&!isLowestApplicableOffer(it,sid,its.indexOf(it));
   });
   if(!nonLowest.length){applyAwardSelection(lineIds,sid);return}
   const supplier=suppliers.find(x=>x.id===sid);
@@ -4252,9 +5032,33 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     // English: Exclude revision number so commit increments cannot cause infinite saves.
     return JSON.stringify(readState().state);
   }
+  // 中文：使用真实业务快照做即时安全核对，避免点击到下次轮询之间漏检未保存修改。
+  // English: Recheck the actual persisted-state signature at critical user actions.
+  function hasUnsavedBusinessChanges(){
+    if(!buyerMode)return false;
+    if(dirty||revision===0||autosaveHalted)return true;
+    try{return signature()!==savedSignature}catch(_){return true}
+  }
   function autosaveLabel(message,isError=false){
     autosaveStatus.textContent="自动保存："+message;
     autosaveStatus.className=isError?"small dangertext":"small muted";
+    // 中文：待保存修改一旦同步成功，清除备份操作区的过期阻止提示。
+    // English: Clear stale backup-block feedback after pending changes are safely saved.
+    if(!isError && message.includes("无待保存修改")) s4DownloadNotice("");
+  }
+  /* 中文：备份阻止原因必须显示在备份按钮附近，不能只写入可能已折叠/滚出视口的状态栏。
+   * English: Keep backup-block reasons beside the backup action, independent of collapsed or off-screen status panels. */
+  function s4DownloadNotice(message,isError=true,bringIntoView=true){
+    const notice=document.getElementById("pilotS4DownloadFeedback");
+    if(!notice)return;
+    notice.textContent=message;
+    notice.hidden=!message;
+    notice.style.background=isError?"#fff1f0":"#edf7f0";
+    notice.style.color=isError?"#a32922":"#116143";
+    notice.style.borderColor=isError?"#efc0bb":"#bce2c9";
+    // 中文：操作区滚动到备份按钮时，阻止原因必须进入当前视口，不能仅存在于 DOM 中。
+    // English: Bring actionable backup-block feedback into view even if the drawer is scrolled.
+    if(message&&isError&&bringIntoView)notice.scrollIntoView({block:"nearest",behavior:"auto"});
   }
   async function refreshAutoBackupStatus(){
     if(!localReady||!s4Available)return;
@@ -4329,6 +5133,12 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     exportAllBtn.disabled=!localReady||busy||dirty||blocked;
     exportCompleteBtn.disabled=!localReady||busy||dirty||blocked;
     s4DownloadBtn.disabled=!s4Available||busy||dirty||blocked;
+    // 中文：真正有未保存修改时，禁用备份按钮也须在其旁边被动展示原因，不自动跳转页面。
+    // English: A disabled S4 button still needs an adjacent reason, without unexpected scrolling.
+    if(buyerMode&&dirty&&localReady&&!busy&&!blocked&&
+       !document.getElementById("pilotS4DownloadFeedback")?.textContent){
+      s4DownloadNotice("检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。",true,false);
+    }
     s4RestoreBtn.disabled=!s4Available||busy||blocked||!s4FileInput.files?.length;
     document.getElementById("pilotExportExcel").disabled=!buyerMode||busy||!localReady||dirty;
     document.getElementById("pilotReportOpen").disabled=!buyerMode||busy||!localReady||dirty;
@@ -4420,8 +5230,8 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   }
   function beginBuyer(){
     if(!localReady||busy||blocked)return;
-    if(buyerMode&&dirty&&!confirm("当前询价尚有未保存修改，新建将放弃这些修改。继续？"))return;
-    if(buyerMode&&!dirty&&!confirm("新建一笔空白询价？原来已保存的数据仍保存在 SQLite。"))return;
+    if(buyerMode&&hasUnsavedBusinessChanges()&&!confirm("当前询价尚有未保存修改，新建将放弃这些修改。继续？"))return;
+    if(buyerMode&&!hasUnsavedBusinessChanges()&&!confirm("新建一笔空白询价？原来已保存的数据仍保存在 SQLite。"))return;
     const fresh=model.createEmptyWorkspace("RFQ-"+Date.now()+"-"+Math.random().toString(36).slice(2,8).toUpperCase());
     applyWorkspace(fresh);dirty=true;lastChangeAt=Date.now();buttons();
     autosaveLabel("新询价尚未保存，将在操作空闲后自动创建；图纸上传前仍需完成首次保存");
@@ -4488,7 +5298,12 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       }
       autosaveLabel(dirty?"保存第 "+revision+" 版成功，仍有新修改等待保存":
         "已"+(automatic?"自动":"手动")+"保存第 "+revision+" 版（"+new Date().toLocaleTimeString()+"）");
-      if(!dirty)status("SQLite "+(automatic?"自动":"手动")+"保存成功："+workspaceId+"（第 "+revision+" 版）。");
+      // 中文：仅在 SQLite 已确认保存且没有新输入时，移除旧的备份阻止提示；不能依赖 UI 文案。
+      // English: Clear the S4 pending-edit warning only after a confirmed clean save; never depend on status wording.
+      if(!dirty){
+        s4DownloadNotice("");
+        status("SQLite "+(automatic?"自动":"手动")+"保存成功："+workspaceId+"（第 "+revision+" 版）。");
+      }
       // 中文：只报告真实 SQLite PUT 成功的版本；仍有输入时标记待保存。
       // English: Acknowledge only a real successful SQLite commit, marking pending edits.
       window.dispatchEvent(new CustomEvent("srm:workspace-saved",{detail:{workspaceId,revision,dirty}}));
@@ -4612,7 +5427,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   // English: Supplier reports read committed buyer snapshots only.
   async function committedWorkspaceForReport(){
     if(!buyerMode||!localReady||busy)throw Error("请先进入可用的正式工作区");
-    if(dirty)throw Error("有未保存的修改，请先点击“保存到本机”，成功后再导出单据");
+    if(hasUnsavedBusinessChanges())throw Error("有未保存的修改，请先点击“保存到本机”，成功后再导出单据");
     const saved=await readSaved();
     if(!saved||saved.workspaceId!==workspaceId||saved.revision!==revision)
       throw Error("本机保存版本与当前页面不同，请先恢复最新版本");
@@ -4620,17 +5435,44 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     if(saved.origin!=="buyer")throw Error("禁止导出演示工作数据");
     return saved;
   }
+  // 中文：任何界面点击/输入都不能凭事件类型直接标记 dirty。只比较持久化业务快照。
+  // English: View, report-picker and navigation events must never create phantom unsaved edits.
+  function checkBusinessStateAfterEvent(){
+    // 中文：捕获阶段早于实际按钮业务处理；在事件派发结束后再读取快照。
+    // English: Run after the event dispatch so synchronous business handlers have finished.
+    queueMicrotask(()=>{
+      if(!buyerMode||busy)return;
+      try{
+        const observed=signature();
+        if(revision===0||observed!==savedSignature){
+          if(observed!==lastObservedSignature){
+            lastObservedSignature=observed;
+            lastChangeAt=Date.now();
+          }
+          dirty=true;
+          buttons();
+        }
+      }catch(e){
+        // 中文：正在输入无效或不完整值时保守禁止导出，直到数据完成校验。
+        // English: An invalid intermediate state must not bypass the unsaved-data safety guard.
+        dirty=true;
+        buttons();
+      }
+    });
+  }
   document.addEventListener("click",e=>{
     if(!buyerMode||busy||!e.isTrusted)return;
-    // 中文：程序触发的下载链接等非用户点击不代表业务发生修改；操作按钮中的真实修改仍提示保存。
-    // English: Programmatic download clicks must not mark a saved workspace dirty.
-    // English: Dirty indicator errs on the safe side; UI events do not automatically persist.
-    if(e.target.closest("#pilotControls,#pilotDrawingPanel,#drawingModal,#pilotReportPanel,#rfqPreviewModal,.tabs,[data-drawing]"))return;
-    dirty=true;status("工作内容可能有未保存修改；系统只对实际业务变化自动保存。");
+    checkBusinessStateAfterEvent();
   },true);
   document.addEventListener("input",e=>{
-    if(!buyerMode||busy||e.target.closest("#pilotControls"))return;
-    dirty=true;status("输入中，业务数据将在停止修改后自动保存。");
+    if(!buyerMode||busy||!e.isTrusted)return;
+    checkBusinessStateAfterEvent();
+  },true);
+  // 中文：复选框的业务变更通常在 change 事件完成；必须同步真实分配状态。
+  // English: Checkbox allocations may finalize on change rather than click/input.
+  document.addEventListener("change",e=>{
+    if(!buyerMode||busy||!e.isTrusted)return;
+    checkBusinessStateAfterEvent();
   },true);
 
 
@@ -4677,7 +5519,17 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   /* 中文：S4 ZIP 同时包含 SQLite 历史快照和全部已登记的 PDF 原件。
    * English: Download a versioned SQLite backup plus every indexed original PDF. */
   async function downloadS4Full(){
-    if(!s4Available||busy||dirty||blocked)return;
+    if(!s4Available){const message="S4 完整备份暂不可用，请检查本机服务状态。";status(message,true);s4DownloadNotice(message);return;}
+    if(busy){const message="系统正在处理其他操作，请稍后再下载完整备份。";status(message,true);s4DownloadNotice(message);return;}
+    if(blocked){const message="当前工作区存在数据冲突或安全阻止，已暂停备份。请先处理冲突提示。";status(message,true);s4DownloadNotice(message);return;}
+    if(dirty){
+      const message="检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。";
+      status(message,true);s4DownloadNotice(message,true);
+      autosaveLabel("存在未保存修改，完整备份已暂停",true);
+      buttons();
+      return;
+    }
+    s4DownloadNotice("");
     busy=true;buttons();status("正在生成并校验 S4 完整备份……");
     try{
       const created=await api("/api/backups/full",jsonRequest("POST",{}));
@@ -4688,7 +5540,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       downloadFile(data,created.backup.fileName);
       status("已下载 S4 完整备份："+created.backup.workspaceCount+" 笔询价，"+
         created.backup.pdfCount+" 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。");
-    }catch(e){status("S4 完整备份失败："+e.message,true)}
+    }catch(e){const message="S4 完整备份失败："+e.message;status(message,true);s4DownloadNotice(message,true)}
     finally{busy=false;buttons()}
   }
   /* 中文：先人工确认再提交；服务端保证只向空白数据目录恢复。
@@ -5187,8 +6039,9 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
 
   const item = one("items");
   const itemLead = document.createElement("div");
-  itemLead.className = "ui-panelLead";
-  itemLead.innerHTML = '<div><b>物料与图纸</b><div class="muted">管理拟询价清单、批量导入及 PDF 关联</div></div>'+
+  itemLead.className = "ui-panelLead srm-v3-pageIntro";
+  itemLead.id="srmV3PageStage-items";
+  itemLead.innerHTML = '<div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">02 / ITEMS & DRAWINGS</div><h2>物料与图纸 <span>/ 清单与技术资料</span></h2><p>优先核对物料清单；图纸匹配与批量导入从对应工具入口进行。</p></div>'+
     '<div class="toolbar"><button class="btn soft" id="uiOpenDrawings" type="button">图纸匹配与管理</button></div>';
   item.prepend(itemLead);
   // 中文：按钮移入日常物料工具栏，避免重复标题/工具占满首屏。
@@ -5221,9 +6074,10 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
 
   const assign = one("assign");
   const assignLead = document.createElement("div");
-  assignLead.className = "ui-panelLead";
-  assignLead.innerHTML = '<div><b>供应商与分配</b><div class="muted">支持按物料或按供应商双向分配；新增关系不会覆盖已有关系</div></div>'+
-    '<div class="toolbar"><button class="btn" id="uiJumpSupplierList" type="button">查看供应商分配操作 ↓</button><button class="btn soft" id="uiOpenSupplierTools" type="button">添加 / 导入供应商</button></div>';
+  assignLead.className = "ui-panelLead srm-v3-pageIntro";
+  assignLead.id="srmV3PageStage-assign";
+  assignLead.innerHTML = '<div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">03 / SUPPLIER ALLOCATION</div><h2>供应商分配 <span>/ 询价范围管理</span></h2><p>先明确目标供应商，再关联物料；追加分配不会覆盖其他供应商的询价范围。</p></div>'+
+    '<div class="toolbar"><button class="btn" id="uiJumpSupplierList" type="button">查看分配操作 ↓</button><button class="btn soft" id="uiOpenSupplierTools" type="button">添加 / 导入供应商</button></div>';
   assign.prepend(assignLead);
   one("uiOpenSupplierTools").addEventListener("click",()=>reveal("uiSupplierTools"));
   one("uiJumpSupplierList").addEventListener("click",()=>one("supplierSearch").scrollIntoView({block:"center",behavior:"smooth"}));
@@ -5291,6 +6145,25 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   }
   if(statusSource)new MutationObserver(syncRealSaveStatus).observe(statusSource,{childList:true,characterData:true,subtree:true});
   syncRealSaveStatus();
+  // 中文：已确认版本同时显示不可操作样式与锁定说明，不修改原按钮的业务事件处理器。
+  // English: Add a visible locked affordance without touching quotation confirmation logic.
+  const quoteConfirm=document.getElementById("confirmQuoteRound");
+  if(quoteConfirm){
+    const hint=document.createElement("span");
+    hint.className="srm-v3-lockHint";
+    hint.id="srmV3QuoteLockHint";
+    hint.textContent="已确认并锁定 · 修改请新建版本";
+    hint.hidden=true;
+    quoteConfirm.insertAdjacentElement("afterend",hint);
+    function syncLock(){
+      const locked=quoteConfirm.disabled;
+      hint.hidden=!locked;
+      quoteConfirm.title=locked?"报价版本已确认并锁定，修改请新建修订版本。":"检查本轮报价后确认提交";
+      quoteConfirm.setAttribute("aria-description",quoteConfirm.title);
+    }
+    new MutationObserver(syncLock).observe(quoteConfirm,{attributes:true,attributeFilter:["disabled"]});
+    syncLock();
+  }
   sync();
 })();
 </script>

@@ -131,3 +131,101 @@ test('B3 quote and comparison with real SQLite '+viewport.width+'x'+viewport.hei
  expect(errors).toEqual([]);
 });
 }
+
+
+// 中文：PR #27 真实业务缺陷复验：并列最低不应视为非最低，已解决的并列不再提示待核对。
+// English: Real SQLite buyer flow: tied-lowest awards require no exception reason; resolved ties close.
+test('B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态',async({page,app})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.setViewportSize({width:1366,height:768});
+ await open(page,'#uiProjectDetails');
+ await page.locator('#pilotNewWorkspace').click();
+ await page.locator('#toggleItemIntake').click();
+ await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'items12.xlsx'));
+ await expect(page.locator('#confirmImportRows')).toBeEnabled();
+ await page.locator('#confirmImportRows').click();
+ await expect(page.locator('#itemCount')).toContainText('12');
+ await open(page,'#uiSupplierTools');
+ await page.locator('#pilotSupplierExcel').setInputFiles(path.join(app.fixtures,'suppliers.xlsx'));
+ await expect(page.locator('#pilotImportSupplierConfirm')).toBeEnabled();
+ await page.locator('#pilotImportSupplierConfirm').click();
+ await expect.poll(async()=>(await snap(page)).state.suppliers.length).toBe(2);
+ await close(page,'#uiSupplierTools');
+ await page.locator('.srm-v2-sideitem[data-srm-v2-tab="assign"]').click();
+ await page.locator('#assign .modebtn[data-mode="itemFirst"]').click();
+ await page.locator('#selectAssignAll').click();
+ await page.locator('[data-add="SUP-A"]').click();
+ await page.locator('[data-add="SUP-B"]').click();
+ await expect.poll(async()=>(await snap(page)).state.assignments.filter(x=>x.values.length===2).length).toBe(12);
+ const items=(await snap(page)).state.items;
+ const tieItem=items.find(it=>it.id==='TST-001'),dearerItem=items.find(it=>it.id==='TST-002');
+ expect(tieItem).toBeTruthy();expect(dearerItem).toBeTruthy();
+ await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quoteImport"]').click();
+ for(const [supplier,rows] of [
+   ['SUP-A','TST-001,20,7,1,正常报价\nTST-002,8,7,1,正常报价'],
+   ['SUP-B','TST-001,20,7,1,正常报价\nTST-002,12,7,1,正常报价']
+ ]){
+   await page.locator('#quoteImportSupplier').selectOption(supplier);
+   await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\n'+rows);
+   await page.locator('#quoteParsePaste').click();
+   await expect(page.locator('#commitQuoteImport')).toBeEnabled();
+   await page.locator('#commitQuoteImport').click();
+   await expect(page.locator('#qcQuoted')).toHaveText('2');
+   await page.locator('#confirmQuoteRound').click();
+   await expect(page.locator('#confirmQuoteRound')).toBeDisabled();
+ }
+ await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
+ await expect(page.locator('#quotes')).toHaveClass(/active/);
+ const metrics=page.locator('#srmV31DecisionBoard .srm-v31-decisionMetrics>div');
+ await expect(metrics.nth(1).locator('strong')).toHaveText('2'); // pending buyer choice
+ await expect(metrics.nth(2).locator('strong')).toHaveText('0'); // manual decisions
+ await expect(metrics.nth(3).locator('strong')).toHaveText('1'); // unresolved tied minimum
+ const tieB=page.locator('#quoteTable td[data-award="'+tieItem.lineId+'|SUP-B"]');
+ await expect(tieB).toBeVisible();
+ await tieB.click();
+ // Both confirmed suppliers offered ¥20 on this line; supplier B is still a valid minimum.
+ await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');
+ await expect(metrics.nth(2).locator('strong')).toHaveText('1');
+ await expect(metrics.nth(3).locator('strong')).toHaveText('0');
+ // 中文：M1-Lite 快照的 Map 记录为 {key,value}，Set 记录为值数组；严禁以二元组检查 Map。
+ // English: Snapshot Map entries are {key,value} objects; Set entries remain scalar arrays.
+ let current=await snap(page);
+ expect(current.state.manualAwards).toContain(tieItem.lineId);
+ expect(current.state.awards).toContainEqual({key:tieItem.lineId,value:'SUP-B'});
+ expect(current.state.awardReasons.some(x=>x.key===tieItem.lineId)).toBe(false);
+ // A truly higher quote (12 vs 8) still needs an explicit reason, including in bulk logic.
+ const higherB=page.locator('#quoteTable td[data-award="'+dearerItem.lineId+'|SUP-B"]');
+ await higherB.click();
+ await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','false');
+ await expect(page.locator('#awardReasonContext')).toContainText('并非最低报价');
+ await page.locator('#awardReasonCancel').click();
+ await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');
+ expect((await snap(page)).state.manualAwards).toHaveLength(1);
+ await higherB.click();
+ await page.locator('#awardReasonInput').fill('虚构测试：交期和保障条款更适合');
+ await page.locator('#awardReasonConfirm').click();
+ await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');
+ await expect(metrics.nth(1).locator('strong')).toHaveText('0');
+ await expect(metrics.nth(2).locator('strong')).toHaveText('2');
+ await expect(metrics.nth(3).locator('strong')).toHaveText('0');
+ current=await snap(page);
+ expect(current.state.awardReasons.some(x=>x.key===tieItem.lineId)).toBe(false);
+ expect(current.state.awardReasons.some(x=>x.key===dearerItem.lineId&&x.value.includes('交期'))).toBe(true);
+ // Real persisted state and F5 must preserve selected equal-minimum semantics.
+ await expect.poll(async()=>{
+   const ws=await snap(page);
+   const response=await page.request.get(URL+'/api/workspaces/'+ws.workspaceId);
+   if(!response.ok())return false;
+   const saved=(await response.json()).workspace;
+   return saved.revision>0&&JSON.stringify(saved.state)===JSON.stringify(ws.state);
+ },{timeout:30000}).toBe(true);
+ await page.reload();
+ await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
+ await expect(metrics.nth(1).locator('strong')).toHaveText('0');
+ await expect(metrics.nth(2).locator('strong')).toHaveText('2');
+ await expect(metrics.nth(3).locator('strong')).toHaveText('0');
+ const reloaded=await snap(page);
+ expect(reloaded.state.manualAwards).toContain(tieItem.lineId);
+ expect(reloaded.state.awardReasons.some(x=>x.key===tieItem.lineId)).toBe(false);
+ expect(errors).toEqual([]);
+});

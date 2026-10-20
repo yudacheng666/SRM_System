@@ -6,9 +6,13 @@ on:
     branches:
       - draft/20261013-m1-storage-ui-audit
       - test/20261014-issue3-playwright
+      - fix/20261020-s4-backup-dirty-guard
+      - fix/20261020-s4-visible-block-feedback
   pull_request:
     branches:
       - draft/20261013-m1-storage-ui-audit
+      - feat/20261019-srm-ui-v3-integration
+      - fix/20261020-s4-backup-dirty-guard
   workflow_dispatch:
 
 permissions:
@@ -63,6 +67,9 @@ jobs:
       - name: Retain synthetic browser evidence
         if: always()
         uses: actions/upload-artifact@v4
+        # 中文：附件存储额度耗尽时，证据上传失败不应覆盖业务回归结果。
+        # English: Artifact storage failure must not override required regression results.
+        continue-on-error: true
         with:
           name: srm-playwright-evidence
           path: |
