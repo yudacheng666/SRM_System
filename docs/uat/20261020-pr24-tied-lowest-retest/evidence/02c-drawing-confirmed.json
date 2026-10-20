@@ -1,0 +1,214 @@
+{
+  "workspaces": {
+    "RFQ-1792459298134-26MAFU": {
+      "revision": 4,
+      "sha256": "2c45588223fcb33330ba85a6828a3c8cd9875bbcc8e80e20300e92760d9b10e9",
+      "snapshot": {
+        "format": "srm-workspace",
+        "schemaVersion": 1,
+        "workspaceId": "RFQ-1792459298134-26MAFU",
+        "origin": "buyer",
+        "revision": 4,
+        "state": {
+          "items": [
+            {
+              "id": "UAT24-SHAFT",
+              "lineId": "RFQ-L00001",
+              "name": "虚构采购轴：同编码规格区分",
+              "cat": "机加工",
+              "spec": "M16 / 220 mm",
+              "ref1": "",
+              "ref2": "",
+              "purchaseUnit": "",
+              "erpExtra": {
+                "虚构ERP备注": "ANON-ERP-01"
+              },
+              "qty": 10,
+              "unit": "件",
+              "drawingNo": "U24-D16",
+              "_rowNo": 2,
+              "sources": [
+                {
+                  "source": "materials.xlsx · 工作表：Sheet · 真实 XLSX · 第2行",
+                  "qty": 10
+                }
+              ],
+              "_errors": [],
+              "custom": {},
+              "_createdOrder": 1,
+              "drawings": [
+                {
+                  "id": "a243754cd142b4d5",
+                  "sha256": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+                  "name": "U24-D16_A.pdf",
+                  "revision": "A",
+                  "size": 592,
+                  "createdAt": "2026-10-20T01:22:56.196Z"
+                }
+              ]
+            },
+            {
+              "id": "UAT24-SHAFT",
+              "lineId": "RFQ-L00002",
+              "name": "虚构采购轴：同编码规格区分",
+              "cat": "机加工",
+              "spec": "M20 / 350 mm",
+              "ref1": "",
+              "ref2": "",
+              "purchaseUnit": "",
+              "erpExtra": {
+                "虚构ERP备注": "ANON-ERP-02"
+              },
+              "qty": 25,
+              "unit": "件",
+              "drawingNo": "U24-D20",
+              "_rowNo": 3,
+              "sources": [
+                {
+                  "source": "materials.xlsx · 工作表：Sheet · 真实 XLSX · 第3行",
+                  "qty": 25
+                }
+              ],
+              "_errors": [],
+              "custom": {},
+              "_createdOrder": 2
+            },
+            {
+              "id": "UAT24-BASE",
+              "lineId": "RFQ-L00003",
+              "name": "虚构不供货底座",
+              "cat": "钣金",
+              "spec": "L型 90×120",
+              "ref1": "",
+              "ref2": "",
+              "purchaseUnit": "",
+              "erpExtra": {
+                "虚构ERP备注": "ANON-ERP-03"
+              },
+              "qty": 4,
+              "unit": "件",
+              "drawingNo": "U24-BASE",
+              "_rowNo": 4,
+              "sources": [
+                {
+                  "source": "materials.xlsx · 工作表：Sheet · 真实 XLSX · 第4行",
+                  "qty": 4
+                }
+              ],
+              "_errors": [],
+              "custom": {},
+              "_createdOrder": 3
+            },
+            {
+              "id": "UAT28-HIGH",
+              "lineId": "RFQ-L00004",
+              "name": "虚构高价理由采购件",
+              "cat": "机加工",
+              "spec": "M8 / 60mm",
+              "ref1": "",
+              "ref2": "",
+              "purchaseUnit": "",
+              "erpExtra": {
+                "虚构ERP备注": "ANON-ERP-04"
+              },
+              "qty": 6,
+              "unit": "件",
+              "drawingNo": "U28-HIGH",
+              "_rowNo": 5,
+              "sources": [
+                {
+                  "source": "materials.xlsx · 工作表：Sheet · 真实 XLSX · 第5行",
+                  "qty": 6
+                }
+              ],
+              "_errors": [],
+              "custom": {},
+              "_createdOrder": 4
+            }
+          ],
+          "suppliers": [
+            {
+              "id": "U24-A",
+              "counterpartyCode": "U24-CP-A",
+              "supplierCode": "U24-A",
+              "name": "虚构甲方精密制造有限公司",
+              "roles": [
+                "supplier"
+              ],
+              "reason": "本次 Excel 导入"
+            },
+            {
+              "id": "U24-B",
+              "counterpartyCode": "U24-CP-B",
+              "supplierCode": "U24-B",
+              "name": "虚构乙方，快速交付测试供应商",
+              "roles": [
+                "supplier"
+              ],
+              "reason": "本次 Excel 导入"
+            },
+            {
+              "id": "U24-CP-C",
+              "counterpartyCode": "U24-C",
+              "supplierCode": "U24-CP-C",
+              "name": "虚构丙方同价复核供应商",
+              "roles": [
+                "supplier"
+              ],
+              "reason": "本次 Excel 导入"
+            }
+          ],
+          "assignments": [
+            {
+              "key": "RFQ-L00001",
+              "values": [
+                "U24-A",
+                "U24-B"
+              ]
+            },
+            {
+              "key": "RFQ-L00002",
+              "values": [
+                "U24-A",
+                "U24-B",
+                "U24-CP-C"
+              ]
+            },
+            {
+              "key": "RFQ-L00003",
+              "values": [
+                "U24-A",
+                "U24-B"
+              ]
+            },
+            {
+              "key": "RFQ-L00004",
+              "values": [
+                "U24-A",
+                "U24-B"
+              ]
+            }
+          ],
+          "quoteRounds": [],
+          "awards": [],
+          "awardReasons": [],
+          "manualAwards": [],
+          "awardReviewIds": [],
+          "supplierPool": [
+            "U24-A",
+            "U24-B",
+            "U24-CP-C"
+          ],
+          "selectedCompareSuppliers": [],
+          "customFields": [],
+          "lineSeq": 4,
+          "createdSeq": 4,
+          "quoteComparisonMode": "returned"
+        }
+      }
+    }
+  },
+  "pdf": {
+    "assets/a2/a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41.pdf": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41"
+  }
+}
