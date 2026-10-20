@@ -266,6 +266,10 @@ test('06 full backup restore: actual imported quotes, history, PDFs, overwrite r
     for(let r=1;r<=w.revision;r++) originals[row.workspaceId].push((await (await fetch(baseURL+'/api/workspaces/'+row.workspaceId+'?revision='+r)).json()).workspace);
   }
   await openTools(page,'#uiDataTools');
+  // 中文：顶部管理入口只负责导航，不应将已保存工作区误标为 dirty 并吞掉备份点击。
+  // English: Admin navigation must not dirty a saved workspace or silently swallow the S4 download.
+  await page.locator('[data-srm-v2-action="admin"]').click();
+  await openTools(page,'#uiDataTools');
   const file=await download(page,'#pilotS4DownloadFull',info,'full-backup.zip'); const z=inspectZip(file); expect(z['database/srm.sqlite3']).toBeTruthy();
   await app.start(8766,path.join(app.root,'restored')); const other=await browser.newPage(); other.on('dialog',d=>d.accept());
   try {
@@ -571,4 +575,36 @@ test('15 new RFQ clears stale supplier-first context without corrupting saved RF
   const shot=info.outputPath('supplier-context-cross-rfq.png');
   await page.screenshot({path:shot,fullPage:true});
   await info.attach('supplier-context-cross-rfq',{path:shot,contentType:'image/png'});
+});
+
+
+test('44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见', async ({page,app})=>{
+  await page.setViewportSize({width:1366,height:768});
+  await fresh(page); await items(page,app);
+  // 中文：按 Codex P3-S4-01 原场景：项目操作区收起，页面滚动至备份按钮。
+  // English: Reproduce the real P3 state: collapsed project operations, S4 action in the current viewport.
+  await openTools(page,'#uiDataTools');
+  const projectDrawer=page.locator('#uiProjectDetails');
+  if(await projectDrawer.evaluate(node=>node.open)) await projectDrawer.locator('summary').click();
+  await expect(projectDrawer).not.toHaveAttribute('open','');
+  const button=page.locator('#pilotS4DownloadFull');
+  await button.scrollIntoViewIfNeeded();
+  await button.click();
+  const feedback=page.locator('#pilotS4DownloadFeedback');
+  await expect(feedback).toBeVisible();
+  await expect(feedback).toContainText('尚未保存');
+  await expect(feedback).toContainText('再重新下载');
+  await expect(button).toBeDisabled();
+  // 中文：文本存在还不够，提示必须真正处在用户当前的可视区域内。
+  // English: DOM visibility alone is insufficient; the notice must lie within the browser viewport.
+  const visible=await feedback.evaluate(el=>{
+    const rect=el.getBoundingClientRect();
+    return rect.height>0&&rect.top>=0&&rect.bottom<=window.innerHeight;
+  });
+  expect(visible,'backup block notice must be visible within the viewport').toBe(true);
+  // 中文：完成真实 SQLite 自动保存才可清除旧阻止提示；文案允许包含版本和时间。
+  // English: Wait for a confirmed autosave, not a fragile literal message without the revision.
+  await expect(page.locator('#pilotAutosaveStatus')).toContainText('已自动保存第',{timeout:12000});
+  await expect(feedback).toBeHidden();
+  await expect(button).toBeEnabled();
 });
