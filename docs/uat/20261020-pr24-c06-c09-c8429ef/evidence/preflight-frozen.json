@@ -1,0 +1,54 @@
+{
+  "frozenBeforeTest": true,
+  "files": {
+    "preflight.py": "2160c2d666fafd259cdb9e7328d6bce5e6ca2c6860832c233bc13233481c623f",
+    "setup-fixture.py": "344f632e6cbd9f4a1bc95e65e774bc4cc83e835493bdefb299e30e0328228e4b",
+    "validate-C08.py": "6585c669beacb898b3939d3f9a7042d1b5fe4217107c2d14491768bd2102ed3c",
+    "validate-C06.py": "64f74639ba75e5afb076f321137d2f7c82416a36ff8c4d4b6afe23cb224fd34a",
+    "db_history.py": "8d46cbe0a66d17ef029f92a0232316edd7b5c42851484af4e22e549efecc1201",
+    "fingerprint.py": "3d6d02f138948dbe80203bffbabc88453b9c1e4148498fea10dc9be0f2ab6c8b",
+    "steps/02-C06-supplier-content.js": "f36ee263c4f6911ca492136d3c9504afa6ebaa80a165a65d967fb59137e29acd",
+    "steps/01-C06-excel-first.js": "74b671067a73ba3fcf5fba1f5794000745900524f18d3c56d1559d659b2e6721",
+    "steps/00-browser-preflight.js": "dacd0eeb53e34f0b3721acd5d52aa1479a500b26655742f5fcd9db3c11c6e17f",
+    "steps/09-C09-ui-compatibility.js": "501c7531ded99608023477eb56151eeb810e883f39d7d9e4905edb92eea00927",
+    "steps/08-C08-backup-restore.js": "48b2845f19fe166f040c0c82023e5721f68d55dd8cfd10686c61c68367da273a",
+    "steps/07-C07-after-restart.js": "f13d2dc9c75f372ee43bc1c55bba38a1d8cfb4704ade3f96514d0527feda04ec",
+    "steps/06-C07-persistence-before-restart.js": "67bb95d2505a14f69007e0174a00483f7d9ee289bf73dfb6e91d4b0d5826e69b",
+    "console.cjs": "0408a10fd28922b01fe7243c9b9b9b6c4647207923e302540bfdef790c5ea116"
+  },
+  "syntax": [
+    {
+      "syntax": "preflight.py",
+      "result": "PASS"
+    },
+    {
+      "syntax": "setup-fixture.py",
+      "result": "PASS"
+    },
+    {
+      "syntax": "validate-C08.py",
+      "result": "PASS"
+    },
+    {
+      "syntax": "validate-C06.py",
+      "result": "PASS"
+    },
+    {
+      "syntax": "db_history.py",
+      "result": "PASS"
+    },
+    {
+      "syntax": "fingerprint.py",
+      "result": "PASS"
+    }
+  ],
+  "routes": [
+    "Report picker: ensure uiDataTools open; inspect reportPanel.isVisible; click pilotReportOpen once only if closed; assert visible/enabled/options before selection",
+    "History switch: inspect project Details.open, use idempotent checkbox/check and selectOption; wait for actual runtime workspaceId",
+    "S4 restore: register POST response before click; verify response200/verified/restored; wait for reloaded real workspace; never await transient feedback destroyed by location.reload",
+    "Nonempty restore: visible denial and readonly current+history+asset equality",
+    "UI: five existing sidebar tabs; quote round options1|1,1|2,2|1 derived from fixture; select confirmed2|1 before lock checks"
+  ],
+  "fixtureSetup": "Official guarded local API only, not C03-C05 acceptance. New workspaceId revision1 then registered PDFs then revision2. All acceptance uses Chromium UI.",
+  "stopRule": "First unexpected browser/action/file assertion error -> raw evidence+trace+state then close; no repair/retry/expansion. Prior reports unchanged."
+}

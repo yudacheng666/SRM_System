@@ -1,0 +1,120 @@
+{
+  "productSHA": "c8429ef51731da570c7a556d7cdce89e7123e739",
+  "taskComment": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6288365279",
+  "overall": "NOT-READY: C06-C07 PASS; C08 body-observation failure interrupts scope; C09/nonempty restore NOT TESTED",
+  "wholeProductAccepted": false,
+  "ChatGPTReviewRequired": true,
+  "mergeApproved": false,
+  "rawBrowserAssertions": {
+    "total": 25,
+    "pass": 25,
+    "false": 0
+  },
+  "separateDriverErrors": 1,
+  "firstFailureUTC": "2026-10-20T10:46:11.095Z",
+  "classification": "TEST PRECONDITION / independent observer reads response.json across immediate product reload; CDP body resource unavailable",
+  "repairOrRetryAfterFailure": false,
+  "expansionAfterFailure": false,
+  "frozenScriptsUnchanged": true,
+  "C06WorkbookChecks": {
+    "total": 17,
+    "pass": 17
+  },
+  "C06SupplierCSVChecks": {
+    "total": 45,
+    "pass": 45
+  },
+  "C08ArchiveChecks": {
+    "total": 10,
+    "pass": 10
+  },
+  "fullS4Downloads": 1,
+  "emptyRestorePOSTs": 1,
+  "emptyRestoreHTTP": 200,
+  "restoreResponseBodyVerifiedByOriginalDriver": false,
+  "restoreResponseBodyRecoveredInTrace": false,
+  "postStopReadonlyRestoreMatches": true,
+  "nonemptyRestoreAttempts": 0,
+  "C09ViewportsExecuted": 0,
+  "screenshots": 7,
+  "traceCount": 1,
+  "downloads": 7,
+  "newConfirmedProductDefects": {
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "C03C05": "SETUP ONLY; not reaccepted",
+  "priorEvidenceUnchanged": [
+    40,
+    41
+  ],
+  "scopes": [
+    {
+      "scope": "GATE",
+      "status": "PASS",
+      "detail": "唯一HEAD/真实HTTP字节/两套CI所有Windows/Linux作业 / Exact version and CI gates",
+      "evidence": "evidence/runtime-identity.json"
+    },
+    {
+      "scope": "SETUP",
+      "status": "SETUP ONLY",
+      "detail": "正式API装入最小虚构状态，未重复C03–C05完整验收 / Official API fixture only",
+      "evidence": "evidence/setup-provenance.json"
+    },
+    {
+      "scope": "C06 Excel",
+      "status": "PASS",
+      "detail": "比价/业务Excel实际下载，RFQ行数量/阶梯/历史/来源/共同范围 / Real XLSX contents and quote history",
+      "evidence": "evidence/C06-workbooks-checks.json"
+    },
+    {
+      "scope": "C06 packages/CSV",
+      "status": "PASS",
+      "detail": "单家/总包行数量/PDF/隔离及CSV金额 / Actual supplier/nested archives and CSV amounts",
+      "evidence": "evidence/C06-supplier-checks.json"
+    },
+    {
+      "scope": "C07",
+      "status": "PASS",
+      "detail": "跨RFQ/F5/真实进程重启，当前/全历史/附件登记/PDF一致 / Actual persistence and process restart",
+      "evidence": "evidence/C07-history-after-restart.json"
+    },
+    {
+      "scope": "C08 file",
+      "status": "PASS",
+      "detail": "1份新S4，CRC/SQLite当前历史/资产表/manifest/PDF / Single complete ZIP/DB/PDF integrity",
+      "evidence": "evidence/C08-file-checks.json"
+    },
+    {
+      "scope": "C08 restore action",
+      "status": "HTTP200 observed; verification INTERRUPTED",
+      "detail": "空目录恢复API200，驱动读取响应体时CDP错误 / Empty restore200, observer protocol failure",
+      "evidence": "FAILURE-C08-RESPONSE-BODY.md"
+    },
+    {
+      "scope": "C08 readonly evidence",
+      "status": "POST-STOP FACT, not original assertion PASS",
+      "detail": "恢复后只读数据与预期完全相同；原验证链未完成 / Readonly recovered data matches, original chain incomplete",
+      "evidence": "evidence/C08-poststop-readonly-observations.json"
+    },
+    {
+      "scope": "C08 nonempty",
+      "status": "NOT TESTED",
+      "detail": "首失败后未尝试非空拒绝 / No nonempty refusal attempted",
+      "evidence": "TEST-SCOPE.md"
+    },
+    {
+      "scope": "C09",
+      "status": "NOT TESTED",
+      "detail": "三尺寸UI关键兼容未运行 / Three-size compatibility not executed",
+      "evidence": "TEST-SCOPE.md"
+    },
+    {
+      "scope": "P2/P3 smoke",
+      "status": "PASS limited",
+      "detail": "首次A包成功、纯导航新建无假未保存警告 / First supplier and clean navigation smoke only",
+      "evidence": "evidence/browser.jsonl"
+    }
+  ]
+}

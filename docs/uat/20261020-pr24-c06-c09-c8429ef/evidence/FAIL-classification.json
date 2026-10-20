@@ -1,0 +1,16 @@
+{
+  "productSHA": "c8429ef51731da570c7a556d7cdce89e7123e739",
+  "category": "TEST PRECONDITION / observer response-body lifetime across automatic navigation",
+  "observed": "Empty restore actual HTTP200 passes; response.json raises CDP Network.getResponseBody No resource with given identifier found",
+  "facts": [
+    "Product restore handler calls location.reload immediately after verified response",
+    "Protocol error is in independent driver response-body observation, not product exception",
+    "C08 stored backup file10integrity checks already pass",
+    "Post-stop readonly current/history/asset/PDF equality recorded separately",
+    "No failed-driver modification/retry and no C09/nonempty restoration after stop"
+  ],
+  "limits": "Exact Chrome resource-retention cause not instrumented; response body not observed by failed json call. Do not infer payload from HTTP200 alone. Trace may retain a network copy; preserve separately.",
+  "notConfirmed": "No new product P1/P2/P3 or backend restore failure confirmed",
+  "rootCauseAssessment": "Observer assumed response.json body remains readable through immediate product reload. Broader browser retention mechanism unproven.",
+  "noExpansionAfterStop": true
+}

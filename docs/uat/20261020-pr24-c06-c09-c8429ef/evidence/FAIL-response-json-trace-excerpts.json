@@ -1,0 +1,166 @@
+{
+  "events": [
+    {
+      "type": "after",
+      "callId": "call@292",
+      "endTime": 216636.024,
+      "error": {
+        "message": "Protocol error (Network.getResponseBody): No resource with given identifier found",
+        "stack": "Error: Protocol error (Network.getResponseBody): No resource with given identifier found\n    at /workspace/SRM_System/node_modules/playwright-core/lib/server/chromium/crConnection.js:111:57\n    at new Promise (<anonymous>)\n    at CRSession.send (/workspace/SRM_System/node_modules/playwright-core/lib/server/chromium/crConnection.js:110:12)\n    at Response.getResponseBody [as _getResponseBodyCallback] (/workspace/SRM_System/node_modules/playwright-core/lib/server/chromium/crNetworkManager.js:333:39)\n    at /workspace/SRM_System/node_modules/playwright-core/lib/server/network.js:465:21\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:502:9)",
+        "name": "Error"
+      }
+    }
+  ],
+  "restoreNetwork": [
+    {
+      "type": "resource-snapshot",
+      "snapshot": {
+        "pageref": "page@b08e95b7c457c4aa3a0ae0438d8241e2",
+        "startedDateTime": "2026-10-20T10:46:10.503Z",
+        "time": 33.17,
+        "request": {
+          "method": "POST",
+          "url": "http://127.0.0.1:9461/api/backups/full/restore",
+          "httpVersion": "http/1.0",
+          "cookies": [],
+          "headers": [
+            {
+              "name": "Accept",
+              "value": "*/*"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, br, zstd"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "en-US,en;q=0.9"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Content-Length",
+              "value": "65355"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/zip"
+            },
+            {
+              "name": "Host",
+              "value": "127.0.0.1:9461"
+            },
+            {
+              "name": "Origin",
+              "value": "http://127.0.0.1:9461"
+            },
+            {
+              "name": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "name": "Sec-Fetch-Dest",
+              "value": "empty"
+            },
+            {
+              "name": "Sec-Fetch-Mode",
+              "value": "cors"
+            },
+            {
+              "name": "Sec-Fetch-Site",
+              "value": "same-origin"
+            },
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Not A(Brand\";v=\"99\", \"Chromium\";v=\"154\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Linux\""
+            }
+          ],
+          "queryString": [],
+          "headersSize": 604,
+          "bodySize": 0
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "httpVersion": "http/1.0",
+          "cookies": [],
+          "headers": [
+            {
+              "name": "Cache-Control",
+              "value": "no-store"
+            },
+            {
+              "name": "Content-Length",
+              "value": "89"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "name": "Date",
+              "value": "Tue, 20 Oct 2026 10:46:10 GMT"
+            },
+            {
+              "name": "Referrer-Policy",
+              "value": "no-referrer"
+            },
+            {
+              "name": "Server",
+              "value": "SRM-Local-S3"
+            },
+            {
+              "name": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "name": "X-Frame-Options",
+              "value": "DENY"
+            }
+          ],
+          "content": {
+            "size": -1,
+            "mimeType": "application/json; charset=utf-8",
+            "compression": 0
+          },
+          "headersSize": 257,
+          "bodySize": 89,
+          "redirectURL": "",
+          "_transferSize": 346
+        },
+        "cache": {},
+        "timings": {
+          "dns": 0.281,
+          "connect": 0.499,
+          "ssl": 1.956,
+          "send": 0,
+          "wait": 28.255,
+          "receive": 2.179
+        },
+        "_frameref": "frame@c6d2ff44e8e54586e26ae8e2a9575935",
+        "_monotonicTime": 216061.575,
+        "serverIPAddress": "127.0.0.1",
+        "_serverPort": 9461,
+        "_securityDetails": {}
+      }
+    }
+  ]
+}

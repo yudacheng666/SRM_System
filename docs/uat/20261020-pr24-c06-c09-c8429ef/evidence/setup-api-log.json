@@ -1,0 +1,69 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/workspaces",
+    "status": 200,
+    "response": {
+      "workspaces": []
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/workspaces/RFQ-20261020-C06-INDEPENDENT-R3",
+    "status": 200,
+    "response": {
+      "saved": true,
+      "workspaceId": "RFQ-20261020-C06-INDEPENDENT-R3",
+      "revision": 1
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/assets/RFQ-20261020-C06-INDEPENDENT-R3/a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+    "status": 200,
+    "response": {
+      "saved": true,
+      "document": {
+        "sha256": "a243754cd142b4d581a0b048bb1b5363e92122466ea8b86078e7147695ae9f41",
+        "size": 592,
+        "name": "U24-D16_A.pdf"
+      }
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/assets/RFQ-20261020-C06-INDEPENDENT-R3/bf95f46283d2c534c23c828508f5b05d1ef01706956e61efd9d35587225e2a15",
+    "status": 200,
+    "response": {
+      "saved": true,
+      "document": {
+        "sha256": "bf95f46283d2c534c23c828508f5b05d1ef01706956e61efd9d35587225e2a15",
+        "size": 597,
+        "name": "UAT24-SHAFT_A.pdf"
+      }
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/assets/RFQ-20261020-C06-INDEPENDENT-R3/abf6494382900653ad2e08c3f2b26cd5eb78f4fd4355f57012716ef6a670ec02",
+    "status": 200,
+    "response": {
+      "saved": true,
+      "document": {
+        "sha256": "abf6494382900653ad2e08c3f2b26cd5eb78f4fd4355f57012716ef6a670ec02",
+        "size": 598,
+        "name": "NO-MATCH_U24.pdf"
+      }
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/workspaces/RFQ-20261020-C06-INDEPENDENT-R3",
+    "status": 200,
+    "response": {
+      "saved": true,
+      "workspaceId": "RFQ-20261020-C06-INDEPENDENT-R3",
+      "revision": 2
+    }
+  }
+]

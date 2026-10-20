@@ -1,0 +1,21 @@
+from pathlib import Path
+import json,urllib.request,urllib.parse,hashlib,copy,traceback
+R=Path('/tmp/c06');base='http://127.0.0.1:9460';events=[]
+def call(method,path,payload=None,content='application/json',headers=None):
+ data=payload if isinstance(payload,bytes)else json.dumps(payload).encode()if payload is not None else None
+ h={'Origin':base,'Content-Type':content,**(headers or {})};q=urllib.request.Request(base+path,data=data,method=method,headers=h)
+ with urllib.request.urlopen(q)as res:r=json.load(res);events.append({'method':method,'path':path,'status':res.status,'response':r})
+ (R/'evidence/setup-api-log.json').write_text(json.dumps(events,ensure_ascii=False,indent=2));return r
+try:
+ listing=call('GET','/api/workspaces');assert listing.get('workspaces',[])==[],listing
+ ws=json.load(open(R/'fixtures/setup-workspace.json'));original=copy.deepcopy(ws);docs=[]
+ for item in ws['state']['items']:
+  docs+=item.get('drawings',[]);item.pop('drawings',None)
+ call('PUT','/api/workspaces/'+ws['workspaceId'],{'workspace':ws,'expectedRevision':None,'expectedActive':None})
+ for d in docs:
+  raw=(R/'fixtures'/d['name']).read_bytes();assert hashlib.sha256(raw).hexdigest()==d['sha256']
+  call('PUT','/api/assets/'+ws['workspaceId']+'/'+d['sha256'],raw,'application/pdf',{'X-SRM-Filename':urllib.parse.quote(d['name'])})
+ original['revision']=2;call('PUT','/api/workspaces/'+ws['workspaceId'],{'workspace':original,'expectedRevision':1,'expectedActive':ws['workspaceId']})
+ (R/'fixtures/setup-final-workspace.json').write_text(json.dumps(original,ensure_ascii=False,indent=2));print('SETUP ONLY official API completed',ws['workspaceId'])
+except Exception as ex:
+ (R/'evidence/setup-failure.json').write_text(json.dumps({'error':str(ex),'trace':traceback.format_exc()},indent=2));raise
