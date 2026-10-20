@@ -1,0 +1,10 @@
+global.wid='RFQ-20261020-FINAL-C08-C09';
+await p.waitForFunction(id=>window.SRMPilot?.snapshot()?.workspaceId===id,wid);
+await p.waitForFunction(()=>!document.querySelector('#pilotS4DownloadFull').disabled);
+global.history=(name,dir='/tmp/final24/data')=>{cp.execFileSync('python',['/tmp/final24/db_history.py',dir,root+name+'.json']);return JSON.parse(fs.readFileSync(root+name+'.json'))};
+global.decision=async(page=p)=>page.locator('.srm-v31-decisionMetrics > div').evaluateAll(es=>Object.fromEntries(es.map(e=>[e.querySelector('span').innerText,e.querySelector('strong').innerText])));
+global.openReport=async()=>{await openD('#uiDataTools');let was=await p.locator('#pilotReportPanel').isVisible();log('panel-preflight',{id:'pilotReportPanel',was,action:was?'leave open':'one click'});if(!was)await p.locator('#pilotReportOpen').click();await check('report panel visible enabled',await p.locator('#pilotReportType').isVisible()&&await p.locator('#pilotReportType').isEnabled(),true);await check('report options pre-reviewed',await p.locator('#pilotReportType option').evaluateAll(es=>es.map(e=>e.value)),['rfq','comparison'])};
+await tell('Preflight details and sidebar DOM',await p.evaluate(()=>({details:[...document.querySelectorAll('details')].map(e=>({id:e.id,open:e.open})),tabs:[...document.querySelectorAll('.srm-v2-sideitem[data-srm-v2-tab]')].map(e=>e.dataset.srmV2Tab)})));
+await nav('quoteImport');await p.locator('#quoteImportSupplier').selectOption('U24-A');await check('fixture round options before action',await p.locator('#quoteRoundSelect option').evaluateAll(es=>es.map(e=>e.value)),['1|1','1|2','2|1']);await p.locator('#quoteRoundSelect').selectOption('2|1');await nav('items');
+global.baseline=fp('SETUP-baseline');global.baselineHistory=history('SETUP-baseline-history');await shot('SETUP-real-product-ready');
+log('setup-complete',{method:'guarded product API; new SQLite and three fictional PDFs; fixture revision1+2 only',notAcceptance:['C03','C04','C05','C06','C07']});

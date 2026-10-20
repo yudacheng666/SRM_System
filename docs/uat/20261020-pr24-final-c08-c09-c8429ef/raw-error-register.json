@@ -1,0 +1,32 @@
+{
+  "unanticipatedProductFailures": [],
+  "driverErrors": [],
+  "driverCorrections": 0,
+  "environmentBlockers": [],
+  "expectedNegativeCase": {
+    "method": "POST",
+    "url": "http://127.0.0.1:9481/api/backups/full/restore",
+    "status": 409,
+    "body": {
+      "error": "RESTORE_REJECTED",
+      "message": "RESTORE_TARGET_NOT_EMPTY"
+    }
+  },
+  "retainedConsoleObservations": [
+    {
+      "time": "2026-10-20T12:21:15.455Z",
+      "kind": "console",
+      "url": "http://127.0.0.1:9480/",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "time": "2026-10-20T12:21:26.477Z",
+      "kind": "console",
+      "url": "http://127.0.0.1:9481/",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "classification": "Two favicon.ico404 console entries corroborated by raw server logs; no pageerror, driver error or failed request. Expected backend409 is the passed refusal test, not a product failure. No errors were discarded. Previous PR40-42 errors remain in their original evidence PRs."
+}

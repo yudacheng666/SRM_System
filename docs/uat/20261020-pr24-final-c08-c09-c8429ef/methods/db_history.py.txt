@@ -1,0 +1,4 @@
+from pathlib import Path
+import sys,sqlite3,json,hashlib
+r=Path(sys.argv[1]);c=sqlite3.connect('file:'+str(r/'srm.sqlite3')+'?mode=ro',uri=True)
+o={t:[list(x)for x in c.execute('select * from '+t+' order by workspace_id,revision')]for t in ['workspaces','workspace_versions']};o['assets']=[list(x)for x in c.execute('select * from assets order by workspace_id,sha256')];o['pdf']={p.name:hashlib.sha256(p.read_bytes()).hexdigest()for p in sorted(r.rglob('*.pdf'))};Path(sys.argv[2]).write_text(json.dumps(o,ensure_ascii=False,indent=2))
