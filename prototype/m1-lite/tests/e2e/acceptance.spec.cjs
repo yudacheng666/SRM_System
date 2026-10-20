@@ -635,7 +635,7 @@ test('46 UI-only navigation and first supplier export do not dirty RFQ / 导航�
   const downloadPromise=page.waitForEvent('download');
   await page.locator('#pilotReportDownload').click();
   const downloaded=await downloadPromise;
-  expect(downloaded.suggestedFilename()).toMatch(/\\.xlsx$/i);
+  expect(downloaded.suggestedFilename()).toMatch(/\.xlsx$/i);
   await expect(page.locator('#pilotReportHint')).toContainText('已发起供应商询价');
   expect(await isDirty()).toBe(false);
 
