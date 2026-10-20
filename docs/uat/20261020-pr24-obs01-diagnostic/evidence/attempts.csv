@@ -1,0 +1,29 @@
+﻿id,mode,startUTC,result,downloadTimedOut,elapsedMs,before_disabled,before_autosave,trustedClicks,gate_dirty,gate_busy,backup_request_count,response_statuses,download_file
+D01,RFQ-return-1500ms-admin-immediate,2026-10-20T02:34:48.207Z,PASS,False,400,False,自动保存：已同步第 1 版；无待保存修改,1,False,False,2,201|200,D01.zip
+D02,natural-RFQ-return-1500ms-admin-immediate,2026-10-20T02:35:31.963Z,FAIL,True,20124,False,自动保存：已同步第 1 版；无待保存修改,1,True,False,0,,
+D03,natural-RFQ-return-1500ms-admin-immediate,2026-10-20T02:35:54.803Z,FAIL,True,20120,False,自动保存：已同步第 1 版；无待保存修改,1,True,False,0,,
+D04,natural-RFQ-return-1500ms-admin-immediate,2026-10-20T02:36:18.130Z,FAIL,True,20136,False,自动保存：已同步第 1 版；无待保存修改,1,True,False,0,,
+D05,natural-RFQ-return-1500ms-admin-immediate,2026-10-20T02:36:41.038Z,FAIL,True,20158,False,自动保存：已同步第 1 版；无待保存修改,1,True,False,0,,
+D06,natural-RFQ-return-1500ms-admin-immediate,2026-10-20T02:37:03.947Z,FAIL,True,20115,False,自动保存：已同步第 1 版；无待保存修改,1,True,False,0,,
+D07,natural-RFQ-return-1500ms-admin-immediate,2026-10-20T02:37:26.857Z,FAIL,True,20115,False,自动保存：已同步第 1 版；无待保存修改,1,True,False,0,,
+D08,natural-RFQ-return-1500ms-admin-immediate,2026-10-20T02:37:49.724Z,FAIL,True,20123,False,自动保存：已同步第 1 版；无待保存修改,1,True,False,0,,
+D09,natural-RFQ-return-1500ms-admin-immediate,2026-10-20T02:38:12.761Z,FAIL,True,20123,False,自动保存：已同步第 1 版；无待保存修改,1,True,False,0,,
+D10,natural-RFQ-return-1500ms-admin-immediate,2026-10-20T02:38:35.591Z,PASS,False,278,False,自动保存：已同步第 1 版；无待保存修改,1,False,False,2,201|200,D10.zip
+D11,same-RFQ-return-admin-wait1000ms,2026-10-20T02:38:39.566Z,PASS,False,216,False,自动保存：已同步第 1 版；无待保存修改,1,False,False,2,201|200,D11.zip
+D12,same-RFQ-return-admin-wait1000ms,2026-10-20T02:38:43.653Z,PASS,False,393,False,自动保存：已同步第 1 版；无待保存修改,1,False,False,2,201|200,D12.zip
+D13,same-RFQ-return-admin-wait1000ms,2026-10-20T02:38:48.320Z,PASS,False,327,False,自动保存：已同步第 1 版；无待保存修改,1,False,False,2,201|200,D13.zip
+D14,same-RFQ-return-admin-wait1000ms,2026-10-20T02:38:52.375Z,PASS,False,301,False,自动保存：已同步第 1 版；无待保存修改,1,False,False,2,201|200,D14.zip
+D15,natural-return-admin-immediate-no-CDP-logpoint,2026-10-20T02:38:55.321Z,FAIL,True,20131,False,自动保存：已同步第 1 版；无待保存修改,1,,,0,,
+D16,natural-return-admin-immediate-no-CDP-logpoint,2026-10-20T02:39:18.047Z,FAIL,True,20158,False,自动保存：已同步第 1 版；无待保存修改,1,,,0,,
+D17,natural-return-admin-immediate-no-CDP-logpoint,2026-10-20T02:39:41.756Z,FAIL,True,20123,False,自动保存：已同步第 1 版；无待保存修改,1,,,0,,
+D18,natural-return-admin-immediate-no-CDP-logpoint,2026-10-20T02:40:04.998Z,FAIL,True,20127,False,自动保存：已同步第 1 版；无待保存修改,1,,,0,,
+S01,controlled-3000ms-auto-save-in-flight-disabled-click,2026-10-20T02:40:32.308Z,PASS_EXPECTED_BLOCK,True,1110,True,自动保存：正在自动保存……,0,,,0,,
+S02,same-state-after-delayed-autosave-completes,2026-10-20T02:40:33.850Z,PASS,False,263,False,自动保存：已自动保存第 2 版（2:40:33 AM）,1,False,False,2,201|200,S02.zip
+S03,natural-autosave-just-completed-admin-immediate,2026-10-20T02:42:18.453Z,FAIL,True,20154,False,自动保存：已自动保存第 3 版（2:42:18 AM）,1,True,False,0,,
+S04,retry-after-one-poll-no-business-change,2026-10-20T02:42:39.855Z,PASS,False,510,False,自动保存：已自动保存第 3 版（2:42:18 AM）,1,False,False,2,201|200,S04.zip
+C01,same-RFQ-return-open-native-details-no-header-admin,2026-10-20T02:42:43.651Z,PASS,False,386,False,自动保存：已同步第 3 版；无待保存修改,1,False,False,2,201|200,C01.zip
+C02,same-RFQ-return-open-native-details-no-header-admin,2026-10-20T02:42:46.793Z,PASS,False,244,False,自动保存：已同步第 3 版；无待保存修改,1,False,False,2,201|200,C02.zip
+R01,header-immediate-trace-reproduction,2026-10-20T02:42:49.703Z,PASS,False,466,False,自动保存：已同步第 3 版；无待保存修改,1,False,False,2,201|200,R01.zip
+R02,same-header-path-wait1000ms-trace-control,2026-10-20T02:42:53.856Z,PASS,False,238,False,自动保存：已同步第 3 版；无待保存修改,1,False,False,2,201|200,R02.zip
+S05,controlled-auto-save-in-flight-repeat,2026-10-20T02:43:01.580Z,PASS_EXPECTED_BLOCK,True,1112,True,自动保存：正在自动保存……,0,,,0,,
+S06,after-delayed-autosave-complete-cleanup-awaited,2026-10-20T02:43:04.299Z,PASS,False,214,False,自动保存：已自动保存第 4 版（2:43:04 AM）,1,False,False,2,201|200,S06.zip
