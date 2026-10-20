@@ -5,6 +5,9 @@ on:
   pull_request:
     branches:
       - draft/20261013-m1-storage-ui-audit
+      # 中文：PR24 集成候选的修复 PR 也必须执行完整 UI 验收。
+      # English: Gate fixes targeting the PR24 integration branch with the full UI suite.
+      - feat/20261019-srm-ui-v3-integration
   workflow_dispatch:
 permissions:
   contents: read
