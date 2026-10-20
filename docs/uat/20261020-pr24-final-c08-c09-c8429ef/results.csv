@@ -1,0 +1,12 @@
+case,status,scope,evidence
+C08-01,PASS,S4 actual ZIP download and all manifest/SQLite/PDF bytes,evidence/C08-file-checks.json
+C08-02,PASS,Empty actual UI restore POST200 followed by product reload,evidence/C08-restored.json
+C08-03,PASS,"Reloaded buyer decisions, locked quote histories and all database rows",evidence/C08-restored-history.json
+C08-04,PASS,"Nonempty UI refuses overwrite, sends no restore POST, data unchanged",evidence/C08-after-UI-refusal.json
+C08-05,PASS,"Nonempty backend actual409 RESTORE_TARGET_NOT_EMPTY, all data unchanged",evidence/C08-after-backend409.json
+C09-01,PASS,"1024x768 five pages, four drawers, tables, controls, keyboard/search",evidence/C09-1024-overview.png
+C09-02,PASS,"1366x768 five pages, four drawers, tables, controls, keyboard/search",evidence/C09-1366-overview.png
+C09-03,PASS,"1600x900 five pages, four drawers, tables, controls, keyboard/search",evidence/C09-1600-overview.png
+C09-04,PASS,P2 first supplier actual RFQ ZIP/Excel/PDF contents smoke,evidence/C06-supplier-smoke-checks.json
+C09-05,PASS,P3 pure supplier navigation then new-project confirmation dismissed,evidence/C09-P3-clean-navigation-dismissed.png
+C09-06,PASS,Full data/history/assets/PDF unchanged after all UI navigation,evidence/C09-final-history.json

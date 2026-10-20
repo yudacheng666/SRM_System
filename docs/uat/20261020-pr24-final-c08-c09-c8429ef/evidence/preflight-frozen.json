@@ -1,0 +1,39 @@
+{
+  "time": "2026-10-20T12:20:16.049649+00:00",
+  "sha": "c8429ef51731da570c7a556d7cdce89e7123e739",
+  "comment": 6290574455,
+  "frozenBeforeBrowser": true,
+  "files": {
+    "validate-supplier.py": "35df6a0fc8b2d6a5ba3778ccdb31fad8829109853fe40ae5e88ccaf394e3cdf7",
+    "backend-nonempty.py": "dfe61f02fbde5b8ac47b268902db4161a5f2604a4d02c014405c209eadb7098e",
+    "setup-fixture.py": "3c0880f3895f71c41a96c2fa8a38ffcce99753fe31e0a39e3e19cd7f753cb559",
+    "validate-C08.py": "92c96a2318d8ac16d100af5a22eccad5952e16df682c4e5965c0b5e68449b3d1",
+    "db_history.py": "8d46cbe0a66d17ef029f92a0232316edd7b5c42851484af4e22e549efecc1201",
+    "fingerprint.py": "3d6d02f138948dbe80203bffbabc88453b9c1e4148498fea10dc9be0f2ab6c8b",
+    "console.cjs": "809b4b76e26737ca7d6d5b38abe2a57d3e21f42295c89eae46d3de39cc2053aa",
+    "steps/09-C09.js": "587e7b17a0814fe50aa28b7f9771af74fbf7c16cce5f23621ec4b89fd91a8b11",
+    "steps/08-C08.js": "058ea00c6c29fd02ac273a3678693987b522e28369471f85cfe879b74a471804",
+    "steps/00-preflight.js": "75af7404a70d43c2fa468bf63160a0e0df9ecb84abc89b50ea394b1fc23f1b33"
+  },
+  "pathsReviewed": [
+    "Product restore POST200 then location.reload; only status read from original Response; reloaded UI + SQLite full history/assets/PDF comparisons",
+    "Nonempty UI guard sends no POST; direct isolated API gives409 error RESTORE_REJECTED message RESTORE_TARGET_NOT_EMPTY",
+    "Details.open read before summary click; report toggle only when hidden; actual round/supplier options asserted before selection",
+    "New RFQ P3 smoke: intercept/dismiss native confirm; no new RFQ; quote history controls confirmed disabled",
+    "C09 five existing modules, actual known headings/filters/drawers across3 viewports; local table scrolling allowed, document overflow fails",
+    "Dialog dismiss handler registered before click, independent promise avoids blocking native confirm"
+  ],
+  "scope": [
+    "C08 one actual ZIP download, full contents, empty actual UI restore, nonempty UI+backend",
+    "C09 three sizes/critical V3 pages/nav/drawers/search/locks/P2-P3 smoke"
+  ],
+  "setup": "Official API, synthetic prior same-SHA fixture only; no repeat C03-C07 acceptance",
+  "policy": "One documented driver correction max, original raw errors retained, affected case+regression in fresh clean state; data risk stops; second unexpected error stops",
+  "exclusions": [
+    "Windows native",
+    "whole-product certification",
+    "full PR23 pixel parity",
+    "repeated OBS01 stress",
+    "full C03-C07 rerun"
+  ]
+}

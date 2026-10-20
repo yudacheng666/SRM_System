@@ -1,0 +1,12 @@
+from pathlib import Path
+import json,zipfile,hashlib,sqlite3
+R=Path('/tmp/final24');E=R/'evidence';expected=json.load(open(E/'C08-history-before-backup.json'));checks=[]
+def ck(n,a,b):
+ ok=a==b;checks.append({'label':n,'actual':a,'expected':b,'pass':ok});(E/'C08-file-checks.json').write_text(json.dumps(checks,ensure_ascii=False,indent=2));print('PASS'if ok else'FAIL',n,flush=True);assert ok,n
+with zipfile.ZipFile(R/'downloads/C08-single-full-backup.zip')as z:
+ ck('full ZIP CRC',z.testzip(),None);m=json.loads(z.read('manifest.json'));data=z.read(m['database']['path']);ck('manifest DB SHA256',hashlib.sha256(data).hexdigest(),m['database']['sha256']);p=R/'verify-S4-only.sqlite3';p.write_bytes(data);c=sqlite3.connect('file:'+str(p)+'?mode=ro',uri=True);ck('SQLite integrity',c.execute('pragma integrity_check').fetchone()[0],'ok')
+ for t in ['workspaces','workspace_versions']:ck('all '+t+' rows/fields', [list(x)for x in c.execute('select * from '+t+' order by workspace_id,revision')],expected[t])
+ ck('all asset-link database rows',[list(x)for x in c.execute('select * from assets order by workspace_id,sha256')],expected['assets'])
+ pdf={Path(a['path']).name:hashlib.sha256(z.read(a['path'])).hexdigest()for a in m['assets']};ck('all3 asset bytes and exact scope',pdf,expected['pdf'])
+ for a in m['assets']:ck('PDF manifest SHA '+a['path'],hashlib.sha256(z.read(a['path'])).hexdigest(),a['sha256'])
+ print('ALL_C08_FILE_CHECKS_PASS',len(checks))

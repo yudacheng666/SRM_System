@@ -1,0 +1,402 @@
+{
+  "start": {
+    "head": "c8429ef51731da570c7a556d7cdce89e7123e739",
+    "draft": true,
+    "comment": [
+      {
+        "id": 6290574455,
+        "url": "https://github.com/yudacheng666/SRM_System/pull/24#issuecomment-6290574455",
+        "body": "## 流程纠偏：一次性完成 PR #24 剩余验收 / Consolidated independent acceptance\n\n**本评论取代本 PR 之前对 C08/C09 的“任意测试错误即终止整轮”指令，仅调整独立测试执行规则，不改变产品数据安全门槛。**\n\n产品唯一 SHA：`c8429ef51731da570c7a556d7cdce89e7123e739`。开始/结束均核验 PR #24 HEAD；如变更，停止并报告。当前已有 C03–C07 同 SHA 独立验收 PASS，保留 PR #40/#41/#42 原证据，不重测之前全部业务。\n\n**本次目标：一轮内完整交付 C08 和 C09，除非发现真实产品安全缺陷、确实无法恢复的环境故障或无法可靠判断的数据风险。**\n\n### 执行前一次性预审\n- 先审产品当前 restore UI、REST API、安全拒绝和自动 `location.reload()`，以及所有 C09 UI 导航、开关、下拉菜单的当前 DOM 状态/选项。冻结测试计划与基线脚本；测试用例使用独立 driver，不修改产品或既有 CI/测试代码。\n- 新隔离目录 + 正式 M1 Lite + 真实 Chromium + 虚构数据。仅最小化准备 C08/C09 必要的 RFQ/报价/PDF/供应商，标记 SETUP ONLY。\n- 需记录 HTTP 恢复 POST200，但**不能依赖跨刷新之后的原 Playwright Response.json()**。使用导航后重新加载的 UI、SQLite 的当前/历史/资产以及 PDF 物理字节作验收；如需要独立 JSON 响应，可通过不受页面导航影响的独立 API 客户端在另外的隔离恢复目标中采样。\n- 同时准备非空恢复拒绝：UI 不应执行覆盖；后端直接对非空目录发起完整 ZIP 恢复请求应返回 409 RESTORE_TARGET_NOT_EMPTY；严格只在虚构隔离目录验证，前后 SQLite/历史/PDF 一致。\n\n### 运行范围\n1. C08：一份真实 S4 完整备份（不要重跑 24 次），ZIP/manifest/SQLite/PDF 内容核验；新空数据目录实际恢复并在重新加载后的 UI 验证完整业务和历史；非空数据目录 UI 拒绝覆盖、后端 HTTP409、安全数据一致。\n2. C09：1024×768、1366×768、1600×900 三个尺寸，真实 M1 Lite 关键 UI V3 页面、导航/抽屉、表格溢出、可见按钮和关键交互、必要 P2/P3 冒烟。不要宣称完整像素一致性。\n3. 结果必须区分 PASS/FAIL/NOT TESTED，具体字段和文件核验，不把 setup、断言总数或旧 SHA 证据等同新验收。\n\n### 错误处置（关键修订）\n- **确认或怀疑真实产品安全/业务数据缺陷**（覆盖、丢失、报价/定标金额错、完整性错误等）：立即停止相关测试和可能影响数据的后续操作，保存原始证据，报告产品缺陷并结束该范围。\n- **明显的 driver/观察器错误**（隐藏控件、选项不存在、CDP 响应体丢失、误触发 toggle）：不得自动记为产品失败。保存首次原始截图/log/trace，诊断并更正独立驱动，仅在新隔离干净状态**重新执行受影响用例及必要的相关回归**，在报告里分别列明原失败与修正后结果。**最多允许一次有记录的驱动修正和重跑；再次出现非预期错误或无法区分是否产品问题则停止并如实报告。**\n- **环境故障**：记录实际原因与恢复措施；仅在可证明数据安全、测试结果可追溯时继续。不能用反复重试掩盖间歇性产品问题。\n- 禁止为了得出 PASS 而修改产品/现有测试/CI、跳过必测断言、篡改证据、模拟不存在的功能、修改受保护分支或降级安全要求。\n\n最终提交**一份新的 TEST-ONLY Draft 证据 PR**，双语报告、截图、raw error、前后数据、trace、准确 SHA、未测范围，并回评 PR #24。PR #40–#42 原始证据不改；PR #24 保持 Draft，不合并 main 或开发基线。"
+      }
+    ]
+  },
+  "end": {
+    "head": "c8429ef51731da570c7a556d7cdce89e7123e739",
+    "draft": true,
+    "latestCommentId": [
+      6290574455
+    ]
+  },
+  "ci": {
+    "runs": {
+      "workflow_runs": [
+        {
+          "id": 39394554901,
+          "name": "SRM UI V2 Unified Candidate Acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "run_number": 55,
+          "jobs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39394554901/jobs",
+          "logs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39394554901/logs",
+          "workflow_id": 385464786
+        },
+        {
+          "id": 39394554892,
+          "name": "SRM S3/S4 Regression",
+          "status": "completed",
+          "conclusion": "success",
+          "run_number": 158,
+          "jobs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39394554892/jobs",
+          "logs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39394554892/logs",
+          "workflow_id": 383906368
+        }
+      ]
+    },
+    "jobs": [
+      {
+        "jobs": [
+          {
+            "id": 118533929283,
+            "name": "linux-real-browser",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 39394554901,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run actions/setup-python@v5",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Install locked Node dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Install real Chromium",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Check Python SQLite, complete backup and restoration logic",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Check supplier quotation and workbook business rules",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 8
+              },
+              {
+                "name": "Run complete real Chromium M1-Lite and UI V2 end-to-end acceptance",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 9
+              },
+              {
+                "name": "Archive screenshots, database test logs, HTML report and traces",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 10
+              },
+              {
+                "name": "Post Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 18
+              },
+              {
+                "name": "Post Run actions/setup-python@v5",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 19
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 20
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 21
+              }
+            ]
+          },
+          {
+            "id": 118533929739,
+            "name": "windows-business-safety",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 39394554901,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run actions/setup-python@v5",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Verify Windows SQLite and backup restore",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Verify supplier packages and autosave rules",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Validate Windows local launcher's encoding and relative path",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Validate isolated V2 pilot launcher does not use normal data directory",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 8
+              },
+              {
+                "name": "Post Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 14
+              },
+              {
+                "name": "Post Run actions/setup-python@v5",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 15
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 16
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 17
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "jobs": [
+          {
+            "id": 118533929189,
+            "name": "Synthetic Chromium acceptance on Linux",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 39394554892,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run actions/setup-python@v5",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Run npm ci",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Run npx playwright install --with-deps chromium",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Run python -m unittest discover -v -s prototype/m1-lite/backend -p \"test_*.py\"",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Run npm test",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 8
+              },
+              {
+                "name": "Run npm run test:e2e",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 9
+              },
+              {
+                "name": "Retain synthetic browser evidence",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 10
+              },
+              {
+                "name": "Post Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 18
+              },
+              {
+                "name": "Post Run actions/setup-python@v5",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 19
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 20
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 21
+              }
+            ]
+          },
+          {
+            "id": 118533929525,
+            "name": "SQLite S4 restore and supplier ZIP regression on Windows",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 39394554892,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Checkout the tested branch",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Set up Python",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Set up Node.js",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Run SQLite, full backup/restore and local API tests",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Run supplier ZIP and PDF regression",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Verify launcher is ASCII and points to backend",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Post Set up Node.js",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 12
+              },
+              {
+                "name": "Post Set up Python",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 13
+              },
+              {
+                "name": "Post Checkout the tested branch",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 14
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 15
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

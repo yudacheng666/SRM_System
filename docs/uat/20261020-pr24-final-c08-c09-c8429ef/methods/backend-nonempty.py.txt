@@ -1,0 +1,13 @@
+from pathlib import Path
+import urllib.request,urllib.error,json
+R=Path('/tmp/final24');base='http://127.0.0.1:9481'
+req=urllib.request.Request(base+'/api/backups/full/restore',data=(R/'downloads/C08-single-full-backup.zip').read_bytes(),method='POST',headers={'Origin':base,'Content-Type':'application/zip'})
+try:
+ with urllib.request.urlopen(req) as res: status=res.status;body=res.read().decode()
+except urllib.error.HTTPError as ex: status=ex.code;body=ex.read().decode()
+result={'method':'POST','url':req.full_url,'status':status,'body':json.loads(body)}
+(R/'evidence/C08-backend-nonempty-response.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
+assert status==409,result
+assert result['body']['error']=='RESTORE_REJECTED',result
+assert result['body']['message']=='RESTORE_TARGET_NOT_EMPTY',result
+print('PASS actual backend nonempty rejection',status,body)

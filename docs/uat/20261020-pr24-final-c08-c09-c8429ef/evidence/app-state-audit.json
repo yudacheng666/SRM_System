@@ -1,0 +1,27 @@
+{
+  "time": "2026-10-20T12:33:32.907037+00:00",
+  "method": "Read-only evidence audit after browser complete; compare app_state in actual downloaded backup database vs final source/restored databases. No UI replay or driver change.",
+  "table": "app_state",
+  "rows": {
+    "backup": [
+      [
+        "active_workspace",
+        "RFQ-20261020-FINAL-C08-C09"
+      ]
+    ],
+    "source-final": [
+      [
+        "active_workspace",
+        "RFQ-20261020-FINAL-C08-C09"
+      ]
+    ],
+    "restored-final": [
+      [
+        "active_workspace",
+        "RFQ-20261020-FINAL-C08-C09"
+      ]
+    ]
+  },
+  "equal": true,
+  "limits": "Current/history/assets/PDF were also captured before/after each refusal separately; this app_state audit is backup versus final, not a separate intermediate snapshot."
+}

@@ -1,0 +1,11 @@
+from pathlib import Path
+import json,io,csv,zipfile,hashlib,openpyxl,sys
+R=Path('/tmp/final24');E=R/'evidence';checks=[];mode='supplier-smoke'
+def ck(n,a,b):
+ ok=a==b;checks.append({'label':n,'actual':a,'expected':b,'pass':ok});(E/('C06-'+mode+'-checks.json')).write_text(json.dumps(checks,ensure_ascii=False,indent=2));print('PASS'if ok else'FAIL',n,flush=True);assert ok,n
+pdfNames=['U24-D16_A.pdf','UAT24-SHAFT_A.pdf','NO-MATCH_U24.pdf']
+def supplier(sid,data,num,pdfs):
+ with zipfile.ZipFile(io.BytesIO(data))as z:
+  ck(sid+' ZIP CRC',z.testzip(),None);name=next(x for x in z.namelist()if x.endswith('.xlsx'));s=openpyxl.load_workbook(io.BytesIO(z.read(name))).active;ck(sid+' assigned row count',s.max_row-1,num);ck(sid+' RFQ identities',[s.cell(i,1).value for i in range(2,s.max_row+1)],['RFQ-L00002']if num==1 else['RFQ-L00001','RFQ-L00002','RFQ-L00003','RFQ-L00004']);ck(sid+' correct RFQ quantities',[s.cell(i,4).value for i in range(2,s.max_row+1)],[25]if num==1 else[10,25,4,6]);ck(sid+' supplier requested prices blank',[s.cell(i,6).value for i in range(2,s.max_row+1)],[None]*num);ck(sid+' no competing party data',not any(v in str(list(s.values))for v in ['U24-A','U24-B','U24-CP-C']if v!=sid.split()[0]),True);ck(sid+' no buyer award/reason exported',not any(v in str(list(s.values))for v in ['完全虚构：乙方交付快','非最低价原因','人工已选']),True);actual={Path(n).name:hashlib.sha256(z.read(n)).hexdigest()for n in z.namelist()if n.endswith('.pdf')};expected={n:hashlib.sha256((R/'fixtures'/n).read_bytes()).hexdigest()for n in pdfs};ck(sid+' assigned PDFs exact bytes and scope',actual,expected)
+
+supplier('U24-A',(R/'downloads/C09-first-supplier-A.zip').read_bytes(),4,pdfNames)
