@@ -1,0 +1,104 @@
+{
+  "verifiedUTC": "2026-10-20T04:43:28.037Z",
+  "pr": {
+    "url": "https://github.com/yudacheng666/SRM_System/pull/32",
+    "number": 32,
+    "state": "open",
+    "merged": false,
+    "mergeable": true,
+    "draft": true,
+    "body": "## Summary / 摘要\n\nFixes the residual P3-S4-01 found in [independent evidence PR #31](https://github.com/yudacheng666/SRM_System/pull/31).\n\n- Shows S4 backup blocking reasons directly beside the S4 download action, independent of the collapsed project-operations drawer or off-screen global status.\n- Clears stale blocking feedback after autosave reports no pending changes.\n- Adds a real-browser regression test for visible dirty-state feedback and clearing it after autosave.\n\n## Validation / 验证\n\nAwait GitHub Actions on this exact PR HEAD, then run Codex Cloud TEST-ONLY independent acceptance. Do not infer pass from code review alone.\n\n## Safety boundary / 边界\n\nNo changes to main; no merge. Keep PR #30 and evidence PR #31 open pending independent retest.",
+    "title": "fix(s4): keep backup-block feedback visible",
+    "base": "fix/20261020-s4-backup-dirty-guard",
+    "base_sha": "69f660cb2944e278a1e12b4824d8532b0fe6c7c3",
+    "head": "fix/20261020-s4-visible-block-feedback",
+    "head_sha": "a0edd9a753733c738360fc437d0a3ee4a29144e4",
+    "head_repo_id": 1392690011,
+    "head_repo_full_name": "yudacheng666/SRM_System",
+    "merge_commit_sha": "c8da9d530b47f716286b674793d5bec809e8d8b1",
+    "user": {
+      "login": "yudacheng666",
+      "name": "yudacheng666",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+      "id": 227731428
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "comments": [
+      {
+        "url": "https://github.com/yudacheng666/SRM_System/pull/32#issuecomment-6283266243",
+        "body": "## Codex Cloud TEST-ONLY — CI 门槛失败，独立验收停止 / CI gate failed; UAT not started\n\n核对时间：2026-10-20（UTC）。已读取本 PR 说明、diff 和评论（开始时为空），并持续检查至两个作业结束。\n\n**目标 HEAD 与实际本地 checkout 均为 `ea604437e12a38126540f36ddecea91d660c8fca`**；结束时 PR HEAD 未变化，仍 open/Draft、未合并。\n\n### GitHub Actions 最终事实\n\n[SRM S3/S4 Regression #138 / run39367964898](https://github.com/yudacheng666/SRM_System/actions/runs/39367964898) 总结论 **FAILURE**：\n\n| 作业 | 最终结果 |\n|---|---|\n| [Windows — SQLite S4 restore and supplier ZIP regression](https://github.com/yudacheng666/SRM_System/actions/runs/39367964898/job/118449035969) | **SUCCESS** |\n| [Linux — Synthetic Chromium acceptance](https://github.com/yudacheng666/SRM_System/actions/runs/39367964898/job/118449035838) | **FAILURE**，`npm run test:e2e` 退出1 |\n\nLinux 日志：Python43成功、Node10成功；浏览器 **43 passed /1 failed**。该运行由候选HEAD关联的PR触发，日志checkout的是合成merge `24f871236984509ba0d63a5e8e09ed743b2c41fd`（ea604437合入69f660cb）。本地准备的独立worktree是准确候选本身；**没有运行这个worktree的产品或浏览器**。不把PR合成merge冒称为独立实测产品SHA。只要关联阻断性CI存在失败，便不满足本次开始条件。\n\n### 具体失败：新测试44的自动保存状态断言\n\n`prototype/m1-lite/tests/e2e/acceptance.spec.cjs:594`：\n\n```text\n44 S4 blocked-download reason stays visible beside the action\nLocator: #pilotAutosaveStatus\nExpected substring: 无待保存修改\nReceived: 自动保存：已自动保存第 2 版（4:12:57 AM）\nTimeout: 6000ms\n43 passed / 1 failed\n```\n\n调用日志先看到“存在未保存修改，完整备份已暂停”，随后看到“已自动保存第2版”。这证明了 **CI在这个文案断言处失败**；**不是独立浏览器复现证据**。测试在594行失败，595行 `expect(feedback).toBeHidden()` 尚未执行，因此无法据此宣布“自动保存后提示已清除”或“只是修改断言就能解决”。产品提示是否正确清除、是否仅为测试预期不匹配，仍需开发者分析并通过CI后再独立验证；目前不作根因定论。\n\n此外，上传证据步骤日志明确报告：\n\n```text\nFailed to CreateArtifact: Artifact storage quota has been hit.\nUnable to upload any new artifacts.\n```\n\n本run的artifact列表查询为 **[]**。日志中虽列出失败截图、server-log和trace的runner本地路径，但没有成功上传的artifact，不能提供虚构截图/trace下载链接，也不能把这个配额错误当成上述浏览器断言失败的根因。本轮未清理任何既有artifact或更改CI。\n\n### 本HEAD的独立验收状态\n\n| 独立目标 | 状态 |\n|---|---|\n| P3-S4-01：项目区收起+页面滚动+真实未保存时，按钮附近可见提示 | **NOT TESTED** |\n| 自动保存完成后旧提示清除 | **NOT TESTED** |\n| OBS-01快速重复下载 | **NOT TESTED** |\n| 真实保存进行中保护 | **NOT TESTED** |\n| ZIP/SQLite全部历史/PDF完整性及空目录恢复/非空安全拒绝 | **NOT TESTED** |\n| PR24并列最低价、非最低理由、待核对、报价历史与保存恢复关键业务 | **NOT TESTED** |\n\n遵守用户明确要求“CI失败则停止”，**未启动独立产品服务、未运行本地测试或Chromium、未产生本轮采购数据/截图/trace，不创建冒称已完成独立验收的Draft证据PR**。这里只进行了只读GitHub/版本核对及本地独立worktree/方法准备，没有执行验收。不能引用PR31旧版本的PASS作为本HEAD通过证据。\n\n请由开发者处理CI失败和artifact上传问题；准确候选的Windows/Linux阻断作业全部成功后，再交接独立验收。**本轮不修改产品代码、原测试、CI或任何开发/main分支，不合并、不关闭、不重跑或删除CI记录。** P3不判PASS，PR32不判通过。\n\n**English:** Candidate HEAD and prepared checkout match `ea604437e12a38126540f36ddecea91d660c8fca`; HEAD remained unchanged. Associated PR CI run39367964898 finished with Windows SUCCESS and Linux FAILURE. Chromium reported43 passed/1 failed: new test44 expected “无待保存修改” at acceptance.spec.cjs:594 but received “已自动保存第2版”; the subsequent feedback-hidden assertion was never reached. This does not establish whether the product clearing logic or only the test expectation is wrong. CI evidence upload separately hit artifact storage quota; the run has no downloadable artifacts. Following the explicit stop-on-CI-failure rule, **no independent product/browser test was started; every independent target remains NOT TESTED**, and no acceptance evidence PR was fabricated. No product/test/CI/development/main edits, merges or closures.\n",
+        "user": {
+          "login": "yudacheng666",
+          "name": "yudacheng666",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+          "id": 227731428
+        },
+        "id": 6283266243,
+        "pull_request_review_id": null,
+        "in_reply_to_id": null,
+        "created_at": "2026-10-20T04:17:39Z",
+        "updated_at": "2026-10-20T04:17:39Z",
+        "review": null,
+        "side": null,
+        "line": null,
+        "start_line": null,
+        "path": null
+      },
+      {
+        "url": "https://github.com/yudacheng666/SRM_System/pull/32#issuecomment-6283341861",
+        "body": "## P3-S4-01 的 CI FAIL 定向修复（2026-10-20）\n\n收到 [Codex 对旧候选 `ea604437...` 的 CI 定位](https://github.com/yudacheng666/SRM_System/pull/32#issuecomment-6283266243)：Windows 成功、Linux Chromium **43 PASS / 1 FAIL**，失败在新增测试 44 的保存文案断言，后续清除反馈断言尚未执行；独立验收未启动。历史 [失败 CI #39367964898](https://github.com/yudacheng666/SRM_System/actions/runs/39367964898) 不应计为通过。\n\n**修复不是只改断言**：\n- 产品：原备份阻止反馈只在 autosave 状态文案包含“无待保存修改”时清除，而正常保存成功显示“已自动保存第 N 版”。现在改为仅在**真实 SQLite PUT 已成功且 `dirty=false`** 时调用 `s4DownloadNotice(\"\")` 清除过期阻止提示，不能仅靠文案判断。\n- 产品：阻止原因在备份按钮旁显示时，使用 `scrollIntoView({block:\"nearest\"})` 保证项目区折叠或页面滚动后用户仍能看到消息。\n- 测试：改为在已折叠项目抽屉、1366×768、滚动备份按钮进入视口的真实场景中验证原因的 **bounding rect 确实在视口内**；等待合法“已自动保存第”提示，检查警告隐藏、按钮恢复可用。移除错误的“必须显示无待保存修改”字面断言。\n- 不修改业务数据库模型、S4 ZIP 创建和恢复、既有报价/定标规则，不删除任何 CI 日志或测试证据。\n\n**当前准确待测 HEAD：`a0edd9a753733c738360fc437d0a3ee4a29144e4`**。两条 CI 均已启动：\n- [PR #39369250226](https://github.com/yudacheng666/SRM_System/actions/runs/39369250226)\n- [Push #39369245980](https://github.com/yudacheng666/SRM_System/actions/runs/39369245980)\n\n请严格待这两条对同一 HEAD 的 Windows 与 Linux 作业均最终 SUCCESS 后，才由 Codex Cloud 对照 PR #31 P3-S4-01 做 TEST-ONLY 独立复验。若任一 FAIL，仍停止验收并回报。当前 PR 继续 Draft、不得合并 main。",
+        "user": {
+          "login": "yudacheng666",
+          "name": "yudacheng666",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+          "id": 227731428
+        },
+        "id": 6283341861,
+        "pull_request_review_id": null,
+        "in_reply_to_id": null,
+        "created_at": "2026-10-20T04:24:18Z",
+        "updated_at": "2026-10-20T04:24:18Z",
+        "review": null,
+        "side": null,
+        "line": null,
+        "start_line": null,
+        "path": null
+      },
+      {
+        "url": "https://github.com/yudacheng666/SRM_System/pull/32#issuecomment-6283410152",
+        "body": "## P3-S4-01：新 HEAD CI 全部成功，开始 Codex TEST-ONLY 独立复验\n\n**正式产品修复候选 HEAD：`a0edd9a753733c738360fc437d0a3ee4a29144e4`**。PR #32 仍 Draft，base 为 PR #30 修复分支，没有合并任何 PR。\n\n上一个候选 `ea604437...` 因新测试 44 期待“无待保存修改”而 **43 PASS / 1 FAIL**。修复时进一步确认了**真实产品问题**：完成 SQLite 保存实际显示“已自动保存第 N 版”，旧提示清理逻辑只匹配“无待保存修改”，因而可能留下过期警告。已改为仅在真实 SQLite PUT 成功且 `dirty=false` 后清除阻止提示；还确保提示出现后通过 `scrollIntoView({block:\"nearest\"})` 进入可视范围。真实 Chromium 新测试同时覆盖折叠项目操作区、1366×768 下视口内警告、保存成功清除以及按钮解禁。\n\n### 新 CI 门槛 — 已全部 SUCCESS\n- [PR run #39369250226](https://github.com/yudacheng666/SRM_System/actions/runs/39369250226)：Windows **SUCCESS**、Linux Chromium **SUCCESS**。\n- [Push run #39369245980](https://github.com/yudacheng666/SRM_System/actions/runs/39369245980)：Windows **SUCCESS**、Linux Chromium **SUCCESS**。\n- 两条是同一 S3/S4 回归工作流的 PR/push 两次运行，**不是两种独立测试套件**，但结果均验证当前准确 HEAD。\n\n### Codex Cloud 下一轮：只测试，不修复\n1. Checkout 准确 HEAD `a0edd9a753733c738360fc437d0a3ee4a29144e4`，使用真正 M1-Lite Python + SQLite 和隔离虚构数据。\n2. 逐项复现 [PR #31 P3-S4-01](https://github.com/yudacheng666/SRM_System/pull/31)：项目操作区收起，页面在 1366×768 下滚动到 S4 备份按钮；真实未保存修改时点击，**按钮旁原因可见且其 bounding rect 进入当前视口**，无备份 API 请求；正常完成自动保存后应清除**过期的未保存阻止提示**并允许再次备份。\n3. 验证真实保存失败/冲突/服务不可用时**不能**错误清除警告；运行中保护不得被绕过。\n4. 回归 PR #30 原 OBS-01 快速切换 RFQ/导航后下载，ZIP/SQLite/PDF 完整性、空目录恢复/非空拒绝；并列最低价选择/理由、人工待核对和报价历史关键业务回归。保留不足项目为 NOT TESTED，不能推断通过。\n5. 产出中英双语报告、逐次结果、三分辨率截图及日志/trace，存独立测试证据分支 + Draft 证据 PR，**回评 PR #32** 并链接 PR #30。\n6. 严格 TEST-ONLY：不改产品/原测试/CI/开发分支/main，不合并或关闭任何 PR。视觉+业务分别给出 PASS/FAIL/NOT TESTED，禁止将 CI 代替独立测试。\n\n**当前仅 CI SUCCESS，P3-S4-01 独立验收仍未完成。**",
+        "user": {
+          "login": "yudacheng666",
+          "name": "yudacheng666",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+          "id": 227731428
+        },
+        "id": 6283410152,
+        "pull_request_review_id": null,
+        "in_reply_to_id": null,
+        "created_at": "2026-10-20T04:30:09Z",
+        "updated_at": "2026-10-20T04:30:09Z",
+        "review": null,
+        "side": null,
+        "line": null,
+        "start_line": null,
+        "path": null
+      }
+    ],
+    "created_at": "2026-10-20T04:07:55Z",
+    "updated_at": "2026-10-20T04:30:09Z",
+    "closed_at": null,
+    "merged_at": null,
+    "commits": 7,
+    "changed_files": 3,
+    "additions": 65,
+    "deletions": 6,
+    "display_url": "https://github.com/yudacheng666/SRM_System/pull/32",
+    "display_title": "fix(s4): keep backup-block feedback visible"
+  }
+}

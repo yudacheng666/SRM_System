@@ -1,0 +1,14 @@
+from pathlib import Path
+import json,csv,io,zipfile,hashlib,sqlite3,openpyxl
+r=Path('/tmp/a0');out=[]
+def ck(n,a,e):
+ p=a==e;out.append(dict(label=n,actual=sorted(a)if isinstance(a,set)else a,expected=sorted(e)if isinstance(e,set)else e,passed=p));print('PASS'if p else'FAIL',n)
+for name,totals in [('common-scope.csv',['638.00','692.00']),('common-scope-after-review.csv',['638.00','717.00'])]:
+ p=r/'downloads'/name;ck(name+' BOM',p.read_bytes()[:3].hex(),'efbbbf');rows=list(csv.reader(io.StringIO(p.read_text(encoding='utf-8-sig'))));ck(name+' RFQ line identity',[x[1]for x in rows[1:4]],['RFQ-L00001','RFQ-L00002','RFQ-L00004']);ck(name+' totals',[rows[-1][7],rows[-1][9]],totals);ck(name+' qty times actual price',all(round(float(x[4])*float(x[6]),2)==float(x[7])and round(float(x[4])*float(x[8]),2)==float(x[9])for x in rows[1:4]),True)
+w=openpyxl.load_workbook(r/'downloads/business.xlsx');ck('business sheets',w.sheetnames,['询价物料','供应商','报价明细']);ck('business counts',[s.max_row-1 for s in w],[4,3,12]);rr=list(w['报价明细'].values)[1:];ck('exported A V1 and V2',[x[9]for x in rr if x[0]=='U24-A'and x[7]=='RFQ-L00001'],[10,9])
+for name,who,detail in [('comparison-report.xlsx','虚构乙方，快速交付测试供应商',13),('comparison-after-review.xlsx','虚构丙方同价复核供应商',17)]:
+ w=openpyxl.load_workbook(r/'downloads'/name);s=w.worksheets[0];ck(name+' selected-group history excludes C',set(x[0]for x in list(w.worksheets[1].values)[1:]),{'U24-A','U24-B'});ck(name+' shape',[(s.max_row,s.max_column)for s in w],[(6,22),(detail,26)]);ck(name+' tied buyer choice',s['M3'].value,who);ck(name+' tied exception reason absent',s['O3'].value,None);ck(name+' higher reason retained',bool(s['O5'].value),True);ck(name+' noquote not zero',[s['L4'].value,s['N4'].value],[None,None]);ck(name+' real formulas',[s['R2'].value,s['U5'].value,s['R6'].value],['=ROUND(Q2*C2,2)','=ROUND(T5*C5,2)','=SUMIF(K2:K5,"是",R2:R5)']);ck(name+' price8vs12',[s['Q5'].value,s['T5'].value],[8,12])
+for v in ['A','B']:
+ with zipfile.ZipFile(r/('downloads/supplier-'+v+'.zip'))as z:
+  n=next(x for x in z.namelist()if x.endswith('.xlsx'));s=openpyxl.load_workbook(io.BytesIO(z.read(n))).active;ck(v+' supplier rows',s.max_row-1,4);ck(v+' blank prices',[s.cell(i,6).value for i in range(2,6)],[None]*4);ck(v+' private ERP absent','ANON-ERP'not in str(list(s.values)),True);ck(v+' competitor absent',('U24-'+('B'if v=='A'else'A'))not in str(list(s.values)),True);ck(v+' unchanged PDF',hashlib.sha256(z.read('U24-D16_A.pdf')).hexdigest(),hashlib.sha256((r/'fixtures/U24-D16_A.pdf').read_bytes()).hexdigest())
+(r/'evidence/business-file-validation.json').write_text(json.dumps(out,ensure_ascii=False,indent=2));(r/'evidence/business-file-validation-source.txt').write_text(Path(__file__).read_text());assert all(x['passed']for x in out)
