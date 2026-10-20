@@ -1,0 +1,3910 @@
+[
+  {
+    "id": "O01",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:41:46.139Z",
+    "elapsedMs": 702,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:41:46.131Z",
+      "mono": 17966.300000000745,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 294.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:41:46.248Z",
+      "mono": 18083.699999999255,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 291.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:41:46.682Z",
+      "mono": 18517.89999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": -0.15625,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:41:46.711Z",
+      "mono": 18546.89999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": -0.15625,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:41:46.585Z",
+        "trial": "O01",
+        "kind": "gate",
+        "mono": 18420.599999997765,
+        "trialAtEvent": "O01",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:41:46.615Z",
+        "trial": "O01",
+        "kind": "request",
+        "id": 5,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:41:46.660Z",
+        "trial": "O01",
+        "kind": "request",
+        "id": 6,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064146_c602082d.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:41:46.647Z",
+        "trial": "O01",
+        "kind": "response",
+        "id": 5,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O01",
+        "headersMs": 32
+      },
+      {
+        "time": "2026-10-20T06:41:46.671Z",
+        "trial": "O01",
+        "kind": "response",
+        "id": 6,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064146_c602082d.zip",
+        "status": 200,
+        "requestTrial": "O01",
+        "headersMs": 11
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 361,
+    "adminToGateMs": 372.79999999701977,
+    "file": "obs-O01.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -274.65625,
+        "bottom": -247.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:41:46.680Z",
+        "trial": "O01",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/00774472-78bc-4970-9773-9148bc42328f",
+        "suggested": "SRM_FULL_20261020_064146_c602082d.zip"
+      }
+    ]
+  },
+  {
+    "id": "O02",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:41:49.166Z",
+    "elapsedMs": 808,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:41:49.151Z",
+      "mono": 20986.199999999255,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 294.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:41:49.315Z",
+      "mono": 21150.199999999255,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 239.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:41:49.738Z",
+      "mono": 21573.599999997765,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 294.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:41:49.825Z",
+      "mono": 21661.099999997765,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 294.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:41:49.537Z",
+        "trial": "O02",
+        "kind": "gate",
+        "mono": 21372.599999997765,
+        "trialAtEvent": "O02",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:41:49.562Z",
+        "trial": "O02",
+        "kind": "request",
+        "id": 11,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:41:49.730Z",
+        "trial": "O02",
+        "kind": "request",
+        "id": 12,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064149_57934d43.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:41:49.635Z",
+        "trial": "O02",
+        "kind": "response",
+        "id": 11,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O02",
+        "headersMs": 73
+      },
+      {
+        "time": "2026-10-20T06:41:49.733Z",
+        "trial": "O02",
+        "kind": "response",
+        "id": 12,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064149_57934d43.zip",
+        "status": 200,
+        "requestTrial": "O02",
+        "headersMs": 3
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 282,
+    "adminToGateMs": 282.5999999977648,
+    "file": "obs-O02.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": true,
+      "rect": {
+        "top": 20.34375,
+        "bottom": 47.734375
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:41:49.746Z",
+        "trial": "O02",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/e2f5f4fd-342b-4151-897c-91250de1e702",
+        "suggested": "SRM_FULL_20261020_064149_57934d43.zip"
+      }
+    ]
+  },
+  {
+    "id": "O03",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:41:52.444Z",
+    "elapsedMs": 1161,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:41:52.427Z",
+      "mono": 24262.5,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 294.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:41:52.703Z",
+      "mono": 24538.89999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 193.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:41:53.338Z",
+      "mono": 25173.5,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:41:53.408Z",
+      "mono": 25243.599999997765,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:41:52.998Z",
+        "trial": "O03",
+        "kind": "gate",
+        "mono": 24833.800000000745,
+        "trialAtEvent": "O03",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:41:53.048Z",
+        "trial": "O03",
+        "kind": "request",
+        "id": 17,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:41:53.105Z",
+        "trial": "O03",
+        "kind": "request",
+        "id": 18,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064153_bf892a07.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:41:53.096Z",
+        "trial": "O03",
+        "kind": "response",
+        "id": 17,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O03",
+        "headersMs": 48
+      },
+      {
+        "time": "2026-10-20T06:41:53.129Z",
+        "trial": "O03",
+        "kind": "response",
+        "id": 18,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064153_bf892a07.zip",
+        "status": 200,
+        "requestTrial": "O03",
+        "headersMs": 24
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 444.19999999925494,
+    "adminToGateMs": 449.6000000014901,
+    "file": "obs-O03.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:41:53.252Z",
+        "trial": "O03",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/2eca91f6-24d2-4aa7-b74d-c89839fc50b2",
+        "suggested": "SRM_FULL_20261020_064153_bf892a07.zip"
+      }
+    ]
+  },
+  {
+    "id": "O04",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:41:57.111Z",
+    "elapsedMs": 770,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:41:57.102Z",
+      "mono": 28937.300000000745,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:41:57.321Z",
+      "mono": 29157.099999997765,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:41:57.717Z",
+      "mono": 29553.099999997765,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:41:57.754Z",
+      "mono": 29589.800000000745,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:41:57.631Z",
+        "trial": "O04",
+        "kind": "gate",
+        "mono": 29466.699999999255,
+        "trialAtEvent": "O04",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:41:57.663Z",
+        "trial": "O04",
+        "kind": "request",
+        "id": 23,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:41:57.669Z",
+        "trial": "O04",
+        "kind": "request",
+        "id": 24,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064157_1b27627d.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:41:57.668Z",
+        "trial": "O04",
+        "kind": "response",
+        "id": 23,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O04",
+        "headersMs": 5
+      },
+      {
+        "time": "2026-10-20T06:41:57.675Z",
+        "trial": "O04",
+        "kind": "response",
+        "id": 24,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064157_1b27627d.zip",
+        "status": 200,
+        "requestTrial": "O04",
+        "headersMs": 6
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 454.80000000074506,
+    "adminToGateMs": 457.19999999925494,
+    "file": "obs-O04.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:41:57.682Z",
+        "trial": "O04",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/89c3bb26-2eab-436c-9270-d4155afc4eab",
+        "suggested": "SRM_FULL_20261020_064157_1b27627d.zip"
+      }
+    ]
+  },
+  {
+    "id": "O05",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:00.335Z",
+    "elapsedMs": 892,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:00.315Z",
+      "mono": 32150.39999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:00.583Z",
+      "mono": 32418.599999997765,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:00.942Z",
+      "mono": 32777.39999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:00.994Z",
+      "mono": 32830.099999997765,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:00.700Z",
+        "trial": "O05",
+        "kind": "gate",
+        "mono": 32535.699999999255,
+        "trialAtEvent": "O05",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:00.739Z",
+        "trial": "O05",
+        "kind": "request",
+        "id": 29,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:00.820Z",
+        "trial": "O05",
+        "kind": "request",
+        "id": 30,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064200_48529f13.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:00.813Z",
+        "trial": "O05",
+        "kind": "response",
+        "id": 29,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O05",
+        "headersMs": 74
+      },
+      {
+        "time": "2026-10-20T06:42:00.840Z",
+        "trial": "O05",
+        "kind": "response",
+        "id": 30,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064200_48529f13.zip",
+        "status": 200,
+        "requestTrial": "O05",
+        "headersMs": 20
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 222.80000000074506,
+    "adminToGateMs": 223.5,
+    "file": "obs-O05.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:00.847Z",
+        "trial": "O05",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/170aa881-3174-4d85-a85b-b7ca5ec702db",
+        "suggested": "SRM_FULL_20261020_064200_48529f13.zip"
+      }
+    ]
+  },
+  {
+    "id": "O06",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:04.171Z",
+    "elapsedMs": 641,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:04.155Z",
+      "mono": 35990.300000000745,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:04.258Z",
+      "mono": 36093.5,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:04.448Z",
+      "mono": 36283.599999997765,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:04.500Z",
+      "mono": 36336,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:04.350Z",
+        "trial": "O06",
+        "kind": "gate",
+        "mono": 36185.89999999851,
+        "trialAtEvent": "O06",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:04.363Z",
+        "trial": "O06",
+        "kind": "request",
+        "id": 35,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:04.402Z",
+        "trial": "O06",
+        "kind": "request",
+        "id": 36,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064204_f5159795.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:04.383Z",
+        "trial": "O06",
+        "kind": "response",
+        "id": 35,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O06",
+        "headersMs": 20
+      },
+      {
+        "time": "2026-10-20T06:42:04.431Z",
+        "trial": "O06",
+        "kind": "response",
+        "id": 36,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064204_f5159795.zip",
+        "status": 200,
+        "requestTrial": "O06",
+        "headersMs": 29
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 122.60000000149012,
+    "adminToGateMs": 123.80000000074506,
+    "file": "obs-O06.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:04.442Z",
+        "trial": "O06",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/9bc91df4-9c4b-4c3d-9f79-d5462a617c24",
+        "suggested": "SRM_FULL_20261020_064204_f5159795.zip"
+      }
+    ]
+  },
+  {
+    "id": "O07",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:08.783Z",
+    "elapsedMs": 968,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:08.755Z",
+      "mono": 40590.699999999255,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:08.942Z",
+      "mono": 40777.300000000745,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:09.398Z",
+      "mono": 41233.699999999255,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:09.491Z",
+      "mono": 41327,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:09.110Z",
+        "trial": "O07",
+        "kind": "gate",
+        "mono": 40945.39999999851,
+        "trialAtEvent": "O07",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:09.152Z",
+        "trial": "O07",
+        "kind": "request",
+        "id": 41,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:09.261Z",
+        "trial": "O07",
+        "kind": "request",
+        "id": 42,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064209_ebb069a9.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:09.168Z",
+        "trial": "O07",
+        "kind": "response",
+        "id": 41,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O07",
+        "headersMs": 16
+      },
+      {
+        "time": "2026-10-20T06:42:09.262Z",
+        "trial": "O07",
+        "kind": "response",
+        "id": 42,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064209_ebb069a9.zip",
+        "status": 200,
+        "requestTrial": "O07",
+        "headersMs": 1
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 227.5,
+    "adminToGateMs": 228.19999999925494,
+    "file": "obs-O07.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:09.319Z",
+        "trial": "O07",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/99ca4937-445f-4c2e-bdaf-20885a49f429",
+        "suggested": "SRM_FULL_20261020_064209_ebb069a9.zip"
+      }
+    ]
+  },
+  {
+    "id": "O08",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:15.390Z",
+    "elapsedMs": 1781,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:15.377Z",
+      "mono": 47212.5,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:15.805Z",
+      "mono": 47641.199999999255,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:16.825Z",
+      "mono": 48660.39999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:16.936Z",
+      "mono": 48771.89999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:16.415Z",
+        "trial": "O08",
+        "kind": "gate",
+        "mono": 48250.800000000745,
+        "trialAtEvent": "O08",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:16.617Z",
+        "trial": "O08",
+        "kind": "request",
+        "id": 47,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:16.630Z",
+        "trial": "O08",
+        "kind": "request",
+        "id": 48,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064216_1215b294.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:16.630Z",
+        "trial": "O08",
+        "kind": "response",
+        "id": 47,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O08",
+        "headersMs": 14
+      },
+      {
+        "time": "2026-10-20T06:42:16.632Z",
+        "trial": "O08",
+        "kind": "response",
+        "id": 48,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064216_1215b294.zip",
+        "status": 200,
+        "requestTrial": "O08",
+        "headersMs": 2
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 795.5,
+    "adminToGateMs": 796.8000000007451,
+    "file": "obs-O08.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:16.632Z",
+        "trial": "O08",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/35e12312-b08a-4767-8a74-2440b43f0ac6",
+        "suggested": "SRM_FULL_20261020_064216_1215b294.zip"
+      }
+    ]
+  },
+  {
+    "id": "O09",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:21.275Z",
+    "elapsedMs": 1375,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:21.253Z",
+      "mono": 53088.39999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:21.464Z",
+      "mono": 53300.099999997765,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:21.999Z",
+      "mono": 53834.5,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": true,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "正在生成并校验 S4 完整备份……",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:22.253Z",
+      "mono": 54089,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:21.681Z",
+        "trial": "O09",
+        "kind": "gate",
+        "mono": 53517.099999997765,
+        "trialAtEvent": "O09",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:21.715Z",
+        "trial": "O09",
+        "kind": "request",
+        "id": 53,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:21.789Z",
+        "trial": "O09",
+        "kind": "request",
+        "id": 54,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064221_61123179.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:21.775Z",
+        "trial": "O09",
+        "kind": "response",
+        "id": 53,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O09",
+        "headersMs": 60
+      },
+      {
+        "time": "2026-10-20T06:42:21.866Z",
+        "trial": "O09",
+        "kind": "response",
+        "id": 54,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064221_61123179.zip",
+        "status": 200,
+        "requestTrial": "O09",
+        "headersMs": 77
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 301.6000000014901,
+    "adminToGateMs": 306.69999999925494,
+    "file": "obs-O09.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:22.065Z",
+        "trial": "O09",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/076087b6-c435-4ef9-807d-447da26e2ee2",
+        "suggested": "SRM_FULL_20261020_064221_61123179.zip"
+      }
+    ]
+  },
+  {
+    "id": "O10",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:25.583Z",
+    "elapsedMs": 689,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:25.568Z",
+      "mono": 57403.5,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:25.790Z",
+      "mono": 57625.89999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:25.993Z",
+      "mono": 57828.5,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:26.068Z",
+      "mono": 57903.300000000745,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:25.929Z",
+        "trial": "O10",
+        "kind": "gate",
+        "mono": 57765,
+        "trialAtEvent": "O10",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:25.947Z",
+        "trial": "O10",
+        "kind": "request",
+        "id": 59,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:25.977Z",
+        "trial": "O10",
+        "kind": "request",
+        "id": 60,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064225_d76981f2.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:25.963Z",
+        "trial": "O10",
+        "kind": "response",
+        "id": 59,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O10",
+        "headersMs": 16
+      },
+      {
+        "time": "2026-10-20T06:42:25.978Z",
+        "trial": "O10",
+        "kind": "response",
+        "id": 60,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064225_d76981f2.zip",
+        "status": 200,
+        "requestTrial": "O10",
+        "headersMs": 1
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 217.69999999925494,
+    "adminToGateMs": 218.30000000074506,
+    "file": "obs-O10.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:26.016Z",
+        "trial": "O10",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/494c483a-4a90-4f48-b4bb-d9bdd4ac08bc",
+        "suggested": "SRM_FULL_20261020_064225_d76981f2.zip"
+      }
+    ]
+  },
+  {
+    "id": "O11",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:30.760Z",
+    "elapsedMs": 939,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:30.739Z",
+      "mono": 62575,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:30.946Z",
+      "mono": 62782.099999997765,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:31.351Z",
+      "mono": 63187,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:31.445Z",
+      "mono": 63280.199999999255,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:31.122Z",
+        "trial": "O11",
+        "kind": "gate",
+        "mono": 62958.099999997765,
+        "trialAtEvent": "O11",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:31.144Z",
+        "trial": "O11",
+        "kind": "request",
+        "id": 66,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:31.191Z",
+        "trial": "O11",
+        "kind": "request",
+        "id": 67,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064231_b949a4e9.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:31.191Z",
+        "trial": "O11",
+        "kind": "response",
+        "id": 66,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O11",
+        "headersMs": 47
+      },
+      {
+        "time": "2026-10-20T06:42:31.198Z",
+        "trial": "O11",
+        "kind": "response",
+        "id": 67,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064231_b949a4e9.zip",
+        "status": 200,
+        "requestTrial": "O11",
+        "headersMs": 7
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 262.19999999925494,
+    "adminToGateMs": 263.0999999977648,
+    "file": "obs-O11.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:31.270Z",
+        "trial": "O11",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/2faa4609-186a-42c4-8276-57e8b1e7d849",
+        "suggested": "SRM_FULL_20261020_064231_b949a4e9.zip"
+      }
+    ]
+  },
+  {
+    "id": "O12",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:35.330Z",
+    "elapsedMs": 737,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:35.317Z",
+      "mono": 67152.39999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:35.527Z",
+      "mono": 67363.09999999776,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:35.824Z",
+      "mono": 67659.30000000075,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:35.922Z",
+      "mono": 67757.30000000075,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:35.632Z",
+        "trial": "O12",
+        "kind": "gate",
+        "mono": 67467.89999999851,
+        "trialAtEvent": "O12",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:35.656Z",
+        "trial": "O12",
+        "kind": "request",
+        "id": 72,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:35.691Z",
+        "trial": "O12",
+        "kind": "request",
+        "id": 73,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064235_9dd97cc4.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:35.676Z",
+        "trial": "O12",
+        "kind": "response",
+        "id": 72,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O12",
+        "headersMs": 20
+      },
+      {
+        "time": "2026-10-20T06:42:35.705Z",
+        "trial": "O12",
+        "kind": "response",
+        "id": 73,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064235_9dd97cc4.zip",
+        "status": 200,
+        "requestTrial": "O12",
+        "headersMs": 14
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 204.5,
+    "adminToGateMs": 206.09999999776483,
+    "file": "obs-O12.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:35.715Z",
+        "trial": "O12",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/69cbcb98-a1db-4ba9-84c5-8ea709f6b265",
+        "suggested": "SRM_FULL_20261020_064235_9dd97cc4.zip"
+      }
+    ]
+  },
+  {
+    "id": "O13",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:37.960Z",
+    "elapsedMs": 635,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:37.947Z",
+      "mono": 69782.30000000075,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:38.064Z",
+      "mono": 69899.39999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:38.313Z",
+      "mono": 70148.89999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": true,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "正在生成并校验 S4 完整备份……",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:38.409Z",
+      "mono": 70244.19999999925,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:38.192Z",
+        "trial": "O13",
+        "kind": "gate",
+        "mono": 70028,
+        "trialAtEvent": "O13",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:38.208Z",
+        "trial": "O13",
+        "kind": "request",
+        "id": 78,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:38.313Z",
+        "trial": "O13",
+        "kind": "request",
+        "id": 79,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064238_a3167d7a.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:38.276Z",
+        "trial": "O13",
+        "kind": "response",
+        "id": 78,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O13",
+        "headersMs": 68
+      },
+      {
+        "time": "2026-10-20T06:42:38.323Z",
+        "trial": "O13",
+        "kind": "response",
+        "id": 79,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064238_a3167d7a.zip",
+        "status": 200,
+        "requestTrial": "O13",
+        "headersMs": 10
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 160.40000000223517,
+    "adminToGateMs": 161.10000000149012,
+    "file": "obs-O13.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:38.327Z",
+        "trial": "O13",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/b9ad90a0-e76b-4e4a-9719-24b3171a5fda",
+        "suggested": "SRM_FULL_20261020_064238_a3167d7a.zip"
+      }
+    ]
+  },
+  {
+    "id": "O14",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:40.594Z",
+    "elapsedMs": 576,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:40.577Z",
+      "mono": 72412.89999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:40.706Z",
+      "mono": 72541.59999999776,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:40.934Z",
+      "mono": 72769.39999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:41.025Z",
+      "mono": 72861,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:40.821Z",
+        "trial": "O14",
+        "kind": "gate",
+        "mono": 72656.30000000075,
+        "trialAtEvent": "O14",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:40.832Z",
+        "trial": "O14",
+        "kind": "request",
+        "id": 84,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:40.865Z",
+        "trial": "O14",
+        "kind": "request",
+        "id": 85,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064240_ea1674a5.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:40.862Z",
+        "trial": "O14",
+        "kind": "response",
+        "id": 84,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O14",
+        "headersMs": 30
+      },
+      {
+        "time": "2026-10-20T06:42:40.912Z",
+        "trial": "O14",
+        "kind": "response",
+        "id": 85,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064240_ea1674a5.zip",
+        "status": 200,
+        "requestTrial": "O14",
+        "headersMs": 47
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 162.80000000074506,
+    "adminToGateMs": 165.40000000223517,
+    "file": "obs-O14.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:40.930Z",
+        "trial": "O14",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/bdce110d-f6af-4d4a-9488-a2a891725b54",
+        "suggested": "SRM_FULL_20261020_064240_ea1674a5.zip"
+      }
+    ]
+  },
+  {
+    "id": "O15",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:43.463Z",
+    "elapsedMs": 498,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:43.454Z",
+      "mono": 75289.30000000075,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:43.543Z",
+      "mono": 75378.30000000075,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:43.751Z",
+      "mono": 75586.89999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:43.787Z",
+      "mono": 75623.19999999925,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:43.643Z",
+        "trial": "O15",
+        "kind": "gate",
+        "mono": 75478.39999999851,
+        "trialAtEvent": "O15",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:43.664Z",
+        "trial": "O15",
+        "kind": "request",
+        "id": 90,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:43.698Z",
+        "trial": "O15",
+        "kind": "request",
+        "id": 91,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064243_fe5fa391.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:43.677Z",
+        "trial": "O15",
+        "kind": "response",
+        "id": 90,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O15",
+        "headersMs": 13
+      },
+      {
+        "time": "2026-10-20T06:42:43.700Z",
+        "trial": "O15",
+        "kind": "response",
+        "id": 91,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064243_fe5fa391.zip",
+        "status": 200,
+        "requestTrial": "O15",
+        "headersMs": 2
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 132,
+    "adminToGateMs": 132.5,
+    "file": "obs-O15.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:43.725Z",
+        "trial": "O15",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/8048e8bc-be80-4b9a-a554-2cfcb3dcbfd0",
+        "suggested": "SRM_FULL_20261020_064243_fe5fa391.zip"
+      }
+    ]
+  },
+  {
+    "id": "O16",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:46.441Z",
+    "elapsedMs": 528,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:46.429Z",
+      "mono": 78264.69999999925,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:46.568Z",
+      "mono": 78403.39999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:46.775Z",
+      "mono": 78610.5,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:46.877Z",
+      "mono": 78712.19999999925,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:46.662Z",
+        "trial": "O16",
+        "kind": "gate",
+        "mono": 78497.39999999851,
+        "trialAtEvent": "O16",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:46.678Z",
+        "trial": "O16",
+        "kind": "request",
+        "id": 96,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:46.731Z",
+        "trial": "O16",
+        "kind": "request",
+        "id": 97,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064246_febc7c86.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:46.728Z",
+        "trial": "O16",
+        "kind": "response",
+        "id": 96,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O16",
+        "headersMs": 50
+      },
+      {
+        "time": "2026-10-20T06:42:46.746Z",
+        "trial": "O16",
+        "kind": "response",
+        "id": 97,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064246_febc7c86.zip",
+        "status": 200,
+        "requestTrial": "O16",
+        "headersMs": 15
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 134.80000000074506,
+    "adminToGateMs": 136.30000000074506,
+    "file": "obs-O16.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:46.755Z",
+        "trial": "O16",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/015323a8-7594-44f7-acf2-b6765494e836",
+        "suggested": "SRM_FULL_20261020_064246_febc7c86.zip"
+      }
+    ]
+  },
+  {
+    "id": "O17",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:47.893Z",
+    "elapsedMs": 296,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:47.887Z",
+      "mono": 79723,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:47.951Z",
+      "mono": 79786.5,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:48.080Z",
+      "mono": 79915.59999999776,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:48.095Z",
+      "mono": 79930.89999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:48.025Z",
+        "trial": "O17",
+        "kind": "gate",
+        "mono": 79860.39999999851,
+        "trialAtEvent": "O17",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:48.038Z",
+        "trial": "O17",
+        "kind": "request",
+        "id": 102,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:48.049Z",
+        "trial": "O17",
+        "kind": "request",
+        "id": 103,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064248_489ced3d.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:48.046Z",
+        "trial": "O17",
+        "kind": "response",
+        "id": 102,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O17",
+        "headersMs": 8
+      },
+      {
+        "time": "2026-10-20T06:42:48.051Z",
+        "trial": "O17",
+        "kind": "response",
+        "id": 103,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064248_489ced3d.zip",
+        "status": 200,
+        "requestTrial": "O17",
+        "headersMs": 2
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 93.89999999850988,
+    "adminToGateMs": 94.89999999850988,
+    "file": "obs-O17.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:48.069Z",
+        "trial": "O17",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/a472c344-3bae-43f5-ab70-a50abb88ae8e",
+        "suggested": "SRM_FULL_20261020_064248_489ced3d.zip"
+      }
+    ]
+  },
+  {
+    "id": "O18",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:49.104Z",
+    "elapsedMs": 311,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:49.095Z",
+      "mono": 80930.69999999925,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:49.176Z",
+      "mono": 81011.30000000075,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:49.273Z",
+      "mono": 81108.19999999925,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": true,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "正在生成并校验 S4 完整备份……",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:49.308Z",
+      "mono": 81143.30000000075,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:49.239Z",
+        "trial": "O18",
+        "kind": "gate",
+        "mono": 81074.59999999776,
+        "trialAtEvent": "O18",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:49.244Z",
+        "trial": "O18",
+        "kind": "request",
+        "id": 108,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:49.265Z",
+        "trial": "O18",
+        "kind": "request",
+        "id": 109,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064249_a7fa8322.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:49.263Z",
+        "trial": "O18",
+        "kind": "response",
+        "id": 108,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O18",
+        "headersMs": 19
+      },
+      {
+        "time": "2026-10-20T06:42:49.275Z",
+        "trial": "O18",
+        "kind": "response",
+        "id": 109,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064249_a7fa8322.zip",
+        "status": 200,
+        "requestTrial": "O18",
+        "headersMs": 10
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 87,
+    "adminToGateMs": 87.69999999925494,
+    "file": "obs-O18.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:49.279Z",
+        "trial": "O18",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/cf6a1c79-85e6-4d5a-b169-959ae545bf66",
+        "suggested": "SRM_FULL_20261020_064249_a7fa8322.zip"
+      }
+    ]
+  },
+  {
+    "id": "O19",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:50.636Z",
+    "elapsedMs": 320,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:50.628Z",
+      "mono": 82463.80000000075,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:50.680Z",
+      "mono": 82515.39999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:50.787Z",
+      "mono": 82622.39999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": true,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "正在生成并校验 S4 完整备份……",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:50.820Z",
+      "mono": 82656.09999999776,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:50.749Z",
+        "trial": "O19",
+        "kind": "gate",
+        "mono": 82584.5,
+        "trialAtEvent": "O19",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:50.754Z",
+        "trial": "O19",
+        "kind": "request",
+        "id": 114,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:50.771Z",
+        "trial": "O19",
+        "kind": "request",
+        "id": 115,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064250_a9d5222b.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:50.763Z",
+        "trial": "O19",
+        "kind": "response",
+        "id": 114,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O19",
+        "headersMs": 9
+      },
+      {
+        "time": "2026-10-20T06:42:50.781Z",
+        "trial": "O19",
+        "kind": "response",
+        "id": 115,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064250_a9d5222b.zip",
+        "status": 200,
+        "requestTrial": "O19",
+        "headersMs": 10
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 88,
+    "adminToGateMs": 88.69999999925494,
+    "file": "obs-O19.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:50.799Z",
+        "trial": "O19",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/ac3d07da-0ebd-4969-9024-7c5ad9a78da2",
+        "suggested": "SRM_FULL_20261020_064250_a9d5222b.zip"
+      }
+    ]
+  },
+  {
+    "id": "O20",
+    "mode": "RFQ-return-top-admin-immediate",
+    "start": "2026-10-20T06:42:52.525Z",
+    "elapsedMs": 327,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:52.515Z",
+      "mono": 84350.89999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:52.591Z",
+      "mono": 84426.59999999776,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:52.714Z",
+      "mono": 84549.59999999776,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:52.742Z",
+      "mono": 84577.59999999776,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [
+      {
+        "time": "2026-10-20T06:42:52.671Z",
+        "trial": "O20",
+        "kind": "gate",
+        "mono": 84506.59999999776,
+        "trialAtEvent": "O20",
+        "s4Available": true,
+        "busy": false,
+        "dirty": false,
+        "blocked": false,
+        "disabled": false
+      }
+    ],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:52.677Z",
+        "trial": "O20",
+        "kind": "request",
+        "id": 120,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:52.693Z",
+        "trial": "O20",
+        "kind": "request",
+        "id": 121,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064252_f5b9c4b6.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:52.686Z",
+        "trial": "O20",
+        "kind": "response",
+        "id": 120,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O20",
+        "headersMs": 9
+      },
+      {
+        "time": "2026-10-20T06:42:52.705Z",
+        "trial": "O20",
+        "kind": "response",
+        "id": 121,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064252_f5b9c4b6.zip",
+        "status": 200,
+        "requestTrial": "O20",
+        "headersMs": 12
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 108.09999999776483,
+    "adminToGateMs": 108.79999999701977,
+    "file": "obs-O20.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:52.711Z",
+        "trial": "O20",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/ecd32c34-4f4a-4fde-b28a-ab0070bc2446",
+        "suggested": "SRM_FULL_20261020_064252_f5b9c4b6.zip"
+      }
+    ]
+  },
+  {
+    "id": "O21",
+    "mode": "same-path-no-gate-logpoint",
+    "start": "2026-10-20T06:42:53.750Z",
+    "elapsedMs": 303,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:53.743Z",
+      "mono": 85578.59999999776,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:53.802Z",
+      "mono": 85637.69999999925,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:53.935Z",
+      "mono": 85771.09999999776,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:53.954Z",
+      "mono": 85789.69999999925,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:53.886Z",
+        "trial": "O21",
+        "kind": "request",
+        "id": 126,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:53.900Z",
+        "trial": "O21",
+        "kind": "request",
+        "id": 127,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064253_6ea050b1.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:53.894Z",
+        "trial": "O21",
+        "kind": "response",
+        "id": 126,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O21",
+        "headersMs": 8
+      },
+      {
+        "time": "2026-10-20T06:42:53.910Z",
+        "trial": "O21",
+        "kind": "response",
+        "id": 127,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064253_6ea050b1.zip",
+        "status": 200,
+        "requestTrial": "O21",
+        "headersMs": 10
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 101.10000000149012,
+    "adminToGateMs": null,
+    "file": "obs-O21.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:53.916Z",
+        "trial": "O21",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/37a7b8c4-2135-455e-83dc-c1b61fd9575d",
+        "suggested": "SRM_FULL_20261020_064253_6ea050b1.zip"
+      }
+    ]
+  },
+  {
+    "id": "O22",
+    "mode": "same-path-no-gate-logpoint",
+    "start": "2026-10-20T06:42:55.367Z",
+    "elapsedMs": 341,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:55.356Z",
+      "mono": 87191.5,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:55.437Z",
+      "mono": 87273,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:55.571Z",
+      "mono": 87407.09999999776,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": true,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "正在生成并校验 S4 完整备份……",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:55.606Z",
+      "mono": 87441.19999999925,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:55.535Z",
+        "trial": "O22",
+        "kind": "request",
+        "id": 132,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:55.550Z",
+        "trial": "O22",
+        "kind": "request",
+        "id": 133,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064255_1be97ea8.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:55.542Z",
+        "trial": "O22",
+        "kind": "response",
+        "id": 132,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O22",
+        "headersMs": 7
+      },
+      {
+        "time": "2026-10-20T06:42:55.563Z",
+        "trial": "O22",
+        "kind": "response",
+        "id": 133,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064255_1be97ea8.zip",
+        "status": 200,
+        "requestTrial": "O22",
+        "headersMs": 13
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 109.40000000223517,
+    "adminToGateMs": null,
+    "file": "obs-O22.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:55.579Z",
+        "trial": "O22",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/43557c1c-3f4b-432a-9504-34981a05eef0",
+        "suggested": "SRM_FULL_20261020_064255_1be97ea8.zip"
+      }
+    ]
+  },
+  {
+    "id": "O23",
+    "mode": "same-path-no-gate-logpoint",
+    "start": "2026-10-20T06:42:57.025Z",
+    "elapsedMs": 341,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:57.020Z",
+      "mono": 88855.39999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:57.085Z",
+      "mono": 88920.69999999925,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:57.230Z",
+      "mono": 89065.89999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:57.248Z",
+      "mono": 89083.30000000075,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:57.158Z",
+        "trial": "O23",
+        "kind": "request",
+        "id": 138,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:57.165Z",
+        "trial": "O23",
+        "kind": "request",
+        "id": 139,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064257_0bbf0e63.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:57.160Z",
+        "trial": "O23",
+        "kind": "response",
+        "id": 138,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O23",
+        "headersMs": 2
+      },
+      {
+        "time": "2026-10-20T06:42:57.172Z",
+        "trial": "O23",
+        "kind": "response",
+        "id": 139,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064257_0bbf0e63.zip",
+        "status": 200,
+        "requestTrial": "O23",
+        "headersMs": 7
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 85.19999999925494,
+    "adminToGateMs": null,
+    "file": "obs-O23.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:57.175Z",
+        "trial": "O23",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/764089de-d8a8-4727-bc42-eead14736c4f",
+        "suggested": "SRM_FULL_20261020_064257_0bbf0e63.zip"
+      }
+    ]
+  },
+  {
+    "id": "O24",
+    "mode": "same-path-no-gate-logpoint",
+    "start": "2026-10-20T06:42:58.969Z",
+    "elapsedMs": 296,
+    "options": {},
+    "waitMs": 20000,
+    "beforeAdmin": {
+      "time": "2026-10-20T06:42:58.962Z",
+      "mono": 90798.09999999776,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "before": {
+      "time": "2026-10-20T06:42:59.011Z",
+      "mono": 90846.89999999851,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已切换并从 SQLite 读取：RFQ-1792478290303-FO4WEZ（第 10 版）。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "immediate": {
+      "time": "2026-10-20T06:42:59.153Z",
+      "mono": 90988.59999999776,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "after": {
+      "time": "2026-10-20T06:42:59.165Z",
+      "mono": 91000.19999999925,
+      "workspace": "RFQ-1792478290303-FO4WEZ",
+      "revision": 10,
+      "button": {
+        "disabled": false,
+        "rect": {
+          "x": 992.671875,
+          "y": 122.84375,
+          "width": 213.25,
+          "height": 34
+        }
+      },
+      "save": "已下载 S4 完整备份：2 笔询价，1 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。",
+      "auto": "自动保存：已同步第 10 版；无待保存修改",
+      "live": "自动保存：已同步第 10 版；无待保存修改",
+      "dataOpen": true
+    },
+    "gate": [],
+    "backupRequests": [
+      {
+        "time": "2026-10-20T06:42:59.091Z",
+        "trial": "O24",
+        "kind": "request",
+        "id": 144,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "method": "POST"
+      },
+      {
+        "time": "2026-10-20T06:42:59.106Z",
+        "trial": "O24",
+        "kind": "request",
+        "id": 145,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064259_3bc0a568.zip",
+        "method": "GET"
+      }
+    ],
+    "responses": [
+      {
+        "time": "2026-10-20T06:42:59.100Z",
+        "trial": "O24",
+        "kind": "response",
+        "id": 144,
+        "url": "http://127.0.0.1:9090/api/backups/full",
+        "status": 201,
+        "requestTrial": "O24",
+        "headersMs": 9
+      },
+      {
+        "time": "2026-10-20T06:42:59.114Z",
+        "trial": "O24",
+        "kind": "response",
+        "id": 145,
+        "url": "http://127.0.0.1:9090/api/backups/full/SRM_FULL_20261020_064259_3bc0a568.zip",
+        "status": 200,
+        "requestTrial": "O24",
+        "headersMs": 8
+      }
+    ],
+    "trustedClicks": 1,
+    "adminToBackupMs": 87,
+    "adminToGateMs": null,
+    "file": "obs-O24.zip",
+    "fileError": null,
+    "actionError": null,
+    "downloadTimedOut": false,
+    "feedback": {
+      "text": "自动保存：已同步第 10 版；无待保存修改",
+      "cssVisible": true,
+      "visible": false,
+      "rect": {
+        "top": -151.65625,
+        "bottom": -124.265625
+      },
+      "viewportHeight": 768
+    },
+    "outcome": "DOWNLOAD_SUCCESS",
+    "downloadEvents": [
+      {
+        "time": "2026-10-20T06:42:59.126Z",
+        "trial": "O24",
+        "kind": "download-event",
+        "url": "blob:http://127.0.0.1:9090/23fe1cba-88cc-493c-acd4-28f90e2bbc18",
+        "suggested": "SRM_FULL_20261020_064259_3bc0a568.zip"
+      }
+    ]
+  }
+]

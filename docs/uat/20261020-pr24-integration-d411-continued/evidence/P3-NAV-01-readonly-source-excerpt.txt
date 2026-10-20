@@ -1,0 +1,45 @@
+5210:     lineSeq=s.lineSeq;createdSeq=s.createdSeq;quoteComparisonMode="returned";
+5211:     workspaceId=data.workspaceId;revision=data.revision;buyerMode=true;dirty=false;
+5212:     buttons();resetUI();window.SRMDrawUI?.refresh();dirty=false;
+5213:     resetAutosaveBaseline();
+5214:     // 中文：询价身份切换后只通知其他 UI 面板刷新；不触发数据库写入。
+5215:     // English: Notify dependent UI of an RFQ switch; never persist from this event.
+5216:     window.dispatchEvent(new CustomEvent("srm:workspace-changed",{detail:{workspaceId}}));
+5217:   }
+5218:   function beginBuyer(){
+5219:     if(!localReady||busy||blocked)return;
+5220:     if(buyerMode&&dirty&&!confirm("当前询价尚有未保存修改，新建将放弃这些修改。继续？"))return;
+5221:     if(buyerMode&&!dirty&&!confirm("新建一笔空白询价？原来已保存的数据仍保存在 SQLite。"))return;
+5222:     const fresh=model.createEmptyWorkspace("RFQ-"+Date.now()+"-"+Math.random().toString(36).slice(2,8).toUpperCase());
+5223:     applyWorkspace(fresh);dirty=true;lastChangeAt=Date.now();buttons();
+5224:     autosaveLabel("新询价尚未保存，将在操作空闲后自动创建；图纸上传前仍需完成首次保存");
+5225:     status("新询价已建立；空闲约 3 秒会自动写入 SQLite，也可以立即点击“保存到本机”。");
+5226:   }
+5227:   async function recover(){
+5228:     if(busy||!localReady)return;
+5229:     if(buyerMode&&dirty&&!confirm("重新读取已保存询价会放弃当前未保存修改。继续？"))return;
+5230:     busy=true;buttons();
+5415:   async function committedWorkspaceForReport(){
+5416:     if(!buyerMode||!localReady||busy)throw Error("请先进入可用的正式工作区");
+5417:     if(dirty)throw Error("有未保存的修改，请先点击“保存到本机”，成功后再导出单据");
+5418:     const saved=await readSaved();
+5419:     if(!saved||saved.workspaceId!==workspaceId||saved.revision!==revision)
+5420:       throw Error("本机保存版本与当前页面不同，请先恢复最新版本");
+5421:     model.validate(saved);
+5422:     if(saved.origin!=="buyer")throw Error("禁止导出演示工作数据");
+5423:     return saved;
+5424:   }
+5425:   document.addEventListener("click",e=>{
+5426:     if(!buyerMode||busy||!e.isTrusted)return;
+5427:     // 中文：程序触发的下载链接等非用户点击不代表业务发生修改；操作按钮中的真实修改仍提示保存。
+5428:     // English: Programmatic download clicks must not mark a saved workspace dirty.
+5429:     // English: Dirty indicator errs on the safe side; UI events do not automatically persist.
+5430:     if(e.target.closest("#pilotControls,#pilotDrawingPanel,#drawingModal,#pilotReportPanel,#rfqPreviewModal,.tabs,[data-drawing],[data-srm-v2-action=\"admin\"]"))return;
+5431:     dirty=true;status("工作内容可能有未保存修改；系统只对实际业务变化自动保存。");
+5432:   },true);
+5433:   document.addEventListener("input",e=>{
+5434:     if(!buyerMode||busy||e.target.closest("#pilotControls"))return;
+5435:     dirty=true;status("输入中，业务数据将在停止修改后自动保存。");
+5436:   },true);
+5437: 
+5438: 
