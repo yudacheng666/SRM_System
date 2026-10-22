@@ -18,7 +18,7 @@
 | M1 开发基线 / Development | draft/20261013-m1-storage-ui-audit @ \`b0629a06a7ab2880fc86427e26a953d722487a57\` | M1 Lite, SQLite, ERP core fields, V3.1, S4 and merged #47 memory |
 | 已批准 UI 设计 / Design | [#44](https://github.com/yudacheng666/SRM_System/pull/44) Draft @ \`8e643520\` | Architecture and acceptance matrix only, not product code |
 | 并行历史候选 / Alternate | [#45](https://github.com/yudacheng666/SRM_System/pull/45) Draft @ \`4480482c5bbb280257c06aa44889706705663280\` | Two CI SUCCESS on that SHA, **not** evidence for #46 |
-| 当前 UI 产品候选 / Active UI | [#46](https://github.com/yudacheng666/SRM_System/pull/46) Draft @ \`c2737f0221a7b529114da2df363e062e75c7544c\` | New filtered pagination; **102 temporary Codex Cloud automation PASS** on exact SHA, but independent UAT NOT READY, GitHub Actions blocked; not merged |
+| 当前 UI 产品候选 / Active UI | [#46](https://github.com/yudacheng666/SRM_System/pull/46) Draft @ 2dbde578165de720fed290cddbfef0a34e99f032 | P2 manual-only amount + P3 single top save state fixed in branch; **static syntax PASS**, new-sha real E2E/UAT NOT TESTED, GitHub Actions blocked; not merged |
 | 项目记忆 / Memory | [#47](https://github.com/yudacheng666/SRM_System/pull/47), merged 2026-10-22 | AGENTS.md + PROJECT_STATE + DECISIONS + original session now on M1 dev, not main |
 
 ## Validated development history / 已核实开发和证据
@@ -39,6 +39,13 @@
 - Added isolated synthetic 12-line Chromium+SQLite E2E covering two pages (10+2), read-only filter, real award selection and full-scope counts.
   8 个页面内嵌 JS 和新增测试源码 V8 语法解析 PASS；随后 Codex Cloud 在真实 Chromium 上执行新增3项及全部49项 E2E，连同后端/Node共102 PASS，均为临时非 Actions 证据。
 
+## Latest independent UAT and repair / 最新独立验收与修复
+
+- [Codex continuation PR #50](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6337865994) @ evidence 8296b853b3de03eb406ccd1f6eca50fdfdfdfa44 tested prior product SHA c2737f0: independent 14 groups **12 PASS / 2 FAIL**, plus native Windows **3 NOT TESTED**. Passed real round/revision/tier, price decisions, supplier ZIP, S4 empty restore + nonempty rejection and three-viewport geometry/keyboard checks. P2 UX-01: missing manual-only subtotal (3 manual items ¥1,979.00, theoretical ¥6,940.00, mixed recommendations ¥7,064.00); P3 UX-02: duplicate technical autosave mirror in top header. No confirmed corruption or security leakage.
+- ChatGPT fixed **both** on [PR #46 commit 2dbde57](https://github.com/yudacheng666/SRM_System/commit/2dbde578165de720fed290cddbfef0a34e99f032): valid, non-review buyer selections now have a separate manual-only amount, and top header no longer duplicates raw technical status; raw diagnostics remain expandable. UI regression updated across 3 test files, one new manual-only E2E; 8 page scripts + 3 E2E test files syntax PASS. **New-SHA actual Chromium/SQLite E2E and independent UAT NOT YET RUN.**
+- [PR #46 developer retest instruction](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6338965924): use Codex Cloud exact new SHA; rerun Python/Node/Chromium because product and UI tests changed; validate P2/P3 across fresh simulated data and three sizes, then append separate evidence directory on Draft PR #50 without overwriting old records. No merge or ready claim until independently verified.
+  已提交两项修复，但旧版的 102 PASS / 12 PASS 不得套用到新 SHA。
+
 ## CI blocker / 自动化阻断
 
 - Exact PR #46 HEAD \`c2737f0\` triggered [S3/S4 run 39743002740](https://github.com/yudacheng666/SRM_System/actions/runs/39743002740) and [UI run 39743002722](https://github.com/yudacheng666/SRM_System/actions/runs/39743002722); both concluded FAILURE **before test execution**.
@@ -54,8 +61,8 @@
 ## Open gates / 后续门槛
 
 1. Windows 本地隔离模拟数据体验 PR #46：报价导入、待决定筛选/分页、人工定标、工作区状态、PDF 与报表。Do not touch real purchasing records.
-2. In November, first check GitHub Actions billing/spending-limit account state; rerun exact HEAD UI + S3/S4 only when runner allocation works.
-3. Codex TEST-ONLY already ran and created **PR #50**: preserve 102 PASS, no product changes. Only after new user authorization, begin a **new scoped independent continuation** for UAT Q01–Q04 / C01–C05 / W01–W04 / V01, with driver preflight; do not repeat the prior stopped run or create redundant GitHub issues. Exact-SHA GitHub Actions and release gates still required.
+2. New 2dbde57 push triggered [UI 39766115997](https://github.com/yudacheng666/SRM_System/actions/runs/39766115997) and [S3-S4 39766115887](https://github.com/yudacheng666/SRM_System/actions/runs/39766115887); four jobs again steps=[] / no runner. In November, first inspect account billing/limit, then rerun exact new HEAD on actual Actions runners.
+3. Continue with Codex Cloud TEST-ONLY on new 2dbde57 SHA: full local Python/Node/Chromium suites (code and tests changed), then independent P2/C05 manual subtotal + P3/V01 single save feedback. Append only new-sha evidence to Draft PR #50. Exact-SHA GitHub Actions and final release/merge gates still required.
 4. Reconcile #45/#46 duplication, collect buyer feedback, and ask owner for explicit permission before any merge to M1/main. Main stays M0 until approved.
 5. Update canonical memory after each substantial new code/CI/UAT/decision milestone through authorized docs-only PRs; do not overwrite this unmerged checkpoint concurrently.
 
