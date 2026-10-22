@@ -296,12 +296,12 @@ test('ERP08: confirmed cannot supply remains visible in comparison, not a zero-p
   await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quoteImport"]').click();
   await page.locator('#quoteImportSupplier').selectOption('SUP-A');
   const ids=(await snap(page)).state.items.map(it=>it.lineId);
-  await page.locator('#quoteManualItem').fill(ids[0]);
+  await page.locator('[data-v4-quote-mode="manual"]').click(); await page.locator('#quoteManualItem').fill(ids[0]);
   await page.locator('#quoteManualStatus').selectOption('cannot');
   await page.locator('#quoteManualPrice').fill('');
   await page.locator('#quoteManualAdd').click();
   await page.locator('#commitQuoteImport').click();
-  await page.locator('#quoteManualItem').fill(ids[1]);
+  await page.locator('[data-v4-quote-mode="manual"]').click(); await page.locator('#quoteManualItem').fill(ids[1]);
   await page.locator('#quoteManualStatus').selectOption('noquote');
   await page.locator('#quoteManualAdd').click();
   await page.locator('#commitQuoteImport').click();
@@ -353,7 +353,7 @@ test('ERP09: second-round scope shows specification and preserves selected line 
   // English: Use immutable line IDs for both identical-code items.
   const firstQuotes='RFQ Line ID,报价单价,交期,MOQ,报价状态\n'+
     m120.lineId+',9,3,1,正常报价\n'+m220.lineId+',11,3,1,正常报价';
-  await page.locator('#quotePaste').fill(firstQuotes);
+  await page.locator('[data-v4-quote-mode="paste"]').click(); await page.locator('#quotePaste').fill(firstQuotes);
   await page.locator('#quoteParsePaste').click();
   await expect(page.locator('#commitQuoteImport')).toBeEnabled();
   await page.locator('#commitQuoteImport').click();
@@ -384,7 +384,7 @@ test('ERP09: second-round scope shows specification and preserves selected line 
   await expect(page.locator('#carryForwardPreview')).not.toContainText('规格：120W');
   await page.locator('#cancelCarryPreview').click();
   const revised='RFQ Line ID,报价单价,交期,MOQ,报价状态\n'+m220.lineId+',10,4,1,正常报价';
-  await page.locator('#quotePaste').fill(revised);
+  await page.locator('[data-v4-quote-mode="paste"]').click(); await page.locator('#quotePaste').fill(revised);
   await page.locator('#quoteParsePaste').click();
   await expect(page.locator('#commitQuoteImport')).toBeEnabled();
   await page.locator('#commitQuoteImport').click();
@@ -497,7 +497,7 @@ test('ERP10: settings provide three correct XLSX import templates and one header
     const blob=SRMExcel.create([{name:'供应商报价',rows:[headers,row]}]);
     return Array.from(new Uint8Array(await blob.arrayBuffer()));
   },{headers:defined.quotes,lineId:afterImport.state.items[0].lineId});
-  await page.locator('#quoteImportFile').setInputFiles({name:'quote-template-filled.xlsx',
+  await page.locator('[data-v4-quote-mode="file"]').click(); await page.locator('#quoteImportFile').setInputFiles({name:'quote-template-filled.xlsx',
     mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     buffer:Buffer.from(quoteBuffer)});
   await expect(page.locator('#commitQuoteImport')).toBeEnabled();
