@@ -35,12 +35,12 @@ const test=base.extend({
 const snap=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 async function open(page,id){
  const d=page.locator(id);
- if(!await d.evaluate(n=>n.open))await d.locator('summary').click();
+ if(!await d.evaluate(n=>n.open))await d.locator(':scope > summary').click();
  await expect(d).toHaveAttribute('open','');
 }
 async function close(page,id){
  const d=page.locator(id);
- if(await d.evaluate(n=>n.open))await d.locator('summary').click();
+ if(await d.evaluate(n=>n.open))await d.locator(':scope > summary').click();
 }
 for (const viewport of [{width:1366,height:768},{width:1600,height:900}]){
 test('B3 quote and comparison with real SQLite '+viewport.width+'x'+viewport.height,async({page,app},info)=>{
