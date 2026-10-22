@@ -182,7 +182,7 @@ test('ERP04: new ERP fields are searchable/editable, internal-vs-supplier export
     const saved=(await res.json()).workspace;
     return saved.revision>0&&JSON.stringify(saved.state)===JSON.stringify(ws.state);
   },{timeout:30000}).toBe(true);
-  await open(page,'#uiDataTools');
+  await open(page,'#uiBusinessExports');
   await expect(page.locator('#pilotExportExcel')).toBeEnabled();
   const downloadEvent=page.waitForEvent('download');
   await page.locator('#pilotExportExcel').click();
@@ -216,7 +216,7 @@ test('ERP06: repeated internal XLSX export and UI import keep current/source RFQ
       const ws=await snap(page),res=await page.request.get(URL+'/api/workspaces/'+ws.workspaceId);
       return res.ok()&&(await res.json()).workspace.revision>0;
     }).toBe(true);
-    await open(page,'#uiDataTools');
+    await open(page,'#uiBusinessExports');
     await expect(page.locator('#pilotExportExcel')).toBeEnabled();
     const download=page.waitForEvent('download');
     await page.locator('#pilotExportExcel').click();
