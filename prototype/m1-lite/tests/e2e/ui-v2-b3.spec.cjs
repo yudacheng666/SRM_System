@@ -69,7 +69,7 @@ test('B3 quote and comparison with real SQLite '+viewport.width+'x'+viewport.hei
  await expect(page.locator('#quoteImport')).toHaveClass(/active/);
  await expect(page.locator('#quoteImport .srm-v2-quote-section-label')).toHaveCount(3);
  await page.locator('#quoteImportSupplier').selectOption('SUP-A');
- await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\nTST-001,17.25,7,1,正常报价\nTST-002,23.75,9,1,正常报价');
+ await page.locator('[data-v4-quote-mode="paste"]').click(); await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\nTST-001,17.25,7,1,正常报价\nTST-002,23.75,9,1,正常报价');
  await page.locator('#quoteParsePaste').click();
  await expect(page.locator('#quoteImportPreviewBody')).toContainText('17.25');
  await page.locator('#commitQuoteImport').click();
@@ -81,7 +81,7 @@ test('B3 quote and comparison with real SQLite '+viewport.width+'x'+viewport.hei
  await expect(page.locator('#confirmQuoteRound')).toBeDisabled();
  await page.locator('#newQuoteRound').click();
  await expect(page.locator('#confirmQuoteRound')).toBeEnabled();
- await page.locator('#quoteManualItem').fill('TST-001');
+ await page.locator('[data-v4-quote-mode="manual"]').click(); await page.locator('#quoteManualItem').fill('TST-001');
  await page.locator('#quoteManualPrice').fill('16.75');
  await page.locator('#quoteManualLead').fill('5');
  await page.locator('#quoteManualMoq').fill('1');
@@ -166,7 +166,7 @@ test('B3 tied-lowest manual award semantics and persistence / 并列最低定标
    ['SUP-B','TST-001,20,7,1,正常报价\nTST-002,12,7,1,正常报价']
  ]){
    await page.locator('#quoteImportSupplier').selectOption(supplier);
-   await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\n'+rows);
+   await page.locator('[data-v4-quote-mode="paste"]').click(); await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\n'+rows);
    await page.locator('#quoteParsePaste').click();
    await expect(page.locator('#commitQuoteImport')).toBeEnabled();
    await page.locator('#commitQuoteImport').click();
