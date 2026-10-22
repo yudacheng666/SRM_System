@@ -268,23 +268,7 @@ body.srm-v2 .modalCard{border-radius:8px}
 }
 
 
-/* 中文：实时保存状态出现在固定顶栏，真实内容来自现有后台同步控件；仅展示，不改变保存机制。 */
-/* English: Real save feedback is mirrored in the header without touching save or conflict semantics. */
-body.srm-v2 .srm-v2-live-status{
-  color:#336449;background:#edf7f0;border:1px solid #d3e8dc;border-radius:5px;
-  padding:6px 9px;display:inline-block;max-width:310px;overflow-wrap:anywhere;font-size:12px;font-weight:650;
-}
-body.srm-v2 .srm-v2-live-status.srm-v2-attention{
-  color:#975400;background:#fff7e6;border-color:#f5d9a5;
-}
-body.srm-v2 .srm-v2-live-status.srm-v2-error{
-  color:#ad3028;background:#fff0ee;border-color:#f0c4bf;
-}
-@media(max-width:1260px){
- body.srm-v2 .srm-v2-live-status{max-width:245px}
-}
-
-
+obsolete header css
 /* 中文：UI V2 B2 供应商与分配页 — 严格限定样式，不触碰原关联与筛选业务逻辑。 */
 /* English: UI V2 B2 styles the supplier allocation panel only; all original assignment logic remains unchanged. */
 body.srm-v2 #assign .ui-panelLead{margin:0 0 12px;padding:12px 17px;border-radius:7px;min-height:56px}
@@ -548,7 +532,6 @@ body.srm-v2 #quotes #resetAwards{color:#b42318;border-color:#efd8d3;background:#
   body.srm-v2 .ui-appHeader #pilotSubtitle{font-size:10px;max-width:260px;line-height:1.25}
   body.srm-v2 .ui-headActions{gap:6px}
   body.srm-v2 .ui-headActions .btn,body.srm-v2 .ui-headActions .tab{padding:6px 9px;font-size:11px;min-height:30px}
-  body.srm-v2 .srm-v2-live-status{max-width:205px;font-size:11px;padding:4px 7px}
   body.srm-v2 .ui-context{padding:6px 10px;min-height:44px;margin-bottom:6px}
   body.srm-v2 .ui-context small{font-size:10px}
   body.srm-v2 .ui-context b{font-size:14px}
@@ -747,13 +730,6 @@ body.srm-v2 #pilotModeBadge{
   border-radius:5px;
   background:#f4f6fa;
   color:#52647d;
-}
-body.srm-v2 .srm-v2-live-status{
-  max-width:285px;
-  padding:5px 8px;
-  border-radius:5px;
-  font-size:11px;
-  line-height:1.4;
 }
 body.srm-v2 .ui-context{
   min-height:54px;
@@ -1045,7 +1021,6 @@ body.srm-v2 .footerNote{padding:12px 0;color:#718198}
   body.srm-v2 .srm-v2-sidedivider{margin:12px 6px}
   body.srm-v2 .ui-appHeader{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}
   body.srm-v2 .ui-headActions{gap:5px}
-  body.srm-v2 .srm-v2-live-status{max-width:190px}
 }
 @media(max-width:700px){
   body.srm-v2 .app{padding:0 11px 20px}
@@ -1386,6 +1361,10 @@ body.srm-v2 #quotes .srm-ux-analytics{margin-top:14px;padding:14px 13px;backgrou
 body.srm-v2 #quotes .srm-ux-analytics h3{margin:0 0 5px;color:#253e59;font-size:15px}
 body.srm-v2 #quotes .srm-ux-analytics h3 span{font-size:12px;color:#74859b;font-weight:450;margin-left:8px}
 body.srm-v2 #quotes #quoteAnalysis{border:0;margin:5px 0!important;padding:0}
+/* 中文：人工定标独立口径明显区别于混合建议金额。 */
+/* English: Visually distinguish buyer-confirmed totals from mixed recommended totals. */
+body.srm-v2 #quotes .srm-ux-manual-total{margin:10px 0 8px;padding:9px 12px;border-left:3px solid #3f78cb;background:#eef5ff;color:#244569;border-radius:4px;font-size:13px}
+body.srm-v2 #quotes .srm-ux-manual-total b{font-weight:760}
 @media(max-width:1090px){
   body.srm-v2 #quotes .srm-ux-scope-heading span{display:block;margin:4px 0 0}
   body.srm-v2 #quotes .srm-ux-compare-heading{flex-wrap:wrap}
@@ -1445,7 +1424,8 @@ body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps span{font-size:12px;font-we
     </div>
     <div class="ui-headActions">
       <span class="badge" id="pilotModeBadge">演示模式（不保存）</span>
-      <span id="srmV2LiveStatus" class="srm-v2-live-status" role="status" aria-live="polite">正在读取保存状态…</span>
+      <!-- 中文：顶栏不复制保存诊断；唯一常驻状态由当前 RFQ 摘要显示。
+           English: One persistent save indicator remains in RFQ context, not mirrored in the header. -->
       <button type="button" class="btn ui-projectAction" id="uiProjectJump">询价项目</button>
       <button type="button" class="btn ui-projectAction" id="uiAdminToggle">数据与备份</button>
       <button type="button" class="tab" data-tab="settings" id="uiFieldSettings">字段设置</button>
@@ -4698,14 +4678,22 @@ function renderQuoteAnalysis(){
     "报价回收验证：仅已确认的报价记录参与比较；未报价不自动补价。上次采购价仍是 M0 虚构示例。";
   renderCommonScopePicker();
   const sups=comparisonSuppliers(),its=comparisonItems(),shared=planSelectedCommonScope();
-  let theoretical=0,theoreticalCount=0,finalTotal=0,finalCount=0;
+  let theoretical=0,theoreticalCount=0,finalTotal=0,finalCount=0,manualTotalCents=0,manualCount=0;
   its.forEach((it,i)=>{
     const values=sups.map((s,si)=>quoteMetaFor(it,s,i,si)?.price).filter(v=>v!=null);
     if(values.length){theoretical+=Math.min(...values)*it.qty;theoreticalCount++}
     const sid=awards.get(it.lineId),sup=sups.find(s=>s.id===sid);
     if(sup){
       const meta=quoteMetaFor(it,sup,i,sups.indexOf(sup));
-      if(meta?.price!=null&&!awardReviewIds.has(it.lineId)){finalTotal+=meta.price*it.qty;finalCount++}
+      if(meta?.price!=null&&!awardReviewIds.has(it.lineId)){
+        finalTotal+=meta.price*it.qty;finalCount++;
+        // 中文：只计有效且不待复核的人工选择，金额逐行四舍五入到分，不将自动建议视为定标。
+        // English: Count only valid reviewed buyer awards, round each line to cents, exclude automatic suggestions.
+        if(manualAwards.has(it.lineId)){
+          manualTotalCents+=Math.round(meta.price*it.qty*100);
+          manualCount++;
+        }
+      }
     }
   });
   // 中文：自身报价总额的物料范围可能不同，禁止把这一列当作同范围排名。
@@ -4740,6 +4728,10 @@ function renderQuoteAnalysis(){
   quoteAnalysis.innerHTML='<div class="sline"><div><b>报价金额分析（M0）</b>'+
     '<div class="small muted">三种口径分别统计：自身报价范围、指定供应商组共同范围、逐物料最低价组合。仅演示同币种同税口径。</div></div>'+
     '<div><b>逐物料理论最低价组合：</b>¥'+theoretical.toFixed(2)+'（'+theoreticalCount+' 项）　<b>当前建议/已选组合：</b>¥'+finalTotal.toFixed(2)+'（'+finalCount+' 项，含自动建议；待复核 '+awardReviewIds.size+' 项不计入）</div></div>'+
+    // 中文：人工确认汇总独立呈现；没有人工有效定标时避免误写成可采购金额 ¥0.00。
+    // English: Surface approved-only totals separately; zero approved lines must not masquerade as a priced award.
+    '<div id="srmUxManualAwardSummary" class="srm-ux-manual-total"><b>采购员已确认金额：</b>'+
+    (manualCount?'¥'+(manualTotalCents/100).toFixed(2)+'（'+manualCount+' 项，排除自动建议和待复核项）':'尚无人工确认的有效定标（0 项；不含自动建议）')+'</div>'+
     '<div style="margin-top:10px"><b>A. 各供应商自身报价金额（不同范围，不可直接排名）</b></div>'+
     '<table class="analysisTable"><thead><tr><th>供应商</th><th>自身有效报价项数</th><th>自身报价范围金额（元）</th></tr></thead><tbody>'+ownRows+'</tbody></table>'+
     '<div style="margin-top:12px"><b>B. 采购员指定供应商组的同范围金额</b></div>'+sharedBody+
@@ -6427,19 +6419,8 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
     document.getElementById("uiAdminToggle")?.click();
   });
 
-  // 中文：只监听现有已保存/自动保存/冲突状态节点；不调用持久化 API、不伪造状态。
-  // English: Mirror existing autosave/conflict text only; never write data or invent a saved state.
-  const statusSource=document.getElementById("pilotAutosaveStatus");
-  const headerStatus=document.getElementById("srmV2LiveStatus");
-  function syncRealSaveStatus(){
-    const value=statusSource?.textContent?.trim()||"保存状态尚未就绪";
-    headerStatus.textContent=value;
-    headerStatus.title=value;
-    headerStatus.classList.toggle("srm-v2-error",/失败|错误|冲突|无法|拒绝|未能/.test(value));
-    headerStatus.classList.toggle("srm-v2-attention",!/失败|错误|冲突|无法|拒绝|未能/.test(value)&&/尚未|等待|未保存|初始化|正在/.test(value));
-  }
-  if(statusSource)new MutationObserver(syncRealSaveStatus).observe(statusSource,{childList:true,characterData:true,subtree:true});
-  syncRealSaveStatus();
+  // 中文：保存反馈只有当前 RFQ 摘要常驻，技术详细信息继续由 #srmUxStatusDetails 展开读取。
+  // English: Keep one live RFQ save indicator; leave raw autosave/conflict details in their existing disclosure.
   // 中文：已确认版本同时显示不可操作样式与锁定说明，不修改原按钮的业务事件处理器。
   // English: Add a visible locked affordance without touching quotation confirmation logic.
   const quoteConfirm=document.getElementById("confirmQuoteRound");

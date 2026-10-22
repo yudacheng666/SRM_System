@@ -172,3 +172,37 @@ test('UX pending-only: filtered pagination and award state / 待决定筛选真�
   await expect(page.locator('#quoteCount')).toContainText('共 12 项');
   expect(errors).toEqual([]);
 });
+
+
+// 中文：采购员已确认金额必须只汇总有效人工选择，不混入默认建议；重置后不将空集显示为 ¥0。
+// English: Buyer-approved subtotal counts only valid manual awards and clearly separates defaults and empty scope.
+test('UX manual-only: buyer-approved amount distinct from suggested totals / 人工定标金额独立显示',async({page,app})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await prepare(page,app);
+  const st=(await snapshot(page)).state,lines=st.items;
+  const input=['RFQ Line ID,报价单价,交期,MOQ,报价状态',
+    ...lines.map((it,i)=>[it.lineId,20+i,7,1,'正常报价'].join(','))].join('\n');
+  await page.locator('#quotePaste').fill(input);
+  await page.locator('#quoteParsePaste').click();
+  await expect(page.locator('#quoteImportPreviewBody tr')).toHaveCount(12);
+  await page.locator('#commitQuoteImport').click();
+  await page.locator('#confirmQuoteRound').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
+  const summary=page.locator('#srmUxManualAwardSummary');
+  await expect(summary).toContainText('尚无人工确认的有效定标（0 项');
+  await expect(page.locator('#quoteAnalysis')).toContainText('当前建议/已选组合');
+  const totalCents=lines.slice(0,3).reduce((sum,it,i)=>sum+Math.round((20+i)*it.qty*100),0);
+  for(const it of lines.slice(0,3)){
+    await page.locator('#quoteTable td[data-award="'+it.lineId+'|SUP-A"]').click();
+  }
+  await expect(summary).toContainText('采购员已确认金额：');
+  await expect(summary).toContainText('¥'+(totalCents/100).toFixed(2));
+  await expect(summary).toContainText('（3 项，排除自动建议和待复核项）');
+  await expect(page.locator('#srmV31DecisionBoard')).toContainText('人工已选');
+  expect((await snapshot(page)).state.manualAwards).toHaveLength(3);
+  await page.locator('#resetAwards').click();
+  await expect(summary).toContainText('尚无人工确认的有效定标（0 项');
+  await expect(summary).not.toContainText('¥0.00');
+  expect((await snapshot(page)).state.manualAwards).toHaveLength(0);
+  expect(errors).toEqual([]);
+});

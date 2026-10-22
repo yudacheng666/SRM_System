@@ -114,7 +114,7 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
         tableScrollable:!!tablewrap&&tablewrap.scrollWidth>tablewrap.clientWidth+2,
         panelButtons:actionable.length,
         hiddenOffscreenControls:outOfViewport,
-        saveMessage:document.getElementById('srmV2LiveStatus')?.textContent?.trim()
+        saveMessage:document.getElementById('srmUxWorkspaceSaveSummary')?.textContent?.trim()
       };
     },{stage,selector});
     measurements.push(m);
