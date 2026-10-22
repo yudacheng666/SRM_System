@@ -18,7 +18,7 @@
 | M1 开发基线 / Development | draft/20261013-m1-storage-ui-audit @ \`b0629a06a7ab2880fc86427e26a953d722487a57\` | M1 Lite, SQLite, ERP core fields, V3.1, S4 and merged #47 memory |
 | 已批准 UI 设计 / Design | [#44](https://github.com/yudacheng666/SRM_System/pull/44) Draft @ \`8e643520\` | Architecture and acceptance matrix only, not product code |
 | 并行历史候选 / Alternate | [#45](https://github.com/yudacheng666/SRM_System/pull/45) Draft @ \`4480482c5bbb280257c06aa44889706705663280\` | Two CI SUCCESS on that SHA, **not** evidence for #46 |
-| 当前 UI 产品候选 / Active UI | [#46](https://github.com/yudacheng666/SRM_System/pull/46) Draft @ \`c2737f0221a7b529114da2df363e062e75c7544c\` | New filtered pagination; **not tested in real browser on this SHA**, not merged |
+| 当前 UI 产品候选 / Active UI | [#46](https://github.com/yudacheng666/SRM_System/pull/46) Draft @ \`c2737f0221a7b529114da2df363e062e75c7544c\` | New filtered pagination; **102 temporary Codex Cloud automation PASS** on exact SHA, but independent UAT NOT READY, GitHub Actions blocked; not merged |
 | 项目记忆 / Memory | [#47](https://github.com/yudacheng666/SRM_System/pull/47), merged 2026-10-22 | AGENTS.md + PROJECT_STATE + DECISIONS + original session now on M1 dev, not main |
 
 ## Validated development history / 已核实开发和证据
@@ -37,21 +37,25 @@
 - Fixes quote comparison's “仅显示待人工决定”: filter **valid quotable lines before pagination**, respect original full-list item index for pricing, preserve unfiltered totals/decision overview, reset pager and show accurate filtered count.
   解决以前“只隐藏当前页行，导致空白页和统计不符”的静态可确认逻辑问题。
 - Added isolated synthetic 12-line Chromium+SQLite E2E covering two pages (10+2), read-only filter, real award selection and full-scope counts.
-  8 个页面内嵌 JS 和新增测试源码 V8 语法解析 PASS；**不是 E2E 执行成功**。
+  8 个页面内嵌 JS 和新增测试源码 V8 语法解析 PASS；随后 Codex Cloud 在真实 Chromium 上执行新增3项及全部49项 E2E，连同后端/Node共102 PASS，均为临时非 Actions 证据。
 
 ## CI blocker / 自动化阻断
 
 - Exact PR #46 HEAD \`c2737f0\` triggered [S3/S4 run 39743002740](https://github.com/yudacheng666/SRM_System/actions/runs/39743002740) and [UI run 39743002722](https://github.com/yudacheng666/SRM_System/actions/runs/39743002722); both concluded FAILURE **before test execution**.
 - 4 jobs: \`steps=[]\`, blank runner assignment, ~2–3 s duration. User's prior Actions annotation explicitly says: "The job was not started because recent account payments have failed or your spending limit needs to be increased."
-- The account-side blocker is established, but **which payment/budget subcondition** caused it remains UNVERIFIED. No product assertion has run on the latest SHA; never call the implementation PASS or FAIL.
+- The account-side blocker is established, but **which payment/budget subcondition** caused it remains UNVERIFIED. GitHub-hosted product assertions did not run, although independent local-cloud suites later ran; never relabel these as GitHub Actions PASS.
   按用户决定：不充值，等待十一月检查额度/账户状态；不能保证账户问题会自动恢复，暂不手动反复重跑。
-- The PR stays Draft. **Temporary exception authorized 2026-10-22:** Codex Cloud may run *pre-CI TEST-ONLY* on exact SHA as evidence, but this cannot replace green GitHub CI, the formal independent release gate or user approval for any merge. [Task Issue #49](https://github.com/yudacheng666/SRM_System/issues/49) has full instructions. The [PR #46 @codex dispatch](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6335844250) was **BLOCKED**: Codex bot explicitly requested a cloud environment for this repo. **No Codex test began**; user must configure environment before re-triggering the same task.
+- User-authorized temporary **pre-CI TEST-ONLY** Codex execution **has now run** on exact SHA (despite earlier `@codex` GitHub bot's environment-setup response). [Draft evidence PR #50](https://github.com/yudacheng666/SRM_System/pull/50) @ `75a06ab23a5e2d93c169651f511ccbedb035e468`: Python 43/43, Node 10/10, Chromium 49/49 **PASS (102 total)** with isolated fictional data, including new 12-line 10+2 pending-only E2E.
+  临时 Linux 云端实际自动化全绿，不代表 GitHub Actions 或 Windows 专项通过。
+- [Codex bilingual report](https://github.com/yudacheng666/SRM_System/blob/75a06ab23a5e2d93c169651f511ccbedb035e468/docs/uat/20261022-pr46-c2737f0-temp-ci/REPORT.zh-CN.md): Playwright dependency install blocked by `su: Authentication failure`, used already available real Chromium via supported `SRM_CHROMIUM_PATH`. Independent buyer UAT **0 PASS / 1 BLOCKED / 13 NOT TESTED**, plus native Windows **3 NOT TESTED**; two isolated driver errors (wrong `多候选` vs actual `多个候选` label, null `.disabled` read before async XLSX preview). **No new confirmed product defect**; not proof for untested scope.
+- [ChatGPT review on PR #50](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6337013474) and [development PR #46](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6337014255): accept exact-SHA temporary automated evidence, independent UAT still NOT READY. Retain Draft, no merge. A **separately authorized scoped continuation** should inspect actual DOM labels and null-guard asynchronous waits, then complete only untested UAT; do not re-run 102 cases absent head change. Official exact-SHA GitHub Actions and owner approval remain gates.
+  已审原始错误登记、截图文本、冻结脚本和报告；旧 Issue #49 的“一次修正上限”不得偷偷突破，本轮停止有效。
 
 ## Open gates / 后续门槛
 
 1. Windows 本地隔离模拟数据体验 PR #46：报价导入、待决定筛选/分页、人工定标、工作区状态、PDF 与报表。Do not touch real purchasing records.
 2. In November, first check GitHub Actions billing/spending-limit account state; rerun exact HEAD UI + S3/S4 only when runner allocation works.
-3. First configure a Codex Cloud Environment for this private repo; then re-trigger **Issue #49** once as temporary pre-CI TEST-ONLY, recording actual results on a Draft evidence PR. ChatGPT fixes confirmed issues. Formal exact-SHA GitHub Actions green and final independent gate still required before merges.
+3. Codex TEST-ONLY already ran and created **PR #50**: preserve 102 PASS, no product changes. Only after new user authorization, begin a **new scoped independent continuation** for UAT Q01–Q04 / C01–C05 / W01–W04 / V01, with driver preflight; do not repeat the prior stopped run or create redundant GitHub issues. Exact-SHA GitHub Actions and release gates still required.
 4. Reconcile #45/#46 duplication, collect buyer feedback, and ask owner for explicit permission before any merge to M1/main. Main stays M0 until approved.
 5. Update canonical memory after each substantial new code/CI/UAT/decision milestone through authorized docs-only PRs; do not overwrite this unmerged checkpoint concurrently.
 
