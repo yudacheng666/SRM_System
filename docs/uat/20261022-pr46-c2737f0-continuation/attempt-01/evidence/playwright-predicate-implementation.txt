@@ -1,0 +1,55 @@
+      const handle = await progress.race(injectedScript.evaluateHandle((injected, { expression: expression2, isFunction: isFunction2, polling, arg: arg2 }) => {
+        let evaledExpression;
+        const predicate = () => {
+          let result2 = evaledExpression ?? globalThis.eval(expression2);
+          if (isFunction2 === true) {
+            evaledExpression = result2;
+            result2 = result2(arg2);
+          } else if (isFunction2 === false) {
+            result2 = result2;
+          } else {
+            if (typeof result2 === "function") {
+              evaledExpression = result2;
+              result2 = result2(arg2);
+            }
+          }
+          return result2;
+        };
+        let fulfill;
+        let reject;
+        let aborted = false;
+        const result = new Promise((f, r) => {
+          fulfill = f;
+          reject = r;
+        });
+        const next = () => {
+          if (aborted)
+            return;
+          try {
+            const success = predicate();
+            if (success) {
+              fulfill(success);
+              return;
+            }
+            if (typeof polling !== "number")
+              injected.utils.builtins.requestAnimationFrame(next);
+            else
+              injected.utils.builtins.setTimeout(next, polling);
+          } catch (e) {
+            reject(e);
+          }
+        };
+        next();
+        return { result, abort: () => aborted = true };
+      }, { expression, isFunction, polling: options.pollingInterval, arg }));
+      try {
+        return await progress.race(handle.evaluateHandle((h) => h.result));
+      } catch (error) {
+        await handle.evaluate((h) => h.abort()).catch(() => {
+        });
+        throw error;
+      } finally {
+        handle.dispose();
+      }
+    });
+  }

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/tmp/pr46-cont/verify-s4.py", line 10, in <module>
+    pdf={x['path']:hashlib.sha256(z.read(x['path'])).hexdigest()for x in m['assets']};ck('S4 all physical PDFs exact',pdf,expected['pdf'])
+                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pr46-cont/verify-s4.py", line 5, in ck
+    ok=a==b;checks.append({'label':n,'actual':a,'expected':b,'pass':ok});(e/'s4-checks.json').write_text(json.dumps(checks,ensure_ascii=False,indent=2));print('PASS'if ok else'FAIL',n,flush=True);assert ok,n
+                                                                                                                                                                                                           ^^
+AssertionError: S4 all physical PDFs exact

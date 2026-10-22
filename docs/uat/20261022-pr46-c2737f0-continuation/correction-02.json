@@ -1,0 +1,31 @@
+{
+  "number": 2,
+  "limit": 2,
+  "time": "2026-10-22T09:35:40.963506+00:00",
+  "classification": "DRIVER_ERROR",
+  "failure": "S4 all physical PDFs exact path-key comparison",
+  "proof": "Every PDF hash equal; SQLite all4tables/CRC/manifest DB SHA/integrity already passed. Product contract stores assets/xx/hash.pdf locally but assets/hash.pdf in S4 ZIP.",
+  "fix": "Compare physical identities via basename under canonical archive assets/, preserving exact content hashes, scope/count, manifest verification and full database equality. No product assertions dropped.",
+  "rawEvidence": [
+    "attempt-02/evidence/s4-checks.json",
+    "attempt-02/evidence/s4-validation.stderr",
+    "attempt-02/evidence/trace-first-attempt.zip"
+  ],
+  "freshScope": "Fresh attempt03 source populated via actual UI restore of prior fictional ZIP; new actual S4 download and separate empty restore destination; then remaining read-only V01. Completed Q/C/W01-W03 not repeated.",
+  "remainingCorrections": 0,
+  "files": {
+    "steps/01-setup.js": "13476aa5999742011edb7519cfa9fab9b6e8ba046e479b4ac88be477ac66067d",
+    "steps/02-drawings.js": "ca565f66ad23f67f9da6df6340f00c6be0567cb03a2deaa3a5d06bc94989dbb2",
+    "steps/03-quotes.js": "83b49cd14248e4f405080be2f56c41dfb4f761eb013b971bfbf07f7616af1f2d",
+    "steps/04-comparison.js": "6306e170eb72c86626bbbc09379123b53b6c3939aa1b20b158684ecaf1dca5d0",
+    "steps/05-workspace-exports.js": "a8157ce0dabbcfd22f8613c9fa80de1bb0d29b1eacfc33870a2d78fea94d49fd",
+    "steps/06-S4.js": "c906ec920dd93be27896778d76123d1cbbeed3d9e124fb4c7436e656cbf68bd7",
+    "steps/07-visual.js": "ff71eaeed44660e2cef97c0efee87ed0242dd76fdb61baacfd32503431925fc0",
+    "driver.cjs": "eb6817c49fee038f14b39344826ad5c6601e91d4ec8fad7ec1cc43ad64615d19",
+    "verify-s4.py": "006b8f2bc8b751ef919090ba118d6b7f46af70c79c4665431444f672f5ce2ef1",
+    "verify-exports.py": "3c639e17982479855d870a8f68004e4539b81a4ec35eda88dc1ccd244d627a0c",
+    "create-quote-file.py": "bd6538a281c70ec79e0d2d823a5063125ab3e1e4ddc3cc11545a7349930d20f0",
+    "db-state.py": "fcad33abe01f00398fd78beab1ff44352a67cedd2a21490af5280cb422a69582",
+    "steps/00-prime-fresh-S4-source.js": "80ab8240703c0dff43d683c145e687f51424f63194d9450b3dd5f56544598019"
+  }
+}

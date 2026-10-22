@@ -1,0 +1,162 @@
+{
+  "attempt-01": {
+    "checksPASS": 31,
+    "checksFAIL": 1,
+    "runtimeErrors": [
+      {
+        "time": "2026-10-22T09:25:48.586Z",
+        "kind": "unanticipated-error",
+        "message": "Q02 saved ACK reflects actual draft",
+        "stack": "Error: Q02 saved ACK reflects actual draft\n    at global.check (/tmp/pr46-cont/driver.cjs:4:191)\n    at eval (eval at global.run (/tmp/pr46-cont/driver.cjs:16:147), <anonymous>:4:566)\n    at async eval (eval at <anonymous> (/tmp/pr46-cont/driver.cjs:17:583), <anonymous>:1:12)\n    at async /tmp/pr46-cont/driver.cjs:17:577"
+      }
+    ],
+    "caseCompleted": [
+      {
+        "time": "2026-10-22T09:24:37.886Z",
+        "kind": "case-complete",
+        "id": "SETUP",
+        "status": "PASS",
+        "note": "Actual UI setup; not counted as full material/allocation historical acceptance"
+      },
+      {
+        "time": "2026-10-22T09:25:16.186Z",
+        "kind": "case-complete",
+        "id": "W04",
+        "status": "PASS"
+      }
+    ],
+    "screenshots": 6,
+    "pageErrors": [],
+    "requestFailed": []
+  },
+  "attempt-02": {
+    "checksPASS": 89,
+    "checksFAIL": 0,
+    "runtimeErrors": [
+      {
+        "time": "2026-10-22T09:33:42.119Z",
+        "kind": "unanticipated-error",
+        "message": "Command failed: python /tmp/pr46-cont/verify-s4.py",
+        "stack": "Error: Command failed: python /tmp/pr46-cont/verify-s4.py\n    at genericNodeError (node:internal/errors:985:15)\n    at wrappedFn (node:internal/errors:539:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at Object.execFileSync (node:child_process:978:15)\n    at eval (eval at global.run (/tmp/pr46-cont/driver.cjs:16:147), <anonymous>:1:207)\n    at async eval (eval at <anonymous> (/tmp/pr46-cont/driver.cjs:17:583), <anonymous>:1:12)\n    at async /tmp/pr46-cont/driver.cjs:17:577"
+      }
+    ],
+    "caseCompleted": [
+      {
+        "time": "2026-10-22T09:29:38.362Z",
+        "kind": "case-complete",
+        "id": "SETUP",
+        "status": "PASS",
+        "note": "Actual UI setup; not counted as full material/allocation historical acceptance"
+      },
+      {
+        "time": "2026-10-22T09:29:40.649Z",
+        "kind": "case-complete",
+        "id": "W04",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-22T09:29:53.913Z",
+        "kind": "case-complete",
+        "id": "Q01",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-22T09:29:53.913Z",
+        "kind": "case-complete",
+        "id": "Q02",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-22T09:29:53.913Z",
+        "kind": "case-complete",
+        "id": "Q03",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-22T09:29:53.913Z",
+        "kind": "case-complete",
+        "id": "Q04",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-22T09:30:25.782Z",
+        "kind": "case-complete",
+        "id": "C01",
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "time": "2026-10-22T09:30:25.782Z",
+        "kind": "case-complete",
+        "id": "C02",
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "time": "2026-10-22T09:30:25.782Z",
+        "kind": "case-complete",
+        "id": "C03",
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "time": "2026-10-22T09:30:25.782Z",
+        "kind": "case-complete",
+        "id": "C04",
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "time": "2026-10-22T09:30:25.782Z",
+        "kind": "case-complete",
+        "id": "C05",
+        "status": "PASS",
+        "note": "Numerical checks; UX manual-only amount omission assessed separately"
+      },
+      {
+        "time": "2026-10-22T09:32:27.128Z",
+        "kind": "case-complete",
+        "id": "W01",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-22T09:32:27.128Z",
+        "kind": "case-complete",
+        "id": "W02",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-22T09:32:27.128Z",
+        "kind": "case-complete",
+        "id": "W03",
+        "status": "PASS"
+      }
+    ],
+    "screenshots": 14,
+    "pageErrors": [],
+    "requestFailed": []
+  },
+  "attempt-03": {
+    "checksPASS": 56,
+    "checksFAIL": 0,
+    "runtimeErrors": [],
+    "caseCompleted": [
+      {
+        "time": "2026-10-22T09:36:10.302Z",
+        "kind": "case-complete",
+        "id": "W04-S4",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-22T09:37:21.487Z",
+        "kind": "case-complete",
+        "id": "V01",
+        "status": "PASS",
+        "note": "Functional geometry checks; independent visual/usability review reported separately, not pixel certification"
+      }
+    ],
+    "screenshots": 37,
+    "pageErrors": [],
+    "requestFailed": []
+  }
+}
