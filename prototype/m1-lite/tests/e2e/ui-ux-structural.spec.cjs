@@ -38,7 +38,7 @@ const test=base.extend({
 const snapshot=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 async function open(page,id){
   const drawer=page.locator(id);
-  if(!await drawer.evaluate(node=>node.open))await drawer.locator('summary').click();
+  if(!await drawer.evaluate(node=>node.open))await drawer.locator(':scope > summary').click();
   await expect(drawer).toHaveAttribute('open','');
 }
 async function prepare(page,app){

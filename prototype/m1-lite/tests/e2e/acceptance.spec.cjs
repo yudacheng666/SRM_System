@@ -46,7 +46,7 @@ const tab = (page, name) => page.locator(`[data-tab="${name}"]`).click();
 // English: Expand new UI drawers as a buyer would, never force visibility by script.
 async function openTools(page, id) {
   const details=page.locator(id);
-  if (!await details.evaluate(node => node.open)) await details.locator('summary').click();
+  if (!await details.evaluate(node => node.open)) await details.locator(':scope > summary').click();
   await expect(details).toHaveAttribute('open', '');
 }
 async function saved(page) {
@@ -600,7 +600,7 @@ test('44 S4 blocked-download reason stays visible beside the action / 备份阻�
   // English: Keep the project drawer collapsed and require a real warning beside disabled S4.
   await openTools(page,'#uiDataTools');
   const projectDrawer=page.locator('#uiProjectDetails');
-  if(await projectDrawer.evaluate(node=>node.open)) await projectDrawer.locator('summary').click();
+  if(await projectDrawer.evaluate(node=>node.open)) await projectDrawer.locator(':scope > summary').click();
   await expect(projectDrawer).not.toHaveAttribute('open','');
   const button=page.locator('#pilotS4DownloadFull');
   await button.scrollIntoViewIfNeeded();

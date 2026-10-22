@@ -34,7 +34,7 @@ const test=base.extend({
 const snapshot=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 async function ensureOpen(page,id){
   const el=page.locator(id);
-  if(!await el.evaluate(n=>n.open))await el.locator('summary').click();
+  if(!await el.evaluate(n=>n.open))await el.locator(':scope > summary').click();
   await expect(el).toHaveAttribute('open','');
 }
 async function start(page,app,{suppliers=false}={}){
