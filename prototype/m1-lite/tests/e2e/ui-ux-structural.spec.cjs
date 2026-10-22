@@ -137,3 +137,38 @@ test('UX comparison: decision-first disclosure, priced details and workspace sta
   await expect(page.locator('.srm-ux-admin-title')).toHaveCount(2);
   expect(errors).toEqual([]);
 });
+
+
+// 中文：真实 12 行有效报价中，待决定筛选必须参与分页、保留原始报价行序号和全量概览。
+// English: Pending-only filtering must paginate real quotable lines without changing source prices or all-line analytics.
+test('UX pending-only: filtered pagination and award state / 待决定筛选真实分页',async({page,app})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await prepare(page,app);
+  const ws=await snapshot(page);
+  const lines=['RFQ Line ID,报价单价,交期,MOQ,报价状态',
+    ...ws.state.items.map((it,i)=>[it.lineId,(20+i).toFixed(2),7,1,'正常报价'].join(','))].join('\n');
+  await page.locator('#quotePaste').fill(lines);
+  await page.locator('#quoteParsePaste').click();
+  await expect(page.locator('#quoteImportPreviewBody tr')).toHaveCount(12);
+  await page.locator('#commitQuoteImport').click();
+  await expect(page.locator('#quoteRoundBody tr')).toHaveCount(12);
+  await page.locator('#confirmQuoteRound').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
+  const before=await snapshot(page);
+  await page.locator('#srmUxPendingOnly').check();
+  await expect(page.locator('#quoteCount')).toContainText('待决定 12 项（全部 12 项）');
+  await expect(page.locator('#quoteTable tbody tr')).toHaveCount(10);
+  await page.locator('#quotePager [data-pg="1"]').click();
+  await expect(page.locator('#quoteTable tbody tr')).toHaveCount(2);
+  await expect(page.locator('#quoteTable tbody tr').first()).toContainText('TST-011');
+  await page.locator('#quotePager [data-pg="0"]').click();
+  expect((await snapshot(page)).state).toEqual(before.state);
+  await page.locator('#quoteTable td.awardSelectable').first().click();
+  await expect(page.locator('#quoteCount')).toContainText('待决定 11 项（全部 12 项）');
+  await expect(page.locator('#quoteTable tbody tr')).toHaveCount(10);
+  await expect(page.locator('#quoteTable tbody tr').first()).toContainText('TST-002');
+  await expect(page.locator('#srmV31DecisionBoard')).toContainText('有效报价物料');
+  await page.locator('#srmUxPendingOnly').uncheck();
+  await expect(page.locator('#quoteCount')).toContainText('共 12 项');
+  expect(errors).toEqual([]);
+});
