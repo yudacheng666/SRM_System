@@ -1,0 +1,16 @@
+await ready('#pilotNewWorkspace');await open('#uiDataTools');
+await p.locator('#pilotS4BackupFile').setInputFiles('/tmp/pr46-cont/attempt-02/downloads/independent-S4-full.zip');
+const response=p.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/api/backups/full/restore'));
+await (await ready('#pilotS4RestoreFull')).click();await check('SETUP empty isolated restore actual200',(await response).status(),200);
+global.seed=JSON.parse(fs.readFileSync('/tmp/pr46-cont/attempt-02/evidence/W04-before-backup.json'));
+global.wid=seed.tables.app_state.rows.find(x=>x[0]==='active_workspace')[1];
+await p.waitForFunction(id=>window.SRMPilot?.snapshot()?.workspaceId===id,wid);await saved();
+await check('SETUP every original fictional DB row/history/PDF byte unchanged',db('SETUP-restored'),seed);
+global.ids=(await snap()).state.items.map(x=>x.lineId);await nav('quotes');
+await check('P2 initial independent three manual identities',(await snap()).state.manualAwards,[ids[1],ids[4],ids[11]]);
+global.baseline=await snap();await expect(p.locator('#srmUxManualAwardSummary')).toContainText('¥1979.00');
+await expect(p.locator('#srmUxManualAwardSummary')).toContainText('3 项');
+const text=await p.locator('#quoteAnalysis').innerText();await check('P2 distinct theoretical6940 and mixed7064',text.includes('逐物料理论最低价组合：¥6940.00')&&text.includes('当前建议/已选组合：¥7064.00'),true);
+await p.locator('#srmUxManualAwardSummary').scrollIntoViewIfNeeded();await shot('P2-3-manual-1979-theory6940-mixed7064');
+fs.writeFileSync(root+'baseline-workspace.json',JSON.stringify(baseline,null,2));
+log('case-complete',{id:'P2-01',status:'PASS',basis:'actual prior fictional S4 restored through new product UI, current computation and state independently verified'});

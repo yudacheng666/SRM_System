@@ -1,0 +1,6 @@
+RAW_ARCHIVE_COMPLETE 395 files 327851040 bytes 10 parts
+Traceback (most recent call last):
+  File "/tmp/pr46-retest/package.py", line 69, in <module>
+    py=(S/'automation/python-backend/stderr.log').read_text();names=[x.split(' ... ',1)[0]for x in py.splitlines()if ' ... ok' in x];assert len(names)==43
+                                                                                                                                            ^^^^^^^^^^^^^^
+AssertionError

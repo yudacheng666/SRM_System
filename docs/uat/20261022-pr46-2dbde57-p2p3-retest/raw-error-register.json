@@ -1,0 +1,54 @@
+{
+  "productSHA": "2dbde578165de720fed290cddbfef0a34e99f032",
+  "previousEvidenceCommit": "8296b853b3de03eb406ccd1f6eca50fdfdfdfa44",
+  "oldReportsUnmodified": true,
+  "automatedCounts": {
+    "PythonPASS": 43,
+    "NodePASS": 10,
+    "ChromiumPASS": 50,
+    "FAIL": 0,
+    "SKIP": 0,
+    "RETRY": 0
+  },
+  "independentCounts": {
+    "PASS": 8,
+    "FAIL": 0,
+    "NOT TESTED": 0,
+    "BLOCKED": 0
+  },
+  "nativeWindowsNOTTESTED": 3,
+  "newDriverErrors": [],
+  "driverCorrectionsUsed": 0,
+  "confirmedNewProductDefects": [],
+  "expectedNegativeTests": [
+    {
+      "id": "P3-03",
+      "status": "PASS",
+      "actualHTTP": 409,
+      "method": "real stale browser tab, same SQLite version check",
+      "evidence": "independent/evidence/P3-conflict-http.json"
+    }
+  ],
+  "nonfatalObservations": [
+    {
+      "type": "usability wording",
+      "text": "While the actual PUT was pending, the summary read 保存状态待确认 with pending styling, not 已保存. Diagnostics stated actual save in progress. Accurate non-success state; wording can be made more specific, no confirmed false-save defect."
+    },
+    {
+      "type": "environment warning",
+      "text": "Original Node/Playwright logs contain NO_COLOR/FORCE_COLOR warning; commands all exited0."
+    }
+  ],
+  "officialGitHubActions": "Both exact-SHA workflows remain failure with4jobs no execution steps returned; cloud suite PASS is not official Actions PASS. Account restriction explanation originates developer handoff; empty steps alone does not prove billing root cause.",
+  "scopeVerdict": "P2/C05 PASS; P3/V01 PASS; scoped cloud retest PASS; not whole-product release approval",
+  "reportingToolErrors": [
+    {
+      "classification": "REPORT_PACKAGING_PARSER, not browser driver or product",
+      "status": "RESOLVED without rerunning tests",
+      "raw": "package.log",
+      "cause": "Verbose unittest uses multi-line docstrings; first packaging parser counted lines ending ...ok instead of actual test-name records. Original suite exited0 with43 tests OK.",
+      "correction": "Parse the43 test-name records anchored at start of line, cross-check final Ran43/OK and unchanged exit0; preserve all raw logs.",
+      "retest": "Packaging-only CSV regeneration; no browser/business rerun or product/test edits."
+    }
+  ]
+}
