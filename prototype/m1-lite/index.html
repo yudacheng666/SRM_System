@@ -1360,6 +1360,21 @@ body.srm-v2 #quotes .srm-v4-analysis-disclosure>summary::before{content:"▸";ma
 body.srm-v2 #quotes .srm-v4-analysis-disclosure[open]>summary::before{content:"▾"}
 body.srm-v2 #quotes .srm-v4-analysis-body{padding:0 12px 12px}
 @media(max-width:1100px){body.srm-v2 #quotes #quoteTable{min-width:790px}}
+
+/* SRM UI V4 / C-D: shared RFQ status and separate business report drawer from backup/restore. */
+body.srm-v2 .ui-context .ui-contextRight{display:flex;align-items:center;justify-content:flex-end;min-width:195px;flex:1}
+body.srm-v2 .ui-context #srmV2LiveStatus{font-size:12px;max-width:min(48vw,420px);white-space:normal;overflow-wrap:anywhere}
+body.srm-v2 #uiProjectDetails #uiStatusDetails{border:1px solid #e0e7f0;background:#f7faff;border-radius:6px;margin-top:8px}
+body.srm-v2 #uiStatusDetails summary{padding:7px 10px;cursor:pointer;color:#506581;font-size:12px;font-weight:700}
+body.srm-v2 #uiStatusDetails .ui-statusStrip{margin:6px 8px 8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+body.srm-v2 #uiStatusDetails .ui-statusStrip>div{min-width:0;white-space:normal;overflow-wrap:anywhere;font-size:12px;line-height:1.45}
+body.srm-v2 #uiStatusDetails .ui-projectStatus{display:none}
+body.srm-v2 #uiBusinessExports .srm-v4-business-actions{padding:9px 0;gap:8px}
+body.srm-v2 #uiBusinessExports #pilotReportPanel{margin-top:9px}
+body.srm-v2 #uiDataTools .ui-drawerBody>.toolbar{gap:8px}
+body.srm-v2 #srmV3PageStage-assign #srmV4SupplierReport,
+body.srm-v2 #quotes #srmV4ComparisonReport{font-size:13px}
+@media(max-width:1050px){body.srm-v2 #uiStatusDetails .ui-statusStrip{grid-template-columns:1fr}body.srm-v2 .ui-context #srmV2LiveStatus{max-width:280px}}
 </style>
 </head>
 <body class="srm-v2">
@@ -4434,8 +4449,8 @@ generateBtn.onclick=()=>{
   if(exportOpen.disabled){alert("当前数据尚未保存或本机服务不可用。请等待自动保存成功后再导出。");return}
   // 中文：直接打开已实现的正式导出面板，不使用原型占位弹窗。
   // English: Route the visible action to the working supplier export panel, not a placeholder alert.
-  const admin=document.getElementById("uiDataTools");
-  if(admin)admin.open=true;
+  const business=document.getElementById("uiBusinessExports");
+  if(business)business.open=true;
   const panel=document.getElementById("pilotReportPanel");
   const type=document.getElementById("pilotReportType");
   type.value="rfq";
@@ -6073,11 +6088,23 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   const projectDetails=document.createElement("details");
   projectDetails.id="uiProjectDetails";projectDetails.className="ui-projectDetails";projectDetails.open=true;
   const projectSummary=document.createElement("summary");
-  projectSummary.innerHTML='项目操作：新建 / 切换 / 手动保存 <span class="ui-projectStatus" id="uiProjectStatus">演示模式</span>';
+  projectSummary.textContent="项目操作：新建 / 切换 / 手动保存";
   const projectBody=document.createElement("div");
   projectBody.className="ui-projectBody";
-  projectBody.append(project,statusStrip);
+  // 中文：技术诊断保留在可展开区域；RFQ 与实时保存状态只在统一顶部显示。
+  // English: Keep diagnostics disclosed while RFQ ID and live save status occupy one header.
+  const detailStatus=document.createElement("details");
+  detailStatus.id="uiStatusDetails";detailStatus.className="srm-v4-status-details";
+  const detailSummary=document.createElement("summary");
+  detailSummary.textContent="保存与备份技术详情";
+  const technicalState=document.createElement("span");
+  technicalState.id="uiProjectStatus";technicalState.className="ui-projectStatus";
+  statusStrip.prepend(technicalState);
+  detailStatus.append(detailSummary,statusStrip);
+  projectBody.append(project,detailStatus);
   projectDetails.append(projectSummary,projectBody);
+  const headerContext=one("uiCurrentRfq").closest(".ui-context");
+  headerContext.querySelector(".ui-contextRight").replaceChildren(one("srmV2LiveStatus"));
   controls.prepend(projectDetails);
   window.addEventListener("srm:workspace-changed",()=>{projectDetails.open=false});
   if(window.SRMPilot?.isBuyer())projectDetails.open=false;
@@ -6100,16 +6127,25 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
 
   const notes = Array.from(controls.children).find(el=>
     el.classList?.contains("small") && el.textContent.includes("必须先保存到本机"));
-  const adminTools = drawer("uiDataTools","数据备份、恢复与报表导出",
-      "包含 S4 完整 ZIP、旧版兼容格式与业务单据",[
+  // 中文：业务报表与备份恢复拆分入口，不复制产品业务状态或事件处理器。
+  // English: Separate report and backup surfaces without duplicating the underlying controls.
+  const businessActions=document.createElement("div");
+  businessActions.className="toolbar srm-v4-business-actions";
+  businessActions.append(one("pilotExportExcel"),one("pilotReportOpen"));
+  const businessTools=drawer("uiBusinessExports","采购单据与比价报表导出",
+      "供应商询价单、内部比价和业务 Excel",[
+        businessActions,one("pilotReportPanel")
+      ]);
+  supplierTools.after(businessTools);
+  const adminTools=drawer("uiDataTools","数据备份与恢复",
+      "S4 完整 ZIP、恢复保护与旧版兼容工具",[
         one("pilotExportBackup").closest(".toolbar"),
         one("pilotImportComplete").closest(".toolbar"),
         one("pilotBulkRestoreOptions"),
         one("pilotBackupPreview"),
-        one("pilotReportPanel"),
         notes
       ]);
-  supplierTools.after(adminTools);
+  businessTools.after(adminTools);
   
   function reveal(id){
     const section = one(id);
@@ -6122,6 +6158,22 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
     one("pilotHistoryWorkspace").focus();
   });
   one("uiAdminToggle").addEventListener("click",()=>reveal("uiDataTools"));
+  // 中文：页面导出快捷入口只代理原按钮，保留原自动保存与外发隔离检查。
+  // English: Report shortcuts delegate to the existing guarded exporter.
+  function openBusinessReport(kind){
+    businessTools.open=true;
+    const button=one("pilotReportOpen");
+    if(button.disabled){
+      one("pilotNotice").textContent="当前询价尚未保存完成；请等待保存确认后再导出单据。";
+      reveal("uiBusinessExports");return;
+    }
+    const panel=one("pilotReportPanel"),reportType=one("pilotReportType");
+    if(panel.style.display==="none")button.click();
+    reportType.value=kind;
+    reportType.dispatchEvent(new Event("change",{bubbles:true}));
+    reveal("uiBusinessExports");
+    panel.scrollIntoView({block:"nearest",behavior:"smooth"});
+  }
 
   const item = one("items");
   const itemLead = document.createElement("div");
@@ -6140,7 +6192,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   const drawingTools=document.createElement("details");
   drawingTools.id="uiDrawingTools";drawingTools.className="ui-drawer";
   const drawingTitle=document.createElement("summary");
-  drawingTitle.textContent="PDF 图纸匹配与关联管理（点击展开）";
+  drawingTitle.textContent="PDF 图纸：匹配预览 → 人工复核 → 确认关联（点击展开）";
   drawingTools.append(drawingTitle,one("pilotDrawingPanel"));
   item.insertBefore(drawingTools,itemLead.nextSibling);
   // 中文：排序操作说明移至物料表下方（保留原 ID），避免抢占首屏物料位置。
@@ -6165,6 +6217,16 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   assignLead.innerHTML = '<div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">03 / SUPPLIER ALLOCATION</div><h2>供应商分配 <span>/ 询价范围管理</span></h2><p>先明确目标供应商，再关联物料；追加分配不会覆盖其他供应商的询价范围。</p></div>'+
     '<div class="toolbar"><button class="btn" id="uiJumpSupplierList" type="button">查看分配操作 ↓</button><button class="btn soft" id="uiOpenSupplierTools" type="button">添加 / 导入供应商</button></div>';
   assign.prepend(assignLead);
+  const rfqReportShortcut=document.createElement("button");
+  rfqReportShortcut.id="srmV4SupplierReport";rfqReportShortcut.className="btn soft";rfqReportShortcut.type="button";
+  rfqReportShortcut.textContent="导出供应商询价单";
+  assignLead.querySelector(".toolbar").appendChild(rfqReportShortcut);
+  rfqReportShortcut.addEventListener("click",()=>openBusinessReport("rfq"));
+  const compReportShortcut=document.createElement("button");
+  compReportShortcut.id="srmV4ComparisonReport";compReportShortcut.className="btn soft";compReportShortcut.type="button";
+  compReportShortcut.textContent="导出内部比价报表";
+  one("quotes").querySelector(".cardhead .toolbar").prepend(compReportShortcut);
+  compReportShortcut.addEventListener("click",()=>openBusinessReport("comparison"));
   one("uiOpenSupplierTools").addEventListener("click",()=>reveal("uiSupplierTools"));
   one("uiJumpSupplierList").addEventListener("click",()=>one("supplierSearch").scrollIntoView({block:"center",behavior:"smooth"}));
 
