@@ -1306,6 +1306,30 @@ body.srm-v2 .srm-v31-decision.suggested{color:#356fae;background:#eaf2fc}
  body.srm-v2 .srm-v31-decisionMetrics>div{padding:7px 9px}
  body.srm-v2 .srm-v31-decisionMetrics span{font-size:10px}
 }
+
+/* SRM UI V4 / Phase A — presentation-only quote table. All original 12 columns and edit actions remain available. */
+body.srm-v2 #quoteImport .srm-v4-revision-card>.cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+body.srm-v2 #quoteImport .srm-v4-revision-card>.cardhead>.toolbar{display:flex;gap:7px;flex-wrap:wrap}
+body.srm-v2 #quoteImport #quoteRoundTable{width:100%;border-collapse:separate;border-spacing:0}
+body.srm-v2 #quoteImport #quoteRoundTable th{font-size:12px;padding:8px 9px;white-space:normal;line-height:1.3}
+body.srm-v2 #quoteImport #quoteRoundTable td{font-size:13px;padding:8px 9px;line-height:1.3;vertical-align:middle;min-height:40px}
+body.srm-v2 #quoteImport #quoteRoundTable td:first-child{min-width:175px}
+body.srm-v2 #quoteImport #quoteRoundTable .srm-v4-item-name{display:block;font-size:12px;color:#60728a;max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.srm-v2 #quoteImport #quoteRoundTable .srm-v4-quote-details{display:inline-block;vertical-align:middle;margin-top:1px;font-size:12px}
+body.srm-v2 #quoteImport #quoteRoundTable .srm-v4-quote-details summary{color:#255aa2;cursor:pointer;white-space:nowrap;font-weight:600}
+body.srm-v2 #quoteImport #quoteRoundTable .srm-v4-quote-details[open]{display:block;white-space:normal;padding:6px 0;max-width:310px;min-width:215px;line-height:1.55}
+body.srm-v2 #quoteImport #quoteRoundTable .srm-v4-quote-details[open] div{margin-top:3px;overflow-wrap:anywhere}
+body.srm-v2 #quoteImport.srm-v4-compact #quoteRoundTable :is(th,td):nth-child(4),
+body.srm-v2 #quoteImport.srm-v4-compact #quoteRoundTable :is(th,td):nth-child(7),
+body.srm-v2 #quoteImport.srm-v4-compact #quoteRoundTable :is(th,td):nth-child(8),
+body.srm-v2 #quoteImport.srm-v4-compact #quoteRoundTable :is(th,td):nth-child(10),
+body.srm-v2 #quoteImport.srm-v4-compact #quoteRoundTable :is(th,td):nth-child(11){display:none}
+body.srm-v2 #quoteImport.srm-v4-compact #quoteRoundTable :is(th,td):first-child{position:sticky;left:0;z-index:2;background:#f9fbff;border-right:1px solid #e3eaf2}
+body.srm-v2 #quoteImport.srm-v4-compact #quoteRoundTable th:first-child{z-index:4}
+body.srm-v2 #quoteImport .srm-v4-feedback{font-size:12px;color:#255aa2;line-height:1.4;margin-bottom:4px}
+body.srm-v2 #quoteImport .srm-v4-feedback:empty{display:none}
+@media(max-width:1050px){body.srm-v2 #quoteImport #quoteRoundTable{min-width:810px}}
+
 </style>
 </head>
 <body class="srm-v2">
@@ -1722,7 +1746,7 @@ body.srm-v2 .srm-v31-decision.suggested{color:#356fae;background:#eaf2fc}
     </div>
   </section>
 
-  <section id="quoteImport" class="panel">
+  <section id="quoteImport" class="panel srm-v4-compact">
     <div id="srmV3PageStage-quoteImport" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">04 / QUOTE INTAKE</div><h2>报价回收 <span>/ 轮次与版本</span></h2><p>选择供应商与轮次，录入并核验报价；已确认的历史版本保持只读。</p></div><div class="srm-v3-pageMeta">报价录入 · 异常核验 · 版本确认</div></div>
     <div class="card" style="margin-bottom:14px">
       <div class="cardhead">
@@ -1823,13 +1847,13 @@ body.srm-v2 .srm-v31-decision.suggested{color:#356fae;background:#eaf2fc}
       <div class="cardbody"><div id="quoteImportFeedback" class="small muted" style="margin-bottom:8px"></div><div class="tablewrap"><table class="table"><thead><tr><th>存货编码</th><th>RFQ Line ID</th><th>存货名称</th><th>报价单价 / 阶梯价（元/询价单位）</th><th>RFQ 数量适用单价（元/单位）</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>物料备注</th><th>覆盖检查</th></tr></thead><tbody id="quoteImportPreviewBody"></tbody></table></div></div>
     </div>
 
-    <div class="card" style="margin-top:14px">
-      <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small">导入后可点击“修改”逐行修正</span></div><div class="toolbar"><button class="btn" id="carryForwardMissing">选择沿用上轮项目…</button></div></div>
-      <div class="cardbody">
+    <div class="card srm-v4-revision-card" style="margin-top:14px">
+      <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small">优先显示适用报价与变化，展开行查看交期、阶梯及来源</span></div><div class="toolbar"><button class="btn soft" type="button" id="quoteRefreshDisplay" title="刷新显示，不重新读取 SQLite 或覆盖草稿">↻ 刷新显示</button><button class="btn" type="button" id="quoteDensityToggle" aria-pressed="false">查看全部列</button><button class="btn" id="carryForwardMissing">选择沿用上轮项目…</button></div></div>
+      <div class="cardbody"><div id="quoteRefreshFeedback" class="srm-v4-feedback" role="status" aria-live="polite"></div>
         <div id="srmV31RevisionDiff" class="srm-v31-revisionDiff" aria-live="polite" hidden></div>
         <div id="quoteRoundHint" class="small muted" style="margin-bottom:8px"></div>
         <div id="carryForwardPreview" class="coverageDetails" style="display:none"></div>
-        <div class="tablewrap"><table class="table"><thead><tr><th>存货编码 / RFQ Line ID / 存货名称</th><th>询价数量（询价单位）</th><th id="srmV31PreviousPriceHeading">上轮单价（元/单位）</th><th>本轮单价 / 阶梯价（元/单位）</th><th>本轮适用单价（元/单位）</th><th>单价变化</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>报价来源</th><th>物料备注</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
+        <div class="tablewrap"><table class="table" id="quoteRoundTable"><thead><tr><th>存货编码 / RFQ Line ID / 存货名称</th><th>询价数量（询价单位）</th><th id="srmV31PreviousPriceHeading">上轮单价（元/单位）</th><th>本轮单价 / 阶梯价（元/单位）</th><th>本轮适用单价（元/单位）</th><th>单价变化</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>报价来源</th><th>物料备注</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
       </div>
     </div>
   </section>
@@ -3900,15 +3924,39 @@ function renderV31RevisionDiff(round){
       rows.join("")+'</tbody></table></div>':'<div class="small muted">本版与上一个已确认版本的报价明细一致。</div>');
   return previous;
 }
-function renderQuoteRound(){
-  carryForwardPreview.style.display="none";carryForwardPreview.innerHTML="";
+// 中文：本操作只刷新内存数据的可见视图，不重新读取 SQLite、不创建版本或提交报价。
+// English: Redraw in-memory rows without SQLite reload, revision creation or quote submission.
+document.getElementById("quoteRefreshDisplay").addEventListener("click",()=>{
+  const wrapper=document.getElementById("quoteRoundTable").closest(".tablewrap");
+  const x=window.scrollX,y=window.scrollY;
+  const left=wrapper.scrollLeft,top=wrapper.scrollTop;
+  const focused=document.activeElement;
+  if(!currentQuoteRound()){
+    document.getElementById("quoteRefreshFeedback").textContent="先选择供应商与轮次。";return;
+  }
+  renderQuoteRound({preserveTransient:true});
+  wrapper.scrollLeft=left;wrapper.scrollTop=top;
+  if(focused?.isConnected&&focused!==document.body)focused.focus({preventScroll:true});
+  window.scrollTo({left:x,top:y,behavior:"instant"});
+  document.getElementById("quoteRefreshFeedback").textContent="已刷新当前显示；草稿、导入预览、轮次与 SQLite 均未更改。";
+});
+document.getElementById("quoteDensityToggle").addEventListener("click",()=>{
+  const compact=document.getElementById("quoteImport").classList.toggle("srm-v4-compact");
+  const btn=document.getElementById("quoteDensityToggle");
+  btn.setAttribute("aria-pressed",String(!compact));
+  btn.textContent=compact?"查看全部列":"返回紧凑视图";
+});
+function renderQuoteRound(options={}){
+  // 中文：显示刷新保留尚未确认的沿用预览；切换轮次按原逻辑重置跨轮临时状态。
+  // English: Preserve uncommitted carry preview on view refresh; round switching still resets it.
+  if(!options.preserveTransient){carryForwardPreview.style.display="none";carryForwardPreview.innerHTML="";}
   const round=currentQuoteRound();if(!round)return;const sup=suppliers.find(s=>s.id===round.supplierId),expected=expectedIdsForRound(round);
   quoteEvidenceType.value=round.evidenceType||"email_attachment";quoteEvidenceNote.value=round.evidenceNote||"";quoteTermsNote.value=round.termsNote||"";
   for(const el of [quoteEvidenceType,quoteEvidenceNote,quoteTermsNote])el.disabled=round.status==="confirmed";
   quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮 · 第${round.revisionNo}版</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认/锁定":"草稿"}</span><div class="small" style="margin-top:5px">轮次表示议价阶段；版本表示同一轮报价的更正提交。已确认提交不可覆盖修改。</div>`;
   const previousV31=renderV31RevisionDiff(round);
   quoteRoundHint.textContent=`本轮应报价范围 ${expected.length} 项；当前提交已记录 ${round.lines.length} 项。`;renderCoverageResult(coverageFromRows(round,round.lines));
-  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=({carry:"明确沿用上轮",manual:"手工录入/修正",paste:"表格粘贴",file:"文件导入",demo:"虚构演示","revision-copy":"复制自上一版",import:"旧记录（来源未细分）"})[l.source]||"历史记录（来源未知）",prev=previousV31?previousV31.lines.find(x=>x.lineId===l.lineId):round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)} · 规格：${esc(it?.spec||"未填写")}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td>${esc(l.remark||"")}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="12" class="muted">当前提交还没有报价记录。</td></tr>';
+  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=({carry:"明确沿用上轮",manual:"手工录入/修正",paste:"表格粘贴",file:"文件导入",demo:"虚构演示","revision-copy":"复制自上一版",import:"旧记录（来源未细分）"})[l.source]||"历史记录（来源未知）",prev=previousV31?previousV31.lines.find(x=>x.lineId===l.lineId):round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td class="srm-v4-item-cell"><b>${esc(it?.id||l.itemId)}</b><span class="srm-v4-item-name" title="${esc(it?.name||"")}">${esc(it?.name||"")}</span><details class="srm-v4-quote-details"><summary>详情</summary><div><b>RFQ：</b>${esc(l.lineId)} · <b>规格：</b>${esc(it?.spec||"未填写")}</div><div><b>原始价格/档位：</b>${esc(tierText(l))}</div><div><b>交期：</b>${l.lead==null?"—":esc(l.lead+" 天")} · <b>MOQ：</b>${l.moq==null?"—":esc(String(l.moq))}</div><div><b>来源：</b>${esc(src)} · <b>状态：</b>${esc(quoteStatusLabel(l.status))}</div><div><b>备注：</b>${esc(l.remark||"—")}</div></details></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td>${esc(l.remark||"")}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="12" class="muted">当前提交还没有报价记录。</td></tr>';
   document.querySelectorAll("[data-edit-quote]").forEach(b=>b.onclick=()=>editQuoteLine(Number(b.dataset.editQuote)));
   carryForwardMissing.disabled=round.roundNo===1||round.status==="confirmed";editRoundScope.disabled=round.roundNo===1||round.status==="confirmed";confirmQuoteRound.disabled=round.status==="confirmed";commitQuoteImport.disabled=round.status==="confirmed";renderQuotes();
 }
