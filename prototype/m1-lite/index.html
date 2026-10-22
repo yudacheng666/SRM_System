@@ -1330,6 +1330,36 @@ body.srm-v2 #quoteImport .srm-v4-feedback{font-size:12px;color:#255aa2;line-heig
 body.srm-v2 #quoteImport .srm-v4-feedback:empty{display:none}
 @media(max-width:1050px){body.srm-v2 #quoteImport #quoteRoundTable{min-width:810px}}
 
+
+/* SRM UI V4 / Phase B — decision-first comparison, price scope remains unchanged. */
+body.srm-v2 #quotes>.card>.cardhead{padding:12px 16px}
+body.srm-v2 #quotes .srm-v4-quote-rules{margin:0 0 7px;font-size:12px}
+body.srm-v2 #quotes .srm-v4-quote-rules summary{cursor:pointer;color:#526985;font-weight:650}
+body.srm-v2 #quotes .srm-v4-quote-rules .notice{margin-top:7px}
+body.srm-v2 #quotes .srm-v4-matrix-heading{display:flex;justify-content:space-between;padding:9px 2px 7px;gap:12px;font-size:15px;color:#17263e}
+body.srm-v2 #quotes .srm-v4-matrix-heading span{display:block;font-size:12px;margin-top:3px}
+body.srm-v2 #quotes .srm-v4-matrix-scroll{max-height:530px;border:1px solid #dce5ef}
+body.srm-v2 #quotes #quoteTable td{padding:9px 10px;font-size:13px;vertical-align:middle;line-height:1.35}
+body.srm-v2 #quotes #quoteTable :is(th,td):first-child{position:sticky;left:0;z-index:2;background:#f7faff;border-right:1px solid #dce5ef;min-width:175px}
+body.srm-v2 #quotes #quoteTable th:first-child{z-index:4}
+body.srm-v2 #quotes #quoteTable td.selectedCell{background:#ebf3ff!important}
+body.srm-v2 #quotes #quoteTable .srm-v4-bid-details{margin-top:4px;font-size:12px;color:#60728a}
+body.srm-v2 #quotes #quoteTable .srm-v4-bid-details summary{font-size:11px;color:#60728a;cursor:pointer;line-height:1.25}
+body.srm-v2 #quotes #quoteTable .srm-v4-bid-details[open]{min-width:165px;max-width:290px;white-space:normal}
+body.srm-v2 #quotes #quoteTable .srm-v4-bid-details[open]>div{margin-top:5px;overflow-wrap:anywhere}
+body.srm-v2 #quotes #quoteTable .quotePrice{padding:5px 7px;min-height:30px;font-size:13px}
+body.srm-v2 #quotes #quoteTable .srm-v4-terms-inline{font-size:11px;color:#60728a;font-weight:500;line-height:1.3;margin-top:3px;max-width:180px}
+body.srm-v2 #quotes #quoteTable .srm-v4-item-qty{font-size:12px;color:#506581;margin-top:3px}
+body.srm-v2 #quotes .srm-v4-scope-heading{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:14px;color:#17263e;margin-top:12px}
+body.srm-v2 #quotes .srm-v4-scope-heading span{font-size:12px}
+body.srm-v2 #quotes #commonScopePicker{padding:8px 12px!important;background:#f9fbff}
+body.srm-v2 #quotes #quoteAnalysis{padding:0!important;background:#fff;border-color:#dfe5ee;border-left:0}
+body.srm-v2 #quotes .srm-v4-analysis-disclosure>summary{display:block;padding:12px 14px;cursor:pointer;font-size:14px;font-weight:700;color:#24496f;list-style:none}
+body.srm-v2 #quotes .srm-v4-analysis-disclosure>summary::-webkit-details-marker{display:none}
+body.srm-v2 #quotes .srm-v4-analysis-disclosure>summary::before{content:"▸";margin-right:8px}
+body.srm-v2 #quotes .srm-v4-analysis-disclosure[open]>summary::before{content:"▾"}
+body.srm-v2 #quotes .srm-v4-analysis-body{padding:0 12px 12px}
+@media(max-width:1100px){body.srm-v2 #quotes #quoteTable{min-width:790px}}
 </style>
 </head>
 <body class="srm-v2">
@@ -1867,17 +1897,21 @@ body.srm-v2 #quoteImport .srm-v4-feedback:empty{display:none}
         <div class="toolbar"><button class="btn" id="resetAwards">清空选择</button></div>
       </div>
       <div class="cardbody">
-        <div class="notice">最低价仅作为提示；允许选择非最低价，但必须填写原因。V1 每项物料最终选择一家供应商。总价分析仅在可比口径下计算；缺报价不会按 0 处理。</div>
+        <details class="srm-v4-quote-rules"><summary>报价口径与定标规则</summary><div class="notice">最低价仅作为提示；允许选择非最低价，但必须填写原因。V1 每项物料最终选择一家供应商。总价分析仅在可比口径下计算；缺报价不会按 0 处理。</div></details>
         <div id="quoteModeNotice" class="small muted" style="margin-top:8px"></div>
         <!-- 中文：比较组不预选全体供应商；只有采购员勾选至少两家才生成同范围金额。
              English: The buyer must explicitly select two or more suppliers for shared-scope totals. -->
         <!-- 中文：比价明细优先展示，汇总分析仍保留并移至表格之后。
              English: Lead with actionable quote lines; preserve all analysis below the comparison table. -->
-        <div id="commonScopePicker" class="coverageDetails" style="margin-top:10px"></div>
-        <div class="tablewrap" style="margin-top:10px">
+        <!-- 中文：逐物料决策先于金额分析；现有 #quoteTable 保持原业务事件与报价身份。 -->
+        <!-- English: Lead with per-line decisions; preserve the existing award handlers and line identity. -->
+        <div class="srm-v4-matrix-heading"><div><b>逐物料比价与人工定标</b><span class="muted small">点击有效报价选择供应商；系统建议不等于人工确认</span></div></div>
+        <div class="tablewrap srm-v4-matrix-scroll" style="margin-top:9px">
           <table class="table" id="quoteTable"></table>
         </div>
         <div class="pager"><span id="quoteCount"></span><div id="quotePager"></div></div>
+        <div class="srm-v4-scope-heading"><b>共同有效报价范围</b><span class="muted small">勾选至少两家后，才比较相同物料范围下的总金额</span></div>
+        <div id="commonScopePicker" class="coverageDetails" style="margin-top:8px"></div>
         <div id="quoteAnalysis" class="coverageDetails" style="margin-top:10px"></div>
       </div>
     </div>
@@ -4535,7 +4569,7 @@ function exportSelectedCommonScopeCsv(plan){
 function renderQuoteAnalysis(){
   quoteModeNotice.textContent=quoteComparisonMode==="demo"?
     "纯模拟展示：当前所有报价及上次采购价均为虚构演示值，不可用于实际选择。":
-    "报价回收验证：仅已确认的报价记录参与比较；未报价不自动补价。上次采购价仍是 M0 虚构示例。";
+    "仅已确认的报价参与比价；未报价不按零元处理。历史采购价尚未接入，未参与当前计算。";
   renderCommonScopePicker();
   const sups=comparisonSuppliers(),its=comparisonItems(),shared=planSelectedCommonScope();
   let theoretical=0,theoreticalCount=0,finalTotal=0,finalCount=0;
@@ -4577,13 +4611,13 @@ function renderQuoteAnalysis(){
       shared.selected.map(s=>'<th>'+esc(s.name)+'<div class="small muted">单价 / 行金额</div></th>').join('')+
       '</tr></thead><tbody>'+detailRows+'</tbody></table></div></details></div>';
   }
-  quoteAnalysis.innerHTML='<div class="sline"><div><b>报价金额分析（M0）</b>'+
+  quoteAnalysis.innerHTML='<details id="srmV4AnalysisDisclosure" class="srm-v4-analysis-disclosure"><summary>展开金额分析：同范围、供应商自身范围与理论组合</summary><div class="srm-v4-analysis-body"><div class="sline"><div><b>分口径金额分析</b>'+
     '<div class="small muted">三种口径分别统计：自身报价范围、指定供应商组共同范围、逐物料最低价组合。仅演示同币种同税口径。</div></div>'+
     '<div><b>逐物料理论最低价组合：</b>¥'+theoretical.toFixed(2)+'（'+theoreticalCount+' 项）　<b>当前建议/已选组合：</b>¥'+finalTotal.toFixed(2)+'（'+finalCount+' 项，含自动建议；待复核 '+awardReviewIds.size+' 项不计入）</div></div>'+
     '<div style="margin-top:10px"><b>A. 各供应商自身报价金额（不同范围，不可直接排名）</b></div>'+
     '<table class="analysisTable"><thead><tr><th>供应商</th><th>自身有效报价项数</th><th>自身报价范围金额（元）</th></tr></thead><tbody>'+ownRows+'</tbody></table>'+
     '<div style="margin-top:12px"><b>B. 采购员指定供应商组的同范围金额</b></div>'+sharedBody+
-    '<div class="small muted" style="margin-top:10px">C. 逐物料最低价组合及采购员已选择金额仅供 RFQ 整体规划，不代表某一家供应商的整单报价。缺报价不作为零元处理。</div>';
+    '<div class="small muted" style="margin-top:10px">C. 逐物料最低价组合及采购员已选择金额仅供 RFQ 整体规划，不代表某一家供应商的整单报价。缺报价不作为零元处理。</div></div></details>';
   const exporter=document.getElementById("exportSelectedCommonScope");
   if(exporter)exporter.onclick=()=>exportSelectedCommonScopeCsv(shared);
 }
@@ -4634,13 +4668,17 @@ function renderV31DecisionBoard(sups,its){
 }
 function renderQuotes(){
   const sups=comparisonSuppliers(),its=comparisonItems(),QUOTE_PAGE=10,pages=Math.max(1,Math.ceil(its.length/QUOTE_PAGE));quotePage=Math.min(quotePage,pages-1);const start=quotePage*QUOTE_PAGE,slice=its.slice(start,start+QUOTE_PAGE);
-  let h=`<thead><tr><th>存货</th><th>历史采购价（未接入）</th>`+sups.map(s=>{
+  let h=`<thead><tr><th>存货</th>${window.SRMPilot?.isBuyer()?"":"<th>历史采购价（演示）</th>"}`+sups.map(s=>{
     // 中文：展示已确认报价版本的整轮商务条款，避免采购员只比较单价忽略附加条件。
     // English: Surface confirmed commercial terms beside quote comparisons.
     const terms=supplierSubmissions(s.id).filter(r=>r.status==="confirmed").sort((a,b)=>b.roundNo-a.roundNo||b.revisionNo-a.revisionNo)[0]?.termsNote||"";
-    return `<th>${esc(s.name)}${terms?`<div class="small warn" title="${esc(terms)}">本轮商务备注：${esc(terms.slice(0,90))}${terms.length>90?"…":""}</div>`:""}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`;
+    return `<th>${esc(s.name)}${terms?`<div class="srm-v4-terms-inline" title="${esc(terms)}">商务条款：${esc(terms.slice(0,32))}${terms.length>32?"…":""}</div>`:""}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`;
   }).join("")+`<th>系统建议 / 人工决定</th></tr></thead><tbody>`;
-  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>${window.SRMPilot?.isBuyer()?"—":"¥"+prev}<span class="small muted">（${window.SRMPilot?.isBuyer()?"未接入":"虚构"}）</span></td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=v!=null&&vals.length&&Math.abs(v-vals[0].v)<=QUOTE_PRICE_TIE_EPSILON?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell ":""}${v!=null?"awardSelectable":""}" ${v!=null?`data-award="${esc(it.lineId+"|"+s.id)}" tabindex="0" role="button" aria-label="选择此供应商报价"`:""}>${v==null?'<span class="muted">'+esc(quoteUnpricedStateLabel(it,s))+'</span>':`<button class="btn quotePrice ${cls}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>${meta.rawLine?.remark?`<div class="small warn">物料备注：${esc(meta.rawLine.remark)}</div>`:""}`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?(manualAwards.has(it.lineId)?'<span class="srm-v31-decision manual">采购员已选择</span>':'<span class="srm-v31-decision suggested">系统建议 · 待人工确认</span>')+'<br>'+esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("#quoteTable td[data-award]").forEach(cell=>{
+  slice.forEach((it,localIndex)=>{const i=start+localIndex,vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span><div class="srm-v4-item-qty">数量 ${it.qty} ${esc(it.unit||"")}</div></td>${window.SRMPilot?.isBuyer()?"":`<td>¥${prev}<span class="small muted">（虚构）</span></td>`}`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=v!=null&&vals.length&&Math.abs(v-vals[0].v)<=QUOTE_PRICE_TIE_EPSILON?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell ":""}${v!=null?"awardSelectable":""}" ${v!=null?`data-award="${esc(it.lineId+"|"+s.id)}" tabindex="0" role="button" aria-label="选择此供应商报价"`:""}>${v==null?'<span class="muted">'+esc(quoteUnpricedStateLabel(it,s))+'</span>':`<button class="btn quotePrice ${cls}">¥${Number(v).toFixed(2)}</button><details class="srm-v4-bid-details"><summary>交期 · 轮次详情</summary><div>询价数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</div>${meta.rawLine?.remark?`<div class="small warn">物料备注：${esc(meta.rawLine.remark)}</div>`:""}</details>`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?(manualAwards.has(it.lineId)?'<span class="srm-v31-decision manual">采购员已选择</span>':'<span class="srm-v31-decision suggested">系统建议 · 待人工确认</span>')+'<br>'+esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;
+  // 中文：展开报价详情不得触发外层单元格的人工定标事件。
+  // English: Opening an offer detail must never bubble into an award selection.
+  quoteTable.querySelectorAll(".srm-v4-bid-details").forEach(el=>{el.onclick=e=>e.stopPropagation();el.onkeydown=e=>e.stopPropagation()});
+  bindDrawingThumbs();quoteCount.textContent=`共 ${its.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("#quoteTable td[data-award]").forEach(cell=>{
     cell.onclick=()=>{const [lineId,sid]=cell.dataset.award.split("|");chooseAward(lineId,sid)};
     cell.onkeydown=e=>{if(e.target===cell&&(e.key==="Enter"||e.key===" ")){e.preventDefault();cell.click()}};
   });document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter((it,i)=>quoteMetaFor(it,sup,i,si)?.price!=null),nonLowest=eligible.filter(it=>!isLowestApplicableOffer(it,sid,its.indexOf(it),sups));requestAwardSelection(eligible.map(it=>it.lineId),sid)});renderQuoteAnalysis();renderV31DecisionBoard(sups,its);
