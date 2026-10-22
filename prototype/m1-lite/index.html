@@ -1307,6 +1307,54 @@ body.srm-v2 .srm-v31-decision.suggested{color:#356fae;background:#eaf2fc}
  body.srm-v2 .srm-v31-decisionMetrics span{font-size:10px}
 }
 </style>
+
+<style id="srm-ux-20261022-styles">
+/* 中文：统一报价回收/比价的紧凑阅读密度，仍显示真实字段并保留现有业务 DOM。
+ * English: Improve task density without changing source data, field values or business IDs. */
+body.srm-v2 #quoteImport .srm-ux-intake-modes{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:0 0 9px;padding:8px 10px;background:#fff;border:1px solid #e2e8f2;border-radius:7px}
+body.srm-v2 #quoteImport .srm-ux-intake-modes>span:first-child{font-size:13px;font-weight:750;margin-right:5px}
+body.srm-v2 .srm-ux-muted{font-size:12px;color:#718399;margin-left:auto}
+body.srm-v2 #quoteImport .srm-ux-intake-modes .btn{font-size:12px;min-height:32px;padding:6px 11px}
+body.srm-v2 #quoteImport .srm-ux-intake-modes .srm-ux-mode-active{background:#eaf2ff;border-color:#a9c8f5;color:#1955ac;font-weight:750}
+body.srm-v2 #quoteImport .quoteImportGrid[data-srm-ux-mode="file"]>.intakeBox:not(:nth-child(3)),
+body.srm-v2 #quoteImport .quoteImportGrid[data-srm-ux-mode="paste"]>.intakeBox:not(:nth-child(2)),
+body.srm-v2 #quoteImport .quoteImportGrid[data-srm-ux-mode="manual"]>.intakeBox:not(:nth-child(1)){display:none}
+body.srm-v2 #quoteImport .quoteImportGrid:not([data-srm-ux-mode="all"]){grid-template-columns:minmax(0,1fr)}
+body.srm-v2 #quoteImport .quoteImportGrid:not([data-srm-ux-mode="all"])>.intakeBox{max-width:none}
+body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox{padding:10px 12px}
+body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox h3{margin-bottom:8px;font-size:14px}
+body.srm-v2 #quoteImport .quoteImportGrid>.intakeBox .toolbar{gap:6px}
+body.srm-v2 #quoteImport .quoteImportGrid input,
+body.srm-v2 #quoteImport .quoteImportGrid select{font-size:13px}
+body.srm-v2 #quoteImport .srm-ux-quote-actions .btn{font-size:12px;min-height:32px;padding:6px 10px}
+body.srm-v2 #quoteImport .srm-ux-quote-actions #srmUxRefreshQuote{color:#174c97;border-color:#b8cde8}
+body.srm-v2 #quoteImport.srm-ux-detailed #srmUxQuoteDensity{background:#eaf2ff;color:#174c97;border-color:#b8cde8}
+body.srm-v2 #quoteImport #srmUxQuoteRoundTable{table-layout:auto;width:100%}
+body.srm-v2 #quoteImport #srmUxQuoteRoundTable :is(th,td){padding:8px 10px;font-size:13px;vertical-align:middle;line-height:1.45}
+body.srm-v2 #quoteImport.srm-ux-compact:not(.srm-ux-detailed) #srmUxQuoteRoundTable :is(th,td):nth-child(4),
+body.srm-v2 #quoteImport.srm-ux-compact:not(.srm-ux-detailed) #srmUxQuoteRoundTable :is(th,td):nth-child(7),
+body.srm-v2 #quoteImport.srm-ux-compact:not(.srm-ux-detailed) #srmUxQuoteRoundTable :is(th,td):nth-child(8),
+body.srm-v2 #quoteImport.srm-ux-compact:not(.srm-ux-detailed) #srmUxQuoteRoundTable :is(th,td):nth-child(10),
+body.srm-v2 #quoteImport.srm-ux-compact:not(.srm-ux-detailed) #srmUxQuoteRoundTable :is(th,td):nth-child(11){display:none}
+body.srm-v2 #quoteImport.srm-ux-compact:not(.srm-ux-detailed) #srmUxQuoteRoundTable tbody tr{height:43px}
+body.srm-v2 #quoteImport.srm-ux-compact:not(.srm-ux-detailed) #srmUxQuoteRoundTable td:first-child{min-width:180px;max-width:260px}
+body.srm-v2 #quoteImport #srmUxQuoteRoundTable td:first-child .muted{font-size:12px}
+body.srm-v2 #quoteImport #srmUxQuoteRoundTable [data-srm-ux-line-detail]{padding:4px 7px;font-size:12px;margin-right:5px}
+body.srm-v2 #quoteImport .srm-ux-line-detail:not([hidden]){display:block;margin:9px 0 2px;padding:13px 15px;background:#f5f9ff;border:1px solid #ccdaea;border-radius:7px}
+body.srm-v2 #quoteImport .srm-ux-line-detail h4{font-size:14px;margin:0 0 9px}
+body.srm-v2 #quoteImport .srm-ux-line-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px 16px}
+body.srm-v2 #quoteImport .srm-ux-line-grid div{min-width:0;overflow-wrap:anywhere;font-size:13px}
+body.srm-v2 #quoteImport .srm-ux-line-grid small{display:block;color:#60758d;font-size:12px;margin-bottom:3px}
+body.srm-v2 #quoteImport #quoteCoverageSummary{gap:5px;grid-template-columns:repeat(7,minmax(82px,1fr));margin-bottom:7px}
+body.srm-v2 #quoteImport #quoteCoverageSummary .stat{padding:7px 9px}
+body.srm-v2 #quoteCoverageSummary .stat b{font-size:18px}
+body.srm-v2 #quoteImport #quoteRoundSummary{margin-bottom:7px}
+body.srm-v2 #quoteImport #quoteRoundHint{font-size:12px}
+@media(max-width:1120px){
+ body.srm-v2 #quoteImport #quoteCoverageSummary{grid-template-columns:repeat(4,minmax(0,1fr))}
+ body.srm-v2 #quoteImport .srm-ux-intake-modes .srm-ux-muted{flex-basis:100%}
+}
+</style>
 </head>
 <body class="srm-v2">
 <div class="app">
@@ -1722,7 +1770,7 @@ body.srm-v2 .srm-v31-decision.suggested{color:#356fae;background:#eaf2fc}
     </div>
   </section>
 
-  <section id="quoteImport" class="panel">
+  <section id="quoteImport" class="panel srm-ux-compact">
     <div id="srmV3PageStage-quoteImport" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">04 / QUOTE INTAKE</div><h2>报价回收 <span>/ 轮次与版本</span></h2><p>选择供应商与轮次，录入并核验报价；已确认的历史版本保持只读。</p></div><div class="srm-v3-pageMeta">报价录入 · 异常核验 · 版本确认</div></div>
     <div class="card" style="margin-bottom:14px">
       <div class="cardhead">
@@ -1748,7 +1796,17 @@ body.srm-v2 .srm-v31-decision.suggested{color:#356fae;background:#eaf2fc}
         </div>
       </div>
     </div>
-    <div class="quoteImportGrid">
+    <!-- 中文：按录入方式聚焦，保留三种原始输入控件和既有测试的默认可见性。 -->
+    <!-- English: Focus one intake method on demand while retaining original controls and default compatibility. -->
+    <div class="srm-ux-intake-modes" role="group" aria-label="报价录入方式">
+      <span>录入方式</span>
+      <button type="button" class="btn srm-ux-mode-active" data-srm-ux-input-mode="all" aria-pressed="true">全部方式</button>
+      <button type="button" class="btn" data-srm-ux-input-mode="file" aria-pressed="false">文件导入</button>
+      <button type="button" class="btn" data-srm-ux-input-mode="paste" aria-pressed="false">批量粘贴</button>
+      <button type="button" class="btn" data-srm-ux-input-mode="manual" aria-pressed="false">单条补录</button>
+      <span class="srm-ux-muted">只切换显示，不清空草稿或预览</span>
+    </div>
+    <div class="quoteImportGrid" id="srmUxQuoteIntakeGrid" data-srm-ux-mode="all">
       <div class="intakeBox">
         <h3>单条输入</h3>
         <div class="toolbar">
@@ -1824,12 +1882,13 @@ body.srm-v2 .srm-v31-decision.suggested{color:#356fae;background:#eaf2fc}
     </div>
 
     <div class="card" style="margin-top:14px">
-      <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small">导入后可点击“修改”逐行修正</span></div><div class="toolbar"><button class="btn" id="carryForwardMissing">选择沿用上轮项目…</button></div></div>
+      <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small">紧凑浏览，按需展开交期、MOQ、阶梯价与来源</span></div><div class="toolbar srm-ux-quote-actions"><button type="button" class="btn" id="srmUxRefreshQuote" title="仅刷新当前显示，不读取覆盖 SQLite 草稿">↻ 刷新显示</button><button type="button" class="btn" id="srmUxQuoteDensity" aria-pressed="false">详细列</button><button class="btn" id="carryForwardMissing">选择沿用上轮项目…</button></div></div>
       <div class="cardbody">
         <div id="srmV31RevisionDiff" class="srm-v31-revisionDiff" aria-live="polite" hidden></div>
         <div id="quoteRoundHint" class="small muted" style="margin-bottom:8px"></div>
         <div id="carryForwardPreview" class="coverageDetails" style="display:none"></div>
-        <div class="tablewrap"><table class="table"><thead><tr><th>存货编码 / RFQ Line ID / 存货名称</th><th>询价数量（询价单位）</th><th id="srmV31PreviousPriceHeading">上轮单价（元/单位）</th><th>本轮单价 / 阶梯价（元/单位）</th><th>本轮适用单价（元/单位）</th><th>单价变化</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>报价来源</th><th>物料备注</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
+        <div class="tablewrap srm-ux-quote-tablewrap"><table class="table" id="srmUxQuoteRoundTable"><thead><tr><th>存货编码 / RFQ Line ID / 存货名称</th><th>询价数量（询价单位）</th><th id="srmV31PreviousPriceHeading">上轮单价（元/单位）</th><th>本轮单价 / 阶梯价（元/单位）</th><th>本轮适用单价（元/单位）</th><th>单价变化</th><th>交期（天）</th><th>MOQ（物料单位）</th><th>报价状态</th><th>报价来源</th><th>物料备注</th><th>操作</th></tr></thead><tbody id="quoteRoundBody"></tbody></table></div>
+        <div id="srmUxQuoteLineDetail" class="srm-ux-line-detail" hidden aria-live="polite"></div>
       </div>
     </div>
   </section>
@@ -3900,6 +3959,79 @@ function renderV31RevisionDiff(round){
       rows.join("")+'</tbody></table></div>':'<div class="small muted">本版与上一个已确认版本的报价明细一致。</div>');
   return previous;
 }
+// 中文：报价回收视图管理只作用于 DOM，不产生报价修订或存储写入。
+// English: Intake view preferences are purely presentational and do not mutate quotes or persistence.
+const srmUxQuoteSection=document.getElementById("quoteImport");
+const srmUxQuoteIntakeGrid=document.getElementById("srmUxQuoteIntakeGrid");
+document.querySelectorAll("[data-srm-ux-input-mode]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    srmUxQuoteIntakeGrid.dataset.srmUxMode=button.dataset.srmUxInputMode;
+    document.querySelectorAll("[data-srm-ux-input-mode]").forEach(b=>{
+      const active=b===button;
+      b.classList.toggle("srm-ux-mode-active",active);
+      b.setAttribute("aria-pressed",String(active));
+    });
+  });
+});
+document.getElementById("srmUxQuoteDensity").addEventListener("click",()=>{
+  const detailed=srmUxQuoteSection.classList.toggle("srm-ux-detailed");
+  const button=document.getElementById("srmUxQuoteDensity");
+  button.textContent=detailed?"紧凑列":"详细列";
+  button.setAttribute("aria-pressed",String(detailed));
+});
+function srmUxShowQuoteLineDetail(index){
+  const target=document.getElementById("srmUxQuoteLineDetail");
+  const r=currentQuoteRound(),line=r?.lines[index],it=items.find(x=>x.lineId===line?.lineId);
+  if(!r||!line){target.hidden=true;return;}
+  const values=[
+    ["RFQ Line ID",line.lineId],["物料名称",it?.name||"—"],["规格型号",it?.spec||"—"],
+    ["当前询价数量",(it?.qty??"—")+" "+(it?.unit||"")],
+    ["本轮原始报价 / 阶梯",tierText(line)],
+    ["当前数量适用单价",effectivePriceForLine(line,it?.qty)==null?"—":"¥"+effectivePriceForLine(line,it?.qty).toFixed(2)],
+    ["交期 / MOQ",(line.lead??"—")+" 天 / "+(line.moq??"—")],
+    ["报价状态",quoteStatusLabel(line.status)],
+    ["报价来源",({carry:"明确沿用上轮",manual:"手工录入/修正",paste:"表格粘贴",file:"文件导入",demo:"虚构演示","revision-copy":"复制自上一版",import:"旧记录（来源未细分）"})[line.source]||"历史记录（来源未知）"],
+    ["物料备注",line.remark||"—"]
+  ];
+  target.innerHTML='<h4>'+esc(it?.id||line.itemId||"物料")+' · 第 '+r.roundNo+' 轮第 '+r.revisionNo+' 版（只读详情）</h4><div class="srm-ux-line-grid">'+
+    values.map(([name,value])=>'<div><small>'+esc(name)+'</small>'+esc(String(value))+'</div>').join("")+'</div>';
+  target.hidden=false;
+}
+function srmUxRefreshQuoteDisplay(){
+  const round=currentQuoteRound();
+  const msg=document.getElementById("quoteRoundHint");
+  if(!round){msg.textContent="请选择供应商与报价轮次后刷新。";return;}
+  const carry=document.getElementById("carryForwardPreview");
+  const importPanel=document.getElementById("quoteImportPreview");
+  // 中文：仍在待确认预览时拒绝重绘，保护导入/沿用预览与草稿。
+  // English: Reject redraw during uncommitted import/carry preview rather than discard user work.
+  if((carry.style.display!=="none"&&carry.textContent.trim())||
+      (importPanel.style.display!=="none"&&importPanel.textContent.trim())){
+    msg.textContent="存在尚未确认的导入或沿用预览；请先处理预览，刷新未执行且没有更改数据。";
+    return;
+  }
+  const area=document.querySelector("#quoteImport .srm-ux-quote-tablewrap");
+  const horizontal=area?.scrollLeft||0,vertical=area?.scrollTop||0;
+  const activeId=document.activeElement?.id||"";
+  const saveInputs=["quoteEvidenceNote","quoteTermsNote"].map(id=>{
+    const el=document.getElementById(id);
+    return {id,value:el.value,selectionStart:el.selectionStart,selectionEnd:el.selectionEnd};
+  });
+  // 中文：读当前业务快照重绘；保留输入框临时内容和表格滚动，不触发提交/API。
+  // English: Repaint from current workspace state while preserving edits and scroll; no API/save.
+  renderQuoteRound();
+  for(const info of saveInputs){
+    const el=document.getElementById(info.id);
+    el.value=info.value;
+    if(activeId===info.id){
+      el.focus();
+      if(info.selectionStart!=null)el.setSelectionRange(info.selectionStart,info.selectionEnd);
+    }
+  }
+  if(area){area.scrollLeft=horizontal;area.scrollTop=vertical;}
+  msg.textContent="已刷新当前明细显示 · 未重新载入 SQLite · 未修改本轮报价。";
+}
+document.getElementById("srmUxRefreshQuote").addEventListener("click",srmUxRefreshQuoteDisplay);
 function renderQuoteRound(){
   carryForwardPreview.style.display="none";carryForwardPreview.innerHTML="";
   const round=currentQuoteRound();if(!round)return;const sup=suppliers.find(s=>s.id===round.supplierId),expected=expectedIdsForRound(round);
@@ -3908,7 +4040,9 @@ function renderQuoteRound(){
   quoteRoundSummary.innerHTML=`<b>${esc(sup?.name||round.supplierId)} · 第 ${round.roundNo} 轮 · 第${round.revisionNo}版</b> <span class="roundBadge ${round.status}">${round.status==="confirmed"?"已确认/锁定":"草稿"}</span><div class="small" style="margin-top:5px">轮次表示议价阶段；版本表示同一轮报价的更正提交。已确认提交不可覆盖修改。</div>`;
   const previousV31=renderV31RevisionDiff(round);
   quoteRoundHint.textContent=`本轮应报价范围 ${expected.length} 项；当前提交已记录 ${round.lines.length} 项。`;renderCoverageResult(coverageFromRows(round,round.lines));
-  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=({carry:"明确沿用上轮",manual:"手工录入/修正",paste:"表格粘贴",file:"文件导入",demo:"虚构演示","revision-copy":"复制自上一版",import:"旧记录（来源未细分）"})[l.source]||"历史记录（来源未知）",prev=previousV31?previousV31.lines.find(x=>x.lineId===l.lineId):round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)} · 规格：${esc(it?.spec||"未填写")}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td>${esc(l.remark||"")}</td><td><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="12" class="muted">当前提交还没有报价记录。</td></tr>';
+  document.getElementById("srmUxQuoteLineDetail").hidden=true;
+  quoteRoundBody.innerHTML=round.lines.map((l,i)=>{const it=items.find(x=>x.lineId===l.lineId),src=({carry:"明确沿用上轮",manual:"手工录入/修正",paste:"表格粘贴",file:"文件导入",demo:"虚构演示","revision-copy":"复制自上一版",import:"旧记录（来源未细分）"})[l.source]||"历史记录（来源未知）",prev=previousV31?previousV31.lines.find(x=>x.lineId===l.lineId):round.roundNo>1?priorApplicableLine(round.supplierId,l.lineId,round.roundNo):null,prevEff=effectivePriceForLine(prev,it?.qty),curEff=effectivePriceForLine(l,it?.qty);let change="—";if(prevEff!=null&&curEff!=null){const diff=curEff-prevEff,pct=prevEff?diff/prevEff*100:0;change=(diff===0?"0.00":(diff>0?"+":"")+diff.toFixed(2))+" / "+pct.toFixed(2)+"%"}return `<tr><td><b>${esc(it?.id||l.itemId)}</b><br><span class="muted">${esc(l.lineId)} · 规格：${esc(it?.spec||"未填写")}</span></td><td>${it?.qty??"—"}</td><td>${prevEff==null?"—":"¥"+prevEff.toFixed(2)}</td><td>${esc(tierText(l))}</td><td>${curEff==null?"—":"¥"+curEff.toFixed(2)}</td><td>${change}</td><td>${l.lead==null?"—":l.lead+" 天"}</td><td>${l.moq==null?"—":l.moq}</td><td>${esc(quoteStatusLabel(l.status))}</td><td>${src}</td><td>${esc(l.remark||"")}</td><td><button type="button" class="btn" data-srm-ux-line-detail="${i}">详情</button><button class="btn" data-edit-quote="${i}" ${round.status==="confirmed"?"disabled":""}>修改</button></td></tr>`}).join("")||'<tr><td colspan="12" class="muted">当前提交还没有报价记录。</td></tr>';
+  document.querySelectorAll("[data-srm-ux-line-detail]").forEach(b=>b.onclick=()=>srmUxShowQuoteLineDetail(Number(b.dataset.srmUxLineDetail)));
   document.querySelectorAll("[data-edit-quote]").forEach(b=>b.onclick=()=>editQuoteLine(Number(b.dataset.editQuote)));
   carryForwardMissing.disabled=round.roundNo===1||round.status==="confirmed";editRoundScope.disabled=round.roundNo===1||round.status==="confirmed";confirmQuoteRound.disabled=round.status==="confirmed";commitQuoteImport.disabled=round.status==="confirmed";renderQuotes();
 }
