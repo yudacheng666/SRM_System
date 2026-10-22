@@ -1381,6 +1381,19 @@ body.srm-v2 .srm-v4-drawing-steps{display:grid;grid-template-columns:repeat(4,mi
 body.srm-v2 .srm-v4-drawing-steps span{font-size:12px;color:#506581;line-height:1.4;white-space:normal}
 body.srm-v2 .srm-v4-drawing-steps b{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border:1px solid #a6c6e8;color:#1d5caa;border-radius:5px;font-size:11px;margin-right:3px}
 @media(max-width:880px){body.srm-v2 .srm-v4-drawing-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* SRM UI V4 / Phase A — focused entry modes, draft-safe and responsive. */
+body.srm-v2 #quoteImport .srm-v4-intake-modebar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0 10px;background:#f8fafc;border:1px solid #e0e6ef;padding:9px 12px;border-radius:7px}
+body.srm-v2 #quoteImport .srm-v4-intake-mode-title{font-size:13px;font-weight:750;color:#405572;margin-right:4px}
+body.srm-v2 #quoteImport .srm-v4-intake-modebar .btn[aria-pressed="true"]{border-color:#175cd3;background:#eaf2ff;color:#174b94}
+body.srm-v2 #quoteImport .srm-v4-intake-modebar .small{margin-left:4px;font-size:12px}
+body.srm-v2 #quoteImport #srmV4IntakeGrid{display:block!important;width:100%;min-width:0}
+body.srm-v2 #quoteImport #srmV4IntakeGrid>.intakeBox{display:none!important;width:100%;min-width:0;min-height:0}
+body.srm-v2 #quoteImport #srmV4IntakeGrid[data-v4-active="file"]>.intakeBox[data-v4-mode-panel="file"],
+body.srm-v2 #quoteImport #srmV4IntakeGrid[data-v4-active="paste"]>.intakeBox[data-v4-mode-panel="paste"],
+body.srm-v2 #quoteImport #srmV4IntakeGrid[data-v4-active="manual"]>.intakeBox[data-v4-mode-panel="manual"]{display:block!important}
+body.srm-v2 #quoteImport #srmV4IntakeGrid>.intakeBox{padding:13px 16px}
+body.srm-v2.ui-buyer-mode #quoteImport #demoQuoteExcel{display:none}
 </style>
 </head>
 <body class="srm-v2">
@@ -1823,8 +1836,17 @@ body.srm-v2 .srm-v4-drawing-steps b{display:inline-flex;align-items:center;justi
         </div>
       </div>
     </div>
-    <div class="quoteImportGrid">
-      <div class="intakeBox">
+    <!-- 中文：只在一个录入模式中工作，切换只改变显示，不会清除输入、预览或报价草稿。 -->
+    <!-- English: Switch intake modes without clearing forms, previews or quote draft state. -->
+    <div class="srm-v4-intake-modebar" role="group" aria-label="选择报价录入方式">
+      <span class="srm-v4-intake-mode-title">录入方式</span>
+      <button type="button" class="btn" data-v4-quote-mode="file" aria-pressed="true">文件导入</button>
+      <button type="button" class="btn" data-v4-quote-mode="paste" aria-pressed="false">批量粘贴</button>
+      <button type="button" class="btn" data-v4-quote-mode="manual" aria-pressed="false">单条补录</button>
+      <span class="small muted">三种方式共用当前供应商与轮次，不覆盖尚未确认的导入预览。</span>
+    </div>
+    <div class="quoteImportGrid" id="srmV4IntakeGrid" data-v4-active="file">
+      <div class="intakeBox" data-v4-mode-panel="manual">
         <h3>单条输入</h3>
         <div class="toolbar">
           <label class="small">物料编码 / RFQ Line ID<input id="quoteManualItem" type="text" placeholder="唯一物料编码 / RFQ Line ID" style="display:block;max-width:220px"></label>
@@ -1835,7 +1857,7 @@ body.srm-v2 .srm-v4-drawing-steps b{display:inline-flex;align-items:center;justi
           <label class="small">物料备注<input id="quoteManualRemark" type="text" maxlength="2000" placeholder="替代型号、限制、包装等" style="display:block;min-width:170px"></label><button class="btn soft" id="quoteManualAdd">加入预览</button>
         </div><div class="small muted" style="margin-top:7px">M0 现按人民币（元/物料单位）、天和物料数量显示。正式币种、税口径、采购单位后续以 ERP / 询价字段为准。</div>
       </div>
-      <div class="intakeBox">
+      <div class="intakeBox" data-v4-mode-panel="paste">
         <h3>剪贴板批量粘贴</h3>
         <textarea id="quotePaste" placeholder="第一行是表头，须含 RFQ Line ID 或存货编码（兼容旧名物料编码）。&#10;存货编码,报价单价,交期,MOQ,报价状态,物料备注&#10;ITEM-00001,100,7,10,正常报价,可替代品牌"></textarea>
         <div class="toolbar">
@@ -1845,10 +1867,10 @@ body.srm-v2 .srm-v4-drawing-steps b{display:inline-flex;align-items:center;justi
           <button class="btn danger" id="quoteClearPreview">清空预览</button>
         </div>
       </div>
-      <div class="intakeBox">
+      <div class="intakeBox" data-v4-mode-panel="file">
         <h3>文件导入</h3>
         <input id="quoteImportFile" type="file" accept=".xlsx,.csv,.txt">
-        <div class="small muted" style="margin:7px 0">CSV/TXT 根据文件内容解析；.xlsx/.xls 尚不支持直接读取，请打开 Excel 后复制表格粘贴。演示按钮仅用于虚构数据练习。</div>
+        <div class="small muted" style="margin:7px 0">可导入 .xlsx、.csv 或 .txt；请使用当前询价的 RFQ Line ID 或唯一存货编码，并在确认前核对预览。演示按钮仅用于虚构数据练习。</div>
         <button class="btn" id="toggleQuoteMapping">字段映射</button>
         <button class="btn soft" id="demoQuoteExcel">仅模拟：查看虚构报价</button>
         <div id="quoteFileFeedback" role="status" class="small warn" style="margin-top:6px"></div>
@@ -3981,6 +4003,17 @@ function renderV31RevisionDiff(round){
 }
 // 中文：本操作只刷新内存数据的可见视图，不重新读取 SQLite、不创建版本或提交报价。
 // English: Redraw in-memory rows without SQLite reload, revision creation or quote submission.
+// 中文：选择录入方式仅更新 UI；所有未提交输入框值与报价预览保留在 DOM 中。
+ // English: Intake mode selection is view-only; keep every draft field and import preview intact.
+document.querySelectorAll("[data-v4-quote-mode]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const target=button.dataset.v4QuoteMode;
+    document.getElementById("srmV4IntakeGrid").dataset.v4Active=target;
+    document.querySelectorAll("[data-v4-quote-mode]").forEach(other=>{
+      other.setAttribute("aria-pressed",String(other===button));
+    });
+  });
+});
 document.getElementById("quoteRefreshDisplay").addEventListener("click",()=>{
   const wrapper=document.getElementById("quoteRoundTable").closest(".tablewrap");
   const x=window.scrollX,y=window.scrollY;
