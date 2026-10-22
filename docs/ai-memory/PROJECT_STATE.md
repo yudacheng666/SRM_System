@@ -45,13 +45,13 @@
 - 4 jobs: \`steps=[]\`, blank runner assignment, ~2–3 s duration. User's prior Actions annotation explicitly says: "The job was not started because recent account payments have failed or your spending limit needs to be increased."
 - The account-side blocker is established, but **which payment/budget subcondition** caused it remains UNVERIFIED. No product assertion has run on the latest SHA; never call the implementation PASS or FAIL.
   按用户决定：不充值，等待十一月检查额度/账户状态；不能保证账户问题会自动恢复，暂不手动反复重跑。
-- The PR stays Draft; **NO Codex Cloud TEST-ONLY and NO merge** to development/main before exact latest-head developer CI succeeds and subsequent independent evidence is reviewed.
+- The PR stays Draft. **Temporary exception authorized 2026-10-22:** Codex Cloud may run *pre-CI TEST-ONLY* on exact SHA as evidence, but this cannot replace green GitHub CI, the formal independent release gate or user approval for any merge. [Task Issue #49](https://github.com/yudacheng666/SRM_System/issues/49) has full instructions. The [PR #46 @codex dispatch](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6335844250) was **BLOCKED**: Codex bot explicitly requested a cloud environment for this repo. **No Codex test began**; user must configure environment before re-triggering the same task.
 
 ## Open gates / 后续门槛
 
 1. Windows 本地隔离模拟数据体验 PR #46：报价导入、待决定筛选/分页、人工定标、工作区状态、PDF 与报表。Do not touch real purchasing records.
 2. In November, first check GitHub Actions billing/spending-limit account state; rerun exact HEAD UI + S3/S4 only when runner allocation works.
-3. If actual browser/SQLite tests expose issues, ChatGPT repairs. After CI green, one scoped Codex Cloud independent TEST-ONLY buyer UAT; preserve exact SHA and evidence.
+3. First configure a Codex Cloud Environment for this private repo; then re-trigger **Issue #49** once as temporary pre-CI TEST-ONLY, recording actual results on a Draft evidence PR. ChatGPT fixes confirmed issues. Formal exact-SHA GitHub Actions green and final independent gate still required before merges.
 4. Reconcile #45/#46 duplication, collect buyer feedback, and ask owner for explicit permission before any merge to M1/main. Main stays M0 until approved.
 5. Update canonical memory after each substantial new code/CI/UAT/decision milestone through authorized docs-only PRs; do not overwrite this unmerged checkpoint concurrently.
 
