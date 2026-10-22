@@ -1375,6 +1375,12 @@ body.srm-v2 #uiDataTools .ui-drawerBody>.toolbar{gap:8px}
 body.srm-v2 #srmV3PageStage-assign #srmV4SupplierReport,
 body.srm-v2 #quotes #srmV4ComparisonReport{font-size:13px}
 @media(max-width:1050px){body.srm-v2 #uiStatusDetails .ui-statusStrip{grid-template-columns:1fr}body.srm-v2 .ui-context #srmV2LiveStatus{max-width:280px}}
+
+/* SRM UI V4 / D — drawing workflow labels only; match and PDF persistence remain unchanged. */
+body.srm-v2 .srm-v4-drawing-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;padding:9px 12px;background:#f6f9fd;border-bottom:1px solid #dce5ef}
+body.srm-v2 .srm-v4-drawing-steps span{font-size:12px;color:#506581;line-height:1.4;white-space:normal}
+body.srm-v2 .srm-v4-drawing-steps b{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border:1px solid #a6c6e8;color:#1d5caa;border-radius:5px;font-size:11px;margin-right:3px}
+@media(max-width:880px){body.srm-v2 .srm-v4-drawing-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body class="srm-v2">
@@ -6193,7 +6199,13 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   drawingTools.id="uiDrawingTools";drawingTools.className="ui-drawer";
   const drawingTitle=document.createElement("summary");
   drawingTitle.textContent="PDF 图纸：匹配预览 → 人工复核 → 确认关联（点击展开）";
-  drawingTools.append(drawingTitle,one("pilotDrawingPanel"));
+  // 中文：图纸业务操作按步骤呈现，保留原批量/单文件入口及 PDF 关联规则。
+  // English: Show the actual PDF workflow without changing existing attachment handlers.
+  const drawingSteps=document.createElement("div");
+  drawingSteps.className="srm-v4-drawing-steps";
+  drawingSteps.setAttribute("aria-label","图纸匹配操作步骤");
+  drawingSteps.innerHTML='<span><b>01</b> 选择 PDF</span><span><b>02</b> 匹配预览</span><span><b>03</b> 人工复核</span><span><b>04</b> 确认关联并保存</span>';
+  drawingTools.append(drawingTitle,drawingSteps,one("pilotDrawingPanel"));
   item.insertBefore(drawingTools,itemLead.nextSibling);
   // 中文：排序操作说明移至物料表下方（保留原 ID），避免抢占首屏物料位置。
   // English: Preserve sorting instructions below the item table instead of above its rows.
