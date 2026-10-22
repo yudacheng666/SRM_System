@@ -766,3 +766,29 @@ test('48 V4 comparison details separate from real awards / 决策和商务详情
   await expect(page.locator('#quoteAnalysis')).toContainText('不同范围，不可直接排名');
   expect((await snapshot(page)).state.manualAwards).toEqual(beforeManual);
 });
+
+
+// 中文：V4 顶部 RFQ 上下文与业务报表快捷入口不能制造业务脏状态。
+// English: Contextual report access and the single authoritative RFQ status are read-only.
+test('49 V4 RFQ status and contextual exports / 统一状态与报表管理分离',async({page,app})=>{
+  await allocated(page,app);
+  const before=await snapshot(page);
+  await expect(page.locator('#uiCurrentRfq')).toContainText(before.workspaceId);
+  await expect(page.locator('.ui-context #srmV2LiveStatus')).toBeVisible();
+  await openProject(page);
+  await expect(page.locator('#uiStatusDetails')).not.toHaveAttribute('open','');
+  await page.locator('#uiStatusDetails summary').click();
+  await expect(page.locator('#pilotAutosaveStatus')).toContainText('保存');
+  await tab(page,'assign');
+  await page.locator('#srmV4SupplierReport').click();
+  await expect(page.locator('#uiBusinessExports')).toHaveAttribute('open','');
+  await expect(page.locator('#pilotReportPanel')).toBeVisible();
+  await expect(page.locator('#pilotReportType')).toHaveValue('rfq');
+  await tab(page,'quotes');
+  await page.locator('#srmV4ComparisonReport').click();
+  await expect(page.locator('#pilotReportType')).toHaveValue('comparison');
+  await openTools(page,'#uiDataTools');
+  await expect(page.locator('#pilotS4DownloadFull')).toBeVisible();
+  expect((await snapshot(page)).state).toEqual(before.state);
+  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
+});
