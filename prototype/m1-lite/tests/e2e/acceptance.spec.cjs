@@ -87,21 +87,21 @@ async function allocated(page, app) {
 }
 async function quotes(page, app) {
   await tab(page,'quoteImport'); await page.locator('#quoteImportSupplier').selectOption('SUP-A');
-  await page.locator('#quoteImportFile').setInputFiles(path.join(app.fixtures,'quotes.xlsx'));
+  await page.locator('[data-v4-quote-mode="file"]').click(); await page.locator('#quoteImportFile').setInputFiles(path.join(app.fixtures,'quotes.xlsx'));
   await expect(page.locator('#quoteImportPreviewBody')).toContainText('17.25');
   await page.locator('#commitQuoteImport').click();
   await expect(page.locator('#qcQuoted')).toHaveText('2'); await expect(page.locator('#qcMissing')).toHaveText('10');
   await page.locator('#confirmQuoteRound').click();
   await expect(page.locator('#confirmQuoteRound')).toBeDisabled();
   await page.locator('#newQuoteRound').click();
-  await page.locator('#quoteManualItem').fill('TST-001'); await page.locator('#quoteManualPrice').fill('15.125');
+  await page.locator('[data-v4-quote-mode="manual"]').click(); await page.locator('#quoteManualItem').fill('TST-001'); await page.locator('#quoteManualPrice').fill('15.125');
   await page.locator('#quoteManualLead').fill('5'); await page.locator('#quoteManualMoq').fill('1');
   await page.locator('#quoteManualAdd').click(); await page.locator('#commitQuoteImport').click();
   await page.locator('#confirmQuoteRound').click();
   await page.locator('#newQuoteRevision').click();
   await expect.poll(async () => (await snapshot(page)).state.quoteRounds.filter(r=>r.supplierId==='SUP-A').length).toBe(3);
   await page.locator('#quoteImportSupplier').selectOption('SUP-B');
-  await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\nTST-001,16.75,6,1,正常报价\nTST-002,22.25,8,1,正常报价');
+  await page.locator('[data-v4-quote-mode="paste"]').click(); await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\nTST-001,16.75,6,1,正常报价\nTST-002,22.25,8,1,正常报价');
   await page.locator('#quoteParsePaste').click(); await page.locator('#commitQuoteImport').click(); await page.locator('#confirmQuoteRound').click();
   await save(page);
 }
@@ -391,7 +391,7 @@ test('11 formal RFQ identity in missing-quote CSV and working export shortcut / 
   await expect(page.locator('#pilotReportType')).toHaveValue('rfq');
   await tab(page,'quoteImport');
   await page.locator('#quoteImportSupplier').selectOption('SUP-B');
-  await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\nTST-001,19,5,1,正常报价');
+  await page.locator('[data-v4-quote-mode="paste"]').click(); await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\nTST-001,19,5,1,正常报价');
   await page.locator('#quoteParsePaste').click();
   await page.locator('#commitQuoteImport').click();
   await expect(page.locator('#qcMissing')).toHaveText('11');
@@ -718,7 +718,7 @@ test('47 V4 quote intake refresh and compact details / 安全刷新及紧凑主�
   await page.locator('#quoteImportSupplier').selectOption('SUP-A');
   const before=await snapshot(page);
   const chosen=await page.locator('#quoteRoundSelect').inputValue();
-  await page.locator('#quoteImportFile').setInputFiles(path.join(app.fixtures,'quotes.xlsx'));
+  await page.locator('[data-v4-quote-mode="file"]').click(); await page.locator('#quoteImportFile').setInputFiles(path.join(app.fixtures,'quotes.xlsx'));
   await expect(page.locator('#quoteImportPreviewBody')).toContainText('17.25');
   const preview=await page.locator('#quoteImportPreviewBody').innerText();
   await page.locator('#quoteRefreshDisplay').click();
