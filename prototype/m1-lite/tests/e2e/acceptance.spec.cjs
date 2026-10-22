@@ -485,6 +485,9 @@ test('14 common-scope CSV uses the real RFQ ID across two workspaces and restart
     await expect(page.locator('#quoteAnalysis')).toContainText('共同有效报价 1 项');
     const current=await snapshot(page);
     expect(current.workspaceId).toMatch(/^RFQ-/);
+    // 中文：V4 将金额分析放在按需展开区，导出仍然依赖真实共同报价范围。
+    // English: Expand V4 scoped analytics before exporting actual shared-scope rows.
+    await page.locator('#srmV4AnalysisDisclosure summary').click();
     const downloadPromise=page.waitForEvent('download');
     await page.locator('#exportSelectedCommonScope').click();
     const downloaded=await downloadPromise;
@@ -704,4 +707,62 @@ test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与�
   expect((await snapshot(page)).workspaceId).toBe(before.workspaceId);
   await saved(page);
   await expect.poll(()=>page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
+});
+
+
+// 中文：V4 结构整改只改变显示，不丢失报价文件预览、草稿或持久化修订。
+// English: V4 view refresh and column density must preserve the in-flight quote preview and persisted revision.
+test('47 V4 quote intake refresh and compact details / 安全刷新及紧凑主表', async ({page,app})=>{
+  await allocated(page,app);
+  await tab(page,'quoteImport');
+  await page.locator('#quoteImportSupplier').selectOption('SUP-A');
+  const before=await snapshot(page);
+  const chosen=await page.locator('#quoteRoundSelect').inputValue();
+  await page.locator('#quoteImportFile').setInputFiles(path.join(app.fixtures,'quotes.xlsx'));
+  await expect(page.locator('#quoteImportPreviewBody')).toContainText('17.25');
+  const preview=await page.locator('#quoteImportPreviewBody').innerText();
+  await page.locator('#quoteRefreshDisplay').click();
+  await expect(page.locator('#quoteRefreshFeedback')).toContainText('未更改');
+  await expect(page.locator('#quoteImportPreview')).toBeVisible();
+  expect(await page.locator('#quoteImportPreviewBody').innerText()).toBe(preview);
+  expect(await page.locator('#quoteRoundSelect').inputValue()).toBe(chosen);
+  expect((await snapshot(page)).state).toEqual(before.state);
+  expect((await snapshot(page)).revision).toBe(before.revision);
+  await page.locator('#commitQuoteImport').click();
+  await expect(page.locator('#quoteRoundBody tr')).toHaveCount(2);
+  expect(await page.locator('#quoteImport').evaluate(el=>el.classList.contains('srm-v4-compact'))).toBe(true);
+  const hidden=await page.locator('#quoteRoundTable thead th').nth(3).evaluate(el=>getComputedStyle(el).display);
+  expect(hidden).toBe('none');
+  await page.locator('#quoteRoundBody tr').first().locator('.srm-v4-quote-details summary').click();
+  await expect(page.locator('#quoteRoundBody .srm-v4-quote-details').first()).toHaveAttribute('open','');
+  await expect(page.locator('#quoteRoundBody .srm-v4-quote-details').first()).toContainText('MOQ');
+  await page.locator('#quoteDensityToggle').click();
+  await expect(page.locator('#quoteDensityToggle')).toHaveAttribute('aria-pressed','true');
+  const visible=await page.locator('#quoteRoundTable thead th').nth(3).evaluate(el=>getComputedStyle(el).display);
+  expect(visible).not.toBe('none');
+  await page.locator('#quoteDensityToggle').click();
+  expect((await snapshot(page)).state.quoteRounds).toEqual(before.state.quoteRounds);
+});
+
+// 中文：比价界面决策优先，点击报价详情不得发生人工定标或跳过理由。
+// English: Comparison details must remain read-only; expanding them cannot award a supplier.
+test('48 V4 comparison details separate from real awards / 决策和商务详情隔离', async({page,app})=>{
+  await allocated(page,app);
+  await quotes(page,app);
+  await tab(page,'quotes');
+  await expect(page.locator('#srmV31DecisionBoard')).toBeVisible();
+  await expect(page.locator('.srm-v4-matrix-heading')).toContainText('逐物料比价与人工定标');
+  await expect(page.locator('#srmV4AnalysisDisclosure')).toHaveCount(1);
+  await expect(page.locator('#srmV4AnalysisDisclosure')).not.toHaveAttribute('open','');
+  const before=await snapshot(page);
+  const beforeManual=before.state.manualAwards;
+  const details=page.locator('#quoteTable .srm-v4-bid-details summary').first();
+  await expect(details).toBeVisible();
+  await details.click();
+  await expect(page.locator('#quoteTable .srm-v4-bid-details').first()).toHaveAttribute('open','');
+  expect((await snapshot(page)).state.manualAwards).toEqual(beforeManual);
+  await page.locator('#srmV4AnalysisDisclosure summary').click();
+  await expect(page.locator('#srmV4AnalysisDisclosure')).toHaveAttribute('open','');
+  await expect(page.locator('#quoteAnalysis')).toContainText('不同范围，不可直接排名');
+  expect((await snapshot(page)).state.manualAwards).toEqual(beforeManual);
 });
