@@ -487,7 +487,7 @@ test('14 common-scope CSV uses the real RFQ ID across two workspaces and restart
     expect(current.workspaceId).toMatch(/^RFQ-/);
     // 中文：V4 将金额分析放在按需展开区，导出仍然依赖真实共同报价范围。
     // English: Expand V4 scoped analytics before exporting actual shared-scope rows.
-    await page.locator('#srmV4AnalysisDisclosure summary').click();
+    await page.locator('#srmV4AnalysisDisclosure > summary').click();
     const downloadPromise=page.waitForEvent('download');
     await page.locator('#exportSelectedCommonScope').click();
     const downloaded=await downloadPromise;
@@ -730,6 +730,9 @@ test('47 V4 quote intake refresh and compact details / 安全刷新及紧凑主�
   expect((await snapshot(page)).revision).toBe(before.revision);
   await page.locator('#commitQuoteImport').click();
   await expect(page.locator('#quoteRoundBody tr')).toHaveCount(2);
+  // 中文：写入报价确实改变报价状态；只要求后续纯界面密度切换不再改变数据。
+  // English: A real quote import does mutate quote state; capture the post-import baseline before view-only toggles.
+  const afterImport=await snapshot(page);
   expect(await page.locator('#quoteImport').evaluate(el=>el.classList.contains('srm-v4-compact'))).toBe(true);
   const hidden=await page.locator('#quoteRoundTable thead th').nth(3).evaluate(el=>getComputedStyle(el).display);
   expect(hidden).toBe('none');
@@ -741,7 +744,7 @@ test('47 V4 quote intake refresh and compact details / 安全刷新及紧凑主�
   const visible=await page.locator('#quoteRoundTable thead th').nth(3).evaluate(el=>getComputedStyle(el).display);
   expect(visible).not.toBe('none');
   await page.locator('#quoteDensityToggle').click();
-  expect((await snapshot(page)).state.quoteRounds).toEqual(before.state.quoteRounds);
+  expect((await snapshot(page)).state.quoteRounds).toEqual(afterImport.state.quoteRounds);
 });
 
 // 中文：比价界面决策优先，点击报价详情不得发生人工定标或跳过理由。
@@ -761,7 +764,7 @@ test('48 V4 comparison details separate from real awards / 决策和商务详情
   await details.click();
   await expect(page.locator('#quoteTable .srm-v4-bid-details').first()).toHaveAttribute('open','');
   expect((await snapshot(page)).state.manualAwards).toEqual(beforeManual);
-  await page.locator('#srmV4AnalysisDisclosure summary').click();
+  await page.locator('#srmV4AnalysisDisclosure > summary').click();
   await expect(page.locator('#srmV4AnalysisDisclosure')).toHaveAttribute('open','');
   await expect(page.locator('#quoteAnalysis')).toContainText('不同范围，不可直接排名');
   expect((await snapshot(page)).state.manualAwards).toEqual(beforeManual);
