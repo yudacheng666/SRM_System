@@ -1,0 +1,2832 @@
+{
+  "config": {
+    "configFile": "/tmp/srm-pr46/playwright.config.cjs",
+    "rootDir": "/tmp/srm-pr46/prototype/m1-lite/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/srm-pr46/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/tmp/srm-pr46/prototype/m1-lite/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "acceptance.spec.cjs",
+      "file": "acceptance.spec.cjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "01 startup, demo isolation, autosave, navigation and restart / 启动与隔离",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17209,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:20:20.968Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "startup",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/attachments/startup-c9e16b132863f54a9e655cc8ac4114e025e6d5a8.png"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/attachments/server-log-2149dfb9dc036cea4ae4f106d3a20ed8f1ea7248.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-b08ff03a3a81c6a1a501",
+          "file": "acceptance.spec.cjs",
+          "line": 134,
+          "column": 1
+        },
+        {
+          "title": "02 XLSX 12/100, duplicates and invalid format / 物料",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12437,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:20:39.655Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-02-XLSX-12-100-duplicates-and-invalid-format-物料/attachments/server-log-83f7b8ed490aaee0524db20baaccc6b9f94527c7.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-02-XLSX-12-100-duplicates-and-invalid-format-物料/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-0560973a7bee78b6625d",
+          "file": "acceptance.spec.cjs",
+          "line": 153,
+          "column": 1
+        },
+        {
+          "title": "03 suppliers and bidirectional additive allocation / 供应商与分配",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12933,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:20:52.596Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-03-suppliers-an-eb55d--additive-allocation-供应商与分配/attachments/server-log-4c3f31ba9b2442e1b2d5b927e380bcc14796daf6.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-03-suppliers-an-eb55d--additive-allocation-供应商与分配/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-4e1e1e4aee0fa2dadaf4",
+          "file": "acceptance.spec.cjs",
+          "line": 170,
+          "column": 1
+        },
+        {
+          "title": "04 real quote imports, rounds, tiers, immutable confirmation and comparison XLSX / 报价比价",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17405,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:21:06.198Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "comparison.xlsx",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/attachments/comparison-xlsx-01c97f739b1f064e18350b6d97745e6f65016fde.xlsx"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/attachments/server-log-4ed509e9cea2ae18a4432a59b8c8a9be10437895.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-81c343d3eefc9c4af4c7",
+          "file": "acceptance.spec.cjs",
+          "line": 185,
+          "column": 1
+        },
+        {
+          "title": "05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18281,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    },
+                    {
+                      "buffer": ""
+                    },
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:21:24.645Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "pdf-preview",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/pdf-preview-c9e9db6fb246da2ee49cac3fd0cd30473d9899dd.png"
+                    },
+                    {
+                      "name": "SUP-A.zip",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/SUP-A-zip-9d4ebf78a6d60458189702d7a24de841c8b6d612.zip"
+                    },
+                    {
+                      "name": "SUP-B.zip",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/SUP-B-zip-3c1f336fad80a9c0c8c1609fc50d05ea7061dcb7.zip"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/server-log-acd85167d3229c44f7ebf4e80d5c87dcd78e1c36.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-c1656022b669a384566f",
+          "file": "acceptance.spec.cjs",
+          "line": 230,
+          "column": 1
+        },
+        {
+          "title": "06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23307,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:21:44.122Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "full-backup.zip",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/attachments/full-backup-zip-535b528e526e8bc14f912f31f0b138673e968e13.zip"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/attachments/server-log-0f460122fc39dfb6d73a9e41e283ba250074639c.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-dce559d57ef77f19df04",
+          "file": "acceptance.spec.cjs",
+          "line": 261,
+          "column": 1
+        },
+        {
+          "title": "07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19463,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:22:09.479Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/attachments/server-log-d43565a580e6f892c2cd7ffbc1a0e136de2b318a.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-1178afe33aed6ddbf394",
+          "file": "acceptance.spec.cjs",
+          "line": 297,
+          "column": 1
+        },
+        {
+          "title": "08 bad PDF and damaged ZIP never contaminate saved data / 异常回归",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10146,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:22:29.451Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-08-bad-PDF-and--a971f-contaminate-saved-data-异常回归/attachments/server-log-359d081053c5d36710ee94303a0aeaaedb4a8843.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-08-bad-PDF-and--a971f-contaminate-saved-data-异常回归/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-a488f844c6f195c0bccb",
+          "file": "acceptance.spec.cjs",
+          "line": 314,
+          "column": 1
+        },
+        {
+          "title": "09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台操作",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12092,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:22:40.086Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-09-UI-V1-naviga-1e321-te-do-not-mutate-data-工作台操作/attachments/server-log-a868035805d0649a2bece549a3cd516fca19154f.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-09-UI-V1-naviga-1e321-te-do-not-mutate-data-工作台操作/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-35d7c012889a43b2ee8e",
+          "file": "acceptance.spec.cjs",
+          "line": 329,
+          "column": 1
+        },
+        {
+          "title": "10 buyer continuous allocation to items and drawing select without reload / 跨步骤实时同步",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8696,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:22:52.494Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-10-buyer-contin-86e89-lect-without-reload-跨步骤实时同步/attachments/server-log-969519297996e10d8a1be3c06692643416b185e6.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-10-buyer-contin-86e89-lect-without-reload-跨步骤实时同步/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-d299a063098400ef69ce",
+          "file": "acceptance.spec.cjs",
+          "line": 358,
+          "column": 1
+        },
+        {
+          "title": "11 formal RFQ identity in missing-quote CSV and working export shortcut / 单据追溯",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10057,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:23:01.589Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-11-formal-RFQ-i-a6c3e-orking-export-shortcut-单据追溯/attachments/server-log-10f6352917128d2f4e07837e6a18981b31a63d0d.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-11-formal-RFQ-i-a6c3e-orking-export-shortcut-单据追溯/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-96e86a6d84c5c7843f47",
+          "file": "acceptance.spec.cjs",
+          "line": 383,
+          "column": 1
+        },
+        {
+          "title": "12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21702,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:23:12.196Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/attachments/server-log-5c1846b7f3951bcb6ef3024f63f1dd1f1d969000.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-549722d3ec6ef27a6755",
+          "file": "acceptance.spec.cjs",
+          "line": 415,
+          "column": 1
+        },
+        {
+          "title": "13 compact laptop item table after import / 1366首屏物料可见",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10015,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:23:34.421Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/attachments/server-log-f02fc5faf0e9dfad801940fb4f6d42a2464f8344.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-3ac0d490a8a60ca7329d",
+          "file": "acceptance.spec.cjs",
+          "line": 445,
+          "column": 1
+        },
+        {
+          "title": "14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 31380,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:23:44.655Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "common-scope-csv-rfq-identity",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/attachments/common-scope-csv-rfq-identity-981f6fdf5013c078fbc9b41a37a78a878098c69f.png"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/attachments/server-log-ef53ca60a73a96a2df7aecb25b354fd54737aeb2.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-5d5113f25198ed26359f",
+          "file": "acceptance.spec.cjs",
+          "line": 476,
+          "column": 1
+        },
+        {
+          "title": "15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18843,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:24:17.855Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "supplier-context-cross-rfq",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/attachments/supplier-context-cross-rfq-a00ef85443b2394724d33dd4a098f1ddd9631478.png"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/attachments/server-log-d8431358b142682654791c7e8c617bf311d56852.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-b0095856581d78ca5165",
+          "file": "acceptance.spec.cjs",
+          "line": 537,
+          "column": 1
+        },
+        {
+          "title": "44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13190,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:24:37.454Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/attachments/server-log-6ef70b3a569dee0f51fd2764bc7fc3cc085cc4bc.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-b226fb69ab0017eb6517",
+          "file": "acceptance.spec.cjs",
+          "line": 581,
+          "column": 1
+        },
+        {
+          "title": "45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13733,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:24:50.989Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "P2-first-supplier-package",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/attachments/P2-first-supplier-package-babef09d8c17e83a8c366aae2bcdf6643348f46f.zip"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/attachments/server-log-bfb4443f19cc36418ced374d3252e12cac4db8ad.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-77967790303a41d57ea5",
+          "file": "acceptance.spec.cjs",
+          "line": 632,
+          "column": 1
+        },
+        {
+          "title": "46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15088,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:25:05.546Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/attachments/server-log-e40503ace059299347e2c4f7cc900ee2c3b56233.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ca3536bea9e5ab96e253-a07463745d96e93af5ef",
+          "file": "acceptance.spec.cjs",
+          "line": 666,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "erp-core-alignment.spec.cjs",
+      "file": "erp-core-alignment.spec.cjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "ERP01: canonical aliases, optional original columns and conflicting identities are explicit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9877,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:25:21.470Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "erp-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP01-c-e459c-ing-identities-are-explicit/attachments/erp-server-log-01672976d9b71d0ce35cd468c0d9bac759c33c7d.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP01-c-e459c-ing-identities-are-explicit/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "92331258ef9746e52039-a68af19a620ee518497e",
+          "file": "erp-core-alignment.spec.cjs",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "ERP02: real XLSX keeps metadata, separates same code with different specs, and survives SQLite refresh",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17528,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:25:35.467Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "erp-items",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP02-r-440bf-and-survives-SQLite-refresh/attachments/erp-items-dd8820afd105b5356adee642092ce01692778213.png"
+                    },
+                    {
+                      "name": "erp-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP02-r-440bf-and-survives-SQLite-refresh/attachments/erp-server-log-24b2e9a9954c2795666a9cf765fc85229752b140.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP02-r-440bf-and-survives-SQLite-refresh/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "92331258ef9746e52039-f27d4af0c977a2cf36a0",
+          "file": "erp-core-alignment.spec.cjs",
+          "line": 57,
+          "column": 1
+        },
+        {
+          "title": "ERP03: equal specifications merge quantity; conflicting canonical and alias header blocks commit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2965,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:25:54.374Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "erp-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP03-e-e77a0--alias-header-blocks-commit/attachments/erp-server-log-cc57a4db582f97ac4290ff41a1c551b9bf031b48.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP03-e-e77a0--alias-header-blocks-commit/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "92331258ef9746e52039-09e36311280be15fec7f",
+          "file": "erp-core-alignment.spec.cjs",
+          "line": 89,
+          "column": 1
+        },
+        {
+          "title": "ERP05: wide 220-column ERP source survives native XLSX importer and remains internal metadata",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2929,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:25:57.528Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "erp-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP05-w-02d2d-d-remains-internal-metadata/attachments/erp-server-log-456e620faf432dad707fc497b34fb3852a33d6ab.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP05-w-02d2d-d-remains-internal-metadata/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "92331258ef9746e52039-db10b92e22e207651131",
+          "file": "erp-core-alignment.spec.cjs",
+          "line": 110,
+          "column": 1
+        },
+        {
+          "title": "ERP04: new ERP fields are searchable/editable, internal-vs-supplier export boundaries hold",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8389,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:26:00.608Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "erp-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP04-n-799d5-lier-export-boundaries-hold/attachments/erp-server-log-fbe60c280331d5efb75dc00da13a3373749c0399.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP04-n-799d5-lier-export-boundaries-hold/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "92331258ef9746e52039-be0f7e132a3d2fc3798a",
+          "file": "erp-core-alignment.spec.cjs",
+          "line": 133,
+          "column": 1
+        },
+        {
+          "title": "ERP06: repeated internal XLSX export and UI import keep current/source RFQ IDs distinct",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17769,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:26:09.399Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "erp-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP06-r-958ca-ent-source-RFQ-IDs-distinct/attachments/erp-server-log-0cf30c65bac4dc665532afa939aa3d0f73e1b917.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP06-r-958ca-ent-source-RFQ-IDs-distinct/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "92331258ef9746e52039-37754402a4a3c627cd28",
+          "file": "erp-core-alignment.spec.cjs",
+          "line": 206,
+          "column": 1
+        },
+        {
+          "title": "ERP07: specifications visibly distinguish drawing candidates and supplier allocation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4015,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:26:27.655Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "pr15-spec-decisions",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP07-s-ddc7e-tes-and-supplier-allocation/attachments/pr15-spec-decisions-98371d01877b739153eabc31ee12306a06a043c3.png"
+                    },
+                    {
+                      "name": "erp-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP07-s-ddc7e-tes-and-supplier-allocation/attachments/erp-server-log-50319a1c343ac444b7ddea5b3225fcf57f4c686a.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP07-s-ddc7e-tes-and-supplier-allocation/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "92331258ef9746e52039-c2aa5e1b31a668f3a80d",
+          "file": "erp-core-alignment.spec.cjs",
+          "line": 257,
+          "column": 1
+        },
+        {
+          "title": "ERP08: confirmed cannot supply remains visible in comparison, not a zero-priced offer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8934,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:26:32.090Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "erp-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP08-c-89e25-son-not-a-zero-priced-offer/attachments/erp-server-log-284f905d90ef64e03afe455ad6cf50a714ed98d5.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP08-c-89e25-son-not-a-zero-priced-offer/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "92331258ef9746e52039-9081b6fa56cdce17a83b",
+          "file": "erp-core-alignment.spec.cjs",
+          "line": 285,
+          "column": 1
+        },
+        {
+          "title": "ERP09: second-round scope shows specification and preserves selected line identities",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6852,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:26:41.782Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "pr16-negotiation-scope",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/attachments/pr16-negotiation-scope-bece51237b9ce2a5e4010cd81b3b3ecdb574be02.png"
+                    },
+                    {
+                      "name": "erp-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/attachments/erp-server-log-4d86167d1ce231f5651a0515acd8c643e3f59524.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "92331258ef9746e52039-0f10040befdadb775bd8",
+          "file": "erp-core-alignment.spec.cjs",
+          "line": 332,
+          "column": 1
+        },
+        {
+          "title": "ERP10: settings provide three correct XLSX import templates and one header-aware CSV template",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6656,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:26:49.593Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "settings-import-templates",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP10-s-2b653-e-header-aware-CSV-template/attachments/settings-import-templates-8a79531628a69489637bdc09956552ff2151413e.png"
+                    },
+                    {
+                      "name": "erp-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP10-s-2b653-e-header-aware-CSV-template/attachments/erp-server-log-1170169e10b67a6dd212e44e44b68a5267025802.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP10-s-2b653-e-header-aware-CSV-template/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "92331258ef9746e52039-94b8c5bdfc2e08e37a5a",
+          "file": "erp-core-alignment.spec.cjs",
+          "line": 405,
+          "column": 1
+        },
+        {
+          "title": "ERP11: rejected and canceled material previews do not alter line sequence or saved workspace",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21424,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:26:56.879Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "erp-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP11-r-74660-sequence-or-saved-workspace/attachments/erp-server-log-32f4208f5f6653bc218199919fc7b6a7af0a5700.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/erp-core-alignment-ERP11-r-74660-sequence-or-saved-workspace/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "92331258ef9746e52039-2385039051a129317158",
+          "file": "erp-core-alignment.spec.cjs",
+          "line": 519,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "uat-13-fixes.spec.cjs",
+      "file": "uat-13-fixes.spec.cjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UAT-01 categories follow active imported RFQ in both allocation views",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6647,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:27:18.810Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "uat-fixes-server",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/uat-13-fixes-UAT-01-catego-59dcf-FQ-in-both-allocation-views/attachments/uat-fixes-server-c192fde669bcd5da47ad5f57ac790122c790b332.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/uat-13-fixes-UAT-01-catego-59dcf-FQ-in-both-allocation-views/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e985e4de76c97ef5c0f-080fcb9946a910db2cd8",
+          "file": "uat-13-fixes.spec.cjs",
+          "line": 60,
+          "column": 1
+        },
+        {
+          "title": "UAT-02 manual, pasted and CSV file quotation sources remain distinct in stored state",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12404,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:27:25.861Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "uat-fixes-server",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/uat-13-fixes-UAT-02-manual-0d170-in-distinct-in-stored-state/attachments/uat-fixes-server-bccdc34c2640c3be10558882bbf822aedd223ad2.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/uat-13-fixes-UAT-02-manual-0d170-in-distinct-in-stored-state/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e985e4de76c97ef5c0f-ea386f9da37a14f81eb5",
+          "file": "uat-13-fixes.spec.cjs",
+          "line": 85,
+          "column": 1
+        },
+        {
+          "title": "UAT-03 refused restore is visible within current backup section while project drawer collapsed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15692,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:27:39.196Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "uat-fixes-server",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/attachments/uat-fixes-server-1c3ade815ad4023a69ade73c9ef805797d7e3580.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e985e4de76c97ef5c0f-aca2fa19ee9b0e76c757",
+          "file": "uat-13-fixes.spec.cjs",
+          "line": 134,
+          "column": 1
+        },
+        {
+          "title": "UAT-04 item editor Escape, dirty cancel and keyboard focus confinement",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10706,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:27:56.123Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "uat-fixes-server",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/uat-13-fixes-UAT-04-item-e-322c0--keyboard-focus-confinement/attachments/uat-fixes-server-5bf030714e2a7a32324f1de56b70c4c3bab52559.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/uat-13-fixes-UAT-04-item-e-322c0--keyboard-focus-confinement/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e985e4de76c97ef5c0f-bf5c5dc4c7ee263b21f5",
+          "file": "uat-13-fixes.spec.cjs",
+          "line": 146,
+          "column": 1
+        },
+        {
+          "title": "UAT-07 drawing guidance reflects currently selected formal RFQ material",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6662,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:28:07.324Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "uat-fixes-server",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/uat-13-fixes-UAT-07-drawin-4ee65-elected-formal-RFQ-material/attachments/uat-fixes-server-0a42e2c7c1c1e263c3567d45f550fc5eb18609e0.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/uat-13-fixes-UAT-07-drawin-4ee65-elected-formal-RFQ-material/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e985e4de76c97ef5c0f-ea263c36d3140ac39e16",
+          "file": "uat-13-fixes.spec.cjs",
+          "line": 173,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "ui-ux-structural.spec.cjs",
+      "file": "ui-ux-structural.spec.cjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UX quote: focused intake, non-destructive refresh, compact rows and details / 报价回收安全刷新",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7780,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:28:14.252Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "ux-structural-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-ux-structural-UX-quote--958c8-t-rows-and-details-报价回收安全刷新/attachments/ux-structural-server-log-97dee9f625395e170ff49aafc4ef38315984d2e5.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-ux-structural-UX-quote--958c8-t-rows-and-details-报价回收安全刷新/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "405cc0014031cae14de1-fa7f1f9c783409ca0ebd",
+          "file": "ui-ux-structural.spec.cjs",
+          "line": 65,
+          "column": 1
+        },
+        {
+          "title": "UX comparison: decision-first disclosure, priced details and workspace status / 比价与状态层级",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6785,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:28:22.627Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "ux-structural-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-ux-structural-UX-compar-69322-nd-workspace-status-比价与状态层级/attachments/ux-structural-server-log-e949b353f7d7c1d32f17f21d2f40e4b3037d91dd.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-ux-structural-UX-compar-69322-nd-workspace-status-比价与状态层级/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "405cc0014031cae14de1-fb3222e1cb7a1341a6af",
+          "file": "ui-ux-structural.spec.cjs",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "UX pending-only: filtered pagination and award state / 待决定筛选真实分页",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6439,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:28:30.001Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "ux-structural-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/attachments/ux-structural-server-log-125264d404cc4067e6d8d9b10bf16e3a20a12a6c.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "405cc0014031cae14de1-165bc7283c257ea8db3a",
+          "file": "ui-ux-structural.spec.cjs",
+          "line": 144,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "ui-v2-b1.spec.cjs",
+      "file": "ui-v2-b1.spec.cjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UI V2 B1 real workspace and visual layout 1366x768",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9811,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "SRM_UI_V2_B1_METRIC={\"viewport\":{\"width\":1366,\"height\":768},\"documentWidth\":1366,\"scrollY\":0,\"sidebar\":{\"width\":224,\"height\":768},\"tableTop\":0,\"firstRowTop\":547.90625,\"firstRowBottom\":616.84375,\"bodyFont\":\"14px\",\"tableFont\":\"12.5px\"}\n"
+                    }
+                  ],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:28:37.095Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "SRM-V2-B1-1366-items",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/attachments/SRM-V2-B1-1366-items-42df996c2e44deac0cbc098caf874932d0685e4b.png"
+                    },
+                    {
+                      "name": "ui-v2-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/attachments/ui-v2-server-log-8c0ecf9b15bb901066e9c40c124ab431b59f0d4c.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be37453cde8da053d6b1-36d5b34cd5c3bfbab825",
+          "file": "ui-v2-b1.spec.cjs",
+          "line": 53,
+          "column": 3
+        },
+        {
+          "title": "UI V2 B1 real workspace and visual layout 1600x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10371,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "SRM_UI_V2_B1_METRIC={\"viewport\":{\"width\":1600,\"height\":900},\"documentWidth\":1600,\"scrollY\":0,\"sidebar\":{\"width\":224,\"height\":900},\"tableTop\":0,\"firstRowTop\":611.328125,\"firstRowBottom\":680.265625,\"bodyFont\":\"14px\",\"tableFont\":\"12.5px\"}\n"
+                    }
+                  ],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:28:47.348Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "SRM-V2-B1-1600-items",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/attachments/SRM-V2-B1-1600-items-1f5d4dd92bbb73a921c5e287771af1f2b02a4187.png"
+                    },
+                    {
+                      "name": "ui-v2-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/attachments/ui-v2-server-log-ec2d78149c81e3bb9f65eb4b159490e71f33377e.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be37453cde8da053d6b1-7edc718898954fe26e5f",
+          "file": "ui-v2-b1.spec.cjs",
+          "line": 53,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "ui-v2-b2.spec.cjs",
+      "file": "ui-v2-b2.spec.cjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "B2 allocation real-browser 1366x768",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9181,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "SRM_UI_V2_B2_METRIC={\"width\":1366,\"height\":768,\"documentWidth\":1366,\"scrollY\":0,\"navBottom\":255.84375,\"rowTop\":643.546875,\"rowBottom\":731.5625}\n"
+                    }
+                  ],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:28:58.645Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "supplier-first-1366",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b2-B2-allocation-real-browser-1366x768/attachments/supplier-first-1366-0fb3f1022a3e42f6abe34423ed04d9cb0b9aec22.png"
+                    },
+                    {
+                      "name": "item-first-1366",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b2-B2-allocation-real-browser-1366x768/attachments/item-first-1366-75678774dde6fa71ee68d1fcc7c64ee82ea4e36b.png"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b2-B2-allocation-real-browser-1366x768/attachments/server-log-69fc0b23088bbea0a4d916f133344e378141f6ea.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b2-B2-allocation-real-browser-1366x768/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "40b54dbc01a542bfc0bb-78a47f9b824463129de2",
+          "file": "ui-v2-b2.spec.cjs",
+          "line": 41,
+          "column": 1
+        },
+        {
+          "title": "B2 allocation real-browser 1600x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8983,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "SRM_UI_V2_B2_METRIC={\"width\":1600,\"height\":900,\"documentWidth\":1600,\"scrollY\":0,\"navBottom\":274.375,\"rowTop\":679.96875,\"rowBottom\":767.984375}\n"
+                    }
+                  ],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:29:08.328Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "supplier-first-1600",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b2-B2-allocation-real-browser-1600x900/attachments/supplier-first-1600-da67822d45e359889863ee1194debc032262586a.png"
+                    },
+                    {
+                      "name": "item-first-1600",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b2-B2-allocation-real-browser-1600x900/attachments/item-first-1600-e574df02c48f73f1f013addc73d6903a32a1507f.png"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b2-B2-allocation-real-browser-1600x900/attachments/server-log-f94aba277e906ba6f83a054aac1640c2c462c718.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b2-B2-allocation-real-browser-1600x900/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "40b54dbc01a542bfc0bb-7d165276071833c85100",
+          "file": "ui-v2-b2.spec.cjs",
+          "line": 41,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "ui-v2-b3.spec.cjs",
+      "file": "ui-v2-b3.spec.cjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "B3 quote and comparison with real SQLite 1366x768",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10845,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "SRM_UI_V2_B3_QUOTE_METRIC={\"viewport\":{\"width\":1366,\"height\":768},\"documentWidth\":1366,\"roundTop\":1377.140625,\"coverageTop\":961.796875,\"firstImportTop\":527.515625,\"primaryVisible\":[\"confirmQuoteRound\"]}\n"
+                    },
+                    {
+                      "text": "SRM_UI_V2_B3_COMPARE_METRIC={\"width\":1366,\"height\":768,\"documentWidth\":1366,\"tableTop\":825.84375,\"comparableScopeTop\":659.34375}\n"
+                    }
+                  ],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:29:17.801Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "b3-quote-1366",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/attachments/b3-quote-1366-d004b53b71873316e8a10ae219ae7001b6325e89.png"
+                    },
+                    {
+                      "name": "b3-comparison-1366",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/attachments/b3-comparison-1366-2c2acaab30f88d78aa38a93d7fca12739e029c31.png"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/attachments/server-log-e9499145c84cfb9c46aff48c6232120fa7c274eb.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "16f3aa108219d9d3c2c6-17755cc7fd0fdaffb3bc",
+          "file": "ui-v2-b3.spec.cjs",
+          "line": 46,
+          "column": 1
+        },
+        {
+          "title": "B3 quote and comparison with real SQLite 1600x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11946,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "SRM_UI_V2_B3_QUOTE_METRIC={\"viewport\":{\"width\":1600,\"height\":900},\"documentWidth\":1600,\"roundTop\":1391.0625,\"coverageTop\":971.71875,\"firstImportTop\":598.9375,\"primaryVisible\":[\"confirmQuoteRound\"]}\n"
+                    },
+                    {
+                      "text": "SRM_UI_V2_B3_COMPARE_METRIC={\"width\":1600,\"height\":900,\"documentWidth\":1600,\"tableTop\":889.265625,\"comparableScopeTop\":722.765625}\n"
+                    }
+                  ],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:29:29.420Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "b3-quote-1600",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/attachments/b3-quote-1600-422a29d8fa3d4ed2962d102f08f95fad33c29426.png"
+                    },
+                    {
+                      "name": "b3-comparison-1600",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/attachments/b3-comparison-1600-8e649a8551d43c48a46dcafc56981af2e95db90c.png"
+                    },
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/attachments/server-log-a4f3e2d7b8c32920f4271d660a0a41601a515a96.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "16f3aa108219d9d3c2c6-39854897cd4822bbebc9",
+          "file": "ui-v2-b3.spec.cjs",
+          "line": 46,
+          "column": 1
+        },
+        {
+          "title": "B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14196,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:29:42.704Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/attachments/server-log-0b5830572ea78efe583de4953b06213297367ac7.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "16f3aa108219d9d3c2c6-ff84a7b28d3cde58bcfc",
+          "file": "ui-v2-b3.spec.cjs",
+          "line": 138,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "ui-v2-exploratory.spec.cjs",
+      "file": "ui-v2-exploratory.spec.cjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "EXPLORATORY: desktop stages, control visibility and geometry 1024x768",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6992,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1268.015625,\"bottom\":1268.015625,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":268.34375,\"width\":926,\"height\":915.671875,\"bottom\":1184.015625,\"right\":1008},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":57,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：新询价尚未保存，将在操作空闲后自动创建；图纸上传前仍需完成首次保存\"}\n"
+                    },
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1218.90625,\"bottom\":1218.90625,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":268.34375,\"width\":926,\"height\":866.5625,\"bottom\":1134.90625,\"right\":1008},\"table\":{\"x\":92,\"y\":604.90625,\"width\":577.390625,\"height\":1035.578125,\"bottom\":1640.484375,\"right\":669.390625},\"tablewrap\":{\"x\":91,\"y\":603.90625,\"width\":579.390625,\"height\":480,\"bottom\":1083.90625,\"right\":670.390625},\"firstDataRow\":{\"x\":92,\"y\":633.296875,\"width\":577.390625,\"height\":84.015625,\"bottom\":717.3125,\"right\":669.390625},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":49,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：新询价尚未保存，将在操作空闲后自动创建；图纸上传前仍需完成首次保存\"}\n"
+                    },
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1697.640625,\"bottom\":1697.640625,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":268.34375,\"width\":926,\"height\":1345.296875,\"bottom\":1613.640625,\"right\":1008},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":82,\"y\":570.015625,\"width\":926,\"height\":431,\"bottom\":1001.015625,\"right\":1008},\"quoteReview\":{\"x\":82,\"y\":1013.015625,\"width\":926,\"height\":408.78125,\"bottom\":1421.796875,\"right\":1008},\"confirmButton\":{\"x\":877.984375,\"y\":1369.796875,\"width\":114.015625,\"height\":38,\"bottom\":1407.796875,\"right\":992},\"tableScrollable\":false,\"panelButtons\":27,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：检测到业务数据修改，等待操作结束\"}\n"
+                    },
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quotes\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1355.125,\"bottom\":1355.125,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":268.34375,\"width\":926,\"height\":1002.78125,\"bottom\":1271.125,\"right\":1008},\"table\":{\"x\":101,\"y\":860.59375,\"width\":888,\"height\":39.84375,\"bottom\":900.4375,\"right\":989},\"tablewrap\":{\"x\":100,\"y\":859.59375,\"width\":890,\"height\":41.84375,\"bottom\":901.4375,\"right\":990},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":6,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：检测到业务数据修改，等待操作结束\"}\n"
+                    },
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"settings\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1382.546875,\"bottom\":1382.546875,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":268.34375,\"width\":926,\"height\":1030.203125,\"bottom\":1298.546875,\"right\":1008},\"table\":null,\"tablewrap\":null,\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":7,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：检测到业务数据修改，等待操作结束\"}\n"
+                    }
+                  ],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:29:57.404Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "explore-1024-items",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-items-7c6cc6d978609288540dad2b003268ef8637358c.png"
+                    },
+                    {
+                      "name": "explore-1024-assign",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-assign-8c3a9957f99d04bf91b64163e6a8b99c36f93390.png"
+                    },
+                    {
+                      "name": "explore-1024-quoteImport",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-quoteImport-039de8fd2402959c56f6c5e6cfcfe7565fdf0032.png"
+                    },
+                    {
+                      "name": "explore-1024-quotes",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-quotes-19079240240c4fd0860f5efda277f27bcd37afee.png"
+                    },
+                    {
+                      "name": "explore-1024-settings",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-settings-cec1d94aec8a5b41054de3c926b9f039c80da675.png"
+                    },
+                    {
+                      "name": "metrics-1024",
+                      "contentType": "application/json",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/metrics-1024-d984f6ee208ea03e0100351aa20e350b4e0a16ec.json"
+                    },
+                    {
+                      "name": "isolated-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/isolated-server-log-3b302e6f2fb4f8e58c91c6ea202ca43cd726a2fc.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "36cd1b3ff825093287b7-d568f2875261860c1b5c",
+          "file": "ui-v2-exploratory.spec.cjs",
+          "line": 77,
+          "column": 1
+        },
+        {
+          "title": "EXPLORATORY: desktop stages, control visibility and geometry 1366x768",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7333,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1250.515625,\"bottom\":1250.515625,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":250.84375,\"width\":1088,\"height\":915.671875,\"bottom\":1166.515625,\"right\":1339},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":57,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：新询价尚未保存，将在操作空闲后自动创建；图纸上传前仍需完成首次保存\"}\n"
+                    },
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1226.40625,\"bottom\":1226.40625,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":261.84375,\"width\":1088,\"height\":880.5625,\"bottom\":1142.40625,\"right\":1339},\"table\":{\"x\":267,\"y\":605.40625,\"width\":701.03125,\"height\":1087.578125,\"bottom\":1692.984375,\"right\":968.03125},\"tablewrap\":{\"x\":266,\"y\":604.40625,\"width\":703.03125,\"height\":480,\"bottom\":1084.40625,\"right\":969.03125},\"firstDataRow\":{\"x\":267,\"y\":637.796875,\"width\":701.03125,\"height\":88.015625,\"bottom\":725.8125,\"right\":968.03125},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":49,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：新询价尚未保存，将在操作空闲后自动创建；图纸上传前仍需完成首次保存\"}\n"
+                    },
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1495.140625,\"bottom\":1495.140625,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":250.84375,\"width\":1088,\"height\":1160.296875,\"bottom\":1411.140625,\"right\":1339},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":251,\"y\":527.515625,\"width\":1088,\"height\":335.5,\"bottom\":863.015625,\"right\":1339},\"quoteReview\":{\"x\":251,\"y\":875.015625,\"width\":1088,\"height\":344.28125,\"bottom\":1219.296875,\"right\":1339},\"confirmButton\":{\"x\":1208.984375,\"y\":1167.296875,\"width\":114.015625,\"height\":38,\"bottom\":1205.296875,\"right\":1323},\"tableScrollable\":false,\"panelButtons\":27,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：新询价尚未保存，将在操作空闲后自动创建；图纸上传前仍需完成首次保存\"}\n"
+                    },
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quotes\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1320.375,\"bottom\":1320.375,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":250.84375,\"width\":1088,\"height\":985.53125,\"bottom\":1236.375,\"right\":1339},\"table\":{\"x\":270,\"y\":825.84375,\"width\":1050,\"height\":39.84375,\"bottom\":865.6875,\"right\":1320},\"tablewrap\":{\"x\":269,\"y\":824.84375,\"width\":1052,\"height\":41.84375,\"bottom\":866.6875,\"right\":1321},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":6,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：检测到业务数据修改，等待操作结束\"}\n"
+                    },
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"settings\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1365.046875,\"bottom\":1365.046875,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":250.84375,\"width\":1088,\"height\":1030.203125,\"bottom\":1281.046875,\"right\":1339},\"table\":null,\"tablewrap\":null,\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":7,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：检测到业务数据修改，等待操作结束\"}\n"
+                    }
+                  ],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:30:05.138Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "explore-1366-items",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-items-5e0b55be33ad133cde531890f922a31d71a7732c.png"
+                    },
+                    {
+                      "name": "explore-1366-assign",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-assign-6197ec9fed01be601102abf6afe21d0a59c519db.png"
+                    },
+                    {
+                      "name": "explore-1366-quoteImport",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-quoteImport-e2a4fae70398eed1462a7014f491d393a1e09e7a.png"
+                    },
+                    {
+                      "name": "explore-1366-quotes",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-quotes-446792899cd1a410498447fd6d7edb3a017499d8.png"
+                    },
+                    {
+                      "name": "explore-1366-settings",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-settings-0c5b092b5506726a9c3ffa528c4482b8c01dc4ff.png"
+                    },
+                    {
+                      "name": "metrics-1366",
+                      "contentType": "application/json",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/metrics-1366-f2fef38ebba9c51e739b7499214a35ac5dac44c3.json"
+                    },
+                    {
+                      "name": "isolated-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/isolated-server-log-108c6b92354ef18607a70518d55e34d63b1677d8.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "36cd1b3ff825093287b7-a171d305e1c2cc5a7aa1",
+          "file": "ui-v2-exploratory.spec.cjs",
+          "line": 77,
+          "column": 1
+        },
+        {
+          "title": "EXPLORATORY: desktop stages, control visibility and geometry 1600x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11276,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1313.9375,\"bottom\":1313.9375,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":283.375,\"width\":1322,\"height\":946.5625,\"bottom\":1229.9375,\"right\":1573},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":57,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：检测到业务数据修改，等待操作结束\"}\n"
+                    },
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1262.828125,\"bottom\":1262.828125,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":283.375,\"width\":1322,\"height\":895.453125,\"bottom\":1178.828125,\"right\":1573},\"table\":{\"x\":267,\"y\":641.828125,\"width\":860.15625,\"height\":1087.578125,\"bottom\":1729.40625,\"right\":1127.15625},\"tablewrap\":{\"x\":266,\"y\":640.828125,\"width\":862.15625,\"height\":480,\"bottom\":1120.828125,\"right\":1128.15625},\"firstDataRow\":{\"x\":267,\"y\":674.21875,\"width\":860.15625,\"height\":88.015625,\"bottom\":762.234375,\"right\":1127.15625},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":49,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：检测到业务数据修改，等待操作结束\"}\n"
+                    },
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1513.0625,\"bottom\":1513.0625,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":283.375,\"width\":1322,\"height\":1145.6875,\"bottom\":1429.0625,\"right\":1573},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":251,\"y\":598.9375,\"width\":1322,\"height\":274,\"bottom\":872.9375,\"right\":1573},\"quoteReview\":{\"x\":251,\"y\":884.9375,\"width\":1322,\"height\":344.28125,\"bottom\":1229.21875,\"right\":1573},\"confirmButton\":{\"x\":1442.984375,\"y\":1177.21875,\"width\":114.015625,\"height\":38,\"bottom\":1215.21875,\"right\":1557},\"tableScrollable\":false,\"panelButtons\":27,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：检测到业务数据修改，等待操作结束\"}\n"
+                    },
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quotes\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1365.796875,\"bottom\":1365.796875,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":283.375,\"width\":1322,\"height\":998.421875,\"bottom\":1281.796875,\"right\":1573},\"table\":{\"x\":270,\"y\":889.265625,\"width\":1284,\"height\":39.84375,\"bottom\":929.109375,\"right\":1554},\"tablewrap\":{\"x\":269,\"y\":888.265625,\"width\":1286,\"height\":41.84375,\"bottom\":930.109375,\"right\":1555},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":6,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：检测到业务数据修改，等待操作结束\"}\n"
+                    },
+                    {
+                      "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"settings\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1448.46875,\"bottom\":1448.46875,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":283.375,\"width\":1322,\"height\":1081.09375,\"bottom\":1364.46875,\"right\":1573},\"table\":null,\"tablewrap\":null,\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":7,\"hiddenOffscreenControls\":[],\"saveMessage\":\"自动保存：检测到业务数据修改，等待操作结束\"}\n"
+                    }
+                  ],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:30:13.147Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "explore-1600-items",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-items-76959960c95ce2c03ba6ea8717ce206cb56010c6.png"
+                    },
+                    {
+                      "name": "explore-1600-assign",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-assign-49434e5ffe05bae7b6e2c001bf2d1b82387e4658.png"
+                    },
+                    {
+                      "name": "explore-1600-quoteImport",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-quoteImport-f03ded735401663e1a209bd35bf4980b767f803e.png"
+                    },
+                    {
+                      "name": "explore-1600-quotes",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-quotes-65a89c282cbb64dbcc9f454ce16c0edcc08a8f85.png"
+                    },
+                    {
+                      "name": "explore-1600-settings",
+                      "contentType": "image/png",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-settings-c823194a1d382534b4ae267cfc5e61a40f918ece.png"
+                    },
+                    {
+                      "name": "metrics-1600",
+                      "contentType": "application/json",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/metrics-1600-ee68ce39fa38a064cba6bc040d33807b867542dd.json"
+                    },
+                    {
+                      "name": "isolated-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/isolated-server-log-ccaa817cc09de677c9923e2ac268b6e932ca9987.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "36cd1b3ff825093287b7-312d24236b4c51ca307c",
+          "file": "ui-v2-exploratory.spec.cjs",
+          "line": 77,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "ui-v3-integration.spec.cjs",
+      "file": "ui-v3-integration.spec.cjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12585,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:30:25.199Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "srm-v3-ui-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/attachments/srm-v3-ui-server-log-e607f715cd414cd021f614630ac431a3b5c03e84.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f95fb36e88536e4fd7f8-3f3b95cb7962d03787a7",
+          "file": "ui-v3-integration.spec.cjs",
+          "line": 45,
+          "column": 1
+        },
+        {
+          "title": "UI V3.1 P2 buyer layout and semantic controls / 正式 RFQ 标题、抽屉、分配与决策",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6315,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T08:30:38.663Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "srm-v3-ui-server-log",
+                      "contentType": "text/plain",
+                      "path": "/tmp/srm-pr46/test-results/ui-v3-integration-UI-V3-1--67357-controls-正式-RFQ-标题、抽屉、分配与决策/attachments/srm-v3-ui-server-log-161091751d805708c3b74edf6fbe893b78ed4551.log"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/srm-pr46/test-results/ui-v3-integration-UI-V3-1--67357-controls-正式-RFQ-标题、抽屉、分配与决策/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f95fb36e88536e4fd7f8-c321b5048683cb05cfaf",
+          "file": "ui-v3-integration.spec.cjs",
+          "line": 111,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T08:20:18.620Z",
+    "duration": 627118.3999999999,
+    "expected": 49,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

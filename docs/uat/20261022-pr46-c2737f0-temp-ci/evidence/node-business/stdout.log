@@ -1,0 +1,22 @@
+
+> srm_system@1.0.0 test
+> node --test prototype/m1-lite/tests/*.test.cjs
+
+✔ real changes save after idle; navigation/no-op does not save (8.056609ms)
+✔ new empty workspace needs an initial SQLite commit (5.800971ms)
+✔ busy, blocked, missing backend or halted failure prevent autosave (4.572636ms)
+✔ revision does not influence unchanged snapshot fingerprints (7.846926ms)
+✔ supplier ZIPs preserve original names/bytes, isolate contents, and omit JSON (24.861105ms)
+✔ reused same PDF appears once per supplier ZIP (6.780376ms)
+✔ case-insensitive same-name different-content conflict is rejected (13.68271ms)
+✔ same filename in separate supplier ZIPs still contains the right bytes (6.352701ms)
+✔ unsafe names and corrupt PDF content block export (27.990589ms)
+✔ internal complete backup retains its separate private JSON index (6.590479ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 296.74739

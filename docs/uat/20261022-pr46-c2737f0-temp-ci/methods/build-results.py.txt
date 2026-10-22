@@ -1,0 +1,24 @@
+from pathlib import Path
+import json,re,csv
+r=Path('/tmp/pr46-run');e=r/'evidence';out=[]
+for n in ['python-backend','npm-ci','node-business','playwright-install','chromium-e2e']:
+ d=json.load(open(e/n/'command.json'));out.append({'id':'CMD-'+n,'category':'command','status':'BLOCKED'if n=='playwright-install'else d['status'],'title':' '.join(d['command']),'evidence':'evidence/'+n+'/command.json','exitCode':d['exitCode'],'duration':d['elapsedSeconds']})
+backend=(e/'python-backend/stderr.log').read_text();matches=re.findall(r'^(test_\S+) \(([^\n]+)\)',backend,re.M);assert len(matches)==43;assert 'Ran 43 tests' in backend and backend.rstrip().endswith('OK')
+for i,(n,cl)in enumerate(matches,1):out.append({'id':f'PY-{i:02}','category':'backend-unit','status':'PASS','title':cl+'.'+n,'evidence':'evidence/python-backend/stderr.log'})
+lines=(e/'node-business/stdout.log').read_text();nodes=re.findall(r'^✔ (.+) \([\d.]+ms\)$',lines,re.M);assert len(nodes)==10,len(nodes)
+for i,n in enumerate(nodes,1):out.append({'id':f'NODE-{i:02}','category':'node-business','status':'PASS','title':n,'evidence':'evidence/node-business/stdout.log'})
+res=json.load(open('/tmp/srm-pr46/test-results/results.json'));tests=[]
+def visit(s):
+ for spec in s.get('specs',[]):
+  for t in spec['tests']:
+   assert all(x['status']=='passed'for x in t['results']),spec['title'];tests.append((spec,t))
+ for sub in s.get('suites',[]):visit(sub)
+visit(res);assert len(tests)==49
+for i,(s,t)in enumerate(tests,1):out.append({'id':f'E2E-{i:02}','category':'existing-chromium','status':'PASS','title':s['title'],'evidence':'evidence/automated-results.json#'+s['id'],'duration':round(sum(x.get('duration',0)for x in t['results'])/1000,3)})
+ua=[('Q01','Real Round2 XLSX buyer import'),('Q02','Uncommitted import/carry/note refresh safety'),('Q03','Confirmed rounds and same-round revision history'),('Q04','Compact/full and real detail fields'),('C01','Independent12-line page2 award and full metrics'),('C02','Missing quotes and tier-price correctness'),('C03','Tied-lowest and non-awarding disclosure'),('C04','Non-lowest cancel/blank/accepted reason persistence'),('C05','Independent scoped totals and actual comparison export'),('W01','RFQ switching/F5/restart and save ACK'),('W02','Unique/ambiguous/unmatched PDFs through confirmation'),('W03','Independent supplier isolation and export bytes'),('W04','Independent full S4/empty restore/nonempty safety'),('V01','Independent three-size buyer UI usability')]
+for id,n in ua:out.append({'id':'UAT-'+id,'category':'independent-uat','status':'BLOCKED'if id=='W02'else'NOT TESTED','title':n,'evidence':'evidence/driver-correction-01.json'if id=='W02'else'evidence/execution-summary.json'})
+for i,n in enumerate(['Native Windows Python3.13 backend','Native Windows Node business regression','PowerShell/batch launcher and isolated pilot checks'],1):out.append({'id':f'WIN-{i:02}','category':'windows-only','status':'NOT TESTED','title':n,'evidence':'evidence/runtime-identity.json'})
+for i,n in enumerate(['Wrong multiple-candidate label in independent driver','Async preview null-element dereference in corrected runner'],1):out.append({'id':f'DRIVER-0{i}','category':'driver-error-not-product','status':'FAIL','title':n,'evidence':'evidence/'+('independent-attempt1'if i==1 else'independent')+'/raw-first-error.json'})
+with(r/'results.csv').open('w',newline='')as f:
+ w=csv.DictWriter(f,fieldnames=['id','category','status','title','evidence','exitCode','duration']);w.writeheader();w.writerows(out)
+(e/'automated-results.json').write_text(json.dumps(res,ensure_ascii=False,indent=2));summary={'rows':len(out),'byCategory':{c:{status:sum(x['category']==c and x['status']==status for x in out)for status in ['PASS','FAIL','NOT TESTED','BLOCKED']}for c in dict.fromkeys(x['category']for x in out)}};(e/'case-counts.json').write_text(json.dumps(summary,indent=2));print(summary)

@@ -1,0 +1,8 @@
+from pathlib import Path
+import subprocess,sys,time,json,datetime,os
+root=Path('/tmp/pr46-run');name=sys.argv[1];cmd=sys.argv[2:];out=root/'evidence'/name;out.mkdir(exist_ok=False)
+start=time.time();meta={'command':cmd,'cwd':'/tmp/srm-pr46','startUTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'productSHA':'c2737f0221a7b529114da2df363e062e75c7544c','status':'RUNNING'};(out/'command.json').write_text(json.dumps(meta,indent=2));env=os.environ.copy();env['SRM_DATA_DIR']=str(root/('fallback-'+name));env['npm_config_cache']=str(root/'npm-cache');env['PLAYWRIGHT_BROWSERS_PATH']=str(root/'pw-browsers');env['PYTHONDONTWRITEBYTECODE']='1';env['PYTHONUNBUFFERED']='1'
+with(out/'stdout.log').open('wb')as stdout,(out/'stderr.log').open('wb')as stderr:
+ try:code=subprocess.call(cmd,cwd='/tmp/srm-pr46',env=env,stdout=stdout,stderr=stderr)
+ except Exception as ex:stderr.write(str(ex).encode());code=127
+meta.update(exitCode=code,endUTC=datetime.datetime.now(datetime.timezone.utc).isoformat(),elapsedSeconds=round(time.time()-start,3),status='PASS'if code==0 else'FAIL');(out/'command.json').write_text(json.dumps(meta,indent=2));print(json.dumps(meta),flush=True);sys.exit(code)

@@ -1,0 +1,39 @@
+{
+  "productSHA": "c2737f0221a7b529114da2df363e062e75c7544c",
+  "productDefectsConfirmed": [],
+  "driverFailures": [
+    {
+      "attempt": "independent-attempt1",
+      "raw": "independent-attempt1/raw-first-error.json",
+      "error": "W04 unique ambiguous unmatched preview all represented",
+      "classification": "TEST_DRIVER_ERROR",
+      "productDefect": false
+    },
+    {
+      "attempt": "independent",
+      "raw": "independent/raw-first-error.json",
+      "error": "page.waitForFunction: TypeError: Cannot read properties of null (reading 'disabled')\n    at eval (eval at predicate (eval at evaluate (:290:30)), <anonymous>:1:50)\n    at predicate (eval at evaluate (:290:30), <anonymous>:7:23)\n    at next (eval at evaluate (:290:30), <anonymous>:29:29)\n    at eval (eval at evaluate (:290:30), <anonymous>:42:9)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "classification": "TEST_DRIVER_ERROR",
+      "productDefect": false
+    }
+  ],
+  "driverCorrectionCount": 1,
+  "cleanRerunCount": 1,
+  "stopAfterSecondDriverError": true,
+  "environmentFailures": [
+    {
+      "id": "ENV-01",
+      "status": "BLOCKED",
+      "command": "npx playwright install --with-deps chromium",
+      "exitCode": 1,
+      "rawStderr": "evidence/playwright-install/stderr.log",
+      "message": "su: Authentication failure",
+      "action": "No install retry, no credential/root bypass. Used existing actual /usr/bin/chromium via repository-supported SRM_CHROMIUM_PATH; unmodified full E2E49 passed."
+    }
+  ],
+  "rawEvidencePreserved": true,
+  "notProductPageError": "Attempt2 pageerror originates in Playwright injected waitForFunction predicate. Product JavaScript failure not established.",
+  "incompleteScope": "Independent14 groups:0 PASS,0 product FAIL,13 NOT TESTED,1 BLOCKED. Native Windows3 NOT TESTED.",
+  "originalFirstErrorFiles": "evidence/independent-attempt1/",
+  "originalSecondErrorFiles": "evidence/independent/"
+}
