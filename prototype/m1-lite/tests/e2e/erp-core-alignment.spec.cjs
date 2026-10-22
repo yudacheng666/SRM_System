@@ -30,7 +30,7 @@ const test=base.extend({
  }
 });
 const snap=page=>page.evaluate(()=>window.SRMPilot.snapshot());
-async function open(page,id){const e=page.locator(id);if(!await e.evaluate(x=>x.open))await e.locator('summary').click()}
+async function open(page,id){const e=page.locator(id);if(!await e.evaluate(x=>x.open))await e.locator(':scope > summary').click()}
 async function createBuyer(page){
   await open(page,'#uiProjectDetails');
   await page.locator('#pilotNewWorkspace').click();
