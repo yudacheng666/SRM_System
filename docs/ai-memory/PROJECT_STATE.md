@@ -1,68 +1,64 @@
 # SRM_System PROJECT_STATE / 项目当前有效状态
 
-> Snapshot / 核实日期：2026-10-22（GitHub refs / PR metadata / exact-SHA Actions；不是持续实时监控）
-> This file is proposed on a documentation branch until its PR is merged. Revalidate GitHub facts at each new task.
-> 本文件在文档 PR 合并前仅属于候选分支；新任务先重新核实。
+> 核实日期 / Checked: 2026-10-22. Snapshot from actual GitHub refs, exact-commit Actions and user-provided GitHub annotation; not continuous monitoring.
+> 此文件由已合并的 PR #47 初始化到 M1 开发基线；本次续开发状态更新在单独的 Draft 文档 PR 中，合并前不属于开发基线。
 
-## Goal & scope / 目标与边界
+## Goal / 产品目标
 
-- Lightweight offline local RFQ and supplier comparison workflow: RFQ items → many-to-many supplier allocation → supplier-specific Excel/PDF package → quote import and multi-round negotiations → common-scope/line price analysis and award → persistent history and secure backup. Source: docs/01_产品需求PRD.md; docs/02_业务规则.md.
-  轻量离线询比价闭环；供应商不登录。长期可交 IT 服务器部署；当前不做多用户、ERP API 或正式生产发布。
-- Current M1 Lite uses a localhost browser UI, local service, SQLite history, PDF assets and on-demand S4 ZIP restore checks. Source: docs/20261013_SRM_离线持久化与UI改造边界_V1.md; docs/20261014_SRM_S4完整备份恢复开发记录_V1.md; #33/#34.
-  仍需 Windows 实机及采购员业务试用，不能将云端模拟测试说成已上线。
+- 本地轻量 SRM：物料 → 多供应商询价分配 → Excel/PDF 询价包 → 回收报价/多轮议价 → 同范围比价与定标 → SQLite 历史和 S4 安全备份。
+- Lightweight local RFQ lifecycle with supplier-specific documents, revisions, traceable price comparison and backup; suppliers do not log in.
+- 当前为 Windows localhost + SQLite 采购员试用开发版，不是正式部署的 ERP/多用户系统。
+- No real enterprise data in GitHub, even in private repos; only synthetic fixtures.
 
-## Branch truth / 分支事实（准确 SHA）
+## Branch truth / 当前分支和版本
 
-| Layer / 层级 | Ref | As checked / 核实状态 |
+| Layer / 层级 | Verified ref / 准确版本 | Status / 状态 |
 | --- | --- | --- |
-| Formal main / 正式主线 | main @ f330de510f97c552629052ff1841d7223194e7f8 | M0 prototype + selected-supplier common-scope comparison; merged #2 on 2026-10-09; **not M1** |
-| Active M1 development / M1 开发基线 | draft/20261013-m1-storage-ui-audit @ f117cf3ca512a4ca7e1eec505b5e28744159343f | M1 Lite code, SQLite/S3/S4, ERP/import templates, V3.1 integration; development only, not main |
-| Integrated V3 evidence / V3 已入开发基线 | #24 merged to M1 dev at c8429ef; #38 merged to #24 head at 9633c03 | Exact-chain fixes of false dirty/navigation and UI; product PRs were merged to their development targets |
-| UX approved design candidate / UI 设计 | #44 Draft @ 8e643520 | Design/acceptance matrix only; not runtime |
-| Parallel UI candidate A / UI 候选 A | #45 Draft @ 4480482c | Two CI workflows SUCCESS on that SHA; NOT merged; no independent scoped acceptance verified |
-| Latest UI candidate B / 最新 UI 候选 B | #46 Draft @ c157040a39e929f062273f6bbb242f6d38fbb3b5 | Developed but **both CI workflows FAILURE** on exact head; no validated independent UAT; NOT merged |
+| 正式主线 / Main | main @ \`f330de510f97c552629052ff1841d7223194e7f8\` | M0 prototype and comparison only; **not M1**, no new release |
+| M1 开发基线 / Development | draft/20261013-m1-storage-ui-audit @ \`b0629a06a7ab2880fc86427e26a953d722487a57\` | M1 Lite, SQLite, ERP core fields, V3.1, S4 and merged #47 memory |
+| 已批准 UI 设计 / Design | [#44](https://github.com/yudacheng666/SRM_System/pull/44) Draft @ \`8e643520\` | Architecture and acceptance matrix only, not product code |
+| 并行历史候选 / Alternate | [#45](https://github.com/yudacheng666/SRM_System/pull/45) Draft @ \`4480482c5bbb280257c06aa44889706705663280\` | Two CI SUCCESS on that SHA, **not** evidence for #46 |
+| 当前 UI 产品候选 / Active UI | [#46](https://github.com/yudacheng666/SRM_System/pull/46) Draft @ \`c2737f0221a7b529114da2df363e062e75c7544c\` | New filtered pagination; **not tested in real browser on this SHA**, not merged |
+| 项目记忆 / Memory | [#47](https://github.com/yudacheng666/SRM_System/pull/47), merged 2026-10-22 | AGENTS.md + PROJECT_STATE + DECISIONS + original session now on M1 dev, not main |
 
-Evidence / 证据：[main commit](https://github.com/yudacheng666/SRM_System/commit/f330de510f97c552629052ff1841d7223194e7f8) · [M1 HEAD](https://github.com/yudacheng666/SRM_System/commit/f117cf3ca512a4ca7e1eec505b5e28744159343f) · #24 · #38 · #44 · #45 · #46.
+## Validated development history / 已核实开发和证据
 
-## Implemented and tested / 已实现与测试证据
+- M1 development has local SQLite persistence/round history, imported XLSX/CSV, RFQ supplier assignment, quote-tier applicable pricing, line-level awards, original PDF per RFQ line, supplier-isolated ZIP exports and safe empty-target-only S4 restore.
+  这些能力属于 M1 开发基线，不代表完整采购员现场实机验收。
+- ERP Chinese core fields and unknown-column retention were integrated; semantics of the complete historical ERP field dictionary remain unverified.
+  ERP 全字段语义与现场源数据尚未完成核验。
+- Scope-specific TEST-ONLY evidence: #33 S4 feedback, #34 S4 restore, #39 export/navigation at \`9633c03\`, and #43 C08/C09 at \`c8429ef\`. These are exact-SHA limited acceptance reports, not blanket approval of future UI code.
+  不把历史 PASS 迁移为新提交 PASS。
+- PR #45 CI: [UI 39729243552](https://github.com/yudacheng666/SRM_System/actions/runs/39729243552) SUCCESS, [S3/S4 39729243554](https://github.com/yudacheng666/SRM_System/actions/runs/39729243554) SUCCESS. It remains a separate unmerged UI candidate.
 
-- main/M0: synthetic interaction prototype, RFQ, allocations, quote comparison, shared-scope CSV; initial Playwright accepted via #2. No M1 persistence release to main.
-  main 的 M0 仅原型能力，不能作为日常正式采购系统。
-- M1 dev: real XLSX/CSV imports and vendor RFQ/internal comparison outputs, core ERP semantic mapping with unmapped-column retention, settings import templates, common-scope CSV actual RFQ identity (#15/#16/#18/#20 merged into their respective development lineage). Original ERP 220-field semantics **not fully verified**.
-  以上为开发基线能力；原始 ERP 全字段语义映射待现场核实。
-- M1 dev: local SQLite snapshots/versions, PDF line association, supplier-limited package, saved quote revisions, S4 full on-demand ZIP with empty-target-only restoration, and autosave/dirty-guard behavior in later implementation. Older 2026-10-14 design notes describing manual-save-only are historical, not proof about later HEAD.
-  旧设计日志不能覆盖后来代码/验收的事实。
-- Cloud TEST-ONLY evidence: #33 (S4 P3 visibility PASS, 19 PASS/0 FAIL/4 NOT TESTED); #34 (S4/recovery scope RELEASE-READY for the *development merge gate*, 21 PASS/0 FAIL/4 NOT TESTED); #39 (P2 first export, P3 navigation and documented safety regression PASS at 9633c03); #43 (C08/C09 11 PASS/0 FAIL/0 NOT TESTED at c8429ef).
-  这些是对应准确 SHA 的范围内 PASS；证据 PR 未合并，不代表主线或全软件上线。
-- #24 merged into M1 dev after its exact-head C03-C09 evidence, documented by development commit f117cf3. No Windows physical machine/Excel desktop/production load certification.
-  开发基线通过了云端范围测试，但 Windows 本机全链路仍有门槛。
+## Most recent development / 最新续开发
 
-## Active work, pending acceptance & blockers / 当前工作、待验收、阻塞
+- [Commit c2737f0](https://github.com/yudacheng666/SRM_System/commit/c2737f0221a7b529114da2df363e062e75c7544c) on PR #46 edits only \`prototype/m1-lite/index.html\` and \`prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs\`.
+- Fixes quote comparison's “仅显示待人工决定”: filter **valid quotable lines before pagination**, respect original full-list item index for pricing, preserve unfiltered totals/decision overview, reset pager and show accurate filtered count.
+  解决以前“只隐藏当前页行，导致空白页和统计不符”的静态可确认逻辑问题。
+- Added isolated synthetic 12-line Chromium+SQLite E2E covering two pages (10+2), read-only filter, real award selection and full-scope counts.
+  8 个页面内嵌 JS 和新增测试源码 V8 语法解析 PASS；**不是 E2E 执行成功**。
 
-1. **P1 gate / CI blocker:** PR #46 exact SHA c157040a: both SRM S3/S4 Regression and UI V2 Unified Candidate Acceptance concluded FAILURE ([run 39738425452](https://github.com/yudacheng666/SRM_System/actions/runs/39738425452), [run 39738425462](https://github.com/yudacheng666/SRM_System/actions/runs/39738425462)). Logs could not be retrieved on 2026-10-22; root cause **UNVERIFIED**. Do not classify as product bug or quota-only failure yet.
-   PR #46 禁止在 CI 未全绿前交独立 Codex 验收，也不能合并。
-2. PR #45 has separate green runs ([39729243554](https://github.com/yudacheng666/SRM_System/actions/runs/39729243554), [39729243552](https://github.com/yudacheng666/SRM_System/actions/runs/39729243552)), but remains Draft. PR #45/#46 overlap; choose one integration path and reconcile actual changes, do not merge both blindly.
-   两条 UI 并行候选需明确取舍，不能重复叠加。
-3. GitHub artifact storage quota was reported exhausted in #24; artifact upload was made best-effort, while business CI remained gating. User indicated preference to wait until November to resume quota-limited work; billing reset timing/causation for PR #46 failures requires new verification.
-   用户决定暂待十一月额度周期；不能据此证明本次失败根因。
-4. Windows on-site buyer UAT, Excel desktop recalculation/printing, exhaustive accessibility/browsers, production filesystem failure/load, and complete real ERP field dictionary are NOT TESTED/NOT VERIFIED. Original supplier email/chat/PDF quotation evidence capture is not yet proven part of S4 ZIP (#14 S4 record).
-   缺少采购员完整实机验收，不宣称正式交付。
-5. Document-only memory initialization is proposed in a separate Draft PR; this PR must not alter product, existing tests or CI. Unmerged files are not on the development or main branch.
-   记忆规则生效以实际读取分支为准。
+## CI blocker / 自动化阻断
 
-## Next execution / 下一步
+- Exact PR #46 HEAD \`c2737f0\` triggered [S3/S4 run 39743002740](https://github.com/yudacheng666/SRM_System/actions/runs/39743002740) and [UI run 39743002722](https://github.com/yudacheng666/SRM_System/actions/runs/39743002722); both concluded FAILURE **before test execution**.
+- 4 jobs: \`steps=[]\`, blank runner assignment, ~2–3 s duration. User's prior Actions annotation explicitly says: "The job was not started because recent account payments have failed or your spending limit needs to be increased."
+- The account-side blocker is established, but **which payment/budget subcondition** caused it remains UNVERIFIED. No product assertion has run on the latest SHA; never call the implementation PASS or FAIL.
+  按用户决定：不充值，等待十一月检查额度/账户状态；不能保证账户问题会自动恢复，暂不手动反复重跑。
+- The PR stays Draft; **NO Codex Cloud TEST-ONLY and NO merge** to development/main before exact latest-head developer CI succeeds and subsequent independent evidence is reviewed.
 
-1. Complete review/approval of memory-only PR. Confirm the canonical memory content; merge only with explicit owner approval into M1 development branch. If main is ever to receive memory files, plan a separate explicitly approved docs sync.
-   先审核本次纯文档 PR，不擅自合并。
-2. When CI capacity permits, inspect PR #46 failed job reason, repair confirmed product/test cause in a separately authorized task (not this initialization), rerun both exact-head workflows; do not reuse #45 green as #46 proof.
-   核查 CI 原因，恢复准确 SHA 全绿。
-3. Only after #46 CI green: one targeted independent Codex Cloud TEST-ONLY browser/UAT evidence, focused on intake, comparison, unsaved-preview safety and PDF/report navigation. Keep product PR Draft before approval.
-   之后做一次定向独立验收。
-4. Resolve PR #45 vs #46 redundancy, collect Windows buyer pilot findings, and request explicit approval for any development merge or later main release.
-   最终开发合并及正式发布均需用户批准。
+## Open gates / 后续门槛
 
-## Decision requests / 需人工决策
+1. Windows 本地隔离模拟数据体验 PR #46：报价导入、待决定筛选/分页、人工定标、工作区状态、PDF 与报表。Do not touch real purchasing records.
+2. In November, first check GitHub Actions billing/spending-limit account state; rerun exact HEAD UI + S3/S4 only when runner allocation works.
+3. If actual browser/SQLite tests expose issues, ChatGPT repairs. After CI green, one scoped Codex Cloud independent TEST-ONLY buyer UAT; preserve exact SHA and evidence.
+4. Reconcile #45/#46 duplication, collect buyer feedback, and ask owner for explicit permission before any merge to M1/main. Main stays M0 until approved.
+5. Update canonical memory after each substantial new code/CI/UAT/decision milestone through authorized docs-only PRs; do not overwrite this unmerged checkpoint concurrently.
 
-- Whether to approve/merge the docs-only memory PR to the development baseline.
-- Whether #46 supersedes #45 after evidence review; no conclusion without checking.
-- Windows buyer pilot and any future promotion of M1 to main.
+## Decisions / 需要用户决定
+
+- Review current PR #46 UX in isolated buyer pilot.
+- Whether #46 supersedes #45 **after** CI and independent acceptance.
+- Promotion of M1 to main is a separate explicit owner decision.
+
+Detailed durable business decisions remain in \`docs/ai-memory/DECISIONS.md\`; historical original evidence remains in earlier session files.
