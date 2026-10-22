@@ -1390,6 +1390,31 @@ body.srm-v2 #quotes #quoteAnalysis{border:0;margin:5px 0!important;padding:0}
   body.srm-v2 #quotes .srm-ux-scope-heading span{display:block;margin:4px 0 0}
   body.srm-v2 #quotes .srm-ux-compare-heading{flex-wrap:wrap}
 }
+
+/* 中文：统一当前 RFQ 与保存状态层级，技术细节仍原样可取。
+ * English: Single workspace context and progressive disclosure of storage diagnostics. */
+body.srm-v2 .ui-context{align-items:center;min-height:47px;gap:12px}
+body.srm-v2 .ui-contextRight{display:flex;align-items:center;justify-content:flex-end}
+body.srm-v2 .srm-ux-save-indicator{font-size:12px;font-weight:750;color:#225b46;border:1px solid #c8e5d3;border-radius:6px;background:#f1faf4;padding:5px 10px;white-space:nowrap}
+body.srm-v2 .srm-ux-save-indicator[data-srm-ux-save="pending"]{color:#745616;background:#fff8e8;border-color:#efdfb8}
+body.srm-v2 .srm-ux-save-indicator[data-srm-ux-save="error"]{color:#ab2827;background:#fff2f1;border-color:#e9b4b2}
+body.srm-v2.ui-buyer-mode #items .cardhead #pilotRfqHead{display:none}
+body.srm-v2 #pilotControls .ui-statusStrip{display:block}
+body.srm-v2 #pilotControls #srmUxStatusDetails{font-size:12px;border:0;background:transparent}
+body.srm-v2 #pilotControls #srmUxStatusDetails summary{cursor:pointer;color:#566e87;font-size:12px}
+body.srm-v2 #pilotControls .srm-ux-save-details{padding:8px 11px;background:#f6f9fc;border:1px solid #e4eaf1;border-radius:6px;margin-top:7px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+body.srm-v2 #pilotControls .srm-ux-save-details>div{overflow-wrap:anywhere}
+body.srm-v2 #pilotControls .srm-ux-admin-title{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:5px 13px;margin:9px 0 10px;padding:9px 4px;border-bottom:1px solid #d9e5f0;color:#234362}
+body.srm-v2 #pilotControls .srm-ux-admin-title strong{font-size:14px}
+body.srm-v2 #pilotControls .srm-ux-admin-title span{font-size:12px;color:#70829a}
+body.srm-v2 #pilotControls .srm-ux-report-actions{padding:9px 0 12px;gap:8px}
+body.srm-v2 #pilotControls .srm-ux-report-actions .btn{font-size:13px;min-height:33px}
+body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:11px 0}
+body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps span{font-size:12px;font-weight:650;color:#2b597f;padding:8px 9px;background:#f0f6ff;border:1px solid #d8e5f5;border-radius:5px;text-align:center}
+@media(max-width:1100px){
+ body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.srm-v2 .ui-contextRight{max-width:220px}
+}
 </style>
 </head>
 <body class="srm-v2">
@@ -1429,7 +1454,7 @@ body.srm-v2 #quotes #quoteAnalysis{border:0;margin:5px 0!important;padding:0}
 
   <div class="ui-context" aria-label="当前询价工作摘要">
     <div><small>当前工作 / Current RFQ</small><div><b id="uiCurrentRfq">演示数据</b></div></div>
-    <div class="ui-contextRight"><small class="srm-v3-contextHelp">当前询价项目 · 实际业务数据以本机已保存记录为准</small></div>
+    <div class="ui-contextRight"><span class="srm-ux-save-indicator" id="srmUxWorkspaceSaveSummary" role="status" aria-live="polite">正在检查保存状态…</span></div>
   </div>
   <div class="notice" id="pilotNotice" style="margin:0 0 12px">演示模式不会保存；请新建空白正式询价后开始操作。</div>
 <div class="card" id="pilotControls" style="margin-bottom:14px">
@@ -1511,7 +1536,8 @@ body.srm-v2 #quotes #quoteAnalysis{border:0;margin:5px 0!important;padding:0}
   <div class="card" id="pilotDrawingPanel" style="display:none;margin-bottom:12px">
       <div class="cardbody">
        <h3>真实 PDF 图纸管理（仅当前询价）</h3>
-       <div class="small muted">按 RFQ Line ID 明确关联，支持多个 PDF、共用图纸、版本保留；图纸原件单独持久化，修改关联后仍需保存正式工作。</div>
+       <div class="small muted">按 RFQ Line ID 关联多个 PDF、共享图纸及版本；只有确认关联和保存后才正式生效。</div>
+       <div class="srm-ux-drawing-steps" aria-label="PDF 图纸匹配步骤"><span>1 选择图纸</span><span>2 匹配预览</span><span>3 处理多候选</span><span>4 确认关联并保存</span></div>
        <div style="margin:12px 0;padding:12px;border:1px solid #cbd5e1;border-radius:10px;background:#fafcff">
         <h4 style="margin:0 0 6px">批量图纸匹配（先预览，后确认）</h4>
         <div class="small muted">根据 PDF 文件名与物料编码 / 图号生成候选。不会读取 PDF 内文字，也不会自动建立正式关系；重复编码、多候选、无匹配必须人工指定 RFQ Line ID。先确认关联，之后仍要“保存到本机”。</div>
@@ -6200,9 +6226,19 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   const statusStrip = document.createElement("div");
   statusStrip.className = "ui-statusStrip";
   statusStrip.setAttribute("aria-label","保存与自动备份状态");
+  // 中文：仅保留一条保存状态，SQLite/备份诊断可展开；原始 ID/文本保留供安全检查。
+  // English: Keep a single operational status; preserve original diagnostic IDs behind a disclosure.
+  const statusDetails=document.createElement("details");
+  statusDetails.id="srmUxStatusDetails";
+  const statusSummary=document.createElement("summary");
+  statusSummary.textContent="查看保存与备份详情";
+  const diagnostic=document.createElement("div");
+  diagnostic.className="srm-ux-save-details";
   for(const id of ["pilotSaveStatus","pilotAutosaveStatus","pilotAutoBackupStatus"]){
-    statusStrip.appendChild(one(id));
+    diagnostic.appendChild(one(id));
   }
+  statusDetails.append(statusSummary,diagnostic);
+  statusStrip.append(statusDetails);
   project.after(statusStrip);
   // 中文：演示时项目按钮展开；打开正式询价后默认收起，以便 1366×768 笔记本首屏显示业务。
   // English: Demo exposes the create controls; active RFQs collapse project admin for table-first use.
@@ -6219,8 +6255,18 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   if(window.SRMPilot?.isBuyer())projectDetails.open=false;
   const projectStatus=one("uiProjectStatus"),autosave=one("pilotAutosaveStatus");
   const updateProjectStatus=()=>{
-    projectStatus.textContent=autosave.textContent.replace(/^自动保存：/,"");
-    projectDetails.querySelector("summary").title=projectStatus.textContent;
+    const raw=autosave.textContent.replace(/^自动保存：/,"");
+    // 中文：状态只来自原有真实 SQLite 保存结果，不独立推断成功。
+    // English: The summary reflects the original save messages, never inventing a success state.
+    const status=/失败|冲突|HTTP 409|停止自动重试|未成功/.test(raw)?
+      "保存异常 · 查看详情":/有未保存|正在保存|输入中|保存中/.test(raw)?
+      "有未保存修改":/无待保存修改|已自动保存|已手动保存/.test(raw)?
+      "已保存":"保存状态待确认";
+    projectStatus.textContent=status;
+    const indicator=document.getElementById("srmUxWorkspaceSaveSummary");
+    indicator.textContent=status;
+    indicator.dataset.srmUxSave= status.startsWith("保存异常")?"error":status==="已保存"?"saved":"pending";
+    projectDetails.querySelector("summary").title=raw;
   };
   new MutationObserver(updateProjectStatus).observe(autosave,{subtree:true,characterData:true,childList:true});
   updateProjectStatus();
@@ -6236,7 +6282,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
 
   const notes = Array.from(controls.children).find(el=>
     el.classList?.contains("small") && el.textContent.includes("必须先保存到本机"));
-  const adminTools = drawer("uiDataTools","数据备份、恢复与报表导出",
+  const adminTools = drawer("uiDataTools","数据与备份（含报表）",
       "包含 S4 完整 ZIP、旧版兼容格式与业务单据",[
         one("pilotExportBackup").closest(".toolbar"),
         one("pilotImportComplete").closest(".toolbar"),
@@ -6246,7 +6292,22 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
         notes
       ]);
   supplierTools.after(adminTools);
-  
+  // 中文：业务报表与系统恢复分别成组，移动既有 DOM 而不复制功能或事件监听器。
+  // English: Group business exports apart from data recovery while preserving live nodes and handlers.
+  const adminBody=adminTools.querySelector(".ui-drawerBody");
+  const backupTitle=document.createElement("div");
+  backupTitle.className="srm-ux-admin-title";
+  backupTitle.innerHTML="<strong>数据安全与恢复</strong><span>S4 完整备份 · 空数据恢复 · 兼容资料</span>";
+  adminBody.prepend(backupTitle);
+  const reportTitle=document.createElement("div");
+  reportTitle.className="srm-ux-admin-title";
+  reportTitle.innerHTML="<strong>业务单据导出</strong><span>供应商询价单 · 内部比价议价单 · Excel</span>";
+  const reportActions=document.createElement("div");
+  reportActions.className="toolbar srm-ux-report-actions";
+  reportActions.append(one("pilotExportExcel"),one("pilotReportOpen"));
+  adminBody.insertBefore(reportTitle,one("pilotReportPanel"));
+  adminBody.insertBefore(reportActions,one("pilotReportPanel"));
+
   function reveal(id){
     const section = one(id);
     section.open=true;
