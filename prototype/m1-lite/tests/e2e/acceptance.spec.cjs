@@ -193,7 +193,7 @@ test('04 real quote imports, rounds, tiers, immutable confirmation and compariso
   await expect(page.locator('#quoteAnalysis')).toContainText('30.25');
   await expect(page.locator('#quoteAnalysis')).toContainText('33.50');
   await saved(page);
-  await openTools(page,'#uiDataTools'); await page.locator('#pilotReportOpen').click(); await page.locator('#pilotReportType').selectOption('comparison');
+  await openTools(page,'#uiBusinessExports'); await page.locator('#pilotReportOpen').click(); await page.locator('#pilotReportType').selectOption('comparison');
   for(const check of await page.locator('[data-report-supplier]').all()) await check.check();
   const file=await download(page,'#pilotReportDownload',info,'comparison.xlsx');
   const z=inspectZip(file); expect(z['[Content_Types].xml']).toBeTruthy();
@@ -242,7 +242,7 @@ test('05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图�
   await page.locator('[data-mode="supplierFirst"]').click(); await page.locator('[data-sf-s="SUP-B"]').click();
   const ws=await snapshot(page), line=ws.state.items.find(x=>x.id==='TST-002').lineId;
   await page.locator(`[data-sfi="${line}"]`).check(); await save(page);
-  await openTools(page,'#uiDataTools'); await page.locator('#pilotReportOpen').click();
+  await openTools(page,'#uiBusinessExports'); await page.locator('#pilotReportOpen').click();
   const crypto=require('node:crypto');
   for(const sid of ['SUP-A','SUP-B']) {
     await page.locator('#pilotReportSupplier').selectOption(sid); const file=await download(page,'#pilotReportDownload',info,sid+'.zip'); const z=inspectZip(file);
@@ -386,7 +386,7 @@ test('11 formal RFQ identity in missing-quote CSV and working export shortcut / 
   await allocated(page,app);
   const ws=await snapshot(page);
   await page.locator('#generateBtn').click();
-  await expect(page.locator('#uiDataTools')).toHaveAttribute('open','');
+  await expect(page.locator('#uiBusinessExports')).toHaveAttribute('open','');
   await expect(page.locator('#pilotReportPanel')).toBeVisible();
   await expect(page.locator('#pilotReportType')).toHaveValue('rfq');
   await tab(page,'quoteImport');
@@ -405,7 +405,7 @@ test('11 formal RFQ identity in missing-quote CSV and working export shortcut / 
   expect(data).toContain(ws.workspaceId);
   expect(data).not.toContain('RFQ-DEMO-001');
   await tab(page,'quotes');
-  await openTools(page,'#uiDataTools');
+  await openTools(page,'#uiBusinessExports');
   if(!await page.locator('#pilotReportPanel').isVisible())await page.locator('#pilotReportOpen').click();
   await page.locator('#pilotReportType').selectOption('comparison');
   await expect(page.locator('#pilotReportDownload')).toContainText('内部比价议价单');
@@ -424,7 +424,7 @@ test('12 supplier status and report context reset on RFQ change / 保存提示�
   await page.locator('#selectAssignAll').click();
   await page.locator('[data-add="SUP-A"]').click();
   await saved(page);
-  await openTools(page,'#uiDataTools');
+  await openTools(page,'#uiBusinessExports');
   await page.locator('#pilotReportOpen').click();
   await expect(page.locator('#pilotReportSupplier option')).toHaveCount(1);
   const downloadWait=page.waitForEvent('download');
