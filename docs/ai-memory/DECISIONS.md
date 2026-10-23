@@ -26,6 +26,7 @@
 | D-019 | 2026-10-22 | VALID | main 不因候选开发/测试自动更新；合并任何 PR 必须用户明确批准，证据 PR 不等于产品合并。 Explicit owner merge gate; distinguish main/dev/evidence. | 用户本次明确指令; #2; #24; #43 |
 | D-020 | 2026-10-22 | VALID | GitHub + Markdown 主记忆；实质里程碑及时固化，按任务在授权文档分支提交 PR，新会话先读入口文件并核验仓库。 Checkpoint on substantive changes; no claim of autonomous background persistence. | 用户本次明确指令; 本次 docs-only PR |
 | D-021 | 2026-10-12（计划记录） | VALID | 首次采购员试用前保留 ERP 完全对接/审批/服务器功能为后续阶段；但真实 PDF 与安全恢复必须达到试用门槛。 Avoid scope creep while protecting buyer pilot quality. | 20261010_SRM_项目总控与最小试用计划.md |
+| D-022 | 2026-10-23（用户选择方案 A） | VALID · TEMPORARY / 临时有效 | **SRM M1 开发候选临时验收门槛**：GitHub-hosted Actions 因无 runner / 账户限制不能执行期间，允许以 **同一准确产品 SHA 的 Codex Cloud 完整 Python+Node+Chromium 自动化 PASS、独立业务 TEST-ONLY 验收 PASS、原生 Windows 隔离环境 Python3.13/Node22/PowerShell-BAT 及实际本机启动安全核验 PASS**，作为候选版本进入 *M1 开发基线合并审批* 的替代证据；缺任何一项即不得以本临时门槛宣称合并条件完备。**这是对 D-017“CI 先行”流程的临时例外，不更改 ChatGPT 开发 / Codex TEST-ONLY 角色分工。** 任何合并（包括 M1、main）仍须用户另行明确授权；本规则本身不授权合并。Codex 不是 GitHub Actions runner，不得写成 Actions SUCCESS / 通过 GitHub 必需状态检查，不绕过仓库保护；账户恢复后按准确最终 SHA 补跑正式 Actions，正式发布和 main 晋级仍须另行审核。新增代码/SHA 改变时相关证据重新核对与复验，不能沿用旧 SHA。 Scope: current SRM M1 / PR #46 only until exception explicitly retired. | 用户本对话选 A；[PR #46](https://github.com/yudacheng666/SRM_System/pull/46)；[PR #50 测试证据](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6341985654)；[Actions UI](https://github.com/yudacheng666/SRM_System/actions/runs/39766115997)、[S3/S4](https://github.com/yudacheng666/SRM_System/actions/runs/39766115887) |
 
 ## Change handling / 决策变更规则
 
@@ -33,5 +34,5 @@
   决策冲突不覆盖历史；新旧编号相互关联，保留原因和来源。
 - Do not upgrade a historical proposal or a statement in a Draft PR to VALID unless user confirmation or authoritative existing approved rule supports it.
   Draft PR 的实现说明本身不代表业务授权。
-- D-016 describes the approved UI direction; #46 implementation remains CI-red and unaccepted. D-020 is a workflow convention, not a verified autonomous automation service.
-  界面设计批准不等于产品实现已验收；自动固化依赖实际执行任务时读取本规则。
+- D-016 describes the UI direction; #46's scoped Codex automated/UAT PASS is not GitHub Actions PASS or full release approval. D-020 is a workflow convention, not a daemon. D-022 is the explicitly authorized **temporary development gate**; the original D-017 CI-first rule resumes when the exception expires. Windows-native tests and separate merge authorization are still outstanding.
+  UI 两项整改已独立复验通过；在原生 Windows 专项与单独合并审批完成前，不得以方案 A 自动合并；项目记忆 PR 未合并前不属于 M1 开发基线。
