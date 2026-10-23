@@ -50,8 +50,10 @@ Checkpoint procedure / 固化动作：
 
 ## Acceptance, safety and privacy / 验收、安全与隐私
 
-- Exact-SHA successful developer CI precedes new independent Codex testing; a failed or unverified job is not PASS.
-  新产品候选先过准确 SHA 的开发者 CI，再交 Codex Cloud 独立验收。
+- **Default:** Exact-SHA successful GitHub Actions/developer CI precedes independent Codex Cloud TEST-ONLY review; a failed, unallocated or unverified GitHub runner is never `PASS`.
+  默认门槛：准确 SHA 的正式 CI 先行；未启动或无验证不得写作通过。
+- **Explicit time-limited SRM M1 exception — D-022:** While GitHub Actions cannot allocate runners, an exact-SHA Codex Cloud full Python+Node+Chromium run plus independent buyer UAT can substitute for the **development testing evidence only**. A proposed M1 development merge still requires real isolated **native Windows** Python3.13/Node22/PowerShell/BAT + local launch/safety verification and **separate explicit user merge approval**. If any of these are untested/failed, do not call the temporary development merge gate complete. This does **not** set GitHub required checks to SUCCESS, permit bypassing branch protection, authorize main/release, or relieve the team of rerunning official exact-SHA GitHub Actions once the account allows it. Codex remains TEST-ONLY; no code/CI modifications from independent tests.
+  用户选定的方案 A 仅限本 SRM M1 开发阶段；云端测试和独立业务验收 + Windows 本机专项齐备后，仍须用户单独批准 M1 合并。不能宣称 Actions PASS，不能绕过仓库规则，恢复额度后要补跑正式 CI。
 - Preserve accepted RFQ identities, quotation history, tier-price semantics, supplier isolation and S4 restore protections; scope changes require an owner-confirmed decision.
   不擅自变更已确认的采购业务不变量。
 - Never commit identifiable enterprise/person/supplier/customer/product data, actual pricing, original emails, or private screenshots; use fictional fixtures only, even though the repo is private.
