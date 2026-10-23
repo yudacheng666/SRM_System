@@ -1,6 +1,6 @@
 # SRM_System PROJECT_STATE / 项目当前有效状态
 
-> 核实日期 / Checked: 2026-10-22. Snapshot from actual GitHub refs, exact-commit Actions and user-provided GitHub annotation; not continuous monitoring.
+> 核实日期 / Checked: 2026-10-23. Current state reconciled with actual GitHub refs, Codex #50 evidence and user's approval of temporary option A; not continuous monitoring.
 > 此文件由已合并的 PR #47 初始化到 M1 开发基线；本次续开发状态更新在单独的 Draft 文档 PR 中，合并前不属于开发基线。
 
 ## Goal / 产品目标
@@ -60,11 +60,19 @@
 - [ChatGPT review on PR #50](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6337013474) and [development PR #46](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6337014255): accept exact-SHA temporary automated evidence, independent UAT still NOT READY. Retain Draft, no merge. A **separately authorized scoped continuation** should inspect actual DOM labels and null-guard asynchronous waits, then complete only untested UAT; do not re-run 102 cases absent head change. Official exact-SHA GitHub Actions and owner approval remain gates.
   已审原始错误登记、截图文本、冻结脚本和报告；旧 Issue #49 的“一次修正上限”不得偷偷突破，本轮停止有效。
 
+## Temporary development acceptance — owner approved option A / 临时开发验收方案
+
+- **User decision 2026-10-23: [D-022](DECISIONS.md), temporary for current SRM M1 candidate PR #46 only while GitHub Actions has no assigned runner.** Accept **exact-product-SHA Codex Cloud full Python/Node/Chromium suite PASS + separate independent TEST-ONLY buyer UAT PASS + native Windows isolated Python 3.13, Node 22, PowerShell/BAT, real local launch and safety PASS** as an alternative **for entering M1 development merge approval**, not official GitHub Actions or release/main approval.
+- Already evidenced on product SHA `2dbde578165de720fed290cddbfef0a34e99f032`: [103 PASS + 8 independent PASS](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6341985654), audited via [PR #46 review](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6342862031). **Native Windows 3 NOT TESTED**, so **temporary development merge gate is NOT COMPLETE**. Do not repeat 103/8 until source SHA or relevant scope changes.
+- [UI Actions](https://github.com/yudacheng666/SRM_System/actions/runs/39766115997) and [S3/S4 Actions](https://github.com/yudacheng666/SRM_System/actions/runs/39766115887) were `failure` **before any job steps**, no runner; official checks remain unresolved and may still block GitHub merging if required by repository rules. The user's no-payment preference remains; account restoration timing unverified. When GitHub allows it, rerun all required workflows on accurate latest head.
+- **Even after native Windows PASS:** user must separately authorize any PR #46 merge into M1 development. Approval of option A alone is *not* merge authorization, nor permission to close PR #50 / #48 or promote M1 to `main`. Main remains M0. Codex TEST-ONLY role and anonymized test data unchanged.
+  临时验收用于推进开发，不虚构正式CI；Windows专项未测，不能自动合并。
+
 ## Open gates / 后续门槛
 
-1. Windows 本地隔离模拟数据体验 PR #46：报价导入、待决定筛选/分页、人工定标、工作区状态、PDF 与报表。Do not touch real purchasing records.
+1. **Next immediate blocker for option A:** real Windows isolated trial for PR #46 exact SHA `2dbde57`: native Python3.13 tests, Node22 business tests, PowerShell/BAT launcher static checks, actual localhost start + isolated SQLite, supplier ZIP/PDF and S4 safety; record exact environment/SHA/logs and PASS/FAIL/NOT TESTED in PR #46. Never touch real purchase records. If only Python3.15 is available, do not claim equivalence to requested 3.13.
 2. New 2dbde57 push triggered [UI 39766115997](https://github.com/yudacheng666/SRM_System/actions/runs/39766115997) and [S3-S4 39766115887](https://github.com/yudacheng666/SRM_System/actions/runs/39766115887); four jobs again steps=[] / no runner. In November, first inspect account billing/limit, then rerun exact new HEAD on actual Actions runners.
-3. Codex Cloud `2dbde57` full local suites and scoped P2/P3 buyer UAT have completed (103 + 8 PASS). No redundant retest needed while this SHA is unchanged. Remaining: Windows-native 3 cases, exact-head GitHub Actions when runner works, owner review of actual UI and explicit separate approval for any development/main merge.
+3. Codex Cloud full local suites and scoped buyer UAT on `2dbde57` are complete (103 + 8 PASS). Under D-022 no further identical cloud rerun is required; when native Windows checks also PASS, prepare **M1 development merge recommendation only**, subject to separate owner approval and any enforced GitHub required checks. Final exact-head official Actions remains pending; `main` promotion requires distinct decision.
 4. Reconcile #45/#46 duplication, collect buyer feedback, and ask owner for explicit permission before any merge to M1/main. Main stays M0 until approved.
 5. Update canonical memory after each substantial new code/CI/UAT/decision milestone through authorized docs-only PRs; do not overwrite this unmerged checkpoint concurrently.
 
