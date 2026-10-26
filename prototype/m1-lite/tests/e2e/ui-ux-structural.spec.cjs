@@ -328,3 +328,40 @@ test('UX item rows: single-line drawing badge and compact row / 物料行高及�
   await expect(page.locator('#drawingModal')).toHaveClass(/open/);
   expect(errors).toEqual([]);
 });
+
+
+// 中文：供应商分配/供应商视角等列表与物料明细行高一致，缺图纸不用 PDF 占位，信息应横排。
+// English: Reuse compact item-table density and in-place missing-drawing badges in allocation.
+test('UX allocation: shared compact material list and missing drawing / 供应商物料列表紧凑布局',async({page,app})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.setViewportSize({width:1366,height:768});
+  await prepare(page,app);
+  await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
+  const rows=page.locator('#assignItemBody tr');
+  await expect(rows).toHaveCount(12);
+  await expect(page.locator('#assignItemBody .srm-ux-inlineMaterial')).toHaveCount(12);
+  const missing=page.locator('#assignItemBody .drawingThumb--missing');
+  await expect(missing).toHaveCount(12);
+  await expect(missing.first()).toHaveText('缺图纸');
+  await expect(missing.first()).not.toHaveText('PDF');
+  await expect(missing.first()).toHaveAttribute('data-drawing',/^RFQ-L/);
+  await expect(page.locator('#assignItemBody .pdfMeta')).toHaveCount(0);
+  await expect(rows.first().locator('.srm-ux-materialSummary')).toHaveAttribute('title',/TST-001/);
+  const density=await rows.first().evaluate(row=>{
+    const info=row.querySelector('.srm-ux-materialSummary');
+    const button=row.querySelector('.drawingThumb');
+    const css=getComputedStyle(info);
+    return {row:row.getBoundingClientRect().height,
+      whiteSpace:css.whiteSpace,overflow:css.overflow,
+      button:button.getBoundingClientRect().height,
+      cellPadding:getComputedStyle(row.cells[1]).paddingTop};
+  });
+  expect(density.row).toBeLessThanOrEqual(40);
+  expect(density.whiteSpace).toBe('nowrap');
+  expect(density.overflow).toBe('hidden');
+  expect(density.button).toBeLessThanOrEqual(26);
+  expect(parseFloat(density.cellPadding)).toBeLessThanOrEqual(4);
+  await missing.first().click();
+  await expect(page.locator('#drawingModal')).toHaveClass(/open/);
+  expect(errors).toEqual([]);
+});
