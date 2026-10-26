@@ -37,7 +37,8 @@ const test=base.extend({
 });
 const snapshot=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 async function open(page,id){
-  if(id==='#uiProjectDetails'||id==='#uiDataTools')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiProjectDetails')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiDataTools'||id==='#srmUxStatusDetails')await page.locator('#uiAdminToggle').click();
   if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
   const drawer=page.locator(id);
   if(!await drawer.evaluate(node=>node.open))await drawer.locator(':scope > summary').click();
