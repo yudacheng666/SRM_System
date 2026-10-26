@@ -30,11 +30,16 @@ const test=base.extend({
  }
 });
 const snap=page=>page.evaluate(()=>window.SRMPilot.snapshot());
-async function open(page,id){const e=page.locator(id);if(!await e.evaluate(x=>x.open))await e.locator(':scope > summary').click()}
+async function open(page,id){
+ if(id==='#uiProjectDetails'||id==='#uiDataTools')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+ if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
+ const e=page.locator(id);if(!await e.evaluate(x=>x.open))await e.locator(':scope > summary').click()
+}
 async function createBuyer(page){
   await open(page,'#uiProjectDetails');
   await page.locator('#pilotNewWorkspace').click();
   await expect(page.locator('#pilotModeBadge')).not.toContainText('演示');
+  await page.locator('.ui-workNav .tab[data-tab="items"]').click();
   await page.locator('#toggleItemIntake').click();
 }
 test('ERP01: canonical aliases, optional original columns and conflicting identities are explicit',async({page,app})=>{
