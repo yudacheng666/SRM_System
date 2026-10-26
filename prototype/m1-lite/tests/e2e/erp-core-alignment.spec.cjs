@@ -399,8 +399,10 @@ test('ERP09: second-round scope shows specification and preserves selected line 
   expect(saved.find(r=>r.roundNo===1)?.lines.map(x=>x.lineId).sort()).toEqual([m120.lineId,m220.lineId].sort());
   expect(saved.find(r=>r.roundNo===2)?.lines.map(x=>x.lineId)).toEqual([m220.lineId]);
   await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
-  await expect(page.locator('#quoteTable')).toContainText('规格：120W');
-  await expect(page.locator('#quoteTable')).toContainText('规格：220W');
+  // 中文：比价表规格按新设计在同一行展示，不再强制保留旧“规格：”字面。
+  // English: Check true specs in current inline material cells without enforcing obsolete copy.
+  await expect(page.locator('#quoteTable')).toContainText('120W');
+  await expect(page.locator('#quoteTable')).toContainText('220W');
   await expect(page.locator('#quoteTable')).toContainText('¥9.00');
   await expect(page.locator('#quoteTable')).toContainText('¥10.00');
 });
