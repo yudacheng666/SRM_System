@@ -195,6 +195,19 @@ body.srm-v2 .ui-context{
   margin-bottom:10px;box-shadow:none;
 }
 body.srm-v2 .ui-context b{font-size:16px;color:#17263e}
+/* 中文：采购项目作为第一步独立页面，项目表单一直展开，不再以三列折叠入口悬浮在所有页面上方。
+ * English: Project is a full workflow page, with permanently visible controls instead of global accordions. */
+body.srm-v2 #project #pilotControls{margin:0!important;border:1px solid #e1e8f2;background:#fff}
+body.srm-v2 #project #pilotControls>.cardbody,
+body.ui-buyer-mode #project #pilotControls>.cardbody{display:block;padding:16px 19px}
+body.srm-v2 #project #pilotControls .ui-workspaceHead{display:none}
+body.srm-v2 #project #uiProjectDetails{display:block;background:#fff;border:0;margin:0}
+body.srm-v2 #project #uiProjectDetails>summary{display:none!important}
+body.srm-v2 #project #uiProjectDetails>.ui-projectBody{display:block;border:0;padding:0}
+body.srm-v2 #project #uiProjectDetails>.ui-projectBody>.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+body.srm-v2 .ui-workNav .tabs{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media(max-width:760px){body.srm-v2 .ui-workNav .tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 /* 中文：采购员可识别的名称优先显示，技术 ID 只在详情中保留。
  * English: Business-facing project titles replace opaque internal identities in the main UI. */
 body.srm-v2 .srm-ux-projectNameRow{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
@@ -1411,8 +1424,8 @@ body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps span{font-size:12px;font-we
     <div class="srm-v2-brand"><span class="srm-v3-brandmark">S</span><span class="srm-v3-brandcopy">SRM <small>PROCUREMENT</small></span></div>
     <div class="srm-v2-descriptor">采购协同 · 内部工作台</div>
     <div class="srm-v2-navlabel">工作空间</div>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-action="project" aria-label="打开询价项目" title="打开询价项目"><span class="srm-v2-icon" aria-hidden="true">▤</span><span class="srm-v2-word">询价项目</span></button>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="items" aria-label="物料与图纸" title="物料与图纸" aria-current="page"><span class="srm-v2-icon" aria-hidden="true">▦</span><span class="srm-v2-word">物料与图纸</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="project" aria-label="询价项目" title="询价项目" aria-current="page"><span class="srm-v2-icon" aria-hidden="true">▤</span><span class="srm-v2-word">询价项目</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="items" aria-label="物料与图纸" title="物料与图纸"><span class="srm-v2-icon" aria-hidden="true">▦</span><span class="srm-v2-word">物料与图纸</span></button>
     <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="assign" aria-label="供应商与分配" title="供应商与分配"><span class="srm-v2-icon" aria-hidden="true">♧</span><span class="srm-v2-word">供应商分配</span></button>
     <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="quoteImport" aria-label="报价回收" title="报价回收"><span class="srm-v2-icon" aria-hidden="true">▣</span><span class="srm-v2-word">报价回收</span></button>
     <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="quotes" aria-label="比价议价" title="比价议价"><span class="srm-v2-icon" aria-hidden="true">▥</span><span class="srm-v2-word">比价议价</span></button>
@@ -1569,14 +1582,26 @@ body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps span{font-size:12px;font-we
     <nav class="ui-workNav" aria-label="询价业务流程">
     <div class="srm-v3-flow-label"><strong>采购业务流程</strong><span>点击步骤切换</span></div>
     <div class="tabs" role="tablist">
-      <button class="tab active" data-tab="items" role="tab" aria-selected="true">① 物料与图纸</button>
-      <button class="tab" data-tab="assign" role="tab" aria-selected="false">② 供应商与分配</button>
-      <button class="tab" data-tab="quoteImport" role="tab" aria-selected="false">③ 报价回收</button>
-      <button class="tab" data-tab="quotes" role="tab" aria-selected="false">④ 比价议价</button>
+      <button class="tab active" data-tab="project" role="tab" aria-selected="true">① 询价项目</button>
+      <button class="tab" data-tab="items" role="tab" aria-selected="false">② 物料与图纸</button>
+      <button class="tab" data-tab="assign" role="tab" aria-selected="false">③ 供应商分配</button>
+      <button class="tab" data-tab="quoteImport" role="tab" aria-selected="false">④ 报价回收</button>
+      <button class="tab" data-tab="quotes" role="tab" aria-selected="false">⑤ 比价议价</button>
     </div>
   </nav>
 
-  <section id="items" class="panel active">
+  <section id="project" class="panel active" aria-label="询价项目">
+    <div class="ui-panelLead srm-v3-pageIntro" id="srmV3PageStage-project">
+      <div class="srm-v3-pageMain">
+        <div class="srm-v3-pageKicker">01 / 询价项目</div>
+        <h2>询价项目 <span>/ 新建与管理</span></h2>
+        <p>从这里新建或打开询价项目，核对保存状态，然后进入物料清单。</p>
+      </div>
+      <div class="toolbar"><button type="button" id="uiProjectNextItems" class="btn primary">下一步：物料与图纸</button></div>
+    </div>
+  </section>
+
+  <section id="items" class="panel">
     <div class="card">
       <div class="cardhead">
         <div><b id="pilotRfqHead">RFQ-DEMO-001</b> <span class="muted small">本次询价物料</span></div>
@@ -6267,6 +6292,9 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   const controls = document.querySelector("#pilotControls > .cardbody");
   const one = id => document.getElementById(id);
   if(!controls || one("uiSupplierTools")) return;
+  // 中文：原项目控件整体移入首个业务页面，仅变更 DOM 位置，复用原事件与业务数据。
+  // English: Move the original project controls into the first real workflow panel without duplicating handlers.
+  one("project").append(one("pilotControls"));
 
   function drawer(id, heading, hint, nodes) {
     const details = document.createElement("details");
@@ -6314,8 +6342,8 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   statusDetails.append(statusSummary,diagnostic);
   statusStrip.append(statusDetails);
   project.after(statusStrip);
-  // 中文：演示时项目按钮展开；打开正式询价后默认收起，以便 1366×768 笔记本首屏显示业务。
-  // English: Demo exposes the create controls; active RFQs collapse project admin for table-first use.
+  // 中文：项目已是独立常驻页面，项目操作始终展开，不能因新建/切换自动折叠。
+  // English: Project controls stay expanded on their dedicated workflow page, even after creating or switching RFQs.
   const projectDetails=document.createElement("details");
   projectDetails.id="uiProjectDetails";projectDetails.className="ui-projectDetails";projectDetails.open=true;
   const projectSummary=document.createElement("summary");
@@ -6325,8 +6353,9 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   projectBody.append(project,statusStrip);
   projectDetails.append(projectSummary,projectBody);
   controls.prepend(projectDetails);
-  window.addEventListener("srm:workspace-changed",()=>{projectDetails.open=false});
-  if(window.SRMPilot?.isBuyer())projectDetails.open=false;
+  projectDetails.open=true;
+  // 中文：不再在工作空间切换时收起项目操作；页面与面板呈现由导航控制。
+  // English: Workspace changes do not collapse project management; navigation owns visibility.
   const projectStatus=one("uiProjectStatus"),autosave=one("pilotAutosaveStatus");
   const updateProjectStatus=()=>{
     const raw=autosave.textContent.replace(/^自动保存：/,"");
@@ -6388,11 +6417,17 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
     section.scrollIntoView({block:"start",behavior:"smooth"});
   }
   one("uiProjectJump").addEventListener("click",()=>{
-    projectDetails.open=true;
-    projectDetails.scrollIntoView({block:"start",behavior:"smooth"});
-    one("pilotHistoryWorkspace").focus();
+    document.querySelector('.ui-workNav .tab[data-tab="project"]').click();
+    one("srmV3PageStage-project").scrollIntoView({block:"start",behavior:"smooth"});
   });
-  one("uiAdminToggle").addEventListener("click",()=>reveal("uiDataTools"));
+  one("uiAdminToggle").addEventListener("click",()=>{
+    document.querySelector('.ui-workNav .tab[data-tab="project"]').click();
+    reveal("uiDataTools");
+  });
+  one("uiProjectNextItems").addEventListener("click",()=>{
+    document.querySelector('.ui-workNav .tab[data-tab="items"]').click();
+    document.querySelector(".ui-workNav").scrollIntoView({block:"start",behavior:"smooth"});
+  });
 
   const item = one("items");
   const itemLead = document.createElement("div");
@@ -6436,6 +6471,9 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   assignLead.innerHTML = '<div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">03 / SUPPLIER ALLOCATION</div><h2>供应商分配 <span>/ 询价范围管理</span></h2><p>先明确目标供应商，再关联物料；追加分配不会覆盖其他供应商的询价范围。</p></div>'+
     '<div class="toolbar"><button class="btn" id="uiJumpSupplierList" type="button">查看分配操作 ↓</button><button class="btn soft" id="uiOpenSupplierTools" type="button">添加 / 导入供应商</button></div>';
   assign.prepend(assignLead);
+  // 中文：供应商管理属于第三个业务步骤；移动既有抽屉而不复制控件。
+  // English: Existing supplier management belongs to the allocation stage, not project creation.
+  assignLead.after(supplierTools);
   one("uiOpenSupplierTools").addEventListener("click",()=>reveal("uiSupplierTools"));
   one("uiJumpSupplierList").addEventListener("click",()=>one("supplierSearch").scrollIntoView({block:"center",behavior:"smooth"}));
 
@@ -6470,8 +6508,8 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   const buttons=Array.from(document.querySelectorAll(".srm-v2-sideitem[data-srm-v2-tab]"));
   const allNav=Array.from(document.querySelectorAll(".srm-v2-sideitem"));
   const original=id=>Array.from(document.querySelectorAll(".tab")).find(el=>el.dataset.tab===id);
-  // 中文：询价项目/数据备份是独立侧栏入口，激活后应保持唯一高亮，直到切换其他导航。
-  // English: Action drawers retain the single selected nav highlight until switching views.
+  // 中文：询价项目现在是真正的第一步；只保留“数据与备份”为非业务流程工具入口。
+  // English: Project is a real step, and only backup remains an auxiliary action.
   let selectedAction=null;
   function sync(){
     const current=document.querySelector(".ui-workNav .tab.active")?.dataset.tab||
@@ -6496,23 +6534,16 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   document.querySelectorAll(".tab").forEach(el=>el.addEventListener("click",()=>{
     selectedAction=null;sync();
   }));
-  document.querySelector('[data-srm-v2-action="project"]')?.addEventListener("click",()=>{
-    document.getElementById("uiProjectJump")?.click();
-    selectAction("project");
-  });
   document.querySelector('[data-srm-v2-action="admin"]')?.addEventListener("click",()=>{
     document.getElementById("uiAdminToggle")?.click();
     selectAction("admin");
   });
-  // 中文：顶部快捷入口与侧栏同步；收起抽屉时恢复底层业务页面高亮。
-  // English: Header shortcuts share nav state; closing an action drawer restores the active stage.
-  document.getElementById("uiProjectJump")?.addEventListener("click",()=>selectAction("project"));
+  // 中文：项目顶部入口直接打开独立项目页；备份入口沿用抽屉与唯一导航高亮。
+  // English: Header project shortcut opens the actual project panel; backup remains a managed drawer.
   document.getElementById("uiAdminToggle")?.addEventListener("click",()=>selectAction("admin"));
-  for(const [action,id] of [["project","uiProjectDetails"],["admin","uiDataTools"]]){
-    document.getElementById(id)?.addEventListener("toggle",event=>{
-      if(!event.currentTarget.open&&selectedAction===action){selectedAction=null;sync();}
-    });
-  }
+  document.getElementById("uiDataTools")?.addEventListener("toggle",event=>{
+    if(!event.currentTarget.open&&selectedAction==="admin"){selectedAction=null;sync();}
+  });
 
   // 中文：保存反馈只有当前 RFQ 摘要常驻，技术详细信息继续由 #srmUxStatusDetails 展开读取。
   // English: Keep one live RFQ save indicator; leave raw autosave/conflict details in their existing disclosure.
