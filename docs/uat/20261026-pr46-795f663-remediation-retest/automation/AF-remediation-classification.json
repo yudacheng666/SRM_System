@@ -1,0 +1,243 @@
+[
+  {
+    "id": "AF-01",
+    "title": "01 startup, demo isolation, autosave, navigation and restart / 启动与隔离",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "PASS",
+    "phase2": "PASS",
+    "classification": "PASS",
+    "assessment": "Whole unchanged original test passed on this SHA in both targeted and full runs, including assertions previously not reached.",
+    "rawOriginalErrorsPhase1": [],
+    "rawOriginalErrorsPhase2": []
+  },
+  {
+    "id": "AF-02",
+    "title": "05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "FAIL",
+    "phase2": "FAIL",
+    "classification": "TEST_PATH_OR_ASSERTION_DEFECT",
+    "assessment": "Old badge assertion now passes; after reload test fills hidden #itemSearch at acceptance.spec.cjs:239 without navigating to Materials. Later PDF/ZIP assertions NOT REACHED.",
+    "rawOriginalErrorsPhase1": [
+      {
+        "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+      },
+      {
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 37,
+          "line": 239
+        },
+        "message": "Error: locator.fill: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#itemSearch')\u001b[22m\n\u001b[2m    - locator resolved to <input type=\"text\" id=\"itemSearch\" placeholder=\"全字段模糊搜索\"/>\u001b[22m\n\u001b[2m    - fill(\"TST-001\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    132 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying fill action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\n\n  237 |   await allocated(page,app); await drawings(page,app); await page.reload();\n  238 |   await expect(page.locator('#pilotModeBadge')).toContainText('本机工作模式');\n> 239 |   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();\n      |                                     ^\n  240 |   await page.locator('#itemBody [data-drawing]').filter({hasText:'PDF'}).first().click();\n  241 |   await expect(page.locator('#drawingLarge iframe')).toBeVisible();\n  242 |   await page.locator('#drawingNextPage').click();\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:239:37"
+      }
+    ],
+    "rawOriginalErrorsPhase2": [
+      {
+        "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+      },
+      {
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 37,
+          "line": 239
+        },
+        "message": "Error: locator.fill: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#itemSearch')\u001b[22m\n\u001b[2m    - locator resolved to <input type=\"text\" id=\"itemSearch\" placeholder=\"全字段模糊搜索\"/>\u001b[22m\n\u001b[2m    - fill(\"TST-001\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    154 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying fill action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\n\n  237 |   await allocated(page,app); await drawings(page,app); await page.reload();\n  238 |   await expect(page.locator('#pilotModeBadge')).toContainText('本机工作模式');\n> 239 |   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();\n      |                                     ^\n  240 |   await page.locator('#itemBody [data-drawing]').filter({hasText:'PDF'}).first().click();\n  241 |   await expect(page.locator('#drawingLarge iframe')).toBeVisible();\n  242 |   await page.locator('#drawingNextPage').click();\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:239:37"
+      }
+    ]
+  },
+  {
+    "id": "AF-03",
+    "title": "06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "PASS",
+    "phase2": "PASS",
+    "classification": "PASS",
+    "assessment": "Whole unchanged original test passed on this SHA in both targeted and full runs, including assertions previously not reached.",
+    "rawOriginalErrorsPhase1": [],
+    "rawOriginalErrorsPhase2": []
+  },
+  {
+    "id": "AF-04",
+    "title": "07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "FAIL",
+    "phase2": "FAIL",
+    "classification": "TEST_PATH_OR_ASSERTION_DEFECT",
+    "assessment": "Old badge and genuine stale-tab409 assertions now pass; later after stopping server, main page remains Materials and test fills hidden #pilotCounterpartyCode (CP-OFFLINE) at acceptance.spec.cjs:313. Remaining offline/manual recovery assertions NOT REACHED. Phase1 timeout additionally caused trace-finalization ZIP error/no trace attachment; Phase2 usable original trace confirms last waiting action.",
+    "rawOriginalErrorsPhase1": [
+      {
+        "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+      },
+      {
+        "message": "Error: End of central directory record signature not found. Either not a zip file, or file is truncated."
+      }
+    ],
+    "rawOriginalErrorsPhase2": [
+      {
+        "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+      },
+      {
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 50,
+          "line": 313
+        },
+        "message": "Error: locator.fill: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#pilotCounterpartyCode')\u001b[22m\n\u001b[2m    - locator resolved to <input type=\"text\" placeholder=\"往来单位编码\" id=\"pilotCounterpartyCode\"/>\u001b[22m\n\u001b[2m    - fill(\"CP-OFFLINE\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    148 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying fill action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\n\n  311 |     expect((await (await fetch(baseURL+'/api/workspaces/'+good.workspaceId)).json()).workspace).toEqual(good);\n  312 |     await app.stop(app.child);\n> 313 |     await page.locator('#pilotCounterpartyCode').fill('CP-OFFLINE');await page.locator('#pilotSupplierName').fill('虚构断线');await page.locator('#pilotAddSupplier').click();\n      |                                                  ^\n  314 |     await expect(page.locator('#pilotAutosaveStatus')).toContainText('保存失败');\n  315 |     await app.start();await openProject(page);await page.locator('#pilotSaveWorkspace').click();await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n  316 |     await page.reload();await expect.poll(async()=> (await snapshot(page)).state.suppliers.length).toBe(1);\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:313:50"
+      }
+    ]
+  },
+  {
+    "id": "AF-05",
+    "title": "12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "PASS",
+    "phase2": "PASS",
+    "classification": "PASS",
+    "assessment": "Whole unchanged original test passed on this SHA in both targeted and full runs, including assertions previously not reached.",
+    "rawOriginalErrorsPhase1": [],
+    "rawOriginalErrorsPhase2": []
+  },
+  {
+    "id": "AF-06",
+    "title": "13 compact laptop item table after import / 1366首屏物料可见",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "FAIL",
+    "phase2": "FAIL",
+    "classification": "TEST_PATH_OR_ASSERTION_DEFECT",
+    "assessment": "Initial project-page assertion now passes; post-reload line486 still expects permanent project details to be closed. Later first-row check NOT REACHED.",
+    "rawOriginalErrorsPhase1": [
+      {
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 55,
+          "line": 486
+        },
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#uiProjectDetails')\nExpected: not \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"not toHaveAttribute\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiProjectDetails')\u001b[22m\n\u001b[2m    19 × locator resolved to <details open=\"\" id=\"uiProjectDetails\" class=\"ui-projectDetails\">…</details>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n\n\n  484 |   // English: Buyer UI displays a readable title, with the stable internal key in diagnostics.\n  485 |   await expect(page.locator('#uiCurrentRfq')).toContainText('未命名询价');\n> 486 |   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');\n      |                                                       ^\n  487 |   await checkFirstRow('Fresh page reload');\n  488 | });\n  489 |\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:486:55"
+      }
+    ],
+    "rawOriginalErrorsPhase2": [
+      {
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 55,
+          "line": 486
+        },
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#uiProjectDetails')\nExpected: not \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"not toHaveAttribute\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiProjectDetails')\u001b[22m\n\u001b[2m    18 × locator resolved to <details open=\"\" id=\"uiProjectDetails\" class=\"ui-projectDetails\">…</details>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n\n\n  484 |   // English: Buyer UI displays a readable title, with the stable internal key in diagnostics.\n  485 |   await expect(page.locator('#uiCurrentRfq')).toContainText('未命名询价');\n> 486 |   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');\n      |                                                       ^\n  487 |   await checkFirstRow('Fresh page reload');\n  488 | });\n  489 |\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:486:55"
+      }
+    ]
+  },
+  {
+    "id": "AF-07",
+    "title": "44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "PASS",
+    "phase2": "PASS",
+    "classification": "PASS",
+    "assessment": "Whole unchanged original test passed on this SHA in both targeted and full runs, including assertions previously not reached.",
+    "rawOriginalErrorsPhase1": [],
+    "rawOriginalErrorsPhase2": []
+  },
+  {
+    "id": "AF-08",
+    "title": "46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "PASS",
+    "phase2": "PASS",
+    "classification": "PASS",
+    "assessment": "Whole unchanged original test passed on this SHA in both targeted and full runs, including assertions previously not reached.",
+    "rawOriginalErrorsPhase1": [],
+    "rawOriginalErrorsPhase2": []
+  },
+  {
+    "id": "AF-09",
+    "title": "ERP09: second-round scope shows specification and preserves selected line identities",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "PASS",
+    "phase2": "PASS",
+    "classification": "PASS",
+    "assessment": "Whole unchanged original test passed on this SHA in both targeted and full runs, including assertions previously not reached.",
+    "rawOriginalErrorsPhase1": [],
+    "rawOriginalErrorsPhase2": []
+  },
+  {
+    "id": "AF-10",
+    "title": "UX project title: Chinese label, rename, history and reload / 询价名称真实保存",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "PASS",
+    "phase2": "PASS",
+    "classification": "PASS",
+    "assessment": "Whole unchanged original test passed on this SHA in both targeted and full runs, including assertions previously not reached.",
+    "rawOriginalErrorsPhase1": [],
+    "rawOriginalErrorsPhase2": []
+  },
+  {
+    "id": "AF-11",
+    "title": "UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "PASS",
+    "phase2": "PASS",
+    "classification": "PASS",
+    "assessment": "Whole unchanged original test passed on this SHA in both targeted and full runs, including assertions previously not reached.",
+    "rawOriginalErrorsPhase1": [],
+    "rawOriginalErrorsPhase2": []
+  },
+  {
+    "id": "AF-12",
+    "title": "UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "PASS",
+    "phase2": "PASS",
+    "classification": "PASS",
+    "assessment": "Whole unchanged original test passed on this SHA in both targeted and full runs, including assertions previously not reached.",
+    "rawOriginalErrorsPhase1": [],
+    "rawOriginalErrorsPhase2": []
+  },
+  {
+    "id": "AF-13",
+    "title": "UX item rows: single-line drawing badge and compact row / 物料行高及缺图纸标识",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "PASS",
+    "phase2": "PASS",
+    "classification": "PASS",
+    "assessment": "Whole unchanged original test passed on this SHA in both targeted and full runs, including assertions previously not reached.",
+    "rawOriginalErrorsPhase1": [],
+    "rawOriginalErrorsPhase2": []
+  },
+  {
+    "id": "AF-14",
+    "title": "B3 quote and comparison with real SQLite 1366x768",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "PASS",
+    "phase2": "PASS",
+    "classification": "PASS",
+    "assessment": "Whole unchanged original test passed on this SHA in both targeted and full runs, including assertions previously not reached.",
+    "rawOriginalErrorsPhase1": [],
+    "rawOriginalErrorsPhase2": []
+  },
+  {
+    "id": "AF-15",
+    "title": "B3 quote and comparison with real SQLite 1600x900",
+    "priorSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+    "priorStatus": "FAIL",
+    "phase1": "PASS",
+    "phase2": "PASS",
+    "classification": "PASS",
+    "assessment": "Whole unchanged original test passed on this SHA in both targeted and full runs, including assertions previously not reached.",
+    "rawOriginalErrorsPhase1": [],
+    "rawOriginalErrorsPhase2": []
+  }
+]

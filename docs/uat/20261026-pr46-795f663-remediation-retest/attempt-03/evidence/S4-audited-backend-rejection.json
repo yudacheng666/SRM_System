@@ -1,0 +1,26 @@
+{
+  "channel": "Node fetch, actual backend HTTP response, no CDP Network.getResponseBody",
+  "timeStart": "2026-10-26T11:31:48.262Z",
+  "timeEnd": "2026-10-26T11:31:48.337Z",
+  "url": "http://127.0.0.1:9866/api/backups/full/restore",
+  "origin": "http://127.0.0.1:9866",
+  "requestSHA256": "9857326b38fe46d49378774011e5dca6c4f08cdc6b5624ec5f7daf7e849e2ffc",
+  "status": 400,
+  "headers": {
+    "cache-control": "no-store",
+    "content-length": "69",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Mon, 26 Oct 2026 11:31:48 GMT",
+    "referrer-policy": "no-referrer",
+    "server": "SRM-Local-S3 ",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY"
+  },
+  "rawBody": "{\"error\": \"RESTORE_REJECTED\", \"message\": \"RESTORE_PDF_HASH_MISMATCH\"}",
+  "body": {
+    "error": "RESTORE_REJECTED",
+    "message": "RESTORE_PDF_HASH_MISMATCH"
+  },
+  "uiStatus": 400,
+  "uiFeedback": "完整恢复未成功：RESTORE_PDF_HASH_MISMATCH（HTTP 400）"
+}

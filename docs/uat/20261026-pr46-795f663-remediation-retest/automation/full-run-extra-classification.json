@@ -1,0 +1,59 @@
+[
+  {
+    "id": "NEW-TEST-01",
+    "title": "UX pending-only: filtered pagination and award state / 待决定筛选真实分页",
+    "status": "FAIL",
+    "severity": "P2-TEST coverage gap, not a confirmed product arithmetic defect",
+    "classification": "CELL_CENTER_HITS_NEW_DETAIL_DISCLOSURE",
+    "facts": "Original test clicks an award cell center; screenshot/trace shows price detail expanded while manual count/amount unchanged. Current UI has a distinct .quotePrice button; independent explicit-button tests passed real pending, tie, higher-reason,1979/manual state,persistence. Original later assertions NOT REACHED. No original test edit/retry.",
+    "originalErrors": [
+      {
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+          "column": 45,
+          "line": 171
+        },
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#quoteCount')\nExpected substring: \u001b[32m\"待决定 1\u001b[7m1\u001b[27m 项（全部 12 项）\"\u001b[39m\nReceived string:    \u001b[31m\"待决定 1\u001b[7m2\u001b[27m 项（全部 12 项）\u001b[7m · 第 1/2 页\u001b[27m\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#quoteCount')\u001b[22m\n\u001b[2m    18 × locator resolved to <span id=\"quoteCount\">待决定 12 项（全部 12 项） · 第 1/2 页</span>\u001b[22m\n\u001b[2m       - unexpected value \"待决定 12 项（全部 12 项） · 第 1/2 页\"\u001b[22m\n\n\n  169 |   expect((await snapshot(page)).state).toEqual(before.state);\n  170 |   await page.locator('#quoteTable td.awardSelectable').first().click();\n> 171 |   await expect(page.locator('#quoteCount')).toContainText('待决定 11 项（全部 12 项）');\n      |                                             ^\n  172 |   await expect(page.locator('#quoteTable tbody tr')).toHaveCount(10);\n  173 |   await expect(page.locator('#quoteTable tbody tr').first()).toContainText('TST-002');\n  174 |   await expect(page.locator('#srmV31DecisionBoard')).toContainText('有效报价物料');\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:171:45"
+      }
+    ],
+    "evidence": "full-run-extra-three-readonly.json; automation/phase2/failures"
+  },
+  {
+    "id": "NEW-TEST-02",
+    "title": "UX manual-only: buyer-approved amount distinct from suggested totals / 人工定标金额独立显示",
+    "status": "FAIL",
+    "severity": "P2-TEST coverage gap, not a confirmed product arithmetic defect",
+    "classification": "CELL_CENTER_HITS_NEW_DETAIL_DISCLOSURE",
+    "facts": "Original test clicks an award cell center; screenshot/trace shows price detail expanded while manual count/amount unchanged. Current UI has a distinct .quotePrice button; independent explicit-button tests passed real pending, tie, higher-reason,1979/manual state,persistence. Original later assertions NOT REACHED. No original test edit/retry.",
+    "originalErrors": [
+      {
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+          "column": 25,
+          "line": 203
+        },
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#srmUxManualAwardSummary')\nExpected substring: \u001b[32m\"¥191.00\"\u001b[39m\nReceived string:    \u001b[31m\"采购员已确认金额：¥63.00（1 项，排除自动建议和待复核项）\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#srmUxManualAwardSummary')\u001b[22m\n\u001b[2m    19 × locator resolved to <div class=\"srm-ux-manual-total\" id=\"srmUxManualAwardSummary\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"采购员已确认金额：¥63.00（1 项，排除自动建议和待复核项）\"\u001b[22m\n\n\n  201 |   }\n  202 |   await expect(summary).toContainText('采购员已确认金额：');\n> 203 |   await expect(summary).toContainText('¥'+(totalCents/100).toFixed(2));\n      |                         ^\n  204 |   await expect(summary).toContainText('（3 项，排除自动建议和待复核项）');\n  205 |   await expect(page.locator('#srmV31DecisionBoard')).toContainText('人工已选');\n  206 |   expect((await snapshot(page)).state.manualAwards).toHaveLength(3);\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:203:25"
+      }
+    ],
+    "evidence": "full-run-extra-three-readonly.json; automation/phase2/failures"
+  },
+  {
+    "id": "NEW-TEST-03",
+    "title": "B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态",
+    "status": "FAIL",
+    "severity": "P2-TEST coverage gap, not a confirmed product arithmetic defect",
+    "classification": "CELL_CENTER_HITS_NEW_DETAIL_DISCLOSURE",
+    "facts": "Original test clicks an award cell center; screenshot/trace shows price detail expanded while manual count/amount unchanged. Current UI has a distinct .quotePrice button; independent explicit-button tests passed real pending, tie, higher-reason,1979/manual state,persistence. Original later assertions NOT REACHED. No original test edit/retry.",
+    "originalErrors": [
+      {
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+          "column": 49,
+          "line": 196
+        },
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#srmV31DecisionBoard .srm-v31-decisionMetrics>div').nth(2).locator('strong')\nExpected: \u001b[32m\"1\"\u001b[39m\nReceived: \u001b[31m\"0\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#srmV31DecisionBoard .srm-v31-decisionMetrics>div').nth(2).locator('strong')\u001b[22m\n\u001b[2m    19 × locator resolved to <strong>0</strong>\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n  194 |  // Both confirmed suppliers offered ¥20 on this line; supplier B is still a valid minimum.\n  195 |  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');\n> 196 |  await expect(metrics.nth(2).locator('strong')).toHaveText('1');\n      |                                                 ^\n  197 |  await expect(metrics.nth(3).locator('strong')).toHaveText('0');\n  198 |  // 中文：M1-Lite 快照的 Map 记录为 {key,value}，Set 记录为值数组；严禁以二元组检查 Map。\n  199 |  // English: Snapshot Map entries are {key,value} objects; Set entries remain scalar arrays.\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:196:49"
+      }
+    ],
+    "evidence": "full-run-extra-three-readonly.json; automation/phase2/failures"
+  }
+]

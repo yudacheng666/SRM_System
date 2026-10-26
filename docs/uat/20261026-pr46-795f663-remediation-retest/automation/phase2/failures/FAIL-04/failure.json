@@ -1,0 +1,71 @@
+{
+  "id": "405cc0014031cae14de1-165bc7283c257ea8db3a",
+  "title": "UX pending-only: filtered pagination and award state / 待决定筛选真实分页",
+  "file": "ui-ux-structural.spec.cjs",
+  "line": 148,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 3,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 23253,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#quoteCount')\nExpected substring: \u001b[32m\"待决定 1\u001b[7m1\u001b[27m 项（全部 12 项）\"\u001b[39m\nReceived string:    \u001b[31m\"待决定 1\u001b[7m2\u001b[27m 项（全部 12 项）\u001b[7m · 第 1/2 页\u001b[27m\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#quoteCount')\u001b[22m\n\u001b[2m    18 × locator resolved to <span id=\"quoteCount\">待决定 12 项（全部 12 项） · 第 1/2 页</span>\u001b[22m\n\u001b[2m       - unexpected value \"待决定 12 项（全部 12 项） · 第 1/2 页\"\u001b[22m\n",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#quoteCount')\nExpected substring: \u001b[32m\"待决定 1\u001b[7m1\u001b[27m 项（全部 12 项）\"\u001b[39m\nReceived string:    \u001b[31m\"待决定 1\u001b[7m2\u001b[27m 项（全部 12 项）\u001b[7m · 第 1/2 页\u001b[27m\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#quoteCount')\u001b[22m\n\u001b[2m    18 × locator resolved to <span id=\"quoteCount\">待决定 12 项（全部 12 项） · 第 1/2 页</span>\u001b[22m\n\u001b[2m       - unexpected value \"待决定 12 项（全部 12 项） · 第 1/2 页\"\u001b[22m\n\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:171:45",
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+          "column": 45,
+          "line": 171
+        },
+        "snippet": "  169 |   expect((await snapshot(page)).state).toEqual(before.state);\n  170 |   await page.locator('#quoteTable td.awardSelectable').first().click();\n> 171 |   await expect(page.locator('#quoteCount')).toContainText('待决定 11 项（全部 12 项）');\n      |                                             ^\n  172 |   await expect(page.locator('#quoteTable tbody tr')).toHaveCount(10);\n  173 |   await expect(page.locator('#quoteTable tbody tr').first()).toContainText('TST-002');\n  174 |   await expect(page.locator('#srmV31DecisionBoard')).toContainText('有效报价物料');"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+            "column": 45,
+            "line": 171
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#quoteCount')\nExpected substring: \u001b[32m\"待决定 1\u001b[7m1\u001b[27m 项（全部 12 项）\"\u001b[39m\nReceived string:    \u001b[31m\"待决定 1\u001b[7m2\u001b[27m 项（全部 12 项）\u001b[7m · 第 1/2 页\u001b[27m\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#quoteCount')\u001b[22m\n\u001b[2m    18 × locator resolved to <span id=\"quoteCount\">待决定 12 项（全部 12 项） · 第 1/2 页</span>\u001b[22m\n\u001b[2m       - unexpected value \"待决定 12 项（全部 12 项） · 第 1/2 页\"\u001b[22m\n\n\n  169 |   expect((await snapshot(page)).state).toEqual(before.state);\n  170 |   await page.locator('#quoteTable td.awardSelectable').first().click();\n> 171 |   await expect(page.locator('#quoteCount')).toContainText('待决定 11 项（全部 12 项）');\n      |                                             ^\n  172 |   await expect(page.locator('#quoteTable tbody tr')).toHaveCount(10);\n  173 |   await expect(page.locator('#quoteTable tbody tr').first()).toContainText('TST-002');\n  174 |   await expect(page.locator('#srmV31DecisionBoard')).toContainText('有效报价物料');\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:171:45"
+        }
+      ],
+      "stdout": [],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-26T11:26:01.942Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/tmp/srm795-product/test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/test-failed-1.png"
+        },
+        {
+          "name": "ux-structural-server-log",
+          "contentType": "text/plain",
+          "path": "/tmp/srm795-product/test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/attachments/ux-structural-server-log-3a2d97be637b79d5f22e9e096ee745f3535fd0d3.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/tmp/srm795-product/test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/tmp/srm795-product/test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+        "column": 45,
+        "line": 171
+      }
+    }
+  ]
+}

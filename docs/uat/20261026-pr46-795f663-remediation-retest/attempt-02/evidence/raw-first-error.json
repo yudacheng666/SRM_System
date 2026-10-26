@@ -1,0 +1,7 @@
+{
+  "time": "2026-10-26T11:11:29.002Z",
+  "message": "Command failed: python /workspace/uat795/methods/verify-exports.py",
+  "stack": "Error: Command failed: python /workspace/uat795/methods/verify-exports.py\n    at genericNodeError (node:internal/errors:985:15)\n    at wrappedFn (node:internal/errors:539:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at Object.execFileSync (node:child_process:978:15)\n    at eval (eval at global.run (/workspace/uat795/methods/driver.cjs:18:152), <anonymous>:4:4)\n    at async eval (eval at <anonymous> (/workspace/uat795/methods/driver.cjs:19:583), <anonymous>:1:253)\n    at async /workspace/uat795/methods/driver.cjs:19:577",
+  "activeStep": "07-export.js",
+  "classification": "UNCLASSIFIED pending review; no product fix or hidden retry"
+}

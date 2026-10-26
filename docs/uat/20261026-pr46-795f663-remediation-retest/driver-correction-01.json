@@ -1,0 +1,12 @@
+{
+  "number": 1,
+  "limit": 2,
+  "remaining": 1,
+  "time": "2026-10-26T11:08:25.528714+00:00",
+  "classification": "INDEPENDENT_DRIVER_TARGET_ERROR",
+  "raw": "independent/evidence/raw-first-error.json",
+  "trace": "independent/evidence/trace-first-attempt.zip",
+  "cause": "New inline price/detail layout places the details disclosure at the award cell center. Whole-cell click expanded details (visible in native screenshot/text) and intentionally did not award. Driver must target the actual price button.",
+  "correction": "Only independent award clicks now target .quotePrice inside exact data-award cell; all count/price/identity/reason assertions retained. Fresh attempt02 emptySQLite/retest.",
+  "productOriginalTestsCIUnchanged": true
+}

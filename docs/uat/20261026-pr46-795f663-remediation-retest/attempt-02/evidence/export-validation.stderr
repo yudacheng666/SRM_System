@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/uat795/methods/verify-exports.py", line 3, in <module>
+    r=Path('/workspace/uat795');e=r/'attempt-03/evidence';ws=json.load(open(e/'final-workspace.json'));items=ws['state']['items'];ids=[i['lineId']for i in items];qty=[i['qty']for i in items];checks=[]
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/uat795/attempt-03/evidence/final-workspace.json'

@@ -1,0 +1,31 @@
+SRM local prototype: http://127.0.0.1:8765/
+S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.
+SQLite API check: http://127.0.0.1:8765/storage-check
+127.0.0.1 - - [26/Oct/2026 11:21:09] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:10] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:10] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:10] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:10] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:10] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:11] "GET /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 11:21:11] "GET /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 11:21:11] "GET /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 11:21:12] "GET /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 11:21:13] "GET /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 11:21:14] "PUT /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 200 -
+S4 automatic full backup created: SRM_FULL_20261026_112114_75e7ed98.zip
+127.0.0.1 - - [26/Oct/2026 11:21:14] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:14] "GET /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:15] "GET /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:15] "GET /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:16] "GET /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:16] "GET /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:17] "GET /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:18] "PUT /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:18] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:18] "GET /api/workspaces/RFQ-1793013671066-INW6AA HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:18] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:18] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:18] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:18] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 11:21:18] "GET /api/backups/auto/status HTTP/1.1" 200 -

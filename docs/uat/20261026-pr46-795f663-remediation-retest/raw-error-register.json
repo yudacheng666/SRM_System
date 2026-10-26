@@ -1,0 +1,51 @@
+{
+  "productSHA": "795f663933f6883bc6e05d30b4ebbc2623a3301c",
+  "originalAutomationFailures": "automation/AF-remediation-classification.json; both phase*/failures and automated-results.json retain original FAIL",
+  "phase1AF04EvidenceGap": "Timeout also caused End of central directory signature error during trace finalization; no trace attachment was produced for that case. Screenshots/context/server log retained; Phase2 trace exists and confirms hidden offline supplier input. Available archives validated separately.",
+  "driverErrors": [
+    {
+      "number": 1,
+      "limit": 2,
+      "remaining": 1,
+      "time": "2026-10-26T11:08:25.528714+00:00",
+      "classification": "INDEPENDENT_DRIVER_TARGET_ERROR",
+      "raw": "independent/evidence/raw-first-error.json",
+      "trace": "independent/evidence/trace-first-attempt.zip",
+      "cause": "New inline price/detail layout places the details disclosure at the award cell center. Whole-cell click expanded details (visible in native screenshot/text) and intentionally did not award. Driver must target the actual price button.",
+      "correction": "Only independent award clicks now target .quotePrice inside exact data-award cell; all count/price/identity/reason assertions retained. Fresh attempt02 emptySQLite/retest.",
+      "productOriginalTestsCIUnchanged": true
+    },
+    {
+      "number": 2,
+      "limit": 2,
+      "remaining": 0,
+      "time": "2026-10-26T11:14:47.668286+00:00",
+      "classification": "INDEPENDENT_DRIVER_PATH_ERROR",
+      "raw": "attempt-02/evidence/raw-first-error.json",
+      "stderr": "attempt-02/evidence/export-validation.stderr",
+      "rootCause": "Archived export validator retained relative attempt-03/evidence path while actual current files were attempt02; failed before content assertions. Preflight missed this path.",
+      "correction": "Pass real evidence root as explicit argument; derive matching downloads directory; retain every46 numerical/file/byte assertion. Fresh attempt03 independent restart.",
+      "preventiveAudit": "Unexecuted independent conflict response audit avoids known CDP body cache; real status/UI/DB checks retained. S4 negative will use supported Node HTTP body capture.",
+      "productExistingTestsCIUnchanged": true
+    }
+  ],
+  "remainingCorrections": 0,
+  "thirdAttempt": "Complete, no further fault/correction/restart",
+  "expectedSafetyResponses": [
+    {
+      "status": 409,
+      "meaning": "real stale SQLite revision"
+    },
+    {
+      "status": 400,
+      "meaning": "valid ZIP_STORED PDF content hash mismatch; twice, actual UI and Node audit"
+    },
+    {
+      "status": 409,
+      "meaning": "nonempty restore target"
+    }
+  ],
+  "factsVsUnknown": "Known exact failure points recorded. No inferred root cause for the phase1 trace-finalization failure; no product code diagnosis from inspection alone.",
+  "fullRunAdditionalFailures": "automation/full-run-extra-classification.json (3 original whole-cell click mismatches)",
+  "evidenceBookkeeping": "evidence-packaging-notes.json"
+}

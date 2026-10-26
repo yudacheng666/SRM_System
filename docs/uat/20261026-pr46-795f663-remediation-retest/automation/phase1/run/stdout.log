@@ -1,0 +1,197 @@
+
+> srm_system@1.0.0 test:e2e
+> playwright test --grep 01\ startup,\ demo\ isolation,\ autosave,\ navigation\ and\ restart\ /\ 启动与隔离|05\ PDF\ matching,\ manual\ correction,\ refresh\ and\ scoped\ supplier\ ZIP\ /\ 图纸询价包|06\ full\ backup\ restore:\ actual\ imported\ quotes,\ history,\ PDFs,\ overwrite\ refusal\ /\ 完整恢复|07\ real\ service\ disconnect\ and\ stale\-tab\ 409\ halt\ autosave\ /\ 自动保存失败|12\ supplier\ status\ and\ report\ context\ reset\ on\ RFQ\ change\ /\ 保存提示与跨询价报告隔离|13\ compact\ laptop\ item\ table\ after\ import\ /\ 1366首屏物料可见|44\ S4\ blocked\-download\ reason\ stays\ visible\ beside\ the\ action\ /\ 备份阻止原因始终可见|46\ P3\-NAV\-01\ view\ navigation\ versus\ actual\ unsaved\ edit\ /\ 只读导航与真实脏数据区分|ERP09:\ second\-round\ scope\ shows\ specification\ and\ preserves\ selected\ line\ identities|UX\ project\ title:\ Chinese\ label,\ rename,\ history\ and\ reload\ /\ 询价名称真实保存|UX\ project\ page:\ first\ workflow\ stage,\ visible\ controls,\ stage\ switching\ /\ 询价项目独立首页|UX\ admin:\ backup\ page\ separate\ from\ RFQ,\ concise\ labels\ /\ 独立备份页与简短项目按钮|UX\ item\ rows:\ single\-line\ drawing\ badge\ and\ compact\ row\ /\ 物料行高及缺图纸标识|B3\ quote\ and\ comparison\ with\ real\ SQLite\ 1366x768|B3\ quote\ and\ comparison\ with\ real\ SQLite\ 1600x900|UX09\ exact\ 1366\ comparison\ density\ and\ first\-row\ reachability\ /\ 比价紧凑性复验
+
+
+Running 16 tests using 1 worker
+
+
+  ✓   1 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:139:1 › 01 startup, demo isolation, autosave, navigation and restart / 启动与隔离 (17.0s)
+
+  ✘   2 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:236:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 (1.5m)
+
+  ✓   3 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:267:1 › 06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复 (31.9s)
+
+  ✘   4 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:303:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 (1.5m)
+
+  ✓   5 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:423:1 › 12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离 (21.0s)
+
+  ✘   6 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:457:1 › 13 compact laptop item table after import / 1366首屏物料可见 (24.7s)
+
+  ✓   7 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:596:1 › 44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见 (14.7s)
+
+  ✓   8 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:680:1 › 46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分 (15.4s)
+
+  ✓   9 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:338:1 › ERP09: second-round scope shows specification and preserves selected line identities (8.5s)
+
+  ✓  10 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:217:1 › UX project title: Chinese label, rename, history and reload / 询价名称真实保存 (10.7s)
+
+  ✓  11 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:257:1 › UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页 (3.0s)
+
+  ✓  12 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:286:1 › UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮 (2.8s)
+
+  ✓  13 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:312:1 › UX item rows: single-line drawing badge and compact row / 物料行高及缺图纸标识 (5.1s)
+
+  ✘  14 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:374:1 › UX09 exact 1366 comparison density and first-row reachability / 比价紧凑性复验 (5.4s)
+SRM_UI_V2_B3_QUOTE_METRIC={"viewport":{"width":1366,"height":768},"documentWidth":1366,"roundTop":1345.640625,"coverageTop":930.296875,"firstImportTop":496.015625,"primaryVisible":["confirmQuoteRound"]}
+SRM_UI_V2_B3_COMPARE_METRIC={"width":1366,"height":768,"documentWidth":1366,"tableTop":753.34375,"comparableScopeTop":600.84375}
+  ✓  15 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:52:1 › B3 quote and comparison with real SQLite 1366x768 (18.5s)
+SRM_UI_V2_B3_QUOTE_METRIC={"viewport":{"width":1600,"height":900},"documentWidth":1600,"roundTop":1355.5625,"coverageTop":936.21875,"firstImportTop":563.4375,"primaryVisible":["confirmQuoteRound"]}
+SRM_UI_V2_B3_COMPARE_METRIC={"width":1600,"height":900,"documentWidth":1600,"tableTop":796.765625,"comparableScopeTop":644.265625}
+  ✓  16 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:52:1 › B3 quote and comparison with real SQLite 1600x900 (12.1s)
+
+
+  1) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:236:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 
+
+    [31mTest timeout of 90000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 90000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('#itemSearch')[22m
+    [2m    - locator resolved to <input type="text" id="itemSearch" placeholder="全字段模糊搜索"/>[22m
+    [2m    - fill("TST-001")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    132 × waiting for element to be visible, enabled and editable[22m
+    [2m        - element is not visible[22m
+    [2m      - retrying fill action[22m
+    [2m        - waiting 500ms[22m
+
+
+      237 |   await allocated(page,app); await drawings(page,app); await page.reload();
+      238 |   await expect(page.locator('#pilotModeBadge')).toContainText('本机工作模式');
+    > 239 |   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();
+          |                                     ^
+      240 |   await page.locator('#itemBody [data-drawing]').filter({hasText:'PDF'}).first().click();
+      241 |   await expect(page.locator('#drawingLarge iframe')).toBeVisible();
+      242 |   await page.locator('#drawingNextPage').click();
+        at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:239:37
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/server-log-a301396952ed8f3bcfdeceda4cedea6ec6ef03ca.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:303:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 
+
+    [31mTest timeout of 90000ms exceeded.[39m
+
+    Error: End of central directory record signature not found. Either not a zip file, or file is truncated.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/attachments/server-log-118db4a3bee0679e6fce3ecce443f1bcf4a482e3.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/error-context.md
+
+  3) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:457:1 › 13 compact laptop item table after import / 1366首屏物料可见 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).not.[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('#uiProjectDetails')
+    Expected: not [32m""[39m
+    Received: [31m""[39m
+    Timeout:  15000ms
+
+    Call log:
+    [2m  - Expect "not toHaveAttribute" with timeout 15000ms[22m
+    [2m  - waiting for locator('#uiProjectDetails')[22m
+    [2m    19 × locator resolved to <details open="" id="uiProjectDetails" class="ui-projectDetails">…</details>[22m
+    [2m       - unexpected value ""[22m
+
+
+      484 |   // English: Buyer UI displays a readable title, with the stable internal key in diagnostics.
+      485 |   await expect(page.locator('#uiCurrentRfq')).toContainText('未命名询价');
+    > 486 |   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
+          |                                                       ^
+      487 |   await checkFirstRow('Fresh page reload');
+      488 | });
+      489 |
+        at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:486:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/attachments/server-log-43f2aded2748c8f59a626b047a470b2fcd3e3df7.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:374:1 › UX09 exact 1366 comparison density and first-row reachability / 比价紧凑性复验 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: <= [32m44[39m
+    Received:    [31m44.4375[39m
+
+      398 |       priceCenter:(price.top+price.bottom)/2,detailCenter:(detail.top+detail.bottom)/2};
+      399 |   });
+    > 400 |   expect(measure.height).toBeLessThanOrEqual(44);
+          |                          ^
+      401 |   expect(measure.top).toBeLessThan(measure.viewport);
+      402 |   expect(Math.abs(measure.priceCenter-measure.detailCenter)).toBeLessThanOrEqual(10);
+      403 |   await cells.first().locator('.srm-ux-bid-details summary').click();
+        at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:400:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: ux-structural-server-log (text/plain) ───────────────────────────────────────────
+    test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/attachments/ux-structural-server-log-92147abeaca2adaaad7a369e4da68ea6d54367fc.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:236:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:303:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:457:1 › 13 compact laptop item table after import / 1366首屏物料可见 
+    prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:374:1 › UX09 exact 1366 comparison density and first-row reachability / 比价紧凑性复验 
+  12 passed (6.7m)

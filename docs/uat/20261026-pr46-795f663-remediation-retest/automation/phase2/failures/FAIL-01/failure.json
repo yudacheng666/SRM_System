@@ -1,0 +1,63 @@
+{
+  "id": "ca3536bea9e5ab96e253-c1656022b669a384566f",
+  "title": "05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包",
+  "file": "acceptance.spec.cjs",
+  "line": 236,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 0,
+      "parallelIndex": 0,
+      "status": "timedOut",
+      "duration": 91157,
+      "error": {
+        "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m",
+        "stack": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+      },
+      "errors": [
+        {
+          "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+        },
+        {
+          "location": {
+            "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 37,
+            "line": 239
+          },
+          "message": "Error: locator.fill: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#itemSearch')\u001b[22m\n\u001b[2m    - locator resolved to <input type=\"text\" id=\"itemSearch\" placeholder=\"全字段模糊搜索\"/>\u001b[22m\n\u001b[2m    - fill(\"TST-001\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    154 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying fill action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\n\n  237 |   await allocated(page,app); await drawings(page,app); await page.reload();\n  238 |   await expect(page.locator('#pilotModeBadge')).toContainText('本机工作模式');\n> 239 |   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();\n      |                                     ^\n  240 |   await page.locator('#itemBody [data-drawing]').filter({hasText:'PDF'}).first().click();\n  241 |   await expect(page.locator('#drawingLarge iframe')).toBeVisible();\n  242 |   await page.locator('#drawingNextPage').click();\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:239:37"
+        }
+      ],
+      "stdout": [],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-26T11:16:03.291Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/tmp/srm795-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/test-failed-1.png"
+        },
+        {
+          "name": "server-log",
+          "contentType": "text/plain",
+          "path": "/tmp/srm795-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/server-log-a301396952ed8f3bcfdeceda4cedea6ec6ef03ca.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/tmp/srm795-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/tmp/srm795-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/trace.zip"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,454 @@
+
+> srm_system@1.0.0 test:e2e
+> playwright test
+
+
+Running 56 tests using 1 worker
+
+
+  ✓   1 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:139:1 › 01 startup, demo isolation, autosave, navigation and restart / 启动与隔离 (17.9s)
+
+  ✓   2 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:159:1 › 02 XLSX 12/100, duplicates and invalid format / 物料 (13.7s)
+
+  ✓   3 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:176:1 › 03 suppliers and bidirectional additive allocation / 供应商与分配 (17.1s)
+
+  ✓   4 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:191:1 › 04 real quote imports, rounds, tiers, immutable confirmation and comparison XLSX / 报价比价 (18.7s)
+
+  ✘   5 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:236:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 (1.5m)
+
+  ✓   6 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:267:1 › 06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复 (25.2s)
+
+  ✘   7 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:303:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 (1.5m)
+
+  ✓   8 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:320:1 › 08 bad PDF and damaged ZIP never contaminate saved data / 异常回归 (17.3s)
+
+  ✓   9 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:335:1 › 09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台操作 (16.5s)
+
+  ✓  10 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:366:1 › 10 buyer continuous allocation to items and drawing select without reload / 跨步骤实时同步 (11.3s)
+
+  ✓  11 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:391:1 › 11 formal RFQ identity in missing-quote CSV and working export shortcut / 单据追溯 (14.7s)
+
+  ✓  12 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:423:1 › 12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离 (22.5s)
+
+  ✘  13 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:457:1 › 13 compact laptop item table after import / 1366首屏物料可见 (25.8s)
+
+  ✓  14 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:491:1 › 14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯 (32.3s)
+
+  ✓  15 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:552:1 › 15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离 (18.7s)
+
+  ✓  16 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:596:1 › 44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见 (13.9s)
+
+  ✓  17 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:646:1 › 45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出 (16.3s)
+
+  ✓  18 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:680:1 › 46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分 (16.3s)
+
+  ✓  19 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:46:1 › ERP01: canonical aliases, optional original columns and conflicting identities are explicit (1.9s)
+
+  ✓  20 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:63:1 › ERP02: real XLSX keeps metadata, separates same code with different specs, and survives SQLite refresh (7.6s)
+
+  ✓  21 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:95:1 › ERP03: equal specifications merge quantity; conflicting canonical and alias header blocks commit (3.9s)
+
+  ✓  22 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:116:1 › ERP05: wide 220-column ERP source survives native XLSX importer and remains internal metadata (3.3s)
+
+  ✓  23 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:139:1 › ERP04: new ERP fields are searchable/editable, internal-vs-supplier export boundaries hold (11.6s)
+
+  ✓  24 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:212:1 › ERP06: repeated internal XLSX export and UI import keep current/source RFQ IDs distinct (22.4s)
+
+  ✓  25 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:263:1 › ERP07: specifications visibly distinguish drawing candidates and supplier allocation (7.5s)
+
+  ✓  26 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:291:1 › ERP08: confirmed cannot supply remains visible in comparison, not a zero-priced offer (9.7s)
+
+  ✓  27 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:338:1 › ERP09: second-round scope shows specification and preserves selected line identities (11.0s)
+
+  ✓  28 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:413:1 › ERP10: settings provide three correct XLSX import templates and one header-aware CSV template (8.4s)
+
+  ✓  29 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:527:1 › ERP11: rejected and canceled material previews do not alter line sequence or saved workspace (21.4s)
+
+  ✓  30 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:64:1 › UAT-01 categories follow active imported RFQ in both allocation views (4.7s)
+
+  ✓  31 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:89:1 › UAT-02 manual, pasted and CSV file quotation sources remain distinct in stored state (9.5s)
+
+  ✓  32 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:138:1 › UAT-03 refused restore is visible within current backup section while project drawer collapsed (3.6s)
+
+  ✓  33 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:152:1 › UAT-04 item editor Escape, dirty cancel and keyboard focus confinement (4.7s)
+
+  ✓  34 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:179:1 › UAT-07 drawing guidance reflects currently selected formal RFQ material (3.4s)
+
+  ✓  35 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:69:1 › UX quote: focused intake, non-destructive refresh, compact rows and details / 报价回收安全刷新 (7.2s)
+
+  ✓  36 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:107:1 › UX comparison: decision-first disclosure, priced details and workspace status / 比价与状态层级 (8.5s)
+
+  ✘  37 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:148:1 › UX pending-only: filtered pagination and award state / 待决定筛选真实分页 (23.3s)
+
+  ✘  38 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:183:1 › UX manual-only: buyer-approved amount distinct from suggested totals / 人工定标金额独立显示 (22.4s)
+
+  ✓  39 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:217:1 › UX project title: Chinese label, rename, history and reload / 询价名称真实保存 (10.9s)
+
+  ✓  40 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:257:1 › UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页 (5.8s)
+
+  ✓  41 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:286:1 › UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮 (5.7s)
+
+  ✓  42 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:312:1 › UX item rows: single-line drawing badge and compact row / 物料行高及缺图纸标识 (5.6s)
+
+  ✓  43 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:337:1 › UX allocation: shared compact material list and missing drawing / 供应商物料列表紧凑布局 (5.2s)
+
+  ✘  44 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:374:1 › UX09 exact 1366 comparison density and first-row reachability / 比价紧凑性复验 (6.0s)
+SRM_UI_V2_B1_METRIC={"viewport":{"width":1366,"height":768},"documentWidth":1366,"scrollY":0,"sidebar":{"width":224,"height":768},"tableTop":0,"firstRowTop":516.40625,"firstRowBottom":548.40625,"bodyFont":"14px","tableFont":"12.5px"}
+  ✓  45 prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:53:3 › UI V2 B1 real workspace and visual layout 1366x768 (12.8s)
+SRM_UI_V2_B1_METRIC={"viewport":{"width":1600,"height":900},"documentWidth":1600,"scrollY":0,"sidebar":{"width":224,"height":900},"tableTop":0,"firstRowTop":575.828125,"firstRowBottom":607.828125,"bodyFont":"14px","tableFont":"12.5px"}
+  ✓  46 prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:53:3 › UI V2 B1 real workspace and visual layout 1600x900 (12.6s)
+SRM_UI_V2_B2_METRIC={"width":1366,"height":768,"documentWidth":1366,"scrollY":0,"navBottom":225.34375,"rowTop":679.046875,"rowBottom":711.046875}
+  ✓  47 prototype/m1-lite/tests/e2e/ui-v2-b2.spec.cjs:44:1 › B2 allocation real-browser 1366x768 (10.9s)
+SRM_UI_V2_B2_METRIC={"width":1600,"height":900,"documentWidth":1600,"scrollY":0,"navBottom":238.875,"rowTop":710.46875,"rowBottom":742.46875}
+  ✓  48 prototype/m1-lite/tests/e2e/ui-v2-b2.spec.cjs:44:1 › B2 allocation real-browser 1600x900 (12.6s)
+SRM_UI_V2_B3_QUOTE_METRIC={"viewport":{"width":1366,"height":768},"documentWidth":1366,"roundTop":1345.640625,"coverageTop":930.296875,"firstImportTop":496.015625,"primaryVisible":["confirmQuoteRound"]}
+SRM_UI_V2_B3_COMPARE_METRIC={"width":1366,"height":768,"documentWidth":1366,"tableTop":753.34375,"comparableScopeTop":600.84375}
+  ✓  49 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:52:1 › B3 quote and comparison with real SQLite 1366x768 (12.8s)
+SRM_UI_V2_B3_QUOTE_METRIC={"viewport":{"width":1600,"height":900},"documentWidth":1600,"roundTop":1355.5625,"coverageTop":936.21875,"firstImportTop":563.4375,"primaryVisible":["confirmQuoteRound"]}
+SRM_UI_V2_B3_COMPARE_METRIC={"width":1600,"height":900,"documentWidth":1600,"tableTop":796.765625,"comparableScopeTop":644.265625}
+  ✓  50 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:52:1 › B3 quote and comparison with real SQLite 1600x900 (13.4s)
+
+  ✘  51 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:145:1 › B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态 (22.8s)
+SRM_V2_EXPLORE_METRIC={"stage":"items","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1094.40625,"bottom":1094.40625,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":224.34375,"width":926,"height":786.0625,"bottom":1010.40625,"right":1008},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":57,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"assign","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1159.296875,"bottom":1159.296875,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":224.34375,"width":926,"height":850.953125,"bottom":1075.296875,"right":1008},"table":{"x":92,"y":611.90625,"width":577.390625,"height":411.390625,"bottom":1023.296875,"right":669.390625},"tablewrap":{"x":91,"y":610.90625,"width":579.390625,"height":413.390625,"bottom":1024.296875,"right":670.390625},"firstDataRow":{"x":92,"y":640.296875,"width":577.390625,"height":32,"bottom":672.296875,"right":669.390625},"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":54,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quoteImport","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1632.890625,"bottom":1632.890625,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":224.34375,"width":926,"height":1324.546875,"bottom":1548.890625,"right":1008},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":{"x":82,"y":526.015625,"width":926,"height":431,"bottom":957.015625,"right":1008},"quoteReview":{"x":82,"y":969.015625,"width":926,"height":408.78125,"bottom":1377.796875,"right":1008},"confirmButton":{"x":877.984375,"y":1325.796875,"width":114.015625,"height":38,"bottom":1363.796875,"right":992},"tableScrollable":false,"panelButtons":27,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quotes","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1308.625,"bottom":1308.625,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":224.34375,"width":926,"height":1000.28125,"bottom":1224.625,"right":1008},"table":{"x":101,"y":779.59375,"width":888,"height":39.84375,"bottom":819.4375,"right":989},"tablewrap":{"x":100,"y":778.59375,"width":890,"height":41.84375,"bottom":820.4375,"right":990},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":6,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"settings","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1195.578125,"bottom":1195.578125,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":224.34375,"width":926,"height":887.234375,"bottom":1111.578125,"right":1008},"table":null,"tablewrap":null,"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":7,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+  ✓  52 prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:87:1 › EXPLORATORY: desktop stages, control visibility and geometry 1024x768 (9.8s)
+SRM_V2_EXPLORE_METRIC={"stage":"items","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1089.40625,"bottom":1089.40625,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":219.34375,"width":1088,"height":786.0625,"bottom":1005.40625,"right":1339},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":57,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"assign","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1199.296875,"bottom":1199.296875,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":231.34375,"width":1088,"height":883.953125,"bottom":1115.296875,"right":1339},"table":{"x":267,"y":640.90625,"width":701.03125,"height":415.390625,"bottom":1056.296875,"right":968.03125},"tablewrap":{"x":266,"y":639.90625,"width":703.03125,"height":417.390625,"bottom":1057.296875,"right":969.03125},"firstDataRow":{"x":267,"y":673.296875,"width":701.03125,"height":32,"bottom":705.296875,"right":968.03125},"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":54,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quoteImport","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1442.890625,"bottom":1442.890625,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":219.34375,"width":1088,"height":1139.546875,"bottom":1358.890625,"right":1339},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":{"x":251,"y":496.015625,"width":1088,"height":335.5,"bottom":831.515625,"right":1339},"quoteReview":{"x":251,"y":843.515625,"width":1088,"height":344.28125,"bottom":1187.796875,"right":1339},"confirmButton":{"x":1208.984375,"y":1135.796875,"width":114.015625,"height":38,"bottom":1173.796875,"right":1323},"tableScrollable":false,"panelButtons":27,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quotes","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1282.375,"bottom":1282.375,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":219.34375,"width":1088,"height":979.03125,"bottom":1198.375,"right":1339},"table":{"x":270,"y":753.34375,"width":1050,"height":39.84375,"bottom":793.1875,"right":1320},"tablewrap":{"x":269,"y":752.34375,"width":1052,"height":41.84375,"bottom":794.1875,"right":1321},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":6,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"settings","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1190.578125,"bottom":1190.578125,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":219.34375,"width":1088,"height":887.234375,"bottom":1106.578125,"right":1339},"table":null,"tablewrap":null,"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":7,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+  ✓  53 prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:87:1 › EXPLORATORY: desktop stages, control visibility and geometry 1366x768 (8.6s)
+SRM_V2_EXPLORE_METRIC={"stage":"items","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1148.828125,"bottom":1148.828125,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":247.875,"width":1322,"height":816.953125,"bottom":1064.828125,"right":1573},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":57,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"assign","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1230.71875,"bottom":1230.71875,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":247.875,"width":1322,"height":898.84375,"bottom":1146.71875,"right":1573},"table":{"x":267,"y":672.328125,"width":860.15625,"height":415.390625,"bottom":1087.71875,"right":1127.15625},"tablewrap":{"x":266,"y":671.328125,"width":862.15625,"height":417.390625,"bottom":1088.71875,"right":1128.15625},"firstDataRow":{"x":267,"y":704.71875,"width":860.15625,"height":32,"bottom":736.71875,"right":1127.15625},"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":54,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quoteImport","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1456.8125,"bottom":1456.8125,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":247.875,"width":1322,"height":1124.9375,"bottom":1372.8125,"right":1573},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":{"x":251,"y":563.4375,"width":1322,"height":274,"bottom":837.4375,"right":1573},"quoteReview":{"x":251,"y":849.4375,"width":1322,"height":344.28125,"bottom":1193.71875,"right":1573},"confirmButton":{"x":1442.984375,"y":1141.71875,"width":114.015625,"height":38,"bottom":1179.71875,"right":1557},"tableScrollable":false,"panelButtons":27,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quotes","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1307.796875,"bottom":1307.796875,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":247.875,"width":1322,"height":975.921875,"bottom":1223.796875,"right":1573},"table":{"x":270,"y":796.765625,"width":1284,"height":39.84375,"bottom":836.609375,"right":1554},"tablewrap":{"x":269,"y":795.765625,"width":1286,"height":41.84375,"bottom":837.609375,"right":1555},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":6,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"settings","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1270,"bottom":1270,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":247.875,"width":1322,"height":938.125,"bottom":1186,"right":1573},"table":null,"tablewrap":null,"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":7,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+  ✓  54 prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:87:1 › EXPLORATORY: desktop stages, control visibility and geometry 1600x900 (8.7s)
+  ✓  55 prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:45:1 › UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归 (11.1s)
+  ✓  56 prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:111:1 › UI V3.1 P2 buyer layout and semantic controls / 正式 RFQ 标题、抽屉、分配与决策 (6.6s)
+
+
+  1) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:236:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 
+
+    [31mTest timeout of 90000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 90000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('#itemSearch')[22m
+    [2m    - locator resolved to <input type="text" id="itemSearch" placeholder="全字段模糊搜索"/>[22m
+    [2m    - fill("TST-001")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    154 × waiting for element to be visible, enabled and editable[22m
+    [2m        - element is not visible[22m
+    [2m      - retrying fill action[22m
+    [2m        - waiting 500ms[22m
+
+
+      237 |   await allocated(page,app); await drawings(page,app); await page.reload();
+      238 |   await expect(page.locator('#pilotModeBadge')).toContainText('本机工作模式');
+    > 239 |   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();
+          |                                     ^
+      240 |   await page.locator('#itemBody [data-drawing]').filter({hasText:'PDF'}).first().click();
+      241 |   await expect(page.locator('#drawingLarge iframe')).toBeVisible();
+      242 |   await page.locator('#drawingNextPage').click();
+        at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:239:37
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/server-log-a301396952ed8f3bcfdeceda4cedea6ec6ef03ca.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:303:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 
+
+    [31mTest timeout of 90000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 90000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('#pilotCounterpartyCode')[22m
+    [2m    - locator resolved to <input type="text" placeholder="往来单位编码" id="pilotCounterpartyCode"/>[22m
+    [2m    - fill("CP-OFFLINE")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    148 × waiting for element to be visible, enabled and editable[22m
+    [2m        - element is not visible[22m
+    [2m      - retrying fill action[22m
+    [2m        - waiting 500ms[22m
+
+
+      311 |     expect((await (await fetch(baseURL+'/api/workspaces/'+good.workspaceId)).json()).workspace).toEqual(good);
+      312 |     await app.stop(app.child);
+    > 313 |     await page.locator('#pilotCounterpartyCode').fill('CP-OFFLINE');await page.locator('#pilotSupplierName').fill('虚构断线');await page.locator('#pilotAddSupplier').click();
+          |                                                  ^
+      314 |     await expect(page.locator('#pilotAutosaveStatus')).toContainText('保存失败');
+      315 |     await app.start();await openProject(page);await page.locator('#pilotSaveWorkspace').click();await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');
+      316 |     await page.reload();await expect.poll(async()=> (await snapshot(page)).state.suppliers.length).toBe(1);
+        at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:313:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/attachments/server-log-118db4a3bee0679e6fce3ecce443f1bcf4a482e3.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:457:1 › 13 compact laptop item table after import / 1366首屏物料可见 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).not.[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('#uiProjectDetails')
+    Expected: not [32m""[39m
+    Received: [31m""[39m
+    Timeout:  15000ms
+
+    Call log:
+    [2m  - Expect "not toHaveAttribute" with timeout 15000ms[22m
+    [2m  - waiting for locator('#uiProjectDetails')[22m
+    [2m    18 × locator resolved to <details open="" id="uiProjectDetails" class="ui-projectDetails">…</details>[22m
+    [2m       - unexpected value ""[22m
+
+
+      484 |   // English: Buyer UI displays a readable title, with the stable internal key in diagnostics.
+      485 |   await expect(page.locator('#uiCurrentRfq')).toContainText('未命名询价');
+    > 486 |   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
+          |                                                       ^
+      487 |   await checkFirstRow('Fresh page reload');
+      488 | });
+      489 |
+        at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:486:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/attachments/server-log-43f2aded2748c8f59a626b047a470b2fcd3e3df7.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:148:1 › UX pending-only: filtered pagination and award state / 待决定筛选真实分页 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('#quoteCount')
+    Expected substring: [32m"待决定 1[7m1[27m 项（全部 12 项）"[39m
+    Received string:    [31m"待决定 1[7m2[27m 项（全部 12 项）[7m · 第 1/2 页[27m"[39m
+    Timeout: 15000ms
+
+    Call log:
+    [2m  - Expect "toContainText" with timeout 15000ms[22m
+    [2m  - waiting for locator('#quoteCount')[22m
+    [2m    18 × locator resolved to <span id="quoteCount">待决定 12 项（全部 12 项） · 第 1/2 页</span>[22m
+    [2m       - unexpected value "待决定 12 项（全部 12 项） · 第 1/2 页"[22m
+
+
+      169 |   expect((await snapshot(page)).state).toEqual(before.state);
+      170 |   await page.locator('#quoteTable td.awardSelectable').first().click();
+    > 171 |   await expect(page.locator('#quoteCount')).toContainText('待决定 11 项（全部 12 项）');
+          |                                             ^
+      172 |   await expect(page.locator('#quoteTable tbody tr')).toHaveCount(10);
+      173 |   await expect(page.locator('#quoteTable tbody tr').first()).toContainText('TST-002');
+      174 |   await expect(page.locator('#srmV31DecisionBoard')).toContainText('有效报价物料');
+        at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:171:45
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: ux-structural-server-log (text/plain) ───────────────────────────────────────────
+    test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/attachments/ux-structural-server-log-3a2d97be637b79d5f22e9e096ee745f3535fd0d3.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:183:1 › UX manual-only: buyer-approved amount distinct from suggested totals / 人工定标金额独立显示 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('#srmUxManualAwardSummary')
+    Expected substring: [32m"¥191.00"[39m
+    Received string:    [31m"采购员已确认金额：¥63.00（1 项，排除自动建议和待复核项）"[39m
+    Timeout: 15000ms
+
+    Call log:
+    [2m  - Expect "toContainText" with timeout 15000ms[22m
+    [2m  - waiting for locator('#srmUxManualAwardSummary')[22m
+    [2m    19 × locator resolved to <div class="srm-ux-manual-total" id="srmUxManualAwardSummary">…</div>[22m
+    [2m       - unexpected value "采购员已确认金额：¥63.00（1 项，排除自动建议和待复核项）"[22m
+
+
+      201 |   }
+      202 |   await expect(summary).toContainText('采购员已确认金额：');
+    > 203 |   await expect(summary).toContainText('¥'+(totalCents/100).toFixed(2));
+          |                         ^
+      204 |   await expect(summary).toContainText('（3 项，排除自动建议和待复核项）');
+      205 |   await expect(page.locator('#srmV31DecisionBoard')).toContainText('人工已选');
+      206 |   expect((await snapshot(page)).state.manualAwards).toHaveLength(3);
+        at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:203:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: ux-structural-server-log (text/plain) ───────────────────────────────────────────
+    test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/attachments/ux-structural-server-log-a61124e894d05334968165a1d412eb966edbb9f1.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:374:1 › UX09 exact 1366 comparison density and first-row reachability / 比价紧凑性复验 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: <= [32m44[39m
+    Received:    [31m44.4375[39m
+
+      398 |       priceCenter:(price.top+price.bottom)/2,detailCenter:(detail.top+detail.bottom)/2};
+      399 |   });
+    > 400 |   expect(measure.height).toBeLessThanOrEqual(44);
+          |                          ^
+      401 |   expect(measure.top).toBeLessThan(measure.viewport);
+      402 |   expect(Math.abs(measure.priceCenter-measure.detailCenter)).toBeLessThanOrEqual(10);
+      403 |   await cells.first().locator('.srm-ux-bid-details summary').click();
+        at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:400:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: ux-structural-server-log (text/plain) ───────────────────────────────────────────
+    test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/attachments/ux-structural-server-log-92147abeaca2adaaad7a369e4da68ea6d54367fc.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:145:1 › B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('#srmV31DecisionBoard .srm-v31-decisionMetrics>div').nth(2).locator('strong')
+    Expected: [32m"1"[39m
+    Received: [31m"0"[39m
+    Timeout:  15000ms
+
+    Call log:
+    [2m  - Expect "toHaveText" with timeout 15000ms[22m
+    [2m  - waiting for locator('#srmV31DecisionBoard .srm-v31-decisionMetrics>div').nth(2).locator('strong')[22m
+    [2m    19 × locator resolved to <strong>0</strong>[22m
+    [2m       - unexpected value "0"[22m
+
+
+      194 |  // Both confirmed suppliers offered ¥20 on this line; supplier B is still a valid minimum.
+      195 |  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');
+    > 196 |  await expect(metrics.nth(2).locator('strong')).toHaveText('1');
+          |                                                 ^
+      197 |  await expect(metrics.nth(3).locator('strong')).toHaveText('0');
+      198 |  // 中文：M1-Lite 快照的 Map 记录为 {key,value}，Set 记录为值数组；严禁以二元组检查 Map。
+      199 |  // English: Snapshot Map entries are {key,value} objects; Set entries remain scalar arrays.
+        at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:196:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/attachments/server-log-3639fcb04095054be8d424f755c6ee7b75190195.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7 failed
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:236:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:303:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:457:1 › 13 compact laptop item table after import / 1366首屏物料可见 
+    prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:148:1 › UX pending-only: filtered pagination and award state / 待决定筛选真实分页 
+    prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:183:1 › UX manual-only: buyer-approved amount distinct from suggested totals / 人工定标金额独立显示 
+    prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:374:1 › UX09 exact 1366 comparison density and first-row reachability / 比价紧凑性复验 
+    prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:145:1 › B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态 
+  49 passed (15.4m)

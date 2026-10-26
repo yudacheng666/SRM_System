@@ -1,0 +1,71 @@
+{
+  "id": "16f3aa108219d9d3c2c6-ff84a7b28d3cde58bcfc",
+  "title": "B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态",
+  "file": "ui-v2-b3.spec.cjs",
+  "line": 145,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 6,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 22813,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#srmV31DecisionBoard .srm-v31-decisionMetrics>div').nth(2).locator('strong')\nExpected: \u001b[32m\"1\"\u001b[39m\nReceived: \u001b[31m\"0\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#srmV31DecisionBoard .srm-v31-decisionMetrics>div').nth(2).locator('strong')\u001b[22m\n\u001b[2m    19 × locator resolved to <strong>0</strong>\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#srmV31DecisionBoard .srm-v31-decisionMetrics>div').nth(2).locator('strong')\nExpected: \u001b[32m\"1\"\u001b[39m\nReceived: \u001b[31m\"0\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#srmV31DecisionBoard .srm-v31-decisionMetrics>div').nth(2).locator('strong')\u001b[22m\n\u001b[2m    19 × locator resolved to <strong>0</strong>\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:196:49",
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+          "column": 49,
+          "line": 196
+        },
+        "snippet": "  194 |  // Both confirmed suppliers offered ¥20 on this line; supplier B is still a valid minimum.\n  195 |  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');\n> 196 |  await expect(metrics.nth(2).locator('strong')).toHaveText('1');\n      |                                                 ^\n  197 |  await expect(metrics.nth(3).locator('strong')).toHaveText('0');\n  198 |  // 中文：M1-Lite 快照的 Map 记录为 {key,value}，Set 记录为值数组；严禁以二元组检查 Map。\n  199 |  // English: Snapshot Map entries are {key,value} objects; Set entries remain scalar arrays."
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+            "column": 49,
+            "line": 196
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#srmV31DecisionBoard .srm-v31-decisionMetrics>div').nth(2).locator('strong')\nExpected: \u001b[32m\"1\"\u001b[39m\nReceived: \u001b[31m\"0\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#srmV31DecisionBoard .srm-v31-decisionMetrics>div').nth(2).locator('strong')\u001b[22m\n\u001b[2m    19 × locator resolved to <strong>0</strong>\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n  194 |  // Both confirmed suppliers offered ¥20 on this line; supplier B is still a valid minimum.\n  195 |  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');\n> 196 |  await expect(metrics.nth(2).locator('strong')).toHaveText('1');\n      |                                                 ^\n  197 |  await expect(metrics.nth(3).locator('strong')).toHaveText('0');\n  198 |  // 中文：M1-Lite 快照的 Map 记录为 {key,value}，Set 记录为值数组；严禁以二元组检查 Map。\n  199 |  // English: Snapshot Map entries are {key,value} objects; Set entries remain scalar arrays.\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:196:49"
+        }
+      ],
+      "stdout": [],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-26T11:28:58.653Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/tmp/srm795-product/test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/test-failed-1.png"
+        },
+        {
+          "name": "server-log",
+          "contentType": "text/plain",
+          "path": "/tmp/srm795-product/test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/attachments/server-log-3639fcb04095054be8d424f755c6ee7b75190195.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/tmp/srm795-product/test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/tmp/srm795-product/test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+        "column": 49,
+        "line": 196
+      }
+    }
+  ]
+}
