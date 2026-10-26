@@ -37,6 +37,8 @@ const test=base.extend({
 });
 const snapshot=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 async function open(page,id){
+  if(id==='#uiProjectDetails'||id==='#uiDataTools')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
   const drawer=page.locator(id);
   if(!await drawer.evaluate(node=>node.open))await drawer.locator(':scope > summary').click();
   await expect(drawer).toHaveAttribute('open','');
@@ -44,6 +46,7 @@ async function open(page,id){
 async function prepare(page,app){
   await open(page,'#uiProjectDetails');
   await page.locator('#pilotNewWorkspace').click();
+  await page.locator('.ui-workNav .tab[data-tab="items"]').click();
   await page.locator('#toggleItemIntake').click();
   await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'items12.xlsx'));
   await expect(page.locator('#confirmImportRows')).toBeEnabled();
@@ -244,5 +247,34 @@ test('UX project title: Chinese label, rename, history and reload / 询价名称
   await page.locator('#pilotSwitchWorkspace').click();
   await expect(page.locator('#uiCurrentRfq')).toHaveText('虚构测试零件询价（第二批）');
   expect((await snapshot(page)).workspaceId).toBe(before.workspaceId);
+  expect(errors).toEqual([]);
+});
+
+
+// 中文：项目必须是与物料/分配并列的采购第一步，非跨页面折叠工具条；不触碰业务数据。
+// English: Project is the permanent first workflow panel, with original controls and correct navigation.
+test('UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页',async({page})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  const stages=page.locator('.ui-workNav .tab');
+  await expect(stages).toHaveCount(5);
+  await expect(stages.first()).toHaveText('① 询价项目');
+  await expect(page.locator('#project')).toHaveClass(/active/);
+  await expect(page.locator('.srm-v2-sideitem[data-srm-v2-tab="project"]')).toHaveAttribute('aria-current','page');
+  await expect(page.locator('#uiProjectDetails')).toHaveAttribute('open','');
+  await expect(page.locator('#pilotNewWorkspace')).toBeVisible();
+  await expect(page.locator('#uiProjectDetails > summary')).toBeHidden();
+  await page.locator('#pilotNewWorkspace').click();
+  await expect(page.locator('#pilotSaveWorkspace')).toBeVisible();
+  const original=await snapshot(page);
+  await page.locator('#uiProjectNextItems').click();
+  await expect(page.locator('#items')).toHaveClass(/active/);
+  await expect(page.locator('#project')).not.toBeVisible();
+  await expect(page.locator('.srm-v2-sideitem[data-srm-v2-tab="items"]')).toHaveAttribute('aria-current','page');
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="project"]').click();
+  await expect(page.locator('#project')).toHaveClass(/active/);
+  await expect(page.locator('#pilotNewWorkspace')).toBeVisible();
+  await expect(page.locator('#uiProjectDetails')).toHaveAttribute('open','');
+  await expect(page.locator('#pilotHistoryWorkspace')).toBeVisible();
+  expect((await snapshot(page)).workspaceId).toBe(original.workspaceId);
   expect(errors).toEqual([]);
 });
