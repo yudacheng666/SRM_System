@@ -1,0 +1,60 @@
+{
+  "semantic": {
+    "tables": {
+      "app_state": {
+        "columns": [
+          "key",
+          "value"
+        ],
+        "rows": []
+      },
+      "workspaces": {
+        "columns": [
+          "workspace_id",
+          "revision",
+          "snapshot_json",
+          "updated_at"
+        ],
+        "rows": []
+      },
+      "workspace_versions": {
+        "columns": [
+          "workspace_id",
+          "revision",
+          "snapshot_json",
+          "committed_at"
+        ],
+        "rows": []
+      },
+      "assets": {
+        "columns": [
+          "workspace_id",
+          "sha256",
+          "original_name",
+          "size"
+        ],
+        "rows": []
+      }
+    },
+    "pdf": {}
+  },
+  "persistentFiles": {
+    "srm.sqlite3": {
+      "bytes": 36864,
+      "sha256": "bd57a873c86f7a76c14a3ac39d64bfc4b15003b1f43845c1d515347595641712"
+    }
+  },
+  "sqliteVolatileFiles": {
+    "srm.sqlite3-shm": {
+      "bytes": 32768,
+      "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+    },
+    "srm.sqlite3-wal": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "directories": [
+    "assets"
+  ]
+}

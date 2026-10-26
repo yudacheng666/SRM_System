@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/uatf4/methods/verify-exports.py", line 22, in <module>
+    expected=json.load(open(r/'fixtures/business-expected.json'));shared=[i for i in range(12)if expected['A'][i]is not None];csvrows=list(csv.reader((d/'independent-common-scope.csv').read_text(encoding='utf-8-sig').splitlines()));ck('CSV exact10 common lines',[x[1]for x in csvrows[1:-1]],[ids[i]for i in shared]);ck('CSV true RFQ identity',list(set(x[0]for x in csvrows[1:])),[ws['workspaceId']]);ck('CSV independently calculated totals',[float(csvrows[-1][7]),float(csvrows[-1][9])],[sum(qty[i]*expected[s][i]for i in shared)for s in ['A','B']]);ck('CSV every amount equals quantity times applicable price',all(round(float(x[4])*float(x[6]),2)==float(x[7])and round(float(x[4])*float(x[8]),2)==float(x[9])for x in csvrows[1:-1]),True)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/uatf4/fixtures/business-expected.json'

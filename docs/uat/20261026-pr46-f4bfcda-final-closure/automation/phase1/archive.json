@@ -1,0 +1,21 @@
+{
+  "originalFiles": 65,
+  "uniqueContents": 38,
+  "allOriginalHashesRevalidated": true,
+  "bytes": 49493320,
+  "sha256": "cea64bcd102b2c852ea74bd59fa7de5e5e5c891981facb71580805bba11491c3",
+  "parts": [
+    {
+      "file": "all-original.tar.gz.part000",
+      "bytes": 33554432,
+      "sha256": "2aa10b8f0d652ffb4158b74fe5991aadcd98c9bb93cc16f85f07c4657d0eb22f"
+    },
+    {
+      "file": "all-original.tar.gz.part001",
+      "bytes": 15938888,
+      "sha256": "8d5033136c4f737e4b5809d897ffa52451d3681ae100c0f06d4857a866fa932e"
+    }
+  ],
+  "extract": "cat raw-parts/all-original.tar.gz.part* | tar -xz -f -",
+  "traceIntegrity": "See trace-integrity.json; damaged originals are retained, never repaired"
+}

@@ -1,0 +1,16 @@
+START bootstrap/npm-ci
+END bootstrap/npm-ci 0
+START phase1/list
+END phase1/list 0
+START phase1/run
+END phase1/run 0
+PHASE1_FINISHED
+START phase2/python-backend
+END phase2/python-backend 0
+START phase2/npm-ci
+END phase2/npm-ci 0
+START phase2/node-business
+END phase2/node-business 0
+START phase2/chromium-e2e
+END phase2/chromium-e2e 0
+FULL_AUTOMATION_FINISHED
