@@ -6468,26 +6468,51 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
 (function(){
   "use strict";
   const buttons=Array.from(document.querySelectorAll(".srm-v2-sideitem[data-srm-v2-tab]"));
+  const allNav=Array.from(document.querySelectorAll(".srm-v2-sideitem"));
   const original=id=>Array.from(document.querySelectorAll(".tab")).find(el=>el.dataset.tab===id);
+  // 中文：询价项目/数据备份是独立侧栏入口，激活后应保持唯一高亮，直到切换其他导航。
+  // English: Action drawers retain the single selected nav highlight until switching views.
+  let selectedAction=null;
   function sync(){
     const current=document.querySelector(".ui-workNav .tab.active")?.dataset.tab||
       document.querySelector(".tab.active")?.dataset.tab||"items";
-    buttons.forEach(el=>{
-      if(el.dataset.srmV2Tab===current)el.setAttribute("aria-current","page");
+    const active=selectedAction?
+      allNav.find(el=>el.dataset.srmV2Action===selectedAction):
+      buttons.find(el=>el.dataset.srmV2Tab===current);
+    allNav.forEach(el=>{
+      if(el===active)el.setAttribute("aria-current","page");
       else el.removeAttribute("aria-current");
     });
   }
+  function selectAction(name){selectedAction=name;sync()}
   buttons.forEach(el=>el.addEventListener("click",()=>{
+    selectedAction=null;
     const target=original(el.dataset.srmV2Tab);
-    if(target){target.click();sync();}
+    if(target)target.click();
+    sync();
   }));
-  document.querySelectorAll(".tab").forEach(el=>el.addEventListener("click",sync));
+  // 中文：原有顶栏和业务步骤导航仍能取消工具入口高亮。
+  // English: Native stage tabs clear transient drawer selection.
+  document.querySelectorAll(".tab").forEach(el=>el.addEventListener("click",()=>{
+    selectedAction=null;sync();
+  }));
   document.querySelector('[data-srm-v2-action="project"]')?.addEventListener("click",()=>{
     document.getElementById("uiProjectJump")?.click();
+    selectAction("project");
   });
   document.querySelector('[data-srm-v2-action="admin"]')?.addEventListener("click",()=>{
     document.getElementById("uiAdminToggle")?.click();
+    selectAction("admin");
   });
+  // 中文：顶部快捷入口与侧栏同步；收起抽屉时恢复底层业务页面高亮。
+  // English: Header shortcuts share nav state; closing an action drawer restores the active stage.
+  document.getElementById("uiProjectJump")?.addEventListener("click",()=>selectAction("project"));
+  document.getElementById("uiAdminToggle")?.addEventListener("click",()=>selectAction("admin"));
+  for(const [action,id] of [["project","uiProjectDetails"],["admin","uiDataTools"]]){
+    document.getElementById(id)?.addEventListener("toggle",event=>{
+      if(!event.currentTarget.open&&selectedAction===action){selectedAction=null;sync();}
+    });
+  }
 
   // 中文：保存反馈只有当前 RFQ 摘要常驻，技术详细信息继续由 #srmUxStatusDetails 展开读取。
   // English: Keep one live RFQ save indicator; leave raw autosave/conflict details in their existing disclosure.
