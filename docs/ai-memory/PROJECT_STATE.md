@@ -1,6 +1,6 @@
 # SRM_System PROJECT_STATE / 项目当前有效状态
 
-> 核实日期 / Checked: 2026-10-23. Current state reconciled with actual GitHub refs, Codex #50 evidence and user's approval of temporary option A; not continuous monitoring.
+> 核实日期 / Checked: 2026-10-26. Current state reconciled with actual GitHub refs, Codex #50 evidence and user's approval of temporary option A; not continuous monitoring.
 > 此文件由已合并的 PR #47 初始化到 M1 开发基线；本次续开发状态更新在单独的 Draft 文档 PR 中，合并前不属于开发基线。
 
 ## Goal / 产品目标
@@ -18,7 +18,7 @@
 | M1 开发基线 / Development | draft/20261013-m1-storage-ui-audit @ \`b0629a06a7ab2880fc86427e26a953d722487a57\` | M1 Lite, SQLite, ERP core fields, V3.1, S4 and merged #47 memory |
 | 已批准 UI 设计 / Design | [#44](https://github.com/yudacheng666/SRM_System/pull/44) Draft @ \`8e643520\` | Architecture and acceptance matrix only, not product code |
 | 并行历史候选 / Alternate | [#45](https://github.com/yudacheng666/SRM_System/pull/45) Draft @ \`4480482c5bbb280257c06aa44889706705663280\` | Two CI SUCCESS on that SHA, **not** evidence for #46 |
-| 当前 UI 产品候选 / Active UI | [#46](https://github.com/yudacheng666/SRM_System/pull/46) Draft @ `2dbde578165de720fed290cddbfef0a34e99f032` | Exact-SHA Codex Cloud **103 automated PASS + 8 independent P2/P3 PASS**; GitHub Actions no-runner, Windows native 3 NOT TESTED; not merged |
+| 当前 UI 产品候选 / Active UI | [#46](https://github.com/yudacheng666/SRM_System/pull/46) Draft @ `ec1bb8a4ce767904909d982db36d5768a180d4ce` | Windows buyer feedback four-point Chinese UI and editable RFQ title implemented; **JS syntax PASS ONLY, exact current-SHA real regression PENDING**; former 103+8 PASS applies to prior `2dbde57`, not new head; not merged |
 | 项目记忆 / Memory | [#47](https://github.com/yudacheng666/SRM_System/pull/47), merged 2026-10-22 | AGENTS.md + PROJECT_STATE + DECISIONS + original session now on M1 dev, not main |
 
 ## Validated development history / 已核实开发和证据
@@ -48,6 +48,15 @@
 - [ChatGPT evidence review comment PR #46](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6342862031) accepts the **scoped** fix verification as PASS, not as release readiness. Original c2737f0 evidence and two earlier defects remain in old PR #50 directories without being rewritten.
   已提交两项修复，但旧版的 102 PASS / 12 PASS 不得套用到新 SHA。
 
+
+## 2026-10-26 buyer pilot feedback / Windows 试用四处反馈
+
+- User annotated four issues in the locally running older UI: top S4/SQLite technical message incomprehensible to buyer, opaque `RFQ-179...-...` identity repeatedly raised, unnecessary English `Current RFQ` and `PURCHASING WORKSPACE`. This is **actual user visual feedback**; no inference of business quote data from screenshots.
+- ChatGPT implemented [PR #46 new head `ec1bb8a4`](https://github.com/yudacheng666/SRM_System/commit/ec1bb8a4ce767904909d982db36d5768a180d4ce): simple Chinese status text and labels, optional editable `state.projectName` for buyer-facing current/history display; immutable `workspaceId` retained for SQLite, revisions, supplier files, quotation and PDF bindings and only shown in technical detail. New Python list-index/history and Playwright rename/reload checks; updated two outdated UI assertions that required `RFQ-` visible.
+- The HTML inline JS and affected E2E JS passed static V8 syntax; **no actual new-head Python/Node/Chromium/Windows acceptance has run**. Prior [PR #50 evidence 103 + 8 PASS](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6341985654) is for **`2dbde57` only**; it remains valid history, cannot be relabeled as current-head PASS. [PR #46 test-only instruction](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6406983737) requests an exact `ec1bb8a4` isolated Codex rerun and new independent business-title/legacy-backup verification.
+- GitHub Actions runner/account restriction and native Windows three NOT TESTED remain; locally running user's application is not automatically upgraded by GitHub commits. Under approved [D-022](DECISIONS.md) development alternative, reverify cloud suites for the changed SHA, then native Windows and separate user authorization before any merge. [D-023](DECISIONS.md) records buyer-friendly Chinese naming/copy rule; no backend ID migration.
+  新提交仅静态检查通过；不要把旧版全绿报告套用到新版本。
+
 ## CI blocker / 自动化阻断
 
 - Exact PR #46 HEAD \`c2737f0\` triggered [S3/S4 run 39743002740](https://github.com/yudacheng666/SRM_System/actions/runs/39743002740) and [UI run 39743002722](https://github.com/yudacheng666/SRM_System/actions/runs/39743002722); both concluded FAILURE **before test execution**.
@@ -70,9 +79,9 @@
 
 ## Open gates / 后续门槛
 
-1. **Next immediate blocker for option A:** real Windows isolated trial for PR #46 exact SHA `2dbde57`: native Python3.13 tests, Node22 business tests, PowerShell/BAT launcher static checks, actual localhost start + isolated SQLite, supplier ZIP/PDF and S4 safety; record exact environment/SHA/logs and PASS/FAIL/NOT TESTED in PR #46. Never touch real purchase records. If only Python3.15 is available, do not claim equivalence to requested 3.13.
+1. **New exact-HEAD gate before Windows acceptance:** PR #46 `ec1bb8a4` edits buyer-facing name persistence plus backend history index. Codex Cloud reruns complete Python/Node/Chromium and focused rename/switch/legacy restore test on this exact SHA; old 103+8 evidence applies to `2dbde57` only. Then native Windows isolated trial (Python3.13, Node22, PowerShell/BAT, localhost SQLite/S4 and suppliers). Use only synthetic data; Python3.15 cannot substitute for an explicit 3.13 compatibility claim.
 2. New 2dbde57 push triggered [UI 39766115997](https://github.com/yudacheng666/SRM_System/actions/runs/39766115997) and [S3-S4 39766115887](https://github.com/yudacheng666/SRM_System/actions/runs/39766115887); four jobs again steps=[] / no runner. In November, first inspect account billing/limit, then rerun exact new HEAD on actual Actions runners.
-3. Codex Cloud full local suites and scoped buyer UAT on `2dbde57` are complete (103 + 8 PASS). Under D-022 no further identical cloud rerun is required; when native Windows checks also PASS, prepare **M1 development merge recommendation only**, subject to separate owner approval and any enforced GitHub required checks. Final exact-head official Actions remains pending; `main` promotion requires distinct decision.
+3. Codex Cloud full local suites and scoped buyer UAT on **old** `2dbde57` are complete (103 + 8 PASS). For current `ec1bb8a4` the exact-sha suites and changed-name scope must be rerun (code now changed). Once new-head evidence + native Windows checks PASS, prepare M1 development merge recommendation only, subject to owner's separate approval and enforced GitHub checks. No `main` promotion.
 4. Reconcile #45/#46 duplication, collect buyer feedback, and ask owner for explicit permission before any merge to M1/main. Main stays M0 until approved.
 5. Update canonical memory after each substantial new code/CI/UAT/decision milestone through authorized docs-only PRs; do not overwrite this unmerged checkpoint concurrently.
 
