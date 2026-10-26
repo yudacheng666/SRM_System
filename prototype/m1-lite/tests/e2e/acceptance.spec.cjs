@@ -144,6 +144,7 @@ test('01 startup, demo isolation, autosave, navigation and restart / 启动与�
   await page.reload(); await expect(page.locator('#itemCount')).toContainText('12');
   await expect.poll(async () => (await (await fetch(baseURL+'/api/backups/auto/status')).json()).retained).toBe(1);
   const revision=(await snapshot(page)).revision;
+  await tab(page,'items');
   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();
   await tab(page,'assign'); await page.locator('#assignStateFilter').selectOption({index:1});
   await page.locator('#runAssignSearch').click(); await tab(page,'items');
@@ -234,7 +235,7 @@ with zipfile.ZipFile(sys.argv[1]) as z:
 
 test('05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包', async ({page,app},info)=>{
   await allocated(page,app); await drawings(page,app); await page.reload();
-  await expect(page.locator('#pilotModeBadge')).toContainText('正式');
+  await expect(page.locator('#pilotModeBadge')).toContainText('本机工作模式');
   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();
   await page.locator('#itemBody [data-drawing]').filter({hasText:'PDF'}).first().click();
   await expect(page.locator('#drawingLarge iframe')).toBeVisible();
@@ -281,7 +282,7 @@ test('06 full backup restore: actual imported quotes, history, PDFs, overwrite r
     await other.goto('http://127.0.0.1:8766'); await expect(other.locator('#pilotNewWorkspace')).toBeEnabled();
     await openTools(other,'#uiDataTools');
     await other.locator('#pilotS4BackupFile').setInputFiles(file); await other.locator('#pilotS4RestoreFull').click();
-    await expect(other.locator('#pilotModeBadge')).toContainText('正式');
+    await expect(other.locator('#pilotModeBadge')).toContainText('本机工作模式');
     expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toEqual(index);
     for(const [id,versions] of Object.entries(originals)) for(const w of versions) expect((await (await fetch('http://127.0.0.1:8766/api/workspaces/'+id+'?revision='+w.revision)).json()).workspace).toEqual(w);
     for(const item of ws.state.items) for(const pdf of item.drawings||[]) {
@@ -302,7 +303,7 @@ test('06 full backup restore: actual imported quotes, history, PDFs, overwrite r
 test('07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败', async ({page,app,browser})=>{
   await fresh(page); const stale=await browser.newPage();stale.on('dialog',d=>d.accept());
   try {
-    await stale.goto(baseURL);await expect(stale.locator('#pilotModeBadge')).toContainText('正式');
+    await stale.goto(baseURL);await expect(stale.locator('#pilotModeBadge')).toContainText('本机工作模式');
     await openTools(stale,'#uiSupplierTools'); await openTools(page,'#uiSupplierTools');
     await items(page,app);await save(page);const good=await snapshot(page);
     await stale.locator('#pilotCounterpartyCode').fill('CP-STALE');await stale.locator('#pilotSupplierName').fill('虚构旧标签');await stale.locator('#pilotAddSupplier').click();
@@ -439,13 +440,17 @@ test('12 supplier status and report context reset on RFQ change / 保存提示�
   await downloadWait;
   await expect(page.locator('#pilotReportHint')).toContainText('已发起供应商询价');
   await fresh(page);
+  await openTools(page,'#uiDataTools');
   await expect(page.locator('#pilotReportPanel')).toBeVisible();
   await expect(page.locator('#pilotReportSupplier option')).toHaveCount(0);
   await expect(page.locator('#pilotReportSupplierGroup')).toBeEmpty();
   await expect(page.locator('#pilotReportHint')).not.toContainText('已发起');
   await expect(page.locator('#pilotSupplierExcelStatus')).toContainText('仅针对当前询价');
-  await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
+  // 中文：项目操作现为固定首页，导出面板归独立管理页。
+  // English: Project is a permanent stage and report tools have their own admin page.
+  await expect(page.locator('#backup')).toBeVisible();
   await page.locator('#uiProjectJump').click();
+  await expect(page.locator('#project')).toBeVisible();
   await expect(page.locator('#uiProjectDetails')).toHaveAttribute('open','');
 });
 
@@ -455,7 +460,8 @@ test('13 compact laptop item table after import / 1366首屏物料可见',async 
   await page.setViewportSize({width:1366,height:768});
   await fresh(page);
   await items(page,app);
-  await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
+  await expect(page.locator('#project')).not.toBeVisible();
+  await expect(page.locator('#items')).toBeVisible();
   await expect(page.locator('#itemIntake')).not.toBeVisible();
   async function checkFirstRow(label) {
     await page.evaluate(() => window.scrollTo({top:0,behavior:'instant'}));
@@ -605,12 +611,11 @@ test('44 S4 blocked-download reason stays visible beside the action / 备份阻�
   await page.locator('#pilotAddSupplier').click();
   await expect.poll(async()=>(await snapshot(page)).state.suppliers.some(x=>x.id==='VIRTUAL-S44')).toBe(true);
   await expect.poll(()=>page.evaluate(()=>window.SRMPilot.dirty())).toBe(true);
-  // 中文：按 Codex P3-S4-01 原场景：项目操作区收起，页面滚动至备份按钮。
-  // English: Keep the project drawer collapsed and require a real warning beside disabled S4.
+  // 中文：备份位于独立管理页面，不折叠项目首页以访问危险恢复操作。
+  // English: Enter the dedicated admin panel; the project stage stays independently available.
   await openTools(page,'#uiDataTools');
-  const projectDrawer=page.locator('#uiProjectDetails');
-  if(await projectDrawer.evaluate(node=>node.open)) await projectDrawer.locator(':scope > summary').click();
-  await expect(projectDrawer).not.toHaveAttribute('open','');
+  await expect(page.locator('#backup')).toBeVisible();
+  await expect(page.locator('#project')).not.toBeVisible();
   const button=page.locator('#pilotS4DownloadFull');
   await button.scrollIntoViewIfNeeded();
   // 中文：dirty 时禁用 S4 是安全闸门；应被动显示可见原因，禁止假装点击禁用按钮。
@@ -692,8 +697,11 @@ test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与�
   expect(dialogs[0]).not.toContain('未保存修改');
   expect((await snapshot(page)).state).toEqual(before.state);
 
-  // 中文：在供应商视角真正撤销一条已分配的业务关联，再检验未保存保护。
-  // English: Uncheck a genuinely persisted allocation to exercise the real dirty guard.
+  // 中文：已切到项目首页检查新建确认；返回分配页再执行真实业务修改。
+  // English: Re-enter the supplier allocation stage before editing its visible checkbox.
+  await tab(page,'assign');
+  await page.locator('[data-mode="supplierFirst"]').click();
+  await page.locator('[data-sf-s="SUP-B"]').click();
   const allocatedBox=page.locator('#sfItemBody input[data-sfi]').first();
   await expect(allocatedBox).toBeChecked();
   await allocatedBox.uncheck();
@@ -707,6 +715,7 @@ test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与�
   });
   expect(guard).toContain('未保存的修改');
   expect(dialogs).toHaveLength(1);
+  await openProject(page);
   await page.locator('#pilotNewWorkspace').click();
   expect(dialogs).toHaveLength(2);
   expect(dialogs[1]).toContain('未保存修改');
