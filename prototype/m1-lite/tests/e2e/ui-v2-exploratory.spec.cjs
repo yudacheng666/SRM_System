@@ -158,12 +158,31 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
   await expect(page.locator('#items')).toHaveClass(/active/);
   const outline=await page.locator('.srm-v2-sideitem[data-srm-v2-tab="items"]').evaluate(el=>getComputedStyle(el).outlineStyle);
   expect(outline).not.toBe('none');
-  // 中文：项目/备份入口应打开原有工具抽屉，不能隐藏业务入口。
-  // English: Project and backup sidebar actions must reveal original management controls.
-  await page.locator('[data-srm-v2-action="project"]').click();
+  // 中文：询价项目/数据备份入口需独占侧栏高亮，点击其他导航项才切换。
+  // English: Action drawers must keep one exclusive sidebar selection until navigating away.
+  const projectNav=page.locator('[data-srm-v2-action="project"]');
+  const adminNav=page.locator('[data-srm-v2-action="admin"]');
+  const itemsNav=page.locator('.srm-v2-sideitem[data-srm-v2-tab="items"]');
+  await projectNav.click();
   await expect(page.locator('#uiProjectDetails')).toHaveAttribute('open','');
-  await page.locator('[data-srm-v2-action="admin"]').click();
+  await expect(projectNav).toHaveAttribute('aria-current','page');
+  await expect(itemsNav).not.toHaveAttribute('aria-current','page');
+  await page.locator('#uiProjectJump').click();
+  await expect(projectNav).toHaveAttribute('aria-current','page');
+  await adminNav.click();
   await expect(page.locator('#uiDataTools')).toHaveAttribute('open','');
+  await expect(adminNav).toHaveAttribute('aria-current','page');
+  await expect(projectNav).not.toHaveAttribute('aria-current','page');
+  await itemsNav.click();
+  await expect(itemsNav).toHaveAttribute('aria-current','page');
+  await expect(adminNav).not.toHaveAttribute('aria-current','page');
+  await projectNav.click();
+  await expect(projectNav).toHaveAttribute('aria-current','page');
+  await page.locator('#uiProjectDetails > summary').click();
+  await expect(projectNav).not.toHaveAttribute('aria-current','page');
+  await expect(itemsNav).toHaveAttribute('aria-current','page');
+  // 中文：导航高亮不应改变当前采购业务快照。
+  // English: Sidebar visual routing must not mutate persisted RFQ data.
   expect(errors).toEqual([]);
   const report=info.outputPath('exploratory-layout-'+size.width+'.json');
   fs.writeFileSync(report,JSON.stringify({viewport:size,measurements,errors},null,2));
