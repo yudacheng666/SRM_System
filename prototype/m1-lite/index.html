@@ -1429,6 +1429,25 @@ body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps span{font-size:12px;font-we
  body.srm-v2 .ui-contextRight{max-width:220px}
 }
 </style>
+<style id="srm-ux-compact-list-rows">
+/* 中文：业务列表正文统一紧凑密度，表头/导入表及可编辑控件不强行压缩。
+ * English: Consistent compact density across list bodies, without removing fields or changing form sizes. */
+body.srm-v2 .panel .table tbody > tr > td{padding:3px 8px;line-height:1.25;vertical-align:middle}
+body.srm-v2 #assign .table tbody > tr > td,
+body.srm-v2 #quoteImport .table tbody > tr > td,
+body.srm-v2 #quotes .table tbody > tr > td{padding:3px 8px;line-height:1.25;vertical-align:middle}
+body.srm-v2 #items #itemBody td{padding:3px 8px;line-height:1.25;vertical-align:middle}
+body.srm-v2 .panel .table tbody .drawingThumb{width:42px;height:25px;min-width:42px;padding:2px;font-size:11px;line-height:1;white-space:nowrap}
+body.srm-v2 .panel .table tbody .drawingThumb--missing{color:#9e423a;background:#fff8f7;border-color:#e7c9c5;font-weight:650}
+body.srm-v2 .panel .table tbody .srm-ux-inlineMaterial{display:flex;align-items:center;gap:7px;min-width:0;max-width:100%;white-space:nowrap}
+body.srm-v2 .panel .table tbody .srm-ux-materialSummary{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
+body.srm-v2 #assign .tablewrap:has(#assignItemBody) .table{table-layout:fixed;width:100%}
+body.srm-v2 #assign .tablewrap:has(#assignItemBody) .table th:first-child{width:38px}
+body.srm-v2 #assign .tablewrap:has(#assignItemBody) .table th:nth-child(2){width:58%}
+body.srm-v2 #assign .tablewrap:has(#assignItemBody) .table th:nth-child(3){width:16%}
+body.srm-v2 #assign #assignItemBody td:nth-child(2){overflow:hidden}
+body.srm-v2 #assign #assignItemBody tr{height:auto}
+</style>
 </head>
 <body class="srm-v2">
 <div class="app">
@@ -3284,14 +3303,13 @@ function drawingSvg(it,doc,page,scale=1){
   return `<svg viewBox="0 0 760 500" style="width:${Math.round(760*scale)}px" xmlns="http://www.w3.org/2000/svg" aria-label="${esc(it.id)} PDF page ${page}"><rect x="70" y="110" width="620" height="280" rx="28" fill="none" stroke="#334155" stroke-width="8"/>${hs}<path d="M110 165 H650 M110 335 H650" stroke="#94a3b8" stroke-width="4" stroke-dasharray="12 10"/><path d="M380 80 V420" stroke="#94a3b8" stroke-width="3" stroke-dasharray="10 9"/><text x="90" y="70" font-size="30" fill="#0f172a">${esc(it.id)} · PDF</text><text x="90" y="455" font-size="23" fill="#64748b">${esc(doc.name)} · 第 ${page}/${doc.pages} 页 · Rev ${esc(doc.revision)}</text></svg>`;
 }
 function itemCell(it){
-  const docs=drawingDocsForItem(it);
-  if(window.SRMPilot?.isBuyer()){
-   const state=it.drawingStatus==="not_required"?"无需图纸":it.drawingStatus==="pending"?"版本待确认":docs.length?docs.length+"份真实 PDF":"缺图纸";
-   return '<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="'+esc(it.lineId)+'" title="打开真实 PDF">PDF</button><div><b>'+esc(it.id)+'</b><div class="pdfMeta">'+esc(it.lineId)+' · '+state+'</div><div class="small" style="max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="规格型号：'+esc(it.spec||"未填写")+'">规格：'+esc(it.spec||"未填写")+'</div></div></div>';
-  }
-  if(!docs.length)return `<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="${it.lineId}" title="无图纸">PDF?</button><div><b>${it.id}</b><div class="pdfMeta">${it.lineId} · 缺图纸</div></div></div>`;
-  const d=docs[0];
-  return `<div class="itemWithDrawing"><button class="drawingThumb" data-drawing="${it.lineId}" title="预览 PDF">${drawingSvg(it,d,1,.18)}</button><div><b>${it.id}</b><div class="pdfMeta">${it.lineId} · PDF ${d.pages}页${docs.length>1?" · "+docs.length+"个文件":""}</div></div></div>`;
+  // 中文：分配/报价/比价列表共用与物料页一致的图纸状态，编码/名称/规格保持单行。
+  // English: Reuse the real drawing badge and show material identity in one compact, inspectable line.
+  const detail=[it.lineId,it.id,it.name,it.spec].filter(Boolean).join(" · ");
+  const spec=it.spec?" · "+esc(it.spec):"";
+  return '<div class="itemWithDrawing srm-ux-inlineMaterial">'+itemDrawingCell(it)+
+    '<span class="srm-ux-materialSummary" title="'+esc(detail)+'"><b>'+esc(it.id)+'</b>'+
+    ' · '+esc(it.name)+spec+'</span></div>';
 }
 function bindDrawingThumbs(){document.querySelectorAll("[data-drawing]").forEach(b=>b.onclick=e=>{e.stopPropagation();openDrawing(b.dataset.drawing)})}
 /** 中文：物料双击编辑只以稳定 RFQ Line ID 定位；已有任何报价行或确认范围时禁止覆盖。
@@ -4433,7 +4451,7 @@ function renderStats(){const c=coverage();stTotal.textContent=items.length;stCov
 function renderAssignItems(){
   const list=filteredItems("assignItemSearch","assignCatFilter","assignStateFilter"), pages=Math.max(1,Math.ceil(list.length/PAGE));assignPage=Math.min(assignPage,pages-1);
   const slice=list.slice(assignPage*PAGE,assignPage*PAGE+PAGE);
-  assignItemBody.innerHTML=slice.map(it=>{const names=[...getSet(it.lineId)].slice(0,3).map(sid=>suppliers.find(s=>s.id===sid)?.name).filter(Boolean);return `<tr><td><input type="checkbox" data-ai="${it.lineId}" ${assignSel.has(it.lineId)?"checked":""}></td><td>${itemCell(it)}<span class="muted small">${it.name}</span></td><td>${it.cat}</td><td>${names.length?names.map(n=>`<span class="chip">${n}</span>`).join(" "):'<span class="dangertext">未分配</span>'}</td></tr>`}).join("");
+  assignItemBody.innerHTML=slice.map(it=>{const names=[...getSet(it.lineId)].slice(0,3).map(sid=>suppliers.find(s=>s.id===sid)?.name).filter(Boolean);return `<tr><td><input type="checkbox" data-ai="${it.lineId}" ${assignSel.has(it.lineId)?"checked":""}></td><td>${itemCell(it)}</td><td>${it.cat}</td><td>${names.length?names.map(n=>`<span class="chip">${n}</span>`).join(" "):'<span class="dangertext">未分配</span>'}</td></tr>`}).join("");
   bindDrawingThumbs();
   bindShiftRange("#assignItemBody input[data-ai]","assign-items","ai",(id,checked)=>checked?assignSel.add(id):assignSel.delete(id),()=>{renderAssignItems();renderSuppliers()});
   assignSelectedCount.textContent=assignSel.size;
@@ -4546,7 +4564,7 @@ function renderSfItems(){
   sfItemBody.innerHTML=slice.map(it=>{
     const linked=[...getSet(it.lineId)].map(id=>suppliers.find(s=>s.id===id)?.name||id);
     const selected=getSet(it.lineId).has(activeSupplier);
-    return `<tr><td><label class="srm-v31-relationCheck"><input type="checkbox" data-sfi="${esc(it.lineId)}" ${selected?"checked":""}><span class="srm-v31-relation ${selected?"linked":"unlinked"}">${selected?"已关联":"未关联"}</span></label></td><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>${esc(String(it.qty))} ${esc(it.unit||"")}</td><td>${esc(it.cat||"—")}</td><td><span class="srm-v31-allSuppliers">${linked.length?esc(linked.join("、")):"尚未分配"}</span></td></tr>`;
+    return `<tr><td><label class="srm-v31-relationCheck"><input type="checkbox" data-sfi="${esc(it.lineId)}" ${selected?"checked":""}><span class="srm-v31-relation ${selected?"linked":"unlinked"}">${selected?"已关联":"未关联"}</span></label></td><td>${itemCell(it)}</td><td>${esc(String(it.qty))} ${esc(it.unit||"")}</td><td>${esc(it.cat||"—")}</td><td><span class="srm-v31-allSuppliers">${linked.length?esc(linked.join("、")):"尚未分配"}</span></td></tr>`;
   }).join("");
   bindDrawingThumbs();
   bindShiftRange("#sfItemBody input[data-sfi]","supplier-items","sfi",(id,checked)=>{const set=getSet(id);checked?set.add(activeSupplier):set.delete(activeSupplier)},renderAssignAll,(ids,checked)=>guardMutableLines(ids.filter(id=>getSet(id).has(activeSupplier)!==checked),"修改供应商物料关联"));
@@ -4919,7 +4937,7 @@ function renderQuotes(){
     const terms=supplierSubmissions(s.id).filter(r=>r.status==="confirmed").sort((a,b)=>b.roundNo-a.roundNo||b.revisionNo-a.revisionNo)[0]?.termsNote||"";
     return `<th>${esc(s.name)}${terms?`<div class="small warn" title="${esc(terms)}">本轮商务备注：${esc(terms.slice(0,90))}${terms.length>90?"…":""}</div>`:""}<br><button class="btn headerPick" data-pickall="${s.id}">选择全部适用</button></th>`;
   }).join("")+`<th>系统建议 / 人工决定</th></tr></thead><tbody>`;
-  slice.forEach(it=>{const i=indexByLine.get(it.lineId),vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr data-srm-ux-pending="${needsDecision(it)}"><td>${itemCell(it)}<span class="muted small">${esc(it.name)}</span></td><td>${window.SRMPilot?.isBuyer()?"—":"¥"+prev}<span class="small muted">（${window.SRMPilot?.isBuyer()?"未接入":"虚构"}）</span></td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=v!=null&&vals.length&&Math.abs(v-vals[0].v)<=QUOTE_PRICE_TIE_EPSILON?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell ":""}${v!=null?"awardSelectable":""}" ${v!=null?`data-award="${esc(it.lineId+"|"+s.id)}" tabindex="0" role="button" aria-label="选择此供应商报价"`:""}>${v==null?'<span class="muted">'+esc(quoteUnpricedStateLabel(it,s))+'</span>':`<button class="btn quotePrice ${cls}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>${meta.rawLine?.remark?`<div class="small warn">物料备注：${esc(meta.rawLine.remark)}</div>`:""}`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?(manualAwards.has(it.lineId)?'<span class="srm-v31-decision manual">采购员已选择</span>':'<span class="srm-v31-decision suggested">系统建议 · 待人工确认</span>')+'<br>'+esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;srmUxFormatComparisonCells();bindDrawingThumbs();quoteCount.textContent=onlyPending?`待决定 ${its.length} 项（全部 ${allItems.length} 项） · 第 ${quotePage+1}/${pages} 页`:`共 ${allItems.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("#quoteTable td[data-award]").forEach(cell=>{
+  slice.forEach(it=>{const i=indexByLine.get(it.lineId),vals=sups.map((s,si)=>({sid:s.id,v:quoteMetaFor(it,s,i,si)?.price??null})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v),low=vals[0]?.sid,second=vals[1]?.sid,prev=(95+((i*11)%50)).toFixed(2);h+=`<tr data-srm-ux-pending="${needsDecision(it)}"><td>${itemCell(it)}</td><td>${window.SRMPilot?.isBuyer()?"—":"¥"+prev}<span class="small muted">（${window.SRMPilot?.isBuyer()?"未接入":"虚构"}）</span></td>`;sups.forEach((s,si)=>{const meta=quoteMetaFor(it,s,i,si),v=meta?.price??null,cls=v!=null&&vals.length&&Math.abs(v-vals[0].v)<=QUOTE_PRICE_TIE_EPSILON?"low":s.id===second?"second":"",selected=awards.get(it.lineId)===s.id,roundInfo=meta?.roundNo?` · 第${meta.roundNo}轮/第${meta.revisionNo}版${meta.source==="carry"?"(沿用)":""}`:"",tierInfo=meta?.tiers?.length?` · 阶梯${meta.tiers.length}档`:"";h+=`<td class="${selected?"selectedCell ":""}${v!=null?"awardSelectable":""}" ${v!=null?`data-award="${esc(it.lineId+"|"+s.id)}" tabindex="0" role="button" aria-label="选择此供应商报价"`:""}>${v==null?'<span class="muted">'+esc(quoteUnpricedStateLabel(it,s))+'</span>':`<button class="btn quotePrice ${cls}">¥${Number(v).toFixed(2)}</button><br><span class="small muted">数量 ${it.qty} · 交期 ${meta.lead??"—"} 天 · MOQ ${meta.moq??"—"}${roundInfo}${tierInfo}</span>${meta.rawLine?.remark?`<div class="small warn">物料备注：${esc(meta.rawLine.remark)}</div>`:""}`}</td>`});const win=awards.get(it.lineId),r=awardReasons.get(it.lineId),needsReview=awardReviewIds.has(it.lineId);h+=`<td>${win?(manualAwards.has(it.lineId)?'<span class="srm-v31-decision manual">采购员已选择</span>':'<span class="srm-v31-decision suggested">系统建议 · 待人工确认</span>')+'<br>'+esc(suppliers.find(s=>s.id===win)?.name||win)+(r?`<br><span class="reasonTag">${esc(r)}</span>`:"")+(needsReview?'<br><span class="dangertext">新报价后需重新复核，暂不计入最终选择总额</span>':""):'<span class="muted">未选择</span>'}</td></tr>`});h+="</tbody>";quoteTable.innerHTML=h;srmUxFormatComparisonCells();bindDrawingThumbs();quoteCount.textContent=onlyPending?`待决定 ${its.length} 项（全部 ${allItems.length} 项） · 第 ${quotePage+1}/${pages} 页`:`共 ${allItems.length} 项 · 第 ${quotePage+1}/${pages} 页`;renderPageNav(quotePager,quotePage,its.length,QUOTE_PAGE,p=>{quotePage=p;renderQuotes()});document.querySelectorAll("#quoteTable td[data-award]").forEach(cell=>{
     cell.onclick=()=>{const [lineId,sid]=cell.dataset.award.split("|");chooseAward(lineId,sid)};
     cell.onkeydown=e=>{if(e.target===cell&&(e.key==="Enter"||e.key===" ")){e.preventDefault();cell.click()}};
   });document.querySelectorAll("[data-pickall]").forEach(b=>b.onclick=()=>{const sid=b.dataset.pickall,sup=sups.find(s=>s.id===sid),si=sups.indexOf(sup),eligible=its.filter(it=>quoteMetaFor(it,sup,indexByLine.get(it.lineId),si)?.price!=null);requestAwardSelection(eligible.map(it=>it.lineId),sid)});renderQuoteAnalysis();renderV31DecisionBoard(sups,allItems);
