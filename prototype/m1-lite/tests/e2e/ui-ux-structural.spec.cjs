@@ -305,3 +305,26 @@ test('UX admin: backup page separate from RFQ, concise labels / 独立备份页�
   await expect(page.locator('[data-srm-v2-tab="project"]')).toHaveAttribute('aria-current','page');
   expect(errors).toEqual([]);
 });
+
+
+// 中文：物料明细需接近导入预览的紧凑行距，缺图纸直接写在原按钮中，不重复占一整行。
+// English: Detail rows are compact, and missing drawings replace PDF in the original action itself.
+test('UX item rows: single-line drawing badge and compact row / 物料行高及缺图纸标识',async({page,app})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await prepare(page,app);
+  await page.locator('.ui-workNav .tab[data-tab="items"]').click();
+  const rows=page.locator('#itemBody tr[data-edit-line]');
+  await expect(rows).toHaveCount(12);
+  const missing=page.locator('#itemBody .drawingThumb--missing');
+  await expect(missing).toHaveCount(12);
+  await expect(missing.first()).toHaveText('缺图纸');
+  await expect(missing.first()).toHaveAttribute('data-drawing',/^RFQ-L/);
+  await expect(missing.first()).toHaveAttribute('title',/缺图纸/);
+  await expect(page.locator('#itemBody .pdfMeta')).toHaveCount(0);
+  const height=await rows.first().evaluate(el=>el.getBoundingClientRect().height);
+  expect(height).toBeLessThanOrEqual(40);
+  await expect(page.locator('#itemBody tr').first()).toContainText('TST-001');
+  await missing.first().click();
+  await expect(page.locator('#drawingModal')).toHaveClass(/open/);
+  expect(errors).toEqual([]);
+});
