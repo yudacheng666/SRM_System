@@ -33,7 +33,8 @@ const test=base.extend({
 });
 const status=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 const open=async(page,id)=>{
-  if(id==='#uiProjectDetails'||id==='#uiDataTools')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiProjectDetails')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiDataTools'||id==='#srmUxStatusDetails')await page.locator('#uiAdminToggle').click();
   if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
   const el=page.locator(id);
   if(!await el.evaluate(n=>n.open))await el.locator(':scope > summary').click();
