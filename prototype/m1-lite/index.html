@@ -197,6 +197,13 @@ body.srm-v2 .ui-context{
 body.srm-v2 .ui-context b{font-size:16px;color:#17263e}
 /* 中文：采购项目作为第一步独立页面，项目表单一直展开，不再以三列折叠入口悬浮在所有页面上方。
  * English: Project is a full workflow page, with permanently visible controls instead of global accordions. */
+body.srm-v2 .srm-ux-hiddenTab{display:none!important}
+body.srm-v2 #backup #uiDataTools{display:block;margin:0;border:1px solid #dfe7f1;background:#fff}
+body.srm-v2 #backup #uiDataTools>summary{display:none!important}
+body.srm-v2 #backup #uiDataTools>.ui-drawerBody{display:block;padding:14px 16px}
+body.srm-v2 #backup .ui-statusStrip{margin-bottom:16px}
+body.srm-v2 #backup .srm-ux-recoverRow{margin-top:18px;padding:12px;border-top:1px solid #dfe7f1;display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+body.srm-v2 #backup .srm-ux-recoverRow>span{color:#64748b;font-size:12px}
 body.srm-v2 #project #pilotControls{margin:0!important;border:1px solid #e1e8f2;background:#fff}
 body.srm-v2 #project #pilotControls>.cardbody,
 body.ui-buyer-mode #project #pilotControls>.cardbody{display:block;padding:16px 19px}
@@ -1448,6 +1455,7 @@ body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps span{font-size:12px;font-we
            English: One persistent save indicator remains in RFQ context, not mirrored in the header. -->
       <button type="button" class="btn ui-projectAction" id="uiProjectJump">询价项目</button>
       <button type="button" class="btn ui-projectAction" id="uiAdminToggle">数据与备份</button>
+      <button type="button" class="tab srm-ux-hiddenTab" data-tab="backup" id="uiBackupNavTab" aria-label="数据与备份页面" hidden tabindex="-1">数据与备份</button>
       <button type="button" class="tab" data-tab="settings" id="uiFieldSettings">字段设置</button>
     </div>
   </header>
@@ -1458,12 +1466,12 @@ body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps span{font-size:12px;font-we
   </div>
   <div class="notice" id="pilotNotice" style="margin:0 0 12px">演示模式不会保存；请新建空白正式询价后开始操作。</div>
 <div class="card" id="pilotControls" style="margin-bottom:14px">
-  <div class="ui-workspaceHead"><div><b>询价项目与数据操作</b><span class="muted">　项目切换、供应商管理和备份按需展开</span></div></div>
+  <div class="ui-workspaceHead"><div><b>询价项目</b><span class="muted">　新建、打开历史询价、保存</span></div></div>
   <div class="cardbody">
  <div class="toolbar" style="margin-bottom:8px">
-  <button type="button" class="btn primary" id="pilotNewWorkspace" disabled>新建空白正式工作</button>
-  <button type="button" class="btn soft" id="pilotSaveWorkspace" disabled>保存到本机</button>
-  <button type="button" class="btn" id="pilotResumeWorkspace" disabled>恢复当前已保存记录</button>
+  <button type="button" class="btn primary" id="pilotNewWorkspace" disabled>新建</button>
+  <button type="button" class="btn soft" id="pilotSaveWorkspace" disabled>保存</button>
+  <button type="button" class="btn" id="pilotResumeWorkspace" title="重新读取当前已保存的数据；不是恢复旧版本或备份。未保存修改会被放弃。" disabled>重新读取已保存数据</button>
   <label class="small">历史询价 <select id="pilotHistoryWorkspace" disabled aria-label="本机已保存的历史询价"></select></label>
   <button type="button" class="btn soft" id="pilotSwitchWorkspace" disabled>打开所选历史询价</button>
  </div>
@@ -1589,6 +1597,15 @@ body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps span{font-size:12px;font-we
       <button class="tab" data-tab="quotes" role="tab" aria-selected="false">⑤ 比价议价</button>
     </div>
   </nav>
+
+  <section id="backup" class="panel" aria-label="数据与备份">
+    <div class="ui-panelLead srm-v3-pageIntro" id="srmV3PageStage-backup">
+      <div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">管理工具</div>
+        <h2>数据与备份 <span>/ 备份与恢复</span></h2>
+        <p>在这里集中备份、恢复及管理业务单据，不影响询价项目的日常操作。</p>
+      </div>
+    </div>
+  </section>
 
   <section id="project" class="panel active" aria-label="询价项目">
     <div class="ui-panelLead srm-v3-pageIntro" id="srmV3PageStage-project">
@@ -5485,11 +5502,11 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     supplierBox.style.display=buyerMode?"flex":"none";
     document.getElementById("pilotDrawingPanel").style.display=buyerMode?"block":"none";
     badge.textContent=buyerMode?"本机工作模式":"本机演示模式（不保存）";
-    newBtn.textContent=buyerMode?"新建另一笔空白询价":"新建空白正式工作";
+    newBtn.textContent="新建";
     rfqHead.textContent=buyerMode?displayProjectName():"演示数据";
     renameBtn.hidden=!buyerMode||!nameInput.hidden;
     document.getElementById("pilotSubtitle").textContent=buyerMode?
-      "修改内容会自动保存到本机，也可以手动点击“保存到本机”。":
+      "修改内容会自动保存到本机，也可以点击“保存”。":
       "演示数据不会保存；新建询价后可保存到本机。";
     document.getElementById("pilotNotice").textContent=buyerMode?
       "数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。":
@@ -5924,7 +5941,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       if(saved){model.validate(saved);applyWorkspace(saved);status("已从 SQLite 自动恢复："+workspaceId+"（第 "+revision+" 版）。")}
       else{
         autosaveLabel("演示数据不会自动保存；请先新建正式询价");
-        status("SQLite 当前为空；点击“新建空白正式工作”开始使用。旧浏览器测试数据不迁移。");
+        status("当前没有保存的询价。点击“新建”开始使用。");
       }
       await refreshHistory();
       await refreshAutoBackupStatus();
@@ -6350,7 +6367,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   projectSummary.innerHTML='项目操作：新建 / 切换 / 手动保存 <span class="ui-projectStatus" id="uiProjectStatus">演示模式</span>';
   const projectBody=document.createElement("div");
   projectBody.className="ui-projectBody";
-  projectBody.append(project,statusStrip);
+  projectBody.append(project);
   projectDetails.append(projectSummary,projectBody);
   controls.prepend(projectDetails);
   projectDetails.open=true;
@@ -6394,10 +6411,22 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
         one("pilotReportPanel"),
         notes
       ]);
-  supplierTools.after(adminTools);
+  // 中文：备份功能整体搬到独立管理页，不复制按钮和原业务处理器。
+  // English: Existing live backup and export nodes move to the management page.
+  one("backup").append(adminTools);
+  adminTools.open=true;
   // 中文：业务报表与系统恢复分别成组，移动既有 DOM 而不复制功能或事件监听器。
   // English: Group business exports apart from data recovery while preserving live nodes and handlers.
   const adminBody=adminTools.querySelector(".ui-drawerBody");
+  // 中文：保存/内部编号技术详情与业务备份同页，避免占用项目第一页。
+  // English: Raw persistence diagnostics belong with administrative backup tooling.
+  adminBody.prepend(statusStrip);
+  const resumeAction=one("pilotResumeWorkspace");
+  const recoverRow=document.createElement("div");
+  recoverRow.className="srm-ux-recoverRow";
+  recoverRow.innerHTML='<strong>辅助操作</strong><span>“重新读取”会放弃本页尚未保存的修改；不是恢复旧版本或备份。</span>';
+  recoverRow.append(resumeAction);
+  adminBody.append(recoverRow);
   const backupTitle=document.createElement("div");
   backupTitle.className="srm-ux-admin-title";
   backupTitle.innerHTML="<strong>数据安全与恢复</strong><span>S4 完整备份 · 空数据恢复 · 兼容资料</span>";
@@ -6421,8 +6450,9 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
     one("srmV3PageStage-project").scrollIntoView({block:"start",behavior:"smooth"});
   });
   one("uiAdminToggle").addEventListener("click",()=>{
-    document.querySelector('.ui-workNav .tab[data-tab="project"]').click();
-    reveal("uiDataTools");
+    one("uiBackupNavTab").click();
+    adminTools.open=true;
+    one("srmV3PageStage-backup").scrollIntoView({block:"start",behavior:"smooth"});
   });
   one("uiProjectNextItems").addEventListener("click",()=>{
     document.querySelector('.ui-workNav .tab[data-tab="items"]').click();
@@ -6541,9 +6571,8 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   // 中文：项目顶部入口直接打开独立项目页；备份入口沿用抽屉与唯一导航高亮。
   // English: Header project shortcut opens the actual project panel; backup remains a managed drawer.
   document.getElementById("uiAdminToggle")?.addEventListener("click",()=>selectAction("admin"));
-  document.getElementById("uiDataTools")?.addEventListener("toggle",event=>{
-    if(!event.currentTarget.open&&selectedAction==="admin"){selectedAction=null;sync();}
-  });
+  // 中文：备份现在是独立页面；离开该页时导航高亮由原 tab 事件恢复。
+  // English: A real backup panel replaces the old backup drawer under project.
 
   // 中文：保存反馈只有当前 RFQ 摘要常驻，技术详细信息继续由 #srmUxStatusDetails 展开读取。
   // English: Keep one live RFQ save indicator; leave raw autosave/conflict details in their existing disclosure.
