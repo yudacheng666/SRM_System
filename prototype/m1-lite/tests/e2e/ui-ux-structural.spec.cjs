@@ -367,3 +367,38 @@ test('UX allocation: shared compact material list and missing drawing / 供应�
   await expect(page.locator('#drawingModal')).toHaveClass(/open/);
   expect(errors).toEqual([]);
 });
+
+
+// 中文：回归P3-UX09-01：真实报价列表价格/详情同行，保留展开的商务信息，首屏可达。
+ // English: Measure the actual quote matrix density, not just CSS declarations.
+test('UX09 exact 1366 comparison density and first-row reachability / 比价紧凑性复验',async({page,app})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.setViewportSize({width:1366,height:768});
+  await prepare(page,app);
+  await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\nTST-001,17.25,7,1,正常报价\nTST-002,23.75,9,1,正常报价');
+  await page.locator('#quoteParsePaste').click();
+  await expect(page.locator('#commitQuoteImport')).toBeEnabled();
+  await page.locator('#commitQuoteImport').click();
+  await page.locator('#confirmQuoteRound').click();
+  await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
+  await expect(page.locator('#quoteTable tbody tr').first()).toBeVisible();
+  await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+  const cells=page.locator('#quoteTable td.awardSelectable');
+  await expect(cells.first().locator('.quotePrice')).toBeVisible();
+  const row=page.locator('#quoteTable tbody tr').first();
+  const measure=await row.evaluate(el=>{
+    const cell=el.querySelector('td.awardSelectable');
+    const price=cell.querySelector('.quotePrice').getBoundingClientRect();
+    const detail=cell.querySelector('.srm-ux-bid-details summary').getBoundingClientRect();
+    const bounds=el.getBoundingClientRect();
+    return {height:bounds.height,top:bounds.top,viewport:window.innerHeight,
+      priceCenter:(price.top+price.bottom)/2,detailCenter:(detail.top+detail.bottom)/2};
+  });
+  expect(measure.height).toBeLessThanOrEqual(44);
+  expect(measure.top).toBeLessThan(measure.viewport);
+  expect(Math.abs(measure.priceCenter-measure.detailCenter)).toBeLessThanOrEqual(10);
+  await cells.first().locator('.srm-ux-bid-details summary').click();
+  await expect(cells.first().locator('.srm-ux-bid-details')).toHaveAttribute('open','');
+  await expect(cells.first().locator('.srm-ux-bid-details')).toContainText('数量');
+  expect(errors).toEqual([]);
+});
