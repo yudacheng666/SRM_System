@@ -214,7 +214,7 @@ test('UX manual-only: buyer-approved amount distinct from suggested totals / 人
 
 // 中文：编辑可读询价名称须真实保存、切换及重载后保留；底层工作空间身份不得改变。
 // English: Renaming a buyer RFQ persists to SQLite and history without mutating the immutable key.
-test('UX project title: Chinese label, rename, history and reload / 询价名称真实保存',async({page})=>{
+test('UX project title: Chinese label, rename, history and reload / 询价名称真实保存',async({page,app})=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await open(page,'#uiProjectDetails');
   await page.locator('#pilotNewWorkspace').click();
@@ -254,7 +254,7 @@ test('UX project title: Chinese label, rename, history and reload / 询价名称
 
 // 中文：项目必须是与物料/分配并列的采购第一步，非跨页面折叠工具条；不触碰业务数据。
 // English: Project is the permanent first workflow panel, with original controls and correct navigation.
-test('UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页',async({page})=>{
+test('UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页',async({page,app})=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   const stages=page.locator('.ui-workNav .tab');
   await expect(stages).toHaveCount(5);
@@ -283,7 +283,7 @@ test('UX project page: first workflow stage, visible controls, stage switching /
 
 // 中文：备份功能必须归独立管理页，项目首页只有新建/保存/切换等业务入口。
 // English: Backup and technical reload are in a separate admin panel, never beneath RFQ creation.
-test('UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮',async({page})=>{
+test('UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮',async({page,app})=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await expect(page.locator('#project')).toHaveClass(/active/);
   await expect(page.locator('#pilotNewWorkspace')).toHaveText('新建');
@@ -323,7 +323,9 @@ test('UX item rows: single-line drawing badge and compact row / 物料行高及�
   await expect(page.locator('#itemBody .pdfMeta')).toHaveCount(0);
   const height=await rows.first().evaluate(el=>el.getBoundingClientRect().height);
   expect(height).toBeLessThanOrEqual(40);
-  await expect(page.locator('#itemBody tr').first()).toContainText('TST-001');
+  // 中文：默认最新行排序，断言存在指定物料，不依赖固定第一行。
+  // English: Check material presence without assuming the first item is TST-001.
+  await expect(page.locator('#itemBody')).toContainText('TST-001');
   await missing.first().click();
   await expect(page.locator('#drawingModal')).toHaveClass(/open/);
   expect(errors).toEqual([]);
