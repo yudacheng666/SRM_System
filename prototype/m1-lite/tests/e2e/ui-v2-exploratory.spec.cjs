@@ -40,8 +40,10 @@ const test=base.extend({
 async function ensureOpen(page,id){
   // 中文：项目是常驻第一步，供应商管理属于分配页，备份入口属于项目页。
   // English: Navigate to the owning workflow panel before accessing drawers.
-  if(id==='#uiProjectDetails'||id==='#uiDataTools')
+  if(id==='#uiProjectDetails')
     await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiDataTools')
+    await page.locator('#uiAdminToggle').click();
   if(id==='#uiSupplierTools')
     await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
   const drawer=page.locator(id);
