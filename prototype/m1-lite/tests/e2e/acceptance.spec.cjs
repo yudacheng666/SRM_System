@@ -45,7 +45,8 @@ const tab = (page, name) => page.locator(`[data-tab="${name}"]`).click();
 // 中文：真实操作展开 UI V1 工具区，不以脚本强制绕过页面折叠状态。
 // English: Expand new UI drawers as a buyer would, never force visibility by script.
 async function openTools(page, id) {
-  if(id==='#uiProjectDetails'||id==='#uiDataTools')await tab(page,'project');
+  if(id==='#uiProjectDetails')await tab(page,'project');
+  if(id==='#uiDataTools'||id==='#srmUxStatusDetails')await page.locator('#uiAdminToggle').click();
   if(id==='#uiSupplierTools')await tab(page,'assign');
   const details=page.locator(id);
   if (!await details.evaluate(node => node.open)) await details.locator(':scope > summary').click();
@@ -337,7 +338,7 @@ test('09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台�
   // English: Validate real buyer navigation and drawers without altering business revisions.
   await expect(page.locator('.ui-workNav .tab')).toHaveCount(5);
   await expect(page.locator('#uiCurrentRfq')).toContainText('演示');
-  await expect(page.locator('#uiDataTools')).not.toHaveAttribute('open', '');
+  await expect(page.locator('#backup')).not.toBeVisible();
   await fresh(page);
   const initial=(await snapshot(page)).revision;
   // 中文：采购员应看到可读的项目名称，内部不透明编号另存于可展开详情。
