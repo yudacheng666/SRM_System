@@ -4597,6 +4597,9 @@ generateBtn.onclick=()=>{
   // 中文：直接打开已实现的正式导出面板，不使用原型占位弹窗。
   // English: Route the visible action to the working supplier export panel, not a placeholder alert.
   const admin=document.getElementById("uiDataTools");
+  // 中文：生成供应商询价单时同步进入独立单据/备份管理页，不能只打开隐藏抽屉。
+  // English: Export intents navigate to the dedicated admin page rather than an invisible drawer.
+  document.getElementById("uiAdminToggle")?.click();
   if(admin)admin.open=true;
   const panel=document.getElementById("pilotReportPanel");
   const type=document.getElementById("pilotReportType");
