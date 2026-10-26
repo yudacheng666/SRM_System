@@ -1455,6 +1455,35 @@ body.srm-v2 #assign .tablewrap:has(#assignItemBody) .table th:nth-child(3){width
 body.srm-v2 #assign #assignItemBody td:nth-child(2){overflow:hidden}
 body.srm-v2 #assign #assignItemBody tr{height:auto}
 </style>
+<style id="srm-ux09-compare-density-fix">
+/* 中文：修复UX09比价密度：把价格与按需详情排成同一行；详情展开后仍完整显示来源、交期及备注。
+ * English: Align price and disclosure horizontally; preserve full expanded terms and keyboard access. */
+body.srm-v2 #quotes #quoteTable tbody>tr>td{padding:3px 7px;line-height:1.25;vertical-align:middle}
+body.srm-v2 #quotes #quoteTable tbody td.awardSelectable{white-space:nowrap}
+body.srm-v2 #quotes #quoteTable .quotePrice{display:inline-flex;align-items:center;min-height:26px;padding:3px 7px;line-height:1.15;margin:0;vertical-align:middle}
+body.srm-v2 #quotes #quoteTable .srm-ux-bid-details{display:inline-block;max-width:none;min-width:0;margin:0 0 0 6px;vertical-align:middle;font-size:11px;line-height:1.25;white-space:normal}
+body.srm-v2 #quotes #quoteTable .srm-ux-bid-details summary{display:list-item;white-space:nowrap;cursor:pointer;padding:2px 0;font-size:11px}
+body.srm-v2 #quotes #quoteTable .srm-ux-bid-details[open]{display:inline-block;white-space:normal;min-width:155px;vertical-align:top}
+body.srm-v2 #quotes #quoteTable .srm-ux-bid-details[open]>span,
+body.srm-v2 #quotes #quoteTable .srm-ux-bid-details[open]>div{max-width:240px;white-space:normal;overflow-wrap:anywhere}
+body.srm-v2 #quotes #quoteTable tbody .srm-v31-decision{font-size:11px;line-height:1.2;padding:2px 5px}
+body.srm-v2 #quotes #quoteTable tbody .srm-ux-inlineMaterial{max-width:100%}
+/* 中文：压缩决策看板和操作说明的垂直开销，保留人工与系统金额口径，不藏掉任何统计项。
+ * English: Compress vertical chrome, not decision data or supplier columns. */
+body.srm-v2 #quotes .srm-v3-pageIntro{padding-top:7px;padding-bottom:7px;margin-bottom:5px}
+body.srm-v2 #quotes #srmV31DecisionBoard{margin-bottom:6px}
+body.srm-v2 #quotes .srm-v31-decisionHeader{padding:5px 9px;gap:7px}
+body.srm-v2 #quotes .srm-v31-decisionMetrics>div{padding:5px 8px}
+body.srm-v2 #quotes .cardhead{padding-top:7px;padding-bottom:7px}
+body.srm-v2 #quotes .cardbody{padding-top:8px}
+body.srm-v2 #quotes .srm-ux-comparison-rules{margin-top:2px;margin-bottom:3px}
+body.srm-v2 #quotes #commonScopePicker{margin:2px 0 0!important;padding:2px 1px}
+body.srm-v2 #quotes .srm-ux-compare-heading{padding:4px 1px}
+body.srm-v2 #quotes .srm-ux-manual-total{margin:5px 0;padding:5px 9px}
+@media(max-width:1090px){
+ body.srm-v2 #quotes #quoteTable .srm-ux-bid-details{display:inline-block}
+}
+</style>
 </head>
 <body class="srm-v2">
 <div class="app">
