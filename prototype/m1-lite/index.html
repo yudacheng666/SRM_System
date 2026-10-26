@@ -1437,6 +1437,13 @@ body.srm-v2 #assign .table tbody > tr > td,
 body.srm-v2 #quoteImport .table tbody > tr > td,
 body.srm-v2 #quotes .table tbody > tr > td{padding:3px 8px;line-height:1.25;vertical-align:middle}
 body.srm-v2 #items #itemBody td{padding:3px 8px;line-height:1.25;vertical-align:middle}
+/* 中文：旧报价页的高优先级样式也统一使用同一密度；仅控制内边距，不裁切业务详情。
+ * English: Override older quotation-specific cell padding without clipping nested business controls. */
+body.srm-v2 #assign #sfItemBody > tr > td,
+body.srm-v2 #quoteImport #srmUxQuoteRoundTable tbody > tr > td,
+body.srm-v2 #quoteImport #quoteRoundBody > tr > td,
+body.srm-v2 #quotes #quoteTable tbody > tr > td{padding:3px 8px;line-height:1.25;vertical-align:middle}
+body.srm-v2 #quoteImport.srm-ux-compact:not(.srm-ux-detailed) #srmUxQuoteRoundTable tbody tr{height:auto}
 body.srm-v2 .panel .table tbody .drawingThumb{width:42px;height:25px;min-width:42px;padding:2px;font-size:11px;line-height:1;white-space:nowrap}
 body.srm-v2 .panel .table tbody .drawingThumb--missing{color:#9e423a;background:#fff8f7;border-color:#e7c9c5;font-weight:650}
 body.srm-v2 .panel .table tbody .srm-ux-inlineMaterial{display:flex;align-items:center;gap:7px;min-width:0;max-width:100%;white-space:nowrap}
