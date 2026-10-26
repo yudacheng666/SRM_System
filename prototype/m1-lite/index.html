@@ -43,6 +43,13 @@ input[type=text],select{border:1px solid #cfd6e1;border-radius:8px;padding:8px 1
 #awardReasonInput{width:100%;min-height:85px;padding:9px;border:1px solid #cfd6e1;border-radius:8px;font:inherit;resize:vertical}
 .footerNote{margin-top:14px;color:var(--muted);font-size:12px}
 .itemWithDrawing{display:flex;align-items:center;gap:8px}.drawingThumb{width:42px;height:32px;border:1px solid #cfd6e1;border-radius:6px;background:#fff;padding:2px;display:inline-flex;align-items:center;justify-content:center}.drawingThumb:hover{border-color:#60a5fa;background:#eff6ff}.drawingThumb svg{width:100%;height:100%}
+/* 中文：仅压缩“物料与图纸”明细表正文；表头与上方 Excel 预览、其他模块维持原布局。
+ * English: Compact only the item-detail body, keeping import previews and other tables unchanged. */
+body.srm-v2 #items #itemBody td{padding:3px 8px;line-height:1.25;vertical-align:middle}
+body.srm-v2 #items #itemBody .drawingThumb{width:42px;height:25px;font-size:11px;line-height:1;white-space:nowrap}
+body.srm-v2 #items #itemBody .drawingThumb--missing{color:#9e423a;background:#fff8f7;border-color:#e7c9c5;font-weight:650}
+body.srm-v2 #items #itemBody tr{height:auto}
+
 .modalBackdrop{position:fixed;inset:0;background:rgba(15,23,42,.48);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}.modalBackdrop.open{display:flex}.modalCard{width:min(980px,96vw);max-height:92vh;background:#fff;border-radius:14px;border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.22);overflow:hidden}.modalHead{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.modalBody{padding:16px;overflow:auto;max-height:calc(92vh - 60px)}.drawingLarge{width:100%;min-height:560px;border:1px solid var(--line);background:#fafafa;border-radius:10px;display:flex;align-items:center;justify-content:center}.drawingLarge svg{width:92%;height:auto;max-height:72vh}
 .intakeGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}@media(max-width:980px){.intakeGrid{grid-template-columns:1fr}}
 .intakeBox{border:1px solid var(--line);border-radius:10px;padding:11px;background:#fafbfc}.intakeBox h3{font-size:14px;margin:0 0 8px}.intakeBox textarea{width:100%;min-height:112px;border:1px solid #cfd6e1;border-radius:8px;padding:8px;resize:vertical;font:inherit}.intakeBox input{max-width:100%}
@@ -4351,11 +4358,20 @@ function itemCodeCell(it){return `<b>${esc(it.id)}</b><div class="small muted">$
 function itemDrawingCell(it){
   const docs=drawingDocsForItem(it);
   if(window.SRMPilot?.isBuyer()){
-   const state=it.drawingStatus==="not_required"?"无需图纸":it.drawingStatus==="pending"?"版本待确认":docs.length?docs.length+"份 PDF":"缺图纸";
-   return '<button class="drawingThumb" data-drawing="'+esc(it.lineId)+'" title="浏览 PDF 原件">PDF</button><div class="pdfMeta">'+state+'</div>';
+    // 中文：已有关联仍显示原 PDF 按钮；没有必需图纸则以“缺图纸”代替图标内的 PDF。
+    // English: Preserve the PDF affordance when a real file exists; replace its text when a required file is missing.
+    const missing=!docs.length&&it.drawingStatus!=="not_required";
+    const label=docs.length?"PDF":missing?"缺图纸":"无需图纸";
+    const state=it.drawingStatus==="not_required"?"无需图纸":
+      it.drawingStatus==="pending"?"版本待确认":
+      docs.length?docs.length+"份 PDF":"缺图纸";
+    const title=docs.length?"浏览 PDF 原件（"+state+"）":
+      state+"；点击查看图纸关联";
+    return '<button class="drawingThumb'+(missing?' drawingThumb--missing':'')+'" data-drawing="'+esc(it.lineId)+
+      '" title="'+esc(title)+'" aria-label="'+esc(title)+'">'+label+'</button>';
   }
   if(!docs.length)return '<span class="dangertext">缺图纸</span>';
-  return `<button class="drawingThumb" data-drawing="${it.lineId}" title="PDF ${docs[0].pages}页">${drawingSvg(it,docs[0],1,.18)}</button><div class="pdfMeta">PDF ${docs[0].pages}页</div>`;
+  return `<button class="drawingThumb" data-drawing="${it.lineId}" title="PDF ${docs[0].pages}页">${drawingSvg(it,docs[0],1,.18)}</button>`;
 }
 function renderItemList(){
   const fields=[
