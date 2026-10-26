@@ -381,6 +381,9 @@ test('UX09 exact 1366 comparison density and first-row reachability / 比价紧�
   await page.locator('#commitQuoteImport').click();
   await page.locator('#confirmQuoteRound').click();
   await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
+  // 中文：固定12行里只有2项有确认报价，先按真实待决定过滤，避免抽查未报价行。
+  // English: Scope to the two genuinely quotable lines rather than an unpriced first page.
+  await page.locator('#srmUxPendingOnly').check();
   await expect(page.locator('#quoteTable tbody tr').first()).toBeVisible();
   await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
   const cells=page.locator('#quoteTable td.awardSelectable');
