@@ -1,0 +1,178 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary "SRM 功能导航" [ref=e3]:
+    - generic [ref=e5]: S
+    - button "询价项目" [ref=e6] [cursor=pointer]:
+      - generic [ref=e7]: ▤
+    - button "物料与图纸" [ref=e8] [cursor=pointer]:
+      - generic [ref=e9]: ▦
+    - button "供应商与分配" [ref=e10] [cursor=pointer]:
+      - generic [ref=e11]: ♧
+    - button "报价回收" [ref=e12] [cursor=pointer]:
+      - generic [ref=e13]: ▣
+    - button "比价议价" [active] [ref=e14] [cursor=pointer]:
+      - generic [ref=e15]: ▥
+    - separator [ref=e16]
+    - button "数据与备份" [ref=e17] [cursor=pointer]:
+      - generic [ref=e18]: ◫
+    - button "字段设置" [ref=e19] [cursor=pointer]:
+      - generic [ref=e20]: ⚙
+  - banner [ref=e21]:
+    - generic [ref=e22]:
+      - generic [ref=e23]: 询价与比价
+      - heading "SRM 采购工作台" [level=1] [ref=e24]
+      - generic [ref=e25]: 修改内容会自动保存到本机，也可以点击“保存”。
+    - generic [ref=e26]:
+      - generic [ref=e27]: 本机工作模式
+      - button "询价项目" [ref=e28] [cursor=pointer]
+      - button "数据与备份" [ref=e29] [cursor=pointer]
+      - button "字段设置" [ref=e30] [cursor=pointer]
+  - generic "当前询价工作摘要" [ref=e31]:
+    - generic [ref=e32]:
+      - text: 当前询价项目
+      - generic [ref=e33]:
+        - generic [ref=e34]: 未命名询价（2026-10-26 07:00）
+        - button "修改名称" [ref=e35] [cursor=pointer]
+    - status [ref=e37]: 已保存
+  - generic [ref=e38]: 数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。
+  - navigation "询价业务流程" [ref=e39]:
+    - text: ◉
+    - tablist [ref=e40]:
+      - tab "› ① 询价项目" [ref=e41] [cursor=pointer]
+      - tab "› ② 物料与图纸" [ref=e42] [cursor=pointer]
+      - tab "› ③ 供应商分配" [ref=e43] [cursor=pointer]
+      - tab "› ④ 报价回收" [ref=e44] [cursor=pointer]
+      - tab "⑤ 比价议价" [selected] [ref=e45] [cursor=pointer]
+  - text: ▴ ▾ 批量选择 ▴ ✓
+  - generic [ref=e46]:
+    - generic [ref=e48]:
+      - generic [ref=e49]: 05 / COMMERCIAL REVIEW
+      - heading "比价与议价 / 采购决策" [level=2] [ref=e50]
+      - paragraph [ref=e51]: 在可比口径下检查报价与最低价建议；非最低价决策需保留人工依据。
+    - status [ref=e52]:
+      - generic [ref=e53]:
+        - generic [ref=e54]:
+          - generic [ref=e55]: DECISION OVERVIEW
+          - strong [ref=e56]: 采购决策概览
+        - generic [ref=e57]: 系统计算最低价 ≠ 采购员人工决定
+      - generic [ref=e58]:
+        - generic [ref=e59]:
+          - generic [ref=e60]: 有效报价物料
+          - strong [ref=e61]: "2"
+        - generic [ref=e62]:
+          - generic [ref=e63]: 待人工决定
+          - strong [ref=e64]: "2"
+        - generic [ref=e65]:
+          - generic [ref=e66]: 人工已选
+          - strong [ref=e67]: "0"
+        - generic [ref=e68]:
+          - generic [ref=e69]: 并列最低待核对
+          - strong [ref=e70]: "0"
+        - generic [ref=e71]:
+          - generic [ref=e72]: 新报价后待复核
+          - strong [ref=e73]: "0"
+      - generic [ref=e74]: 无有效报价 1 项；并列最低待核对仅统计尚未完成明确选择或需重新复核的项目。默认最低价仅为建议。
+    - generic [ref=e75]:
+      - generic [ref=e76]:
+        - generic [ref=e77]:
+          - text: 报价比较
+          - generic [ref=e78]: 支持共同报价范围、最低价提示与非最低价选择说明；演示历史采购价为虚构示例
+        - button "恢复默认最低价" [ref=e80] [cursor=pointer]
+      - generic [ref=e81]:
+        - group [ref=e82]:
+          - generic "查看报价口径与人工定标规则" [ref=e83] [cursor=pointer]
+        - generic [ref=e84]: 报价回收验证：仅已确认的报价记录参与比较；未报价不自动补价。上次采购价仍是 M0 虚构示例。
+        - generic [ref=e85]:
+          - generic [ref=e86]:
+            - text: 比较范围
+            - generic [ref=e87]: 只对明确选择的共同有效报价计算同范围金额
+          - generic [ref=e88]:
+            - generic [ref=e89]:
+              - generic [ref=e90]: 指定供应商组 · 同范围比价
+              - generic [ref=e91]: 已选 0 家（至少 2 家）
+            - generic [ref=e92]: 按采购员勾选的供应商交集计算，不要求全部供应商参与。未报价、不供货、无适用阶梯价均不计入。
+            - generic [ref=e93]:
+              - generic [ref=e94]:
+                - checkbox "虚构供应商A (SUP-A)" [ref=e95]
+                - text: 虚构供应商A (SUP-A)
+              - button "清空比较组" [ref=e96] [cursor=pointer]
+        - generic [ref=e97]:
+          - generic [ref=e98]: 逐物料报价与采购决定
+          - generic [ref=e99] [cursor=pointer]:
+            - checkbox "仅显示待人工决定" [ref=e100]
+            - text: 仅显示待人工决定
+        - table [ref=e102]:
+          - rowgroup [ref=e103]:
+            - row "存货 虚构供应商A 选择全部适用 系统建议 / 人工决定" [ref=e104]:
+              - columnheader "存货" [ref=e105]
+              - columnheader "虚构供应商A 选择全部适用" [ref=e106]:
+                - text: 虚构供应商A
+                - button "选择全部适用" [ref=e107] [cursor=pointer]
+              - columnheader "系统建议 / 人工决定" [ref=e108]
+          - rowgroup [ref=e109]:
+            - row "缺图纸；点击查看图纸关联 ERP-A1 · 虚构电机 · 120W 选择此供应商报价 系统建议 · 待人工确认 虚构供应商A" [ref=e110]:
+              - cell "缺图纸；点击查看图纸关联 ERP-A1 · 虚构电机 · 120W" [ref=e111]:
+                - generic [ref=e112]:
+                  - button "缺图纸；点击查看图纸关联" [ref=e113] [cursor=pointer]: 缺图纸
+                  - generic "RFQ-L00001 · ERP-A1 · 虚构电机 · 120W" [ref=e114]: ERP-A1 · 虚构电机 · 120W
+              - button "选择此供应商报价" [ref=e115] [cursor=pointer]:
+                - button "¥9.00" [ref=e116]
+                - group [ref=e117]:
+                  - generic "交期 · MOQ · 轮次" [ref=e118]
+              - cell "系统建议 · 待人工确认 虚构供应商A" [ref=e119]:
+                - generic [ref=e120]: 系统建议 · 待人工确认
+                - text: 虚构供应商A
+            - row "缺图纸；点击查看图纸关联 ERP-A1 · 虚构电机 · 220W 选择此供应商报价 系统建议 · 待人工确认 虚构供应商A" [ref=e121]:
+              - cell "缺图纸；点击查看图纸关联 ERP-A1 · 虚构电机 · 220W" [ref=e122]:
+                - generic [ref=e123]:
+                  - button "缺图纸；点击查看图纸关联" [ref=e124] [cursor=pointer]: 缺图纸
+                  - generic "RFQ-L00002 · ERP-A1 · 虚构电机 · 220W" [ref=e125]: ERP-A1 · 虚构电机 · 220W
+              - button "选择此供应商报价" [ref=e126] [cursor=pointer]:
+                - button "¥10.00" [ref=e127]
+                - group [ref=e128]:
+                  - generic "交期 · MOQ · 轮次" [ref=e129]
+              - cell "系统建议 · 待人工确认 虚构供应商A" [ref=e130]:
+                - generic [ref=e131]: 系统建议 · 待人工确认
+                - text: 虚构供应商A
+            - row "缺图纸；点击查看图纸关联 ERP-B2 · 虚构轴套 · M16 未报价 未选择" [ref=e132]:
+              - cell "缺图纸；点击查看图纸关联 ERP-B2 · 虚构轴套 · M16" [ref=e133]:
+                - generic [ref=e134]:
+                  - button "缺图纸；点击查看图纸关联" [ref=e135] [cursor=pointer]: 缺图纸
+                  - generic "RFQ-L00003 · ERP-B2 · 虚构轴套 · M16" [ref=e136]: ERP-B2 · 虚构轴套 · M16
+              - cell "未报价" [ref=e137]
+              - cell "未选择" [ref=e138]
+        - generic [ref=e139]:
+          - generic [ref=e140]: 共 3 项 · 第 1/1 页
+          - generic [ref=e142]:
+            - button "上一页" [ref=e143] [cursor=pointer]
+            - generic [ref=e144]: …
+            - button "1" [ref=e145] [cursor=pointer]
+            - button "下一页" [ref=e146] [cursor=pointer]
+        - region "按口径汇总的报价金额分析" [ref=e147]:
+          - heading "金额分析 不同报价范围不可直接排名" [level=3] [ref=e148]
+          - generic [ref=e149]:
+            - generic [ref=e150]:
+              - generic [ref=e151]:
+                - text: 报价金额分析（M0）
+                - generic [ref=e152]: 三种口径分别统计：自身报价范围、指定供应商组共同范围、逐物料最低价组合。仅演示同币种同税口径。
+              - generic [ref=e153]: 逐物料理论最低价组合：¥120.00（2 项） 当前建议/已选组合：¥120.00（2 项，含自动建议；待复核 0 项不计入）
+            - generic [ref=e154]: 采购员已确认金额：尚无人工确认的有效定标（0 项；不含自动建议）
+            - generic [ref=e155]: A. 各供应商自身报价金额（不同范围，不可直接排名）
+            - table [ref=e156]:
+              - rowgroup [ref=e157]:
+                - row "供应商 自身有效报价项数 自身报价范围金额（元）" [ref=e158]:
+                  - columnheader "供应商" [ref=e159]
+                  - columnheader "自身有效报价项数" [ref=e160]
+                  - columnheader "自身报价范围金额（元）" [ref=e161]
+              - rowgroup [ref=e162]:
+                - row "虚构供应商A 2 ¥120.00" [ref=e163]:
+                  - cell "虚构供应商A" [ref=e164]
+                  - cell "2" [ref=e165]
+                  - cell "¥120.00" [ref=e166]
+            - generic [ref=e167]: B. 采购员指定供应商组的同范围金额
+            - generic [ref=e168]: 请先勾选至少两家供应商，再计算同范围报价。
+            - generic [ref=e169]: C. 逐物料最低价组合及采购员已选择金额仅供 RFQ 整体规划，不代表某一家供应商的整单报价。缺报价不作为零元处理。
+  - generic [ref=e170]: 修改内容自动保存；备份与恢复请前往“数据与备份”。
+```

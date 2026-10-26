@@ -1,0 +1,33 @@
+{
+  "id": "AF-11",
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "classification": "TEST_SETUP",
+  "assessment": "Test requests page but not app fixture; no startup/goto occurs, so application DOM is absent.",
+  "specFile": "ui-ux-structural.spec.cjs",
+  "specStartLine": 257,
+  "title": "UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页",
+  "status": "FAIL",
+  "rawErrors": [
+    {
+      "location": {
+        "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+        "column": 24,
+        "line": 260
+      },
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.ui-workNav .tab')\nExpected: \u001b[32m5\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('.ui-workNav .tab')\u001b[22m\n\u001b[2m    18 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n  258 |   const errors=[];page.on('pageerror',e=>errors.push(e.message));\n  259 |   const stages=page.locator('.ui-workNav .tab');\n> 260 |   await expect(stages).toHaveCount(5);\n      |                        ^\n  261 |   await expect(stages.first()).toHaveText('① 询价项目');\n  262 |   await expect(page.locator('#project')).toHaveClass(/active/);\n  263 |   await expect(page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"project\"]')).toHaveAttribute('aria-current','page');\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:260:24"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-projec-12a8a-ls-stage-switching-询价项目独立首页/test-failed-1.png"
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-projec-12a8a-ls-stage-switching-询价项目独立首页/trace.zip"
+    }
+  ],
+  "laterAssertions": "NOT REACHED; do not infer their PASS from independent tests"
+}

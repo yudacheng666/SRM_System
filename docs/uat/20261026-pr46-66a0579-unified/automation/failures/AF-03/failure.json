@@ -1,0 +1,53 @@
+{
+  "id": "AF-03",
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "classification": "OUTDATED_TEXT_ASSERTION",
+  "assessment": "Asserted old 正式 badge; actual approved Chinese label is 本机工作模式.",
+  "specFile": "acceptance.spec.cjs",
+  "specStartLine": 266,
+  "title": "06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复",
+  "status": "FAIL",
+  "rawErrors": [
+    {
+      "location": {
+        "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+        "column": 52,
+        "line": 284
+      },
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotModeBadge')\nExpected substring: \u001b[32m\"\u001b[7m正\u001b[27m式\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m本机工作模\u001b[27m式\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotModeBadge')\u001b[22m\n\u001b[2m    - waiting for navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"http://127.0.0.1:8766/\"\u001b[22m\n\u001b[2m    14 × locator resolved to <span class=\"badge\" id=\"pilotModeBadge\">本机工作模式</span>\u001b[22m\n\u001b[2m       - unexpected value \"本机工作模式\"\u001b[22m\n\n\n  282 |     await openTools(other,'#uiDataTools');\n  283 |     await other.locator('#pilotS4BackupFile').setInputFiles(file); await other.locator('#pilotS4RestoreFull').click();\n> 284 |     await expect(other.locator('#pilotModeBadge')).toContainText('正式');\n      |                                                    ^\n  285 |     expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toEqual(index);\n  286 |     for(const [id,versions] of Object.entries(originals)) for(const w of versions) expect((await (await fetch('http://127.0.0.1:8766/api/workspaces/'+id+'?revision='+w.revision)).json()).workspace).toEqual(w);\n  287 |     for(const item of ws.state.items) for(const pdf of item.drawings||[]) {\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:284:52"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "full-backup.zip",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/attachments/full-backup-zip-66c8d87e540d69fd544d45f09cfefa205be43e8b.zip"
+    },
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/test-failed-1.png"
+    },
+    {
+      "name": "server-log",
+      "contentType": "text/plain",
+      "path": "/tmp/srm66-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/attachments/server-log-691af733d1565032d0334c0ec59a5f7868dfc5cd.log"
+    },
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/test-failed-2.png"
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "path": "/tmp/srm66-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/error-context.md"
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/trace.zip"
+    }
+  ],
+  "laterAssertions": "NOT REACHED; do not infer their PASS from independent tests"
+}

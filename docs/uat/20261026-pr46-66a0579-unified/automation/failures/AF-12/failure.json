@@ -1,0 +1,33 @@
+{
+  "id": "AF-12",
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "classification": "TEST_SETUP",
+  "assessment": "Test requests page but not app fixture; no startup/goto occurs, so application DOM is absent.",
+  "specFile": "ui-ux-structural.spec.cjs",
+  "specStartLine": 286,
+  "title": "UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮",
+  "status": "FAIL",
+  "rawErrors": [
+    {
+      "location": {
+        "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+        "column": 42,
+        "line": 288
+      },
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#project')\nExpected pattern: \u001b[32m/active/\u001b[39m\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveClass\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#project')\u001b[22m\n\n\n  286 | test('UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮',async({page})=>{\n  287 |   const errors=[];page.on('pageerror',e=>errors.push(e.message));\n> 288 |   await expect(page.locator('#project')).toHaveClass(/active/);\n      |                                          ^\n  289 |   await expect(page.locator('#pilotNewWorkspace')).toHaveText('新建');\n  290 |   await expect(page.locator('#pilotSaveWorkspace')).toHaveText('保存');\n  291 |   await expect(page.locator('#project #pilotS4DownloadFull')).toHaveCount(0);\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:288:42"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-admin--b8629-concise-labels-独立备份页与简短项目按钮/test-failed-1.png"
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-admin--b8629-concise-labels-独立备份页与简短项目按钮/trace.zip"
+    }
+  ],
+  "laterAssertions": "NOT REACHED; do not infer their PASS from independent tests"
+}

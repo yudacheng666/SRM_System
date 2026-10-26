@@ -1,0 +1,48 @@
+{
+  "id": "AF-04",
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "classification": "OUTDATED_TEXT_ASSERTION",
+  "assessment": "Asserted old 正式 badge; actual approved Chinese label is 本机工作模式.",
+  "specFile": "acceptance.spec.cjs",
+  "specStartLine": 302,
+  "title": "07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败",
+  "status": "FAIL",
+  "rawErrors": [
+    {
+      "location": {
+        "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+        "column": 78,
+        "line": 305
+      },
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotModeBadge')\nExpected substring: \u001b[32m\"\u001b[7m正\u001b[27m式\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m本机工作模\u001b[27m式\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotModeBadge')\u001b[22m\n\u001b[2m    18 × locator resolved to <span class=\"badge\" id=\"pilotModeBadge\">本机工作模式</span>\u001b[22m\n\u001b[2m       - unexpected value \"本机工作模式\"\u001b[22m\n\n\n  303 |   await fresh(page); const stale=await browser.newPage();stale.on('dialog',d=>d.accept());\n  304 |   try {\n> 305 |     await stale.goto(baseURL);await expect(stale.locator('#pilotModeBadge')).toContainText('正式');\n      |                                                                              ^\n  306 |     await openTools(stale,'#uiSupplierTools'); await openTools(page,'#uiSupplierTools');\n  307 |     await items(page,app);await save(page);const good=await snapshot(page);\n  308 |     await stale.locator('#pilotCounterpartyCode').fill('CP-STALE');await stale.locator('#pilotSupplierName').fill('虚构旧标签');await stale.locator('#pilotAddSupplier').click();\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:305:78"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-1.png"
+    },
+    {
+      "name": "server-log",
+      "contentType": "text/plain",
+      "path": "/tmp/srm66-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/attachments/server-log-16b2ac5198f01a88471c0834536f7f8449745b02.log"
+    },
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-2.png"
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "path": "/tmp/srm66-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/error-context.md"
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/trace.zip"
+    }
+  ],
+  "laterAssertions": "NOT REACHED; do not infer their PASS from independent tests"
+}

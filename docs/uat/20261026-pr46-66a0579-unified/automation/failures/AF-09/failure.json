@@ -1,0 +1,48 @@
+{
+  "id": "AF-09",
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "classification": "OUTDATED_TEXT_ASSERTION",
+  "assessment": "Required literal 规格： prefix removed by requested inline code/name/spec layout; actual120W/220W values remain visible and correctly bound.",
+  "specFile": "erp-core-alignment.spec.cjs",
+  "specStartLine": 338,
+  "title": "ERP09: second-round scope shows specification and preserves selected line identities",
+  "status": "FAIL",
+  "rawErrors": [
+    {
+      "location": {
+        "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs",
+        "column": 45,
+        "line": 402
+      },
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#quoteTable')\nExpected substring: \u001b[32m\"规格：120W\"\u001b[39m\nReceived string:    \u001b[31m\"存货历史采购价（未接入）虚构供应商A选择全部适用系统建议 / 人工决定缺图纸ERP-A1 · 虚构电机 · 120W—（未接入）¥9.00交期 · MOQ · 轮次数量 10 · 交期 3 天 · MOQ 1 · 第1轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-A1 · 虚构电机 · 220W—（未接入）¥10.00交期 · MOQ · 轮次数量 3 · 交期 4 天 · MOQ 1 · 第2轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-B2 · 虚构轴套 · M16—（未接入）未报价未选择\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#quoteTable')\u001b[22m\n\u001b[2m    19 × locator resolved to <table class=\"table\" id=\"quoteTable\">…</table>\u001b[22m\n\u001b[2m       - unexpected value \"存货历史采购价（未接入）虚构供应商A选择全部适用系统建议 / 人工决定缺图纸ERP-A1 · 虚构电机 · 120W—（未接入）¥9.00交期 · MOQ · 轮次数量 10 · 交期 3 天 · MOQ 1 · 第1轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-A1 · 虚构电机 · 220W—（未接入）¥10.00交期 · MOQ · 轮次数量 3 · 交期 4 天 · MOQ 1 · 第2轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-B2 · 虚构轴套 · M16—（未接入）未报价未选择\"\u001b[22m\n\n\n  400 |   expect(saved.find(r=>r.roundNo===2)?.lines.map(x=>x.lineId)).toEqual([m220.lineId]);\n  401 |   await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();\n> 402 |   await expect(page.locator('#quoteTable')).toContainText('规格：120W');\n      |                                             ^\n  403 |   await expect(page.locator('#quoteTable')).toContainText('规格：220W');\n  404 |   await expect(page.locator('#quoteTable')).toContainText('¥9.00');\n  405 |   await expect(page.locator('#quoteTable')).toContainText('¥10.00');\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:402:45"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "pr16-negotiation-scope",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/attachments/pr16-negotiation-scope-98dcade5a395e4468cc2e9041b537a6b49a0555f.png"
+    },
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/test-failed-1.png"
+    },
+    {
+      "name": "erp-server-log",
+      "contentType": "text/plain",
+      "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/attachments/erp-server-log-719234d5915b6a37a8197dc967ee1ed44775d09c.log"
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/error-context.md"
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/trace.zip"
+    }
+  ],
+  "laterAssertions": "NOT REACHED; do not infer their PASS from independent tests"
+}

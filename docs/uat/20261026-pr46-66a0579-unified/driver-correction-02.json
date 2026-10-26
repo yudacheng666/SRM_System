@@ -1,0 +1,32 @@
+{
+  "time": "2026-10-26T07:10:28.555684+00:00",
+  "classification": "INDEPENDENT_DRIVER_ERROR",
+  "number": 2,
+  "maximum": 2,
+  "remaining": 0,
+  "rootCause": "Driver expected current and other project names simultaneously in historical picker. Actual refreshHistory intentionally excludes current workspace; current Chinese name is separately displayed in header.",
+  "sourceEvidence": "prototype/m1-lite/index.html:5577 if(x.workspaceId===workspaceId)continue;",
+  "rawEvidence": "attempt-02/evidence/raw-first-error.json",
+  "trace": "attempt-02/evidence/trace-first-attempt.zip",
+  "correction": "Verify current header and OTHER saved-project option separately; retain full state identity/API checks.",
+  "retest": "Fresh attempt03 SQLite, all independent checkpoints; original attempt01/02 untouched",
+  "newMethodsSHA256": {
+    "methods/make-invalid-backup.py": "e1ccf945c94f1c7e1e3e88ce30f02ad6e8a314114b474fd0627f9ab89848c692",
+    "methods/09-s4-current-version.js": "52895a1f55b631d3972ffe9b291fec7d6418c0d0579b7bb33a5a2d09226c2d88",
+    "methods/verify-s4.py": "a4359dd55395bcffe4dd671fb11440682ece2bb18e41284429cb9702c573d968",
+    "methods/11-density-evidence.js": "f1c32560a8cd723fcf30083aa27b92ce711d9583f6ba4491c23119e4c2846b58",
+    "methods/10-save-reload-conflict.js": "cca96ee724b89130d2edc4da181acfd2276930a9714c8725515dec0054de7af2",
+    "methods/08-project-paging-persistence.js": "80382b718bc5d8c2fd13790debba8897d69834497bcd9350becf02d6eed59101",
+    "methods/07-export.js": "ece80e4331e84a3c0f70703a9767dd6563889b8676880c0b060f6640b10732f6",
+    "methods/06-ui-three-sizes.js": "905b99d9f0589fa6937404781be96865b3da971c8071098124555ebeda5d63e8",
+    "methods/verify-exports.py": "0478ffb4be8554bf1a4ea62eacf35320fa9b12e52bd186649fb87bbb91cdbf46",
+    "methods/05-comparison.js": "c6b3ad27a67914bb34c2340131744f2df552319924cf705faaca57161c89211b",
+    "methods/04-quotes.js": "2714ea51515cc5b2afec4cdc61583e44d5ffe717c398a6bcdf1923a61aa5adaf",
+    "methods/03-allocation.js": "102489626a0a4d05d21bbedd6c0d1d940e53c9407384b66f2a417d6d237d6b1f",
+    "methods/02-drawings.js": "a9a46afb8f72a0c9dbf4f58960e9c31d623887913dbc8e5bcd6b519542549905",
+    "methods/01-project-import.js": "f5babbc75f4e2f5c73f97842b024fee53a19ef81100196e417b9ba9971026e14",
+    "methods/driver.cjs": "d323fb378c49b3bdcfa8b68821eb6c0f344641bd43ed1c2a3034dc211e24178d",
+    "methods/create-quote-file.py": "1b30c8b7cc0091352c8d579d948c96beb9a66d0dca1fb96277979fbecd7701dd",
+    "methods/db-state.py": "fcad33abe01f00398fd78beab1ff44352a67cedd2a21490af5280cb422a69582"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "confirmedProductFindings": [
+    {
+      "id": "P3-UX09-01",
+      "severity": "P3",
+      "category": "visual/usability",
+      "group": "UX-09",
+      "actual": "Comparison rows58.375-62px, material/allocation31-32px,intake39-40px; first comparison data row884.97px at1366x768, below first screen",
+      "expected": "Consistent compact business-list density and usable1366 first screen, without hiding real data",
+      "dataIntegrityDefect": false,
+      "evidence": [
+        "row-density-summary.json",
+        "attempt-03/evidence/UX-1366-quotes.png",
+        "attempt-03/evidence/UX09-1366-separate-award-totals.png"
+      ]
+    }
+  ],
+  "testSuiteFindings": [
+    {
+      "id": "P2-TEST-01",
+      "severity": "P2",
+      "category": "test setup/navigation/assertion coverage gap, not confirmed product logic defect",
+      "actual": "15 of55 original Chromium tests fail; expected new Chinese text/navigation and missing app fixture are identified from unedited runner errors/source",
+      "evidence": "automation/failure-classification.json",
+      "laterAssertions": "NOT REACHED; independent case passes do not relabel suite failures"
+    }
+  ],
+  "independentRuntimeFaults": [
+    {
+      "id": "DRIVER-01",
+      "classification": "DRIVER_ASSERTION",
+      "status": "CORRECTED_AND_RETESTED",
+      "raw": "independent/evidence/raw-first-error.json",
+      "correction": "driver-correction-01.json",
+      "reason": "Mistook paginated preview50 visible rows for incomplete52-line import; corrected actual preview50+2 and full52 commit retained."
+    },
+    {
+      "id": "DRIVER-02",
+      "classification": "DRIVER_ASSERTION",
+      "status": "CORRECTED_AND_RETESTED",
+      "raw": "attempt-02/evidence/raw-first-error.json",
+      "correction": "driver-correction-02.json",
+      "reason": "Expected current name inside OTHER RFQ picker instead of separately checking current header and other saved option."
+    },
+    {
+      "id": "DRIVER-03",
+      "classification": "BROWSER_DRIVER_OBSERVABILITY",
+      "status": "BLOCKED_NO_FURTHER_CORRECTION",
+      "raw": "attempt-03/evidence/raw-first-error.json",
+      "reason": "response.json: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache. Why eviction happened is UNKNOWN. No product restore failure inferred.",
+      "affected": "Additional malformed/content-tamper negative restore final evidence/assertions",
+      "readonlyAdditionalFinding": "Helper uses ZIP_DEFLATED whereas current S4 requires ZIP_STORED; actual UI says RESTORE_UNSUPPORTED_ARCHIVE HTTP400, so intended content-hash rejection not reached. No helper change or new test run."
+    }
+  ],
+  "environmentFailures": [
+    {
+      "type": "npm cache",
+      "originalExit": 254,
+      "resolution": "npm_config_cache points to writable task-local tmp; npm ci exit0; no product/lock changes",
+      "evidence": "automation/npm-ci/stderr.log"
+    }
+  ],
+  "expectedSafetyResponses": [
+    {
+      "test": "real SQLite conflict",
+      "status": 409,
+      "evidence": "attempt-03/evidence/CORE08-conflict-http.json"
+    },
+    {
+      "test": "nonempty restore",
+      "status": 409,
+      "evidence": "attempt-03/evidence/CORE09-nonempty-response.json"
+    }
+  ],
+  "observedNotCompleted": [
+    {
+      "test": "additional malformed/content-tamper ZIP",
+      "observedHttp": 400,
+      "observedUI": "RESTORE_UNSUPPORTED_ARCHIVE",
+      "readonlyTargetUnchanged": true,
+      "status": "BLOCKED; not upgraded to PASS",
+      "evidence": "attempt-03/evidence/FAIL-page1.txt"
+    }
+  ],
+  "correctionLimitHonored": true,
+  "oldEvidenceUnmodified": true,
+  "legacySyntheticMigrationNotTestedByDesign": true,
+  "officialGitHubActionsSuccessClaim": false,
+  "reportPackagingOnly": {
+    "status": "RESOLVED",
+    "original": "report-packaging-original.log",
+    "reason": "Local Markdown-link checker ran before writing the self-referenced SHA256SUMS file. Finalized checksums then verified links; no browser/test rerun or result change."
+  }
+}

@@ -1,0 +1,28 @@
+SRM local prototype: http://127.0.0.1:8765/
+S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.
+SQLite API check: http://127.0.0.1:8765/storage-check
+127.0.0.1 - - [26/Oct/2026 06:56:26] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:26] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:26] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:26] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:26] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:26] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:27] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:56:27] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:56:27] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:56:28] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:56:29] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:56:30] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:56:30] "PUT /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 200 -
+S4 automatic full backup created: SRM_FULL_20261026_065630_07ab1c57.zip
+127.0.0.1 - - [26/Oct/2026 06:56:30] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:31] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:32] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:32] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:32] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:32] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:33] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:35] "PUT /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:35] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:56:35] "GET /api/workspaces/RFQ-1792997787333-5Y0F6L HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:57:26] "GET /api/backups/auto/status HTTP/1.1" 200 -

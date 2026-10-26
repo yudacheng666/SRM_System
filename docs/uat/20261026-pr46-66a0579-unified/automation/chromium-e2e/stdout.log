@@ -1,0 +1,834 @@
+
+> srm_system@1.0.0 test:e2e
+> playwright test
+
+
+Running 55 tests using 1 worker
+
+
+  ✘   1 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:139:1 › 01 startup, demo isolation, autosave, navigation and restart / 启动与隔离 (1.5m)
+
+  ✓   2 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:158:1 › 02 XLSX 12/100, duplicates and invalid format / 物料 (13.1s)
+
+  ✓   3 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:175:1 › 03 suppliers and bidirectional additive allocation / 供应商与分配 (14.1s)
+
+  ✓   4 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:190:1 › 04 real quote imports, rounds, tiers, immutable confirmation and comparison XLSX / 报价比价 (18.0s)
+
+  ✘   5 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:235:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 (27.1s)
+
+  ✘   6 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:266:1 › 06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复 (38.7s)
+
+  ✘   7 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:302:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 (23.1s)
+
+  ✓   8 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:319:1 › 08 bad PDF and damaged ZIP never contaminate saved data / 异常回归 (11.7s)
+
+  ✓   9 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:334:1 › 09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台操作 (14.0s)
+
+  ✓  10 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:365:1 › 10 buyer continuous allocation to items and drawing select without reload / 跨步骤实时同步 (9.0s)
+
+  ✓  11 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:390:1 › 11 formal RFQ identity in missing-quote CSV and working export shortcut / 单据追溯 (10.9s)
+
+  ✘  12 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:422:1 › 12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离 (35.1s)
+
+  ✘  13 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:452:1 › 13 compact laptop item table after import / 1366首屏物料可见 (21.4s)
+
+  ✓  14 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:485:1 › 14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯 (29.0s)
+
+  ✓  15 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:546:1 › 15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离 (20.3s)
+
+  ✘  16 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:590:1 › 44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见 (1.5m)
+
+  ✓  17 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:641:1 › 45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出 (13.0s)
+
+  ✘  18 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:675:1 › 46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分 (1.5m)
+
+  ✓  19 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:46:1 › ERP01: canonical aliases, optional original columns and conflicting identities are explicit (1.9s)
+
+  ✓  20 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:63:1 › ERP02: real XLSX keeps metadata, separates same code with different specs, and survives SQLite refresh (6.7s)
+
+  ✓  21 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:95:1 › ERP03: equal specifications merge quantity; conflicting canonical and alias header blocks commit (3.0s)
+
+  ✓  22 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:116:1 › ERP05: wide 220-column ERP source survives native XLSX importer and remains internal metadata (2.9s)
+
+  ✓  23 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:139:1 › ERP04: new ERP fields are searchable/editable, internal-vs-supplier export boundaries hold (9.2s)
+
+  ✓  24 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:212:1 › ERP06: repeated internal XLSX export and UI import keep current/source RFQ IDs distinct (18.2s)
+
+  ✓  25 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:263:1 › ERP07: specifications visibly distinguish drawing candidates and supplier allocation (3.6s)
+
+  ✓  26 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:291:1 › ERP08: confirmed cannot supply remains visible in comparison, not a zero-priced offer (8.6s)
+
+  ✘  27 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:338:1 › ERP09: second-round scope shows specification and preserves selected line identities (21.3s)
+
+  ✓  28 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:411:1 › ERP10: settings provide three correct XLSX import templates and one header-aware CSV template (6.7s)
+
+  ✓  29 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:525:1 › ERP11: rejected and canceled material previews do not alter line sequence or saved workspace (20.5s)
+
+  ✓  30 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:64:1 › UAT-01 categories follow active imported RFQ in both allocation views (6.3s)
+
+  ✓  31 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:89:1 › UAT-02 manual, pasted and CSV file quotation sources remain distinct in stored state (8.6s)
+
+  ✓  32 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:138:1 › UAT-03 refused restore is visible within current backup section while project drawer collapsed (3.0s)
+
+  ✓  33 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:152:1 › UAT-04 item editor Escape, dirty cancel and keyboard focus confinement (3.7s)
+
+  ✓  34 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:179:1 › UAT-07 drawing guidance reflects currently selected formal RFQ material (2.6s)
+
+  ✓  35 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:69:1 › UX quote: focused intake, non-destructive refresh, compact rows and details / 报价回收安全刷新 (5.9s)
+
+  ✓  36 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:107:1 › UX comparison: decision-first disclosure, priced details and workspace status / 比价与状态层级 (6.2s)
+
+  ✓  37 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:148:1 › UX pending-only: filtered pagination and award state / 待决定筛选真实分页 (5.6s)
+
+  ✓  38 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:183:1 › UX manual-only: buyer-approved amount distinct from suggested totals / 人工定标金额独立显示 (5.4s)
+  ✘  39 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:217:1 › UX project title: Chinese label, rename, history and reload / 询价名称真实保存 (1.5m)
+  ✘  40 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:257:1 › UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页 (15.4s)
+  ✘  41 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:286:1 › UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮 (15.5s)
+
+  ✘  42 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:312:1 › UX item rows: single-line drawing badge and compact row / 物料行高及缺图纸标识 (20.1s)
+
+  ✓  43 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:335:1 › UX allocation: shared compact material list and missing drawing / 供应商物料列表紧凑布局 (5.4s)
+SRM_UI_V2_B1_METRIC={"viewport":{"width":1366,"height":768},"documentWidth":1366,"scrollY":0,"sidebar":{"width":224,"height":768},"tableTop":0,"firstRowTop":516.40625,"firstRowBottom":548.40625,"bodyFont":"14px","tableFont":"12.5px"}
+  ✓  44 prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:53:3 › UI V2 B1 real workspace and visual layout 1366x768 (10.1s)
+SRM_UI_V2_B1_METRIC={"viewport":{"width":1600,"height":900},"documentWidth":1600,"scrollY":0,"sidebar":{"width":224,"height":900},"tableTop":0,"firstRowTop":575.828125,"firstRowBottom":607.828125,"bodyFont":"14px","tableFont":"12.5px"}
+  ✓  45 prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:53:3 › UI V2 B1 real workspace and visual layout 1600x900 (15.7s)
+SRM_UI_V2_B2_METRIC={"width":1366,"height":768,"documentWidth":1366,"scrollY":0,"navBottom":225.34375,"rowTop":679.046875,"rowBottom":711.046875}
+  ✓  46 prototype/m1-lite/tests/e2e/ui-v2-b2.spec.cjs:44:1 › B2 allocation real-browser 1366x768 (7.0s)
+SRM_UI_V2_B2_METRIC={"width":1600,"height":900,"documentWidth":1600,"scrollY":0,"navBottom":238.875,"rowTop":710.46875,"rowBottom":742.46875}
+  ✓  47 prototype/m1-lite/tests/e2e/ui-v2-b2.spec.cjs:44:1 › B2 allocation real-browser 1600x900 (6.8s)
+
+  ✘  48 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:49:1 › B3 quote and comparison with real SQLite 1366x768 (1.5m)
+
+  ✘  49 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:49:1 › B3 quote and comparison with real SQLite 1600x900 (1.5m)
+
+  ✓  50 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:142:1 › B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态 (10.6s)
+SRM_V2_EXPLORE_METRIC={"stage":"items","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1094.40625,"bottom":1094.40625,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":224.34375,"width":926,"height":786.0625,"bottom":1010.40625,"right":1008},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":57,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"assign","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1159.296875,"bottom":1159.296875,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":224.34375,"width":926,"height":850.953125,"bottom":1075.296875,"right":1008},"table":{"x":92,"y":611.90625,"width":577.390625,"height":411.390625,"bottom":1023.296875,"right":669.390625},"tablewrap":{"x":91,"y":610.90625,"width":579.390625,"height":413.390625,"bottom":1024.296875,"right":670.390625},"firstDataRow":{"x":92,"y":640.296875,"width":577.390625,"height":32,"bottom":672.296875,"right":669.390625},"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":54,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quoteImport","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1632.890625,"bottom":1632.890625,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":224.34375,"width":926,"height":1324.546875,"bottom":1548.890625,"right":1008},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":{"x":82,"y":526.015625,"width":926,"height":431,"bottom":957.015625,"right":1008},"quoteReview":{"x":82,"y":969.015625,"width":926,"height":408.78125,"bottom":1377.796875,"right":1008},"confirmButton":{"x":877.984375,"y":1325.796875,"width":114.015625,"height":38,"bottom":1363.796875,"right":992},"tableScrollable":false,"panelButtons":27,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quotes","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1358.625,"bottom":1358.625,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":224.34375,"width":926,"height":1050.28125,"bottom":1274.625,"right":1008},"table":{"x":101,"y":816.59375,"width":888,"height":39.84375,"bottom":856.4375,"right":989},"tablewrap":{"x":100,"y":815.59375,"width":890,"height":41.84375,"bottom":857.4375,"right":990},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":6,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"settings","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1195.578125,"bottom":1195.578125,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":224.34375,"width":926,"height":887.234375,"bottom":1111.578125,"right":1008},"table":null,"tablewrap":null,"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":7,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+  ✓  51 prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:87:1 › EXPLORATORY: desktop stages, control visibility and geometry 1024x768 (8.1s)
+SRM_V2_EXPLORE_METRIC={"stage":"items","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1089.40625,"bottom":1089.40625,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":219.34375,"width":1088,"height":786.0625,"bottom":1005.40625,"right":1339},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":57,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"assign","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1199.296875,"bottom":1199.296875,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":231.34375,"width":1088,"height":883.953125,"bottom":1115.296875,"right":1339},"table":{"x":267,"y":640.90625,"width":701.03125,"height":415.390625,"bottom":1056.296875,"right":968.03125},"tablewrap":{"x":266,"y":639.90625,"width":703.03125,"height":417.390625,"bottom":1057.296875,"right":969.03125},"firstDataRow":{"x":267,"y":673.296875,"width":701.03125,"height":32,"bottom":705.296875,"right":968.03125},"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":54,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quoteImport","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1442.890625,"bottom":1442.890625,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":219.34375,"width":1088,"height":1139.546875,"bottom":1358.890625,"right":1339},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":{"x":251,"y":496.015625,"width":1088,"height":335.5,"bottom":831.515625,"right":1339},"quoteReview":{"x":251,"y":843.515625,"width":1088,"height":344.28125,"bottom":1187.796875,"right":1339},"confirmButton":{"x":1208.984375,"y":1135.796875,"width":114.015625,"height":38,"bottom":1173.796875,"right":1323},"tableScrollable":false,"panelButtons":27,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quotes","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1336.375,"bottom":1336.375,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":219.34375,"width":1088,"height":1033.03125,"bottom":1252.375,"right":1339},"table":{"x":270,"y":794.34375,"width":1050,"height":39.84375,"bottom":834.1875,"right":1320},"tablewrap":{"x":269,"y":793.34375,"width":1052,"height":41.84375,"bottom":835.1875,"right":1321},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":6,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"settings","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1190.578125,"bottom":1190.578125,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":219.34375,"width":1088,"height":887.234375,"bottom":1106.578125,"right":1339},"table":null,"tablewrap":null,"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":7,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+  ✓  52 prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:87:1 › EXPLORATORY: desktop stages, control visibility and geometry 1366x768 (7.0s)
+SRM_V2_EXPLORE_METRIC={"stage":"items","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1148.828125,"bottom":1148.828125,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":247.875,"width":1322,"height":816.953125,"bottom":1064.828125,"right":1573},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":57,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"assign","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1230.71875,"bottom":1230.71875,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":247.875,"width":1322,"height":898.84375,"bottom":1146.71875,"right":1573},"table":{"x":267,"y":672.328125,"width":860.15625,"height":415.390625,"bottom":1087.71875,"right":1127.15625},"tablewrap":{"x":266,"y":671.328125,"width":862.15625,"height":417.390625,"bottom":1088.71875,"right":1128.15625},"firstDataRow":{"x":267,"y":704.71875,"width":860.15625,"height":32,"bottom":736.71875,"right":1127.15625},"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":54,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quoteImport","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1456.8125,"bottom":1456.8125,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":247.875,"width":1322,"height":1124.9375,"bottom":1372.8125,"right":1573},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":{"x":251,"y":563.4375,"width":1322,"height":274,"bottom":837.4375,"right":1573},"quoteReview":{"x":251,"y":849.4375,"width":1322,"height":344.28125,"bottom":1193.71875,"right":1573},"confirmButton":{"x":1442.984375,"y":1141.71875,"width":114.015625,"height":38,"bottom":1179.71875,"right":1557},"tableScrollable":false,"panelButtons":27,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quotes","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1377.796875,"bottom":1377.796875,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":247.875,"width":1322,"height":1045.921875,"bottom":1293.796875,"right":1573},"table":{"x":270,"y":853.765625,"width":1284,"height":39.84375,"bottom":893.609375,"right":1554},"tablewrap":{"x":269,"y":852.765625,"width":1286,"height":41.84375,"bottom":894.609375,"right":1555},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":6,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"settings","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1270,"bottom":1270,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":247.875,"width":1322,"height":938.125,"bottom":1186,"right":1573},"table":null,"tablewrap":null,"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":7,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+  ✓  53 prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:87:1 › EXPLORATORY: desktop stages, control visibility and geometry 1600x900 (7.3s)
+  ✓  54 prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:45:1 › UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归 (9.7s)
+  ✓  55 prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:111:1 › UI V3.1 P2 buyer layout and semantic controls / 正式 RFQ 标题、抽屉、分配与决策 (5.9s)
+
+
+  1) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:139:1 › 01 startup, demo isolation, autosave, navigation and restart / 启动与隔离 
+
+    [31mTest timeout of 90000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 90000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('#itemSearch')[22m
+    [2m    - locator resolved to <input type="text" id="itemSearch" placeholder="全字段模糊搜索"/>[22m
+    [2m    - fill("TST-001")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    154 × waiting for element to be visible, enabled and editable[22m
+    [2m        - element is not visible[22m
+    [2m      - retrying fill action[22m
+    [2m        - waiting 500ms[22m
+
+
+      145 |   await expect.poll(async () => (await (await fetch(baseURL+'/api/backups/auto/status')).json()).retained).toBe(1);
+      146 |   const revision=(await snapshot(page)).revision;
+    > 147 |   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();
+          |                                     ^
+      148 |   await tab(page,'assign'); await page.locator('#assignStateFilter').selectOption({index:1});
+      149 |   await page.locator('#runAssignSearch').click(); await tab(page,'items');
+      150 |   // 中文：负向断言需要跨越完整自动保存窗口。
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:147:37
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/attachments/server-log-b47eadcfa3624781c35e090493640e4d7b6afe00.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:235:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('#pilotModeBadge')
+    Expected substring: [32m"[7m正[27m式"[39m
+    Received string:    [31m"[7m本机工作模[27m式"[39m
+    Timeout: 15000ms
+
+    Call log:
+    [2m  - Expect "toContainText" with timeout 15000ms[22m
+    [2m  - waiting for locator('#pilotModeBadge')[22m
+    [2m    19 × locator resolved to <span class="badge" id="pilotModeBadge">本机工作模式</span>[22m
+    [2m       - unexpected value "本机工作模式"[22m
+
+
+      235 | test('05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包', async ({page,app},info)=>{
+      236 |   await allocated(page,app); await drawings(page,app); await page.reload();
+    > 237 |   await expect(page.locator('#pilotModeBadge')).toContainText('正式');
+          |                                                 ^
+      238 |   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();
+      239 |   await page.locator('#itemBody [data-drawing]').filter({hasText:'PDF'}).first().click();
+      240 |   await expect(page.locator('#drawingLarge iframe')).toBeVisible();
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:237:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/server-log-e3c70ee8d2e549f8f4f73190bffed6d463539f94.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:266:1 › 06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('#pilotModeBadge')
+    Expected substring: [32m"[7m正[27m式"[39m
+    Received string:    [31m"[7m本机工作模[27m式"[39m
+    Timeout: 15000ms
+
+    Call log:
+    [2m  - Expect "toContainText" with timeout 15000ms[22m
+    [2m  - waiting for locator('#pilotModeBadge')[22m
+    [2m    - waiting for navigation to finish...[22m
+    [2m    - navigated to "http://127.0.0.1:8766/"[22m
+    [2m    14 × locator resolved to <span class="badge" id="pilotModeBadge">本机工作模式</span>[22m
+    [2m       - unexpected value "本机工作模式"[22m
+
+
+      282 |     await openTools(other,'#uiDataTools');
+      283 |     await other.locator('#pilotS4BackupFile').setInputFiles(file); await other.locator('#pilotS4RestoreFull').click();
+    > 284 |     await expect(other.locator('#pilotModeBadge')).toContainText('正式');
+          |                                                    ^
+      285 |     expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toEqual(index);
+      286 |     for(const [id,versions] of Object.entries(originals)) for(const w of versions) expect((await (await fetch('http://127.0.0.1:8766/api/workspaces/'+id+'?revision='+w.revision)).json()).workspace).toEqual(w);
+      287 |     for(const item of ws.state.items) for(const pdf of item.drawings||[]) {
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:284:52
+
+    attachment #1: full-backup.zip (application/zip) ───────────────────────────────────────────────
+    test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/attachments/full-backup-zip-66c8d87e540d69fd544d45f09cfefa205be43e8b.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/attachments/server-log-691af733d1565032d0334c0ec59a5f7868dfc5cd.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/error-context.md
+
+    attachment #6: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:302:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('#pilotModeBadge')
+    Expected substring: [32m"[7m正[27m式"[39m
+    Received string:    [31m"[7m本机工作模[27m式"[39m
+    Timeout: 15000ms
+
+    Call log:
+    [2m  - Expect "toContainText" with timeout 15000ms[22m
+    [2m  - waiting for locator('#pilotModeBadge')[22m
+    [2m    18 × locator resolved to <span class="badge" id="pilotModeBadge">本机工作模式</span>[22m
+    [2m       - unexpected value "本机工作模式"[22m
+
+
+      303 |   await fresh(page); const stale=await browser.newPage();stale.on('dialog',d=>d.accept());
+      304 |   try {
+    > 305 |     await stale.goto(baseURL);await expect(stale.locator('#pilotModeBadge')).toContainText('正式');
+          |                                                                              ^
+      306 |     await openTools(stale,'#uiSupplierTools'); await openTools(page,'#uiSupplierTools');
+      307 |     await items(page,app);await save(page);const good=await snapshot(page);
+      308 |     await stale.locator('#pilotCounterpartyCode').fill('CP-STALE');await stale.locator('#pilotSupplierName').fill('虚构旧标签');await stale.locator('#pilotAddSupplier').click();
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:305:78
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/attachments/server-log-16b2ac5198f01a88471c0834536f7f8449745b02.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:422:1 › 12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('#pilotReportPanel')
+    Expected: visible
+    Received: hidden
+    Timeout:  15000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 15000ms[22m
+    [2m  - waiting for locator('#pilotReportPanel')[22m
+    [2m    18 × locator resolved to <div id="pilotReportPanel">…</div>[22m
+    [2m       - unexpected value "hidden"[22m
+
+
+      440 |   await expect(page.locator('#pilotReportHint')).toContainText('已发起供应商询价');
+      441 |   await fresh(page);
+    > 442 |   await expect(page.locator('#pilotReportPanel')).toBeVisible();
+          |                                                   ^
+      443 |   await expect(page.locator('#pilotReportSupplier option')).toHaveCount(0);
+      444 |   await expect(page.locator('#pilotReportSupplierGroup')).toBeEmpty();
+      445 |   await expect(page.locator('#pilotReportHint')).not.toContainText('已发起');
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:442:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/attachments/server-log-de8638139152eab73224b935c9983d8e0a214b91.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:452:1 › 13 compact laptop item table after import / 1366首屏物料可见 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).not.[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('#uiProjectDetails')
+    Expected: not [32m""[39m
+    Received: [31m""[39m
+    Timeout:  15000ms
+
+    Call log:
+    [2m  - Expect "not toHaveAttribute" with timeout 15000ms[22m
+    [2m  - waiting for locator('#uiProjectDetails')[22m
+    [2m    19 × locator resolved to <details open="" id="uiProjectDetails" class="ui-projectDetails">…</details>[22m
+    [2m       - unexpected value ""[22m
+
+
+      456 |   await fresh(page);
+      457 |   await items(page,app);
+    > 458 |   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
+          |                                                       ^
+      459 |   await expect(page.locator('#itemIntake')).not.toBeVisible();
+      460 |   async function checkFirstRow(label) {
+      461 |     await page.evaluate(() => window.scrollTo({top:0,behavior:'instant'}));
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:458:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/attachments/server-log-0341e3b132ef657aaab099f311661cb615729b4f.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:590:1 › 44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见 
+
+    [31mTest timeout of 90000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 90000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('#uiProjectDetails').locator(':scope > summary')[22m
+    [2m    - locator resolved to <summary title="已自动保存第 2 版（6:56:35 AM）">…</summary>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    146 × waiting for element to be visible, enabled and stable[22m
+    [2m        - element is not visible[22m
+    [2m      - retrying click action[22m
+    [2m        - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+
+
+      610 |   await openTools(page,'#uiDataTools');
+      611 |   const projectDrawer=page.locator('#uiProjectDetails');
+    > 612 |   if(await projectDrawer.evaluate(node=>node.open)) await projectDrawer.locator(':scope > summary').click();
+          |                                                                                                     ^
+      613 |   await expect(projectDrawer).not.toHaveAttribute('open','');
+      614 |   const button=page.locator('#pilotS4DownloadFull');
+      615 |   await button.scrollIntoViewIfNeeded();
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:612:101
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/attachments/server-log-c7b6717cc643798c0ab9a6126e0163d4274709a4.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:675:1 › 46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分 
+
+    [31mTest timeout of 90000ms exceeded.[39m
+
+    Error: locator.uncheck: Test timeout of 90000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('#sfItemBody input[data-sfi]').first()[22m
+    [2m    - locator resolved to <input checked type="checkbox" data-sfi="RFQ-L00001"/>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    155 × waiting for element to be visible, enabled and stable[22m
+    [2m        - element is not visible[22m
+    [2m      - retrying click action[22m
+    [2m        - waiting 500ms[22m
+
+
+      697 |   const allocatedBox=page.locator('#sfItemBody input[data-sfi]').first();
+      698 |   await expect(allocatedBox).toBeChecked();
+    > 699 |   await allocatedBox.uncheck();
+          |                      ^
+      700 |   expect((await snapshot(page)).state.assignments).not.toEqual(before.state.assignments);
+      701 |   // 中文：change 事件与捕获阶段结束后应识别真修改；不用点击返回同一瞬间作脆弱断言。
+      702 |   // English: Wait for post-change signature reconciliation; never infer a dirty flag from clicks.
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:699:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/attachments/server-log-272e4b8f57d877812b9269cd4833b02bdceccfca.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:338:1 › ERP09: second-round scope shows specification and preserves selected line identities 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('#quoteTable')
+    Expected substring: [32m"规格：120W"[39m
+    Received string:    [31m"存货历史采购价（未接入）虚构供应商A选择全部适用系统建议 / 人工决定缺图纸ERP-A1 · 虚构电机 · 120W—（未接入）¥9.00交期 · MOQ · 轮次数量 10 · 交期 3 天 · MOQ 1 · 第1轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-A1 · 虚构电机 · 220W—（未接入）¥10.00交期 · MOQ · 轮次数量 3 · 交期 4 天 · MOQ 1 · 第2轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-B2 · 虚构轴套 · M16—（未接入）未报价未选择"[39m
+    Timeout: 15000ms
+
+    Call log:
+    [2m  - Expect "toContainText" with timeout 15000ms[22m
+    [2m  - waiting for locator('#quoteTable')[22m
+    [2m    19 × locator resolved to <table class="table" id="quoteTable">…</table>[22m
+    [2m       - unexpected value "存货历史采购价（未接入）虚构供应商A选择全部适用系统建议 / 人工决定缺图纸ERP-A1 · 虚构电机 · 120W—（未接入）¥9.00交期 · MOQ · 轮次数量 10 · 交期 3 天 · MOQ 1 · 第1轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-A1 · 虚构电机 · 220W—（未接入）¥10.00交期 · MOQ · 轮次数量 3 · 交期 4 天 · MOQ 1 · 第2轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-B2 · 虚构轴套 · M16—（未接入）未报价未选择"[22m
+
+
+      400 |   expect(saved.find(r=>r.roundNo===2)?.lines.map(x=>x.lineId)).toEqual([m220.lineId]);
+      401 |   await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
+    > 402 |   await expect(page.locator('#quoteTable')).toContainText('规格：120W');
+          |                                             ^
+      403 |   await expect(page.locator('#quoteTable')).toContainText('规格：220W');
+      404 |   await expect(page.locator('#quoteTable')).toContainText('¥9.00');
+      405 |   await expect(page.locator('#quoteTable')).toContainText('¥10.00');
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:402:45
+
+    attachment #1: pr16-negotiation-scope (image/png) ──────────────────────────────────────────────
+    test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/attachments/pr16-negotiation-scope-98dcade5a395e4468cc2e9041b537a6b49a0555f.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: erp-server-log (text/plain) ─────────────────────────────────────────────────────
+    test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/attachments/erp-server-log-719234d5915b6a37a8197dc967ee1ed44775d09c.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:217:1 › UX project title: Chinese label, rename, history and reload / 询价名称真实保存 
+
+    [31mTest timeout of 90000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 90000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('.ui-workNav .tab[data-tab="project"]')[22m
+
+
+      38 | const snapshot=page=>page.evaluate(()=>window.SRMPilot.snapshot());
+      39 | async function open(page,id){
+    > 40 |   if(id==='#uiProjectDetails')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+         |                                                                                          ^
+      41 |   if(id==='#uiDataTools'||id==='#srmUxStatusDetails')await page.locator('#uiAdminToggle').click();
+      42 |   if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
+      43 |   const drawer=page.locator(id);
+        at open (/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:40:90)
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:219:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX-projec-8461c-history-and-reload-询价名称真实保存/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX-projec-8461c-history-and-reload-询价名称真实保存/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-ux-structural-UX-projec-8461c-history-and-reload-询价名称真实保存/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:257:1 › UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('.ui-workNav .tab')
+    Expected: [32m5[39m
+    Received: [31m0[39m
+    Timeout:  15000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 15000ms[22m
+    [2m  - waiting for locator('.ui-workNav .tab')[22m
+    [2m    18 × locator resolved to 0 elements[22m
+    [2m       - unexpected value "0"[22m
+
+
+      258 |   const errors=[];page.on('pageerror',e=>errors.push(e.message));
+      259 |   const stages=page.locator('.ui-workNav .tab');
+    > 260 |   await expect(stages).toHaveCount(5);
+          |                        ^
+      261 |   await expect(stages.first()).toHaveText('① 询价项目');
+      262 |   await expect(page.locator('#project')).toHaveClass(/active/);
+      263 |   await expect(page.locator('.srm-v2-sideitem[data-srm-v2-tab="project"]')).toHaveAttribute('aria-current','page');
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:260:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX-projec-12a8a-ls-stage-switching-询价项目独立首页/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX-projec-12a8a-ls-stage-switching-询价项目独立首页/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-ux-structural-UX-projec-12a8a-ls-stage-switching-询价项目独立首页/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:286:1 › UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveClass[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('#project')
+    Expected pattern: [32m/active/[39m
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toHaveClass" with timeout 15000ms[22m
+    [2m  - waiting for locator('#project')[22m
+
+
+      286 | test('UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮',async({page})=>{
+      287 |   const errors=[];page.on('pageerror',e=>errors.push(e.message));
+    > 288 |   await expect(page.locator('#project')).toHaveClass(/active/);
+          |                                          ^
+      289 |   await expect(page.locator('#pilotNewWorkspace')).toHaveText('新建');
+      290 |   await expect(page.locator('#pilotSaveWorkspace')).toHaveText('保存');
+      291 |   await expect(page.locator('#project #pilotS4DownloadFull')).toHaveCount(0);
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:288:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX-admin--b8629-concise-labels-独立备份页与简短项目按钮/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX-admin--b8629-concise-labels-独立备份页与简短项目按钮/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-ux-structural-UX-admin--b8629-concise-labels-独立备份页与简短项目按钮/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13) prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:312:1 › UX item rows: single-line drawing badge and compact row / 物料行高及缺图纸标识 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('#itemBody tr').first()
+    Timeout: 15000ms
+    [32m- Expected substring  - 1[39m
+    [31m+ Received string     + 7[39m
+
+    [32m- TST-001[39m
+    [31m+[39m
+    [31m+ [43m    [49m[39m
+    [31m+     RFQ-L00012TST-012缺图纸[39m
+    [31m+     虚构物料12虚构类别13[39m
+    [31m+     件2[39m
+    [31m+ [43m    [49m[39m
+    [31m+ [43m  [49m[39m
+
+    Call log:
+    [2m  - Expect "toContainText" with timeout 15000ms[22m
+    [2m  - waiting for locator('#itemBody tr').first()[22m
+    [2m    18 × locator resolved to <tr title="双击编辑此询价行" data-edit-line="RFQ-L00012">…</tr>[22m
+    [2m       - unexpected value "[22m
+    [2m    [22m
+    [2m    RFQ-L00012TST-012缺图纸[22m
+    [2m    虚构物料12虚构类别13[22m
+    [2m    件2[22m
+    [2m    [22m
+    [2m  "[22m
+
+
+      324 |   const height=await rows.first().evaluate(el=>el.getBoundingClientRect().height);
+      325 |   expect(height).toBeLessThanOrEqual(40);
+    > 326 |   await expect(page.locator('#itemBody tr').first()).toContainText('TST-001');
+          |                                                      ^
+      327 |   await missing.first().click();
+      328 |   await expect(page.locator('#drawingModal')).toHaveClass(/open/);
+      329 |   expect(errors).toEqual([]);
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:326:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: ux-structural-server-log (text/plain) ───────────────────────────────────────────
+    test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/attachments/ux-structural-server-log-d373e7a5cd13a250911538b4ee434bc0faf0c138.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  14) prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:49:1 › B3 quote and comparison with real SQLite 1366x768 
+
+    [31mTest timeout of 90000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 90000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('#uiProjectDetails').locator(':scope > summary')[22m
+    [2m    - locator resolved to <summary title="检测到业务数据修改，等待操作结束">…</summary>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    157 × waiting for element to be visible, enabled and stable[22m
+    [2m        - element is not visible[22m
+    [2m      - retrying click action[22m
+    [2m        - waiting 500ms[22m
+
+
+      44 | async function close(page,id){
+      45 |  const d=page.locator(id);
+    > 46 |  if(await d.evaluate(n=>n.open))await d.locator(':scope > summary').click();
+         |                                                                     ^
+      47 | }
+      48 | for (const viewport of [{width:1366,height:768},{width:1600,height:900}]){
+      49 | test('B3 quote and comparison with real SQLite '+viewport.width+'x'+viewport.height,async({page,app},info)=>{
+        at close (/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:46:69)
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:97:2
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/attachments/server-log-bcc27737077ccc33ba0220b9a8347ebbd5847209.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  15) prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:49:1 › B3 quote and comparison with real SQLite 1600x900 
+
+    [31mTest timeout of 90000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 90000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('#uiProjectDetails').locator(':scope > summary')[22m
+    [2m    - locator resolved to <summary title="检测到业务数据修改，等待操作结束">…</summary>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    156 × waiting for element to be visible, enabled and stable[22m
+    [2m        - element is not visible[22m
+    [2m      - retrying click action[22m
+    [2m        - waiting 500ms[22m
+
+
+      44 | async function close(page,id){
+      45 |  const d=page.locator(id);
+    > 46 |  if(await d.evaluate(n=>n.open))await d.locator(':scope > summary').click();
+         |                                                                     ^
+      47 | }
+      48 | for (const viewport of [{width:1366,height:768},{width:1600,height:900}]){
+      49 | test('B3 quote and comparison with real SQLite '+viewport.width+'x'+viewport.height,async({page,app},info)=>{
+        at close (/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:46:69)
+        at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:97:2
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/attachments/server-log-8894f094521915df952876c2f95a6741b7465452.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  15 failed
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:139:1 › 01 startup, demo isolation, autosave, navigation and restart / 启动与隔离 
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:235:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:266:1 › 06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复 
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:302:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:422:1 › 12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离 
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:452:1 › 13 compact laptop item table after import / 1366首屏物料可见 
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:590:1 › 44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见 
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:675:1 › 46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分 
+    prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:338:1 › ERP09: second-round scope shows specification and preserves selected line identities 
+    prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:217:1 › UX project title: Chinese label, rename, history and reload / 询价名称真实保存 
+    prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:257:1 › UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页 
+    prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:286:1 › UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮 
+    prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:312:1 › UX item rows: single-line drawing badge and compact row / 物料行高及缺图纸标识 
+    prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:49:1 › B3 quote and comparison with real SQLite 1366x768 
+    prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:49:1 › B3 quote and comparison with real SQLite 1600x900 
+  40 passed (20.0m)

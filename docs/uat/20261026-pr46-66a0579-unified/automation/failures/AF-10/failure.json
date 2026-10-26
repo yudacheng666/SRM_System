@@ -1,0 +1,36 @@
+{
+  "id": "AF-10",
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "classification": "TEST_SETUP",
+  "assessment": "Test requests page but not app fixture; no startup/goto occurs, so application DOM is absent.",
+  "specFile": "ui-ux-structural.spec.cjs",
+  "specStartLine": 217,
+  "title": "UX project title: Chinese label, rename, history and reload / 询价名称真实保存",
+  "status": "FAIL",
+  "rawErrors": [
+    {
+      "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+    },
+    {
+      "location": {
+        "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+        "column": 90,
+        "line": 40
+      },
+      "message": "Error: locator.click: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.ui-workNav .tab[data-tab=\"project\"]')\u001b[22m\n\n\n  38 | const snapshot=page=>page.evaluate(()=>window.SRMPilot.snapshot());\n  39 | async function open(page,id){\n> 40 |   if(id==='#uiProjectDetails')await page.locator('.ui-workNav .tab[data-tab=\"project\"]').click();\n     |                                                                                          ^\n  41 |   if(id==='#uiDataTools'||id==='#srmUxStatusDetails')await page.locator('#uiAdminToggle').click();\n  42 |   if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab=\"assign\"]').click();\n  43 |   const drawer=page.locator(id);\n    at open (/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:40:90)\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:219:9"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-projec-8461c-history-and-reload-询价名称真实保存/test-failed-1.png"
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-projec-8461c-history-and-reload-询价名称真实保存/trace.zip"
+    }
+  ],
+  "laterAssertions": "NOT REACHED; do not infer their PASS from independent tests"
+}
