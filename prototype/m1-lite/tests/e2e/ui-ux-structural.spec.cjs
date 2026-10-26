@@ -400,7 +400,10 @@ test('UX09 exact 1366 comparison density and first-row reachability / 比价紧�
       priceCenter:(price.top+price.bottom)/2,detailCenter:(detail.top+detail.bottom)/2};
   });
   expect(measure.height).toBeLessThanOrEqual(44);
-  expect(measure.top).toBeLessThan(measure.viewport);
+  // 中文：首行必须整行可见，不只让顶部边缘落在768px之内。
+  // English: The complete first quote row must fit above the fold, not just its top edge.
+  expect(measure.top).toBeGreaterThanOrEqual(0);
+  expect(measure.top+measure.height).toBeLessThanOrEqual(measure.viewport);
   expect(Math.abs(measure.priceCenter-measure.detailCenter)).toBeLessThanOrEqual(10);
   await cells.first().locator('.srm-ux-bid-details summary').click();
   await expect(cells.first().locator('.srm-ux-bid-details')).toHaveAttribute('open','');
