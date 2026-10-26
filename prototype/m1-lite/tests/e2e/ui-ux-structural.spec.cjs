@@ -279,3 +279,29 @@ test('UX project page: first workflow stage, visible controls, stage switching /
   expect((await snapshot(page)).workspaceId).toBe(original.workspaceId);
   expect(errors).toEqual([]);
 });
+
+
+// 中文：备份功能必须归独立管理页，项目首页只有新建/保存/切换等业务入口。
+// English: Backup and technical reload are in a separate admin panel, never beneath RFQ creation.
+test('UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮',async({page})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await expect(page.locator('#project')).toHaveClass(/active/);
+  await expect(page.locator('#pilotNewWorkspace')).toHaveText('新建');
+  await expect(page.locator('#pilotSaveWorkspace')).toHaveText('保存');
+  await expect(page.locator('#project #pilotS4DownloadFull')).toHaveCount(0);
+  await expect(page.locator('#project #pilotResumeWorkspace')).toHaveCount(0);
+  await page.locator('#uiAdminToggle').click();
+  await expect(page.locator('#backup')).toBeVisible();
+  await expect(page.locator('#project')).not.toBeVisible();
+  await expect(page.locator('#uiDataTools')).toHaveAttribute('open','');
+  await expect(page.locator('#backup #pilotS4DownloadFull')).toBeVisible();
+  await expect(page.locator('#backup #pilotResumeWorkspace')).toHaveText('重新读取已保存数据');
+  await expect(page.locator('#backup #srmUxStatusDetails')).toHaveCount(1);
+  await expect(page.locator('[data-srm-v2-action="admin"]')).toHaveAttribute('aria-current','page');
+  await expect(page.locator('[data-srm-v2-tab="project"]')).not.toHaveAttribute('aria-current','page');
+  await page.locator('[data-srm-v2-tab="project"]').click();
+  await expect(page.locator('#project')).toBeVisible();
+  await expect(page.locator('#backup')).not.toBeVisible();
+  await expect(page.locator('[data-srm-v2-tab="project"]')).toHaveAttribute('aria-current','page');
+  expect(errors).toEqual([]);
+});
