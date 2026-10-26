@@ -190,7 +190,7 @@ test('B3 tied-lowest manual award semantics and persistence / 并列最低定标
  await expect(metrics.nth(3).locator('strong')).toHaveText('1'); // unresolved tied minimum
  const tieB=page.locator('#quoteTable td[data-award="'+tieItem.lineId+'|SUP-B"]');
  await expect(tieB).toBeVisible();
- await tieB.click();
+ await tieB.locator('.quotePrice').click();
  // Both confirmed suppliers offered ¥20 on this line; supplier B is still a valid minimum.
  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');
  await expect(metrics.nth(2).locator('strong')).toHaveText('1');
@@ -203,13 +203,13 @@ test('B3 tied-lowest manual award semantics and persistence / 并列最低定标
  expect(current.state.awardReasons.some(x=>x.key===tieItem.lineId)).toBe(false);
  // A truly higher quote (12 vs 8) still needs an explicit reason, including in bulk logic.
  const higherB=page.locator('#quoteTable td[data-award="'+dearerItem.lineId+'|SUP-B"]');
- await higherB.click();
+ await higherB.locator('.quotePrice').click();
  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','false');
  await expect(page.locator('#awardReasonContext')).toContainText('并非最低报价');
  await page.locator('#awardReasonCancel').click();
  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');
  expect((await snap(page)).state.manualAwards).toHaveLength(1);
- await higherB.click();
+ await higherB.locator('.quotePrice').click();
  await page.locator('#awardReasonInput').fill('虚构测试：交期和保障条款更适合');
  await page.locator('#awardReasonConfirm').click();
  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');
