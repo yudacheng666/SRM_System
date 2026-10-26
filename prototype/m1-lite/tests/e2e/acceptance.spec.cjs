@@ -336,7 +336,9 @@ test('09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台�
   await expect(page.locator('#uiDataTools')).not.toHaveAttribute('open', '');
   await fresh(page);
   const initial=(await snapshot(page)).revision;
-  await expect(page.locator('#uiCurrentRfq')).toContainText('RFQ-');
+  // 中文：采购员应看到可读的项目名称，内部不透明编号另存于可展开详情。
+  // English: Buyer UI displays a readable title, with the stable internal key in diagnostics.
+  await expect(page.locator('#uiCurrentRfq')).toContainText('未命名询价');
   await page.locator('#uiFieldSettings').click();
   await expect(page.locator('#settings')).toBeVisible();
   await tab(page,'assign');
@@ -467,7 +469,9 @@ test('13 compact laptop item table after import / 1366首屏物料可见',async 
   await checkFirstRow('After import');
   await saved(page);
   await page.reload();
-  await expect(page.locator('#uiCurrentRfq')).toContainText('RFQ-');
+  // 中文：采购员应看到可读的项目名称，内部不透明编号另存于可展开详情。
+  // English: Buyer UI displays a readable title, with the stable internal key in diagnostics.
+  await expect(page.locator('#uiCurrentRfq')).toContainText('未命名询价');
   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
   await checkFirstRow('Fresh page reload');
 });
