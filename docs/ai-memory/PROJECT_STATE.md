@@ -18,7 +18,7 @@
 | M1 开发基线 / Development | draft/20261013-m1-storage-ui-audit @ \`b0629a06a7ab2880fc86427e26a953d722487a57\` | M1 Lite, SQLite, ERP core fields, V3.1, S4 and merged #47 memory |
 | 已批准 UI 设计 / Design | [#44](https://github.com/yudacheng666/SRM_System/pull/44) Draft @ \`8e643520\` | Architecture and acceptance matrix only, not product code |
 | 并行历史候选 / Alternate | [#45](https://github.com/yudacheng666/SRM_System/pull/45) Draft @ \`4480482c5bbb280257c06aa44889706705663280\` | Two CI SUCCESS on that SHA, **not** evidence for #46 |
-| 当前 UI 产品候选 / Active UI | [#46](https://github.com/yudacheng666/SRM_System/pull/46) Draft @ `08f4c570666060cd263883949e24616c73811fa9` | Windows buyer feedback four-point Chinese UI and editable RFQ title implemented; **JS syntax PASS ONLY, exact current-SHA real regression PENDING**; former 103+8 PASS applies to prior `2dbde57`, not new head; not merged |
+| 当前 UI 产品候选 / Active UI | [#46](https://github.com/yudacheng666/SRM_System/pull/46) Draft @ `424dce48c7ba0a66e25d4f97de633d40c4c1ccd6` | Buyer feedback issues 1–5 fixed in branch (Chinese title/renamable RFQ + project sidebar selection); **static JS syntax PASS ONLY; final exact-SHA browser regression intentionally DEFERRED until user finishes collecting issues**; old 103+8 PASS pertains only to `2dbde57`, not current head; not merged |
 | 项目记忆 / Memory | [#47](https://github.com/yudacheng666/SRM_System/pull/47), merged 2026-10-22 | AGENTS.md + PROJECT_STATE + DECISIONS + original session now on M1 dev, not main |
 
 ## Validated development history / 已核实开发和证据
@@ -59,6 +59,9 @@
 - GitHub Actions runner/account restriction and native Windows three NOT TESTED remain; locally running user's application is not automatically upgraded by GitHub commits. Under approved [D-022](DECISIONS.md) development alternative, reverify cloud suites for the changed SHA, then native Windows and separate user authorization before any merge. [D-023](DECISIONS.md) records buyer-friendly Chinese naming/copy rule; no backend ID migration.
   新提交仅静态检查通过；不要把旧版全绿报告套用到新版本。
 
+- **Buyer feedback #5 (2026-10-26):** Clicking `询价项目` opened the project controls but left `物料与图纸` selected in the sidebar. [PR #46 fix `424dce4`](https://github.com/yudacheng666/SRM_System/commit/424dce48c7ba0a66e25d4f97de633d40c4c1ccd6) makes project/admin drawer actions retain the **exclusive** `aria-current` selection until navigating to another page or collapsing that active drawer. Same behavior for header shortcuts; no business-state mutation. Added precise assertions in `ui-v2-exploratory.spec.cjs`. **8 inline JS scripts and test spec parse PASS; actual Chromium on new head NOT YET RUN**. User expressly requested incremental fixes and **one consolidated Codex Cloud run only after declaring feedback complete**, not tests after each minor bug.
+  当前先继续采集并修复问题；待用户明确“统一测试”后冻结最终SHA一次性复验，不自动启动Codex。
+
 ## CI blocker / 自动化阻断
 
 - Exact PR #46 HEAD \`c2737f0\` triggered [S3/S4 run 39743002740](https://github.com/yudacheng666/SRM_System/actions/runs/39743002740) and [UI run 39743002722](https://github.com/yudacheng666/SRM_System/actions/runs/39743002722); both concluded FAILURE **before test execution**.
@@ -81,9 +84,9 @@
 
 ## Open gates / 后续门槛
 
-1. **New exact-HEAD gate before Windows acceptance:** PR #46 `08f4c57` edits buyer-facing name persistence plus backend history index. Codex Cloud reruns complete Python/Node/Chromium and focused **fresh-data rename/save/switch and current-version backup safety** tests on this exact SHA (no migration/legacy synthetic ZIP blocker under D-024); old 103+8 evidence applies to `2dbde57` only. Then native Windows isolated trial (Python3.13, Node22, PowerShell/BAT, localhost SQLite/S4 and suppliers). Use only synthetic data; Python3.15 cannot substitute for an explicit 3.13 compatibility claim.
+1. **Next immediate action: incremental Windows buyer feedback** on Draft PR #46 `424dce4`; user will send additional screenshots/problems and ChatGPT fixes them on the existing branch, with static sanity checks only. Do **not** start another Codex run for each change. After the user's explicit final collection/“统一测试”, freeze **actual final SHA** and run full Python/Node/Chromium, focused title/persistence/sidebar + current-version S4 safety on fresh isolated fixtures (no old test backup migration under D-024), then native Windows safety checks. Prior 103+8 PASS is old SHA only.
 2. New 2dbde57 push triggered [UI 39766115997](https://github.com/yudacheng666/SRM_System/actions/runs/39766115997) and [S3-S4 39766115887](https://github.com/yudacheng666/SRM_System/actions/runs/39766115887); four jobs again steps=[] / no runner. In November, first inspect account billing/limit, then rerun exact new HEAD on actual Actions runners.
-3. Codex Cloud full local suites and scoped buyer UAT on **old** `2dbde57` are complete (103 + 8 PASS). For current `08f4c57` the exact-sha suites and changed-name scope must be rerun (code now changed). Once new-head evidence + native Windows checks PASS, prepare M1 development merge recommendation only, subject to owner's separate approval and enforced GitHub checks. No `main` promotion.
+3. Codex Cloud full suites/UAT on **old** `2dbde57` completed (103+8 PASS). Product changed since then; new-head suites will be run **once after user declares the feedback batch complete**, not yet. After final-head cloud evidence + native Windows checks PASS, prepare M1 development merge recommendation subject to separate owner approval and enforced GitHub checks; no `main` promotion.
 4. Reconcile #45/#46 duplication, collect buyer feedback, and ask owner for explicit permission before any merge to M1/main. Main stays M0 until approved.
 5. Update canonical memory after each substantial new code/CI/UAT/decision milestone through authorized docs-only PRs; do not overwrite this unmerged checkpoint concurrently.
 
