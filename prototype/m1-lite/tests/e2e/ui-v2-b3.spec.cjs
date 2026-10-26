@@ -34,6 +34,8 @@ const test=base.extend({
 });
 const snap=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 async function open(page,id){
+ if(id==='#uiProjectDetails'||id==='#uiDataTools')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+ if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
  const d=page.locator(id);
  if(!await d.evaluate(n=>n.open))await d.locator(':scope > summary').click();
  await expect(d).toHaveAttribute('open','');
@@ -48,6 +50,7 @@ test('B3 quote and comparison with real SQLite '+viewport.width+'x'+viewport.hei
  await page.setViewportSize(viewport);
  await open(page,'#uiProjectDetails');
  await page.locator('#pilotNewWorkspace').click();
+ await page.locator('.ui-workNav .tab[data-tab="items"]').click();
  await page.locator('#toggleItemIntake').click();
  await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'items12.xlsx'));
  await expect(page.locator('#confirmImportRows')).toBeEnabled();
@@ -140,6 +143,7 @@ test('B3 tied-lowest manual award semantics and persistence / 并列最低定标
  await page.setViewportSize({width:1366,height:768});
  await open(page,'#uiProjectDetails');
  await page.locator('#pilotNewWorkspace').click();
+ await page.locator('.ui-workNav .tab[data-tab="items"]').click();
  await page.locator('#toggleItemIntake').click();
  await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'items12.xlsx'));
  await expect(page.locator('#confirmImportRows')).toBeEnabled();
