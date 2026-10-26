@@ -33,6 +33,8 @@ const test=base.extend({
 });
 const snapshot=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 async function ensureOpen(page,id){
+  if(id==='#uiProjectDetails'||id==='#uiDataTools')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
   const el=page.locator(id);
   if(!await el.evaluate(n=>n.open))await el.locator(':scope > summary').click();
   await expect(el).toHaveAttribute('open','');
@@ -40,6 +42,7 @@ async function ensureOpen(page,id){
 async function start(page,app,{suppliers=false}={}){
   await ensureOpen(page,'#uiProjectDetails');
   await page.locator('#pilotNewWorkspace').click();
+  await page.locator('.ui-workNav .tab[data-tab="items"]').click();
   await page.locator('#toggleItemIntake').click();
   await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'items12.xlsx'));
   await expect(page.locator('#confirmImportRows')).toBeEnabled();
