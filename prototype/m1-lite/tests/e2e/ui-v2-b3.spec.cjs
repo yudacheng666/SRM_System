@@ -42,6 +42,9 @@ async function open(page,id){
  await expect(d).toHaveAttribute('open','');
 }
 async function close(page,id){
+ // 中文：项目/备份管理为独立固定页面，不可点击隐藏的 summary 折叠按钮。
+ // English: Dedicated project and admin pages must not be collapsed by legacy tests.
+ if(id==='#uiProjectDetails'||id==='#uiDataTools')return;
  const d=page.locator(id);
  if(await d.evaluate(n=>n.open))await d.locator(':scope > summary').click();
 }
