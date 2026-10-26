@@ -236,6 +236,9 @@ with zipfile.ZipFile(sys.argv[1]) as z:
 test('05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包', async ({page,app},info)=>{
   await allocated(page,app); await drawings(page,app); await page.reload();
   await expect(page.locator('#pilotModeBadge')).toContainText('本机工作模式');
+  // 中文：刷新可能回到项目页；按采购员流程切换到物料再使用可见搜索框。
+  // English: Return to the visible Materials stage after reload before searching.
+  await tab(page,'items');
   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();
   await page.locator('#itemBody [data-drawing]').filter({hasText:'PDF'}).first().click();
   await expect(page.locator('#drawingLarge iframe')).toBeVisible();
@@ -309,6 +312,9 @@ test('07 real service disconnect and stale-tab 409 halt autosave / 自动保存�
     await stale.locator('#pilotCounterpartyCode').fill('CP-STALE');await stale.locator('#pilotSupplierName').fill('虚构旧标签');await stale.locator('#pilotAddSupplier').click();
     await expect(stale.locator('#pilotAutosaveStatus')).toContainText('HTTP 409');await expect(stale.locator('#pilotAutosaveStatus')).toContainText('停止自动重试');
     expect((await (await fetch(baseURL+'/api/workspaces/'+good.workspaceId)).json()).workspace).toEqual(good);
+    // 中文：断线前打开供应商操作页，断线后用当前可见输入框测试真实保存失败。
+    // English: Put the supplier form on-screen before disconnecting the real service.
+    await openTools(page,'#uiSupplierTools');
     await app.stop(app.child);
     await page.locator('#pilotCounterpartyCode').fill('CP-OFFLINE');await page.locator('#pilotSupplierName').fill('虚构断线');await page.locator('#pilotAddSupplier').click();
     await expect(page.locator('#pilotAutosaveStatus')).toContainText('保存失败');
@@ -483,7 +489,10 @@ test('13 compact laptop item table after import / 1366首屏物料可见',async 
   // 中文：采购员应看到可读的项目名称，内部不透明编号另存于可展开详情。
   // English: Buyer UI displays a readable title, with the stable internal key in diagnostics.
   await expect(page.locator('#uiCurrentRfq')).toContainText('未命名询价');
-  await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
+  // 中文：项目页是常驻页面，刷新后先返回物料视图，再验收首屏行位置。
+  // English: Navigate to Materials; do not assert the permanent project page is collapsed.
+  await tab(page,'items');
+  await expect(page.locator('#items')).toBeVisible();
   await checkFirstRow('Fresh page reload');
 });
 
