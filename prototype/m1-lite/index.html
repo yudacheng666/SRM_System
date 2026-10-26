@@ -195,6 +195,13 @@ body.srm-v2 .ui-context{
   margin-bottom:10px;box-shadow:none;
 }
 body.srm-v2 .ui-context b{font-size:16px;color:#17263e}
+/* 中文：采购员可识别的名称优先显示，技术 ID 只在详情中保留。
+ * English: Business-facing project titles replace opaque internal identities in the main UI. */
+body.srm-v2 .srm-ux-projectNameRow{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+body.srm-v2 .srm-ux-projectNameRow b{overflow-wrap:anywhere}
+body.srm-v2 #uiRenameRfqBtn{padding:4px 8px;min-height:26px;font-size:11px}
+body.srm-v2 #uiRfqNameInput{min-width:220px;width:min(420px,60vw);font-size:14px;font-weight:650;padding:5px 8px;border:1px solid #8eafd9;border-radius:5px;color:#183a61}
+body.srm-v2 #uiRfqNameInput[hidden],body.srm-v2 #uiRenameRfqBtn[hidden]{display:none!important}
 body.srm-v2 .ui-context small{font-size:12px;color:#65758b}
 body.srm-v2 .ui-contextRight small{font-size:12px}
 body.srm-v2 #pilotNotice{font-size:12px;border-radius:6px;padding:7px 11px;margin-bottom:10px!important}
@@ -1418,7 +1425,7 @@ body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps span{font-size:12px;font-we
 
   <header class="top ui-appHeader">
     <div class="ui-brand">
-      <div class="ui-eyebrow">PURCHASING WORKSPACE <span class="srm-v3-headline-divider"></span> 询价与比价</div>
+      <div class="ui-eyebrow">询价与比价</div>
       <h1>SRM <span class="srm-v3-appname">采购工作台</span></h1>
       <div class="sub" id="pilotSubtitle">演示模式：请从空白正式工作开始。</div>
     </div>
@@ -1433,7 +1440,7 @@ body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps span{font-size:12px;font-we
   </header>
 
   <div class="ui-context" aria-label="当前询价工作摘要">
-    <div><small>当前工作 / Current RFQ</small><div><b id="uiCurrentRfq">演示数据</b></div></div>
+    <div class="srm-ux-projectLabel"><small>当前询价项目</small><div class="srm-ux-projectNameRow"><b id="uiCurrentRfq">演示数据</b><button class="btn soft" type="button" id="uiRenameRfqBtn" hidden>修改名称</button><input type="text" id="uiRfqNameInput" maxlength="80" aria-label="询价名称" placeholder="输入询价项目名称，回车保存" hidden></div></div>
     <div class="ui-contextRight"><span class="srm-ux-save-indicator" id="srmUxWorkspaceSaveSummary" role="status" aria-live="polite">正在检查保存状态…</span></div>
   </div>
   <div class="notice" id="pilotNotice" style="margin:0 0 12px">演示模式不会保存；请新建空白正式询价后开始操作。</div>
@@ -2341,7 +2348,7 @@ function parseSet(xs,label){ensure(Array.isArray(xs),"ARRAY_"+label);xs.forEach(
 function emptyState(){
   return {items:[],suppliers:[],assignments:[],quoteRounds:[],awards:[],awardReasons:[],
     manualAwards:[],awardReviewIds:[],supplierPool:[],selectedCompareSuppliers:[],
-    customFields:[],lineSeq:0,createdSeq:0,quoteComparisonMode:"returned"};
+    customFields:[],projectName:"",lineSeq:0,createdSeq:0,quoteComparisonMode:"returned"};
 }
 /* 中文：仅用户明确创建的真实工作空间才标记为 buyer；演示模式须显式标记。
  * English: Buyer workspace is created explicitly, never inferred from synthetic demo seeds. */
@@ -2369,6 +2376,9 @@ function captureM0(input){
     supplierPool:listSet(st.supplierPool,"POOL"),
     selectedCompareSuppliers:listSet(st.selectedCompareSuppliers,"COMMON"),
     customFields:copy(st.customFields),
+    // 中文：独立的询价名称不替换工作空间 ID，以免破坏图纸和历史关联。
+    // English: Persist a buyer-facing title separately from the immutable workspace identity.
+    projectName:st.projectName==null?"":st.projectName,
     lineSeq:st.lineSeq,createdSeq:st.createdSeq,
     quoteComparisonMode:input.origin==="demo"?"demo":st.quoteComparisonMode
   };
@@ -2380,6 +2390,10 @@ function validate(ws){
   ensure(id(ws.workspaceId)&&(ws.origin==="buyer"||ws.origin==="demo"),"WORKSPACE");
   ensure(Number.isSafeInteger(ws.revision)&&ws.revision>=0,"REVISION");
   const s=ws.state;ensure(isObj(s),"STATE");
+  // 中文：兼容旧版没有项目名称的历史工作空间；拒绝过长、格式错误的名称。
+  // English: Older snapshots may omit the optional project name without migration or ID changes.
+  ensure(s.projectName==null||(typeof s.projectName==="string"&&s.projectName.length<=80&&
+    !/[\u0000-\u001F\u007F]/.test(s.projectName)),"PROJECT_NAME");
   for(const name of ["items","suppliers","assignments","quoteRounds","awards","awardReasons","manualAwards","awardReviewIds","supplierPool","selectedCompareSuppliers","customFields"]){
     ensure(Array.isArray(s[name])&&s[name].length<=LIMIT,"ARRAY_"+name);
   }
@@ -5273,7 +5287,46 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   const erpSupplierName=document.getElementById("pilotSupplierName");
   const badge=document.getElementById("pilotModeBadge");
   const rfqHead=document.getElementById("pilotRfqHead");
-  let buyerMode=false,workspaceId=null,revision=0,busy=false,dirty=false,localReady=false,blocked=false;
+  const nameInput=document.getElementById("uiRfqNameInput");
+  const renameBtn=document.getElementById("uiRenameRfqBtn");
+  let buyerMode=false,workspaceId=null,projectName="",revision=0,busy=false,dirty=false,localReady=false,blocked=false;
+  // 中文：时间作为缺省可读名称；真实内部编号始终保持不变，允许采购员重命名。
+  // English: Show a readable date-based fallback; preserve the stable internal ID.
+  function fallbackProjectName(id){
+    const match=/^RFQ-(\d{13})-/.exec(id||"");
+    if(!match)return "未命名询价";
+    const date=new Date(Number(match[1]));
+    if(!Number.isFinite(date.getTime()))return "未命名询价";
+    const pad=x=>String(x).padStart(2,"0");
+    return "未命名询价（"+date.getFullYear()+"-"+pad(date.getMonth()+1)+"-"+pad(date.getDate())+
+      " "+pad(date.getHours())+":"+pad(date.getMinutes())+"）";
+  }
+  function displayProjectName(){return projectName||fallbackProjectName(workspaceId)}
+  // 中文：回车/离焦提交名称，仍走原有 SQLite 自动保存和冲突保护。
+  // English: Rename is a normal business-state edit, guarded by existing SQLite autosave.
+  function finishProjectRename(cancel=false){
+    if(nameInput.hidden)return;
+    const next=cancel?projectName:nameInput.value.trim();
+    nameInput.hidden=true;renameBtn.hidden=!buyerMode;
+    if(!cancel&&next!==projectName){
+      projectName=next;
+      dirty=true;lastChangeAt=Date.now();
+      autosaveLabel("询价名称有未保存修改");
+      status("询价名称已修改，正在等待保存到本机。");
+    }
+    rfqHead.textContent=displayProjectName();
+    buttons();
+  }
+  renameBtn.addEventListener("click",()=>{
+    if(!buyerMode||busy||blocked)return;
+    nameInput.value=projectName;nameInput.placeholder=fallbackProjectName(workspaceId);
+    renameBtn.hidden=true;nameInput.hidden=false;nameInput.focus();nameInput.select();
+  });
+  nameInput.addEventListener("keydown",event=>{
+    if(event.key==="Enter"){event.preventDefault();finishProjectRename()}
+    if(event.key==="Escape"){event.preventDefault();finishProjectRename(true)}
+  });
+  nameInput.addEventListener("blur",()=>finishProjectRename());
   let serverActiveId=null,s4Available=false;
   // 中文：仅真实业务快照差异会触发自动保存；忽略搜索、筛选和导航。
   // English: Only actual persisted business-state changes trigger autosave.
@@ -5408,14 +5461,15 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     document.getElementById("pilotDrawingPanel").style.display=buyerMode?"block":"none";
     badge.textContent=buyerMode?"SQLite 本机正式工作":"本机演示模式（不保存）";
     newBtn.textContent=buyerMode?"新建另一笔空白询价":"新建空白正式工作";
-    rfqHead.textContent=buyerMode?workspaceId:"RFQ-DEMO-001";
+    rfqHead.textContent=buyerMode?displayProjectName():"演示数据";
+    renameBtn.hidden=!buyerMode||!nameInput.hidden;
     document.getElementById("pilotSubtitle").textContent=buyerMode?
-      "S4 自动保存候选：停止编辑约 3 秒后写入 SQLite；仍可手动保存和完整备份。":
-      "S4 本机原型：演示数据不保存；新建正式询价后可以写入 SQLite";
+      "修改内容会自动保存到本机，也可以手动点击“保存到本机”。":
+      "演示数据不会保存；新建询价后可保存到本机。";
     document.getElementById("pilotNotice").textContent=buyerMode?
-      "数据修改后等待短暂空闲会自动保存到 SQLite；手动保存仍可用。S4 完整 ZIP 仅允许恢复至空白目录。":
-      "使用 run_local.bat 启动后，可新建正式询价并保存到本机 SQLite。原测试 JSON/ZIP 不迁移。";
-    document.getElementById("pilotFooter").textContent="S4：自动保存 + 完整 SQLite/PDF ZIP；恢复只允许空白目录，报价邮件和截图尚未纳入。";
+      "数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。":
+      "这是演示数据，不会保存。请新建一笔询价开始正式操作。";
+    document.getElementById("pilotFooter").textContent="修改内容自动保存；备份与恢复请前往“数据与备份”。";
     document.getElementById("demoExcelImport").disabled=buyerMode;
     document.getElementById("demoQuoteExcel").disabled=buyerMode;
     document.getElementById("demoMatchUpdate").disabled=buyerMode;
@@ -5436,7 +5490,10 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       if(x.workspaceId===workspaceId)continue;
       const option=document.createElement("option");
       option.value=x.workspaceId;
-      option.textContent=x.workspaceId+" · 第 "+x.revision+" 版";
+      // 中文：历史询价列表显示保存的业务名称；内部 ID 仅作为选项值和详情。
+      // English: Historical picker shows persisted buyer names instead of opaque UUID-like IDs.
+      option.textContent=(x.projectName||fallbackProjectName(x.workspaceId))+" · 第 "+x.revision+" 版";
+      option.title="系统编号："+x.workspaceId;
       historyPicker.appendChild(option);
     }
     if([...historyPicker.options].some(x=>x.value===prior))historyPicker.value=prior;
@@ -5446,7 +5503,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     return model.captureM0({
       workspaceId,origin:"buyer",sourceDataKind:"buyer",revision,
       state:{items,suppliers,assignments,quoteRounds,awards,awardReasons,manualAwards,awardReviewIds,
-        supplierPool:rfqSupplierPool,selectedCompareSuppliers,customFields,lineSeq,createdSeq,quoteComparisonMode}
+        supplierPool:rfqSupplierPool,selectedCompareSuppliers,customFields,projectName,lineSeq,createdSeq,quoteComparisonMode}
     });
   }
   function resetUI(){
@@ -5473,7 +5530,9 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     selectedCompareSuppliers.clear();for(const x of s.selectedCompareSuppliers)selectedCompareSuppliers.add(x);
     customFields.splice(0,customFields.length,...s.customFields);
     lineSeq=s.lineSeq;createdSeq=s.createdSeq;quoteComparisonMode="returned";
-    workspaceId=data.workspaceId;revision=data.revision;buyerMode=true;dirty=false;
+    workspaceId=data.workspaceId;projectName=typeof s.projectName==="string"?s.projectName:"";
+    revision=data.revision;buyerMode=true;dirty=false;
+    nameInput.hidden=true;renameBtn.hidden=false;
     buttons();resetUI();window.SRMDrawUI?.refresh();dirty=false;
     resetAutosaveBaseline();
     // 中文：询价身份切换后只通知其他 UI 面板刷新；不触发数据库写入。
@@ -6241,6 +6300,17 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   for(const id of ["pilotSaveStatus","pilotAutosaveStatus","pilotAutoBackupStatus"]){
     diagnostic.appendChild(one(id));
   }
+  // 中文：技术性唯一编号仅在按需展开的详情可见，业务标题独立。
+  // English: Keep the immutable internal key accessible only as on-demand diagnostics.
+  const internalId=document.createElement("div");
+  internalId.innerHTML='<strong>系统内部编号：</strong> <span id="srmUxInternalWorkspaceId"></span>';
+  diagnostic.append(internalId);
+  const updateInternalId=()=>{
+    const snapshot=window.SRMPilot?.snapshot?.();
+    internalId.querySelector("span").textContent=snapshot?.workspaceId||"演示模式";
+  };
+  window.addEventListener("srm:workspace-changed",updateInternalId);
+  updateInternalId();
   statusDetails.append(statusSummary,diagnostic);
   statusStrip.append(statusDetails);
   project.after(statusStrip);

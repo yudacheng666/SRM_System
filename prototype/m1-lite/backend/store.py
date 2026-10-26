@@ -185,9 +185,14 @@ class SnapshotStore:
         """中文：只返回索引元数据而非整份询价。English: Return metadata only."""
         with self._connect() as connection:
             rows = connection.execute(
-                "SELECT workspace_id, revision, updated_at FROM workspaces ORDER BY updated_at DESC, workspace_id"
+                # 中文：只从 JSON 快照提取可读项目名称，保留原存货、报价等数据不变。
+                # English: Extract optional display names without changing IDs or serialized business data.
+                "SELECT workspace_id, revision, updated_at, json_extract(snapshot_json, '$.state.projectName') "
+                "FROM workspaces ORDER BY updated_at DESC, workspace_id"
             ).fetchall()
-        return [{"workspaceId": x[0], "revision": x[1], "updatedAt": x[2]} for x in rows]
+        return [{"workspaceId": x[0], "revision": x[1], "updatedAt": x[2],
+                 "projectName": x[3] if isinstance(x[3], str) and len(x[3]) <= 80 else ""}
+                for x in rows]
 
     def backup(self, destination: str | Path) -> Path:
         """中文：使用 SQLite Backup API 导出一致性副本并校验。English: Consistent verified backup."""

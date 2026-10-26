@@ -206,3 +206,43 @@ test('UX manual-only: buyer-approved amount distinct from suggested totals / 人
   expect((await snapshot(page)).state.manualAwards).toHaveLength(0);
   expect(errors).toEqual([]);
 });
+
+
+// 中文：编辑可读询价名称须真实保存、切换及重载后保留；底层工作空间身份不得改变。
+// English: Renaming a buyer RFQ persists to SQLite and history without mutating the immutable key.
+test('UX project title: Chinese label, rename, history and reload / 询价名称真实保存',async({page})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await open(page,'#uiProjectDetails');
+  await page.locator('#pilotNewWorkspace').click();
+  const before=await snapshot(page);
+  await expect(page.locator('#uiCurrentRfq')).toContainText('未命名询价');
+  await expect(page.locator('#uiRenameRfqBtn')).toBeVisible();
+  await expect(page.locator('.ui-eyebrow')).toHaveText('询价与比价');
+  await expect(page.locator('.ui-context small').first()).toHaveText('当前询价项目');
+  await expect(page.locator('#pilotSubtitle')).toContainText('自动保存到本机');
+  await page.locator('#uiRenameRfqBtn').click();
+  await page.locator('#uiRfqNameInput').fill('虚构测试零件询价（第二批）');
+  await page.locator('#uiRfqNameInput').press('Enter');
+  await expect(page.locator('#uiCurrentRfq')).toHaveText('虚构测试零件询价（第二批）');
+  await expect.poll(async()=>{
+    const data=await page.request.get(URL+'/api/workspaces/'+before.workspaceId);
+    if(!data.ok())return false;
+    const saved=(await data.json()).workspace;
+    return saved.state.projectName==='虚构测试零件询价（第二批）'&&saved.workspaceId===before.workspaceId;
+  },{timeout:20000}).toBe(true);
+  await page.reload();
+  await expect(page.locator('#uiCurrentRfq')).toHaveText('虚构测试零件询价（第二批）');
+  await open(page,'#uiProjectDetails');
+  await open(page,'#srmUxStatusDetails');
+  await expect(page.locator('#srmUxInternalWorkspaceId')).toHaveText(before.workspaceId);
+  await open(page,'#uiProjectDetails');
+  await page.locator('#pilotNewWorkspace').click();
+  await expect.poll(async()=>{const current=await snapshot(page);return current.workspaceId!==before.workspaceId}).toBe(true);
+  await open(page,'#uiProjectDetails');
+  await expect(page.locator('#pilotHistoryWorkspace')).toContainText('虚构测试零件询价（第二批）');
+  await page.locator('#pilotHistoryWorkspace').selectOption(before.workspaceId);
+  await page.locator('#pilotSwitchWorkspace').click();
+  await expect(page.locator('#uiCurrentRfq')).toHaveText('虚构测试零件询价（第二批）');
+  expect((await snapshot(page)).workspaceId).toBe(before.workspaceId);
+  expect(errors).toEqual([]);
+});

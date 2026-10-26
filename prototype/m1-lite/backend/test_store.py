@@ -33,6 +33,20 @@ class SnapshotStoreTests(unittest.TestCase):
         self.assertEqual(reopened.get("RFQ-DEMO-001")["state"]["items"][0]["name"], "模拟物料")
         self.assertEqual(len(reopened.list_workspaces()), 1)
 
+    def test_business_project_name_in_history_keeps_immutable_id(self):
+        """中文：改项目名称只更新显示索引，不改数据身份和旧版本。English: Rename never rewrites identity."""
+        old = make_workspace()
+        self.store.save(old)
+        self.assertEqual(self.store.list_workspaces()[0]["projectName"], "")
+        next_ws = make_workspace(revision=2)
+        next_ws["state"]["projectName"] = "示例设备零件询价（第二批）"
+        self.store.save(next_ws, expected_revision=1)
+        row = self.store.list_workspaces()[0]
+        self.assertEqual(row["workspaceId"], "RFQ-DEMO-001")
+        self.assertEqual(row["projectName"], "示例设备零件询价（第二批）")
+        self.assertEqual(self.store.get("RFQ-DEMO-001", revision=1)["state"].get("projectName"), None)
+        self.assertEqual(self.store.get("RFQ-DEMO-001")["state"]["projectName"], row["projectName"])
+
     def test_revision_conflict_preserves_existing_data(self):
         self.store.save(make_workspace())
         self.store.save(make_workspace(2, "修改版"), expected_revision=1)
