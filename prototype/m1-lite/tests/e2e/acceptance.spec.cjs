@@ -45,6 +45,8 @@ const tab = (page, name) => page.locator(`[data-tab="${name}"]`).click();
 // 中文：真实操作展开 UI V1 工具区，不以脚本强制绕过页面折叠状态。
 // English: Expand new UI drawers as a buyer would, never force visibility by script.
 async function openTools(page, id) {
+  if(id==='#uiProjectDetails'||id==='#uiDataTools')await tab(page,'project');
+  if(id==='#uiSupplierTools')await tab(page,'assign');
   const details=page.locator(id);
   if (!await details.evaluate(node => node.open)) await details.locator(':scope > summary').click();
   await expect(details).toHaveAttribute('open', '');
@@ -59,12 +61,14 @@ async function saved(page) {
   }).toBe(true);
 }
 async function openProject(page) { await openTools(page,'#uiProjectDetails'); }
-async function fresh(page) { await openProject(page); await page.locator('#pilotNewWorkspace').click(); await saved(page); }
+async function fresh(page) { await openProject(page); await page.locator('#pilotNewWorkspace').click(); await saved(page); await tab(page,'items'); }
 async function save(page) {
+  const original=await page.locator('.ui-workNav .tab.active').getAttribute('data-tab');
   await openProject(page);
   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));
   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);
   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');
+  if(original!=='project')await tab(page,original);
 }
 async function items(page, app, file = 'items12.xlsx', count = 12) {
   await tab(page,'items'); if (!await page.locator('#itemIntake').isVisible()) await page.locator('#toggleItemIntake').click();
@@ -331,7 +335,7 @@ test('09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台�
   // English: Request the app fixture to start and navigate the real server before UI assertions.
   // 中文：确认四步导航与管理入口均实际可点，导航本身不能增加业务修订。
   // English: Validate real buyer navigation and drawers without altering business revisions.
-  await expect(page.locator('.ui-workNav .tab')).toHaveCount(4);
+  await expect(page.locator('.ui-workNav .tab')).toHaveCount(5);
   await expect(page.locator('#uiCurrentRfq')).toContainText('演示');
   await expect(page.locator('#uiDataTools')).not.toHaveAttribute('open', '');
   await fresh(page);
