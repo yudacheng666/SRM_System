@@ -56,6 +56,8 @@ Checkpoint procedure / 固化动作：
   用户选定的方案 A 仅限本 SRM M1 开发阶段；云端测试和独立业务验收 + Windows 本机专项齐备后，仍须用户单独批准 M1 合并。不能宣称 Actions PASS，不能绕过仓库规则，恢复额度后要补跑正式 CI。
 - Preserve accepted RFQ identities, quotation history, tier-price semantics, supplier isolation and S4 restore protections; scope changes require an owner-confirmed decision.
   不擅自变更已确认的采购业务不变量。
+- **Development/test data policy — D-024 (owner approved 2026-10-26):** Existing synthetic RFQs, old test SQLite files, snapshots and ZIP archives are disposable test assets, **not** backward-compatibility or data-migration gates. Prefer fresh isolated synthetic fixtures for current-head testing. Do not block a new candidate for compatibility with obsolete test artifacts; do not implement migrations just to preserve them. This does **not** relax current-version referential integrity, quote-round immutability, SQLite concurrency safety, PDF supplier separation or S4 safe backup/restore. Never silently delete the user's local test files or rewrite recorded GitHub evidence. Real ERP historical import is a separate future requirement.
+  测试期旧模拟数据允许重建，不为旧测试包增加迁移/兼容；但当前版本的主键关联、轮次历史、保存和 S4 安全仍须正确。
 - Never commit identifiable enterprise/person/supplier/customer/product data, actual pricing, original emails, or private screenshots; use fictional fixtures only, even though the repo is private.
   仓库一律使用匿名/虚构资料。
 - For documentation-only memory tasks, edit only AGENTS.md and docs/ai-memory/**. No product/test/CI changes.
