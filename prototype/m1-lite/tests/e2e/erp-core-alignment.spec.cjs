@@ -31,7 +31,8 @@ const test=base.extend({
 });
 const snap=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 async function open(page,id){
- if(id==='#uiProjectDetails'||id==='#uiDataTools')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+ if(id==='#uiProjectDetails')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiDataTools'||id==='#srmUxStatusDetails')await page.locator('#uiAdminToggle').click();
  if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
  const e=page.locator(id);if(!await e.evaluate(x=>x.open))await e.locator(':scope > summary').click()
 }
