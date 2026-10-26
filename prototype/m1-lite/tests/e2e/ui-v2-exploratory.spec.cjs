@@ -38,16 +38,24 @@ const test=base.extend({
   }
 });
 async function ensureOpen(page,id){
+  // 中文：项目是常驻第一步，供应商管理属于分配页，备份入口属于项目页。
+  // English: Navigate to the owning workflow panel before accessing drawers.
+  if(id==='#uiProjectDetails'||id==='#uiDataTools')
+    await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiSupplierTools')
+    await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
   const drawer=page.locator(id);
   if(!await drawer.evaluate(el=>el.open))await drawer.locator(':scope > summary').click();
 }
 async function ensureClosed(page,id){
+  if(id==='#uiProjectDetails')return;
   const drawer=page.locator(id);
   if(await drawer.evaluate(el=>el.open))await drawer.locator(':scope > summary').click();
 }
 async function seed(page,app){
   await ensureOpen(page,'#uiProjectDetails');
   await page.locator('#pilotNewWorkspace').click();
+  await page.locator('.ui-workNav .tab[data-tab="items"]').click();
   await page.locator('#toggleItemIntake').click();
   await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'items12.xlsx'));
   await expect(page.locator('#confirmImportRows')).toBeEnabled();
@@ -160,7 +168,7 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
   expect(outline).not.toBe('none');
   // 中文：询价项目/数据备份入口需独占侧栏高亮，点击其他导航项才切换。
   // English: Action drawers must keep one exclusive sidebar selection until navigating away.
-  const projectNav=page.locator('[data-srm-v2-action="project"]');
+  const projectNav=page.locator('[data-srm-v2-tab="project"]');
   const adminNav=page.locator('[data-srm-v2-action="admin"]');
   const itemsNav=page.locator('.srm-v2-sideitem[data-srm-v2-tab="items"]');
   await projectNav.click();
@@ -178,7 +186,7 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
   await expect(adminNav).not.toHaveAttribute('aria-current','page');
   await projectNav.click();
   await expect(projectNav).toHaveAttribute('aria-current','page');
-  await page.locator('#uiProjectDetails > summary').click();
+  await itemsNav.click();
   await expect(projectNav).not.toHaveAttribute('aria-current','page');
   await expect(itemsNav).toHaveAttribute('aria-current','page');
   // 中文：导航高亮不应改变当前采购业务快照。
