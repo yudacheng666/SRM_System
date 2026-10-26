@@ -167,7 +167,9 @@ test('UX pending-only: filtered pagination and award state / 待决定筛选真�
   await expect(page.locator('#quoteTable tbody tr').first()).toContainText('TST-011');
   await page.locator('#quotePager [data-pg="0"]').click();
   expect((await snapshot(page)).state).toEqual(before.state);
-  await page.locator('#quoteTable td.awardSelectable').first().click();
+  // 中文：真实可点击目标是价格按钮，单元格中心可能命中可展开的商务明细。
+  // English: Select the bid via its explicit price button, not the disclosure target.
+  await page.locator('#quoteTable td.awardSelectable .quotePrice').first().click();
   await expect(page.locator('#quoteCount')).toContainText('待决定 11 项（全部 12 项）');
   await expect(page.locator('#quoteTable tbody tr')).toHaveCount(10);
   await expect(page.locator('#quoteTable tbody tr').first()).toContainText('TST-002');
@@ -197,7 +199,7 @@ test('UX manual-only: buyer-approved amount distinct from suggested totals / 人
   await expect(page.locator('#quoteAnalysis')).toContainText('当前建议/已选组合');
   const totalCents=lines.slice(0,3).reduce((sum,it,i)=>sum+Math.round((20+i)*it.qty*100),0);
   for(const it of lines.slice(0,3)){
-    await page.locator('#quoteTable td[data-award="'+it.lineId+'|SUP-A"]').click();
+    await page.locator('#quoteTable td[data-award="'+it.lineId+'|SUP-A"] .quotePrice').click();
   }
   await expect(summary).toContainText('采购员已确认金额：');
   await expect(summary).toContainText('¥'+(totalCents/100).toFixed(2));
