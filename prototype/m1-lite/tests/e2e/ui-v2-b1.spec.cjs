@@ -56,7 +56,7 @@ for (const viewport of [{width:1366,height:768},{width:1600,height:900}]) {
     await page.setViewportSize(viewport);
     await expect(page.locator('body')).toHaveClass(/srm-v2/);
     await expect(page.locator('.srm-v2-sidebar')).toBeVisible();
-    await expect(page.locator('.srm-v2-sideitem[data-srm-v2-tab]')).toHaveCount(5);
+    await expect(page.locator('.srm-v2-sideitem[data-srm-v2-tab]')).toHaveCount(6);
     await expect(page.locator('#pilotModeBadge')).toContainText('演示');
     const selectors=[
       ['assign','#assign'],
@@ -75,11 +75,12 @@ for (const viewport of [{width:1366,height:768},{width:1600,height:900}]) {
     // English: Create a genuine isolated workspace and import synthetic XLSX through the real UI.
     // 中文：只在未展开时打开项目操作，避免反向折叠已展开的面板。
     // English: Open only when collapsed, never close the already-open project action drawer.
-    if(!await page.locator('#uiProjectDetails').evaluate(el=>el.open))
-      await page.locator('#uiProjectDetails > summary').click();
+    await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+    await expect(page.locator('#uiProjectDetails')).toHaveAttribute('open','');
     await expect(page.locator('#pilotNewWorkspace')).toBeVisible();
     await page.locator('#pilotNewWorkspace').click();
     await expect(page.locator('#pilotModeBadge')).not.toContainText('演示');
+    await page.locator('.ui-workNav .tab[data-tab="items"]').click();
     // 中文：项目面板收起后，状态摘要仍然可见，详细状态节点继续保留。
     // English: After project drawer collapses, summary remains visible and detailed status IDs remain mounted.
     await expect(page.locator('#pilotSaveStatus')).toHaveCount(1);
