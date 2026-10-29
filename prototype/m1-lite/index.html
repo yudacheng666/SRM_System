@@ -7206,7 +7206,39 @@ function enhanceDynamicGuidance(){
   var root=document.getElementById(id);
   if(root&&window.MutationObserver)new MutationObserver(enhanceDynamicGuidance).observe(root,{childList:true,subtree:true});
 });
+
 enhanceDynamicGuidance();
+/* Keep dynamic status values visible while moving only static instructions to help icons. */
+function enhanceOtherGuidance(){
+  var sort=document.getElementById("itemSortHint");
+  var sortText=sort&&sort.textContent.trim();
+  var sortMarker="；Shift+点击列标题叠加字段排序";
+  if(sort&&!sort.querySelector(".srm-hint")&&sortText&&sortText.endsWith(sortMarker)){
+    var current=sortText.slice(0,-sortMarker.length).trim();
+    sort.replaceChildren(document.createTextNode(current+" "),makeDynamicHint("Shift+点击列标题叠加字段排序，可追加多个排序字段。","多字段排序说明"));
+  }
+  var mapping=document.getElementById("quoteMappingHint");
+  var mappingText="M0 只验证映射交互；M5 实现真实 Excel 列读取和模板持久化。";
+  if(mapping&&!mapping.querySelector(".srm-hint")&&mapping.textContent.trim()===mappingText){
+    mapping.replaceChildren(makeDynamicHint(mappingText,"报价导入映射说明"));
+  }
+  var supplierStatus=document.getElementById("pilotSupplierExcelStatus");
+  var supplierText="供应商 Excel 必须包含往来单位编码、往来单位名称；供应商编码可选。确认后系统会自动保存，也可手动保存。";
+  if(supplierStatus&&!supplierStatus.querySelector(".srm-hint")&&supplierStatus.textContent.trim()===supplierText){
+    supplierStatus.replaceChildren(document.createTextNode("必填列：往来单位编码、往来单位名称。 "),makeDynamicHint("供应商编码可选；确认后系统会自动保存，也可手动保存。","供应商导入说明"));
+  }
+  var editHint=document.getElementById("itemEditHint");
+  var editText="当前属性带出该行原值。M0 尚未接入 ERP 主数据，修改存货编码不会自动更新其他 ERP 属性，也不会合并其他相同编码询价行。";
+  if(editHint&&!editHint.querySelector(".srm-hint")&&editHint.textContent.trim()===editText){
+    editHint.classList.remove("small","muted");editHint.classList.add("srm-edit-note");
+    editHint.replaceChildren(document.createTextNode("编码修改不会自动同步 ERP 属性，也不会合并其他询价行。 "),makeDynamicHint(editText,"物料编辑注意事项"));
+  }
+}
+["itemSortHint","quoteMappingHint","pilotSupplierExcelStatus","itemEditHint"].forEach(function(id){
+  var root=document.getElementById(id);
+  if(root&&window.MutationObserver)new MutationObserver(enhanceOtherGuidance).observe(root,{childList:true,characterData:true,subtree:true});
+});
+enhanceOtherGuidance();
 
 })();
 </script>
