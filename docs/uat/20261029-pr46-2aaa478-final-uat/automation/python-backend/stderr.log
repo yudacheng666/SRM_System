@@ -1,0 +1,122 @@
+test_boolean_manifest_version_rejected_by_backup_and_restore (test_auto_backup.AutoBackupPolicyTests.test_boolean_manifest_version_rejected_by_backup_and_restore)
+中文：版本 true 不能当作整型 1，完整恢复同样不得接受。 ... ok
+test_changes_after_a_day_create_new_copy (test_auto_backup.AutoBackupPolicyTests.test_changes_after_a_day_create_new_copy)
+中文：间隔到期且内容变化时才新增备份。English: A later edit creates next daily copy. ... ok
+test_corrupted_recent_backup_creates_replacement_after_due (test_auto_backup.AutoBackupPolicyTests.test_corrupted_recent_backup_creates_replacement_after_due)
+中文：损坏旧备份不能阻止新备份，或删除之前的健康备份。 ... ok
+test_first_save_makes_full_zip_but_repeated_checks_do_not (test_auto_backup.AutoBackupPolicyTests.test_first_save_makes_full_zip_but_repeated_checks_do_not)
+中文：首次备份成功；短间隔和无变更不会重复。English: Throttle and changed-only. ... ok
+test_hash_consistent_non_sqlite_is_replaced_and_original_preserved (test_auto_backup.AutoBackupPolicyTests.test_hash_consistent_non_sqlite_is_replaced_and_original_preserved)
+中文：ZIP CRC 和清单 SHA 即使自洽，也不能绕过 SQLite 完整性验证。 ... ok
+test_missing_or_invalid_manifest_never_claims_unchanged (test_auto_backup.AutoBackupPolicyTests.test_missing_or_invalid_manifest_never_claims_unchanged)
+中文：无清单或伪造清单不能导致自动备份误判。 ... ok
+test_no_workspace_does_not_create_backup (test_auto_backup.AutoBackupPolicyTests.test_no_workspace_does_not_create_backup)
+中文：无询价不产生空备份。English: No empty archive loops. ... ok
+test_pdf_upload_without_workspace_save_is_a_change (test_auto_backup.AutoBackupPolicyTests.test_pdf_upload_without_workspace_save_is_a_change)
+中文：附件落盘后尚未保存关联，也必须进入到期完整备份。 ... ok
+test_retention_never_deletes_manual_backups (test_auto_backup.AutoBackupPolicyTests.test_retention_never_deletes_manual_backups)
+中文：保留 7 份自动备份，手动备份永不删除。English: Auto-only pruning. ... ok
+test_valid_zip_with_tampered_database_is_not_trusted (test_auto_backup.AutoBackupPolicyTests.test_valid_zip_with_tampered_database_is_not_trusted)
+中文：即使 ZIP 本身 CRC 正常，数据库哈希变化也应拒绝。 ... ok
+test_asset_cannot_be_read_from_another_workspace (test_s3_regression.S3FailurePathTests.test_asset_cannot_be_read_from_another_workspace)
+中文：供应商及询价资料不能串单。English: Keep assets isolated by RFQ. ... ok
+test_bad_workspace_update_does_not_create_new_revision (test_s3_regression.S3FailurePathTests.test_bad_workspace_update_does_not_create_new_revision)
+中文：验证失败不得污染上一有效版本。English: Invalid update stays atomic. ... ok
+test_corrupted_pdf_fails_integrity_check (test_s3_regression.S3FailurePathTests.test_corrupted_pdf_fails_integrity_check)
+中文：即使长度不变也能发现 PDF 被修改。English: Detect same-length corruption. ... ok
+test_missing_pdf_fails_closed (test_s3_regression.S3FailurePathTests.test_missing_pdf_fails_closed)
+中文：原件被删除时，读取不得伪装成功。English: Missing original must fail. ... ok
+test_same_pdf_cannot_silently_change_original_name (test_s3_regression.S3FailurePathTests.test_same_pdf_cannot_silently_change_original_name)
+中文：相同 SHA 不允许静默改变原始文件身份。English: Reject identity reassignment. ... ok
+test_sqlite_backup_is_not_full_pdf_restore (test_s3_regression.S3FailurePathTests.test_sqlite_backup_is_not_full_pdf_restore)
+中文：数据库备份不等于含 PDF 的完整恢复包。English: DB backup excludes binary PDFs. ... ok
+test_stale_tab_cannot_change_active_workspace (test_s3_regression.S3FailurePathTests.test_stale_tab_cannot_change_active_workspace)
+中文：旧页面不得覆盖其他窗口选择。English: Reject stale tab selection. ... ok
+test_unsaved_workspace_must_not_accept_pdf (test_s3_regression.S3FailurePathTests.test_unsaved_workspace_must_not_accept_pdf)
+中文：禁止未提交的询价上传图纸。English: Reject asset writes before RFQ save. ... ok
+test_backup_refuses_existing_filename (test_s4_backup.S4FullBackupTests.test_backup_refuses_existing_filename)
+中文：备份不会覆盖现有同名文件。English: No overwrite of existing archives. ... ok
+test_empty_workspace_without_pdfs_is_counted (test_s4_backup.S4FullBackupTests.test_empty_workspace_without_pdfs_is_counted)
+中文：没有 PDF 的询价也在数据库历史里。English: Count RFQs with zero PDF links. ... ok
+test_existing_business_data_cannot_be_overwritten (test_s4_backup.S4FullBackupTests.test_existing_business_data_cannot_be_overwritten)
+中文：有数据的目标必须拒绝恢复。English: Existing RFQs are never overwritten. ... ok
+test_invalid_database_hash_rejected (test_s4_backup.S4FullBackupTests.test_invalid_database_hash_rejected)
+中文：数据库快照被改写时不得恢复。English: Reject modified SQLite bytes. ... ok
+test_missing_file_and_extra_entry_rejected (test_s4_backup.S4FullBackupTests.test_missing_file_and_extra_entry_rejected)
+中文：缺失/夹带文件不允许恢复。English: Reject incomplete and unexpected entries. ... ok
+test_missing_source_pdf_rejects_backup_without_output (test_s4_backup.S4FullBackupTests.test_missing_source_pdf_rejects_backup_without_output)
+中文：原始 PDF 缺失不能生成虚假的完整备份。English: No false complete backup. ... ok
+test_modified_pdf_rejected_without_touching_target (test_s4_backup.S4FullBackupTests.test_modified_pdf_rejected_without_touching_target)
+中文：文件长度可相同，但哈希一变即拒绝。English: SHA protects even CRC-valid tampering. ... ok
+test_roundtrip_two_rfqs_revisions_and_pdf_bytes (test_s4_backup.S4FullBackupTests.test_roundtrip_two_rfqs_revisions_and_pdf_bytes)
+中文：真实 ZIP 完整往返包含历史与原件。English: End-to-end archive roundtrip. ... ok
+test_automatic_backup_status_is_read_only (test_s4_server.S4HttpTests.test_automatic_backup_status_is_read_only)
+中文：本机接口只显示自动备份元信息。English: Read-only backup metadata. ... 127.0.0.1 - - [29/Oct/2026 15:56:13] "GET /api/backups/auto/status HTTP/1.1" 200 -
+ok
+test_backup_endpoint_requires_same_origin_and_no_data_loss (test_s4_server.S4HttpTests.test_backup_endpoint_requires_same_origin_and_no_data_loss)
+中文：跨站不应触发完整备份。English: Cross-origin backup denied. ... 127.0.0.1 - - [29/Oct/2026 15:56:14] "POST /api/backups/full HTTP/1.1" 403 -
+127.0.0.1 - - [29/Oct/2026 15:56:14] "POST /api/backups/full HTTP/1.1" 201 -
+ok
+test_full_restore_rejects_cross_origin_and_invalid_archive (test_s4_server.S4HttpTests.test_full_restore_rejects_cross_origin_and_invalid_archive)
+中文：非法来源与坏 ZIP 均应拒绝。English: Origin and malformed uploads fail. ... 127.0.0.1 - - [29/Oct/2026 15:56:14] "POST /api/backups/full/restore HTTP/1.1" 403 -
+127.0.0.1 - - [29/Oct/2026 15:56:14] "POST /api/backups/full/restore HTTP/1.1" 400 -
+127.0.0.1 - - [29/Oct/2026 15:56:14] "GET /api/workspaces HTTP/1.1" 200 -
+ok
+test_http_backup_download_restore_and_reject_overwrite (test_s4_server.S4HttpTests.test_http_backup_download_restore_and_reject_overwrite)
+中文：下载 ZIP，并恢复到不同端口的空库。English: Real HTTP roundtrip. ... 127.0.0.1 - - [29/Oct/2026 15:56:15] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:15] "POST /api/backups/full HTTP/1.1" 201 -
+127.0.0.1 - - [29/Oct/2026 15:56:15] "GET /api/backups/full/SRM_FULL_20261029_155615_99791619.zip HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:15] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:15] "POST /api/backups/full/restore HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:15] "GET /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:15] "POST /api/backups/full/restore HTTP/1.1" 409 -
+ok
+test_conflict_and_previous_revision (test_server.LocalApiTests.test_conflict_and_previous_revision) ... 127.0.0.1 - - [29/Oct/2026 15:56:16] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:16] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:16] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 409 -
+127.0.0.1 - - [29/Oct/2026 15:56:16] "GET /api/workspaces/RFQ-DEMO-001?revision=1 HTTP/1.1" 200 -
+ok
+test_db_only_backup (test_server.LocalApiTests.test_db_only_backup) ... 127.0.0.1 - - [29/Oct/2026 15:56:17] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:17] "POST /api/backups/database HTTP/1.1" 201 -
+ok
+test_health_static_and_roundtrip (test_server.LocalApiTests.test_health_static_and_roundtrip) ... 127.0.0.1 - - [29/Oct/2026 15:56:17] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:17] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:17] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:17] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:17] "GET /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+ok
+test_host_and_origin_rejected (test_server.LocalApiTests.test_host_and_origin_rejected) ... 127.0.0.1 - - [29/Oct/2026 15:56:18] "GET /api/workspaces HTTP/1.1" 403 -
+127.0.0.1 - - [29/Oct/2026 15:56:18] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 403 -
+127.0.0.1 - - [29/Oct/2026 15:56:18] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 403 -
+ok
+test_reject_path_traversal_and_bad_json (test_server.LocalApiTests.test_reject_path_traversal_and_bad_json) ... 127.0.0.1 - - [29/Oct/2026 15:56:18] "GET /../../store.py HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 15:56:18] "GET /api/workspaces/RFQ%2FOTHER HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 15:56:18] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 400 -
+ok
+test_s3_active_rfqs_and_pdf_disk (test_server.LocalApiTests.test_s3_active_rfqs_and_pdf_disk)
+中文：真实 HTTP PDF 写入后重新读取。English: HTTP PDF survives disk read. ... 127.0.0.1 - - [29/Oct/2026 15:56:19] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:19] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:19] "PUT /api/workspaces/RFQ-DEMO-002 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:19] "POST /api/active/select HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:19] "PUT /api/assets/RFQ-DEMO-001/a0b99f9032780126063185186d2d3238114be4c82bff85948181d144555936fb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:19] "GET /api/assets/RFQ-DEMO-001/a0b99f9032780126063185186d2d3238114be4c82bff85948181d144555936fb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:19] "GET /api/assets/RFQ-DEMO-002/a0b99f9032780126063185186d2d3238114be4c82bff85948181d144555936fb HTTP/1.1" 404 -
+ok
+test_s3_checksum_mismatch_rejected (test_server.LocalApiTests.test_s3_checksum_mismatch_rejected)
+中文：图纸错误哈希不得落盘。English: Reject mismatched asset hashes. ... 127.0.0.1 - - [29/Oct/2026 15:56:19] "PUT /api/workspaces/RFQ-DEMO-001 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:56:19] "PUT /api/assets/RFQ-DEMO-001/0000000000000000000000000000000000000000000000000000000000000000 HTTP/1.1" 400 -
+ok
+test_active_workspace_after_new_and_switch (test_store.SnapshotStoreTests.test_active_workspace_after_new_and_switch)
+中文：多询价保留并切换。English: Preserve and select independent RFQs. ... ok
+test_business_project_name_in_history_keeps_immutable_id (test_store.SnapshotStoreTests.test_business_project_name_in_history_keeps_immutable_id)
+中文：改项目名称只更新显示索引，不改数据身份和旧版本。English: Rename never rewrites identity. ... ok
+test_confirmed_round_cannot_be_mutated (test_store.SnapshotStoreTests.test_confirmed_round_cannot_be_mutated) ... ok
+test_malformed_and_demo_rejected (test_store.SnapshotStoreTests.test_malformed_and_demo_rejected) ... ok
+test_revision_conflict_preserves_existing_data (test_store.SnapshotStoreTests.test_revision_conflict_preserves_existing_data) ... ok
+test_round_trip_after_reopen (test_store.SnapshotStoreTests.test_round_trip_after_reopen) ... ok
+test_verified_backup (test_store.SnapshotStoreTests.test_verified_backup) ... ok
+
+----------------------------------------------------------------------
+Ran 44 tests in 6.876s
+
+OK

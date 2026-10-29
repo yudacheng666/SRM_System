@@ -1,0 +1,29 @@
+{
+  "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "classification": "Optional UI efficiency observation; not a failed1366 acceptance requirement",
+  "firstScreen": {
+    "top": 868.875,
+    "bottom": 910.65625,
+    "height": 41.78125,
+    "scrollY": 0,
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "documentWidth": 1600,
+    "line": "RFQ-L00001|UAA-A"
+  },
+  "afterNormalWheel": {
+    "top": 628.875,
+    "bottom": 670.65625,
+    "height": 41.78125,
+    "scrollY": 240,
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "documentWidth": 1600,
+    "line": "RFQ-L00001|UAA-A"
+  },
+  "interpretation": "At1600x900 the larger desktop header/cards may place the first quote row at the fold; normal vertical scroll exposes it.1366x768 has a separate explicit complete-first-row check. No whole-page horizontal overflow or unreachable control established."
+}

@@ -1,0 +1,39 @@
+{
+  "classification": "Read-only trace-auditor scope correction; no product/browser test rerun",
+  "initialAuditorError": "AssertionError on fixture expect.poll inner probe atsource21, outside original test body",
+  "initialParserRetained": "audit-focused-trace.initial.py",
+  "fixtureProbeBefore": {
+    "type": "before",
+    "callId": "expect@42",
+    "stepId": "expect@42",
+    "parentId": "expect@40",
+    "startTime": 7943.707,
+    "class": "Test",
+    "method": "expect",
+    "title": "Expect \"toBe\"",
+    "params": {
+      "expected": "200"
+    },
+    "stack": [
+      {
+        "file": "/workspace/srm2aaa-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+        "line": 21,
+        "column": 7,
+        "function": "Object.app"
+      }
+    ]
+  },
+  "fixtureProbeAfter": {
+    "type": "after",
+    "callId": "expect@42",
+    "endTime": 7951.611,
+    "annotations": [],
+    "error": {
+      "name": "",
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m0\u001b[39m",
+      "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n    at Object.app (/workspace/srm2aaa-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:21:7)"
+    }
+  },
+  "correction": "Count original test-body source45..109 only; retain every completed before/after pair after repaired kicker loop and final errors[] assertion. Fixture polling attempts are not test-case retries.",
+  "originalTraceUnchanged": true
+}

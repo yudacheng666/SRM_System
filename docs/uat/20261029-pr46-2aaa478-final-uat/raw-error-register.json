@@ -1,0 +1,37 @@
+{
+  "primaryOriginalFullSuiteFailures": [],
+  "independentBrowserErrors": [],
+  "launchCorrection": {
+    "original": "selection-order-error.json",
+    "firstFocused": "initial-selection-no-tests:exit1,0actual cases,notPASS",
+    "prematureSuite": {
+      "stats": {
+        "startTime": "2026-10-29T15:50:48.771Z",
+        "duration": 263659.738,
+        "expected": 13,
+        "skipped": 45,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "status": "INCOMPLETE/BLOCKED after explicitSIGINT,not final suite,not reused asPASS",
+      "actualCommand": "initial-interrupted-suite/chromium-e2e/command.json"
+    },
+    "correctedMain": "setup→focused1PASS→Python→Node→completeChromium; all fresh isolated data;no failed product assertion overwritten"
+  },
+  "readOnlyEvidenceMethodCorrections": [
+    {
+      "record": "audit-method-correction.json",
+      "scope": "Trace auditor counts test body not transient fixture poll probes;inputtrace unchanged"
+    },
+    {
+      "record": "packaging-method-correction.json",
+      "scope": "Archive label variable collision fixed;original output bytes unchanged,full rehash after extraction"
+    }
+  ],
+  "firstSearch": {
+    "clickCalls": 1,
+    "status": "NOT REPRODUCED;ROOT CAUSE UNKNOWN",
+    "raw": "independent/evidence/assign-search-first-frames.jsonl",
+    "noRetry": true
+  }
+}

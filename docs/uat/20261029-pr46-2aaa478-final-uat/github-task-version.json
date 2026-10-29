@@ -1,0 +1,43 @@
+{
+  "readUTC": "2026-10-29T15:56:15.716Z",
+  "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "task": {
+    "url": "https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6501279793",
+    "body": "## TEST-ONLY handoff · PR #46 final old-kicker assertion fix\n\n**Unique current product/test SHA:** `2aaa478c8f1966e41b9372d9d989c383dbaa1972`. This PR #46 commit changes **only** `prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs`; GitHub diff verified, JS syntax compile PASS. It now requires two-digit procurement stage numbering and the approved **“系统设置”** label for settings instead of obsolete `ADMIN`. It preserves all subsequent navigation, 3-viewport geometry and state assertions.\n\nPrior **fbb98944** independent results are immutable: Python44 PASS, Node10 PASS, Chromium57 PASS/1 FAIL; last failure was the old ADMIN expectation after background #F6F8FB passed, with later assertions NOT REACHED. Independent buyer, S4, supplier export, tooltip 83, six-page screenshots and 1366×768 quote-first-row were PASS **only on that old SHA**. Original first assign-search timeout was NOT REPRODUCED, ROOT CAUSE UNKNOWN. Windows native 3 NOT TESTED.\n\n**Execute now on exact new SHA, with fresh isolated synthetic SQLite/PDF:**\n1. First run the original `UI V3 integration: theme, active navigation and responsive workspace` Playwright case and verify **every assertion after old line 76 actually executes**; do not treat a standalone kicker query as full PASS.\n2. Run full original Python backend, Node business and Chromium E2E suites (no skip/retry/forced click/threshold weakening). Independently verify at least representative buyer navigation, status, tooltip safety, PDF/ZIP restore and 1366×768 quote-row scope on this same SHA; record any untested detail explicitly.\n3. If `#runAssignSearch` initial actionability timeout recurs, preserve unmodified failure plus consecutive-frame geometry, computed style/animations, focus/hover/scroll, elementFromPoint/hit stack, screenshot and trace. If not, say NOT REPRODUCED; ROOT CAUSE UNKNOWN.\n4. Append **new versioned evidence directory in this existing Draft PR #50**, with Chinese/English report, accurate SHA, raw logs/traces/cases, PASS/FAIL/NOT TESTED, and comment on PR #46. Leave old evidence unchanged. Windows native 3 remain NOT TESTED absent real Windows execution.\n\n**TEST-ONLY restriction:** no product/test/CI changes by Codex, no Actions dispatch, no merges/closures, no main/M1 modifications. This task comment does **not** initiate execution. Do not carry old-SHA PASS into this new SHA.",
+    "user": {
+      "login": "yudacheng666",
+      "name": "yudacheng666",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+      "id": 227731428
+    },
+    "id": 6501279793,
+    "pull_request_review_id": null,
+    "in_reply_to_id": null,
+    "created_at": null,
+    "updated_at": null,
+    "review": null,
+    "side": null,
+    "line": null,
+    "start_line": null,
+    "path": null,
+    "body_html": "<h2 dir=\"auto\">TEST-ONLY handoff · PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5974339365\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/46\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/46/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/46\">#46</a> final old-kicker assertion fix</h2>\n<p dir=\"auto\"><strong>Unique current product/test SHA:</strong> <code class=\"notranslate\">2aaa478c8f1966e41b9372d9d989c383dbaa1972</code>. This PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5974339365\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/46\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/46/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/46\">#46</a> commit changes <strong>only</strong> <code class=\"notranslate\">prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs</code>; GitHub diff verified, JS syntax compile PASS. It now requires two-digit procurement stage numbering and the approved <strong>“系统设置”</strong> label for settings instead of obsolete <code class=\"notranslate\">ADMIN</code>. It preserves all subsequent navigation, 3-viewport geometry and state assertions.</p>\n<p dir=\"auto\">Prior <strong><a class=\"commit-link\" data-hovercard-type=\"commit\" data-hovercard-url=\"https://github.com/yudacheng666/SRM_System/commit/fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/commit/fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0\"><tt>fbb9894</tt></a></strong> independent results are immutable: Python44 PASS, Node10 PASS, Chromium57 PASS/1 FAIL; last failure was the old ADMIN expectation after background #F6F8FB passed, with later assertions NOT REACHED. Independent buyer, S4, supplier export, tooltip 83, six-page screenshots and 1366×768 quote-first-row were PASS <strong>only on that old SHA</strong>. Original first assign-search timeout was NOT REPRODUCED, ROOT CAUSE UNKNOWN. Windows native 3 NOT TESTED.</p>\n<p dir=\"auto\"><strong>Execute now on exact new SHA, with fresh isolated synthetic SQLite/PDF:</strong></p>\n<ol dir=\"auto\">\n<li>First run the original <code class=\"notranslate\">UI V3 integration: theme, active navigation and responsive workspace</code> Playwright case and verify <strong>every assertion after old line 76 actually executes</strong>; do not treat a standalone kicker query as full PASS.</li>\n<li>Run full original Python backend, Node business and Chromium E2E suites (no skip/retry/forced click/threshold weakening). Independently verify at least representative buyer navigation, status, tooltip safety, PDF/ZIP restore and 1366×768 quote-row scope on this same SHA; record any untested detail explicitly.</li>\n<li>If <code class=\"notranslate\">#runAssignSearch</code> initial actionability timeout recurs, preserve unmodified failure plus consecutive-frame geometry, computed style/animations, focus/hover/scroll, elementFromPoint/hit stack, screenshot and trace. If not, say NOT REPRODUCED; ROOT CAUSE UNKNOWN.</li>\n<li>Append <strong>new versioned evidence directory in this existing Draft PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5976161472\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/50\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/50/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/50\">#50</a></strong>, with Chinese/English report, accurate SHA, raw logs/traces/cases, PASS/FAIL/NOT TESTED, and comment on PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5974339365\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/46\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/46/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/46\">#46</a>. Leave old evidence unchanged. Windows native 3 remain NOT TESTED absent real Windows execution.</li>\n</ol>\n<p dir=\"auto\"><strong>TEST-ONLY restriction:</strong> no product/test/CI changes by Codex, no Actions dispatch, no merges/closures, no main/M1 modifications. This task comment does <strong>not</strong> initiate execution. Do not carry old-SHA PASS into this new SHA.</p>"
+  },
+  "PR46": {
+    "url": "https://github.com/yudacheng666/SRM_System/pull/46",
+    "head": "feat/20261022-srm-ui-ux-structural",
+    "head_sha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+    "base": "draft/20261013-m1-storage-ui-audit",
+    "draft": true,
+    "merged": false
+  },
+  "PR50": {
+    "url": "https://github.com/yudacheng666/SRM_System/pull/50",
+    "head": "test/20261022-pr46-c2737f0-temp-ci",
+    "head_sha": "243e5052fa4f56b6ba72771d73998d61f91ff6f4",
+    "base": "feat/20261022-srm-ui-ux-structural",
+    "draft": true,
+    "merged": false
+  },
+  "restrictions": "TEST-ONLY; new evidence append only; no product/existing-test/CI/memory/dev/main edits; no Actions/merge/close"
+}

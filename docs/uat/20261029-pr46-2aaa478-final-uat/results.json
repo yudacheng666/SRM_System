@@ -1,0 +1,272 @@
+[
+  {
+    "id": "HEAD",
+    "status": "PASS",
+    "scope": "Detached SHA,PR HEAD,actual HTTP",
+    "evidence": "http-trace-identity.json",
+    "notes": "HTML bytes identical to previous candidate by design; git/command/data/trace provenance is current SHA, not reused PASS",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "FOCUS",
+    "status": "PASS",
+    "scope": "Original focused UI V3 case executed first in corrected ordered run",
+    "evidence": "focused-assertion-audit.json",
+    "notes": "1PASS;100body assertions;79after old failure loop;15stage/viewports;finalerrors[] complete",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "PY",
+    "status": "PASS",
+    "scope": "Full original Python backend suite",
+    "evidence": "automation/python-backend/stderr.log",
+    "notes": "44PASS",
+    "platform": "Linux/Python3.12",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "NODE",
+    "status": "PASS",
+    "scope": "Full original Node business suite",
+    "evidence": "automation/node-business/stdout.log",
+    "notes": "10PASS",
+    "platform": "Linux/Node24",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "E2E",
+    "status": "PASS",
+    "scope": "Complete original Chromium suite",
+    "evidence": "automation/automated-results.json",
+    "notes": "58PASS/0FAIL; actual final complete suite skips/retries0",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "PREVIOUS-FIVE",
+    "status": "PASS",
+    "scope": "Previous five whole cases on this SHA",
+    "evidence": "prior-five-current-results.json",
+    "notes": "MalformedZIP,3supplier cases,and completeUIV3; no historical PASS transfer",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "NAV",
+    "status": "PASS",
+    "scope": "Fresh buyer navigation,project name and unique active selection",
+    "evidence": "independent/evidence/UX01-04-project-real-name.png",
+    "notes": "Actual create/switch controls and names persist",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "VISUAL",
+    "status": "PASS",
+    "scope": "Six pages×three viewports and approved background",
+    "evidence": "independent/evidence/layout-overflow.json",
+    "notes": "18fresh screenshots visually reviewed;#F6F8FB;no whole-document overflow",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "TOOLTIP",
+    "status": "PASS",
+    "scope": "Hover/realTab/Esc/pin/click-away safety",
+    "evidence": "independent/evidence/tooltip-retest.json",
+    "notes": "83actual visible samples;data/history/PDF unchanged",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "FIRST-ROW",
+    "status": "PASS",
+    "scope": "1366x768 first actual priced row entirely visible",
+    "evidence": "independent/evidence/UX09-independent-before-awards.json",
+    "notes": "top701.140625,bottom742.921875,height41.78125,scrollY0",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "MATERIAL-PDF",
+    "status": "PASS",
+    "scope": "Fresh materialXLSX and actual PDF matching/view/download",
+    "evidence": "independent/evidence/CORE02-clicked-correct-real-PDF.png",
+    "notes": "Unique/ambiguous/unmatched and originalPDF bytes",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "ASSIGN",
+    "status": "PASS",
+    "scope": "Additive supplier allocation and isolation",
+    "evidence": "independent/evidence/CORE07-after-service-restart.json",
+    "notes": "First12line project and new52line RFQ; no leakage;52paging50+2",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "QUOTES",
+    "status": "PASS",
+    "scope": "Real imports,multiple rounds/revisions,locked history",
+    "evidence": "independent/evidence/Q04-all-confirmed.json",
+    "notes": "5confirmed versions/50history lines;V1 immutable;explicit9carry;tiers118/2.25",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "AWARD",
+    "status": "PASS",
+    "scope": "Ties,non-lowest reasons and independent manual subtotal",
+    "evidence": "independent/evidence/C05-scoped-amounts-and-decisions.png",
+    "notes": "Manual3/1979 distinct from theory6940/mixed7064;pending9",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "EXPORT",
+    "status": "PASS",
+    "scope": "Actual supplierZIP/CSV/comparisonXLSX content",
+    "evidence": "independent/evidence/export-checks.json",
+    "notes": "46checks;originalcurrent files and per-supplier PDF scope",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "PERSIST",
+    "status": "PASS",
+    "scope": "RFQ switch,F5,actual service restart",
+    "evidence": "independent/evidence/CORE07-after-service-restart.json",
+    "notes": "All stored rows/history/PDF hashes equal",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "STATUS",
+    "status": "PASS",
+    "scope": "Real pendingPUT and saved status,backup guard",
+    "evidence": "independent/evidence/CORE08-while-held.json",
+    "notes": "Three sizes;no falseSaved;real200 required",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "CONFLICT",
+    "status": "PASS",
+    "scope": "Real stale-tab409 protection",
+    "evidence": "independent/evidence/CORE08-conflict-http.json",
+    "notes": "Winner data/history/PDF preserved;stale draft retained;diagnostics visible",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "OFFLINE",
+    "status": "PASS",
+    "scope": "Actual service outage/manual save recovery",
+    "evidence": "independent/evidence/offline-after-manual-save.json",
+    "notes": "Truthful failure;old history retained;restart200/F5",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "CLASSES",
+    "status": "PASS",
+    "scope": "Actual data-only/archive/full backup categories",
+    "evidence": "independent/evidence/backup-class-checks.json",
+    "notes": "30checks;mail/chat explicitly excluded",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "WRONG-ZIP",
+    "status": "PASS",
+    "scope": "MalformedZIP and archive-as-full restore refusal",
+    "evidence": "independent/evidence/archive-rejection-real-backend.json",
+    "notes": "Real400;buyer-language UI;no rawcodes;target unchanged",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "ZIP-INTEGRITY",
+    "status": "PASS",
+    "scope": "ZIP/SQLite/allPDF integrity",
+    "evidence": "independent/evidence/s4-checks.json",
+    "notes": "11checks includingSQLite integrity and every stored table",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "PDF-TAMPER",
+    "status": "PASS",
+    "scope": "LegalZIP_STORED same-length one-byte PDF tamper",
+    "evidence": "independent/evidence/S4-audited-backend-rejection.json",
+    "notes": "ValidCRC/unchangedmanifest;400PDFhash mismatch;target bytes/semantics/directories unchanged",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "RESTORE",
+    "status": "PASS",
+    "scope": "Correct full restore into fresh empty directory",
+    "evidence": "independent/evidence/S4-positive-control-restored.json",
+    "notes": "Real200;2RFQs/history/decisions/3PDFs equal source",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "NONEMPTY",
+    "status": "PASS",
+    "scope": "Nonempty restore target refusal",
+    "evidence": "independent/evidence/S4-nonempty-backend.json",
+    "notes": "UIrefusal/actual409;restored data unchanged",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "NAME-EXPORT",
+    "status": "PASS",
+    "scope": "Real supplier-name selection and assigned export intent",
+    "evidence": "independent/evidence/original-failure-triage-export.json",
+    "notes": "RealXLSX/PDF ZIP;source rows/history unchanged",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "SEARCH",
+    "status": "PASS",
+    "scope": "First normal assignment search click delivered",
+    "evidence": "independent/evidence/assign-search-first-result.json",
+    "notes": "NOT REPRODUCED;ROOT CAUSE UNKNOWN;20samples/18rAF;1click,no force/retry",
+    "platform": "Linux/Chromium",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "WIN-1",
+    "status": "NOT TESTED",
+    "scope": "Native Windows Python3.13",
+    "evidence": "identity-start.json",
+    "notes": "No realWindows environment available;Linux not substituted",
+    "platform": "Native Windows",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "WIN-2",
+    "status": "NOT TESTED",
+    "scope": "Native Windows Node22",
+    "evidence": "identity-start.json",
+    "notes": "No realWindows environment available;Linux not substituted",
+    "platform": "Native Windows",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  },
+  {
+    "id": "WIN-3",
+    "status": "NOT TESTED",
+    "scope": "Native Windows isolated program/data,CMD/BAT/PowerShell/Edge and filesystem/restore safety",
+    "evidence": "identity-start.json",
+    "notes": "No realWindows environment available;Linux not substituted",
+    "platform": "Native Windows",
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972"
+  }
+]

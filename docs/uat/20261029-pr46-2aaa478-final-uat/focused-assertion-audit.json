@@ -1,0 +1,1156 @@
+{
+  "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "status": "PASS",
+  "originalCase": "UI V3 integration: theme, active navigation and responsive workspace",
+  "caseExpected": 1,
+  "trace": "focused/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/trace.zip",
+  "traceSHA256": "2b180f7d0a4f2e818638fc810be8db40a965c7bceb8bfe7bb38649b373e406f5",
+  "sourceSHA256": "6b86134d360f781b6fc41dbe4350ca2e043c5c583c78006944ac38e06b6bca0c",
+  "sourceUnmodified": true,
+  "method": "Read-only test-level before/after assertion records from original Playwright trace, not test instrumentation or standalone kicker query",
+  "allTestBodyAssertions": 100,
+  "postOldFailureLoopAssertions": 79,
+  "expectedAfterKickerLineCounts": {
+    "82": 1,
+    "83": 1,
+    "84": 1,
+    "90": 15,
+    "91": 15,
+    "104": 15,
+    "105": 15,
+    "106": 15,
+    "109": 1
+  },
+  "actualCounts": {
+    "50": 1,
+    "51": 1,
+    "62": 1,
+    "65": 1,
+    "66": 1,
+    "67": 1,
+    "74": 5,
+    "75": 5,
+    "80": 4,
+    "79": 1,
+    "82": 1,
+    "83": 1,
+    "84": 1,
+    "90": 15,
+    "91": 15,
+    "104": 15,
+    "105": 15,
+    "106": 15,
+    "109": 1
+  },
+  "finalErrorsEmptyAssertionCompleted": true,
+  "geometryCombinations": [
+    "items document overflow at 1024",
+    "assign document overflow at 1024",
+    "quoteImport document overflow at 1024",
+    "quotes document overflow at 1024",
+    "settings document overflow at 1024",
+    "items document overflow at 1366",
+    "assign document overflow at 1366",
+    "quoteImport document overflow at 1366",
+    "quotes document overflow at 1366",
+    "settings document overflow at 1366",
+    "items document overflow at 1600",
+    "assign document overflow at 1600",
+    "quoteImport document overflow at 1600",
+    "quotes document overflow at 1600",
+    "settings document overflow at 1600"
+  ],
+  "assertions": [
+    {
+      "line": 50,
+      "callId": "expect@50",
+      "title": "Expect \"toBe\"",
+      "params": {
+        "expected": "1"
+      },
+      "beforeTime": 10331.227,
+      "afterTime": 10331.376,
+      "completedWithoutError": true
+    },
+    {
+      "line": 51,
+      "callId": "expect@52",
+      "title": "Expect \"toContain\"",
+      "params": {
+        "expected": "Apply the approved V3.1 visual hierarchy"
+      },
+      "beforeTime": 10428.311,
+      "afterTime": 10430.09,
+      "completedWithoutError": true
+    },
+    {
+      "line": 62,
+      "callId": "expect@54",
+      "title": "Expect \"toBe\"",
+      "params": {
+        "expected": "SRM Lite · 采购询价工作台"
+      },
+      "beforeTime": 10524.943,
+      "afterTime": 10525.21,
+      "completedWithoutError": true
+    },
+    {
+      "line": 65,
+      "callId": "expect@55",
+      "title": "Expect \"toBe\"",
+      "params": {
+        "expected": "rgb(246, 248, 251)"
+      },
+      "beforeTime": 10527.338,
+      "afterTime": 10527.411,
+      "completedWithoutError": true
+    },
+    {
+      "line": 66,
+      "callId": "expect@56",
+      "title": "Expect \"toContain\"",
+      "params": {
+        "expected": "Segoe UI"
+      },
+      "beforeTime": 10531.219,
+      "afterTime": 10531.313,
+      "completedWithoutError": true
+    },
+    {
+      "line": 67,
+      "callId": "expect@57",
+      "title": "Expect \"toBeTruthy\"",
+      "params": {},
+      "beforeTime": 10532.603,
+      "afterTime": 10533.078,
+      "completedWithoutError": true
+    },
+    {
+      "line": 74,
+      "callId": "expect@59",
+      "title": "Expect \"toBeVisible\"",
+      "params": {},
+      "beforeTime": 11120.85,
+      "afterTime": 11299.204,
+      "completedWithoutError": true
+    },
+    {
+      "line": 75,
+      "callId": "expect@60",
+      "title": "Expect \"not toBeEmpty\"",
+      "params": {},
+      "beforeTime": 11300.766,
+      "afterTime": 11374.733,
+      "completedWithoutError": true
+    },
+    {
+      "line": 80,
+      "callId": "expect@62",
+      "title": "items should retain a two-digit workflow step",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 11465.028,
+      "afterTime": 11465.406,
+      "completedWithoutError": true
+    },
+    {
+      "line": 74,
+      "callId": "expect@64",
+      "title": "Expect \"toBeVisible\"",
+      "params": {},
+      "beforeTime": 11709.129,
+      "afterTime": 11866.441,
+      "completedWithoutError": true
+    },
+    {
+      "line": 75,
+      "callId": "expect@65",
+      "title": "Expect \"not toBeEmpty\"",
+      "params": {},
+      "beforeTime": 11869.835,
+      "afterTime": 12029.382,
+      "completedWithoutError": true
+    },
+    {
+      "line": 80,
+      "callId": "expect@67",
+      "title": "assign should retain a two-digit workflow step",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 12125.639,
+      "afterTime": 12125.855,
+      "completedWithoutError": true
+    },
+    {
+      "line": 74,
+      "callId": "expect@69",
+      "title": "Expect \"toBeVisible\"",
+      "params": {},
+      "beforeTime": 12409.226,
+      "afterTime": 12550.482,
+      "completedWithoutError": true
+    },
+    {
+      "line": 75,
+      "callId": "expect@70",
+      "title": "Expect \"not toBeEmpty\"",
+      "params": {},
+      "beforeTime": 12552.339,
+      "afterTime": 12642.813,
+      "completedWithoutError": true
+    },
+    {
+      "line": 80,
+      "callId": "expect@72",
+      "title": "quoteImport should retain a two-digit workflow step",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 12689.732,
+      "afterTime": 12689.831,
+      "completedWithoutError": true
+    },
+    {
+      "line": 74,
+      "callId": "expect@74",
+      "title": "Expect \"toBeVisible\"",
+      "params": {},
+      "beforeTime": 12911.474,
+      "afterTime": 12978.229,
+      "completedWithoutError": true
+    },
+    {
+      "line": 75,
+      "callId": "expect@75",
+      "title": "Expect \"not toBeEmpty\"",
+      "params": {},
+      "beforeTime": 12979.025,
+      "afterTime": 13063.707,
+      "completedWithoutError": true
+    },
+    {
+      "line": 80,
+      "callId": "expect@77",
+      "title": "quotes should retain a two-digit workflow step",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 13137.081,
+      "afterTime": 13137.185,
+      "completedWithoutError": true
+    },
+    {
+      "line": 74,
+      "callId": "expect@79",
+      "title": "Expect \"toBeVisible\"",
+      "params": {},
+      "beforeTime": 13298.28,
+      "afterTime": 13366.841,
+      "completedWithoutError": true
+    },
+    {
+      "line": 75,
+      "callId": "expect@80",
+      "title": "Expect \"not toBeEmpty\"",
+      "params": {},
+      "beforeTime": 13370.686,
+      "afterTime": 13424.421,
+      "completedWithoutError": true
+    },
+    {
+      "line": 79,
+      "callId": "expect@82",
+      "title": "Expect \"toBe\"",
+      "params": {
+        "expected": "系统设置"
+      },
+      "beforeTime": 13486.963,
+      "afterTime": 13487.11,
+      "completedWithoutError": true
+    },
+    {
+      "line": 82,
+      "callId": "expect@83",
+      "title": "Expect \"toContainText\"",
+      "params": {
+        "expected": "采购业务流程"
+      },
+      "beforeTime": 13488.575,
+      "afterTime": 13545.636,
+      "completedWithoutError": true
+    },
+    {
+      "line": 83,
+      "callId": "expect@84",
+      "title": "Expect \"toHaveCount\"",
+      "params": {
+        "expected": "1"
+      },
+      "beforeTime": 13546.481,
+      "afterTime": 13590.449,
+      "completedWithoutError": true
+    },
+    {
+      "line": 84,
+      "callId": "expect@86",
+      "title": "Expect \"toContain\"",
+      "params": {
+        "expected": "STRUCTURAL PARITY"
+      },
+      "beforeTime": 13640.32,
+      "afterTime": 13640.512,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@89",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 14122.869,
+      "afterTime": 14248.831,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@90",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 14250.102,
+      "afterTime": 14319.097,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@92",
+      "title": "items document overflow at 1024",
+      "params": {
+        "expected": "1026"
+      },
+      "beforeTime": 14386.067,
+      "afterTime": 14386.519,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@93",
+      "title": "items content must not sit underneath sidebar",
+      "params": {
+        "expected": "61"
+      },
+      "beforeTime": 14387.443,
+      "afterTime": 14387.643,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@94",
+      "title": "items workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 14388.305,
+      "afterTime": 14388.429,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@96",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 14720.582,
+      "afterTime": 14822.038,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@97",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 14828.292,
+      "afterTime": 14949.046,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@99",
+      "title": "assign document overflow at 1024",
+      "params": {
+        "expected": "1026"
+      },
+      "beforeTime": 15024.407,
+      "afterTime": 15024.623,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@100",
+      "title": "assign content must not sit underneath sidebar",
+      "params": {
+        "expected": "61"
+      },
+      "beforeTime": 15025.38,
+      "afterTime": 15025.468,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@101",
+      "title": "assign workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 15026.235,
+      "afterTime": 15026.437,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@103",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 15262.717,
+      "afterTime": 15390.087,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@104",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 15391.401,
+      "afterTime": 15445.656,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@106",
+      "title": "quoteImport document overflow at 1024",
+      "params": {
+        "expected": "1026"
+      },
+      "beforeTime": 15507.753,
+      "afterTime": 15507.832,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@107",
+      "title": "quoteImport content must not sit underneath sidebar",
+      "params": {
+        "expected": "61"
+      },
+      "beforeTime": 15508.429,
+      "afterTime": 15508.48,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@108",
+      "title": "quoteImport workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 15508.916,
+      "afterTime": 15509.218,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@110",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 15657.898,
+      "afterTime": 15741.884,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@111",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 15744.374,
+      "afterTime": 15831.146,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@113",
+      "title": "quotes document overflow at 1024",
+      "params": {
+        "expected": "1026"
+      },
+      "beforeTime": 15870.505,
+      "afterTime": 15870.594,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@114",
+      "title": "quotes content must not sit underneath sidebar",
+      "params": {
+        "expected": "61"
+      },
+      "beforeTime": 15871.059,
+      "afterTime": 15871.1,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@115",
+      "title": "quotes workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 15874.838,
+      "afterTime": 15874.891,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@117",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 16027.228,
+      "afterTime": 16114.45,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@118",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 16120.074,
+      "afterTime": 16298.938,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@120",
+      "title": "settings document overflow at 1024",
+      "params": {
+        "expected": "1026"
+      },
+      "beforeTime": 16347.003,
+      "afterTime": 16347.097,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@121",
+      "title": "settings content must not sit underneath sidebar",
+      "params": {
+        "expected": "61"
+      },
+      "beforeTime": 16347.957,
+      "afterTime": 16348.053,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@122",
+      "title": "settings workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 16349.132,
+      "afterTime": 16349.209,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@125",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 16732.461,
+      "afterTime": 16853.952,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@126",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 16856.547,
+      "afterTime": 16923.388,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@128",
+      "title": "items document overflow at 1366",
+      "params": {
+        "expected": "1368"
+      },
+      "beforeTime": 17035.952,
+      "afterTime": 17036.287,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@129",
+      "title": "items content must not sit underneath sidebar",
+      "params": {
+        "expected": "223"
+      },
+      "beforeTime": 17036.993,
+      "afterTime": 17037.084,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@130",
+      "title": "items workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 17037.688,
+      "afterTime": 17037.758,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@132",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 17380.449,
+      "afterTime": 17465.121,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@133",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 17468.796,
+      "afterTime": 17546.256,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@135",
+      "title": "assign document overflow at 1366",
+      "params": {
+        "expected": "1368"
+      },
+      "beforeTime": 17598.381,
+      "afterTime": 17598.571,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@136",
+      "title": "assign content must not sit underneath sidebar",
+      "params": {
+        "expected": "223"
+      },
+      "beforeTime": 17599.376,
+      "afterTime": 17599.439,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@137",
+      "title": "assign workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 17599.99,
+      "afterTime": 17600.036,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@139",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 17819.627,
+      "afterTime": 17899.878,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@140",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 17903.182,
+      "afterTime": 18019.168,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@142",
+      "title": "quoteImport document overflow at 1366",
+      "params": {
+        "expected": "1368"
+      },
+      "beforeTime": 18062.22,
+      "afterTime": 18062.299,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@143",
+      "title": "quoteImport content must not sit underneath sidebar",
+      "params": {
+        "expected": "223"
+      },
+      "beforeTime": 18063.284,
+      "afterTime": 18063.335,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@144",
+      "title": "quoteImport workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 18063.882,
+      "afterTime": 18063.925,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@146",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 18220.146,
+      "afterTime": 18314.553,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@147",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 18315.658,
+      "afterTime": 18381.598,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@149",
+      "title": "quotes document overflow at 1366",
+      "params": {
+        "expected": "1368"
+      },
+      "beforeTime": 18423.413,
+      "afterTime": 18423.498,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@150",
+      "title": "quotes content must not sit underneath sidebar",
+      "params": {
+        "expected": "223"
+      },
+      "beforeTime": 18424.369,
+      "afterTime": 18424.446,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@151",
+      "title": "quotes workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 18424.859,
+      "afterTime": 18424.901,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@153",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 18589.172,
+      "afterTime": 18684.761,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@154",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 18696.331,
+      "afterTime": 18746.388,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@156",
+      "title": "settings document overflow at 1366",
+      "params": {
+        "expected": "1368"
+      },
+      "beforeTime": 18788.457,
+      "afterTime": 18788.543,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@157",
+      "title": "settings content must not sit underneath sidebar",
+      "params": {
+        "expected": "223"
+      },
+      "beforeTime": 18789.308,
+      "afterTime": 18789.387,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@158",
+      "title": "settings workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 18790.351,
+      "afterTime": 18790.405,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@161",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 19171.52,
+      "afterTime": 19271.033,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@162",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 19272.447,
+      "afterTime": 19348.707,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@164",
+      "title": "items document overflow at 1600",
+      "params": {
+        "expected": "1602"
+      },
+      "beforeTime": 19446.341,
+      "afterTime": 19446.416,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@165",
+      "title": "items content must not sit underneath sidebar",
+      "params": {
+        "expected": "223"
+      },
+      "beforeTime": 19447.106,
+      "afterTime": 19447.162,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@166",
+      "title": "items workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 19448.153,
+      "afterTime": 19448.207,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@168",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 19814.213,
+      "afterTime": 19904.4,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@169",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 19908.149,
+      "afterTime": 19983.032,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@171",
+      "title": "assign document overflow at 1600",
+      "params": {
+        "expected": "1602"
+      },
+      "beforeTime": 20056.819,
+      "afterTime": 20057.07,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@172",
+      "title": "assign content must not sit underneath sidebar",
+      "params": {
+        "expected": "223"
+      },
+      "beforeTime": 20057.8,
+      "afterTime": 20057.848,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@173",
+      "title": "assign workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 20058.359,
+      "afterTime": 20058.401,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@175",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 20214.929,
+      "afterTime": 20324.004,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@176",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 20326.538,
+      "afterTime": 20374.833,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@178",
+      "title": "quoteImport document overflow at 1600",
+      "params": {
+        "expected": "1602"
+      },
+      "beforeTime": 20422.938,
+      "afterTime": 20423.055,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@179",
+      "title": "quoteImport content must not sit underneath sidebar",
+      "params": {
+        "expected": "223"
+      },
+      "beforeTime": 20423.762,
+      "afterTime": 20423.835,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@180",
+      "title": "quoteImport workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 20424.425,
+      "afterTime": 20424.48,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@182",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 20562.315,
+      "afterTime": 20624.369,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@183",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 20625.643,
+      "afterTime": 20681.578,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@185",
+      "title": "quotes document overflow at 1600",
+      "params": {
+        "expected": "1602"
+      },
+      "beforeTime": 20754.234,
+      "afterTime": 20754.34,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@186",
+      "title": "quotes content must not sit underneath sidebar",
+      "params": {
+        "expected": "223"
+      },
+      "beforeTime": 20755.4,
+      "afterTime": 20755.478,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@187",
+      "title": "quotes workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 20756.035,
+      "afterTime": 20756.097,
+      "completedWithoutError": true
+    },
+    {
+      "line": 90,
+      "callId": "expect@189",
+      "title": "Expect \"toHaveClass\"",
+      "params": {
+        "expected": "Object"
+      },
+      "beforeTime": 20913.117,
+      "afterTime": 21025.343,
+      "completedWithoutError": true
+    },
+    {
+      "line": 91,
+      "callId": "expect@190",
+      "title": "Expect \"toHaveAttribute\"",
+      "params": {
+        "expected": "aria-current"
+      },
+      "beforeTime": 21027.231,
+      "afterTime": 21109.327,
+      "completedWithoutError": true
+    },
+    {
+      "line": 104,
+      "callId": "expect@192",
+      "title": "settings document overflow at 1600",
+      "params": {
+        "expected": "1602"
+      },
+      "beforeTime": 21150.012,
+      "afterTime": 21150.207,
+      "completedWithoutError": true
+    },
+    {
+      "line": 105,
+      "callId": "expect@193",
+      "title": "settings content must not sit underneath sidebar",
+      "params": {
+        "expected": "223"
+      },
+      "beforeTime": 21150.741,
+      "afterTime": 21150.918,
+      "completedWithoutError": true
+    },
+    {
+      "line": 106,
+      "callId": "expect@194",
+      "title": "settings workspace should remain visible",
+      "params": {
+        "expected": "420"
+      },
+      "beforeTime": 21151.393,
+      "afterTime": 21151.427,
+      "completedWithoutError": true
+    },
+    {
+      "line": 109,
+      "callId": "expect@195",
+      "title": "Expect \"toEqual\"",
+      "params": {
+        "expected": "[]"
+      },
+      "beforeTime": 21152.316,
+      "afterTime": 21152.627,
+      "completedWithoutError": true
+    }
+  ],
+  "sourceLines": {
+    "79": "    if(stage==='settings')expect(kicker).toBe('系统设置');",
+    "80": "    else expect(kicker,stage+' should retain a two-digit workflow step').toMatch(/^\\d{2}\\s*\\//);",
+    "82": "  await expect(page.locator('.srm-v3-flow-label')).toContainText('采购业务流程');",
+    "83": "  await expect(page.locator('#srmV3QuoteLockHint')).toHaveCount(1);",
+    "84": "  expect(await page.locator('#ui-v3-integration-styles').textContent()).toContain('STRUCTURAL PARITY');",
+    "90": "      await expect(page.locator('#'+stage)).toHaveClass(/active/);",
+    "91": "      await expect(nav).toHaveAttribute('aria-current','page');",
+    "104": "      expect(m.documentWidth,stage+' document overflow at '+size.width).toBeLessThanOrEqual(size.width+2);",
+    "105": "      expect(m.appContentLeft,stage+' content must not sit underneath sidebar').toBeGreaterThanOrEqual(m.sidebarRight-1);",
+    "106": "      expect(m.panelWidth,stage+' workspace should remain visible').toBeGreaterThan(420);",
+    "109": "  expect(errors).toEqual([]);"
+  }
+}

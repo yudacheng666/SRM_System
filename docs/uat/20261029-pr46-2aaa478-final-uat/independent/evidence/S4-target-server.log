@@ -1,0 +1,21 @@
+SRM local prototype: http://127.0.0.1:9866/
+S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.
+SQLite API check: http://127.0.0.1:9866/storage-check
+127.0.0.1 - - [29/Oct/2026 16:04:29] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 16:04:29] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 16:04:30] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 16:04:31] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 16:04:31] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 16:04:31] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 16:04:31] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 16:04:33] "POST /api/backups/full/restore HTTP/1.1" 400 -
+127.0.0.1 - - [29/Oct/2026 16:04:34] "POST /api/backups/full/restore HTTP/1.1" 400 -
+127.0.0.1 - - [29/Oct/2026 16:04:35] "POST /api/backups/full/restore HTTP/1.1" 200 -
+S4 automatic full backup created: SRM_FULL_20261029_160435_9a6fbcad.zip
+127.0.0.1 - - [29/Oct/2026 16:04:35] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 16:04:35] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 16:04:35] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 16:04:35] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 16:04:35] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 16:04:36] "GET /api/workspaces/RFQ-1793289407081-CLOY9D HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 16:04:38] "POST /api/backups/full/restore HTTP/1.1" 409 -

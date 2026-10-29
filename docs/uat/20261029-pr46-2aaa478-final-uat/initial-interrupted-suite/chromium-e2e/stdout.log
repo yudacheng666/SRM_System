@@ -1,0 +1,76 @@
+
+> srm_system@1.0.0 test:e2e
+> playwright test
+
+
+Running 58 tests using 1 worker
+
+
+  ✓   1 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:140:1 › 01 startup, demo isolation, autosave, navigation and restart / 启动与隔离 (20.5s)
+
+  ✓   2 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:160:1 › 02 XLSX 12/100, duplicates and invalid format / 物料 (19.2s)
+
+  ✓   3 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:177:1 › 03 suppliers and bidirectional additive allocation / 供应商与分配 (16.3s)
+
+  ✓   4 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:192:1 › 04 real quote imports, rounds, tiers, immutable confirmation and comparison XLSX / 报价比价 (22.2s)
+
+  ✓   5 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:237:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 (23.2s)
+
+  ✓   6 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:271:1 › 06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复 (27.5s)
+
+  ✓   7 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:334:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 (23.9s)
+
+  ✓   8 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:354:1 › 08 bad PDF and damaged ZIP never contaminate saved data / 异常回归 (10.3s)
+
+  ✓   9 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:371:1 › 09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台操作 (12.2s)
+
+  ✓  10 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:402:1 › 10 buyer continuous allocation to items and drawing select without reload / 跨步骤实时同步 (8.6s)
+
+  ✓  11 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:427:1 › 11 formal RFQ identity in missing-quote CSV and working export shortcut / 单据追溯 (11.3s)
+
+  ✓  12 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:459:1 › 12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离 (21.2s)
+
+  ✓  13 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:493:1 › 13 compact laptop item table after import / 1366首屏物料可见 (11.6s)
+
+  ✘  14 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:530:1 › 14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯 (19.5s)
+
+
+  1) prototype/m1-lite/tests/e2e/acceptance.spec.cjs:530:1 › 14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯 
+
+    Test was interrupted.
+
+    Error: ENOENT: no such file or directory, stat '/tmp/srm-e2e-NLONWd/fixtures/suppliers.xlsx'
+
+      81 | async function suppliers(page, app) {
+      82 |   await openTools(page,'#uiSupplierTools');
+    > 83 |   await page.locator('#pilotSupplierExcel').setInputFiles(path.join(app.fixtures,'suppliers.xlsx'));
+         |   ^
+      84 |   await expect(page.locator('#pilotImportSupplierConfirm')).toBeEnabled(); await page.locator('#pilotImportSupplierConfirm').click();
+      85 |   await expect.poll(async () => (await snapshot(page)).state.suppliers.length).toBe(2);
+      86 | }
+        at suppliers (/workspace/srm2aaa-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:83:3)
+        at allocated (/workspace/srm2aaa-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:88:45)
+        at /workspace/srm2aaa-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:570:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: server-log (text/plain) ─────────────────────────────────────────────────────────
+    test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/attachments/server-log-a1934a1d89234c2cb32e9a509de8fd5a28d6c8cf.log
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 interrupted
+    prototype/m1-lite/tests/e2e/acceptance.spec.cjs:530:1 › 14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯 
+  44 did not run
+  13 passed (4.4m)
