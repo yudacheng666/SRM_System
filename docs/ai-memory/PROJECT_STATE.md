@@ -1,6 +1,6 @@
 # SRM_System PROJECT_STATE / 项目当前有效状态
 
-> 核实日期 / Checked: 2026-10-26. Current state reconciled with actual GitHub refs, Codex #50 evidence and user's approval of temporary option A; not continuous monitoring.
+> 核实日期 / Checked: 2026-10-29. Current state reconciled with actual GitHub refs, Codex #50 evidence and user's approval of temporary option A; not continuous monitoring.
 > 此文件由已合并的 PR #47 初始化到 M1 开发基线；本次续开发状态更新在单独的 Draft 文档 PR 中，合并前不属于开发基线。
 
 ## Goal / 产品目标
@@ -18,7 +18,7 @@
 | M1 开发基线 / Development | draft/20261013-m1-storage-ui-audit @ \`b0629a06a7ab2880fc86427e26a953d722487a57\` | M1 Lite, SQLite, ERP core fields, V3.1, S4 and merged #47 memory |
 | 已批准 UI 设计 / Design | [#44](https://github.com/yudacheng666/SRM_System/pull/44) Draft @ \`8e643520\` | Architecture and acceptance matrix only, not product code |
 | 并行历史候选 / Alternate | [#45](https://github.com/yudacheng666/SRM_System/pull/45) Draft @ \`4480482c5bbb280257c06aa44889706705663280\` | Two CI SUCCESS on that SHA, **not** evidence for #46 |
-| 当前 UI 产品候选 / Active UI | [#46](https://github.com/yudacheng666/SRM_System/pull/46) Draft @ `f4bfcda8efdf3998c833ed25c3193a056fdde451` | [Exact-SHA Codex cloud full-suite **110 PASS/0 FAIL** + UX **9/9 PASS** + core **12/12 PASS**](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6416014875), valid S4 tamper rejection/restore PASS, 1366 full quoted row PASS; **cloud READY but Windows-native3 NOT TESTED, GitHub Actions NOT formally passed, merge NOT authorized** |
+| 当前 UI 产品候选 / Active UI | [#46](https://github.com/yudacheng666/SRM_System/pull/46) Draft @ `0868d422dfdc227f23f2c9e90bab4b3a3f3770e9` | Six-page visual refactor in real index.html + visual browser test **committed, STATIC PARSE ONLY**, not yet UAT. Original `f4bfcda8` [110/110 cloud PASS](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6416014875) remains old SHA rollback baseline, not a PASS for current visual SHA. |
 | 项目记忆 / Memory | [#47](https://github.com/yudacheng666/SRM_System/pull/47), merged 2026-10-22 | AGENTS.md + PROJECT_STATE + DECISIONS + original session now on M1 dev, not main |
 
 ## Validated development history / 已核实开发和证据
@@ -102,6 +102,13 @@
 - **Remaining acceptance blockers, not code defects:** 3 actual **native Windows** groups (Python3.13, Node22, PowerShell/BAT+local launch/safety) **NOT TESTED**; no verified official current-head GitHub Actions SUCCESS, and no explicit owner consent to merge. Cloud Linux/Node24 cannot certify native Windows. [Posted Windows plan PR #50](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6416864097) is **not a run**. [PR #46 status comment](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6416876704) marks no product/head changes; all PR #46/#48/#50 Draft. D-022 temporary development evidence accepted only up to cloud stage; no main or M1 merge allowed automatically.
 - Source control note: PR #46 base points to M1 branch at `f117cf3ca512a4ca7e1eec505b5e28744159343f` (PR #48 metadata still b0629a06); recheck base/merge compatibility **after Windows PASS**, before requesting separate merge authorization. Do not silently rebase tested product code and treat old SHA evidence as valid for new merge SHA.
 
+## 2026-10-29 genuine product visual-system work
+
+- User explicitly rejected another design-only cycle; original PR #44 approved UI architecture remains reference. [D-029](DECISIONS.md) directs real M1 code changes, not a new standalone mockup.
+- PR #46 current SHA `0868d422dfdc227f23f2c9e90bab4b3a3f3770e9`: unified light navigation, seven SVG icons, Chinese labels, typography, buttons, forms, cards and business tables across five RFQ stages and backup. Three legacy density CSS blocks consolidated into one; total style blocks 6 to 4. Added real-browser six-page screenshot/regression spec. All eight inline JS scripts byte-identical to tested `f4bfcda8`; original business DOM IDs preserved; static parsing PASS. **No real current-SHA test run**, no merge.
+- Windows user on older `f4bfcda8` ran local Python 3.15 backend 44/44 PASS, health API offline/SQLite/S4 OK; user says basic functions usable. This does not satisfy D-022 Python3.13, Node22 or full Windows end-to-end requirements.
+- Next: user evaluates real updated six-page UI in isolated source/data copy; new exact-head Codex tests only after visual iteration. All PRs remain Draft, Actions are not official current-head PASS.
+
 ## CI blocker / 自动化阻断
 
 - Exact PR #46 HEAD \`c2737f0\` triggered [S3/S4 run 39743002740](https://github.com/yudacheng666/SRM_System/actions/runs/39743002740) and [UI run 39743002722](https://github.com/yudacheng666/SRM_System/actions/runs/39743002722); both concluded FAILURE **before test execution**.
@@ -124,7 +131,7 @@
 
 ## Open gates / 后续门槛
 
-1. **Single immediate test gate: native Windows 3 groups**, not repeating passed Linux/cloud tests. Codex Cloud actually completed exact `f4bfcda8efdf3998c833ed25c3193a056fdde451` full **110 PASS /0 FAIL**, independent **UX9 PASS, core12 PASS**, S4 security PASS. [Windows executable checklist on PR #50](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6416864097): W1 native Python3.13, W2 Node22, W3 PowerShell/BAT+local browser/SQLite/PDF/409/S4 isolation; **all 3 NOT TESTED**, do not infer PASS from Linux/Node24. User has Python3.15 on Windows, which is supplemental but not the Python3.13 gate. Exact HTML SHA256 `b29927ed84a7110f3546ee03f526b70f63f4e21032b69ce7565d71e772d3d7b8`; any source move => re-evaluate test evidence. No Windows test has actually been started from this chat.
+1. **Current gate: user visually reviews the real six-page UI candidate** `0868d422dfdc227f23f2c9e90bab4b3a3f3770e9` using a separate Windows installation and isolated data. After visual approval, independent Codex must re-run new exact-SHA Python/Node/Chromium, UX/core and S4; prior f4bfcda8 PASS cannot transfer. Windows native3 and explicit owner merge authorization remain separate conditions.
 2. New 2dbde57 push triggered [UI 39766115997](https://github.com/yudacheng666/SRM_System/actions/runs/39766115997) and [S3-S4 39766115887](https://github.com/yudacheng666/SRM_System/actions/runs/39766115887); four jobs again steps=[] / no runner. In November, first inspect account billing/limit, then rerun exact new HEAD on actual Actions runners.
 3. Historical exact-SHA sequence remains immutable: `2dbde57` 103+8 PASS; `66a0579` 94/15 FAIL; `795f663` 103/7 FAIL; **current `f4bfcda` cloud 110/0 + independent UX9/9+core12/12 PASS**. [D-022](DECISIONS.md): Windows-native3 actual PASS + separate owner explicit PR #46→M1 merge approval + check latest M1 base/old #45; GitHub Actions must eventually run and repository required checks cannot be bypassed; do not promote M1 to `main`.
 4. Reconcile #45/#46 duplication, collect buyer feedback, and ask owner for explicit permission before any merge to M1/main. Main stays M0 until approved.
