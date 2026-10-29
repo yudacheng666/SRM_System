@@ -73,7 +73,11 @@ test('UI V3 integration: theme, active navigation and responsive workspace / 视
     const intro=page.locator('#srmV3PageStage-'+stage);
     await expect(intro).toBeVisible();
     await expect(intro.locator('h2')).not.toBeEmpty();
-    expect(await intro.locator('.srm-v3-pageKicker').textContent()).toMatch(/\d\d|ADMIN/);
+    const kicker=(await intro.locator('.srm-v3-pageKicker').textContent()).trim();
+    // 中文：采购流程保留两位步骤编号；设置页使用已批准的中文业务名称，不再要求旧 ADMIN。
+    // English: Workflow stages keep numbered kickers; settings uses its approved Chinese label.
+    if(stage==='settings')expect(kicker).toBe('系统设置');
+    else expect(kicker,stage+' should retain a two-digit workflow step').toMatch(/^\d{2}\s*\//);
   }
   await expect(page.locator('.srm-v3-flow-label')).toContainText('采购业务流程');
   await expect(page.locator('#srmV3QuoteLockHint')).toHaveCount(1);
