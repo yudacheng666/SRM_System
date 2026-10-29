@@ -180,7 +180,7 @@ test('03 suppliers and bidirectional additive allocation / 供应商与分配', 
   await expect(page.locator('#pilotSupplierExcelStatus')).toContainText('重复'); await expect(page.locator('#pilotImportSupplierConfirm')).toBeDisabled();
   await page.locator('[data-rem="SUP-B"]').click();
   await expect.poll(async () => (await snapshot(page)).state.assignments.every(x=>!x.values.includes('SUP-B'))).toBe(true);
-  await page.locator('[data-mode="supplierFirst"]').click(); await page.locator('[data-sf-s="SUP-B"]').click();
+  await page.locator('[data-mode="supplierFirst"]').click(); await page.locator('[data-sf-s="SUP-B"] b').click();
   await page.locator('#sfItemBody input[data-sfi]').first().check(); await save(page); const state=(await snapshot(page)).state;
   await openProject(page); await page.locator('#pilotNewWorkspace').click(); await saved(page);
   await openProject(page);
@@ -249,7 +249,7 @@ test('05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图�
   await info.attach('pdf-preview',{path:info.outputPath('pdf-preview.png'),contentType:'image/png'});
   await page.locator('#closeDrawing').click();
   await tab(page,'assign'); await page.locator('#selectAssignAll').click(); await page.locator('[data-rem="SUP-B"]').click();
-  await page.locator('[data-mode="supplierFirst"]').click(); await page.locator('[data-sf-s="SUP-B"]').click();
+  await page.locator('[data-mode="supplierFirst"]').click(); await page.locator('[data-sf-s="SUP-B"] b').click();
   const ws=await snapshot(page), line=ws.state.items.find(x=>x.id==='TST-002').lineId;
   await page.locator(`[data-sfi="${line}"]`).check(); await save(page);
   await openTools(page,'#uiDataTools'); await page.locator('#pilotReportOpen').click();
@@ -617,7 +617,7 @@ test('15 new RFQ clears stale supplier-first context without corrupting saved RF
   await tab(page,'assign');
   await page.locator('[data-mode="supplierFirst"]').click();
   await expect(page.locator('#supplierFirstTitle')).toHaveText('选择左侧供应商');
-  await page.locator('[data-sf-s="SUP-A"]').click();
+  await page.locator('[data-sf-s="SUP-A"] b').click();
   await expect(page.locator('#supplierFirstTitle')).toContainText('虚构供应商A');
   await saved(page);
   // 通过真实项目列表切回老项目后也应清空活动选择。
@@ -747,7 +747,7 @@ test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与�
   // English: Re-enter the supplier allocation stage before editing its visible checkbox.
   await tab(page,'assign');
   await page.locator('[data-mode="supplierFirst"]').click();
-  await page.locator('[data-sf-s="SUP-B"]').click();
+  await page.locator('[data-sf-s="SUP-B"] b').click();
   const allocatedBox=page.locator('#sfItemBody input[data-sfi]').first();
   await expect(allocatedBox).toBeChecked();
   await allocatedBox.uncheck();
