@@ -281,6 +281,7 @@ test('06 full backup restore: actual imported quotes, history, PDFs, overwrite r
   await page.locator('[data-srm-v2-action="admin"]').click();
   await openTools(page,'#uiDataTools');
   const file=await download(page,'#pilotS4DownloadFull',info,'full-backup.zip'); const z=inspectZip(file); expect(z['database/srm.sqlite3']).toBeTruthy();
+  expect(Object.keys(z).some(name=>name.toLowerCase().endsWith('.pdf'))).toBe(true);
   const archive=await download(page,'#pilotExportComplete',info,'inquiry-drawing-archive.zip');
   await app.start(8766,path.join(app.root,'restored')); const other=await browser.newPage(); other.on('dialog',d=>d.accept());
   try {
@@ -292,6 +293,22 @@ test('06 full backup restore: actual imported quotes, history, PDFs, overwrite r
     const archiveRefusal=other.locator('#pilotS4RestoreFeedback');
     await expect(archiveRefusal).toContainText('不是完整备份');
     await expect(archiveRefusal).toContainText('下载完整备份');
+    await expect(archiveRefusal).not.toContainText(/RESTORE_[A-Z_]+/);
+    expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toEqual([]);
+    // 中文：合法 ZIP 但图纸内容哈希不符时，也应拒绝恢复且只显示业务语言。
+    // English: A structurally valid ZIP with tampered PDF content must be rejected without exposing error codes.
+    const tampered=info.outputPath('tampered-full-backup.zip');
+    execFileSync('python',['-c',String.raw`import sys,zipfile
+src,dst=sys.argv[1:3]
+with zipfile.ZipFile(src,'r') as original, zipfile.ZipFile(dst,'w',compression=zipfile.ZIP_STORED) as changed:
+    for name in original.namelist():
+        data=original.read(name)
+        if name.lower().endswith('.pdf'):
+            data += b'\\nTAMPERED'
+        changed.writestr(name,data,compress_type=zipfile.ZIP_STORED)
+`,file,tampered]);
+    await other.locator('#pilotS4BackupFile').setInputFiles(tampered); await other.locator('#pilotS4RestoreFull').click();
+    await expect(archiveRefusal).toContainText('图纸完整性校验未通过');
     await expect(archiveRefusal).not.toContainText(/RESTORE_[A-Z_]+/);
     expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toEqual([]);
     // 正确的完整备份仍应恢复成功。
