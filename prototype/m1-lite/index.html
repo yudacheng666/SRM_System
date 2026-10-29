@@ -1429,7 +1429,9 @@ body.srm-v2 #pilotDrawingPanel .srm-ux-drawing-steps span{font-size:12px;font-we
  body.srm-v2 .ui-contextRight{max-width:220px}
 }
 </style>
-<style id="srm-ux-compact-list-rows">
+<style id="srm-visual-system-20261029">
+/* Consolidated approved density and UX09 base / 原已验收行高逻辑不变 */
+
 /* 中文：业务列表正文统一紧凑密度，表头/导入表及可编辑控件不强行压缩。
  * English: Consistent compact density across list bodies, without removing fields or changing form sizes. */
 body.srm-v2 .panel .table tbody > tr > td{padding:3px 8px;line-height:1.25;vertical-align:middle}
@@ -1454,8 +1456,9 @@ body.srm-v2 #assign .tablewrap:has(#assignItemBody) .table th:nth-child(2){width
 body.srm-v2 #assign .tablewrap:has(#assignItemBody) .table th:nth-child(3){width:16%}
 body.srm-v2 #assign #assignItemBody td:nth-child(2){overflow:hidden}
 body.srm-v2 #assign #assignItemBody tr{height:auto}
-</style>
-<style id="srm-ux09-compare-density-fix">
+
+
+
 /* 中文：修复UX09比价密度：把价格与按需详情排成同一行；详情展开后仍完整显示来源、交期及备注。
  * English: Align price and disclosure horizontally; preserve full expanded terms and keyboard access. */
 body.srm-v2 #quotes #quoteTable tbody>tr>td{padding:3px 7px;line-height:1.25;vertical-align:middle}
@@ -1483,8 +1486,9 @@ body.srm-v2 #quotes .srm-ux-manual-total{margin:5px 0;padding:5px 9px}
 @media(max-width:1090px){
  body.srm-v2 #quotes #quoteTable .srm-ux-bid-details{display:inline-block}
 }
-</style>
-<style id="srm-ux09-first-screen-closure">
+
+
+
 /* 中文：UX09尾项：普通报价行不得被旧的单元格高度挤大，展开详情仍可按内容自然撑开。
  * English: Keep standard bid rows dense while allowing genuine expanded detail to grow. */
 body.srm-v2 #quotes #quoteTable tbody>tr>td{padding:2px 6px;line-height:1.2}
@@ -1516,6 +1520,209 @@ body.srm-v2 #quotes #quoteTable .srm-ux-bid-details summary{line-height:1.2;font
  body.srm-v2 #quotes .srm-ux-compare-heading{padding:2px 1px}
  body.srm-v2 #quotes .tablewrap{margin-top:3px!important}
 }
+
+/* SRM Visual System 2026.10 / 真正六页共用的视觉系统。
+ * Visual-only: no business handlers, hidden data columns, table layout density,
+ * S4 protection, view state or RFQ identity changes.
+ * Keep quote-row geometry and short-laptop UX09 override above intact. */
+body.srm-v2{
+ --bg:#f5f7f9;--panel:#fff;--line:#dbe2e9;--text:#223143;
+ --muted:#68788a;--primary:#235d98;--soft:#edf4fa;
+ --srm-ink:#223143;--srm-subtle:#65768a;--srm-divider:#e2e7ed;
+ --srm-accent:#245f9f;--srm-accent-soft:#e9f2fb;--srm-canvas:#f5f7f9;
+ color:var(--srm-ink);background:var(--srm-canvas);
+ font:13.5px/1.48 "Segoe UI Variable","Segoe UI","Microsoft YaHei UI","Microsoft YaHei",sans-serif;
+ -webkit-font-smoothing:antialiased;
+}
+body.srm-v2 .srm-v2-sidebar{
+ background:#fff;color:#465970;border-right:1px solid #dce4ec;
+ box-shadow:1px 0 0 #eef2f6;
+}
+body.srm-v2 .srm-v2-brand{color:#192f46;padding:0 10px;letter-spacing:-.025em}
+body.srm-v2 .srm-v3-brandmark{
+ background:#1e476d;color:#fff;border-radius:6px;
+ box-shadow:none;font-size:18px;letter-spacing:-.05em
+}
+body.srm-v2 .srm-v3-brandcopy{color:#172d44}
+body.srm-v2 .srm-v2-brand small{
+ color:#778799;font-size:10px;letter-spacing:.045em;font-weight:600
+}
+body.srm-v2 .srm-v2-descriptor{
+ font-size:11px;color:#7d8b9a;margin:10px 10px 23px;letter-spacing:.015em
+}
+body.srm-v2 .srm-v2-navlabel{
+ color:#8c99a7;letter-spacing:.09em;font-size:10px;
+ font-weight:700;margin:0 11px 7px
+}
+body.srm-v2 .srm-v2-sideitem{
+ color:#526477;min-height:40px;margin:1px 0;padding:9px 12px;
+ font-size:13px;font-weight:560;line-height:1.35;border-radius:5px;
+ box-shadow:none;gap:10px
+}
+body.srm-v2 .srm-v2-sideitem:hover{
+ background:#f2f5f8;color:#223d58
+}
+body.srm-v2 .srm-v2-sideitem[aria-current="page"]{
+ color:#205586;background:#e9f2fa;box-shadow:inset 3px 0 #246aa9;
+ font-weight:720
+}
+body.srm-v2 .srm-v2-icon{
+ width:21px;height:21px;display:inline-flex;align-items:center;justify-content:center;
+ color:#8799a9;flex:none;font-size:0
+}
+body.srm-v2 .srm-v2-sideitem:hover .srm-v2-icon{color:#436c91}
+body.srm-v2 .srm-v2-sideitem[aria-current="page"] .srm-v2-icon{color:#24639b}
+body.srm-v2 .srm-v2-icon svg{display:block;stroke:currentColor}
+body.srm-v2 .srm-v2-sidedivider{border-color:#e8edf2;margin-top:12px;margin-bottom:13px}
+body.srm-v2 .srm-v2-sidefooter{
+ color:#8a97a5;border-top:1px solid #e8edf2;
+ padding:14px 10px 0;font-size:11px;line-height:1.65
+}
+body.srm-v2 .srm-v3-statusDot{width:6px;height:6px;background:#29806c}
+body.srm-v2 .ui-appHeader{
+ background:#fff;border-bottom:1px solid var(--srm-divider);
+ box-shadow:none
+}
+body.srm-v2 .ui-eyebrow{
+ color:#66829d;font-size:10px;letter-spacing:.10em;font-weight:700
+}
+body.srm-v2 .ui-appHeader h1{
+ color:#203246;font-weight:740;font-size:21px;letter-spacing:-.03em
+}
+body.srm-v2 .srm-v3-appname{color:#3b536b}
+body.srm-v2 #pilotSubtitle{color:#7d8b99}
+body.srm-v2 .ui-headActions .btn,
+body.srm-v2 .ui-headActions .tab{
+ background:transparent;border-color:transparent;
+ color:#62748a;font-weight:600
+}
+body.srm-v2 .ui-headActions .btn:hover,
+body.srm-v2 .ui-headActions .tab:hover{
+ background:#f1f5f9;border-color:#e2e8ef;color:#24547c
+}
+body.srm-v2 .ui-context{
+ border:1px solid #dfe7ee;border-left:3px solid #7babc8;
+ background:#fff;border-radius:6px;box-shadow:none
+}
+body.srm-v2 .ui-context b{color:#203b56;font-size:16px;letter-spacing:-.025em}
+body.srm-v2 .ui-context small{color:#6c7d8e}
+body.srm-v2 #pilotModeBadge{
+ border:1px solid #e1e8ef;background:#f6f8fa;
+ color:#66788a;border-radius:4px;font-weight:620
+}
+body.srm-v2 .ui-workNav{
+ background:rgba(245,247,249,.97);border-color:#dfe5ec;
+ box-shadow:none
+}
+body.srm-v2 .srm-v3-flow-label strong{color:#637c91}
+body.srm-v2 .srm-v3-flow-label strong:before{color:#7f9fb9}
+body.srm-v2 .ui-workNav .tab{
+ color:#718094;font-weight:580;letter-spacing:0
+}
+body.srm-v2 .ui-workNav .tab:hover{background:#edf1f5;color:#244f73}
+body.srm-v2 .ui-workNav .tab.active{color:#205f98;font-weight:750}
+body.srm-v2 .ui-workNav .tab.active:after{height:2px;background:#2a669f;border-radius:0}
+body.srm-v2 .srm-v3-pageKicker{
+ color:#71889d;font-size:10px;font-weight:750;letter-spacing:.075em
+}
+body.srm-v2 .srm-v3-pageMain h2{
+ color:#20364b;font-size:23px;font-weight:760;letter-spacing:-.04em
+}
+body.srm-v2 .srm-v3-pageMain h2 span{
+ color:#8c9aab;font-size:13px;font-weight:450;letter-spacing:0
+}
+body.srm-v2 .srm-v3-pageMain p{color:#738296;font-size:12px}
+body.srm-v2 .srm-v3-pageMeta{color:#8b99aa;font-size:11px}
+body.srm-v2 .panel .card,
+body.srm-v2 .card{
+ background:#fff;border-color:#dfe5eb;border-radius:6px;box-shadow:none
+}
+body.srm-v2 .panel .cardhead,
+body.srm-v2 .cardhead{
+ background:#fff;border-color:#e6ebf0;
+ padding:9px 13px;box-shadow:none
+}
+body.srm-v2 .panel .cardhead b,
+body.srm-v2 .cardhead>b,
+body.srm-v2 .cardhead>div:first-child>b{
+ color:#293c50;font-size:13.5px;font-weight:730;letter-spacing:-.01em
+}
+body.srm-v2 .panel .cardhead .muted{color:#83909e;font-size:11px;font-weight:440}
+body.srm-v2 .panel .cardbody,
+body.srm-v2 .cardbody{padding:10px 13px}
+body.srm-v2 .btn{
+ border:1px solid #cfd9e3;border-radius:5px;background:#fff;
+ color:#39526a;font-size:12.5px;font-weight:600;
+ min-height:31px;box-shadow:none;transition:background-color .12s,border-color .12s,color .12s
+}
+body.srm-v2 .btn:hover{background:#f2f6f9;border-color:#b5c5d3;color:#254d71}
+body.srm-v2 .btn.primary{
+ background:#235e98;color:#fff;border-color:#235e98;font-weight:680
+}
+body.srm-v2 .btn.primary:hover{background:#194b7d;border-color:#194b7d;color:#fff}
+body.srm-v2 .btn.soft{background:#eff5fa;border-color:#d9e6f1;color:#295c8c}
+body.srm-v2 .btn.soft:hover{background:#e4eff9;border-color:#c2d7e9}
+body.srm-v2 .btn.danger{background:#fff;border-color:#eed9d6;color:#a83c32}
+body.srm-v2 .btn.danger:hover{background:#fff5f2;border-color:#dfb5ae}
+body.srm-v2 :is(button,input,select,textarea,[role=tab],summary):focus-visible{
+ outline:2px solid #4383bc;outline-offset:2px
+}
+body.srm-v2 .btn:disabled,
+body.srm-v2 button:disabled{opacity:.55;cursor:not-allowed}
+body.srm-v2 :is(input[type=text],input[type=number],input[type=search],select,textarea){
+ border:1px solid #cdd8e3;border-radius:5px;
+ background:#fff;color:#273c50;box-shadow:none;font-size:12.5px
+}
+body.srm-v2 :is(input[type=text],input[type=number],input[type=search],select,textarea):focus{
+ border-color:#5d91bd;box-shadow:0 0 0 2px #e5f0fa
+}
+body.srm-v2 .tablewrap{
+ border:1px solid #dce4ec;border-radius:5px;background:#fff;
+ scrollbar-color:#bac9d6 #f2f5f8
+}
+body.srm-v2 .table{color:#2f4256;font-size:12.5px;font-variant-numeric:tabular-nums}
+body.srm-v2 .table th{
+ background:#f3f6f9;color:#607287;
+ font-size:11.5px;font-weight:730;letter-spacing:.015em;
+ border-bottom-color:#dbe4ec
+}
+body.srm-v2 .table td{border-bottom-color:#e9eef3}
+body.srm-v2 .table tbody tr:hover td{background:#f1f7fb}
+body.srm-v2 .table tbody tr:focus-within td{background:#f4f9fd}
+body.srm-v2 .pager{color:#708194}
+body.srm-v2 .pageNum{border-radius:4px}
+body.srm-v2 .pageNum.active{background:#e9f2fb;border-color:#cddfec;color:#235d98}
+body.srm-v2 .notice{
+ border:1px solid #d9e5ef;border-left:3px solid #86a9c7;
+ border-radius:5px;background:#f4f8fb;color:#47627a
+}
+body.srm-v2 .srm-ux-save-indicator{
+ border-radius:5px;background:#f1f8f4;border-color:#c9e4d6;
+ color:#256247;font-size:12px
+}
+body.srm-v2 .srm-ux-save-indicator[data-srm-ux-save="pending"]{
+ background:#fff7e8;border-color:#ead8ad;color:#805a16
+}
+body.srm-v2 .srm-ux-save-indicator[data-srm-ux-save="error"]{
+ background:#fff2f1;border-color:#e5b4af;color:#a1342d
+}
+body.srm-v2 .srm-ux-analytics{
+ background:#f8fafc;border-color:#e0e7ee;border-radius:6px
+}
+body.srm-v2 .srm-v31-decisionBoard{
+ border-color:#dce5ed;border-radius:6px;box-shadow:none
+}
+/* Keep previously accepted UX09 geometry and compact row padding from the
+ * consolidated blocks above. This block changes surfaces, not row height. */
+@media(max-width:700px){
+ body.srm-v2 .srm-v2-sidebar{background:#fff}
+ body.srm-v2 .ui-appHeader h1{font-size:19px}
+ body.srm-v2 .srm-v3-pageMain h2{font-size:21px}
+}
+@media(prefers-reduced-motion:reduce){
+ body.srm-v2 .btn,body.srm-v2 .srm-v2-sideitem{transition:none}
+}
+
 </style>
 
 </head>
@@ -1524,19 +1731,19 @@ body.srm-v2 #quotes #quoteTable .srm-ux-bid-details summary{line-height:1.2;font
   <!-- 中文：可见侧边导航只代理既有按钮，不复制 RFQ 或数据模型。 -->
   <!-- English: The visible sidebar delegates to existing tab/action controls; no duplicated business state. -->
   <aside class="srm-v2-sidebar" aria-label="SRM 功能导航">
-    <div class="srm-v2-brand"><span class="srm-v3-brandmark">S</span><span class="srm-v3-brandcopy">SRM <small>PROCUREMENT</small></span></div>
-    <div class="srm-v2-descriptor">采购协同 · 内部工作台</div>
+    <div class="srm-v2-brand"><span class="srm-v3-brandmark">S</span><span class="srm-v3-brandcopy">SRM <small>采购业务系统</small></span></div>
+    <div class="srm-v2-descriptor">询价 · 比价 · 定标</div>
     <div class="srm-v2-navlabel">工作空间</div>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="project" aria-label="询价项目" title="询价项目" aria-current="page"><span class="srm-v2-icon" aria-hidden="true">▤</span><span class="srm-v2-word">询价项目</span></button>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="items" aria-label="物料与图纸" title="物料与图纸"><span class="srm-v2-icon" aria-hidden="true">▦</span><span class="srm-v2-word">物料与图纸</span></button>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="assign" aria-label="供应商与分配" title="供应商与分配"><span class="srm-v2-icon" aria-hidden="true">♧</span><span class="srm-v2-word">供应商分配</span></button>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="quoteImport" aria-label="报价回收" title="报价回收"><span class="srm-v2-icon" aria-hidden="true">▣</span><span class="srm-v2-word">报价回收</span></button>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="quotes" aria-label="比价议价" title="比价议价"><span class="srm-v2-icon" aria-hidden="true">▥</span><span class="srm-v2-word">比价议价</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="project" aria-label="询价项目" title="询价项目" aria-current="page"><span class="srm-v2-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span class="srm-v2-word">询价项目</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="items" aria-label="物料与图纸" title="物料与图纸"><span class="srm-v2-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17h7M17.5 14v7"/></svg></span><span class="srm-v2-word">物料与图纸</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="assign" aria-label="供应商与分配" title="供应商与分配"><span class="srm-v2-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M17 7h5M19.5 4.5v5M17 16h5M19.5 13.5v5"/></svg></span><span class="srm-v2-word">供应商分配</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="quoteImport" aria-label="报价回收" title="报价回收"><span class="srm-v2-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M6 3h9l5 5v13H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span><span class="srm-v2-word">报价回收</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="quotes" aria-label="比价议价" title="比价议价"><span class="srm-v2-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-8M22 19V3M2 21h20"/></svg></span><span class="srm-v2-word">比价议价</span></button>
     <hr class="srm-v2-sidedivider">
     <div class="srm-v2-navlabel">管理工具</div>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-action="admin" aria-label="数据与备份" title="数据与备份"><span class="srm-v2-icon" aria-hidden="true">◫</span><span class="srm-v2-word">数据与备份</span></button>
-    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="settings" aria-label="字段设置" title="字段设置"><span class="srm-v2-icon" aria-hidden="true">⚙</span><span class="srm-v2-word">字段设置</span></button>
-    <div class="srm-v2-sidefooter"><span class="srm-v3-statusDot" aria-hidden="true"></span> 本地业务工作台<br>V3.1 风格接入 · 待验收</div>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-action="admin" aria-label="数据与备份" title="数据与备份"><span class="srm-v2-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M4 7h16v13H4zM2 7l2-4h16l2 4M9 12h6"/></svg></span><span class="srm-v2-word">数据与备份</span></button>
+    <button type="button" class="srm-v2-sideitem" data-srm-v2-tab="settings" aria-label="字段设置" title="字段设置"><span class="srm-v2-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></svg></span><span class="srm-v2-word">字段设置</span></button>
+    <div class="srm-v2-sidefooter"><span class="srm-v3-statusDot" aria-hidden="true"></span> 本地业务系统<br>数据保存在本机</div>
   </aside>
 
   <header class="top ui-appHeader">
