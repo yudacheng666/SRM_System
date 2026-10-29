@@ -1830,6 +1830,9 @@ body.srm-v2 #settings .settingsGrid{grid-template-columns:minmax(0,1fr)}
 body.srm-v2 #quotes .srm-ux-scope-heading .srm-hint,body.srm-v2 #quotes .srm-ux-analytics h3 .srm-hint{margin-left:7px;vertical-align:middle}
 /* 2026-10-29 hierarchy pass: one page title, no duplicate metadata icons; critical warnings stay legible. */
 body.srm-v2 .srm-v3-pageMeta{display:none!important}
+body.srm-v2 #backup .srm-ux-recoverRow>span.srm-recover-warning{font-size:13px;color:#70501c;display:inline-flex;align-items:center;gap:6px}
+body.srm-v2 .srm-edit-note{display:flex;align-items:flex-start;gap:7px;margin:10px 0;padding:7px 9px;border-left:2px solid #d7bf83;background:#fffaf0;color:#67532d;font-size:13px;line-height:1.55}
+
 body.srm-v2 .srm-essential-note{display:flex;align-items:flex-start;gap:9px;margin-top:8px;padding:9px 12px;border:1px solid #d8e3eb;border-radius:6px;background:#f7fafc;color:#344c60;font-size:13px;line-height:1.55}
 body.srm-v2 .srm-essential-note>strong{flex:0 0 auto;color:#263f55;font-size:13px;font-weight:700}
 body.srm-v2 .srm-essential-note-text{flex:1;min-width:0}
@@ -7115,7 +7118,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
 (function(){
 "use strict";
 function close(){document.querySelectorAll(".srm-hint.is-open").forEach(function(h){h.classList.remove("is-open");h.querySelector(".srm-hint-button").setAttribute("aria-expanded","false")})}
-document.addEventListener("click",function(ev){var b=ev.target.closest(".srm-hint-button");if(!b){if(!ev.target.closest(".srm-hint-pop"))close();return}var h=b.closest(".srm-hint"),open=!h.classList.contains("is-open");close();if(open){h.classList.add("is-open");b.setAttribute("aria-expanded","true")}});
+document.addEventListener("click",function(ev){var b=ev.target.closest(".srm-hint-button");if(!b){if(!ev.target.closest(".srm-hint-pop"))close();return}ev.preventDefault();ev.stopPropagation();var h=b.closest(".srm-hint"),open=!h.classList.contains("is-open");close();if(open){h.classList.add("is-open");b.setAttribute("aria-expanded","true")}});
 document.addEventListener("keydown",function(ev){if(ev.key==="Escape")close()});
 
 /* Item and supplier page headings are inserted by the existing UI script; make their
@@ -7232,6 +7235,21 @@ function enhanceOtherGuidance(){
   if(editHint&&!editHint.querySelector(".srm-hint")&&editHint.textContent.trim()===editText){
     editHint.classList.remove("small","muted");editHint.classList.add("srm-edit-note");
     editHint.replaceChildren(document.createTextNode("编码修改不会自动同步 ERP 属性，也不会合并其他询价行。 "),makeDynamicHint(editText,"物料编辑注意事项"));
+  }
+  document.querySelectorAll(".ui-drawer>summary .ui-summaryHint").forEach(function(el){
+    var help=el.textContent.trim();if(help)el.replaceWith(makeDynamicHint(help,"查看操作说明"));
+  });
+  var dataDrawer=document.getElementById("uiDataTools");
+  var dataSummary=dataDrawer&&dataDrawer.querySelector(":scope>summary");
+  if(dataSummary&&dataSummary.firstChild&&dataSummary.firstChild.nodeType===3&&dataSummary.firstChild.nodeValue.includes("数据与备份（含报表）"))dataSummary.firstChild.nodeValue="备份、恢复与报表操作　";
+  var drawingSummary=document.querySelector("#uiDrawingTools>summary");
+  if(drawingSummary&&drawingSummary.textContent.includes("点击展开"))drawingSummary.textContent="PDF 图纸匹配与关联管理";
+  var recover=document.querySelector("#backup .srm-ux-recoverRow");
+  var recoverNote=recover&&recover.querySelector("span");
+  var recoverText="“重新读取”会放弃本页尚未保存的修改；不是恢复旧版本或备份。";
+  if(recoverNote&&!recoverNote.querySelector(".srm-hint")&&recoverNote.textContent.trim()===recoverText){
+    recoverNote.classList.add("srm-recover-warning");
+    recoverNote.replaceChildren(document.createTextNode("会放弃未保存修改 "),makeDynamicHint(recoverText,"重新读取说明"));
   }
 }
 ["itemSortHint","quoteMappingHint","pilotSupplierExcelStatus","itemEditHint"].forEach(function(id){
