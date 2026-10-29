@@ -144,7 +144,9 @@ test('UAT-03 refused restore is visible within current backup section while proj
   await page.locator('#pilotS4RestoreFull').click();
   const message=page.locator('#uiDataTools #pilotS4RestoreFeedback');
   await expect(message).toBeVisible();
-  await expect(message).toContainText('禁止直接恢复覆盖');
+  await expect(message).toContainText('不能直接覆盖恢复');
+  await expect(message).toContainText('空白数据目录');
+  await expect(message).not.toContainText(/RESTORE_[A-Z_]+/);
   await expect(message).toHaveAttribute('role','alert');
   await expect(page.locator('#project')).not.toBeVisible();
   await expect(page.locator('#backup')).toBeVisible();
