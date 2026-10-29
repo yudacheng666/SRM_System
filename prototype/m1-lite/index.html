@@ -1808,7 +1808,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
 body.srm-v2 .srm-hint{display:inline-flex;position:relative;align-items:center;vertical-align:middle;isolation:isolate;min-width:22px}
 body.srm-v2 .srm-hint-button{display:inline-flex;align-items:center;justify-content:center;width:23px;height:23px;min-width:23px;padding:0;border:1px solid #cfdee9;border-radius:50%;background:#f6fafc;color:#53758e;cursor:help;line-height:1}
 body.srm-v2 .srm-hint-button:hover,body.srm-v2 .srm-hint-button:focus-visible,body.srm-v2 .srm-hint.is-open .srm-hint-button{background:#eaf4fb;color:#205c90;border-color:#97b9d3}
-body.srm-v2 .srm-hint-pop{position:absolute;left:0;top:calc(100% + 6px);z-index:180;box-sizing:border-box;display:block;min-width:165px;width:max-content;max-width:min(360px,calc(100vw - 42px));padding:11px 13px;border-radius:6px;background:#1e354a;color:white;border:1px solid #304e64;text-align:left;font-size:13px;font-weight:450;line-height:1.65;white-space:normal;overflow-wrap:anywhere;box-shadow:0 9px 26px #14253b30;visibility:hidden;opacity:0;pointer-events:none}
+body.srm-v2 .srm-hint-pop{position:fixed;left:12px;right:auto;top:12px;z-index:180;box-sizing:border-box;display:block;min-width:165px;width:max-content;max-width:min(360px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow-y:auto;overscroll-behavior:contain;padding:11px 13px;border-radius:6px;background:#1e354a;color:white;border:1px solid #304e64;text-align:left;font-size:13px;font-weight:450;line-height:1.65;white-space:normal;overflow-wrap:anywhere;box-shadow:0 9px 26px #14253b30;visibility:hidden;opacity:0;pointer-events:none}
 body.srm-v2 .srm-hint:hover .srm-hint-pop,body.srm-v2 .srm-hint:focus-within .srm-hint-pop,body.srm-v2 .srm-hint.is-open .srm-hint-pop{visibility:visible;opacity:1;pointer-events:auto}
 body.srm-v2 .srm-v3-pageMeta .srm-hint-pop,body.srm-v2 #settings .toolbar .srm-hint-pop{left:auto;right:0}
 body.srm-v2 .srm-page-help{display:inline-flex;margin-top:5px}
@@ -5906,6 +5906,21 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     }
     if(message)status(message,isError);
   }
+  function restoreFailureMessage(error){
+    const detail=String(error&&error.message||error||"");
+    // 中文：详细错误码只记入诊断控制台；采购员只看到可执行的说明。
+    // English: Keep implementation identifiers in diagnostics, not in buyer-facing status text.
+    console.error("SRM 完整备份恢复失败（详细原因）",error);
+    if(/RESTORE_INVALID_ARCHIVE_ENTRIES|RESTORE_INVALID_ARCHIVE|RESTORE_MANIFEST_INVALID/.test(detail))
+      return "所选文件不是完整备份。请使用“下载完整备份（询价数据 + 图纸）”生成的文件；原有数据未被修改。";
+    if(/RESTORE_PDF_HASH_MISMATCH|RESTORE_.*HASH|SHA-?256.*(mismatch|不一致)/i.test(detail))
+      return "备份中的图纸完整性校验未通过，文件可能已损坏或被修改。请重新下载完整备份后重试；原有数据未被修改。";
+    if(/RESTORE_TARGET_NOT_EMPTY|HTTP 409|已有询价|不能直接覆盖恢复/.test(detail))
+      return "当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统后重试。";
+    if(/Failed to fetch|NetworkError|本机服务|fetch/i.test(detail))
+      return "无法连接本机服务，恢复未完成。请检查本机服务后重试。";
+    return "完整备份恢复未完成。请确认文件来自“下载完整备份（询价数据 + 图纸）”且文件完整无损；如仍失败，请检查本机服务日志。";
+  }
   async function api(path,options={}){
     // 中文：不允许静默退回浏览器存储；服务断开时明确失败。
     // English: Never silently fall back to browser storage.
@@ -6370,7 +6385,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       if(!result.verified||!result.restored)throw Error("服务器未确认完整恢复");
       restoreNotice("完整恢复成功："+result.workspaceCount+" 笔询价、"+result.pdfCount+" 张图纸；正在重新读取……");
       location.reload();
-    }catch(e){restoreNotice("完整恢复未成功："+e.message,true)}
+    }catch(e){restoreNotice(restoreFailureMessage(e),true)}
     finally{busy=false;buttons()}
   }
   s4DownloadBtn.addEventListener("click",downloadS4Full);
@@ -7124,8 +7139,29 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
 /* Presentation-only: tapping pins explanations; Esc/click-away dismisses. */
 (function(){
 "use strict";
-function close(){document.querySelectorAll(".srm-hint.is-open").forEach(function(h){h.classList.remove("is-open");h.querySelector(".srm-hint-button").setAttribute("aria-expanded","false")})}
-document.addEventListener("click",function(ev){var b=ev.target.closest(".srm-hint-button");if(!b){if(!ev.target.closest(".srm-hint-pop"))close();return}ev.preventDefault();ev.stopPropagation();var h=b.closest(".srm-hint"),open=!h.classList.contains("is-open");close();if(open){h.classList.add("is-open");b.setAttribute("aria-expanded","true")}});
+function positionHint(h){
+  var b=h&&h.querySelector(".srm-hint-button"),pop=h&&h.querySelector(".srm-hint-pop");
+  if(!b||!pop)return;
+  var pad=12,gap=8;
+  pop.style.position="fixed";pop.style.left=pad+"px";pop.style.right="auto";pop.style.top=pad+"px";
+  pop.style.maxWidth="calc(100vw - 24px)";pop.style.maxHeight="calc(100vh - 24px)";pop.style.overflowY="auto";
+  var anchor=b.getBoundingClientRect(),box=pop.getBoundingClientRect();
+  var vw=document.documentElement.clientWidth||window.innerWidth,vh=document.documentElement.clientHeight||window.innerHeight;
+  var left=anchor.left;
+  if(left+box.width>vw-pad)left=anchor.right-box.width;
+  left=Math.max(pad,Math.min(left,vw-box.width-pad));
+  var top=anchor.bottom+gap;
+  if(top+box.height>vh-pad){var above=anchor.top-gap-box.height;top=above>=pad?above:vh-box.height-pad;}
+  top=Math.max(pad,Math.min(top,vh-box.height-pad));
+  pop.style.left=Math.round(left)+"px";pop.style.right="auto";pop.style.top=Math.round(top)+"px";
+}
+function positionVisibleHints(){document.querySelectorAll(".srm-hint:hover, .srm-hint:focus-within, .srm-hint.is-open").forEach(positionHint)}
+function close(){document.querySelectorAll(".srm-hint.is-open").forEach(function(h){h.classList.remove("is-open");var b=h.querySelector(".srm-hint-button");if(b)b.setAttribute("aria-expanded","false")})}
+document.addEventListener("pointerover",function(ev){var b=ev.target&&ev.target.closest&&ev.target.closest(".srm-hint-button");if(b)positionHint(b.closest(".srm-hint"))});
+document.addEventListener("focusin",function(ev){var b=ev.target&&ev.target.closest&&ev.target.closest(".srm-hint-button");if(b)positionHint(b.closest(".srm-hint"))});
+window.addEventListener("resize",positionVisibleHints,{passive:true});
+window.addEventListener("scroll",positionVisibleHints,{passive:true,capture:true});
+document.addEventListener("click",function(ev){var target=ev.target;var b=target&&target.closest&&target.closest(".srm-hint-button");if(!b){if(!(target&&target.closest&&target.closest(".srm-hint-pop")))close();return}ev.preventDefault();ev.stopPropagation();var h=b.closest(".srm-hint"),open=!h.classList.contains("is-open");close();if(open){h.classList.add("is-open");b.setAttribute("aria-expanded","true");positionHint(h)}});
 document.addEventListener("keydown",function(ev){if(ev.key==="Escape")close()});
 
 /* Item and supplier page headings are inserted by the existing UI script; make their
