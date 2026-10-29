@@ -1802,6 +1802,32 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
   body.srm-v2 #quoteImport .srm-v2-quote-controls>label:has(#quoteTermsNote){min-width:100%}
 }
 
+
+/* 2026-10-29 buyer-requested tooltip disclosure, visual-only. Dynamic statuses,
+ * labels, errors, warnings, required decisions, metrics and validators remain visible. */
+body.srm-v2 .srm-hint{display:inline-flex;position:relative;align-items:center;vertical-align:middle;isolation:isolate;min-width:22px}
+body.srm-v2 .srm-hint-button{display:inline-flex;align-items:center;justify-content:center;width:23px;height:23px;min-width:23px;padding:0;border:1px solid #cfdee9;border-radius:50%;background:#f6fafc;color:#53758e;cursor:help;line-height:1}
+body.srm-v2 .srm-hint-button:hover,body.srm-v2 .srm-hint-button:focus-visible,body.srm-v2 .srm-hint.is-open .srm-hint-button{background:#eaf4fb;color:#205c90;border-color:#97b9d3}
+body.srm-v2 .srm-hint-pop{position:absolute;left:0;top:calc(100% + 6px);z-index:180;box-sizing:border-box;display:block;min-width:165px;width:max-content;max-width:min(360px,calc(100vw - 42px));padding:11px 13px;border-radius:6px;background:#1e354a;color:white;border:1px solid #304e64;text-align:left;font-size:13px;font-weight:450;line-height:1.65;white-space:normal;overflow-wrap:anywhere;box-shadow:0 9px 26px #14253b30;visibility:hidden;opacity:0;pointer-events:none}
+body.srm-v2 .srm-hint:hover .srm-hint-pop,body.srm-v2 .srm-hint:focus-within .srm-hint-pop,body.srm-v2 .srm-hint.is-open .srm-hint-pop{visibility:visible;opacity:1;pointer-events:auto}
+body.srm-v2 .srm-v3-pageMeta .srm-hint-pop,body.srm-v2 #settings .toolbar .srm-hint-pop{left:auto;right:0}
+body.srm-v2 .srm-page-help{display:inline-flex;margin-top:5px}
+body.srm-v2 .srm-v3-pageMeta{max-width:44px}
+body.srm-v2 .srm-v4-project-guide{max-width:840px;grid-template-columns:1fr!important;margin-top:10px!important}
+body.srm-v2 .srm-v4-guide-main{padding:16px 18px!important}
+body.srm-v2 .srm-v4-guide-main>p{margin:5px 0!important}
+body.srm-v2 .srm-v4-guide-steps{margin-top:9px}
+body.srm-v2 .srm-v4-guide-steps>div{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:11px 13px!important}
+body.srm-v2 .srm-v4-guide-steps>div>span:first-child,body.srm-v2 .srm-v4-guide-steps>div strong{margin:0!important}
+body.srm-v2 .srm-v4-guide-steps .srm-hint{margin-left:auto}
+body.srm-v2 .panel .small:has(>.srm-hint),body.srm-v2 .panel .muted:has(>.srm-hint){font-size:13px}
+body.srm-v2 .cardhead .srm-hint{margin-left:5px}
+body.srm-v2 #quoteImport .srm-ux-intake-modes .srm-hint{margin-left:auto}
+body.srm-v2 :is(.srm-v4-demo-tip,.srm-v4-live-tip):has(.srm-hint){display:inline-flex!important;margin:4px 0 0!important}
+body.srm-v2.ui-buyer-mode .srm-v4-demo-tip{display:none!important}
+body.srm-v2:not(.ui-buyer-mode) .srm-v4-live-tip{display:none!important}
+@media(hover:none){body.srm-v2 .srm-hint-button{cursor:pointer}}
+
 /* Keep previously accepted UX09 geometry and compact row padding from the
  * consolidated blocks above. This block changes surfaces, not row height. */
 @media(max-width:700px){
@@ -1859,7 +1885,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
   </div>
   <div class="notice" id="pilotNotice" style="margin:0 0 12px">演示模式不会保存；请新建空白正式询价后开始操作。</div>
 <div class="card" id="pilotControls" style="margin-bottom:14px">
-  <div class="ui-workspaceHead"><div><b>询价项目</b><span class="muted">　新建、打开历史询价、保存</span></div></div>
+  <div class="ui-workspaceHead"><div><b>询价项目</b><span class="muted">　<span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-9" aria-describedby="srm-hint-9" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-9" class="srm-hint-pop" role="tooltip">新建、打开历史询价、保存</span></span></span></div></div>
   <div class="cardbody">
  <div class="toolbar" style="margin-bottom:8px">
   <button type="button" class="btn primary" id="pilotNewWorkspace" disabled>新建</button>
@@ -1920,7 +1946,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
    <b class="small">选择参与同范围比较的供应商（2–10 家）</b>
    <div id="pilotReportSupplierGroup" class="toolbar" style="gap:6px;flex-wrap:wrap"></div>
   </div>
-  <div class="small muted" style="margin-bottom:5px">勾选本次需要导出的字段；* 为确保报价可回收和历史可追溯而保留的必要字段。</div>
+  <div class="small muted" style="margin-bottom:5px"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-34" aria-describedby="srm-hint-34" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-34" class="srm-hint-pop" role="tooltip">勾选本次需要导出的字段；* 为确保报价可回收和历史可追溯而保留的必要字段。</span></span></div>
   <div id="pilotReportFields" style="display:flex;flex-wrap:wrap;gap:10px"></div>
   <div class="toolbar" style="margin-top:11px">
    <button type="button" id="pilotReportDownload" class="btn primary">下载当前供应商询价 Excel</button>
@@ -1937,11 +1963,11 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
   <div class="card" id="pilotDrawingPanel" style="display:none;margin-bottom:12px">
       <div class="cardbody">
        <h3>真实 PDF 图纸管理（仅当前询价）</h3>
-       <div class="small muted">按 RFQ Line ID 关联多个 PDF、共享图纸及版本；只有确认关联和保存后才正式生效。</div>
+       <div class="small muted"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-35" aria-describedby="srm-hint-35" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-35" class="srm-hint-pop" role="tooltip">按 RFQ Line ID 关联多个 PDF、共享图纸及版本；只有确认关联和保存后才正式生效。</span></span></div>
        <div class="srm-ux-drawing-steps" aria-label="PDF 图纸匹配步骤"><span>1 选择图纸</span><span>2 匹配预览</span><span>3 处理多候选</span><span>4 确认关联并保存</span></div>
        <div style="margin:12px 0;padding:12px;border:1px solid #cbd5e1;border-radius:10px;background:#fafcff">
         <h4 style="margin:0 0 6px">批量图纸匹配（先预览，后确认）</h4>
-        <div class="small muted">根据 PDF 文件名与物料编码 / 图号生成候选。不会读取 PDF 内文字，也不会自动建立正式关系；重复编码、多候选、无匹配必须人工指定 RFQ Line ID。先确认关联，之后仍要“保存到本机”。</div>
+        <div class="small muted"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-36" aria-describedby="srm-hint-36" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-36" class="srm-hint-pop" role="tooltip">根据 PDF 文件名与物料编码 / 图号生成候选。不会读取 PDF 内文字，也不会自动建立正式关系；重复编码、多候选、无匹配必须人工指定 RFQ Line ID。先确认关联，之后仍要“保存到本机”。</span></span></div>
         <div class="toolbar" style="gap:8px;margin:8px 0">
          <input type="file" id="pilotBatchDrawingFiles" accept=".pdf,application/pdf" multiple>
          <label class="small">无法识别版本时采用 <input id="pilotBatchDrawingVersion" type="text" value="A" maxlength="80" style="width:70px"></label>
@@ -1995,7 +2021,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
     <div class="ui-panelLead srm-v3-pageIntro" id="srmV3PageStage-backup">
       <div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">管理工具</div>
         <h2>数据与备份 <span>/ 备份与恢复</span></h2>
-        <p>在这里集中备份、恢复及管理业务单据，不影响询价项目的日常操作。</p>
+        <span class="srm-page-help"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-1" aria-describedby="srm-hint-1" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-1" class="srm-hint-pop" role="tooltip">在这里集中备份、恢复及管理业务单据，不影响询价项目的日常操作。</span></span></span>
       </div>
     </div>
   </section>
@@ -2005,7 +2031,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
       <div class="srm-v3-pageMain">
         <div class="srm-v3-pageKicker">01 / 询价项目</div>
         <h2>询价项目 <span>/ 新建与管理</span></h2>
-        <p>从这里新建或打开询价项目，核对保存状态，然后进入物料清单。</p>
+        <span class="srm-page-help"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-2" aria-describedby="srm-hint-2" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-2" class="srm-hint-pop" role="tooltip">从这里新建或打开询价项目，核对保存状态，然后进入物料清单。</span></span></span>
       </div>
       <div class="toolbar"><button type="button" id="uiProjectNextItems" class="btn primary">下一步：物料与图纸</button></div>
     </div>
@@ -2013,29 +2039,23 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
     <div class="srm-v4-project-guide" aria-label="询价工作指引">
       <div class="srm-v4-guide-main">
         <div class="srm-v4-guide-label">询价项目 · 工作起点</div>
-        <h3>从一笔清晰的询价开始</h3>
-        <p class="srm-v4-demo-tip">当前显示演示数据。点击上方“新建”，开始一笔能够保存的正式询价。</p>
-        <p class="srm-v4-live-tip">核对当前项目名称和保存状态，再依次完善清单、供应商与报价。</p>
+        
+        <p class="srm-v4-demo-tip"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-40" aria-describedby="srm-hint-40" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-40" class="srm-hint-pop" role="tooltip">当前显示演示数据。点击上方“新建”，开始一笔能够保存的正式询价。</span></span></p>
+        <p class="srm-v4-live-tip"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-41" aria-describedby="srm-hint-41" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-41" class="srm-hint-pop" role="tooltip">核对当前项目名称和保存状态，再依次完善清单、供应商与报价。</span></span></p>
         <div class="srm-v4-guide-steps">
-          <div><span>01</span><strong>建立询价</strong><small>新建项目，确定本次询价范围</small></div>
-          <div><span>02</span><strong>准备清单</strong><small>整理物料、数量和关联图纸</small></div>
-          <div><span>03</span><strong>推进询价</strong><small>分配供应商，回收并比较报价</small></div>
+          <div><span>01</span><strong>建立询价</strong><small><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-37" aria-describedby="srm-hint-37" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-37" class="srm-hint-pop" role="tooltip">新建项目，确定本次询价范围</span></span></small></div>
+          <div><span>02</span><strong>准备清单</strong><small><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-38" aria-describedby="srm-hint-38" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-38" class="srm-hint-pop" role="tooltip">整理物料、数量和关联图纸</span></span></small></div>
+          <div><span>03</span><strong>推进询价</strong><small><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-39" aria-describedby="srm-hint-39" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-39" class="srm-hint-pop" role="tooltip">分配供应商，回收并比较报价</span></span></small></div>
         </div>
       </div>
-      <aside class="srm-v4-guide-help">
-        <h4>本页操作</h4>
-        <p><b>新建</b> — 创建新询价，不覆盖历史项目。</p>
-        <p><b>保存</b> — 保存已确认的业务内容。</p>
-        <p><b>历史询价</b> — 打开本机已保存项目。</p>
-        <div class="srm-v4-guide-footnote">物料、图纸、报价和定标在对应业务页面完成。</div>
-      </aside>
+      
     </div>
   </section>
 
   <section id="items" class="panel">
     <div class="card">
       <div class="cardhead">
-        <div><b id="pilotRfqHead">RFQ-DEMO-001</b> <span class="muted small">本次询价物料</span></div>
+        <div><b id="pilotRfqHead">RFQ-DEMO-001</b> <span class="muted small"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-10" aria-describedby="srm-hint-10" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-10" class="srm-hint-pop" role="tooltip">本次询价物料</span></span></span></div>
         <div class="toolbar">
           <input id="itemSearch" type="text" placeholder="全字段模糊搜索">
           <button class="btn" id="runItemSearch">搜索</button><button class="btn" id="clearItemSearch">清空搜索</button>
@@ -2057,7 +2077,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
             <input id="matchUpdateFile" type="file" accept=".csv,.txt">
             <button class="btn soft" id="demoMatchUpdate">演示表格匹配更新</button>
           </div>
-          <div class="small muted" style="margin-top:7px">字段结构在“系统设置”维护；这里仅处理字段值。批量导入更新通过关键字段匹配目标记录。</div>
+          <div class="small muted" style="margin-top:7px"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-17" aria-describedby="srm-hint-17" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-17" class="srm-hint-pop" role="tooltip">字段结构在“系统设置”维护；这里仅处理字段值。批量导入更新通过关键字段匹配目标记录。</span></span></div>
           <div id="matchedUpdatePreview" class="importPreview" style="display:none"></div>
         </div>
 
@@ -2095,14 +2115,14 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
             <div class="intakeBox">
               <h3>文件导入</h3>
               <input id="importFile" type="file" accept=".xlsx,.csv,.txt">
-              <div class="small muted" style="margin:7px 0">CSV/TXT 使用实际文件内容解析；.xlsx/.xls 尚不支持直接读取，请在 Excel 中复制单元格后粘贴。演示按钮只生成虚构行。</div>
+              <div class="small muted" style="margin:7px 0"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-18" aria-describedby="srm-hint-18" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-18" class="srm-hint-pop" role="tooltip">CSV/TXT 使用实际文件内容解析；.xlsx/.xls 尚不支持直接读取，请在 Excel 中复制单元格后粘贴。演示按钮只生成虚构行。</span></span></div>
               <button class="btn soft" id="demoExcelImport">仅模拟：查看虚构物料</button>
               <div id="itemFileFeedback" role="status" class="small warn" style="margin-top:6px"></div>
             </div>
           </div>
           <div id="importPreview" class="importPreview" style="display:none"></div>
         </div>
-        <div class="small muted" id="itemSortHint">默认按新增先后倒序（最新在前）。点击列标题排序；Shift+点击追加多字段排序。</div><div class="selectionBar">
+        <div class="small muted" id="itemSortHint"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-43" aria-describedby="srm-hint-43" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-43" class="srm-hint-pop" role="tooltip">默认按新增先后倒序；点击列标题排序，Shift+点击追加多字段排序。</span></span></div><div class="selectionBar">
           <button class="btn" id="itemSelectAll">全选</button>
           <button class="btn" id="itemSelectPage">本页全选</button>
           <button class="btn" id="itemInvertAll">反选</button>
@@ -2115,7 +2135,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
           </table>
         </div>
         <div class="pager"><span id="itemCount"></span><div id="itemPager"></div></div>
-        <div class="small muted" style="margin-top:6px">双击物料行可编辑编码、数量和属性；已有报价记录的行只能查看。</div>
+        <div class="small muted" style="margin-top:6px"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-19" aria-describedby="srm-hint-19" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-19" class="srm-hint-pop" role="tooltip">双击物料行可编辑编码、数量和属性；已有报价记录的行只能查看。</span></span></div>
       </div>
     </div>
     <div id="itemEditModal" class="modalBackdrop" aria-hidden="true">
@@ -2196,7 +2216,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
           </div>
         </div>
         <div class="cardbody">
-          <div class="small muted" style="margin-bottom:8px">已选 <b id="assignSelectedCount">0</b> 项。<span id="assignHiddenHint" role="status"></span>选择供应商时默认“追加关系”，不会覆盖已有供应商。</div>
+          <div class="small muted" style="margin-bottom:8px">已选 <b id="assignSelectedCount">0</b> 项。<span id="assignHiddenHint" role="status"></span><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-42" aria-describedby="srm-hint-42" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-42" class="srm-hint-pop" role="tooltip">选择供应商时默认追加关系，不会覆盖已分配关系。</span></span></div>
           <div class="tablewrap">
             <table class="table">
               <thead><tr><th></th><th>物料</th><th>分类</th><th>当前供应商</th></tr></thead>
@@ -2209,7 +2229,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
 
       <div class="card">
         <div class="cardhead">
-          <div><b>本次候选供应商池</b> <span class="muted small">三态显示</span></div>
+          <div><b>本次候选供应商池</b> <span class="muted small"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-11" aria-describedby="srm-hint-11" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-11" class="srm-hint-pop" role="tooltip">三态显示</span></span></span></div>
           <div class="toolbar"><input id="supplierSearch" type="text" placeholder="搜索供应商"><button class="btn" id="runSupplierSearch">搜索</button><button class="btn" id="clearSupplierSearch">清空条件</button></div>
         </div>
         <div class="cardbody">
@@ -2229,7 +2249,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
           </div>
         </div>
         <div class="cardbody">
-          <div class="small muted" style="margin-bottom:8px">这里只显示采购员已经加入本次 RFQ 的供应商，不展示完整供应商主数据。</div>
+          <div class="small muted" style="margin-bottom:8px"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-20" aria-describedby="srm-hint-20" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-20" class="srm-hint-pop" role="tooltip">这里只显示采购员已经加入本次 RFQ 的供应商，不展示完整供应商主数据。</span></span></div>
           <div id="supplierPicker" class="preview">
             <div class="toolbar" style="margin-bottom:8px">
               <input id="supplierPoolSearch" type="text" placeholder="搜索供应商（支持模糊搜索）">
@@ -2242,7 +2262,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
               <button class="btn danger" id="clearPickedSuppliers">清空勾选</button>
               <button class="btn" id="closeSupplierPicker">关闭</button>
             </div>
-            <div class="small muted" style="margin-bottom:8px">勾选清单支持 Shift 连选。</div>
+            <div class="small muted" style="margin-bottom:8px"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-21" aria-describedby="srm-hint-21" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-21" class="srm-hint-pop" role="tooltip">勾选清单支持 Shift 连选。</span></span></div>
             <div id="supplierPoolList" class="supplierList"></div><div class="pager"><span id="supplierPoolCount"></span><div id="supplierPoolPager"></div></div>
           </div>
           <div id="supplierFirstList" class="supplierList"></div><div class="pager"><span id="supplierFirstCount"></span><div id="supplierFirstPager"></div></div>
@@ -2276,10 +2296,10 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
   </section>
 
   <section id="quoteImport" class="panel srm-ux-compact">
-    <div id="srmV3PageStage-quoteImport" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">04 / 报价回收</div><h2>报价回收 <span>/ 轮次与版本</span></h2><p>选择供应商与轮次，录入并核验报价；已确认的历史版本保持只读。</p></div><div class="srm-v3-pageMeta">报价录入 · 异常核验 · 版本确认</div></div>
+    <div id="srmV3PageStage-quoteImport" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">04 / 报价回收</div><h2>报价回收 <span>/ 轮次与版本</span></h2><span class="srm-page-help"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-3" aria-describedby="srm-hint-3" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-3" class="srm-hint-pop" role="tooltip">选择供应商与轮次，录入并核验报价；已确认的历史版本保持只读。</span></span></span></div><div class="srm-v3-pageMeta"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-6" aria-describedby="srm-hint-6" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-6" class="srm-hint-pop" role="tooltip">报价录入 · 异常核验 · 版本确认</span></span></div></div>
     <div class="card" style="margin-bottom:14px">
       <div class="cardhead">
-        <div><b>报价回收与核验</b> <span class="muted small">先选供应商与轮次，再导入报价、检查异常并确认</span></div>
+        <div><b>报价回收与核验</b> <span class="muted small"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-12" aria-describedby="srm-hint-12" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-12" class="srm-hint-pop" role="tooltip">先选供应商与轮次，再导入报价、检查异常并确认</span></span></span></div>
         <div class="toolbar srm-v2-quote-controls">
           <span class="srm-v2-quote-section-label">01　供应商与轮次</span>
           <select id="quoteImportSupplier" aria-label="本轮报价供应商"></select>
@@ -2309,7 +2329,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
       <button type="button" class="btn" data-srm-ux-input-mode="file" aria-pressed="false">文件导入</button>
       <button type="button" class="btn" data-srm-ux-input-mode="paste" aria-pressed="false">批量粘贴</button>
       <button type="button" class="btn" data-srm-ux-input-mode="manual" aria-pressed="false">单条补录</button>
-      <span class="srm-ux-muted">只切换显示，不清空草稿或预览</span>
+      <span class="srm-ux-muted"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-33" aria-describedby="srm-hint-33" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-33" class="srm-hint-pop" role="tooltip">只切换显示，不清空草稿或预览</span></span></span>
     </div>
     <div class="quoteImportGrid" id="srmUxQuoteIntakeGrid" data-srm-ux-mode="all">
       <div class="intakeBox">
@@ -2321,7 +2341,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
           <label class="small">MOQ（最小起订量，物料单位）<input id="quoteManualMoq" type="text" placeholder="数量" style="display:block;width:100px"></label>
           <label class="small">报价状态<select id="quoteManualStatus" style="display:block"><option value="quoted">正常报价</option><option value="noquote">未报价</option><option value="cannot">不供货</option></select></label>
           <label class="small">物料备注<input id="quoteManualRemark" type="text" maxlength="2000" placeholder="替代型号、限制、包装等" style="display:block;min-width:170px"></label><button class="btn soft" id="quoteManualAdd">加入预览</button>
-        </div><div class="small muted" style="margin-top:7px">M0 现按人民币（元/物料单位）、天和物料数量显示。正式币种、税口径、采购单位后续以 ERP / 询价字段为准。</div>
+        </div><div class="small muted" style="margin-top:7px"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-22" aria-describedby="srm-hint-22" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-22" class="srm-hint-pop" role="tooltip">M0 现按人民币（元/物料单位）、天和物料数量显示。正式币种、税口径、采购单位后续以 ERP / 询价字段为准。</span></span></div>
       </div>
       <div class="intakeBox">
         <h3>剪贴板批量粘贴</h3>
@@ -2336,7 +2356,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
       <div class="intakeBox">
         <h3>文件导入</h3>
         <input id="quoteImportFile" type="file" accept=".xlsx,.csv,.txt">
-        <div class="small muted" style="margin:7px 0">CSV/TXT 根据文件内容解析；.xlsx/.xls 尚不支持直接读取，请打开 Excel 后复制表格粘贴。演示按钮仅用于虚构数据练习。</div>
+        <div class="small muted" style="margin:7px 0"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-23" aria-describedby="srm-hint-23" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-23" class="srm-hint-pop" role="tooltip">CSV/TXT 根据文件内容解析；.xlsx/.xls 尚不支持直接读取，请打开 Excel 后复制表格粘贴。演示按钮仅用于虚构数据练习。</span></span></div>
         <button class="btn" id="toggleQuoteMapping">字段映射</button>
         <button class="btn soft" id="demoQuoteExcel">仅模拟：查看虚构报价</button>
         <div id="quoteFileFeedback" role="status" class="small warn" style="margin-top:6px"></div>
@@ -2387,7 +2407,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
     </div>
 
     <div class="card" style="margin-top:14px">
-      <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small">紧凑浏览，按需展开交期、MOQ、阶梯价与来源</span></div><div class="toolbar srm-ux-quote-actions"><button type="button" class="btn" id="srmUxRefreshQuote" title="仅刷新当前显示，不读取覆盖 SQLite 草稿">↻ 刷新显示</button><button type="button" class="btn" id="srmUxQuoteDensity" aria-pressed="false">详细列</button><button class="btn" id="carryForwardMissing">选择沿用上轮项目…</button></div></div>
+      <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-13" aria-describedby="srm-hint-13" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-13" class="srm-hint-pop" role="tooltip">紧凑浏览，按需展开交期、MOQ、阶梯价与来源</span></span></span></div><div class="toolbar srm-ux-quote-actions"><button type="button" class="btn" id="srmUxRefreshQuote" title="仅刷新当前显示，不读取覆盖 SQLite 草稿">↻ 刷新显示</button><button type="button" class="btn" id="srmUxQuoteDensity" aria-pressed="false">详细列</button><button class="btn" id="carryForwardMissing">选择沿用上轮项目…</button></div></div>
       <div class="cardbody">
         <div id="srmV31RevisionDiff" class="srm-v31-revisionDiff" aria-live="polite" hidden></div>
         <div id="quoteRoundHint" class="small muted" style="margin-bottom:8px"></div>
@@ -2399,11 +2419,11 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
   </section>
 
   <section id="quotes" class="panel">
-    <div id="srmV3PageStage-quotes" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">05 / COMMERCIAL REVIEW</div><h2>比价与议价 <span>/ 采购决策</span></h2><p>在可比口径下检查报价与最低价建议；非最低价决策需保留人工依据。</p></div><div class="srm-v3-pageMeta">共同报价范围 · 价格对照 · 决策理由</div></div>
+    <div id="srmV3PageStage-quotes" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">05 / COMMERCIAL REVIEW</div><h2>比价与议价 <span>/ 采购决策</span></h2><span class="srm-page-help"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-4" aria-describedby="srm-hint-4" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-4" class="srm-hint-pop" role="tooltip">在可比口径下检查报价与最低价建议；非最低价决策需保留人工依据。</span></span></span></div><div class="srm-v3-pageMeta"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-7" aria-describedby="srm-hint-7" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-7" class="srm-hint-pop" role="tooltip">共同报价范围 · 价格对照 · 决策理由</span></span></div></div>
     <div id="srmV31DecisionBoard" class="srm-v31-decisionBoard" role="status" aria-live="polite"></div>
     <div class="card">
       <div class="cardhead">
-        <div><b>报价比较</b> <span class="muted small">支持共同报价范围、最低价提示与非最低价选择说明；演示历史采购价为虚构示例</span></div>
+        <div><b>报价比较</b> <span class="muted small"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-14" aria-describedby="srm-hint-14" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-14" class="srm-hint-pop" role="tooltip">支持共同报价范围、最低价提示与非最低价选择说明；演示历史采购价为虚构示例</span></span></span></div>
         <div class="toolbar"><button class="btn" id="resetAwards">清空选择</button></div>
       </div>
       <div class="cardbody">
@@ -2455,28 +2475,28 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
   </section>
 
   <section id="settings" class="panel">
-    <div id="srmV3PageStage-settings" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">ADMIN / FIELD & TEMPLATES</div><h2>设置与数据管理 <span>/ 标准模板</span></h2><p>统一下载正式导入模板、维护字段结构；备份恢复操作留在项目与数据管理区。</p></div><div class="srm-v3-pageMeta">模板结构 · 字段维护 · 数据安全</div></div>
+    <div id="srmV3PageStage-settings" class="srm-v3-pageIntro"><div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">ADMIN / FIELD & TEMPLATES</div><h2>设置与数据管理 <span>/ 标准模板</span></h2><span class="srm-page-help"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-5" aria-describedby="srm-hint-5" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-5" class="srm-hint-pop" role="tooltip">统一下载正式导入模板、维护字段结构；备份恢复操作留在项目与数据管理区。</span></span></span></div><div class="srm-v3-pageMeta"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-8" aria-describedby="srm-hint-8" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-8" class="srm-hint-pop" role="tooltip">模板结构 · 字段维护 · 数据安全</span></span></div></div>
     <!-- 中文：标准模板统一放在设置页，直接复用实际导入表头及本机 XLSX 生成器。 -->
     <!-- English: Centralize canonical upload templates; use the same native XLSX writer as business exports. -->
     <div class="card" id="importTemplatesCard" style="margin-bottom:16px">
-      <div class="cardhead"><b>数据导入模板下载</b><span class="muted small">先下载标准模板，再在对应业务模块导入</span></div>
+      <div class="cardhead"><b>数据导入模板下载</b><span class="muted small"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-15" aria-describedby="srm-hint-15" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-15" class="srm-hint-pop" role="tooltip">先下载标准模板，再在对应业务模块导入</span></span></span></div>
       <div class="cardbody">
-        <div class="small muted" style="margin-bottom:12px">Excel 模板均为单工作表、仅含正式表头，不含虚构或真实业务行。第一行表头不要修改，第二行开始填写；保存为 .xlsx。字段说明及必填项见下方。</div>
+        <div class="small muted" style="margin-bottom:12px"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-24" aria-describedby="srm-hint-24" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-24" class="srm-hint-pop" role="tooltip">Excel 模板均为单工作表、仅含正式表头，不含虚构或真实业务行。第一行表头不要修改，第二行开始填写；保存为 .xlsx。字段说明及必填项见下方。</span></span></div>
         <div class="toolbar" style="gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
           <button class="btn soft" type="button" data-template-download="items">下载询价物料模板 .xlsx</button>
-          <span class="small muted">必填：存货编码、询价数量、询价单位；规格型号与 ERP 参考字段可选</span>
+          <span class="small muted"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-29" aria-describedby="srm-hint-29" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-29" class="srm-hint-pop" role="tooltip">必填：存货编码、询价数量、询价单位；规格型号与 ERP 参考字段可选</span></span></span>
         </div>
         <div class="toolbar" style="gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
           <button class="btn soft" type="button" data-template-download="suppliers">下载供应商模板 .xlsx</button>
-          <span class="small muted">必填：往来单位编码、往来单位名称；供应商编码可选</span>
+          <span class="small muted"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-30" aria-describedby="srm-hint-30" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-30" class="srm-hint-pop" role="tooltip">必填：往来单位编码、往来单位名称；供应商编码可选</span></span></span>
         </div>
         <div class="toolbar" style="gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
           <button class="btn soft" type="button" data-template-download="quotes">下载供应商报价模板 .xlsx</button>
-          <span class="small muted">必填：当前 RFQ Line ID（或唯一存货编码），报价及状态按实际情况填写</span>
+          <span class="small muted"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-31" aria-describedby="srm-hint-31" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-31" class="srm-hint-pop" role="tooltip">必填：当前 RFQ Line ID（或唯一存货编码），报价及状态按实际情况填写</span></span></span>
         </div>
         <div class="toolbar" style="gap:10px;align-items:center;flex-wrap:wrap">
           <button class="btn soft" type="button" data-template-download="matched">下载匹配更新模板 .csv</button>
-          <span class="small muted">非 Excel 导入：物料页面当前仅支持 CSV/TXT；需先选择匹配字段与更新字段</span>
+          <span class="small muted"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-32" aria-describedby="srm-hint-32" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-32" class="srm-hint-pop" role="tooltip">非 Excel 导入：物料页面当前仅支持 CSV/TXT；需先选择匹配字段与更新字段</span></span></span>
         </div>
         <div class="small" style="margin-top:12px">注意：报价模板是空白通用表头，不会生成有效 RFQ Line ID。请从当前询价单中核对并填写；相同存货编码但不同规格时必须使用实际 RFQ Line ID。外发供应商询价单与内部比价报表不可直接当作本模板导入。</div>
         <div class="small muted" id="importTemplateFeedback" role="status" aria-live="polite" style="margin-top:9px">模板只在本机下载，不修改当前询价或数据库。</div>
@@ -2484,7 +2504,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
     </div>
     <div class="settingsGrid">
       <div class="card">
-        <div class="cardhead"><b>字段维护</b><span class="muted small">正式版本按 ERP 字段与映射方案配置</span></div>
+        <div class="cardhead"><b>字段维护</b><span class="muted small"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-16" aria-describedby="srm-hint-16" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-16" class="srm-hint-pop" role="tooltip">正式版本按 ERP 字段与映射方案配置</span></span></span></div>
         <div class="cardbody">
           <div class="toolbar">
             <button class="btn soft" id="addCustomField">+ 添加字段</button>
@@ -2498,8 +2518,8 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
       <div class="card">
         <div class="cardhead"><b>字段规划说明</b></div>
         <div class="cardbody small">
-          <p>当前物料编码、名称、分类、数量、单位均为 M0 演示字段。</p>
-          <p>正式字段由 ERP 字段、采购询价字段、报价字段、图纸/技术资料字段共同确定，并通过映射配置接入。</p>
+          <p><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-25" aria-describedby="srm-hint-25" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-25" class="srm-hint-pop" role="tooltip">当前物料编码、名称、分类、数量、单位均为 M0 演示字段。</span></span></p>
+          <p><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-26" aria-describedby="srm-hint-26" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-26" class="srm-hint-pop" role="tooltip">正式字段由 ERP 字段、采购询价字段、报价字段、图纸/技术资料字段共同确定，并通过映射配置接入。</span></span></p>
         </div>
       </div>
     </div>
@@ -2507,7 +2527,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
 
   <div id="drawingModal" class="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modalCard">
-      <div class="modalHead"><div><b id="drawingTitle">PDF 图纸预览</b><div class="small muted">演示模式为示意页面；正式工作使用浏览器内置 PDF 查看器，可实际多页、缩放与文件切换</div></div><button class="btn" id="closeDrawing">关闭</button></div>
+      <div class="modalHead"><div><b id="drawingTitle">PDF 图纸预览</b><div class="small muted"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-27" aria-describedby="srm-hint-27" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-27" class="srm-hint-pop" role="tooltip">演示模式为示意页面；正式工作使用浏览器内置 PDF 查看器，可实际多页、缩放与文件切换</span></span></div></div><button class="btn" id="closeDrawing">关闭</button></div>
       <div class="modalBody">
         <div class="pdfControls">
           <select id="drawingDocSelect"></select>
@@ -2525,7 +2545,7 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
 
   <div id="rfqPreviewModal" class="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modalCard" style="width:min(1180px,97vw)">
-      <div class="modalHead"><div><b>供应商询价包预览</b><div class="small muted">切换左侧供应商，检查询价行及该供应商应附的 PDF 图纸。</div></div><button class="btn" id="closeRfqPreview">关闭</button></div>
+      <div class="modalHead"><div><b>供应商询价包预览</b><div class="small muted"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-28" aria-describedby="srm-hint-28" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-28" class="srm-hint-pop" role="tooltip">切换左侧供应商，检查询价行及该供应商应附的 PDF 图纸。</span></span></div></div><button class="btn" id="closeRfqPreview">关闭</button></div>
       <div class="modalBody"><div id="rfqPreviewContent" class="rfqPreviewLayout"></div></div>
     </div>
   </div>
@@ -7079,6 +7099,15 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   // 供自动化检查标准表头；不可由调用者修改，避免模板与页面不一致。
   // Expose read-only template header copies for browser regression assertions.
   window.SRMImportTemplateHeaders=Object.freeze(Object.fromEntries(Object.entries(headers).map(([k,v])=>[k,Object.freeze([...v])])));
+})();
+</script>
+<script id="srm-hint-events">
+/* Presentation-only: tapping pins explanations; Esc/click-away dismisses. */
+(function(){
+"use strict";
+function close(){document.querySelectorAll(".srm-hint.is-open").forEach(function(h){h.classList.remove("is-open");h.querySelector(".srm-hint-button").setAttribute("aria-expanded","false")})}
+document.addEventListener("click",function(ev){var b=ev.target.closest(".srm-hint-button");if(!b){if(!ev.target.closest(".srm-hint-pop"))close();return}var h=b.closest(".srm-hint"),open=!h.classList.contains("is-open");close();if(open){h.classList.add("is-open");b.setAttribute("aria-expanded","true")}});
+document.addEventListener("keydown",function(ev){if(ev.key==="Escape")close()});
 })();
 </script>
 </body>
