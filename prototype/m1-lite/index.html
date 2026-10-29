@@ -1909,26 +1909,26 @@ body.srm-v2 .srm-v3-pageKicker{letter-spacing:.035em}
  <div class="toolbar" style="margin-bottom:8px">
   <button type="button" class="btn primary" id="pilotNewWorkspace" disabled>新建</button>
   <button type="button" class="btn soft" id="pilotSaveWorkspace" disabled>保存</button>
-  <button type="button" class="btn" id="pilotResumeWorkspace" title="重新读取当前已保存的数据；不是恢复旧版本或备份。未保存修改会被放弃。" disabled>重新读取已保存数据</button>
+  <button type="button" class="btn" id="pilotResumeWorkspace" title="重新读取当前已保存的数据；未保存修改会被放弃。此操作不会导入备份。" disabled>重新读取已保存数据</button>
   <label class="small">历史询价 <select id="pilotHistoryWorkspace" disabled aria-label="本机已保存的历史询价"></select></label>
   <button type="button" class="btn soft" id="pilotSwitchWorkspace" disabled>打开所选历史询价</button>
  </div>
  <div class="toolbar" style="margin-bottom:8px;gap:8px">
-  <button type="button" class="btn soft" id="pilotExportBackup" disabled>备份当前询价 JSON</button>
-  <button type="button" class="btn soft" id="pilotExportBackupAll" disabled>备份全部询价 JSON</button>
-  <button type="button" class="btn soft" id="pilotExportComplete" disabled>旧版 JSON+PDF 资料 ZIP（不可用于 S4 恢复）</button>
-  <button type="button" class="btn primary" id="pilotS4DownloadFull" disabled>下载 S4 完整备份（SQLite + PDF）</button>
+  <button type="button" class="btn soft" id="pilotExportBackup" disabled>备份当前询价（仅数据）</button>
+  <button type="button" class="btn soft" id="pilotExportBackupAll" disabled>备份全部询价（仅数据）</button>
+  <button type="button" class="btn soft" id="pilotExportComplete" title="导出询价数据和图纸供查看与留存；不含原始邮件、聊天截图等报价凭证，不能代替完整备份。" disabled>导出询价与图纸资料包</button>
+  <button type="button" class="btn primary" id="pilotS4DownloadFull" disabled>下载完整备份（询价数据 + 图纸）</button>
   <div id="pilotS4DownloadFeedback" role="alert" aria-live="assertive" hidden style="flex-basis:100%;width:100%;padding:9px 12px;border:1px solid #efc0bb;border-radius:6px;background:#fff1f0;color:#a32922;font-size:12px"></div>
-  <label class="small">选择 S4 完整备份 ZIP <input type="file" id="pilotS4BackupFile" accept=".zip,application/zip"></label>
-  <button type="button" class="btn" id="pilotS4RestoreFull" disabled>恢复完整备份（仅空白数据）</button>
+  <label class="small">选择完整备份文件 <input type="file" id="pilotS4BackupFile" accept=".zip,application/zip"></label>
+  <button type="button" class="btn" id="pilotS4RestoreFull" disabled>恢复完整备份（仅限空白数据）</button>
   <div id="pilotS4RestoreFeedback" role="alert" aria-live="assertive" hidden style="flex-basis:100%;width:100%;padding:9px 12px;border:1px solid #efc0bb;border-radius:6px;background:#fff1f0;color:#a32922;font-size:12px"></div>
   <button type="button" class="btn soft" id="pilotExportExcel" disabled>导出业务数据 Excel（3 Sheet）</button>
   <button type="button" class="btn primary" id="pilotReportOpen" disabled>导出询价单 / 比价议价单</button>
-  <label class="btn" style="cursor:pointer">选择备份 JSON <input type="file" id="pilotImportBackup" accept=".json,application/json" disabled style="max-width:185px"></label>
+  <label class="btn" style="cursor:pointer">选择数据备份文件（JSON） <input type="file" id="pilotImportBackup" accept=".json,application/json" disabled style="max-width:185px"></label>
   <button type="button" class="btn" id="pilotRestoreBackup" disabled>确认恢复所选询价</button>
  </div>
  <div class="toolbar" style="gap:8px;margin:8px 0">
-  <label class="small">恢复包含图纸的完整 ZIP <input type="file" id="pilotImportComplete" accept=".zip,application/zip" disabled></label>
+  <label class="small">选择资料包（含图纸） <input type="file" id="pilotImportComplete" accept=".zip,application/zip" disabled></label>
   <button type="button" class="btn" id="pilotRestoreComplete" disabled>确认恢复完整 ZIP</button>
   <span class="small muted" id="pilotCompleteStatus"></span>
  </div>
@@ -1976,7 +1976,7 @@ body.srm-v2 .srm-v3-pageKicker{letter-spacing:.035em}
  <div id="pilotSaveStatus" class="small muted" role="status" aria-live="polite">正在检测本机存储能力……</div>
  <div id="pilotAutosaveStatus" class="small muted" role="status" aria-live="polite">自动保存：正在初始化……</div>
  <div id="pilotAutoBackupStatus" class="small muted" role="status" aria-live="polite">自动备份：正在检查……</div>
- <div class="small srm-essential-note" role="note"><strong>备份安全</strong><span class="srm-essential-note-text">JSON 不含原始邮件/PDF；导入前确认目标，避免覆盖已有正式工作。</span><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看备份安全说明" aria-expanded="false" aria-controls="srm-hint-46" aria-describedby="srm-hint-46" title="查看备份安全说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-46" class="srm-hint-pop" role="tooltip">必须先保存到本机，再下载 JSON 文件备份；文件不含原始邮件、PDF 等附件。已有正式工作不允许被导入文件覆盖。</span></span></div>
+ <div class="small srm-essential-note" role="note"><strong>备份安全</strong><span class="srm-essential-note-text">数据备份不含原始邮件、聊天截图等报价凭证；仅数据备份不含图纸。恢复前请确认目标，已有数据时系统会拒绝覆盖。</span><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看备份安全说明" aria-expanded="false" aria-controls="srm-hint-46" aria-describedby="srm-hint-46" title="查看备份安全说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-46" class="srm-hint-pop" role="tooltip">必须先保存到本机，再下载 JSON 文件备份；文件不含原始邮件、PDF 等附件。已有正式工作不允许被导入文件覆盖。</span></span></div>
 </div></div>
 
   <div class="card" id="pilotDrawingPanel" style="display:none;margin-bottom:12px">
@@ -2040,7 +2040,7 @@ body.srm-v2 .srm-v3-pageKicker{letter-spacing:.035em}
     <div class="ui-panelLead srm-v3-pageIntro" id="srmV3PageStage-backup">
       <div class="srm-v3-pageMain"><div class="srm-v3-pageKicker">数据管理</div>
         <h2>数据与备份</h2>
-        <span class="srm-page-help"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-1" aria-describedby="srm-hint-1" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-1" class="srm-hint-pop" role="tooltip">在这里集中备份、恢复及管理业务单据，不影响询价项目的日常操作。</span></span></span>
+        <span class="srm-page-help" hidden style="display:none"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-1" aria-describedby="srm-hint-1" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-1" class="srm-hint-pop" role="tooltip">在这里集中备份、恢复及管理业务单据，不影响询价项目的日常操作。</span></span></span>
       </div>
     </div>
   </section>
@@ -2360,11 +2360,11 @@ body.srm-v2 .srm-v3-pageKicker{letter-spacing:.035em}
           <label class="small">MOQ（最小起订量，物料单位）<input id="quoteManualMoq" type="text" placeholder="数量" style="display:block;width:100px"></label>
           <label class="small">报价状态<select id="quoteManualStatus" style="display:block"><option value="quoted">正常报价</option><option value="noquote">未报价</option><option value="cannot">不供货</option></select></label>
           <label class="small">物料备注<input id="quoteManualRemark" type="text" maxlength="2000" placeholder="替代型号、限制、包装等" style="display:block;min-width:170px"></label><button class="btn soft" id="quoteManualAdd">加入预览</button>
-        </div><div class="small muted" style="margin-top:7px"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-22" aria-describedby="srm-hint-22" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-22" class="srm-hint-pop" role="tooltip">M0 现按人民币（元/物料单位）、天和物料数量显示。正式币种、税口径、采购单位后续以 ERP / 询价字段为准。</span></span></div>
+        </div><div class="small muted" style="margin-top:7px"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-22" aria-describedby="srm-hint-22" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-22" class="srm-hint-pop" role="tooltip">金额按人民币元/物料单位显示，交期按天计算，数量按询价单位计。正式币种、税口径和采购单位以询价字段为准。</span></span></div>
       </div>
       <div class="intakeBox">
         <h3>剪贴板批量粘贴</h3>
-        <textarea id="quotePaste" placeholder="第一行是表头，须含 RFQ Line ID 或存货编码（兼容旧名物料编码）。&#10;存货编码,报价单价,交期,MOQ,报价状态,物料备注&#10;ITEM-00001,100,7,10,正常报价,可替代品牌"></textarea>
+        <textarea id="quotePaste" placeholder="第一行是表头，须含 RFQ Line ID 或存货编码（也接受“物料编码”列名）。&#10;存货编码,报价单价,交期,MOQ,报价状态,物料备注&#10;ITEM-00001,100,7,10,正常报价,可替代品牌"></textarea>
         <div class="toolbar">
           <button class="btn" id="quoteReadClipboard">读取剪贴板</button>
           <button class="btn soft" id="quoteParsePaste">解析预览</button>
@@ -2380,7 +2380,7 @@ body.srm-v2 .srm-v3-pageKicker{letter-spacing:.035em}
         <button class="btn soft" id="demoQuoteExcel">仅模拟：查看虚构报价</button>
         <div id="quoteFileFeedback" role="status" class="small warn" style="margin-top:6px"></div>
         <div id="quoteMappingBox" class="coverageDetails small" style="display:none;margin-top:8px">
-          <div><b>本供应商报价模板映射（M0）</b></div>
+          <div><b>本供应商报价字段映射</b></div>
           <div class="toolbar" style="margin-top:6px">
             <input id="mapItemRef" type="text" value="RFQ Line ID / 物料编码">
             <input id="mapPrice" type="text" value="报价/单价">
@@ -2389,7 +2389,7 @@ body.srm-v2 .srm-v3-pageKicker{letter-spacing:.035em}
             <input id="mapStatus" type="text" value="状态">
             <button class="btn primary" id="saveQuoteMapping">演示映射预览（不保存）</button>
           </div>
-          <div id="quoteMappingHint" class="muted" style="margin-top:5px">M0 只验证映射交互；M5 实现真实 Excel 列读取和模板持久化。</div>
+          <div id="quoteMappingHint" class="muted" style="margin-top:5px">此处用于预览供应商报价表的字段对应关系；修改后仅生成预览，不会保存为长期模板。</div>
         </div>
       </div>
     </div>
@@ -2426,7 +2426,7 @@ body.srm-v2 .srm-v3-pageKicker{letter-spacing:.035em}
     </div>
 
     <div class="card" style="margin-top:14px">
-      <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-13" aria-describedby="srm-hint-13" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-13" class="srm-hint-pop" role="tooltip">紧凑浏览，按需展开交期、MOQ、阶梯价与来源</span></span></span></div><div class="toolbar srm-ux-quote-actions"><button type="button" class="btn" id="srmUxRefreshQuote" title="仅刷新当前显示，不读取覆盖 SQLite 草稿">↻ 刷新显示</button><button type="button" class="btn" id="srmUxQuoteDensity" aria-pressed="false">详细列</button><button class="btn" id="carryForwardMissing">选择沿用上轮项目…</button></div></div>
+      <div class="cardhead"><div><b>当前轮次报价明细</b> <span class="muted small"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-13" aria-describedby="srm-hint-13" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-13" class="srm-hint-pop" role="tooltip">紧凑浏览，按需展开交期、MOQ、阶梯价与来源</span></span></span></div><div class="toolbar srm-ux-quote-actions"><button type="button" class="btn" id="srmUxRefreshQuote" title="仅刷新当前显示，不重新载入或覆盖未保存的报价草稿">↻ 刷新显示</button><button type="button" class="btn" id="srmUxQuoteDensity" aria-pressed="false">详细列</button><button class="btn" id="carryForwardMissing">选择沿用上轮项目…</button></div></div>
       <div class="cardbody">
         <div id="srmV31RevisionDiff" class="srm-v31-revisionDiff" aria-live="polite" hidden></div>
         <div id="quoteRoundHint" class="small muted" style="margin-bottom:8px"></div>
@@ -3620,7 +3620,7 @@ function hasConfirmedItemHistory(lineId){
 function guardMutableLines(lineIds,action){
   const blocked=[...new Set(lineIds)].filter(hasConfirmedItemHistory);
   if(!blocked.length)return true;
-  alert(action+"被阻止：其中 "+blocked.length+" 条询价行已有已确认报价。请通过正式业务修订处理，M0 不允许覆盖历史。示例："+blocked.slice(0,3).join("、"));
+  alert(action+"被阻止：其中 "+blocked.length+" 条询价行已有已确认报价，系统不会覆盖这些历史记录。示例："+blocked.slice(0,3).join("、"));
   return false;
 }
 /** 中文：统一处理分配增删和反转，避免某个视角绕过已确认报价保护。
@@ -3749,7 +3749,7 @@ function openItemEditor(lineId){
   const raw=Object.entries(it.erpExtra||{});
   itemEditErpExtra.style.display=raw.length?"block":"none";
   itemEditErpExtraPreview.textContent=raw.map(([k,v])=>k+"： "+v).join("\n");
-  itemEditHint.textContent=locked?"此询价行已有报价历史，当前只允许查看；请在后续正式修订流程中变更。":"当前属性带出该行原值。M0 尚未接入 ERP 主数据，修改存货编码不会自动更新其他 ERP 属性，也不会合并其他相同编码询价行。";
+  itemEditHint.textContent=locked?"此询价行已有报价历史，当前仅可查看。若需调整，请在新的询价中添加对应物料。":"当前属性带出该行原值。修改存货编码不会自动更新其他 ERP 属性，也不会合并其他相同编码询价行。";
   for(const input of [itemEditCode,itemEditDrawingNo,itemEditQty,itemEditName,itemEditSpec,itemEditRef1,itemEditRef2,itemEditPurchaseUnit,itemEditCat,itemEditUnit])input.disabled=locked;
   itemEditSave.disabled=locked;itemEditError.textContent="";
   // 中文：记录当前编辑框初值；Esc/取消只在实际修改过时询问，避免意外丢弃输入。
@@ -4137,7 +4137,7 @@ demoExcelImport.onclick=()=>setImportPreview([
   {id:"XLS-DEMO-001",name:"导入示例物料 A",cat:"类别A",qty:3,unit:"件"},
   {id:"XLS-DEMO-002",name:"导入示例物料 B",cat:"类别B",qty:5,unit:"个"},
   {id:"XLS-DEMO-003",name:"导入示例物料 C",cat:"类别C",qty:1,unit:"套"}
-],"Excel 导入演示预览（M0 内置示例）");
+],"Excel 导入示例预览（虚构数据）");
 importFile.onchange=()=>{
   const file=importFile.files?.[0];if(!file)return;
   // 中文：选择任何新文件前清除旧预览，拒绝的 Excel 绝不能沿用旧导入结果。
@@ -4254,7 +4254,7 @@ matchUpdateFile.onchange=()=>{
 deleteSelectedItems.onclick=()=>{
   if(!itemManageSel.size){alert("请先勾选要删除的询价物料。");return}
   const count=itemManageSel.size,lineIds=new Set(itemManageSel),ids=new Set(items.filter(x=>lineIds.has(x.lineId)).map(x=>x.id));
-  if(quoteRounds.some(r=>r.lines.some(l=>lineIds.has(l.lineId))||(r.status==="confirmed"&&(r.expectedLineIds||[]).some(x=>lineIds.has(x))))){alert("选中物料已形成报价历史，M0 不允许物理删除。正式版应使用作废/取消并保留历史。");return}
+  if(quoteRounds.some(r=>r.lines.some(l=>lineIds.has(l.lineId))||(r.status==="confirmed"&&(r.expectedLineIds||[]).some(x=>lineIds.has(x))))){alert("选中物料已形成报价历史，不能直接删除已有报价历史的物料。为保留历史，请保留原记录；如需调整，请在新的询价中处理。");return}
   if(!confirm(`从本次 RFQ 删除选中的 ${count} 项物料？\n相关供应商分配关系也会同时删除。`))return;
   for(let i=items.length-1;i>=0;i--){if(lineIds.has(items[i].lineId))items.splice(i,1)}
   lineIds.forEach(lineId=>{assignments.delete(lineId);assignSel.delete(lineId);itemManageSel.delete(lineId)});
@@ -4586,7 +4586,7 @@ function srmUxRefreshQuoteDisplay(){
     }
   }
   if(area){area.scrollLeft=horizontal;area.scrollTop=vertical;}
-  msg.textContent="已刷新当前明细显示 · 未重新载入 SQLite · 未修改本轮报价。";
+  msg.textContent="已刷新当前明细显示 · 未重新载入已保存数据 · 未修改本轮报价。";
 }
 document.getElementById("srmUxRefreshQuote").addEventListener("click",srmUxRefreshQuoteDisplay);
 function renderQuoteRound(){
@@ -4923,7 +4923,7 @@ function renderSupplierFirstList(){
     e.stopPropagation();
     const sid=b.dataset.poolRemove, sup=suppliers.find(s=>s.id===sid);
     let count=0;items.forEach(it=>{if(getSet(it.lineId).has(sid))count++});
-    if(quoteRounds.some(r=>r.supplierId===sid&&(r.status==="confirmed"||r.lines.length))){alert("该供应商已有报价/版本历史，M0 不允许直接移出并破坏历史。正式版应使用取消参与/作废状态。");return}
+    if(quoteRounds.some(r=>r.supplierId===sid&&(r.status==="confirmed"||r.lines.length))){alert("该供应商已有报价历史，不能直接移出并删除历史。请保留原记录；如需调整供应商范围，请在新的询价中处理。");return}
     if(!guardMutableLines(items.filter(it=>getSet(it.lineId).has(sid)).map(it=>it.lineId),"移出供应商"))return;
     if(!confirm(`将“${sup?.name||sid}”移出本次询价？\n同时会取消它当前关联的 ${count} 个物料。`))return;
     let removed=0;items.forEach(it=>{if(getSet(it.lineId).delete(sid))removed++});
@@ -5190,7 +5190,7 @@ function exportSelectedCommonScopeCsv(plan){
 function renderQuoteAnalysis(){
   quoteModeNotice.textContent=quoteComparisonMode==="demo"?
     "纯模拟展示：当前所有报价及上次采购价均为虚构演示值，不可用于实际选择。":
-    "报价回收验证：仅已确认的报价记录参与比较；未报价不自动补价。上次采购价仍是 M0 虚构示例。";
+    "报价回收验证：仅已确认的报价记录参与比较；未报价不自动补价。上次采购价为示例数据，不可用于实际采购决策。";
   renderCommonScopePicker();
   const sups=comparisonSuppliers(),its=comparisonItems(),shared=planSelectedCommonScope();
   let theoretical=0,theoreticalCount=0,finalTotal=0,finalCount=0,manualTotalCents=0,manualCount=0;
@@ -5240,7 +5240,7 @@ function renderQuoteAnalysis(){
       shared.selected.map(s=>'<th>'+esc(s.name)+'<div class="small muted">单价 / 行金额</div></th>').join('')+
       '</tr></thead><tbody>'+detailRows+'</tbody></table></div></details></div>';
   }
-  quoteAnalysis.innerHTML='<div class="sline"><div><b>报价金额分析（M0）</b>'+
+  quoteAnalysis.innerHTML='<div class="sline"><div><b>报价金额分析</b>'+
     '<div class="small muted">三种口径分别统计：自身报价范围、指定供应商组共同范围、逐物料最低价组合。仅演示同币种同税口径。</div></div>'+
     '<div><b>逐物料理论最低价组合：</b>¥'+theoretical.toFixed(2)+'（'+theoreticalCount+' 项）　<b>当前建议/已选组合：</b>¥'+finalTotal.toFixed(2)+'（'+finalCount+' 项，含自动建议；待复核 '+awardReviewIds.size+' 项不计入）</div></div>'+
     // 中文：人工确认汇总独立呈现；没有人工有效定标时避免误写成可采购金额 ¥0.00。
@@ -5872,7 +5872,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       const info=await api("/api/backups/auto/status");
       autoBackupStatus.textContent=info.enabled?(info.latestAt?
         "自动备份：最近 "+new Date(info.latestAt).toLocaleString()+"，保留 "+info.retained+" 份（上限 7 份）":
-        "自动备份：已启用；首次保存后生成完整 SQLite+PDF ZIP，每日最多一次"):
+        "自动备份：已启用；首次保存后生成包含询价数据和图纸的完整备份，每日最多一次"):
         "自动备份：当前服务没有启动备份检查";
       autoBackupStatus.className="small muted";
     }catch(e){
@@ -5886,7 +5886,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     lastObservedSignature=savedSignature;
     lastChangeAt=Date.now();
     autosaveHalted=false;
-    autosaveLabel("已同步第 "+revision+" 版；无待保存修改");
+    autosaveLabel("已保存；无待保存修改");
   }
 
   function status(message,isError=false){
@@ -5976,8 +5976,8 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     document.getElementById("demoMatchUpdate").disabled=buyerMode;
     const completeInfo=document.getElementById("pilotCompleteStatus");
     if(completeInfo)completeInfo.textContent=s4Available?
-      "S4 完整 ZIP 可用于新电脑或空白数据目录恢复；已有询价时系统会拒绝覆盖。旧测试 ZIP 不能作为 S4 完整备份。":
-      "当前本机服务未支持 S4 完整备份，请更新 backend 文件后重启；旧测试备份入口仍停用。";
+      "完整备份文件可用于新电脑或空白数据目录恢复；已有询价时系统会拒绝覆盖。资料包不能代替完整备份恢复。":
+      "当前本机服务暂不支持完整备份与恢复，请更新本机服务并重启后重试。";
   }
   async function refreshHistory(){
     if(!localReady)return;
@@ -6043,11 +6043,11 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   function beginBuyer(){
     if(!localReady||busy||blocked)return;
     if(buyerMode&&hasUnsavedBusinessChanges()&&!confirm("当前询价尚有未保存修改，新建将放弃这些修改。继续？"))return;
-    if(buyerMode&&!hasUnsavedBusinessChanges()&&!confirm("新建一笔空白询价？原来已保存的数据仍保存在 SQLite。"))return;
+    if(buyerMode&&!hasUnsavedBusinessChanges()&&!confirm("新建一笔空白询价？原来已保存的询价不会被删除。"))return;
     const fresh=model.createEmptyWorkspace("RFQ-"+Date.now()+"-"+Math.random().toString(36).slice(2,8).toUpperCase());
     applyWorkspace(fresh);dirty=true;lastChangeAt=Date.now();buttons();
     autosaveLabel("新询价尚未保存，将在操作空闲后自动创建；图纸上传前仍需完成首次保存");
-    status("新询价已建立；空闲约 3 秒会自动写入 SQLite，也可以立即点击“保存到本机”。");
+    status("新询价已建立；空闲约 3 秒后自动保存，也可以立即点击“保存到本机”。");
   }
   async function recover(){
     if(busy||!localReady)return;
@@ -6057,9 +6057,9 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       const saved=await readSaved(true);
       if(!saved){status("当前没有已保存的询价记录。");return}
       model.validate(saved);applyWorkspace(saved);
-      status("已从 SQLite 恢复："+workspaceId+"（第 "+revision+" 版）。");
+      status("已重新读取已保存的询价数据。");
       await refreshHistory();
-    }catch(e){status("读取 SQLite 失败："+e.message,true)}
+    }catch(e){status("读取已保存的询价数据失败："+e.message,true)}
     finally{busy=false;buttons()}
   }
   async function switchArchived(){
@@ -6073,7 +6073,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       applyWorkspace(result.workspace);
       serverActiveId=target;
       await refreshHistory();
-      status("已切换并从 SQLite 读取："+target+"（第 "+revision+" 版）。");
+      status("已打开所选历史询价。");
     }catch(e){status("切换失败，未覆盖数据库记录："+e.message,true)}
     finally{busy=false;buttons()}
   }
@@ -6106,15 +6106,15 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       try{await refreshHistory()}catch(e){
         // 中文：索引刷新失败不撤销已经成功写入的 SQLite 数据。
         // English: History-index refresh errors cannot invalidate a committed save.
-        status("SQLite 保存成功，但历史列表刷新失败："+e.message,true);
+        status("询价已保存，但历史列表刷新失败："+e.message,true);
       }
-      autosaveLabel(dirty?"保存第 "+revision+" 版成功，仍有新修改等待保存":
-        "已"+(automatic?"自动":"手动")+"保存第 "+revision+" 版（"+new Date().toLocaleTimeString()+"）");
+      autosaveLabel(dirty?"已保存当前修改，仍有新修改等待保存":
+        "已"+(automatic?"自动":"手动")+"保存；无待保存修改");
       // 中文：仅在 SQLite 已确认保存且没有新输入时，移除旧的备份阻止提示；不能依赖 UI 文案。
       // English: Clear the S4 pending-edit warning only after a confirmed clean save; never depend on status wording.
       if(!dirty){
         s4DownloadNotice("");
-        status("SQLite "+(automatic?"自动":"手动")+"保存成功："+workspaceId+"（第 "+revision+" 版）。");
+        status("询价数据已"+(automatic?"自动":"手动")+"保存。");
       }
       // 中文：只报告真实 SQLite PUT 成功的版本；仍有输入时标记待保存。
       // English: Acknowledge only a real successful SQLite commit, marking pending edits.
@@ -6323,15 +6323,15 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       const active=await readSaved(),older=await readArchived(),records=[...(active?[active]:[]),...older];
       if(!records.length)throw Error("没有已保存询价");
       const zip=await window.SRMDrawings.completeBackup(records);
-      downloadFile(zip,"SRM_询价及图纸原件_测试导出.zip");
-      status("已发起包含 "+records.length+" 笔询价和 PDF 图纸的 ZIP 导出；报价邮件和截图尚未归档。S4 需补充完整恢复。");
+      downloadFile(zip,"SRM_询价与图纸资料包.zip");
+      status("已导出包含 "+records.length+" 笔询价和 PDF 图纸的资料包；不包含报价邮件和聊天截图，不能代替完整备份。");
     }catch(e){status("ZIP 导出失败："+e.message,true)}
     finally{busy=false;buttons()}
   }
   /* 中文：S4 ZIP 同时包含 SQLite 历史快照和全部已登记的 PDF 原件。
    * English: Download a versioned SQLite backup plus every indexed original PDF. */
   async function downloadS4Full(){
-    if(!s4Available){const message="S4 完整备份暂不可用，请检查本机服务状态。";status(message,true);s4DownloadNotice(message);return;}
+    if(!s4Available){const message="完整备份功能暂不可用，请检查本机服务状态。";status(message,true);s4DownloadNotice(message);return;}
     if(busy){const message="系统正在处理其他操作，请稍后再下载完整备份。";status(message,true);s4DownloadNotice(message);return;}
     if(blocked){const message="当前工作区存在数据冲突或安全阻止，已暂停备份。请先处理冲突提示。";status(message,true);s4DownloadNotice(message);return;}
     if(dirty){
@@ -6342,7 +6342,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       return;
     }
     s4DownloadNotice("");
-    busy=true;buttons();status("正在生成并校验 S4 完整备份……");
+    busy=true;buttons();status("正在生成并校验完整备份……");
     try{
       const created=await api("/api/backups/full",jsonRequest("POST",{}));
       const download=await fetch(created.downloadUrl,{cache:"no-store"});
@@ -6350,9 +6350,9 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
       const data=await download.blob();
       if(!data.size||data.size!==created.backup.bytes)throw Error("备份下载不完整，大小不一致");
       downloadFile(data,created.backup.fileName);
-      status("已下载 S4 完整备份："+created.backup.workspaceCount+" 笔询价，"+
-        created.backup.pdfCount+" 个 PDF 原件。请将 ZIP 保存到安全位置；本机服务器也保留一份。");
-    }catch(e){const message="S4 完整备份失败："+e.message;status(message,true);s4DownloadNotice(message,true)}
+      status("已下载完整备份："+created.backup.workspaceCount+" 笔询价，"+
+        created.backup.pdfCount+" 张图纸。请将文件保存到安全位置；本机也保留一份。");
+    }catch(e){const message="完整备份失败："+e.message;status(message,true);s4DownloadNotice(message,true)}
     finally{busy=false;buttons()}
   }
   /* 中文：先人工确认再提交；服务端保证只向空白数据目录恢复。
@@ -6360,15 +6360,15 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
   async function restoreS4Full(){
     if(!s4Available||busy||blocked)return;
     const file=s4FileInput.files?.[0];
-    if(!file){restoreNotice("请先选择由 S4 生成的完整 ZIP 备份。",true);return}
-    if(buyerMode){restoreNotice("当前电脑已有询价，禁止直接恢复覆盖。请在新电脑或独立空白数据目录运行 S4 再恢复。",true);return}
-    if(!confirm("确定向当前【空白】数据库恢复完整 ZIP？系统将校验所有文件；已有数据时拒绝恢复。"))return;
-    busy=true;buttons();restoreNotice("正在核验完整 ZIP 并恢复空白数据目录……");
+    if(!file){restoreNotice("请先选择本系统导出的完整备份文件。",true);return}
+    if(buyerMode){restoreNotice("当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。",true);return}
+    if(!confirm("确定将完整备份恢复到当前空白数据目录？系统会先校验文件；若目录已有数据，将拒绝恢复。"))return;
+    busy=true;buttons();restoreNotice("正在核验备份文件并恢复空白数据目录……");
     try{
       const result=await api("/api/backups/full/restore",
         {method:"POST",headers:{"Content-Type":"application/zip"},body:file});
       if(!result.verified||!result.restored)throw Error("服务器未确认完整恢复");
-      restoreNotice("完整恢复成功："+result.workspaceCount+" 笔询价、"+result.pdfCount+" 个 PDF；正在重新读取……");
+      restoreNotice("完整恢复成功："+result.workspaceCount+" 笔询价、"+result.pdfCount+" 张图纸；正在重新读取……");
       location.reload();
     }catch(e){restoreNotice("完整恢复未成功："+e.message,true)}
     finally{busy=false;buttons()}
@@ -6393,11 +6393,11 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
         throw Error("请通过 run_local.bat 启动，不能直接双击 index.html");
       const health=await api("/api/health");
       if(health.backend!=="sqlite"||!["S3","S4"].includes(health.stage))
-        throw Error("当前本机服务不是 SQLite 版本");
+        throw Error("本机服务版本不匹配，请重启本机服务后重试。");
       s4Available=health.stage==="S4"&&health.features?.fullBackupRestore===true;
       localReady=true;
       const saved=await readSaved(true);
-      if(saved){model.validate(saved);applyWorkspace(saved);status("已从 SQLite 自动恢复："+workspaceId+"（第 "+revision+" 版）。")}
+      if(saved){model.validate(saved);applyWorkspace(saved);status("已自动恢复已保存的询价数据。")}
       else{
         autosaveLabel("演示数据不会自动保存；请先新建正式询价");
         status("当前没有保存的询价。点击“新建”开始使用。");
@@ -6407,7 +6407,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
     }catch(e){
       blocked=true;localReady=false;
       autosaveLabel("本机服务不可用，无法保存",true);
-      status("SQLite 服务不可用，禁止正式操作："+e.message,true);
+      status("本机服务不可用，已暂停操作："+e.message,true);
     }
     finally{buttons()}
   })();
@@ -6427,7 +6427,7 @@ root.SRMAutosaveRules=Object.freeze({IDLE_MS,changed,due});
  const csvItemImport=importFile.onchange;
  importFile.accept=".xlsx,.csv,.txt";
  importFile.closest(".intakeBox").querySelector(".small.muted").textContent=
-  "直接导入 Excel .xlsx / CSV / TXT。请使用含有“存货编码、存货名称、询价数量、询价单位”的单张数据表；旧表头仍兼容。原始 .xls 暂不支持。";
+  "直接导入 Excel .xlsx / CSV / TXT。请使用含有“存货编码、存货名称、询价数量、询价单位”的单张数据表；也支持“物料编码”等常见列名。原始 .xls 暂不支持。";
  importFile.onchange=async function(){
   const file=this.files?.[0];if(!file)return;
   if(!/\.xlsx$/i.test(file.name)){return csvItemImport.call(this)}
@@ -6807,7 +6807,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   // 中文：技术性唯一编号仅在按需展开的详情可见，业务标题独立。
   // English: Keep the immutable internal key accessible only as on-demand diagnostics.
   const internalId=document.createElement("div");
-  internalId.innerHTML='<strong>系统内部编号：</strong> <span id="srmUxInternalWorkspaceId"></span>';
+  internalId.innerHTML='<strong>系统内部编号：</strong> <span id="srmUxInternalWorkspaceId"></span>';internalId.hidden=true;
   diagnostic.append(internalId);
   const updateInternalId=()=>{
     const snapshot=window.SRMPilot?.snapshot?.();
@@ -6862,7 +6862,7 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   const notes = Array.from(controls.children).find(el=>
     el.classList?.contains("small") && el.textContent.includes("必须先保存到本机"));
   const adminTools = drawer("uiDataTools","数据与备份（含报表）",
-      "包含 S4 完整 ZIP、旧版兼容格式与业务单据",[
+      "包含备份、恢复和业务报表",[
         one("pilotExportBackup").closest(".toolbar"),
         one("pilotImportComplete").closest(".toolbar"),
         one("pilotBulkRestoreOptions"),
@@ -6880,15 +6880,22 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
   // 中文：保存/内部编号技术详情与业务备份同页，避免占用项目第一页。
   // English: Raw persistence diagnostics belong with administrative backup tooling.
   adminBody.prepend(statusStrip);
+  // Keep permanently disabled restore IDs in the DOM but remove dead controls from the buyer UI.
+  const disabledJsonPicker=one("pilotImportBackup").closest("label");
+  if(disabledJsonPicker)disabledJsonPicker.style.display="none";
+  one("pilotRestoreBackup").style.display="none";
+  const disabledArchivePicker=one("pilotImportComplete").closest("label");
+  if(disabledArchivePicker)disabledArchivePicker.style.display="none";
+  one("pilotRestoreComplete").style.display="none";
   const resumeAction=one("pilotResumeWorkspace");
   const recoverRow=document.createElement("div");
   recoverRow.className="srm-ux-recoverRow";
-  recoverRow.innerHTML='<strong>辅助操作</strong><span>“重新读取”会放弃本页尚未保存的修改；不是恢复旧版本或备份。</span>';
+  recoverRow.innerHTML='<strong>辅助操作</strong><span>“重新读取”会放弃未保存修改；不会导入备份。</span>';
   recoverRow.append(resumeAction);
   adminBody.append(recoverRow);
   const backupTitle=document.createElement("div");
   backupTitle.className="srm-ux-admin-title";
-  backupTitle.innerHTML="<strong>数据安全与恢复</strong><span>S4 完整备份 · 空数据恢复 · 兼容资料</span>";
+  backupTitle.innerHTML="<strong>备份与恢复</strong><span>数据备份 · 完整恢复 · 资料导出</span>";
   adminBody.prepend(backupTitle);
   const reportTitle=document.createElement("div");
   reportTitle.className="srm-ux-admin-title";
@@ -7221,7 +7228,7 @@ function enhanceOtherGuidance(){
     sort.replaceChildren(document.createTextNode(current+" "),makeDynamicHint("Shift+点击列标题叠加字段排序，可追加多个排序字段。","多字段排序说明"));
   }
   var mapping=document.getElementById("quoteMappingHint");
-  var mappingText="M0 只验证映射交互；M5 实现真实 Excel 列读取和模板持久化。";
+  var mappingText="此处用于预览供应商报价表的字段对应关系；修改后仅生成预览，不会保存为长期模板。";
   if(mapping&&!mapping.querySelector(".srm-hint")&&mapping.textContent.trim()===mappingText){
     mapping.replaceChildren(makeDynamicHint(mappingText,"报价导入映射说明"));
   }
@@ -7231,7 +7238,7 @@ function enhanceOtherGuidance(){
     supplierStatus.replaceChildren(document.createTextNode("必填列：往来单位编码、往来单位名称。 "),makeDynamicHint("供应商编码可选；确认后系统会自动保存，也可手动保存。","供应商导入说明"));
   }
   var editHint=document.getElementById("itemEditHint");
-  var editText="当前属性带出该行原值。M0 尚未接入 ERP 主数据，修改存货编码不会自动更新其他 ERP 属性，也不会合并其他相同编码询价行。";
+  var editText="当前属性带出该行原值。修改存货编码不会自动更新其他 ERP 属性，也不会合并其他相同编码询价行。";
   if(editHint&&!editHint.querySelector(".srm-hint")&&editHint.textContent.trim()===editText){
     editHint.classList.remove("small","muted");editHint.classList.add("srm-edit-note");
     editHint.replaceChildren(document.createTextNode("编码修改不会自动同步 ERP 属性，也不会合并其他询价行。 "),makeDynamicHint(editText,"物料编辑注意事项"));
@@ -7246,7 +7253,7 @@ function enhanceOtherGuidance(){
   if(drawingSummary&&drawingSummary.textContent.includes("点击展开"))drawingSummary.textContent="PDF 图纸匹配与关联管理";
   var recover=document.querySelector("#backup .srm-ux-recoverRow");
   var recoverNote=recover&&recover.querySelector("span");
-  var recoverText="“重新读取”会放弃本页尚未保存的修改；不是恢复旧版本或备份。";
+  var recoverText="“重新读取”会放弃未保存修改；不会导入备份。";
   if(recoverNote&&!recoverNote.querySelector(".srm-hint")&&recoverNote.textContent.trim()===recoverText){
     recoverNote.classList.add("srm-recover-warning");
     recoverNote.replaceChildren(document.createTextNode("会放弃未保存修改 "),makeDynamicHint(recoverText,"重新读取说明"));
