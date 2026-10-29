@@ -128,4 +128,4 @@ All failed traces, screenshots, logs and source records remain unchanged. New st
 
 Validate delivered files from this directory with `sha256sum -c SHA256SUMS`. The checksum list intentionally excludes itself.
 ''')
-shutil.copy2(R/'polish-reports.py',D/'polish-reports.py');files=sorted(p for p in D.rglob('*')if p.is_file()and p.name!='SHA256SUMS');(D/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+str(p.relative_to(D))+'\n'for p in files));print('FINAL_REPORTS',len(files),'files')
+shutil.copy2(R/'polish-reports.py',D/'polish-reports.py');files=sorted(p for p in D.rglob('*')if p.is_file()and p.name!='SHA256SUMS'and '__pycache__'not in p.parts and p.suffix!='.pyc');(D/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+str(p.relative_to(D))+'\n'for p in files));print('FINAL_REPORTS',len(files),'files')
