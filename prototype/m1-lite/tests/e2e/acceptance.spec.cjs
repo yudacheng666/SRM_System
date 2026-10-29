@@ -362,7 +362,9 @@ test('08 bad PDF and damaged ZIP never contaminate saved data / 异常回归', a
   try {await other.goto('http://127.0.0.1:8766');await expect(other.locator('#pilotNewWorkspace')).toBeEnabled();
     await openTools(other,'#uiDataTools');
     await other.locator('#pilotS4BackupFile').setInputFiles(path.join(app.fixtures,'broken.zip'));await other.locator('#pilotS4RestoreFull').click();
-    await expect(other.locator('#pilotSaveStatus')).toContainText('未成功');expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toHaveLength(0);
+    await expect(other.locator('#pilotSaveStatus')).toContainText('完整备份恢复未完成');
+    await expect(other.locator('#pilotSaveStatus')).not.toContainText(/RESTORE_[A-Z_]+/);
+    expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toHaveLength(0);
   } finally {await other.close();}
 });
 
@@ -595,7 +597,9 @@ test('15 new RFQ clears stale supplier-first context without corrupting saved RF
   const originalId=first.workspaceId,originalState=first.state;
   await tab(page,'assign');
   await page.locator('[data-mode="supplierFirst"]').click();
-  await page.locator('[data-sf-s="SUP-B"]').click();
+  // 中文：点供应商名称而不是整行中心，避免误触嵌套的“移出本次询价”按钮。
+  // English: Click the supplier name, not the row center over the nested remove action.
+  await page.locator('[data-sf-s="SUP-B"] b').click();
   await expect(page.locator('#supplierFirstTitle')).toContainText('虚构供应商B');
   await fresh(page);
   const second=await snapshot(page);
@@ -689,7 +693,9 @@ test('45 P2-EXPORT-01 first supplier package export after view-only choices / �
   const before=await snapshot(page);
   await tab(page,'assign');
   await page.locator('[data-mode="supplierFirst"]').click();
-  await page.locator('[data-sf-s="SUP-A"]').click();
+  // 中文：使用名称文本作为选择目标，避免行中心命中移除按钮。
+  // English: Target the supplier name so the nested remove button cannot receive the click.
+  await page.locator('[data-sf-s="SUP-A"] b').click();
   await page.locator('#generateBtn').click();
   await expect(page.locator('#pilotReportPanel')).toBeVisible();
   await page.locator('#pilotReportSupplier').selectOption('SUP-A');
@@ -725,7 +731,9 @@ test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与�
   page.on('dialog',async d=>{dialogs.push(d.message());await d.dismiss()});
   await tab(page,'assign');
   await page.locator('[data-mode="supplierFirst"]').click();
-  await page.locator('[data-sf-s="SUP-B"]').click();
+  // 中文：只读选择通过供应商名称完成，避免误触移出询价及其确认框。
+  // English: Select through the supplier name to avoid triggering the nested removal action.
+  await page.locator('[data-sf-s="SUP-B"] b').click();
   expect((await snapshot(page)).state).toEqual(before.state);
   expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
   await openProject(page);
