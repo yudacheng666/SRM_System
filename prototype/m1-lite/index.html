@@ -1810,6 +1810,7 @@ body.srm-v2 .srm-hint-button{display:inline-flex;align-items:center;justify-cont
 body.srm-v2 .srm-hint-button:hover,body.srm-v2 .srm-hint-button:focus-visible,body.srm-v2 .srm-hint.is-open .srm-hint-button{background:#eaf4fb;color:#205c90;border-color:#97b9d3}
 body.srm-v2 .srm-hint-pop{position:fixed;left:12px;right:auto;top:12px;z-index:180;box-sizing:border-box;display:block;min-width:165px;width:max-content;max-width:min(360px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow-y:auto;overscroll-behavior:contain;padding:11px 13px;border-radius:6px;background:#1e354a;color:white;border:1px solid #304e64;text-align:left;font-size:13px;font-weight:450;line-height:1.65;white-space:normal;overflow-wrap:anywhere;box-shadow:0 9px 26px #14253b30;visibility:hidden;opacity:0;pointer-events:none}
 body.srm-v2 .srm-hint:hover .srm-hint-pop,body.srm-v2 .srm-hint:focus-within .srm-hint-pop,body.srm-v2 .srm-hint.is-open .srm-hint-pop{visibility:visible;opacity:1;pointer-events:auto}
+body.srm-v2 .srm-hint.is-dismissed .srm-hint-pop{visibility:hidden!important;opacity:0!important;pointer-events:none!important}
 body.srm-v2 .srm-v3-pageMeta .srm-hint-pop,body.srm-v2 #settings .toolbar .srm-hint-pop{left:auto;right:0}
 body.srm-v2 .srm-page-help{display:inline-flex;margin-top:5px}
 body.srm-v2 .srm-v3-pageMeta{max-width:44px}
@@ -7155,13 +7156,13 @@ function positionHint(h){
   top=Math.max(pad,Math.min(top,vh-box.height-pad));
   pop.style.left=Math.round(left)+"px";pop.style.right="auto";pop.style.top=Math.round(top)+"px";
 }
-function positionVisibleHints(){document.querySelectorAll(".srm-hint:hover, .srm-hint:focus-within, .srm-hint.is-open").forEach(positionHint)}
-function close(){document.querySelectorAll(".srm-hint.is-open").forEach(function(h){h.classList.remove("is-open");var b=h.querySelector(".srm-hint-button");if(b)b.setAttribute("aria-expanded","false")})}
-document.addEventListener("pointerover",function(ev){var b=ev.target&&ev.target.closest&&ev.target.closest(".srm-hint-button");if(b)positionHint(b.closest(".srm-hint"))});
-document.addEventListener("focusin",function(ev){var b=ev.target&&ev.target.closest&&ev.target.closest(".srm-hint-button");if(b)positionHint(b.closest(".srm-hint"))});
+function positionVisibleHints(){document.querySelectorAll(".srm-hint:hover:not(.is-dismissed), .srm-hint:focus-within:not(.is-dismissed), .srm-hint.is-open").forEach(positionHint)}
+function close(){document.querySelectorAll(".srm-hint.is-open").forEach(function(h){h.classList.remove("is-open");var b=h.querySelector(".srm-hint-button");if(b)b.setAttribute("aria-expanded","false")});document.querySelectorAll(".srm-hint:hover, .srm-hint:focus-within").forEach(function(h){h.classList.add("is-dismissed")})}
+document.addEventListener("pointerover",function(ev){var b=ev.target&&ev.target.closest&&ev.target.closest(".srm-hint-button");if(b){var h=b.closest(".srm-hint");h.classList.remove("is-dismissed");positionHint(h)}});
+document.addEventListener("focusin",function(ev){var b=ev.target&&ev.target.closest&&ev.target.closest(".srm-hint-button");if(b){var h=b.closest(".srm-hint");h.classList.remove("is-dismissed");positionHint(h)}});
 window.addEventListener("resize",positionVisibleHints,{passive:true});
 window.addEventListener("scroll",positionVisibleHints,{passive:true,capture:true});
-document.addEventListener("click",function(ev){var target=ev.target;var b=target&&target.closest&&target.closest(".srm-hint-button");if(!b){if(!(target&&target.closest&&target.closest(".srm-hint-pop")))close();return}ev.preventDefault();ev.stopPropagation();var h=b.closest(".srm-hint"),open=!h.classList.contains("is-open");close();if(open){h.classList.add("is-open");b.setAttribute("aria-expanded","true");positionHint(h)}});
+document.addEventListener("click",function(ev){var target=ev.target;var b=target&&target.closest&&target.closest(".srm-hint-button");if(!b){if(!(target&&target.closest&&target.closest(".srm-hint-pop")))close();return}ev.preventDefault();ev.stopPropagation();var h=b.closest(".srm-hint"),open=!h.classList.contains("is-open");close();if(open){h.classList.remove("is-dismissed");h.classList.add("is-open");b.setAttribute("aria-expanded","true");positionHint(h)}});
 document.addEventListener("keydown",function(ev){if(ev.key==="Escape")close()});
 
 /* Item and supplier page headings are inserted by the existing UI script; make their
