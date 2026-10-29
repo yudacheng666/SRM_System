@@ -449,6 +449,10 @@ test('UX visual system: shared six-page design and SVG navigation / 六页统一
   }
   await page.locator('.srm-v2-sideitem[data-srm-v2-action="admin"]').click();
   await expect(page.locator('#backup')).toBeVisible();
+  // 中文：S4控制位于需要主动展开的管理详情区，遵循真实可见操作。
+  // English: The S4 action stays behind the safe admin disclosure until opened.
+  const tools=page.locator('#uiDataTools');
+  if(!await tools.evaluate(el=>el.open))await tools.locator(':scope > summary').click();
   await expect(page.locator('#pilotS4DownloadFull')).toBeVisible();
   const screenshot=info.outputPath('ui-system-backup-1366.png');
   await page.screenshot({path:screenshot,fullPage:false});
