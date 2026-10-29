@@ -1,0 +1,317 @@
+[
+  {
+    "id": "HEAD",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Exact checkout, PR HEAD and actual served HTML",
+    "evidence": "http-trace-identity.json",
+    "notes": "86 captured actual root responses match the current checkout",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "AUTO-PY",
+    "platform": "Linux/Python3.12",
+    "status": "PASS",
+    "name": "Complete original Python backend suite",
+    "evidence": "automation/python-backend/stderr.log",
+    "notes": "44 PASS",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "AUTO-NODE",
+    "platform": "Linux/Node24",
+    "status": "PASS",
+    "name": "Complete original Node business suite",
+    "evidence": "automation/node-business/stdout.log",
+    "notes": "10 PASS",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "AUTO-E2E",
+    "platform": "Linux/Chromium",
+    "status": "FAIL",
+    "name": "Complete original Chromium E2E suite",
+    "evidence": "automation/failure-classification.json",
+    "notes": "53 PASS /5 FAIL /0 skip /0 retry; original failures retained",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "OLD-17",
+    "platform": "Linux/Chromium",
+    "status": "FAIL",
+    "name": "Seventeen previously blocked/outdated whole cases",
+    "evidence": "prior-case-retest-summary.json",
+    "notes": "12 PASS /5 FAIL at subsequent assertions; preserved actual state assertions",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "OVERFLOW-6",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Six original horizontal-overflow cases",
+    "evidence": "prior-case-retest-summary.json",
+    "notes": "6/6 current-SHA PASS, subset of E2E58",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "LAYOUT-18",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Six actual pages across all three viewports",
+    "evidence": "attempt-02/evidence/layout-overflow.json",
+    "notes": "18 page measurements; no whole-document overflow",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "TIP-BOUNDS",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Pointer and keyboard popup bounds",
+    "evidence": "attempt-02/evidence/tooltip-retest.json",
+    "notes": "83 actual visible instances;1024x768/1366x768/1600x900; stored state/history/PDF unchanged",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "TIP-TAB",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Real Tab opens the popup and focus stays on trigger",
+    "evidence": "attempt-02/evidence/tooltip-retest.json",
+    "notes": "83 actual visible instances;1024x768/1366x768/1600x900; stored state/history/PDF unchanged",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "TIP-ESC",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Escape dismisses with pointer/focus retained",
+    "evidence": "attempt-02/evidence/tooltip-retest.json",
+    "notes": "83 actual visible instances;1024x768/1366x768/1600x900; stored state/history/PDF unchanged",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "TIP-PIN",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Pinned popup and click-away dismissal",
+    "evidence": "attempt-02/evidence/tooltip-retest.json",
+    "notes": "83 actual visible instances;1024x768/1366x768/1600x900; stored state/history/PDF unchanged",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "RESTORE-MALFORMED",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Malformed ZIP rejected with Chinese guidance",
+    "evidence": "attempt-02/evidence/BACKUP-malformed-zip-friendly-rejection.png",
+    "notes": "Real HTTP400; empty target unchanged; independently covers business assertion later blocked by old 未成功 wording",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "RESTORE-ARCHIVE",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Actual inquiry/drawing package rejected as full restore",
+    "evidence": "attempt-02/evidence/archive-rejection-real-backend.json",
+    "notes": "UI+backend400; actionable Chinese, no raw RESTORE_*; exact target unchanged",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "RESTORE-HASH",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Legal STORED ZIP with wrong PDF hash rejected",
+    "evidence": "attempt-02/evidence/S4-audited-backend-rejection.json",
+    "notes": "One changed byte, same length, fresh valid CRC, unchanged manifest;400 RESTORE_PDF_HASH_MISMATCH; target files and semantic data unchanged",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "RESTORE-EMPTY",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Correct complete archive restores into empty target",
+    "evidence": "attempt-02/evidence/S4-positive-control-restored.json",
+    "notes": "Two RFQs; all tables,50 confirmed-history lines, quote versions, manual decisions and3PDF hashes match source",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "RESTORE-NONEMPTY",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Nonempty target refuses overwrite",
+    "evidence": "attempt-02/evidence/S4-nonempty-backend.json",
+    "notes": "UI refusal and actual409 RESTORE_TARGET_NOT_EMPTY; restored database/history/PDF unchanged",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "ZIP-CONTENT",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Downloaded backup classes and ZIP/SQLite/PDF integrity",
+    "evidence": "attempt-02/evidence/s4-checks.json",
+    "notes": "30 class checks +11 full integrity checks; original mail/chat explicitly excluded",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "SAVE-STATE",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Actual pending save and acknowledged success",
+    "evidence": "attempt-02/evidence/CORE08-while-held.json",
+    "notes": "Real held PUT; no false saved state, backup blocked at all3sizes; real200 required before saved",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "SAVE-CONFLICT",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Real stale-tab SQLite revision conflict",
+    "evidence": "attempt-02/evidence/CORE08-conflict-http.json",
+    "notes": "Actual409, visible save failure/details; winning data and all history/PDF retained",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "SAVE-OUTAGE",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Actual service outage and saved-data protection",
+    "evidence": "attempt-02/evidence/offline-after-manual-save.json",
+    "notes": "Failure truthful; persisted DB unchanged before restart, manual200 andF5; quote/history preserved",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "HISTORY",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Locked revisions and saved/restored quote history",
+    "evidence": "attempt-02/evidence/Q04-all-confirmed.json",
+    "notes": "5 confirmed revisions/50 history lines, V1 immutable, explicit9 carry lines and tiers118/2.25",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "CORE01",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Actual material XLSX import and duplicate-code line identities",
+    "evidence": "attempt-02/evidence/CORE01-real-excel-preview.png",
+    "notes": "12 new synthetic lines, preview does not save",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "CORE02",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Real PDF matching, ambiguous/unmatched and original download bytes",
+    "evidence": "attempt-02/evidence/CORE02-clicked-correct-real-PDF.png",
+    "notes": "Actual3PDFs; unique/ambiguous/unmatched; preview does not persist",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "CORE03",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Supplier multi-assignment, duplicate append, remove and filter",
+    "evidence": "attempt-02/evidence/UX08-item-first-multiple-suppliers.png",
+    "notes": "Independent fresh UD7-A/B/C; existing links retained",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "CORE04",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "XLSX/paste/manual quotes, rounds/versions and preview safety",
+    "evidence": "attempt-02/evidence/Q03-same-round-version-difference.png",
+    "notes": "Real file refresh refusal and carry preview preservation; no history replacement",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "CORE05",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Ties, higher-price reasons, paging and separate totals",
+    "evidence": "attempt-02/evidence/C05-scoped-amounts-and-decisions.png",
+    "notes": "Manual3/1979 vs theory6940 vs mixed7064; pending9; tied-lowest no reason",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "CORE06",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Actual supplier ZIP/CSV/comparison XLSX contents",
+    "evidence": "attempt-02/evidence/export-checks.json",
+    "notes": "46 file-content checks; per-supplier PDF scope and values",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "CORE07",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "RFQ switch,F5 and real service restart persistence",
+    "evidence": "attempt-02/evidence/CORE07-after-service-restart.json",
+    "notes": "Separate52-line second RFQ; all source rows/history/PDF hashes stable",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "FIRST-ROW",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Entire first actual priced row at1366x768",
+    "evidence": "attempt-02/evidence/UX09-independent-before-awards.json",
+    "notes": "top=701.140625,bottom=742.921875,height=41.78125,scrollY=0",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "TRIAGE-NAME",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Supplier label selection avoids nested remove action",
+    "evidence": "attempt-02/evidence/original-failure-center-hit.json",
+    "notes": "At1440x1000 original container center really hits 移出本次询价; label click selects supplier and keeps all saved rows",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "TRIAGE-EXPORT",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Actual assigned-supplier export through visible action",
+    "evidence": "attempt-02/evidence/original-failure-triage-export.json",
+    "notes": "Real ZIP withXLSX/PDF,no privateJSON; source data unchanged",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "COPY",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "name": "Six-page rendered buyer copy and real error states",
+    "evidence": "attempt-02/evidence/copy-audit.json",
+    "notes": "40 visible states; no S4/M0-M9/SQLite matches in rendered text/visible attributes",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "WIN-01",
+    "platform": "Native Windows",
+    "status": "NOT TESTED",
+    "name": "Native Windows Python3.13 backend",
+    "evidence": "identity-start.json",
+    "notes": "Only Linux execution environment available; not substituted by Linux results",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "WIN-02",
+    "platform": "Native Windows",
+    "status": "NOT TESTED",
+    "name": "Native Windows Node22 business suite",
+    "evidence": "identity-start.json",
+    "notes": "Only Linux execution environment available; not substituted by Linux results",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  },
+  {
+    "id": "WIN-03",
+    "platform": "Native Windows",
+    "status": "NOT TESTED",
+    "name": "Native Windows isolated program/data directory, CMD/BAT/Edge UI and restore safety",
+    "evidence": "identity-start.json",
+    "notes": "Only Linux execution environment available; not substituted by Linux results",
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483"
+  }
+]

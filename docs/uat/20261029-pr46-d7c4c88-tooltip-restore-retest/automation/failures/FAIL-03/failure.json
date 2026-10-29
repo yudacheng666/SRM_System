@@ -1,0 +1,71 @@
+{
+  "id": "ca3536bea9e5ab96e253-77967790303a41d57ea5",
+  "title": "45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出",
+  "file": "acceptance.spec.cjs",
+  "line": 684,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 2,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 27683,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#pilotReportPanel')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotReportPanel')\u001b[22m\n\u001b[2m    19 × locator resolved to <div id=\"pilotReportPanel\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#pilotReportPanel')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotReportPanel')\u001b[22m\n\u001b[2m    19 × locator resolved to <div id=\"pilotReportPanel\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:694:51",
+        "location": {
+          "file": "/workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 51,
+          "line": 694
+        },
+        "snippet": "  692 |   await page.locator('[data-sf-s=\"SUP-A\"]').click();\n  693 |   await page.locator('#generateBtn').click();\n> 694 |   await expect(page.locator('#pilotReportPanel')).toBeVisible();\n      |                                                   ^\n  695 |   await page.locator('#pilotReportSupplier').selectOption('SUP-A');\n  696 |   const optional=page.locator('#pilotReportFields input:not([disabled])').first();\n  697 |   await expect(optional).toBeVisible();"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 51,
+            "line": 694
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#pilotReportPanel')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotReportPanel')\u001b[22m\n\u001b[2m    19 × locator resolved to <div id=\"pilotReportPanel\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  692 |   await page.locator('[data-sf-s=\"SUP-A\"]').click();\n  693 |   await page.locator('#generateBtn').click();\n> 694 |   await expect(page.locator('#pilotReportPanel')).toBeVisible();\n      |                                                   ^\n  695 |   await page.locator('#pilotReportSupplier').selectOption('SUP-A');\n  696 |   const optional=page.locator('#pilotReportFields input:not([disabled])').first();\n  697 |   await expect(optional).toBeVisible();\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:694:51"
+        }
+      ],
+      "stdout": [],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-29T08:19:14.875Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/workspace/srmd7-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/test-failed-1.png"
+        },
+        {
+          "name": "server-log",
+          "contentType": "text/plain",
+          "path": "/workspace/srmd7-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/attachments/server-log-a6e81d0bfca0c7d7efde09df73ce5d4317e49226.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/workspace/srmd7-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/workspace/srmd7-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+        "column": 51,
+        "line": 694
+      }
+    }
+  ]
+}

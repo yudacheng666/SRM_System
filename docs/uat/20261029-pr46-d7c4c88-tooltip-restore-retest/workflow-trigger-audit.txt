@@ -1,0 +1,192 @@
+m1-lite-full-backup-batch-rfq.yml
+on:
+  push:
+    branches:
+      - draft/20261013-m1-lite-full-backup-batch-rfq
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m0-p0-regression.yml
+on:
+  push:
+    branches:
+      - draft/20261009-m0-p0-fixes
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m1-lite-erp-quote-notes.yml
+on:
+  push:
+    branches:
+      - draft/20261012-m1-lite-erp-fields-quote-notes
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m0-uat-feedback-browser.yml
+on:
+  push:
+    branches:
+      - draft/20261009-m0-uat-feedback
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m1-lite-multiple-rfqs.yml
+on:
+  push:
+    branches:
+      - draft/20261013-m1-lite-multiple-rfqs
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m1-lite-native-xlsx.yml
+on:
+  push:
+    branches:
+      - draft/20261012-m1-lite-native-xlsx
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m1-b1-core-model.yml
+on:
+  push:
+    branches:
+      - draft/20261010-m1-b1-core-model
+  workflow_dispatch:
+permissions:
+  contents: read
+
+srm-s3-regression.yml
+on:
+  push:
+    branches:
+      - draft/20261013-m1-storage-ui-audit
+      - test/20261014-issue3-playwright
+      - fix/20261020-s4-backup-dirty-guard
+      - fix/20261020-s4-visible-block-feedback
+  pull_request:
+    branches:
+      - draft/20261013-m1-storage-ui-audit
+      - feat/20261019-srm-ui-v3-integration
+      - fix/20261020-s4-backup-dirty-guard
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+
+m0-playwright-acceptance.yml
+on:
+  push:
+    branches:
+      - draft/20261009-m0-playwright-acceptance
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m0-p2-regression.yml
+on:
+  push:
+    branches:
+      - draft/20261009-m0-p2-fixes
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m0-selected-common-scope.yml
+on:
+  push:
+    branches:
+      - draft/20261009-m0-selected-common-scope
+  workflow_dispatch:
+permissions:
+  contents: read
+
+srm-ui-v2-unified-acceptance.yml
+on:
+  pull_request:
+    branches:
+      - draft/20261013-m1-storage-ui-audit
+      # 中文：PR24 集成候选的修复 PR 也必须执行完整 UI 验收。
+      # English: Gate fixes targeting the PR24 integration branch with the full UI suite.
+      - feat/20261019-srm-ui-v3-integration
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m0-p1-regression.yml
+on:
+  push:
+    branches:
+      - draft/20261009-m0-p1-fixes
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m1-lite-batch-drawing-match.yml
+on:
+  push:
+    branches:
+      - draft/20261013-m1-lite-batch-drawing-match
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m1-lite-portable-backup.yml
+on:
+  push:
+    branches:
+      - draft/20261011-m1-lite-portable-backup
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m1-lite-rfq-comparison-exports.yml
+on:
+  push:
+    branches:
+      - draft/20261012-m1-lite-rfq-comparison-exports
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m1-lite-safe-import.yml
+on:
+  push:
+    branches:
+      - draft/20261011-m1-lite-safe-import
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m1-lite-real-pdf-drawings.yml
+on:
+  push:
+    branches:
+      - draft/20261013-m1-lite-real-pdf-drawings-plan
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m1-b0-lean-offline.yml
+on:
+  push:
+    branches:
+      - draft/20261010-m1-b0-lean-foundation
+  workflow_dispatch:
+permissions:
+  contents: read
+
+m1-lite-manual-save.yml
+on:
+  push:
+    branches:
+      - draft/20261011-m1-lite-manual-save
+  workflow_dispatch:
+permissions:
+  contents: read
