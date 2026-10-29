@@ -139,7 +139,7 @@ for (const viewport of [{width:1366,height:768},{width:1600,height:900}]) {
     expect(layout.documentWidth).toBeLessThanOrEqual(viewport.width+2);
     expect(layout.firstRowTop).toBeLessThan(viewport.height);
     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);
-    expect(layout.bodyFont).toBe('14px');
+    expect(layout.bodyFont).toBe('14.5px');
 
     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');
     await page.screenshot({path:file,fullPage:true});
