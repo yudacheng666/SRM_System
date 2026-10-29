@@ -410,3 +410,51 @@ test('UX09 exact 1366 comparison density and first-row reachability / 比价紧�
   await expect(cells.first().locator('.srm-ux-bid-details')).toContainText('数量');
   expect(errors).toEqual([]);
 });
+
+
+// 中文：同一真实SRM+SQLite下遍历全部五个采购页面及备份管理页，固定跨页视觉规则和截图。
+ // English: Visual regression for the actual six-page product, using synthetic fixtures and live SQLite.
+test('UX visual system: shared six-page design and SVG navigation / 六页统一视觉回归',async({page,app},info)=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.setViewportSize({width:1366,height:768});
+  await prepare(page,app);
+  await expect(page.locator('#srm-visual-system-20261029')).toHaveCount(1);
+  const nav=page.locator('.srm-v2-sidebar .srm-v2-sideitem');
+  await expect(nav).toHaveCount(7);
+  await expect(nav.locator('.srm-v2-icon svg')).toHaveCount(7);
+  const tokens=await page.evaluate(()=>{
+    const side=getComputedStyle(document.querySelector('.srm-v2-sidebar'));
+    const newButton=getComputedStyle(document.getElementById('pilotNewWorkspace'));
+    const body=getComputedStyle(document.body);
+    return {sideBg:side.backgroundColor,buttonRadius:newButton.borderRadius,
+      font:body.fontFamily,icons:[...document.querySelectorAll('.srm-v2-icon svg')].every(el=>el.getAttribute('viewBox')==='0 0 24 24')};
+  });
+  expect(tokens.sideBg).toBe('rgb(255, 255, 255)');
+  expect(tokens.buttonRadius).toBe('5px');
+  expect(tokens.font).toContain('Segoe UI');
+  expect(tokens.icons).toBe(true);
+
+  const sections=['project','items','assign','quoteImport','quotes'];
+  for(const name of sections){
+    await page.locator('.srm-v2-sideitem[data-srm-v2-tab="'+name+'"]').click();
+    await expect(page.locator('#'+name)).toBeVisible();
+    const geometry=await page.evaluate(()=>({
+      viewport:window.innerWidth,
+      pageWidth:document.documentElement.scrollWidth
+    }));
+    expect(geometry.pageWidth,'Horizontal overflow at '+name).toBeLessThanOrEqual(geometry.viewport+1);
+    const screenshot=info.outputPath('ui-system-'+name+'-1366.png');
+    await page.screenshot({path:screenshot,fullPage:false});
+    await info.attach('ui-system-'+name,{path:screenshot,contentType:'image/png'});
+  }
+  await page.locator('.srm-v2-sideitem[data-srm-v2-action="admin"]').click();
+  await expect(page.locator('#backup')).toBeVisible();
+  await expect(page.locator('#pilotS4DownloadFull')).toBeVisible();
+  const screenshot=info.outputPath('ui-system-backup-1366.png');
+  await page.screenshot({path:screenshot,fullPage:false});
+  await info.attach('ui-system-backup',{path:screenshot,contentType:'image/png'});
+  const final=await snapshot(page);
+  expect(final.state.items).toHaveLength(12);
+  expect(final.state.suppliers).toHaveLength(2);
+  expect(errors).toEqual([]);
+});
