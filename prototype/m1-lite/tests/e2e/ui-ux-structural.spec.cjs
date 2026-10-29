@@ -462,3 +462,66 @@ test('UX visual system: shared six-page design and SVG navigation / 六页统一
   expect(final.state.suppliers).toHaveLength(2);
   expect(errors).toEqual([]);
 });
+
+test('UX help popovers stay inside the viewport and do not widen the page / 提示浮层不裁切、不撑宽页面',async({page,app})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await prepare(page,app);
+  const samples=[
+    {width:1024,height:768,stage:'quoteImport',selector:'#quoteImport .srm-hint-button:visible'},
+    {width:1024,height:768,stage:'quotes',selector:'#quotes .srm-hint-button:visible'},
+    {width:1024,height:768,stage:'admin',selector:'#backup [aria-label="查看备份安全说明"]'},
+    {width:1366,height:768,stage:'quoteImport',selector:'#quoteImport .srm-hint-button:visible'},
+    {width:1366,height:768,stage:'quotes',selector:'#quotes .srm-hint-button:visible'},
+    {width:1366,height:768,stage:'admin',selector:'#backup [aria-label="查看备份安全说明"]'},
+    {width:1600,height:900,stage:'quoteImport',selector:'#quoteImport .srm-hint-button:visible'},
+    {width:1600,height:900,stage:'quotes',selector:'#quotes .srm-hint-button:visible'},
+    {width:1600,height:900,stage:'admin',selector:'#backup [aria-label="查看备份安全说明"]'}
+  ];
+  for(const sample of samples){
+    await page.setViewportSize({width:sample.width,height:sample.height});
+    if(sample.stage==='admin')await page.locator('.srm-v2-sideitem[data-srm-v2-action="admin"]').click();
+    else await page.locator('.srm-v2-sideitem[data-srm-v2-tab="'+sample.stage+'"]').click();
+    const button=page.locator(sample.selector).last();
+    await expect(button,'help button '+sample.stage+' '+sample.width).toBeVisible();
+    const id=await button.getAttribute('aria-controls');
+    expect(id).toBeTruthy();
+    const popup=page.locator('#'+id);
+    await button.hover();
+    const pointer=await page.evaluate(id=>{
+      const p=document.getElementById(id),r=p.getBoundingClientRect();
+      return{visibility:getComputedStyle(p).visibility,left:r.left,right:r.right,top:r.top,bottom:r.bottom,
+        width:document.documentElement.clientWidth,height:document.documentElement.clientHeight,
+        documentWidth:document.documentElement.scrollWidth};
+    },id);
+    expect(pointer.visibility).toBe('visible');
+    expect(pointer.left).toBeGreaterThanOrEqual(0);
+    expect(pointer.right).toBeLessThanOrEqual(sample.width+1);
+    expect(pointer.top).toBeGreaterThanOrEqual(0);
+    expect(pointer.bottom).toBeLessThanOrEqual(sample.height+1);
+    expect(pointer.documentWidth).toBeLessThanOrEqual(sample.width+1);
+    await page.mouse.move(0,0);
+    await expect(popup).not.toBeVisible();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(sample.width+1);
+
+    // Keyboard focus opens the same help; Escape must dismiss it even while focus remains.
+    await button.focus();
+    await expect(popup).toBeVisible();
+    const keyboard=await page.evaluate(id=>{
+      const r=document.getElementById(id).getBoundingClientRect();
+      return{left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:document.documentElement.clientWidth,height:document.documentElement.clientHeight};
+    },id);
+    expect(keyboard.left).toBeGreaterThanOrEqual(0);
+    expect(keyboard.right).toBeLessThanOrEqual(sample.width+1);
+    expect(keyboard.top).toBeGreaterThanOrEqual(0);
+    expect(keyboard.bottom).toBeLessThanOrEqual(sample.height+1);
+    await page.keyboard.press('Escape');
+    await expect(popup).not.toBeVisible();
+    await button.blur();
+    await button.focus();
+    await expect(popup).toBeVisible();
+    await button.blur();
+    await page.mouse.move(0,0);
+    await expect(popup).not.toBeVisible();
+  }
+  expect(errors).toEqual([]);
+});
