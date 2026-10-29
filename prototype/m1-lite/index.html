@@ -1813,7 +1813,7 @@ body.srm-v2 .srm-hint:hover .srm-hint-pop,body.srm-v2 .srm-hint:focus-within .sr
 body.srm-v2 .srm-v3-pageMeta .srm-hint-pop,body.srm-v2 #settings .toolbar .srm-hint-pop{left:auto;right:0}
 body.srm-v2 .srm-page-help{display:inline-flex;margin-top:5px}
 body.srm-v2 .srm-v3-pageMeta{max-width:44px}
-body.srm-v2 .srm-v4-project-guide{max-width:840px;grid-template-columns:1fr!important;margin-top:10px!important}
+body.srm-v2 .srm-v4-project-guide{max-width:840px;grid-template-columns:1fr!important;margin-top:10px!important;overflow:visible!important}
 body.srm-v2 .srm-v4-guide-main{padding:16px 18px!important}
 body.srm-v2 .srm-v4-guide-main>p{margin:5px 0!important}
 body.srm-v2 .srm-v4-guide-steps{margin-top:9px}
@@ -1826,6 +1826,8 @@ body.srm-v2 #quoteImport .srm-ux-intake-modes .srm-hint{margin-left:auto}
 body.srm-v2 :is(.srm-v4-demo-tip,.srm-v4-live-tip):has(.srm-hint){display:inline-flex!important;margin:4px 0 0!important}
 body.srm-v2.ui-buyer-mode .srm-v4-demo-tip{display:none!important}
 body.srm-v2:not(.ui-buyer-mode) .srm-v4-live-tip{display:none!important}
+body.srm-v2 #settings .settingsGrid{grid-template-columns:minmax(0,1fr)}
+body.srm-v2 #quotes .srm-ux-scope-heading .srm-hint,body.srm-v2 #quotes .srm-ux-analytics h3 .srm-hint{margin-left:7px;vertical-align:middle}
 @media(hover:none){body.srm-v2 .srm-hint-button{cursor:pointer}}
 
 /* Keep previously accepted UX09 geometry and compact row padding from the
@@ -2435,7 +2437,7 @@ body.srm-v2:not(.ui-buyer-mode) .srm-v4-live-tip{display:none!important}
         <!-- 中文：比价明细优先展示，汇总分析仍保留并移至表格之后。
              English: Lead with actionable quote lines; preserve all analysis below the comparison table. -->
         <div class="srm-ux-scope-bar">
-          <div class="srm-ux-scope-heading">比较范围 <span>只对明确选择的共同有效报价计算同范围金额</span></div>
+          <div class="srm-ux-scope-heading">比较范围 <span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-44" aria-describedby="srm-hint-44" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-44" class="srm-hint-pop" role="tooltip">仅对明确选择的共同有效报价计算同范围金额。</span></span></div>
           <div id="commonScopePicker" class="coverageDetails" style="margin-top:8px"></div>
         </div>
         <div class="srm-ux-compare-heading"><b>逐物料报价与采购决定</b><label class="srm-ux-pending-filter"><input type="checkbox" id="srmUxPendingOnly"> 仅显示待人工决定</label></div>
@@ -2450,7 +2452,7 @@ body.srm-v2:not(.ui-buyer-mode) .srm-v4-live-tip{display:none!important}
           <div>最低价仅作为提示；允许选择非最低价，但必须填写原因。V1 每项物料最终选择一家供应商。总价分析仅在可比口径下计算；缺报价不会按 0 处理。历史采购价未接入，不参与当前比价。</div>
         </details>
         <section class="srm-ux-analytics" aria-label="按口径汇总的报价金额分析">
-          <h3>金额分析 <span>不同报价范围不可直接排名</span></h3>
+          <h3>金额分析 <span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-45" aria-describedby="srm-hint-45" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-45" class="srm-hint-pop" role="tooltip">不同报价范围的供应商金额不能直接排名，请先确认可比口径。</span></span></h3>
           <div id="quoteAnalysis" class="coverageDetails" style="margin-top:10px"></div>
         </section>
       </div>
@@ -2511,15 +2513,8 @@ body.srm-v2:not(.ui-buyer-mode) .srm-v4-live-tip{display:none!important}
             <select id="deleteFieldSelect"><option value="">选择要删除的自定义字段</option></select>
             <button class="btn danger" id="deleteCustomField">删除字段</button>
           </div>
-          <div class="notice" style="margin-top:10px">这里维护“字段结构”；日常询价页面只修改字段值，不修改字段定义。</div>
+          
           <div id="fieldDefinitionList" style="margin-top:10px"></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="cardhead"><b>字段规划说明</b></div>
-        <div class="cardbody small">
-          <p><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-25" aria-describedby="srm-hint-25" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-25" class="srm-hint-pop" role="tooltip">当前物料编码、名称、分类、数量、单位均为 M0 演示字段。</span></span></p>
-          <p><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-26" aria-describedby="srm-hint-26" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-26" class="srm-hint-pop" role="tooltip">正式字段由 ERP 字段、采购询价字段、报价字段、图纸/技术资料字段共同确定，并通过映射配置接入。</span></span></p>
         </div>
       </div>
     </div>
@@ -7108,6 +7103,49 @@ if(typeof module!=="undefined"&&module.exports)module.exports=root.SRMZip;
 function close(){document.querySelectorAll(".srm-hint.is-open").forEach(function(h){h.classList.remove("is-open");h.querySelector(".srm-hint-button").setAttribute("aria-expanded","false")})}
 document.addEventListener("click",function(ev){var b=ev.target.closest(".srm-hint-button");if(!b){if(!ev.target.closest(".srm-hint-pop"))close();return}var h=b.closest(".srm-hint"),open=!h.classList.contains("is-open");close();if(open){h.classList.add("is-open");b.setAttribute("aria-expanded","true")}});
 document.addEventListener("keydown",function(ev){if(ev.key==="Escape")close()});
+
+/* Item and supplier page headings are inserted by the existing UI script; make their
+ * static instruction phrases part of the same help system after those nodes exist. */
+function addGeneratedPageHints(){
+  var pageKeys=[
+    ["items","02 / 物料与图纸"],
+    ["assign","03 / 供应商分配"]
+  ];
+  pageKeys.forEach(function(pair){
+    var section=document.getElementById(pair[0]);
+    if(!section)return;
+    var lead=section.querySelector(".srm-v3-pageIntro");
+    if(!lead)return;
+    var label=lead.querySelector(".srm-v3-pageKicker");
+    if(label)label.textContent=pair[1];
+    var paragraph=lead.querySelector(".srm-v3-pageMain>p");
+    if(!paragraph)return;
+    var container=document.createElement("span");
+    container.className="srm-page-help";
+    var host=document.createElement("span");
+    host.className="srm-hint";
+    var button=document.createElement("button");
+    button.type="button";
+    button.className="srm-hint-button";
+    button.setAttribute("aria-label","查看说明");
+    button.setAttribute("aria-expanded","false");
+    button.title="查看说明";
+    button.textContent="ⓘ";
+    var popup=document.createElement("span");
+    popup.className="srm-hint-pop";
+    popup.id="srm-generated-hint-"+pair[0];
+    popup.setAttribute("role","tooltip");
+    popup.textContent=paragraph.textContent;
+    button.setAttribute("aria-controls",popup.id);
+    button.setAttribute("aria-describedby",popup.id);
+    host.append(button,popup);
+    container.append(host);
+    paragraph.replaceWith(container);
+  });
+}
+if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",addGeneratedPageHints,{once:true})}
+else{addGeneratedPageHints()}
+
 })();
 </script>
 </body>
