@@ -1,0 +1,108 @@
+{
+  "readUTC": "2026-10-29T15:01:24.560Z",
+  "PR46": {
+    "url": "https://github.com/yudacheng666/SRM_System/pull/46",
+    "number": 46,
+    "state": "open",
+    "merged": false,
+    "mergeable": true,
+    "draft": true,
+    "body": "## 目的 / Purpose\n根据用户确认的 [PR #44 统一 UI 设计](https://github.com/yudacheng666/SRM_System/pull/44)，直接升级正式 M1 Lite 页面（不是概念原型）。从开发基线 `f117cf3ca512a4ca7e1eec505b5e28744159343f` 创建独立开发候选，不改 main。\n\nBased on the approved design PR #44, update actual M1 Lite UX while retaining all validated business logic.\n\n### 已实施 / Implemented\n- **报价回收**：导入方式聚焦切换（全部/文件/粘贴/单条）、紧凑默认列 / 完整列、逐条详情；“刷新显示”检测正在使用的导入/沿用预览，拒绝潜在破坏性重绘，其他情况下仅重绘并保留输入与滚动。\n- **Quote intake**: Focusable input modes, compact/full columns, line details, and guarded view-only refresh.\n- **比价议价**：决策概览→范围→逐物料表→金额分析；冗长规则折叠、报价单元格的交期/MOQ/轮次与商务条款改为按需展开、隐藏正式模式下重复的“历史采购价未接入”列，新增纯视图“仅看待决定”。\n- **Comparison**: Decision-first layout, scoped analytics, secondary quote detail disclosures and pending-only view filter.\n- **工作区/图纸/报表**：状态归并为一个简洁入口，技术日志按需展开；业务导出与数据恢复在管理区分组；图纸匹配步骤可见。\n- **Workspace**: Compact status, separate report grouping and visible drawing-step guidance.\n\n### 保护范围 / Safety\n未改动 SQLite schema、报价轮次/版本计算、最低价并列及人工定标条件、Excel/PDF 内容、供应商隔离、S4 后端恢复规则。只修改正式 UI 及添加一个新的测试文件，不删除或修改既有测试/CI。\n\nNo persisted model, quote calculation, award logic, ZIP/PDF, exporter or S4 backend changes.\n\n### 测试与门槛 / Validation gate\n新增真实 Chromium + 隔离 SQLite E2E：录入方式切换、导入预览刷新保护、价单元格详情、紧凑模式、比较筛选、保存状态和数据管理分组。PR 创建后运行原 UI Unified / S3-S4 GitHub Actions 自动测试，**任何 CI 失败必须由 ChatGPT 排查修复；未通过前不交 Codex Cloud**。\n\nWhen the exact final HEAD is CI-green, request one independent scoped TEST-ONLY Codex business/visual run (no full C03-C09 repetition). Keep this PR Draft, do not merge into baseline/main before independent acceptance and explicit owner approval.",
+    "title": "feat(ui): restructure quote intake, comparison, workspace status and drawing workflow",
+    "base": "draft/20261013-m1-storage-ui-audit",
+    "base_sha": "f117cf3ca512a4ca7e1eec505b5e28744159343f",
+    "head": "feat/20261022-srm-ui-ux-structural",
+    "head_sha": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0",
+    "head_repo_id": 1392690011,
+    "head_repo_full_name": "yudacheng666/SRM_System",
+    "merge_commit_sha": "6f8c3a6c582d14de021932d8d58fbec131c3c305",
+    "user": {
+      "login": "yudacheng666",
+      "name": "yudacheng666",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+      "id": 227731428
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "diff": null,
+    "comments": null,
+    "created_at": "2026-10-22T06:33:48Z",
+    "updated_at": "2026-10-29T09:19:49Z",
+    "closed_at": null,
+    "merged_at": null,
+    "commits": 70,
+    "changed_files": 12,
+    "additions": 2026,
+    "deletions": 274,
+    "display_url": "https://github.com/yudacheng666/SRM_System/pull/46",
+    "display_title": "feat(ui): restructure quote intake, comparison, workspace status and drawing workflow"
+  },
+  "PR50": {
+    "url": "https://github.com/yudacheng666/SRM_System/pull/50",
+    "head": "test/20261022-pr46-c2737f0-temp-ci",
+    "head_sha": "0c4e08a82ac5835d088c93cb9d82424bd3065bcd",
+    "base": "feat/20261022-srm-ui-ux-structural",
+    "draft": true,
+    "merged": false
+  },
+  "latestDeveloperHandoff": [
+    {
+      "url": "https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6492833285",
+      "body": "## Follow-up to d7c4c88 E2E failures — fix candidate, not yet retested\n\nLatest product/test HEAD: `fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0` (PR #46 remains Draft/open; no merge). Evidence basis: [Codex exact-SHA report](https://github.com/yudacheng666/SRM_System/blob/0c4e08a82ac5835d088c93cb9d82424bd3065bcd/docs/uat/20261029-pr46-d7c4c88-tooltip-restore-retest/REPORT.zh-CN.md).\n\nChanges on the actual PR #46 branch:\n- Aligned final `--bg` and `--srm-canvas` tokens with the approved V3.1 `#F6F8FB` background. The integration test's expected approved token is unchanged.\n- Updated the malformed-ZIP E2E assertion to the current buyer-facing “完整备份恢复未完成” copy. The test still checks that no `RESTORE_*` code leaks and the restore target remains empty.\n- Replaced every supplier-first whole-row click in `acceptance.spec.cjs` with a click on the supplier-name `<b>` element. This prevents the row-center click from landing on the nested “移出本次询价” button; existing selection/title, RFQ isolation, export/download, and dirty-state assertions remain.\n\nStatic checks: 9 product inline scripts and 5 affected E2E files parse; all 407 DOM IDs remain unique. No browser tests have been run on this new SHA.\n\nThe first independent `#runAssignSearch` timeout remains **ROOT CAUSE UNKNOWN**. The retained log only says Playwright resolved the button and waited for it to be visible/enabled/stable; there is no frame-by-frame geometry/overlay trace to justify a product fix. No forced click or timeout increase was added. Retest exact SHA `fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0`; if it recurs, capture consecutive-frame bounding boxes, computed styles/active animations, scroll, focus/hover, `elementFromPoint`, obstruction, screenshot and trace. If it does not recur, record “not reproduced,” not “root cause fixed.”\n\nNo Actions triggered (`[skip ci]`), no CI change, no merge/closure, no main change. Previous `d7c4c88` 107 PASS/5 FAIL does not transfer. Windows-native three groups remain NOT TESTED.",
+      "user": {
+        "login": "yudacheng666",
+        "name": "yudacheng666",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+        "id": 227731428
+      },
+      "id": 6492833285,
+      "pull_request_review_id": null,
+      "in_reply_to_id": null,
+      "created_at": null,
+      "updated_at": null,
+      "review": null,
+      "side": null,
+      "line": null,
+      "start_line": null,
+      "path": null,
+      "body_html": "<h2 dir=\"auto\">Follow-up to <a class=\"commit-link\" data-hovercard-type=\"commit\" data-hovercard-url=\"https://github.com/yudacheng666/SRM_System/commit/d7c4c88abd354ebdc5d3bfedfc9199e278c48483/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/commit/d7c4c88abd354ebdc5d3bfedfc9199e278c48483\"><tt>d7c4c88</tt></a> E2E failures — fix candidate, not yet retested</h2>\n<p dir=\"auto\">Latest product/test HEAD: <code class=\"notranslate\">fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0</code> (PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5974339365\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/46\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/46/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/46\">#46</a> remains Draft/open; no merge). Evidence basis: <a href=\"https://github.com/yudacheng666/SRM_System/blob/0c4e08a82ac5835d088c93cb9d82424bd3065bcd/docs/uat/20261029-pr46-d7c4c88-tooltip-restore-retest/REPORT.zh-CN.md\">Codex exact-SHA report</a>.</p>\n<p dir=\"auto\">Changes on the actual PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5974339365\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/46\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/46/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/46\">#46</a> branch:</p>\n<ul dir=\"auto\">\n<li>Aligned final <code class=\"notranslate\">--bg</code> and <code class=\"notranslate\">--srm-canvas</code> tokens with the approved V3.1 <code class=\"notranslate\">#F6F8FB<span class=\"ml-1 d-inline-block border circle color-border-subtle\" style=\"background-color: #F6F8FB; height: 8px; width: 8px;\"></span></code> background. The integration test's expected approved token is unchanged.</li>\n<li>Updated the malformed-ZIP E2E assertion to the current buyer-facing “完整备份恢复未完成” copy. The test still checks that no <code class=\"notranslate\">RESTORE_*</code> code leaks and the restore target remains empty.</li>\n<li>Replaced every supplier-first whole-row click in <code class=\"notranslate\">acceptance.spec.cjs</code> with a click on the supplier-name <code class=\"notranslate\">&lt;b&gt;</code> element. This prevents the row-center click from landing on the nested “移出本次询价” button; existing selection/title, RFQ isolation, export/download, and dirty-state assertions remain.</li>\n</ul>\n<p dir=\"auto\">Static checks: 9 product inline scripts and 5 affected E2E files parse; all 407 DOM IDs remain unique. No browser tests have been run on this new SHA.</p>\n<p dir=\"auto\">The first independent <code class=\"notranslate\">#runAssignSearch</code> timeout remains <strong>ROOT CAUSE UNKNOWN</strong>. The retained log only says Playwright resolved the button and waited for it to be visible/enabled/stable; there is no frame-by-frame geometry/overlay trace to justify a product fix. No forced click or timeout increase was added. Retest exact SHA <code class=\"notranslate\">fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0</code>; if it recurs, capture consecutive-frame bounding boxes, computed styles/active animations, scroll, focus/hover, <code class=\"notranslate\">elementFromPoint</code>, obstruction, screenshot and trace. If it does not recur, record “not reproduced,” not “root cause fixed.”</p>\n<p dir=\"auto\">No Actions triggered (<code class=\"notranslate\">[skip ci]</code>), no CI change, no merge/closure, no main change. Previous <code class=\"notranslate\">d7c4c88</code> 107 PASS/5 FAIL does not transfer. Windows-native three groups remain NOT TESTED.</p>"
+    }
+  ],
+  "latestEvidenceHandoff": [
+    {
+      "url": "https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6492834238",
+      "body": "## New exact product SHA for independent TEST-ONLY retest\n\nPlease keep the existing `d7c4c88` report immutable. ChatGPT has prepared a new candidate on PR #46 at exact HEAD `fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0`.\n\nRe-run the full Python/Node/Chromium suite on this exact SHA with isolated synthetic data. Focus on: (1) malformed ZIP displays current buyer copy and still rejects safely with no `RESTORE_*` leakage and unchanged target; (2) supplier-first tests select via supplier-name element and no longer accidentally activate the nested removal button, while retaining RFQ-isolation, export/download/content and dirty-state assertions; (3) approved `#F6F8FB` V3.1 canvas token; (4) full regression, tooltip bounds, restore security, save/quote history and 1366×768 first-row visibility.\n\n**Independent first-click timeout diagnostic:** prior trace only records `#runAssignSearch` resolving while Playwright waits for visible/enabled/stable. If it recurs, preserve first failure and instrument consecutive animation-frame bounding boxes, computed style and active animations, scrollY, focus/hover, `elementFromPoint`, overlay/hit target, screenshot and trace. Do not force-click, raise the timeout, hide the failure with retries, or claim the original root cause fixed if it does not reproduce.\n\nAppend new evidence under a fresh directory in this existing Draft PR #50; do not overwrite old reports. TEST-ONLY only: do not modify product code, tests or CI during the test run; do not dispatch Actions, merge or close PRs. Windows-native three groups remain NOT TESTED if no real Windows environment is available. No previous-SHA results transfer.",
+      "user": {
+        "login": "yudacheng666",
+        "name": "yudacheng666",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+        "id": 227731428
+      },
+      "id": 6492834238,
+      "pull_request_review_id": null,
+      "in_reply_to_id": null,
+      "created_at": null,
+      "updated_at": null,
+      "review": null,
+      "side": null,
+      "line": null,
+      "start_line": null,
+      "path": null,
+      "body_html": "<h2 dir=\"auto\">New exact product SHA for independent TEST-ONLY retest</h2>\n<p dir=\"auto\">Please keep the existing <code class=\"notranslate\">d7c4c88</code> report immutable. ChatGPT has prepared a new candidate on PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5974339365\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/46\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/46/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/46\">#46</a> at exact HEAD <code class=\"notranslate\">fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0</code>.</p>\n<p dir=\"auto\">Re-run the full Python/Node/Chromium suite on this exact SHA with isolated synthetic data. Focus on: (1) malformed ZIP displays current buyer copy and still rejects safely with no <code class=\"notranslate\">RESTORE_*</code> leakage and unchanged target; (2) supplier-first tests select via supplier-name element and no longer accidentally activate the nested removal button, while retaining RFQ-isolation, export/download/content and dirty-state assertions; (3) approved <code class=\"notranslate\">#F6F8FB<span class=\"ml-1 d-inline-block border circle color-border-subtle\" style=\"background-color: #F6F8FB; height: 8px; width: 8px;\"></span></code> V3.1 canvas token; (4) full regression, tooltip bounds, restore security, save/quote history and 1366×768 first-row visibility.</p>\n<p dir=\"auto\"><strong>Independent first-click timeout diagnostic:</strong> prior trace only records <code class=\"notranslate\">#runAssignSearch</code> resolving while Playwright waits for visible/enabled/stable. If it recurs, preserve first failure and instrument consecutive animation-frame bounding boxes, computed style and active animations, scrollY, focus/hover, <code class=\"notranslate\">elementFromPoint</code>, overlay/hit target, screenshot and trace. Do not force-click, raise the timeout, hide the failure with retries, or claim the original root cause fixed if it does not reproduce.</p>\n<p dir=\"auto\">Append new evidence under a fresh directory in this existing Draft PR <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load title\" data-id=\"5976161472\" data-permission-text=\"Title is private\" data-url=\"https://github.com/yudacheng666/SRM_System/issues/50\" data-hovercard-type=\"pull_request\" data-hovercard-url=\"/yudacheng666/SRM_System/pull/50/hovercard\" href=\"https://github.com/yudacheng666/SRM_System/pull/50\">#50</a>; do not overwrite old reports. TEST-ONLY only: do not modify product code, tests or CI during the test run; do not dispatch Actions, merge or close PRs. Windows-native three groups remain NOT TESTED if no real Windows environment is available. No previous-SHA results transfer.</p>"
+    }
+  ],
+  "memoryReference": {
+    "ref": "fcdc34ec9887dece20d6503a14a7d73d5be81a59",
+    "PR48": "unmerged; not product-head contents",
+    "AGENTSOnProductHead": false,
+    "paths": [
+      "AGENTS.md",
+      "docs/ai-memory/PROJECT_STATE.md",
+      "docs/ai-memory/DECISIONS.md"
+    ],
+    "canonicalMemoryWillNotBeChanged": true
+  }
+}

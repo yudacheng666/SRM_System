@@ -1,0 +1,159 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary "SRM 功能导航" [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: S
+      - generic [ref=e6]:
+        - text: SRM
+        - generic [ref=e7]: 采购业务系统
+    - generic [ref=e8]: 询价 · 比价 · 定标
+    - generic [ref=e9]: 工作空间
+    - button "询价项目" [ref=e10] [cursor=pointer]:
+      - img [ref=e12]
+      - generic [ref=e15]: 询价项目
+    - button "物料与图纸" [ref=e16] [cursor=pointer]:
+      - img [ref=e18]
+      - generic [ref=e23]: 物料与图纸
+    - button "供应商与分配" [ref=e24] [cursor=pointer]:
+      - img [ref=e26]
+      - generic [ref=e29]: 供应商分配
+    - button "报价回收" [ref=e30] [cursor=pointer]:
+      - img [ref=e32]
+      - generic [ref=e35]: 报价回收
+    - button "比价议价" [ref=e36] [cursor=pointer]:
+      - img [ref=e38]
+      - generic [ref=e40]: 比价议价
+    - separator [ref=e41]
+    - generic [ref=e42]: 管理工具
+    - button "数据与备份" [ref=e43] [cursor=pointer]:
+      - img [ref=e45]
+      - generic [ref=e47]: 数据与备份
+    - button "字段设置" [active] [ref=e48] [cursor=pointer]:
+      - img [ref=e50]
+      - generic [ref=e54]: 字段设置
+    - generic [ref=e55]:
+      - text: 本地业务系统
+      - text: 数据保存在本机
+  - banner [ref=e57]:
+    - generic [ref=e58]:
+      - generic [ref=e59]: 询价与比价
+      - heading "SRM 采购工作台" [level=1] [ref=e60]
+      - generic [ref=e61]: 演示数据不会保存；新建询价后可保存到本机。
+    - generic [ref=e62]:
+      - generic [ref=e63]: 本机演示模式（不保存）
+      - button "询价项目" [ref=e64] [cursor=pointer]
+      - button "数据与备份" [ref=e65] [cursor=pointer]
+      - button "字段设置" [ref=e66] [cursor=pointer]
+  - generic "当前询价工作摘要" [ref=e67]:
+    - generic [ref=e68]:
+      - text: 当前询价项目
+      - generic [ref=e70]: 演示数据（不保存）
+    - status [ref=e72]: 保存状态待确认
+  - generic [ref=e73]: 这是演示数据，不会保存。请新建一笔询价开始正式操作。
+  - navigation "询价业务流程" [ref=e74]:
+    - strong [ref=e76]: ◉采购业务流程
+    - tablist [ref=e77]:
+      - tab "› ① 询价项目" [ref=e78] [cursor=pointer]
+      - tab "› ② 物料与图纸" [ref=e79] [cursor=pointer]
+      - tab "› ③ 供应商分配" [ref=e80] [cursor=pointer]
+      - tab "› ④ 报价回收" [ref=e81] [cursor=pointer]
+      - tab "⑤ 比价议价" [ref=e82] [cursor=pointer]
+  - text: ▴ ▾ 批量选择 ▾ ✓
+  - generic [ref=e83]:
+    - generic [ref=e85]:
+      - generic [ref=e86]: 系统设置
+      - heading "设置与数据管理" [level=2] [ref=e87]
+      - button "查看说明" [ref=e90]:
+        - img [ref=e91]
+    - generic [ref=e94]:
+      - generic [ref=e95]:
+        - generic [ref=e96]: 数据导入模板下载
+        - button "查看说明" [ref=e99]:
+          - img [ref=e100]
+      - generic [ref=e103]:
+        - button "查看说明" [ref=e106]:
+          - img [ref=e107]
+        - generic [ref=e110]:
+          - button "下载询价物料模板 .xlsx" [ref=e111] [cursor=pointer]
+          - button "查看说明" [ref=e114]:
+            - img [ref=e115]
+        - generic [ref=e118]:
+          - button "下载供应商模板 .xlsx" [ref=e119] [cursor=pointer]
+          - button "查看说明" [ref=e122]:
+            - img [ref=e123]
+        - generic [ref=e126]:
+          - button "下载供应商报价模板 .xlsx" [ref=e127] [cursor=pointer]
+          - button "查看说明" [ref=e130]:
+            - img [ref=e131]
+        - generic [ref=e134]:
+          - button "下载匹配更新模板 .csv" [ref=e135] [cursor=pointer]
+          - button "查看说明" [ref=e138]:
+            - img [ref=e139]
+        - note [ref=e142]:
+          - strong [ref=e143]: 导入提醒
+          - generic [ref=e144]: 报价模板不生成有效 RFQ Line ID；导入前核对实际 Line ID，勿直接导入外发询价单或内部比价报表。
+          - button "查看报价模板导入说明" [ref=e146]:
+            - img [ref=e147]
+        - status [ref=e150]: 模板只在本机下载，不修改当前询价或数据库。
+    - generic [ref=e152]:
+      - generic [ref=e153]:
+        - generic [ref=e154]: 字段维护
+        - button "查看说明" [ref=e157]:
+          - img [ref=e158]
+      - generic [ref=e161]:
+        - generic [ref=e162]:
+          - button "+ 添加字段" [ref=e163] [cursor=pointer]
+          - combobox [ref=e164]:
+            - option "选择要删除的自定义字段" [selected]
+          - button "删除字段" [ref=e165] [cursor=pointer]
+        - table [ref=e167]:
+          - rowgroup [ref=e168]:
+            - row "字段 类型 来源" [ref=e169]:
+              - columnheader "字段" [ref=e170]
+              - columnheader "类型" [ref=e171]
+              - columnheader "来源" [ref=e172]
+          - rowgroup [ref=e173]:
+            - row "RFQ Line ID 文本/数量 ERP 对齐 / SRM 业务字段" [ref=e174]:
+              - cell "RFQ Line ID" [ref=e175]
+              - cell "文本/数量" [ref=e176]
+              - cell "ERP 对齐 / SRM 业务字段" [ref=e177]
+            - row "存货编码 文本/数量 ERP 对齐 / SRM 业务字段" [ref=e178]:
+              - cell "存货编码" [ref=e179]
+              - cell "文本/数量" [ref=e180]
+              - cell "ERP 对齐 / SRM 业务字段" [ref=e181]
+            - row "存货名称 文本/数量 ERP 对齐 / SRM 业务字段" [ref=e182]:
+              - cell "存货名称" [ref=e183]
+              - cell "文本/数量" [ref=e184]
+              - cell "ERP 对齐 / SRM 业务字段" [ref=e185]
+            - row "规格型号 文本/数量 ERP 对齐 / SRM 业务字段" [ref=e186]:
+              - cell "规格型号" [ref=e187]
+              - cell "文本/数量" [ref=e188]
+              - cell "ERP 对齐 / SRM 业务字段" [ref=e189]
+            - row "所属类别 文本/数量 ERP 对齐 / SRM 业务字段" [ref=e190]:
+              - cell "所属类别" [ref=e191]
+              - cell "文本/数量" [ref=e192]
+              - cell "ERP 对齐 / SRM 业务字段" [ref=e193]
+            - row "参考编码1 文本/数量 ERP 对齐 / SRM 业务字段" [ref=e194]:
+              - cell "参考编码1" [ref=e195]
+              - cell "文本/数量" [ref=e196]
+              - cell "ERP 对齐 / SRM 业务字段" [ref=e197]
+            - row "参考编码2 文本/数量 ERP 对齐 / SRM 业务字段" [ref=e198]:
+              - cell "参考编码2" [ref=e199]
+              - cell "文本/数量" [ref=e200]
+              - cell "ERP 对齐 / SRM 业务字段" [ref=e201]
+            - row "采购常用单位 文本/数量 ERP 对齐 / SRM 业务字段" [ref=e202]:
+              - cell "采购常用单位" [ref=e203]
+              - cell "文本/数量" [ref=e204]
+              - cell "ERP 对齐 / SRM 业务字段" [ref=e205]
+            - row "询价数量 文本/数量 ERP 对齐 / SRM 业务字段" [ref=e206]:
+              - cell "询价数量" [ref=e207]
+              - cell "文本/数量" [ref=e208]
+              - cell "ERP 对齐 / SRM 业务字段" [ref=e209]
+            - row "询价单位 文本/数量 ERP 对齐 / SRM 业务字段" [ref=e210]:
+              - cell "询价单位" [ref=e211]
+              - cell "文本/数量" [ref=e212]
+              - cell "ERP 对齐 / SRM 业务字段" [ref=e213]
+  - generic [ref=e214]: 修改内容自动保存；备份与恢复请前往“数据与备份”。
+```

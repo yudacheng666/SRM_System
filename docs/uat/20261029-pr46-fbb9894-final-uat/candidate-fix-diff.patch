@@ -1,0 +1,101 @@
+diff --git a/prototype/m1-lite/index.html b/prototype/m1-lite/index.html
+index 89a7957..a62fa44 100644
+--- a/prototype/m1-lite/index.html
++++ b/prototype/m1-lite/index.html
+@@ -1526,10 +1526,10 @@ body.srm-v2 #quotes #quoteTable .srm-ux-bid-details summary{line-height:1.2;font
+  * S4 protection, view state or RFQ identity changes.
+  * Keep quote-row geometry and short-laptop UX09 override above intact. */
+ body.srm-v2{
+- --bg:#f5f7f9;--panel:#fff;--line:#dbe2e9;--text:#223143;
++ --bg:#f6f8fb;--panel:#fff;--line:#dbe2e9;--text:#223143;
+  --muted:#68788a;--primary:#235d98;--soft:#edf4fa;
+  --srm-ink:#223143;--srm-subtle:#65768a;--srm-divider:#e2e7ed;
+- --srm-accent:#245f9f;--srm-accent-soft:#e9f2fb;--srm-canvas:#f5f7f9;
++ --srm-accent:#245f9f;--srm-accent-soft:#e9f2fb;--srm-canvas:#f6f8fb;
+  color:var(--srm-ink);background:var(--srm-canvas);
+  font:14.5px/1.5 "Segoe UI Variable","Segoe UI","Microsoft YaHei UI","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+diff --git a/prototype/m1-lite/tests/e2e/acceptance.spec.cjs b/prototype/m1-lite/tests/e2e/acceptance.spec.cjs
+index c9e93e9..2493944 100644
+--- a/prototype/m1-lite/tests/e2e/acceptance.spec.cjs
++++ b/prototype/m1-lite/tests/e2e/acceptance.spec.cjs
+@@ -180,7 +180,7 @@ test('03 suppliers and bidirectional additive allocation / 供应商与分配',
+   await expect(page.locator('#pilotSupplierExcelStatus')).toContainText('重复'); await expect(page.locator('#pilotImportSupplierConfirm')).toBeDisabled();
+   await page.locator('[data-rem="SUP-B"]').click();
+   await expect.poll(async () => (await snapshot(page)).state.assignments.every(x=>!x.values.includes('SUP-B'))).toBe(true);
+-  await page.locator('[data-mode="supplierFirst"]').click(); await page.locator('[data-sf-s="SUP-B"]').click();
++  await page.locator('[data-mode="supplierFirst"]').click(); await page.locator('[data-sf-s="SUP-B"] b').click();
+   await page.locator('#sfItemBody input[data-sfi]').first().check(); await save(page); const state=(await snapshot(page)).state;
+   await openProject(page); await page.locator('#pilotNewWorkspace').click(); await saved(page);
+   await openProject(page);
+@@ -249,7 +249,7 @@ test('05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图
+   await info.attach('pdf-preview',{path:info.outputPath('pdf-preview.png'),contentType:'image/png'});
+   await page.locator('#closeDrawing').click();
+   await tab(page,'assign'); await page.locator('#selectAssignAll').click(); await page.locator('[data-rem="SUP-B"]').click();
+-  await page.locator('[data-mode="supplierFirst"]').click(); await page.locator('[data-sf-s="SUP-B"]').click();
++  await page.locator('[data-mode="supplierFirst"]').click(); await page.locator('[data-sf-s="SUP-B"] b').click();
+   const ws=await snapshot(page), line=ws.state.items.find(x=>x.id==='TST-002').lineId;
+   await page.locator(`[data-sfi="${line}"]`).check(); await save(page);
+   await openTools(page,'#uiDataTools'); await page.locator('#pilotReportOpen').click();
+@@ -362,7 +362,9 @@ test('08 bad PDF and damaged ZIP never contaminate saved data / 异常回归', a
+   try {await other.goto('http://127.0.0.1:8766');await expect(other.locator('#pilotNewWorkspace')).toBeEnabled();
+     await openTools(other,'#uiDataTools');
+     await other.locator('#pilotS4BackupFile').setInputFiles(path.join(app.fixtures,'broken.zip'));await other.locator('#pilotS4RestoreFull').click();
+-    await expect(other.locator('#pilotSaveStatus')).toContainText('未成功');expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toHaveLength(0);
++    await expect(other.locator('#pilotSaveStatus')).toContainText('完整备份恢复未完成');
++    await expect(other.locator('#pilotSaveStatus')).not.toContainText(/RESTORE_[A-Z_]+/);
++    expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toHaveLength(0);
+   } finally {await other.close();}
+ });
+ 
+@@ -595,7 +597,9 @@ test('15 new RFQ clears stale supplier-first context without corrupting saved RF
+   const originalId=first.workspaceId,originalState=first.state;
+   await tab(page,'assign');
+   await page.locator('[data-mode="supplierFirst"]').click();
+-  await page.locator('[data-sf-s="SUP-B"]').click();
++  // 中文：点供应商名称而不是整行中心，避免误触嵌套的“移出本次询价”按钮。
++  // English: Click the supplier name, not the row center over the nested remove action.
++  await page.locator('[data-sf-s="SUP-B"] b').click();
+   await expect(page.locator('#supplierFirstTitle')).toContainText('虚构供应商B');
+   await fresh(page);
+   const second=await snapshot(page);
+@@ -613,7 +617,7 @@ test('15 new RFQ clears stale supplier-first context without corrupting saved RF
+   await tab(page,'assign');
+   await page.locator('[data-mode="supplierFirst"]').click();
+   await expect(page.locator('#supplierFirstTitle')).toHaveText('选择左侧供应商');
+-  await page.locator('[data-sf-s="SUP-A"]').click();
++  await page.locator('[data-sf-s="SUP-A"] b').click();
+   await expect(page.locator('#supplierFirstTitle')).toContainText('虚构供应商A');
+   await saved(page);
+   // 通过真实项目列表切回老项目后也应清空活动选择。
+@@ -689,7 +693,9 @@ test('45 P2-EXPORT-01 first supplier package export after view-only choices / 
+   const before=await snapshot(page);
+   await tab(page,'assign');
+   await page.locator('[data-mode="supplierFirst"]').click();
+-  await page.locator('[data-sf-s="SUP-A"]').click();
++  // 中文：使用名称文本作为选择目标，避免行中心命中移除按钮。
++  // English: Target the supplier name so the nested remove button cannot receive the click.
++  await page.locator('[data-sf-s="SUP-A"] b').click();
+   await page.locator('#generateBtn').click();
+   await expect(page.locator('#pilotReportPanel')).toBeVisible();
+   await page.locator('#pilotReportSupplier').selectOption('SUP-A');
+@@ -725,7 +731,9 @@ test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与
+   page.on('dialog',async d=>{dialogs.push(d.message());await d.dismiss()});
+   await tab(page,'assign');
+   await page.locator('[data-mode="supplierFirst"]').click();
+-  await page.locator('[data-sf-s="SUP-B"]').click();
++  // 中文：只读选择通过供应商名称完成，避免误触移出询价及其确认框。
++  // English: Select through the supplier name to avoid triggering the nested removal action.
++  await page.locator('[data-sf-s="SUP-B"] b').click();
+   expect((await snapshot(page)).state).toEqual(before.state);
+   expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
+   await openProject(page);
+@@ -739,7 +747,7 @@ test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与
+   // English: Re-enter the supplier allocation stage before editing its visible checkbox.
+   await tab(page,'assign');
+   await page.locator('[data-mode="supplierFirst"]').click();
+-  await page.locator('[data-sf-s="SUP-B"]').click();
++  await page.locator('[data-sf-s="SUP-B"] b').click();
+   const allocatedBox=page.locator('#sfItemBody input[data-sfi]').first();
+   await expect(allocatedBox).toBeChecked();
+   await allocatedBox.uncheck();

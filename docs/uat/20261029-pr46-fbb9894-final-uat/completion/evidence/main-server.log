@@ -1,0 +1,70 @@
+SRM local prototype: http://127.0.0.1:9865/
+S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.
+SQLite API check: http://127.0.0.1:9865/storage-check
+127.0.0.1 - - [29/Oct/2026 15:16:45] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:16:46] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:16:46] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:16:47] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:16:47] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 15:16:47] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:16:47] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:16:47] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:04] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:04] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:08] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:09] "PUT /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:09] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:09] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:09] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:09] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:10] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:10] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:10] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:10] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:10] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:10] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:11] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:11] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:11] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:12] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:13] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:13] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:13] "PUT /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:13] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:14] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:17] "PUT /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 409 -
+127.0.0.1 - - [29/Oct/2026 15:17:20] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:20] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:20] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:20] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:20] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:20] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:21] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+SRM local prototype: http://127.0.0.1:9865/
+S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.
+SQLite API check: http://127.0.0.1:9865/storage-check
+127.0.0.1 - - [29/Oct/2026 15:17:25] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:25] "PUT /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:25] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:25] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:25] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:25] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:26] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:26] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:26] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:26] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:26] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:27] "POST /api/backups/full HTTP/1.1" 201 -
+127.0.0.1 - - [29/Oct/2026 15:17:27] "GET /api/backups/full/SRM_FULL_20261029_151727_fd694600.zip HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:27] "GET /api/backups/full/SRM_FULL_20261029_151727_fd694600.zip HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:31] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:33] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:33] "GET /api/assets/RFQ-1793286048726-A7D2ME/b982bc3a3be0c03c28418761c81c896ae55171f2aa19d0b12954a6bb4ed6f69d HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:33] "GET /api/assets/RFQ-1793286048726-A7D2ME/4318c9b8f9bbc48b6dbf4d4554cd912ea0b5ffdc01ee6506a40f51c020afca74 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:33] "GET /api/assets/RFQ-1793286048726-A7D2ME/b982bc3a3be0c03c28418761c81c896ae55171f2aa19d0b12954a6bb4ed6f69d HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:33] "GET /api/assets/RFQ-1793286048726-A7D2ME/23244ec7486c385fb2ad481a8e13e574f5e0e8fa0ce89c0fadc49cac4ea19cb7 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:33] "GET /api/assets/RFQ-1793286048726-A7D2ME/4318c9b8f9bbc48b6dbf4d4554cd912ea0b5ffdc01ee6506a40f51c020afca74 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:33] "GET /api/assets/RFQ-1793286048726-A7D2ME/23244ec7486c385fb2ad481a8e13e574f5e0e8fa0ce89c0fadc49cac4ea19cb7 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:17:33] "GET /api/workspaces/RFQ-1793286048726-A7D2ME HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:18:25] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 15:19:17] "GET / HTTP/1.1" 200 -

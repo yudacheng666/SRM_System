@@ -1,0 +1,122 @@
+[
+  {
+    "label": "UFB-A ZIP CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "UFB-A no internal JSON",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "UFB-A exact assigned RFQ lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "UFB-A exact quantities",
+    "actual": [
+      5.0,
+      2.0,
+      3.0,
+      4.0,
+      5.0,
+      6.0,
+      100.0,
+      8.0,
+      9.0,
+      10.0,
+      11.0,
+      12.0
+    ],
+    "expected": [
+      5,
+      2,
+      3,
+      4,
+      5,
+      6,
+      100,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "pass": true
+  },
+  {
+    "label": "UFB-A quote prices remain blank",
+    "actual": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "UFB-A no competitor IDs",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "UFB-A no internal reason",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  }
+]

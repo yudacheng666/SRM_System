@@ -1,0 +1,10 @@
+{
+  "timeUTC": "2026-10-29T15:16:43.856397+00:00",
+  "classification": "Independent resume harness configuration error, not product defect",
+  "originalError": "ReferenceError: sizes is not defined",
+  "raw": "continuation/evidence/raw-first-error.json",
+  "retainedTrace": "continuation/evidence/trace-first-attempt.zip",
+  "originalSaveScenario": "BLOCKED before viewport loop; actual PUT held in browser and aborted on context close; no overwrite of first failure",
+  "correction": "Completion launcher explicitly initializes viewport array, current wid/ids and rename function before READY; remaining scripts audited for all globals. Product/existing tests/CI untouched.",
+  "affectedRetestOnly": "Reexecute10save guard from last committed current-run checkpoint, then finish11/12/13/14. No first-search retry, no reexecution of completed purchasing/tooltip/persistence cases."
+}

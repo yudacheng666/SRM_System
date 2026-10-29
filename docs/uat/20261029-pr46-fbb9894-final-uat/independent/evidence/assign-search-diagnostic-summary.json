@@ -1,0 +1,38 @@
+{
+  "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0",
+  "outcome": "NOT REPRODUCED; ROOT CAUSE UNKNOWN",
+  "clickCalls": 1,
+  "sampleCount": 19,
+  "rAFCount": 17,
+  "rAFDeltaMs": {
+    "min": 10.099999997764826,
+    "max": 69.89999999850988
+  },
+  "buttonBoxRanges": {
+    "x": {
+      "min": 849.03125,
+      "max": 849.03125
+    },
+    "y": {
+      "min": 488.703125,
+      "max": 488.703125
+    },
+    "width": {
+      "min": 45,
+      "max": 45
+    },
+    "height": {
+      "min": 32.25,
+      "max": 32.25
+    }
+  },
+  "animationFrameCount": 6,
+  "actualTrustedClickTargets": [
+    {
+      "id": "runAssignSearch",
+      "tag": "BUTTON",
+      "trusted": true
+    }
+  ],
+  "interpretation": "Fresh one-click observation with read-only instrumentation during concurrent full suite. No actionability timeout; do not infer original cause or a fix. Scroll/hover/focus and all hit-stack details remain in raw frames."
+}

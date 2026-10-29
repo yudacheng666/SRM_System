@@ -1,0 +1,145 @@
+{
+  "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0",
+  "checkRecordsAcrossPhases": 1130,
+  "allRecordedBusinessChecksPASS": true,
+  "notCleanHarnessRun": "Bootstrap stdin error,independent verifier path error,and continuation missing viewport configuration are retained separately; no product/test/CI fix",
+  "tooltipInstances": 83,
+  "tooltipPerWidth": {
+    "1024": 28,
+    "1366": 27,
+    "1600": 28
+  },
+  "layoutCount": 18,
+  "approvedBackground": "#F6F8FB",
+  "firstPricedRow1366": {
+    "height": 41.78125,
+    "top": 701.140625,
+    "bottom": 742.921875,
+    "viewport": 768,
+    "scrollY": 0,
+    "line": "RFQ-L00001",
+    "priceCenter": 721.53125,
+    "detailCenter": 721.53125,
+    "text": "缺图纸\nUFB-DUP · 虚构采购验收部件1 · 长规格-1-测试型\n\t¥118.00\n交期 · MOQ · 轮次\n\t¥119.00\n交期 · MOQ · 轮次\n\t¥121.00\n交期 · MOQ · 轮次\n\t系统建议 · 待人工确认\n虚构复验甲方制造"
+  },
+  "fileContentChecks": {
+    "backup-class-checks.json": 30,
+    "export-checks.json": 46,
+    "s4-checks.json": 11
+  },
+  "copyStates": 40,
+  "firstClickDiagnostic": {
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0",
+    "outcome": "NOT REPRODUCED; ROOT CAUSE UNKNOWN",
+    "clickCalls": 1,
+    "sampleCount": 19,
+    "rAFCount": 17,
+    "rAFDeltaMs": {
+      "min": 10.099999997764826,
+      "max": 69.89999999850988
+    },
+    "buttonBoxRanges": {
+      "x": {
+        "min": 849.03125,
+        "max": 849.03125
+      },
+      "y": {
+        "min": 488.703125,
+        "max": 488.703125
+      },
+      "width": {
+        "min": 45,
+        "max": 45
+      },
+      "height": {
+        "min": 32.25,
+        "max": 32.25
+      }
+    },
+    "animationFrameCount": 6,
+    "actualTrustedClickTargets": [
+      {
+        "id": "runAssignSearch",
+        "tag": "BUTTON",
+        "trusted": true
+      }
+    ],
+    "interpretation": "Fresh one-click observation with read-only instrumentation during concurrent full suite. No actionability timeout; do not infer original cause or a fix. Scroll/hover/focus and all hit-stack details remain in raw frames."
+  },
+  "completedScopes": {
+    "independent": [
+      {
+        "id": "CORE-01",
+        "status": "PASS"
+      },
+      {
+        "id": "CORE-02",
+        "status": "PASS"
+      },
+      {
+        "id": "CORE-03",
+        "status": "PASS"
+      },
+      {
+        "id": "CORE-04",
+        "status": "PASS"
+      },
+      {
+        "id": "UX09-INDEPENDENT",
+        "status": "EXECUTED; metric verdict retained"
+      },
+      {
+        "id": "CORE-05",
+        "status": "PASS"
+      },
+      {
+        "id": "COPY-populated",
+        "status": "executed; audit verdict in copy/tooltip records"
+      },
+      {
+        "id": "LAYOUT",
+        "status": "EXECUTED; failures retained as observations"
+      },
+      {
+        "id": "TOOLTIP-KEYBOARD",
+        "status": "EXECUTED; individual verdicts retained"
+      },
+      {
+        "id": "BACKUP-CATEGORIES",
+        "status": "PASS"
+      }
+    ],
+    "continuation": [
+      {
+        "id": "CORE06-CORRECTED-VERIFIER",
+        "status": "PASS on original current-SHA downloads; original error retained"
+      },
+      {
+        "id": "CORE-07",
+        "status": "PASS"
+      }
+    ],
+    "completion": [
+      {
+        "id": "CORE-08",
+        "status": "PASS"
+      },
+      {
+        "id": "SAVE-OFFLINE",
+        "status": "PASS"
+      },
+      {
+        "id": "S4-STORED-NEGATIVE",
+        "status": "PASS"
+      },
+      {
+        "id": "ORIGINAL-FAILURE-TRIAGE",
+        "status": "PASS; does not overwrite original suite failures"
+      },
+      {
+        "id": "OPTIONAL-FOLD",
+        "status": "PASS accessibility; optional efficiency suggestion retained"
+      }
+    ]
+  }
+}

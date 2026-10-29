@@ -1,0 +1,74 @@
+{
+  "timeUTC": "2026-10-29T15:12:45.283751+00:00",
+  "classification": "Independent evidence verifier path error; not product defect",
+  "originalExitCode": 1,
+  "originalError": "FileNotFoundError: /workspace/uatfbb/fixtures-attempt02/UFB-003_A.pdf",
+  "originalMethodStatus": "FAIL/BLOCKED verifier command retained; no failed content assertion before missing file",
+  "correction": "Only new standalone evidence verifier references fixtures instead of nonexistent fixtures-attempt02; original methods/product/tests/CI untouched",
+  "noReexportBeforeRecheck": true,
+  "sameCurrentRunOwnDataResume": "/workspace/uatfbb/independent/data; fresh created for this SHA, not prior-SHA or user data",
+  "copiedCurrentDownloads": [
+    {
+      "source": "independent/downloads/supplier-UFB-B.zip",
+      "copy": "continuation/downloads/supplier-UFB-B.zip",
+      "sha256": "9961ee91ccc9cb1d58f6aa0aa97b75ae27c753198f1cc405d9d04918afa6aa42",
+      "sameCurrentProductSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+    },
+    {
+      "source": "independent/downloads/current-data.json",
+      "copy": "continuation/downloads/current-data.json",
+      "sha256": "3ae2a09b96f65f4c0352903a4e5de9515a4d4245f0a573abb0f123331e4d1555",
+      "sameCurrentProductSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+    },
+    {
+      "source": "independent/downloads/classification-full.zip",
+      "copy": "continuation/downloads/classification-full.zip",
+      "sha256": "01e9781ba26f339c0878afe90110cb6ca89a72782b521b8a80a7a97b968bbcbd",
+      "sameCurrentProductSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+    },
+    {
+      "source": "independent/downloads/independent-common-scope.csv",
+      "copy": "continuation/downloads/independent-common-scope.csv",
+      "sha256": "25dadc51a8f669a6466f6d34932ff8ca2a20060ca6314d31cda2ba20ce9b9e50",
+      "sameCurrentProductSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+    },
+    {
+      "source": "independent/downloads/inquiry-drawing-archive.zip",
+      "copy": "continuation/downloads/inquiry-drawing-archive.zip",
+      "sha256": "ed7ff8aaf63033a32bf82b4bba55e2f21cd919a829b02b69414aef39d61cd5ee",
+      "sameCurrentProductSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+    },
+    {
+      "source": "independent/downloads/all-data.json",
+      "copy": "continuation/downloads/all-data.json",
+      "sha256": "b62384f44ed555f79a4706227b688f514c808e54436ef492689b08fbb5bc6f17",
+      "sameCurrentProductSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+    },
+    {
+      "source": "independent/downloads/all-suppliers.zip",
+      "copy": "continuation/downloads/all-suppliers.zip",
+      "sha256": "39ba78b3910e635875ab9be2b4de6cb105652faf4a67fcab91d20638a5fe6415",
+      "sameCurrentProductSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+    },
+    {
+      "source": "independent/downloads/supplier-UFB-A.zip",
+      "copy": "continuation/downloads/supplier-UFB-A.zip",
+      "sha256": "49d714ab6cc0970940868d5d46037436ab8fa4bc49e989dc935f7fd4dc1e1aa4",
+      "sameCurrentProductSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+    },
+    {
+      "source": "independent/downloads/supplier-UFB-C.zip",
+      "copy": "continuation/downloads/supplier-UFB-C.zip",
+      "sha256": "9f94290ef5b6db19b27998e4420676a3fbfd9154661add7d1700a9fa777b8d49",
+      "sameCurrentProductSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+    },
+    {
+      "source": "independent/downloads/comparison.xlsx",
+      "copy": "continuation/downloads/comparison.xlsx",
+      "sha256": "0a5e72abae109b02587bf939d905d966ab1f7b49e52446abe8fcfe42a5c6a774",
+      "sameCurrentProductSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+    }
+  ],
+  "originalFilesRemainUnchanged": true,
+  "remainingScopes": "Continue08 persistence,10 pending/conflict,11 outage,12 validSTORED hash/positive/nonempty,13 supplier intent; do not repeat first search/initial business/tooltip tests"
+}

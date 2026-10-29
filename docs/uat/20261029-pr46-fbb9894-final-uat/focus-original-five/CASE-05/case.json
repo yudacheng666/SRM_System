@@ -1,0 +1,67 @@
+{
+  "id": "f95fb36e88536e4fd7f8-3f3b95cb7962d03787a7",
+  "title": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+  "file": "ui-v3-integration.spec.cjs",
+  "line": 45,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 0,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 6234,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/\\d\\d|ADMIN/\u001b[39m\nReceived string:  \u001b[31m\"系统设置\"\u001b[39m",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/\\d\\d|ADMIN/\u001b[39m\nReceived string:  \u001b[31m\"系统设置\"\u001b[39m\n    at /workspace/srmfbb-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:76:69",
+        "location": {
+          "file": "/workspace/srmfbb-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+          "column": 69,
+          "line": 76
+        },
+        "snippet": "  74 |     await expect(intro).toBeVisible();\n  75 |     await expect(intro.locator('h2')).not.toBeEmpty();\n> 76 |     expect(await intro.locator('.srm-v3-pageKicker').textContent()).toMatch(/\\d\\d|ADMIN/);\n     |                                                                     ^\n  77 |   }\n  78 |   await expect(page.locator('.srm-v3-flow-label')).toContainText('采购业务流程');\n  79 |   await expect(page.locator('#srmV3QuoteLockHint')).toHaveCount(1);"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/workspace/srmfbb-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+            "column": 69,
+            "line": 76
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/\\d\\d|ADMIN/\u001b[39m\nReceived string:  \u001b[31m\"系统设置\"\u001b[39m\n\n  74 |     await expect(intro).toBeVisible();\n  75 |     await expect(intro.locator('h2')).not.toBeEmpty();\n> 76 |     expect(await intro.locator('.srm-v3-pageKicker').textContent()).toMatch(/\\d\\d|ADMIN/);\n     |                                                                     ^\n  77 |   }\n  78 |   await expect(page.locator('.srm-v3-flow-label')).toContainText('采购业务流程');\n  79 |   await expect(page.locator('#srmV3QuoteLockHint')).toHaveCount(1);\n    at /workspace/srmfbb-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:76:69"
+        }
+      ],
+      "stdout": [],
+      "stderr": [],
+      "retry": 0,
+      "startTime": "2026-10-29T15:10:04.471Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/workspace/srmfbb-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/test-failed-1.png"
+        },
+        {
+          "name": "srm-v3-ui-server-log",
+          "contentType": "text/plain",
+          "path": "/workspace/srmfbb-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/attachments/srm-v3-ui-server-log-1414a5eac148e9860d457eed62e3e5e61fe1817c.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/workspace/srmfbb-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/workspace/srmfbb-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/workspace/srmfbb-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+        "column": 69,
+        "line": 76
+      }
+    }
+  ]
+}
