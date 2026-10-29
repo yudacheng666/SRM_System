@@ -1,0 +1,108 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary "SRM 功能导航" [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: S
+      - generic [ref=e6]:
+        - text: SRM
+        - generic [ref=e7]: 采购业务系统
+    - generic [ref=e8]: 询价 · 比价 · 定标
+    - generic [ref=e9]: 工作空间
+    - button "询价项目" [ref=e10] [cursor=pointer]:
+      - img [ref=e12]
+      - generic [ref=e15]: 询价项目
+    - button "物料与图纸" [ref=e16] [cursor=pointer]:
+      - img [ref=e18]
+      - generic [ref=e23]: 物料与图纸
+    - button "供应商与分配" [ref=e24] [cursor=pointer]:
+      - img [ref=e26]
+      - generic [ref=e29]: 供应商分配
+    - button "报价回收" [ref=e30] [cursor=pointer]:
+      - img [ref=e32]
+      - generic [ref=e35]: 报价回收
+    - button "比价议价" [ref=e36] [cursor=pointer]:
+      - img [ref=e38]
+      - generic [ref=e40]: 比价议价
+    - separator [ref=e41]
+    - generic [ref=e42]: 管理工具
+    - button "数据与备份" [ref=e43] [cursor=pointer]:
+      - img [ref=e45]
+      - generic [ref=e47]: 数据与备份
+    - button "字段设置" [ref=e48] [cursor=pointer]:
+      - img [ref=e50]
+      - generic [ref=e54]: 字段设置
+    - generic [ref=e55]:
+      - text: 本地业务系统
+      - text: 数据保存在本机
+  - banner [ref=e57]:
+    - generic [ref=e58]:
+      - generic [ref=e59]: 询价与比价
+      - heading "SRM 采购工作台" [level=1] [ref=e60]
+      - generic [ref=e61]: 修改内容会自动保存到本机，也可以点击“保存”。
+    - generic [ref=e62]:
+      - generic [ref=e63]: 本机工作模式
+      - button "询价项目" [ref=e64] [cursor=pointer]
+      - button "数据与备份" [active] [ref=e65] [cursor=pointer]
+      - button "字段设置" [ref=e66] [cursor=pointer]
+  - generic "当前询价工作摘要" [ref=e67]:
+    - generic [ref=e68]:
+      - text: 当前询价项目
+      - generic [ref=e69]:
+        - generic [ref=e70]: 未命名询价（2026-10-29 06:35）
+        - button "修改名称" [ref=e71] [cursor=pointer]
+    - status [ref=e73]: 已保存
+  - generic [ref=e74]: 数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。
+  - navigation "询价业务流程" [ref=e75]:
+    - strong [ref=e77]: ◉采购业务流程
+    - tablist [ref=e78]:
+      - tab "› ① 询价项目" [ref=e79] [cursor=pointer]
+      - tab "› ② 物料与图纸" [ref=e80] [cursor=pointer]
+      - tab "› ③ 供应商分配" [ref=e81] [cursor=pointer]
+      - tab "› ④ 报价回收" [ref=e82] [cursor=pointer]
+      - tab "⑤ 比价议价" [ref=e83] [cursor=pointer]
+  - region "数据与备份" [ref=e84]:
+    - generic [ref=e86]:
+      - generic [ref=e87]: 数据管理
+      - heading "数据与备份" [level=2] [ref=e88]
+    - group [ref=e89]:
+      - text: ▴
+      - generic [ref=e90]:
+        - generic [ref=e91]:
+          - strong [ref=e92]: 备份与恢复
+          - text: 数据备份 · 完整恢复 · 资料导出
+        - generic "保存与自动备份状态" [ref=e93]:
+          - group [ref=e94]:
+            - generic "查看保存与备份详情" [ref=e95]
+        - generic [ref=e96]:
+          - button "备份当前询价（仅数据）" [ref=e97] [cursor=pointer]
+          - button "备份全部询价（仅数据）" [ref=e98] [cursor=pointer]
+          - button "导出询价与图纸资料包" [ref=e99] [cursor=pointer]
+          - button "下载完整备份（询价数据 + 图纸）" [ref=e100] [cursor=pointer]
+          - generic [ref=e101]:
+            - text: 选择完整备份文件
+            - button "选择完整备份文件" [ref=e102]
+          - button "恢复完整备份（仅限空白数据）" [disabled] [ref=e103]
+        - generic [ref=e105]: 完整备份文件可用于新电脑或空白数据目录恢复；已有询价时系统会拒绝覆盖。资料包不能代替完整备份恢复。
+        - generic [ref=e106]:
+          - strong [ref=e107]: 业务单据导出
+          - text: 供应商询价单 · 内部比价议价单 · Excel
+        - generic [ref=e108]:
+          - button "导出业务数据 Excel（3 Sheet）" [ref=e109] [cursor=pointer]
+          - button "导出询价单 / 比价议价单" [ref=e110] [cursor=pointer]
+        - note [ref=e111]:
+          - strong [ref=e112]: 备份安全
+          - generic [ref=e113]: 数据备份不含原始邮件、聊天截图等报价凭证；仅数据备份不含图纸。恢复前请确认目标，已有数据时系统会拒绝覆盖。
+          - button "查看备份安全说明" [ref=e115]:
+            - img [ref=e116]
+        - generic [ref=e119]:
+          - strong [ref=e120]: 辅助操作
+          - generic [ref=e121]:
+            - text: 会放弃未保存修改
+            - button "重新读取说明" [ref=e123]:
+              - img [ref=e124]
+          - button "重新读取已保存数据" [ref=e127] [cursor=pointer]
+  - text: ▾ 批量选择 ▴ ✓
+  - generic [ref=e128]: 修改内容自动保存；备份与恢复请前往“数据与备份”。
+```

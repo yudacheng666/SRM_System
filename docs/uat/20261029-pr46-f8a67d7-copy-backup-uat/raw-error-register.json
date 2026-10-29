@@ -1,0 +1,30 @@
+{
+  "blockingIndependentErrors": [
+    {
+      "number": 1,
+      "type": "NULL_DEMO_SNAPSHOT",
+      "raw": "independent/evidence/raw-first-error.json",
+      "correction": "driver-correction-01.json",
+      "freshRestart": "attempt-02"
+    },
+    {
+      "number": 2,
+      "type": "OUTDATED_NONEMPTY_WORDING",
+      "raw": "attempt-02/evidence/raw-first-error.json",
+      "correction": "driver-correction-02.json",
+      "completedRemainingScope": "continuation; original failed method remains failed"
+    }
+  ],
+  "nonblockingObservation": {
+    "label": "UX-08 supplier-first horizontal material labels",
+    "type": "WRONG_SYNTHETIC_NAME_EXPECTATION",
+    "actualFixtureName": "虚构采购验收部件",
+    "driverLiteral": "虚构验收验收部件",
+    "status": "FAIL preserved; no third driver correction/retry",
+    "readonlyEvidence": "attempt-02/evidence/supplier-inline-style-observation.json",
+    "actualDOM": "nowrap,15px inline summary; correct new fixture names visible; not confirmed product name corruption"
+  },
+  "originalSuiteFailures": "automation/failure-classification.json",
+  "productFindings": "issues.json",
+  "allRawRecordsPreserved": true
+}

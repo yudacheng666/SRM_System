@@ -1,0 +1,1804 @@
+[
+  {
+    "id": "AF-01",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "02 XLSX 12/100, duplicates and invalid format / 物料",
+    "file": "acceptance.spec.cjs",
+    "line": 159,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已手动保存第\"\nReceived string:    \"自动保存：已手动保存；无待保存修改\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已手动保存；无待保存修改\"\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:160:45",
+    "rawResults": [
+      {
+        "workerIndex": 0,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 21971,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:160:45",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          },
+          "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:160:45"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:30:01.661Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-02-XLSX-12-100-duplicates-and-invalid-format-物料/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-02-XLSX-12-100-duplicates-and-invalid-format-物料/attachments/server-log-5e8f6806ac8fd27167a5f6f07e0df9628d90ae83.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-02-XLSX-12-100-duplicates-and-invalid-format-物料/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-02-XLSX-12-100-duplicates-and-invalid-format-物料/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 71
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-02",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "03 suppliers and bidirectional additive allocation / 供应商与分配",
+    "file": "acceptance.spec.cjs",
+    "line": 176,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已手动保存第\"\nReceived string:    \"自动保存：已手动保存；无待保存修改\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已手动保存；无待保存修改\"\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:177:3",
+    "rawResults": [
+      {
+        "workerIndex": 1,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 23642,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:177:3",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          },
+          "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:177:3"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:30:25.534Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-03-suppliers-an-eb55d--additive-allocation-供应商与分配/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-03-suppliers-an-eb55d--additive-allocation-供应商与分配/attachments/server-log-f709fa542c002deff00c628be875ca45282fc490.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-03-suppliers-an-eb55d--additive-allocation-供应商与分配/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-03-suppliers-an-eb55d--additive-allocation-供应商与分配/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 71
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-03",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "04 real quote imports, rounds, tiers, immutable confirmation and comparison XLSX / 报价比价",
+    "file": "acceptance.spec.cjs",
+    "line": 191,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已手动保存第\"\nReceived string:    \"自动保存：已手动保存；无待保存修改\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已手动保存；无待保存修改\"\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:192:3",
+    "rawResults": [
+      {
+        "workerIndex": 2,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 23953,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:192:3",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          },
+          "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:192:3"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:30:51.535Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/attachments/server-log-3e5df321f7bf2096886d6d7e3070eed18c473c19.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 71
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-04",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包",
+    "file": "acceptance.spec.cjs",
+    "line": 236,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已手动保存第\"\nReceived string:    \"自动保存：已手动保存；无待保存修改\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已手动保存；无待保存修改\"\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:237:3",
+    "rawResults": [
+      {
+        "workerIndex": 3,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 24077,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:237:3",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          },
+          "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:237:3"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:31:17.978Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/server-log-d8a8d6b9964d3fa13c41f511d678c8e052a6c3d2.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 71
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-05",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复",
+    "file": "acceptance.spec.cjs",
+    "line": 270,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已手动保存第\"\nReceived string:    \"自动保存：已手动保存；无待保存修改\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已手动保存；无待保存修改\"\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:271:3",
+    "rawResults": [
+      {
+        "workerIndex": 4,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 26352,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:271:3",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          },
+          "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:271:3"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:31:44.477Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/attachments/server-log-449f0dfeb65a145996c341081fd1bdea85728294.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 71
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-06",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败",
+    "file": "acceptance.spec.cjs",
+    "line": 306,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已手动保存第\"\nReceived string:    \"自动保存：已手动保存；无待保存修改\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已手动保存；无待保存修改\"\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:311:27",
+    "rawResults": [
+      {
+        "workerIndex": 5,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 26952,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:311:27",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          },
+          "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:311:27"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:32:13.489Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/attachments/server-log-37533585629eb380c4fe3af2294f9ccea349afcb.log"
+          },
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-2.png"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 71
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-07",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "08 bad PDF and damaged ZIP never contaminate saved data / 异常回归",
+    "file": "acceptance.spec.cjs",
+    "line": 326,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已手动保存第\"\nReceived string:    \"自动保存：已手动保存；无待保存修改\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已手动保存；无待保存修改\"\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:327:43",
+    "rawResults": [
+      {
+        "workerIndex": 6,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 22506,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:327:43",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          },
+          "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:327:43"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:32:43.502Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-08-bad-PDF-and--a971f-contaminate-saved-data-异常回归/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-08-bad-PDF-and--a971f-contaminate-saved-data-异常回归/attachments/server-log-214d2a8cf6a64d7c21c62c85dea9167ae15244d7.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-08-bad-PDF-and--a971f-contaminate-saved-data-异常回归/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-08-bad-PDF-and--a971f-contaminate-saved-data-异常回归/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 71
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-08",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "11 formal RFQ identity in missing-quote CSV and working export shortcut / 单据追溯",
+    "file": "acceptance.spec.cjs",
+    "line": 397,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已手动保存第\"\nReceived string:    \"自动保存：已手动保存；无待保存修改\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已手动保存；无待保存修改\"\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:400:3",
+    "rawResults": [
+      {
+        "workerIndex": 7,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 24976,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:400:3",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          },
+          "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:400:3"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:33:34.608Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-11-formal-RFQ-i-a6c3e-orking-export-shortcut-单据追溯/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-11-formal-RFQ-i-a6c3e-orking-export-shortcut-单据追溯/attachments/server-log-dd42bc97238f7c1169dc419e4a8fbd0c9285e0ab.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-11-formal-RFQ-i-a6c3e-orking-export-shortcut-单据追溯/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-11-formal-RFQ-i-a6c3e-orking-export-shortcut-单据追溯/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 71
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-09",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯",
+    "file": "acceptance.spec.cjs",
+    "line": 500,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已手动保存第\"\nReceived string:    \"自动保存：已手动保存；无待保存修改\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已手动保存；无待保存修改\"\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:537:3",
+    "rawResults": [
+      {
+        "workerIndex": 8,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 23358,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:537:3",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          },
+          "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:537:3"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:34:35.776Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/attachments/server-log-c824cbf9eec47e34979f1728134067c8b7592c0e.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 71
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-10",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离",
+    "file": "acceptance.spec.cjs",
+    "line": 561,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已手动保存第\"\nReceived string:    \"自动保存：已手动保存；无待保存修改\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已手动保存；无待保存修改\"\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:565:3",
+    "rawResults": [
+      {
+        "workerIndex": 9,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 23491,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:565:3",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          },
+          "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:565:3"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:35:01.043Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/attachments/server-log-d9076d139e9e61058c90a9191ef6482740048680.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 71
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-11",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见",
+    "file": "acceptance.spec.cjs",
+    "line": 605,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已自动保存第\"\nReceived string:    \"自动保存：已自动保存；无待保存修改\"\nTimeout: 12000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 12000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    16 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已自动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已自动保存；无待保存修改\"\n\n\n  645 |   // English: Release the real SQLite PUT; only an acknowledged clean save may clear feedback.\n  646 |   releaseSave();\n> 647 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已自动保存第',{timeout:12000});\n      |                                                      ^\n  648 |   await expect(feedback).toBeHidden();\n  649 |   await expect(button).toBeEnabled();\n  650 | });\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:647:54",
+    "rawResults": [
+      {
+        "workerIndex": 10,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 24386,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已自动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已自动保存；无待保存修改\"\u001b[39m\nTimeout: 12000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 12000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    16 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已自动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已自动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已自动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已自动保存；无待保存修改\"\u001b[39m\nTimeout: 12000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 12000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    16 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已自动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已自动保存；无待保存修改\"\u001b[22m\n\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:647:54",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 647
+          },
+          "snippet": "  645 |   // English: Release the real SQLite PUT; only an acknowledged clean save may clear feedback.\n  646 |   releaseSave();\n> 647 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已自动保存第',{timeout:12000});\n      |                                                      ^\n  648 |   await expect(feedback).toBeHidden();\n  649 |   await expect(button).toBeEnabled();\n  650 | });"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 647
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已自动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已自动保存；无待保存修改\"\u001b[39m\nTimeout: 12000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 12000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    16 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已自动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已自动保存；无待保存修改\"\u001b[22m\n\n\n  645 |   // English: Release the real SQLite PUT; only an acknowledged clean save may clear feedback.\n  646 |   releaseSave();\n> 647 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已自动保存第',{timeout:12000});\n      |                                                      ^\n  648 |   await expect(feedback).toBeHidden();\n  649 |   await expect(button).toBeEnabled();\n  650 | });\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:647:54"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:35:27.126Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/attachments/server-log-65c980163efa102ed276665f211304969f466e4d.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 647
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-12",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出",
+    "file": "acceptance.spec.cjs",
+    "line": 655,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已手动保存第\"\nReceived string:    \"自动保存：已手动保存；无待保存修改\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已手动保存；无待保存修改\"\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:656:3",
+    "rawResults": [
+      {
+        "workerIndex": 11,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 27277,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:656:3",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          },
+          "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:656:3"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:35:54.855Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/attachments/server-log-d0346dd3c0372489c6602f7d64eae39172f26239.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 71
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-13",
+    "classification": "OUTDATED_SAVE_WORDING",
+    "title": "46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分",
+    "file": "acceptance.spec.cjs",
+    "line": 689,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \"已手动保存第\"\nReceived string:    \"自动保存：已手动保存；无待保存修改\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotAutosaveStatus')\n    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\n       - unexpected value \"自动保存：已手动保存；无待保存修改\"\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:690:3",
+    "rawResults": [
+      {
+        "workerIndex": 12,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 26787,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:690:3",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          },
+          "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:690:3"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:36:24.830Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/attachments/server-log-ea17c8c5be3df9622744267690731bb067ee1b05.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 54,
+          "line": 71
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-14",
+    "classification": "OUTDATED_REFUSAL_WORDING",
+    "title": "UAT-03 refused restore is visible within current backup section while project drawer collapsed",
+    "file": "uat-13-fixes.spec.cjs",
+    "line": 138,
+    "status": "FAIL",
+    "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#uiDataTools #pilotS4RestoreFeedback')\nExpected substring: \"禁止直接恢复覆盖\"\nReceived string:    \"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#uiDataTools #pilotS4RestoreFeedback')\n    19 × locator resolved to <div role=\"alert\" aria-live=\"assertive\" id=\"pilotS4RestoreFeedback\">当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。</div>\n       - unexpected value \"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\n\n\n  145 |   const message=page.locator('#uiDataTools #pilotS4RestoreFeedback');\n  146 |   await expect(message).toBeVisible();\n> 147 |   await expect(message).toContainText('禁止直接恢复覆盖');\n      |                         ^\n  148 |   await expect(message).toHaveAttribute('role','alert');\n  149 |   await expect(page.locator('#project')).not.toBeVisible();\n  150 |   await expect(page.locator('#backup')).toBeVisible();\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:147:25",
+    "rawResults": [
+      {
+        "workerIndex": 13,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 21981,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#uiDataTools #pilotS4RestoreFeedback')\nExpected substring: \u001b[32m\"禁止直接恢复覆盖\"\u001b[39m\nReceived string:    \u001b[31m\"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiDataTools #pilotS4RestoreFeedback')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"alert\" aria-live=\"assertive\" id=\"pilotS4RestoreFeedback\">当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。</div>\u001b[22m\n\u001b[2m       - unexpected value \"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[22m\n",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#uiDataTools #pilotS4RestoreFeedback')\nExpected substring: \u001b[32m\"禁止直接恢复覆盖\"\u001b[39m\nReceived string:    \u001b[31m\"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiDataTools #pilotS4RestoreFeedback')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"alert\" aria-live=\"assertive\" id=\"pilotS4RestoreFeedback\">当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。</div>\u001b[22m\n\u001b[2m       - unexpected value \"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[22m\n\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:147:25",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs",
+            "column": 25,
+            "line": 147
+          },
+          "snippet": "  145 |   const message=page.locator('#uiDataTools #pilotS4RestoreFeedback');\n  146 |   await expect(message).toBeVisible();\n> 147 |   await expect(message).toContainText('禁止直接恢复覆盖');\n      |                         ^\n  148 |   await expect(message).toHaveAttribute('role','alert');\n  149 |   await expect(page.locator('#project')).not.toBeVisible();\n  150 |   await expect(page.locator('#backup')).toBeVisible();"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs",
+              "column": 25,
+              "line": 147
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#uiDataTools #pilotS4RestoreFeedback')\nExpected substring: \u001b[32m\"禁止直接恢复覆盖\"\u001b[39m\nReceived string:    \u001b[31m\"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiDataTools #pilotS4RestoreFeedback')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"alert\" aria-live=\"assertive\" id=\"pilotS4RestoreFeedback\">当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。</div>\u001b[22m\n\u001b[2m       - unexpected value \"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[22m\n\n\n  145 |   const message=page.locator('#uiDataTools #pilotS4RestoreFeedback');\n  146 |   await expect(message).toBeVisible();\n> 147 |   await expect(message).toContainText('禁止直接恢复覆盖');\n      |                         ^\n  148 |   await expect(message).toHaveAttribute('role','alert');\n  149 |   await expect(page.locator('#project')).not.toBeVisible();\n  150 |   await expect(page.locator('#backup')).toBeVisible();\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:147:25"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:39:05.954Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/test-failed-1.png"
+          },
+          {
+            "name": "uat-fixes-server",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/attachments/uat-fixes-server-b77774f44dc24b61352a472cd0a2475bec77acff.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs",
+          "column": 25,
+          "line": 147
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-15",
+    "classification": "CONFIRMED_HORIZONTAL_OVERFLOW",
+    "title": "UX visual system: shared six-page design and SVG navigation / 六页统一视觉回归",
+    "file": "ui-ux-structural.spec.cjs",
+    "line": 417,
+    "status": "FAIL",
+    "cleanError": "Error: Horizontal overflow at quoteImport\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 1367\nReceived:    1512\n\n  443 |       pageWidth:document.documentElement.scrollWidth\n  444 |     }));\n> 445 |     expect(geometry.pageWidth,'Horizontal overflow at '+name).toBeLessThanOrEqual(geometry.viewport+1);\n      |                                                               ^\n  446 |     const screenshot=info.outputPath('ui-system-'+name+'-1366.png');\n  447 |     await page.screenshot({path:screenshot,fullPage:false});\n  448 |     await info.attach('ui-system-'+name,{path:screenshot,contentType:'image/png'});\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:445:63",
+    "rawResults": [
+      {
+        "workerIndex": 14,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 6196,
+        "error": {
+          "message": "Error: Horizontal overflow at quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1367\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m",
+          "stack": "Error: Horizontal overflow at quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1367\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:445:63",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+            "column": 63,
+            "line": 445
+          },
+          "snippet": "  443 |       pageWidth:document.documentElement.scrollWidth\n  444 |     }));\n> 445 |     expect(geometry.pageWidth,'Horizontal overflow at '+name).toBeLessThanOrEqual(geometry.viewport+1);\n      |                                                               ^\n  446 |     const screenshot=info.outputPath('ui-system-'+name+'-1366.png');\n  447 |     await page.screenshot({path:screenshot,fullPage:false});\n  448 |     await info.attach('ui-system-'+name,{path:screenshot,contentType:'image/png'});"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+              "column": 63,
+              "line": 445
+            },
+            "message": "Error: Horizontal overflow at quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1367\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n\n  443 |       pageWidth:document.documentElement.scrollWidth\n  444 |     }));\n> 445 |     expect(geometry.pageWidth,'Horizontal overflow at '+name).toBeLessThanOrEqual(geometry.viewport+1);\n      |                                                               ^\n  446 |     const screenshot=info.outputPath('ui-system-'+name+'-1366.png');\n  447 |     await page.screenshot({path:screenshot,fullPage:false});\n  448 |     await info.attach('ui-system-'+name,{path:screenshot,contentType:'image/png'});\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:445:63"
+          }
+        ],
+        "stdout": [],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:40:49.307Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "ui-system-project",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/attachments/ui-system-project-4469b3450f26d6e897469fbcccc89ac933987216.png"
+          },
+          {
+            "name": "ui-system-items",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/attachments/ui-system-items-f06c718ec2a8d4cdb76f2b20bc86968b26051d0c.png"
+          },
+          {
+            "name": "ui-system-assign",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/attachments/ui-system-assign-dcd237407c6e78baa0ebf67b921fa303472c0337.png"
+          },
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/test-failed-1.png"
+          },
+          {
+            "name": "ux-structural-server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/attachments/ux-structural-server-log-57698ddc58d33f5a322095e92549402431b42323.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+          "column": 63,
+          "line": 445
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-16",
+    "classification": "OUTDATED_FONT_ASSERTION",
+    "title": "UI V2 B1 real workspace and visual layout 1366x768",
+    "file": "ui-v2-b1.spec.cjs",
+    "line": 53,
+    "status": "FAIL",
+    "cleanError": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"14px\"\nReceived: \"14.5px\"\n\n  140 |     expect(layout.firstRowTop).toBeLessThan(viewport.height);\n  141 |     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);\n> 142 |     expect(layout.bodyFont).toBe('14px');\n      |                             ^\n  143 |\n  144 |     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');\n  145 |     await page.screenshot({path:file,fullPage:true});\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:142:29",
+    "rawResults": [
+      {
+        "workerIndex": 15,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 9678,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:142:29",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+            "column": 29,
+            "line": 142
+          },
+          "snippet": "  140 |     expect(layout.firstRowTop).toBeLessThan(viewport.height);\n  141 |     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);\n> 142 |     expect(layout.bodyFont).toBe('14px');\n      |                             ^\n  143 |\n  144 |     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');\n  145 |     await page.screenshot({path:file,fullPage:true});"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+              "column": 29,
+              "line": 142
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m\n\n  140 |     expect(layout.firstRowTop).toBeLessThan(viewport.height);\n  141 |     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);\n> 142 |     expect(layout.bodyFont).toBe('14px');\n      |                             ^\n  143 |\n  144 |     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');\n  145 |     await page.screenshot({path:file,fullPage:true});\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:142:29"
+          }
+        ],
+        "stdout": [
+          {
+            "text": "SRM_UI_V2_B1_METRIC={\"viewport\":{\"width\":1366,\"height\":768},\"documentWidth\":1366,\"scrollY\":0,\"sidebar\":{\"width\":224,\"height\":768},\"tableTop\":0,\"firstRowTop\":552.828125,\"firstRowBottom\":584.828125,\"bodyFont\":\"14.5px\",\"tableFont\":\"12.5px\"}\n"
+          }
+        ],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:40:57.741Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/test-failed-1.png"
+          },
+          {
+            "name": "ui-v2-server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/attachments/ui-v2-server-log-09ed34c38b7f239ce974605309470763134902a8.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+          "column": 29,
+          "line": 142
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-17",
+    "classification": "OUTDATED_FONT_ASSERTION",
+    "title": "UI V2 B1 real workspace and visual layout 1600x900",
+    "file": "ui-v2-b1.spec.cjs",
+    "line": 53,
+    "status": "FAIL",
+    "cleanError": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"14px\"\nReceived: \"14.5px\"\n\n  140 |     expect(layout.firstRowTop).toBeLessThan(viewport.height);\n  141 |     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);\n> 142 |     expect(layout.bodyFont).toBe('14px');\n      |                             ^\n  143 |\n  144 |     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');\n  145 |     await page.screenshot({path:file,fullPage:true});\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:142:29",
+    "rawResults": [
+      {
+        "workerIndex": 16,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 9692,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:142:29",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+            "column": 29,
+            "line": 142
+          },
+          "snippet": "  140 |     expect(layout.firstRowTop).toBeLessThan(viewport.height);\n  141 |     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);\n> 142 |     expect(layout.bodyFont).toBe('14px');\n      |                             ^\n  143 |\n  144 |     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');\n  145 |     await page.screenshot({path:file,fullPage:true});"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+              "column": 29,
+              "line": 142
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m\n\n  140 |     expect(layout.firstRowTop).toBeLessThan(viewport.height);\n  141 |     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);\n> 142 |     expect(layout.bodyFont).toBe('14px');\n      |                             ^\n  143 |\n  144 |     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');\n  145 |     await page.screenshot({path:file,fullPage:true});\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:142:29"
+          }
+        ],
+        "stdout": [
+          {
+            "text": "SRM_UI_V2_B1_METRIC={\"viewport\":{\"width\":1600,\"height\":900},\"documentWidth\":1600,\"scrollY\":0,\"sidebar\":{\"width\":224,\"height\":900},\"tableTop\":0,\"firstRowTop\":596.453125,\"firstRowBottom\":628.453125,\"bodyFont\":\"14.5px\",\"tableFont\":\"12.5px\"}\n"
+          }
+        ],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:41:09.734Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/test-failed-1.png"
+          },
+          {
+            "name": "ui-v2-server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/attachments/ui-v2-server-log-2888efe47e9675ae3d1e94caaa36968c3ed535f4.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+          "column": 29,
+          "line": 142
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-18",
+    "classification": "CONFIRMED_HORIZONTAL_OVERFLOW",
+    "title": "B3 quote and comparison with real SQLite 1366x768",
+    "file": "ui-v2-b3.spec.cjs",
+    "line": 52,
+    "status": "FAIL",
+    "cleanError": "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 1368\nReceived:    1512\n\n  110 |  }));\n  111 |  console.log('SRM_UI_V2_B3_QUOTE_METRIC='+JSON.stringify(quoteMetrics));\n> 112 |  expect(quoteMetrics.documentWidth).toBeLessThanOrEqual(viewport.width+2);\n      |                                     ^\n  113 |  await page.screenshot({path:info.outputPath('b3-quote-'+viewport.width+'.png'),fullPage:true});\n  114 |  await info.attach('b3-quote-'+viewport.width,{path:info.outputPath('b3-quote-'+viewport.width+'.png'),contentType:'image/png'});\n  115 |  await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:112:37",
+    "rawResults": [
+      {
+        "workerIndex": 17,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 17218,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:112:37",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+            "column": 37,
+            "line": 112
+          },
+          "snippet": "  110 |  }));\n  111 |  console.log('SRM_UI_V2_B3_QUOTE_METRIC='+JSON.stringify(quoteMetrics));\n> 112 |  expect(quoteMetrics.documentWidth).toBeLessThanOrEqual(viewport.width+2);\n      |                                     ^\n  113 |  await page.screenshot({path:info.outputPath('b3-quote-'+viewport.width+'.png'),fullPage:true});\n  114 |  await info.attach('b3-quote-'+viewport.width,{path:info.outputPath('b3-quote-'+viewport.width+'.png'),contentType:'image/png'});\n  115 |  await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+              "column": 37,
+              "line": 112
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n\n  110 |  }));\n  111 |  console.log('SRM_UI_V2_B3_QUOTE_METRIC='+JSON.stringify(quoteMetrics));\n> 112 |  expect(quoteMetrics.documentWidth).toBeLessThanOrEqual(viewport.width+2);\n      |                                     ^\n  113 |  await page.screenshot({path:info.outputPath('b3-quote-'+viewport.width+'.png'),fullPage:true});\n  114 |  await info.attach('b3-quote-'+viewport.width,{path:info.outputPath('b3-quote-'+viewport.width+'.png'),contentType:'image/png'});\n  115 |  await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:112:37"
+          }
+        ],
+        "stdout": [
+          {
+            "text": "SRM_UI_V2_B3_QUOTE_METRIC={\"viewport\":{\"width\":1366,\"height\":768},\"documentWidth\":1512,\"roundTop\":1470.984375,\"coverageTop\":1031.640625,\"firstImportTop\":610.875,\"primaryVisible\":[\"confirmQuoteRound\"]}\n"
+          }
+        ],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:41:42.042Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/attachments/server-log-7d5a048e0f25a4f8271308d23b0a4f9475501ac6.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+          "column": 37,
+          "line": 112
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-19",
+    "classification": "CONFIRMED_HORIZONTAL_OVERFLOW",
+    "title": "B3 quote and comparison with real SQLite 1600x900",
+    "file": "ui-v2-b3.spec.cjs",
+    "line": 52,
+    "status": "FAIL",
+    "cleanError": "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 1602\nReceived:    1746\n\n  110 |  }));\n  111 |  console.log('SRM_UI_V2_B3_QUOTE_METRIC='+JSON.stringify(quoteMetrics));\n> 112 |  expect(quoteMetrics.documentWidth).toBeLessThanOrEqual(viewport.width+2);\n      |                                     ^\n  113 |  await page.screenshot({path:info.outputPath('b3-quote-'+viewport.width+'.png'),fullPage:true});\n  114 |  await info.attach('b3-quote-'+viewport.width,{path:info.outputPath('b3-quote-'+viewport.width+'.png'),contentType:'image/png'});\n  115 |  await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:112:37",
+    "rawResults": [
+      {
+        "workerIndex": 18,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 11821,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:112:37",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+            "column": 37,
+            "line": 112
+          },
+          "snippet": "  110 |  }));\n  111 |  console.log('SRM_UI_V2_B3_QUOTE_METRIC='+JSON.stringify(quoteMetrics));\n> 112 |  expect(quoteMetrics.documentWidth).toBeLessThanOrEqual(viewport.width+2);\n      |                                     ^\n  113 |  await page.screenshot({path:info.outputPath('b3-quote-'+viewport.width+'.png'),fullPage:true});\n  114 |  await info.attach('b3-quote-'+viewport.width,{path:info.outputPath('b3-quote-'+viewport.width+'.png'),contentType:'image/png'});\n  115 |  await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+              "column": 37,
+              "line": 112
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m\n\n  110 |  }));\n  111 |  console.log('SRM_UI_V2_B3_QUOTE_METRIC='+JSON.stringify(quoteMetrics));\n> 112 |  expect(quoteMetrics.documentWidth).toBeLessThanOrEqual(viewport.width+2);\n      |                                     ^\n  113 |  await page.screenshot({path:info.outputPath('b3-quote-'+viewport.width+'.png'),fullPage:true});\n  114 |  await info.attach('b3-quote-'+viewport.width,{path:info.outputPath('b3-quote-'+viewport.width+'.png'),contentType:'image/png'});\n  115 |  await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:112:37"
+          }
+        ],
+        "stdout": [
+          {
+            "text": "SRM_UI_V2_B3_QUOTE_METRIC={\"viewport\":{\"width\":1600,\"height\":900},\"documentWidth\":1746,\"roundTop\":1451.09375,\"coverageTop\":1011.75,\"firstImportTop\":654.5,\"primaryVisible\":[\"confirmQuoteRound\"]}\n"
+          }
+        ],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:42:02.209Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/test-failed-1.png"
+          },
+          {
+            "name": "server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/attachments/server-log-fc868a8dc1a54c2ee4db4d1a6df7a7fb10c26dd0.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+          "column": 37,
+          "line": 112
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-20",
+    "classification": "CONFIRMED_HORIZONTAL_OVERFLOW",
+    "title": "EXPLORATORY: desktop stages, control visibility and geometry 1024x768",
+    "file": "ui-v2-exploratory.spec.cjs",
+    "line": 87,
+    "status": "FAIL",
+    "cleanError": "Error: No whole-page horizontal overflow for quotes\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 1026\nReceived:    1074\n\n  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76",
+    "rawResults": [
+      {
+        "workerIndex": 19,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 6283,
+        "error": {
+          "message": "Error: No whole-page horizontal overflow for quotes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1026\u001b[39m\nReceived:    \u001b[31m1074\u001b[39m",
+          "stack": "Error: No whole-page horizontal overflow for quotes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1026\u001b[39m\nReceived:    \u001b[31m1074\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+            "column": 76,
+            "line": 132
+          },
+          "snippet": "  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+              "column": 76,
+              "line": 132
+            },
+            "message": "Error: No whole-page horizontal overflow for quotes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1026\u001b[39m\nReceived:    \u001b[31m1074\u001b[39m\n\n  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76"
+          }
+        ],
+        "stdout": [
+          {
+            "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1143.078125,\"bottom\":1143.078125,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":235.890625,\"width\":926,\"height\":823.1875,\"bottom\":1059.078125,\"right\":1008},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":60,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+          },
+          {
+            "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1211,\"bottom\":1211,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":235.890625,\"width\":926,\"height\":891.109375,\"bottom\":1127,\"right\":1008},\"table\":{\"x\":92,\"y\":660.625,\"width\":577.390625,\"height\":412.125,\"bottom\":1072.75,\"right\":669.390625},\"tablewrap\":{\"x\":91,\"y\":659.625,\"width\":579.390625,\"height\":414.125,\"bottom\":1073.75,\"right\":670.390625},\"firstDataRow\":{\"x\":92,\"y\":689.75,\"width\":577.390625,\"height\":32,\"bottom\":721.75,\"right\":669.390625},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":58,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+          },
+          {
+            "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1788.84375,\"bottom\":1788.84375,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":235.890625,\"width\":926,\"height\":1468.953125,\"bottom\":1704.84375,\"right\":1008},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":82,\"y\":646.875,\"width\":926,\"height\":453.140625,\"bottom\":1100.015625,\"right\":1008},\"quoteReview\":{\"x\":82,\"y\":1112.015625,\"width\":926,\"height\":415.734375,\"bottom\":1527.75,\"right\":1008},\"confirmButton\":{\"x\":869,\"y\":1473.5,\"width\":123,\"height\":40.25,\"bottom\":1513.75,\"right\":992},\"tableScrollable\":false,\"panelButtons\":33,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+          },
+          {
+            "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quotes\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1074,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1332.03125,\"bottom\":1332.03125,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":235.890625,\"width\":926,\"height\":1012.140625,\"bottom\":1248.03125,\"right\":1008},\"table\":{\"x\":101,\"y\":777.765625,\"width\":888,\"height\":39.84375,\"bottom\":817.609375,\"right\":989},\"tablewrap\":{\"x\":100,\"y\":776.765625,\"width\":890,\"height\":41.84375,\"bottom\":818.609375,\"right\":990},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":13,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+          }
+        ],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:42:31.039Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "explore-1024-items",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-items-d5c7345a9d6085283eedd976183a8358a4a818b5.png"
+          },
+          {
+            "name": "explore-1024-assign",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-assign-6de5d0f1fdb1a294998d55bfd591b09e301a91a8.png"
+          },
+          {
+            "name": "explore-1024-quoteImport",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-quoteImport-bcec1c0155a9519b09cf9b328d3289559d4ba42e.png"
+          },
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/test-failed-1.png"
+          },
+          {
+            "name": "isolated-server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/isolated-server-log-14d932c779045be819e473986b077c4b220aca80.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+          "column": 76,
+          "line": 132
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-21",
+    "classification": "CONFIRMED_HORIZONTAL_OVERFLOW",
+    "title": "EXPLORATORY: desktop stages, control visibility and geometry 1366x768",
+    "file": "ui-v2-exploratory.spec.cjs",
+    "line": 87,
+    "status": "FAIL",
+    "cleanError": "Error: No whole-page horizontal overflow for quoteImport\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 1368\nReceived:    1512\n\n  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76",
+    "rawResults": [
+      {
+        "workerIndex": 20,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 5687,
+        "error": {
+          "message": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m",
+          "stack": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+            "column": 76,
+            "line": 132
+          },
+          "snippet": "  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+              "column": 76,
+              "line": 132
+            },
+            "message": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n\n  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76"
+          }
+        ],
+        "stdout": [
+          {
+            "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1138.078125,\"bottom\":1138.078125,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":230.890625,\"width\":1088,\"height\":823.1875,\"bottom\":1054.078125,\"right\":1339},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":60,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+          },
+          {
+            "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1251.453125,\"bottom\":1251.453125,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":242.890625,\"width\":1088,\"height\":924.5625,\"bottom\":1167.453125,\"right\":1339},\"table\":{\"x\":267,\"y\":690.078125,\"width\":701.03125,\"height\":416.125,\"bottom\":1106.203125,\"right\":968.03125},\"tablewrap\":{\"x\":266,\"y\":689.078125,\"width\":703.03125,\"height\":418.125,\"bottom\":1107.203125,\"right\":969.03125},\"firstDataRow\":{\"x\":267,\"y\":723.203125,\"width\":701.03125,\"height\":32,\"bottom\":755.203125,\"right\":968.03125},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":58,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+          },
+          {
+            "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1512,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1569.234375,\"bottom\":1569.234375,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":230.890625,\"width\":1088,\"height\":1254.34375,\"bottom\":1485.234375,\"right\":1339},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":251,\"y\":610.875,\"width\":1088,\"height\":342.53125,\"bottom\":953.40625,\"right\":1339},\"quoteReview\":{\"x\":251,\"y\":965.40625,\"width\":1088,\"height\":342.734375,\"bottom\":1308.140625,\"right\":1339},\"confirmButton\":{\"x\":1200,\"y\":1253.890625,\"width\":123,\"height\":40.25,\"bottom\":1294.140625,\"right\":1323},\"tableScrollable\":false,\"panelButtons\":33,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+          }
+        ],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:42:39.550Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "explore-1366-items",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-items-69ae50dd5a3c9e346fe52a923ab71ba9f492e9ab.png"
+          },
+          {
+            "name": "explore-1366-assign",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-assign-742b0ed36e528b4ff42eb3678966a66b547602eb.png"
+          },
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/test-failed-1.png"
+          },
+          {
+            "name": "isolated-server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/isolated-server-log-c1641e47d311ccceb85afa850d5424c5f91e44d8.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+          "column": 76,
+          "line": 132
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-22",
+    "classification": "CONFIRMED_HORIZONTAL_OVERFLOW",
+    "title": "EXPLORATORY: desktop stages, control visibility and geometry 1600x900",
+    "file": "ui-v2-exploratory.spec.cjs",
+    "line": 87,
+    "status": "FAIL",
+    "cleanError": "Error: No whole-page horizontal overflow for quoteImport\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 1602\nReceived:    1746\n\n  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76",
+    "rawResults": [
+      {
+        "workerIndex": 21,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 6005,
+        "error": {
+          "message": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m",
+          "stack": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+            "column": 76,
+            "line": 132
+          },
+          "snippet": "  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+              "column": 76,
+              "line": 132
+            },
+            "message": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m\n\n  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76"
+          }
+        ],
+        "stdout": [
+          {
+            "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1181.703125,\"bottom\":1181.703125,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":255.515625,\"width\":1322,\"height\":842.1875,\"bottom\":1097.703125,\"right\":1573},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":60,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+          },
+          {
+            "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1267.078125,\"bottom\":1267.078125,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":255.515625,\"width\":1322,\"height\":927.5625,\"bottom\":1183.078125,\"right\":1573},\"table\":{\"x\":267,\"y\":705.703125,\"width\":860.15625,\"height\":416.125,\"bottom\":1121.828125,\"right\":1127.15625},\"tablewrap\":{\"x\":266,\"y\":704.703125,\"width\":862.15625,\"height\":418.125,\"bottom\":1122.828125,\"right\":1128.15625},\"firstDataRow\":{\"x\":267,\"y\":738.828125,\"width\":860.15625,\"height\":32,\"bottom\":770.828125,\"right\":1127.15625},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":58,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+          },
+          {
+            "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1746,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1549.34375,\"bottom\":1549.34375,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":255.515625,\"width\":1322,\"height\":1209.828125,\"bottom\":1465.34375,\"right\":1573},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":251,\"y\":654.5,\"width\":1322,\"height\":279.015625,\"bottom\":933.515625,\"right\":1573},\"quoteReview\":{\"x\":251,\"y\":945.515625,\"width\":1322,\"height\":342.734375,\"bottom\":1288.25,\"right\":1573},\"confirmButton\":{\"x\":1434,\"y\":1234,\"width\":123,\"height\":40.25,\"bottom\":1274.25,\"right\":1557},\"tableScrollable\":false,\"panelButtons\":33,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+          }
+        ],
+        "stderr": [
+          {
+            "buffer": ""
+          }
+        ],
+        "retry": 0,
+        "startTime": "2026-10-29T06:42:47.642Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "explore-1600-items",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-items-eea6a8394f4fbb13ca0323b24468f27cfbfa9420.png"
+          },
+          {
+            "name": "explore-1600-assign",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-assign-3a270123ca29cd96694342fbb63220f398477543.png"
+          },
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/test-failed-1.png"
+          },
+          {
+            "name": "isolated-server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/isolated-server-log-99f47f6e1c180edc2c049a918078026149be934b.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+          "column": 76,
+          "line": 132
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  },
+  {
+    "id": "AF-23",
+    "classification": "OUTDATED_INTERNAL_TITLE_ASSERTION",
+    "title": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+    "file": "ui-v3-integration.spec.cjs",
+    "line": 45,
+    "status": "FAIL",
+    "cleanError": "Error: expect(received).toContain(expected) // indexOf\n\nExpected substring: \"UI V3\"\nReceived string:    \"SRM Lite · 采购询价工作台\"\n\n  60 |     };\n  61 |   });\n> 62 |   expect(theme.title).toContain('UI V3');\n     |                       ^\n  63 |   // 中文：V3.1 的浅灰背景来自已确认的结构层，而非旧版 V3 首批色值。\n  64 |   // English: Expect the approved V3.1 workspace token, not the earlier transitional theme.\n  65 |   expect(theme.bodyBackground).toBe('rgb(246, 248, 251)');\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:62:23",
+    "rawResults": [
+      {
+        "workerIndex": 22,
+        "parallelIndex": 0,
+        "status": "failed",
+        "duration": 2500,
+        "error": {
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"UI V3\"\u001b[39m\nReceived string:    \u001b[31m\"SRM Lite · 采购询价工作台\"\u001b[39m",
+          "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"UI V3\"\u001b[39m\nReceived string:    \u001b[31m\"SRM Lite · 采购询价工作台\"\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:62:23",
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+            "column": 23,
+            "line": 62
+          },
+          "snippet": "  60 |     };\n  61 |   });\n> 62 |   expect(theme.title).toContain('UI V3');\n     |                       ^\n  63 |   // 中文：V3.1 的浅灰背景来自已确认的结构层，而非旧版 V3 首批色值。\n  64 |   // English: Expect the approved V3.1 workspace token, not the earlier transitional theme.\n  65 |   expect(theme.bodyBackground).toBe('rgb(246, 248, 251)');"
+        },
+        "errors": [
+          {
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+              "column": 23,
+              "line": 62
+            },
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"UI V3\"\u001b[39m\nReceived string:    \u001b[31m\"SRM Lite · 采购询价工作台\"\u001b[39m\n\n  60 |     };\n  61 |   });\n> 62 |   expect(theme.title).toContain('UI V3');\n     |                       ^\n  63 |   // 中文：V3.1 的浅灰背景来自已确认的结构层，而非旧版 V3 首批色值。\n  64 |   // English: Expect the approved V3.1 workspace token, not the earlier transitional theme.\n  65 |   expect(theme.bodyBackground).toBe('rgb(246, 248, 251)');\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:62:23"
+          }
+        ],
+        "stdout": [],
+        "stderr": [],
+        "retry": 0,
+        "startTime": "2026-10-29T06:42:56.331Z",
+        "annotations": [],
+        "attachments": [
+          {
+            "name": "screenshot",
+            "contentType": "image/png",
+            "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/test-failed-1.png"
+          },
+          {
+            "name": "srm-v3-ui-server-log",
+            "contentType": "text/plain",
+            "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/attachments/srm-v3-ui-server-log-6cd0976dfea7c8e2ecdf20c5b3a989825614e985.log"
+          },
+          {
+            "name": "error-context",
+            "contentType": "text/markdown",
+            "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/error-context.md"
+          },
+          {
+            "name": "trace",
+            "contentType": "application/zip",
+            "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/trace.zip"
+          }
+        ],
+        "errorLocation": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+          "column": 23,
+          "line": 62
+        }
+      }
+    ],
+    "laterAssertions": "NOT REACHED after failing assertion; independent results do not overwrite original FAIL"
+  }
+]

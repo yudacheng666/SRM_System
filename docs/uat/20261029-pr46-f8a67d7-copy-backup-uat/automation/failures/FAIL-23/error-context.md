@@ -1,0 +1,104 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary "SRM 功能导航" [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: S
+      - generic [ref=e6]:
+        - text: SRM
+        - generic [ref=e7]: 采购业务系统
+    - generic [ref=e8]: 询价 · 比价 · 定标
+    - generic [ref=e9]: 工作空间
+    - button "询价项目" [ref=e10] [cursor=pointer]:
+      - img [ref=e12]
+      - generic [ref=e15]: 询价项目
+    - button "物料与图纸" [ref=e16] [cursor=pointer]:
+      - img [ref=e18]
+      - generic [ref=e23]: 物料与图纸
+    - button "供应商与分配" [ref=e24] [cursor=pointer]:
+      - img [ref=e26]
+      - generic [ref=e29]: 供应商分配
+    - button "报价回收" [ref=e30] [cursor=pointer]:
+      - img [ref=e32]
+      - generic [ref=e35]: 报价回收
+    - button "比价议价" [ref=e36] [cursor=pointer]:
+      - img [ref=e38]
+      - generic [ref=e40]: 比价议价
+    - separator [ref=e41]
+    - generic [ref=e42]: 管理工具
+    - button "数据与备份" [ref=e43] [cursor=pointer]:
+      - img [ref=e45]
+      - generic [ref=e47]: 数据与备份
+    - button "字段设置" [ref=e48] [cursor=pointer]:
+      - img [ref=e50]
+      - generic [ref=e54]: 字段设置
+    - generic [ref=e55]:
+      - text: 本地业务系统
+      - text: 数据保存在本机
+  - banner [ref=e57]:
+    - generic [ref=e58]:
+      - generic [ref=e59]: 询价与比价
+      - heading "SRM 采购工作台" [level=1] [ref=e60]
+      - generic [ref=e61]: 演示数据不会保存；新建询价后可保存到本机。
+    - generic [ref=e62]:
+      - generic [ref=e63]: 本机演示模式（不保存）
+      - button "询价项目" [ref=e64] [cursor=pointer]
+      - button "数据与备份" [ref=e65] [cursor=pointer]
+      - button "字段设置" [ref=e66] [cursor=pointer]
+  - generic "当前询价工作摘要" [ref=e67]:
+    - generic [ref=e68]:
+      - text: 当前询价项目
+      - generic [ref=e70]: 演示数据（不保存）
+    - status [ref=e72]: 保存状态待确认
+  - generic [ref=e73]: 这是演示数据，不会保存。请新建一笔询价开始正式操作。
+  - navigation "询价业务流程" [ref=e74]:
+    - strong [ref=e76]: ◉采购业务流程
+    - tablist [ref=e77]:
+      - tab "› ① 询价项目" [selected] [ref=e78] [cursor=pointer]
+      - tab "› ② 物料与图纸" [ref=e79] [cursor=pointer]
+      - tab "› ③ 供应商分配" [ref=e80] [cursor=pointer]
+      - tab "› ④ 报价回收" [ref=e81] [cursor=pointer]
+      - tab "⑤ 比价议价" [ref=e82] [cursor=pointer]
+  - text: ▴
+  - region "询价项目" [ref=e83]:
+    - generic [ref=e84]:
+      - generic [ref=e85]:
+        - generic [ref=e86]: 01 / 询价项目
+        - heading "询价项目" [level=2] [ref=e87]
+        - button "查看说明" [ref=e90]:
+          - img [ref=e91]
+      - button "下一步：物料与图纸" [ref=e95] [cursor=pointer]
+    - generic "询价工作指引" [ref=e96]:
+      - generic [ref=e97]:
+        - paragraph [ref=e98]:
+          - button "查看说明" [ref=e100]:
+            - img [ref=e101]
+        - generic [ref=e104]:
+          - generic [ref=e105]:
+            - generic [ref=e106]: "01"
+            - strong [ref=e107]: 建立询价
+            - button "查看说明" [ref=e110]:
+              - img [ref=e111]
+          - generic [ref=e114]:
+            - generic [ref=e115]: "02"
+            - strong [ref=e116]: 准备清单
+            - button "查看说明" [ref=e119]:
+              - img [ref=e120]
+          - generic [ref=e123]:
+            - generic [ref=e124]: "03"
+            - strong [ref=e125]: 推进询价
+            - button "查看说明" [ref=e128]:
+              - img [ref=e129]
+    - group [ref=e134]:
+      - generic [ref=e136]:
+        - button "新建" [ref=e137] [cursor=pointer]
+        - button "保存" [disabled] [ref=e138]
+        - generic [ref=e139]:
+          - text: 历史询价
+          - combobox "本机已保存的历史询价" [disabled] [ref=e140]:
+            - option "选择已保存的其他询价" [selected]
+        - button "打开所选历史询价" [disabled] [ref=e141]
+  - text: ▾ 批量选择 ▾ ✓
+  - generic [ref=e142]: 修改内容自动保存；备份与恢复请前往“数据与备份”。
+```

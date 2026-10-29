@@ -1,0 +1,67 @@
+{
+  "id": "f95fb36e88536e4fd7f8-3f3b95cb7962d03787a7",
+  "title": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+  "file": "ui-v3-integration.spec.cjs",
+  "line": 45,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 22,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 2500,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"UI V3\"\u001b[39m\nReceived string:    \u001b[31m\"SRM Lite · 采购询价工作台\"\u001b[39m",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"UI V3\"\u001b[39m\nReceived string:    \u001b[31m\"SRM Lite · 采购询价工作台\"\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:62:23",
+        "location": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+          "column": 23,
+          "line": 62
+        },
+        "snippet": "  60 |     };\n  61 |   });\n> 62 |   expect(theme.title).toContain('UI V3');\n     |                       ^\n  63 |   // 中文：V3.1 的浅灰背景来自已确认的结构层，而非旧版 V3 首批色值。\n  64 |   // English: Expect the approved V3.1 workspace token, not the earlier transitional theme.\n  65 |   expect(theme.bodyBackground).toBe('rgb(246, 248, 251)');"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+            "column": 23,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"UI V3\"\u001b[39m\nReceived string:    \u001b[31m\"SRM Lite · 采购询价工作台\"\u001b[39m\n\n  60 |     };\n  61 |   });\n> 62 |   expect(theme.title).toContain('UI V3');\n     |                       ^\n  63 |   // 中文：V3.1 的浅灰背景来自已确认的结构层，而非旧版 V3 首批色值。\n  64 |   // English: Expect the approved V3.1 workspace token, not the earlier transitional theme.\n  65 |   expect(theme.bodyBackground).toBe('rgb(246, 248, 251)');\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:62:23"
+        }
+      ],
+      "stdout": [],
+      "stderr": [],
+      "retry": 0,
+      "startTime": "2026-10-29T06:42:56.331Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/test-failed-1.png"
+        },
+        {
+          "name": "srm-v3-ui-server-log",
+          "contentType": "text/plain",
+          "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/attachments/srm-v3-ui-server-log-6cd0976dfea7c8e2ecdf20c5b3a989825614e985.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+        "column": 23,
+        "line": 62
+      }
+    }
+  ]
+}

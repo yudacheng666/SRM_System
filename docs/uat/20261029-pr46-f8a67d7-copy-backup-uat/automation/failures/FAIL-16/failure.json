@@ -1,0 +1,75 @@
+{
+  "id": "be37453cde8da053d6b1-36d5b34cd5c3bfbab825",
+  "title": "UI V2 B1 real workspace and visual layout 1366x768",
+  "file": "ui-v2-b1.spec.cjs",
+  "line": 53,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 15,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 9678,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:142:29",
+        "location": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+          "column": 29,
+          "line": 142
+        },
+        "snippet": "  140 |     expect(layout.firstRowTop).toBeLessThan(viewport.height);\n  141 |     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);\n> 142 |     expect(layout.bodyFont).toBe('14px');\n      |                             ^\n  143 |\n  144 |     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');\n  145 |     await page.screenshot({path:file,fullPage:true});"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+            "column": 29,
+            "line": 142
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m\n\n  140 |     expect(layout.firstRowTop).toBeLessThan(viewport.height);\n  141 |     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);\n> 142 |     expect(layout.bodyFont).toBe('14px');\n      |                             ^\n  143 |\n  144 |     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');\n  145 |     await page.screenshot({path:file,fullPage:true});\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:142:29"
+        }
+      ],
+      "stdout": [
+        {
+          "text": "SRM_UI_V2_B1_METRIC={\"viewport\":{\"width\":1366,\"height\":768},\"documentWidth\":1366,\"scrollY\":0,\"sidebar\":{\"width\":224,\"height\":768},\"tableTop\":0,\"firstRowTop\":552.828125,\"firstRowBottom\":584.828125,\"bodyFont\":\"14.5px\",\"tableFont\":\"12.5px\"}\n"
+        }
+      ],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-29T06:40:57.741Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/test-failed-1.png"
+        },
+        {
+          "name": "ui-v2-server-log",
+          "contentType": "text/plain",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/attachments/ui-v2-server-log-09ed34c38b7f239ce974605309470763134902a8.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+        "column": 29,
+        "line": 142
+      }
+    }
+  ]
+}

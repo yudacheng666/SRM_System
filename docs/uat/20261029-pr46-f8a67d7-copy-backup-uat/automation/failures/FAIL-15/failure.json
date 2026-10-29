@@ -1,0 +1,86 @@
+{
+  "id": "405cc0014031cae14de1-35878e5147136c14dd23",
+  "title": "UX visual system: shared six-page design and SVG navigation / 六页统一视觉回归",
+  "file": "ui-ux-structural.spec.cjs",
+  "line": 417,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 14,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 6196,
+      "error": {
+        "message": "Error: Horizontal overflow at quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1367\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m",
+        "stack": "Error: Horizontal overflow at quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1367\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:445:63",
+        "location": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+          "column": 63,
+          "line": 445
+        },
+        "snippet": "  443 |       pageWidth:document.documentElement.scrollWidth\n  444 |     }));\n> 445 |     expect(geometry.pageWidth,'Horizontal overflow at '+name).toBeLessThanOrEqual(geometry.viewport+1);\n      |                                                               ^\n  446 |     const screenshot=info.outputPath('ui-system-'+name+'-1366.png');\n  447 |     await page.screenshot({path:screenshot,fullPage:false});\n  448 |     await info.attach('ui-system-'+name,{path:screenshot,contentType:'image/png'});"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+            "column": 63,
+            "line": 445
+          },
+          "message": "Error: Horizontal overflow at quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1367\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n\n  443 |       pageWidth:document.documentElement.scrollWidth\n  444 |     }));\n> 445 |     expect(geometry.pageWidth,'Horizontal overflow at '+name).toBeLessThanOrEqual(geometry.viewport+1);\n      |                                                               ^\n  446 |     const screenshot=info.outputPath('ui-system-'+name+'-1366.png');\n  447 |     await page.screenshot({path:screenshot,fullPage:false});\n  448 |     await info.attach('ui-system-'+name,{path:screenshot,contentType:'image/png'});\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:445:63"
+        }
+      ],
+      "stdout": [],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-29T06:40:49.307Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "ui-system-project",
+          "contentType": "image/png",
+          "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/attachments/ui-system-project-4469b3450f26d6e897469fbcccc89ac933987216.png"
+        },
+        {
+          "name": "ui-system-items",
+          "contentType": "image/png",
+          "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/attachments/ui-system-items-f06c718ec2a8d4cdb76f2b20bc86968b26051d0c.png"
+        },
+        {
+          "name": "ui-system-assign",
+          "contentType": "image/png",
+          "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/attachments/ui-system-assign-dcd237407c6e78baa0ebf67b921fa303472c0337.png"
+        },
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/test-failed-1.png"
+        },
+        {
+          "name": "ux-structural-server-log",
+          "contentType": "text/plain",
+          "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/attachments/ux-structural-server-log-57698ddc58d33f5a322095e92549402431b42323.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+        "column": 63,
+        "line": 445
+      }
+    }
+  ]
+}

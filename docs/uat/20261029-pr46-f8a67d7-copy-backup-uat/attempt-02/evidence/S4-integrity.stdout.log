@@ -1,0 +1,12 @@
+PASS S4 ZIP CRC
+PASS S4 manifest DB hash
+PASS S4 SQLite integrity
+PASS S4 every app_state row/field
+PASS S4 every workspaces row/field
+PASS S4 every workspace_versions row/field
+PASS S4 every assets row/field
+PASS S4 all physical PDFs exact
+PASS S4 asset manifest assets/91bf5983aa5fcd4bd045227c1d2642749289123a458a44206c54c780ac0dcd7d.pdf
+PASS S4 asset manifest assets/9c5cbd11841f5b9532348817fe2d50751339f67ebf0967e2c30cabf66abcc2a2.pdf
+PASS S4 asset manifest assets/fc3d222872b390eafc5ece6c9751c554b3543c73c78fa1361560748a7d9aac24.pdf
+ALL_S4_CHECKS_PASS 11

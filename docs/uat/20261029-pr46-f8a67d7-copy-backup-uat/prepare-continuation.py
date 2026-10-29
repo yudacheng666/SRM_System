@@ -1,0 +1,9 @@
+from pathlib import Path
+import shutil,json,datetime,subprocess
+R=Path('/workspace/uatf8');M=R/'methods-attempt02';N=R/'methods-continuation';N.mkdir();(R/'continuation/evidence').mkdir(parents=True);(R/'continuation/downloads').mkdir()
+for name in ['driver.cjs','db-state.py','00-audit-helpers.js','11-offline-save.js']:
+ s=(M/name).read_text().replace('/workspace/uatf8/attempt-02/evidence/','/workspace/uatf8/continuation/evidence/').replace('/workspace/uatf8/methods-attempt02/','/workspace/uatf8/methods-continuation/')
+ if name=='driver.cjs':s=s.replace("if(fs.existsSync(data))throw Error('DATA DIR ALREADY EXISTS');","if(!fs.existsSync(data+'/srm.sqlite3'))throw Error('CURRENT TASK DATABASE MISSING');")
+ (N/name).write_text(s)
+(R/'driver-correction-02.json').write_text(json.dumps({'timeUTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'classification':'INDEPENDENT_DRIVER_OUTDATED_REFUSAL_TEXT','raw':'attempt-02/evidence/raw-first-error.json','trace':'attempt-02/evidence/trace-first-attempt.zip','actual':'Nonempty UI safely refused; test expected literal 禁止 while approved current wording says 不能直接覆盖恢复. Prior hash refusal and positive restore checks actually completed.','action':'Keep executed driver and its FAIL unchanged. New separately named supplemental nonempty scenario verifies current user-facing refusal plus real backend409 and complete unchanged target. New browser context reconnects only current-task isolated SQLite; no older SHA data used, no passed flow rerun.','remainingScope':'Nonempty backend check and true service-disconnect save check','productExistingTestsCIUnmodified':True,'recordedDriverCorrectionsThisTask':2},ensure_ascii=False,indent=2)+'\n')
+subprocess.run(['node','--check',str(N/'driver.cjs')],check=True);print('CONTINUATION_CURRENT_TASK_ONLY_READY')
