@@ -68,7 +68,8 @@ async function save(page) {
   await openProject(page);
   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));
   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);
-  await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');
+  await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存');
+  await expect(page.locator('#pilotAutosaveStatus')).toContainText('无待保存修改');
   if(original!=='project')await tab(page,original);
 }
 async function items(page, app, file = 'items12.xlsx', count = 12) {
@@ -280,10 +281,20 @@ test('06 full backup restore: actual imported quotes, history, PDFs, overwrite r
   await page.locator('[data-srm-v2-action="admin"]').click();
   await openTools(page,'#uiDataTools');
   const file=await download(page,'#pilotS4DownloadFull',info,'full-backup.zip'); const z=inspectZip(file); expect(z['database/srm.sqlite3']).toBeTruthy();
+  const archive=await download(page,'#pilotExportComplete',info,'inquiry-drawing-archive.zip');
   await app.start(8766,path.join(app.root,'restored')); const other=await browser.newPage(); other.on('dialog',d=>d.accept());
   try {
     await other.goto('http://127.0.0.1:8766'); await expect(other.locator('#pilotNewWorkspace')).toBeEnabled();
     await openTools(other,'#uiDataTools');
+    // 中文：资料包不能当作完整备份恢复；提示应可执行且不泄漏后端错误码。
+    // English: Reject the real archive package as a full restore with actionable buyer copy.
+    await other.locator('#pilotS4BackupFile').setInputFiles(archive); await other.locator('#pilotS4RestoreFull').click();
+    const archiveRefusal=other.locator('#pilotS4RestoreFeedback');
+    await expect(archiveRefusal).toContainText('不是完整备份');
+    await expect(archiveRefusal).toContainText('下载完整备份');
+    await expect(archiveRefusal).not.toContainText(/RESTORE_[A-Z_]+/);
+    expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toEqual([]);
+    // 正确的完整备份仍应恢复成功。
     await other.locator('#pilotS4BackupFile').setInputFiles(file); await other.locator('#pilotS4RestoreFull').click();
     await expect(other.locator('#pilotModeBadge')).toContainText('本机工作模式');
     expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toEqual(index);
@@ -298,7 +309,7 @@ test('06 full backup restore: actual imported quotes, history, PDFs, overwrite r
     // 中文：恢复触发页面重载，数据工具区会恢复折叠；必须按真实 UI 再次展开。
     // English: Restore reloads the page and closes the drawer; reopen it through normal UI before retrying.
     await openTools(other,'#uiDataTools');
-    await other.locator('#pilotS4BackupFile').setInputFiles(file);await other.locator('#pilotS4RestoreFull').click();await expect(other.locator('#pilotSaveStatus')).toContainText('禁止');
+    await other.locator('#pilotS4BackupFile').setInputFiles(file);await other.locator('#pilotS4RestoreFull').click();await expect(other.locator('#pilotS4RestoreFeedback')).toContainText('不能直接覆盖恢复');await expect(other.locator('#pilotS4RestoreFeedback')).not.toContainText(/RESTORE_[A-Z_]+/);
     const refusal=await other.evaluate(async()=>{const r=await fetch('/api/backups/full/restore',{method:'POST',headers:{'Content-Type':'application/zip'},body:new Uint8Array([1])});return r.status;}); expect(refusal).toBe(409);
   } finally {await other.close();}
 });
@@ -318,7 +329,7 @@ test('07 real service disconnect and stale-tab 409 halt autosave / 自动保存�
     await app.stop(app.child);
     await page.locator('#pilotCounterpartyCode').fill('CP-OFFLINE');await page.locator('#pilotSupplierName').fill('虚构断线');await page.locator('#pilotAddSupplier').click();
     await expect(page.locator('#pilotAutosaveStatus')).toContainText('保存失败');
-    await app.start();await openProject(page);await page.locator('#pilotSaveWorkspace').click();await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');
+    await app.start();await openProject(page);await page.locator('#pilotSaveWorkspace').click();await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存');await expect(page.locator('#pilotAutosaveStatus')).toContainText('无待保存修改');
     await page.reload();await expect.poll(async()=> (await snapshot(page)).state.suppliers.length).toBe(1);
   } finally {await stale.close();}
 });
@@ -644,7 +655,8 @@ test('44 S4 blocked-download reason stays visible beside the action / 备份阻�
   // 中文：释放真正被暂扣的 SQLite PUT 后，只有真实保存完成才能清除警告。
   // English: Release the real SQLite PUT; only an acknowledged clean save may clear feedback.
   releaseSave();
-  await expect(page.locator('#pilotAutosaveStatus')).toContainText('已自动保存第',{timeout:12000});
+  await expect(page.locator('#pilotAutosaveStatus')).toContainText('已自动保存',{timeout:12000});
+  await expect(page.locator('#pilotAutosaveStatus')).toContainText('无待保存修改');
   await expect(feedback).toBeHidden();
   await expect(button).toBeEnabled();
 });
