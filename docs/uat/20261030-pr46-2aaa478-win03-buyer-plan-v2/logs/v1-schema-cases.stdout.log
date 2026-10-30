@@ -1,0 +1,322 @@
+TAP version 13
+# Subtest: all reviewed source-bound contract scenarios PASS static preflight
+ok 1 - all reviewed source-bound contract scenarios PASS static preflight
+  ---
+  duration_ms: 26.392152
+  type: 'test'
+  ...
+# Subtest: known SUP-A ordinary click rejected, with structured file/index/policy reason
+ok 2 - known SUP-A ordinary click rejected, with structured file/index/policy reason
+  ---
+  duration_ms: 19.361381
+  type: 'test'
+  ...
+# Subtest: known SUP-B ordinary click rejected
+ok 3 - known SUP-B ordinary click rejected
+  ---
+  duration_ms: 15.72205
+  type: 'test'
+  ...
+# Subtest: correct SUP-A/SUP-B dialogClick accepted
+ok 4 - correct SUP-A/SUP-B dialogClick accepted
+  ---
+  duration_ms: 18.706297
+  type: 'test'
+  ...
+# Subtest: unknown step
+ok 5 - unknown step
+  ---
+  duration_ms: 20.383775
+  type: 'test'
+  ...
+# Subtest: unknown selector
+ok 6 - unknown selector
+  ---
+  duration_ms: 15.130708
+  type: 'test'
+  ...
+# Subtest: selector alias does not bypass policy
+ok 7 - selector alias does not bypass policy
+  ---
+  duration_ms: 13.671706
+  type: 'test'
+  ...
+# Subtest: operation/selector substitution
+ok 8 - operation/selector substitution
+  ---
+  duration_ms: 48.192824
+  type: 'test'
+  ...
+# Subtest: missing selector
+ok 9 - missing selector
+  ---
+  duration_ms: 50.822107
+  type: 'test'
+  ...
+# Subtest: missing dialog declaration
+ok 10 - missing dialog declaration
+  ---
+  duration_ms: 20.727292
+  type: 'test'
+  ...
+# Subtest: missing dialog type
+ok 11 - missing dialog type
+  ---
+  duration_ms: 25.740445
+  type: 'test'
+  ...
+# Subtest: missing message
+ok 12 - missing message
+  ---
+  duration_ms: 16.20251
+  type: 'test'
+  ...
+# Subtest: missing accept
+ok 13 - missing accept
+  ---
+  duration_ms: 18.935001
+  type: 'test'
+  ...
+# Subtest: type mismatch
+ok 14 - type mismatch
+  ---
+  duration_ms: 14.678256
+  type: 'test'
+  ...
+# Subtest: message prefix alone rejected
+ok 15 - message prefix alone rejected
+  ---
+  duration_ms: 14.96724
+  type: 'test'
+  ...
+# Subtest: message suffix injection rejected
+ok 16 - message suffix injection rejected
+  ---
+  duration_ms: 16.423395
+  type: 'test'
+  ...
+# Subtest: string accept rejected
+ok 17 - string accept rejected
+  ---
+  duration_ms: 26.906181
+  type: 'test'
+  ...
+# Subtest: wrong supplier in explicit template
+ok 18 - wrong supplier in explicit template
+  ---
+  duration_ms: 18.500859
+  type: 'test'
+  ...
+# Subtest: wrong count rejected
+ok 19 - wrong count rejected
+  ---
+  duration_ms: 17.041705
+  type: 'test'
+  ...
+# Subtest: wrong exact scope rejected
+ok 20 - wrong exact scope rejected
+  ---
+  duration_ms: 16.40777
+  type: 'test'
+  ...
+# Subtest: extra template parameter
+ok 21 - extra template parameter
+  ---
+  duration_ms: 18.51812
+  type: 'test'
+  ...
+# Subtest: missing template parameter
+ok 22 - missing template parameter
+  ---
+  duration_ms: 15.655184
+  type: 'test'
+  ...
+# Subtest: unknown trigger condition
+ok 23 - unknown trigger condition
+  ---
+  duration_ms: 12.933827
+  type: 'test'
+  ...
+# Subtest: unexpected step field
+ok 24 - unexpected step field
+  ---
+  duration_ms: 16.472292
+  type: 'test'
+  ...
+# Subtest: dialogClick cannot declare none
+ok 25 - dialogClick cannot declare none
+  ---
+  duration_ms: 15.885807
+  type: 'test'
+  ...
+# Subtest: state-changing click dialog:none explicit and valid no-dialog branch accepted
+ok 26 - state-changing click dialog:none explicit and valid no-dialog branch accepted
+  ---
+  duration_ms: 27.683805
+  type: 'test'
+  ...
+# Subtest: conditional clean versus dirty workspace strategy cannot be swapped
+ok 27 - conditional clean versus dirty workspace strategy cannot be swapped
+  ---
+  duration_ms: 13.074642
+  type: 'test'
+  ...
+# Subtest: accept/cancel permitted confirm strategy
+ok 28 - accept/cancel permitted confirm strategy
+  ---
+  duration_ms: 25.326622
+  type: 'test'
+  ...
+# Subtest: alert cancel forbidden
+ok 29 - alert cancel forbidden
+  ---
+  duration_ms: 27.863337
+  type: 'test'
+  ...
+# Subtest: five prompts require all explicit input/default strategies
+ok 30 - five prompts require all explicit input/default strategies
+  ---
+  duration_ms: 32.116979
+  type: 'test'
+  ...
+# Subtest: prompt default required and matched
+ok 31 - prompt default required and matched
+  ---
+  duration_ms: 27.973582
+  type: 'test'
+  ...
+# Subtest: prompt cancellation safely truncates entire edit at position 0
+ok 32 - prompt cancellation safely truncates entire edit at position 0
+  ---
+  duration_ms: 12.626154
+  type: 'test'
+  ...
+# Subtest: prompt cancellation safely truncates entire edit at position 1
+ok 33 - prompt cancellation safely truncates entire edit at position 1
+  ---
+  duration_ms: 16.152747
+  type: 'test'
+  ...
+# Subtest: prompt cancellation safely truncates entire edit at position 2
+ok 34 - prompt cancellation safely truncates entire edit at position 2
+  ---
+  duration_ms: 21.064949
+  type: 'test'
+  ...
+# Subtest: prompt cancellation safely truncates entire edit at position 3
+ok 35 - prompt cancellation safely truncates entire edit at position 3
+  ---
+  duration_ms: 14.817306
+  type: 'test'
+  ...
+# Subtest: prompt cancellation safely truncates entire edit at position 4
+ok 36 - prompt cancellation safely truncates entire edit at position 4
+  ---
+  duration_ms: 15.790441
+  type: 'test'
+  ...
+# Subtest: prompt cancel must explicitly declare cancel, not input
+ok 37 - prompt cancel must explicitly declare cancel, not input
+  ---
+  duration_ms: 17.015069
+  type: 'test'
+  ...
+# Subtest: accepted prompt sequence cannot truncate or continue after cancel
+ok 38 - accepted prompt sequence cannot truncate or continue after cancel
+  ---
+  duration_ms: 48.495144
+  type: 'test'
+  ...
+# Subtest: confirm→alert exact ordered sequence and explicit cancel
+ok 39 - confirm→alert exact ordered sequence and explicit cancel
+  ---
+  duration_ms: 37.689392
+  type: 'test'
+  ...
+# Subtest: static identity/source mismatch fail closed
+ok 40 - static identity/source mismatch fail closed
+  ---
+  duration_ms: 2.326475
+  type: 'test'
+  ...
+# Subtest: source anchor must exist in stated source line range
+ok 41 - source anchor must exist in stated source line range
+  ---
+  duration_ms: 5.47302
+  type: 'test'
+  ...
+# Subtest: sparse/missing steps rejected rather than skipped
+ok 42 - sparse/missing steps rejected rather than skipped
+  ---
+  duration_ms: 12.191466
+  type: 'test'
+  ...
+# Subtest: material fixture counts cannot contradict no-conflict scenario
+ok 43 - material fixture counts cannot contradict no-conflict scenario
+  ---
+  duration_ms: 13.864838
+  type: 'test'
+  ...
+# Subtest: explicit Enter key and fictional file contracts accepted
+ok 44 - explicit Enter key and fictional file contracts accepted
+  ---
+  duration_ms: 18.698177
+  type: 'test'
+  ...
+# Subtest: unknown/unreviewed operations denied
+ok 45 - unknown/unreviewed operations denied
+  ---
+  duration_ms: 14.346813
+  type: 'test'
+  ...
+# Subtest: catalogued NEEDS REVIEW fixture is denied before execution
+ok 46 - catalogued NEEDS REVIEW fixture is denied before execution
+  ---
+  duration_ms: 16.993004
+  type: 'test'
+  ...
+# Subtest: policy forbids duplicate selectors and generic wildcard/regex matchers
+ok 47 - policy forbids duplicate selectors and generic wildcard/regex matchers
+  ---
+  duration_ms: 2.061725
+  type: 'test'
+  ...
+# Subtest: file traversal/absolute paths and executable wait expressions rejected
+ok 48 - file traversal/absolute paths and executable wait expressions rejected
+  ---
+  duration_ms: 52.38196
+  type: 'test'
+  ...
+# Subtest: whole multi-file manifest fails before launch, even if earlier file valid
+ok 49 - whole multi-file manifest fails before launch, even if earlier file valid
+  ---
+  duration_ms: 20.113997
+  type: 'test'
+  ...
+# Subtest: contract corpus cannot be accidentally executed as a buyer plan
+ok 50 - contract corpus cannot be accidentally executed as a buyer plan
+  ---
+  duration_ms: 13.519138
+  type: 'test'
+  ...
+# Subtest: static CLI exits2 and writes machine-readable rejection without runtime import
+ok 51 - static CLI exits2 and writes machine-readable rejection without runtime import
+  ---
+  duration_ms: 97.336975
+  type: 'test'
+  ...
+# Subtest: malformed JSON CLI still writes a machine-readable rejection
+ok 52 - malformed JSON CLI still writes a machine-readable rejection
+  ---
+  duration_ms: 115.596949
+  type: 'test'
+  ...
+1..52
+# tests 52
+# suites 0
+# pass 52
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1326.652835

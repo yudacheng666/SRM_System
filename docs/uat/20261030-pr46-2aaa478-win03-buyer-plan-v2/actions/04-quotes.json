@@ -1,0 +1,3781 @@
+{
+  "schemaVersion": 1,
+  "productSha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "name": "quotes",
+  "purpose": "buyer-plan",
+  "scope": "Partial cancel/accept; five-prompt cancels; invalid tier; full R1, revision, R2, explicit carry and manual intake",
+  "steps": [
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-31",
+        "selector": ".srm-v2-sideitem[data-srm-v2-tab='quoteImport']",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-srm-v2-tab=\"quoteImport\"",
+        "lines": [
+          1876,
+          1876
+        ],
+        "anchor": "data-srm-v2-tab=\"quoteImport\"",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": ".srm-v2-sideitem[data-srm-v2-tab='quoteImport']",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-092"
+    },
+    {
+      "kind": "select",
+      "selector": "#quoteImportSupplier",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          402,
+          402
+        ],
+        "anchor": "quoteImportSupplier",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "SUP-A"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteImportSupplier",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-093"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-32",
+        "selector": "[data-srm-ux-input-mode=\"paste\"]",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-srm-ux-input-mode=\"paste\"",
+        "lines": [
+          2350,
+          2350
+        ],
+        "anchor": "data-srm-ux-input-mode=\"paste\"",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-srm-ux-input-mode=\"paste\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-094"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-33",
+        "selector": "#quotePaste",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "RFQ Line ID,报价单价,交期,MOQ,报价状态,物料备注\nRFQ-L00001,10,5,1,quoted,\nBAD,,,,noquote,\n"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quotePaste",
+        "lines": [
+          2368,
+          2368
+        ],
+        "anchor": "quotePaste",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quotePaste",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-095"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-34",
+        "selector": "#quoteParsePaste",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteParsePaste.onclick=",
+        "lines": [
+          4655,
+          4655
+        ],
+        "anchor": "quoteParsePaste.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteParsePaste",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-096"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "quote.import.commit",
+        "selector": "#commitQuoteImport",
+        "scenario": "partial-fixture",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "confirm",
+            "message": "本次共 2 行，可提交 1 行，拒绝/待检查 1 行。\n以下错误行不会保存，完整清单留在预览中：\n3 行 BAD：多报\n是否只提交 1 行？",
+            "values": {
+              "total": 2,
+              "valid": 1,
+              "skipped": 1,
+              "details": "3 行 BAD：多报"
+            },
+            "accept": false
+          }
+        ]
+      },
+      "branch": "Concrete partial.csv, one valid and one skipped unknown noquote row; actual source parser puts BAD on row3",
+      "source": {
+        "function": "commitQuoteImport.onclick",
+        "lines": [
+          4680,
+          4707
+        ],
+        "anchor": "是否只提交 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteImportPreview",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "cancel keeps draft/persisted state/revision and two preview rows",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-097"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "quote.import.commit",
+        "selector": "#commitQuoteImport",
+        "scenario": "partial-fixture",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "confirm",
+            "message": "本次共 2 行，可提交 1 行，拒绝/待检查 1 行。\n以下错误行不会保存，完整清单留在预览中：\n3 行 BAD：多报\n是否只提交 1 行？",
+            "values": {
+              "total": 2,
+              "valid": 1,
+              "skipped": 1,
+              "details": "3 行 BAD：多报"
+            },
+            "accept": true
+          }
+        ]
+      },
+      "branch": "Concrete partial.csv, one valid and one skipped unknown noquote row; actual source parser puts BAD on row3",
+      "source": {
+        "function": "commitQuoteImport.onclick",
+        "lines": [
+          4680,
+          4707
+        ],
+        "anchor": "是否只提交 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteImportFeedback",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "only RFQ-L00001 price10/lead5/MOQ1 accepted; BAD row3 retained; other11missing",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-098"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "round": 1,
+          "version": 1,
+          "quoteLines": 1,
+          "missing": 11
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "round": 1,
+            "version": 1,
+            "quoteLines": 1,
+            "missing": 11
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-099"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-35",
+        "selector": "#quoteClearPreview",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteClearPreview.onclick=",
+        "lines": [
+          4657,
+          4657
+        ],
+        "anchor": "quoteClearPreview.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteClearPreview",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-100"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "quote.line.edit",
+        "selector": "#quoteRoundBody [data-edit-quote='0']",
+        "scenario": "draft-line-zero",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "prompt",
+            "message": "单价 / 阶梯价：",
+            "values": {},
+            "accept": false,
+            "defaultPrompt": "10",
+            "promptText": {
+              "mode": "cancel"
+            }
+          }
+        ]
+      },
+      "branch": "Fixture draft round; line0 defaults price10/lead5/MOQ1/quoted/empty remark",
+      "source": {
+        "function": "editQuoteLine",
+        "lines": [
+          4607,
+          4612
+        ],
+        "anchor": "function editQuoteLine(index)",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteRoundBody",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "entire line unchanged after cancel prompt 0",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-101"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "quote.line.edit",
+        "selector": "#quoteRoundBody [data-edit-quote='0']",
+        "scenario": "draft-line-zero",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "prompt",
+            "message": "单价 / 阶梯价：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "10",
+            "promptText": {
+              "mode": "text",
+              "value": "10"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "交期（天，可空）：",
+            "values": {},
+            "accept": false,
+            "defaultPrompt": "5",
+            "promptText": {
+              "mode": "cancel"
+            }
+          }
+        ]
+      },
+      "branch": "Fixture draft round; line0 defaults price10/lead5/MOQ1/quoted/empty remark",
+      "source": {
+        "function": "editQuoteLine",
+        "lines": [
+          4607,
+          4612
+        ],
+        "anchor": "function editQuoteLine(index)",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteRoundBody",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "entire line unchanged after cancel prompt 1",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-102"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "quote.line.edit",
+        "selector": "#quoteRoundBody [data-edit-quote='0']",
+        "scenario": "draft-line-zero",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "prompt",
+            "message": "单价 / 阶梯价：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "10",
+            "promptText": {
+              "mode": "text",
+              "value": "10"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "交期（天，可空）：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "5",
+            "promptText": {
+              "mode": "text",
+              "value": "5"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "MOQ（可空）：",
+            "values": {},
+            "accept": false,
+            "defaultPrompt": "1",
+            "promptText": {
+              "mode": "cancel"
+            }
+          }
+        ]
+      },
+      "branch": "Fixture draft round; line0 defaults price10/lead5/MOQ1/quoted/empty remark",
+      "source": {
+        "function": "editQuoteLine",
+        "lines": [
+          4607,
+          4612
+        ],
+        "anchor": "function editQuoteLine(index)",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteRoundBody",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "entire line unchanged after cancel prompt 2",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-103"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "quote.line.edit",
+        "selector": "#quoteRoundBody [data-edit-quote='0']",
+        "scenario": "draft-line-zero",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "prompt",
+            "message": "单价 / 阶梯价：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "10",
+            "promptText": {
+              "mode": "text",
+              "value": "10"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "交期（天，可空）：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "5",
+            "promptText": {
+              "mode": "text",
+              "value": "5"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "MOQ（可空）：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "1",
+            "promptText": {
+              "mode": "text",
+              "value": "1"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "状态：quoted / noquote / cannot",
+            "values": {},
+            "accept": false,
+            "defaultPrompt": "quoted",
+            "promptText": {
+              "mode": "cancel"
+            }
+          }
+        ]
+      },
+      "branch": "Fixture draft round; line0 defaults price10/lead5/MOQ1/quoted/empty remark",
+      "source": {
+        "function": "editQuoteLine",
+        "lines": [
+          4607,
+          4612
+        ],
+        "anchor": "function editQuoteLine(index)",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteRoundBody",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "entire line unchanged after cancel prompt 3",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-104"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "quote.line.edit",
+        "selector": "#quoteRoundBody [data-edit-quote='0']",
+        "scenario": "draft-line-zero",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "prompt",
+            "message": "单价 / 阶梯价：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "10",
+            "promptText": {
+              "mode": "text",
+              "value": "10"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "交期（天，可空）：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "5",
+            "promptText": {
+              "mode": "text",
+              "value": "5"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "MOQ（可空）：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "1",
+            "promptText": {
+              "mode": "text",
+              "value": "1"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "状态：quoted / noquote / cannot",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "quoted",
+            "promptText": {
+              "mode": "text",
+              "value": "quoted"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "物料备注（可空）：",
+            "values": {},
+            "accept": false,
+            "defaultPrompt": "",
+            "promptText": {
+              "mode": "cancel"
+            }
+          }
+        ]
+      },
+      "branch": "Fixture draft round; line0 defaults price10/lead5/MOQ1/quoted/empty remark",
+      "source": {
+        "function": "editQuoteLine",
+        "lines": [
+          4607,
+          4612
+        ],
+        "anchor": "function editQuoteLine(index)",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteRoundBody",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "entire line unchanged after cancel prompt 4",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-105"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "quote.line.edit",
+        "selector": "#quoteRoundBody [data-edit-quote='0']",
+        "scenario": "draft-line-zero",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "prompt",
+            "message": "单价 / 阶梯价：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "10",
+            "promptText": {
+              "mode": "text",
+              "value": "10"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "交期（天，可空）：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "5",
+            "promptText": {
+              "mode": "text",
+              "value": "5"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "MOQ（可空）：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "1",
+            "promptText": {
+              "mode": "text",
+              "value": "1"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "状态：quoted / noquote / cannot",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "quoted",
+            "promptText": {
+              "mode": "text",
+              "value": "quoted"
+            }
+          },
+          {
+            "type": "prompt",
+            "message": "物料备注（可空）：",
+            "values": {},
+            "accept": true,
+            "defaultPrompt": "",
+            "promptText": {
+              "mode": "text",
+              "value": ""
+            }
+          }
+        ]
+      },
+      "branch": "Fixture draft round; line0 defaults price10/lead5/MOQ1/quoted/empty remark",
+      "source": {
+        "function": "editQuoteLine",
+        "lines": [
+          4607,
+          4612
+        ],
+        "anchor": "function editQuoteLine(index)",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteRoundBody [data-edit-quote='0']",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-106"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-33",
+        "selector": "#quotePaste",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "RFQ Line ID,报价单价,交期,MOQ,报价状态,物料备注\nRFQ-L00001,1-9:9|9+:8,5,1,quoted,预期拒绝重叠阶梯\n"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quotePaste",
+        "lines": [
+          2368,
+          2368
+        ],
+        "anchor": "quotePaste",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quotePaste",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-107"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-34",
+        "selector": "#quoteParsePaste",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteParsePaste.onclick=",
+        "lines": [
+          4655,
+          4655
+        ],
+        "anchor": "quoteParsePaste.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteParsePaste",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-108"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "quote.import.commit",
+        "selector": "#commitQuoteImport",
+        "scenario": "all-invalid-overlap",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "alert",
+            "message": "没有可写入的有效报价；全部 1 行仍在预览中供修改。",
+            "values": {},
+            "accept": true
+          }
+        ]
+      },
+      "branch": "One invalid overlapping-tier row, mutable draft, validCount0/skippedCount1",
+      "source": {
+        "function": "commitQuoteImport.onclick",
+        "lines": [
+          4680,
+          4707
+        ],
+        "anchor": "是否只提交 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteImportPreview",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "no line/revision change; invalid preview kept",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-109"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-35",
+        "selector": "#quoteClearPreview",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteClearPreview.onclick=",
+        "lines": [
+          4657,
+          4657
+        ],
+        "anchor": "quoteClearPreview.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteClearPreview",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-110"
+    },
+    {
+      "kind": "select",
+      "selector": "#quoteImportSupplier",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          402,
+          402
+        ],
+        "anchor": "quoteImportSupplier",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "SUP-A"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteImportSupplier",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-111"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-36",
+        "selector": "[data-srm-ux-input-mode=\"file\"]",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-srm-ux-input-mode=\"file\"",
+        "lines": [
+          2349,
+          2349
+        ],
+        "anchor": "data-srm-ux-input-mode=\"file\"",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-srm-ux-input-mode=\"file\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-112"
+    },
+    {
+      "kind": "file",
+      "selector": "#quoteImportFile",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2378,
+          2378
+        ],
+        "anchor": "quoteImportFile",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "files": [
+          "fixtures/A-R1.xlsx"
+        ]
+      },
+      "branch": "Exact manifest-listed fictional file paths only; no business API writes",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteImportFile",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-113"
+    },
+    {
+      "kind": "wait-visible",
+      "selector": "#commitQuoteImport",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4688,
+          4688
+        ],
+        "anchor": "commitQuoteImport.onclick=",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "enabled": true,
+        "previewRows": 12
+      },
+      "branch": "Fresh XLSX parsed; stale or invalid preview rejected",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#commitQuoteImport",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-114"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "quote.import.commit",
+        "selector": "#commitQuoteImport",
+        "scenario": "all-valid",
+        "dialog": "none"
+      },
+      "branch": "Mutable draft; exact fixture has valid rows and zero skipped rows",
+      "source": {
+        "function": "commitQuoteImport.onclick",
+        "lines": [
+          4680,
+          4707
+        ],
+        "anchor": "是否只提交 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#commitQuoteImport",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-115"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-37",
+        "selector": "#quoteEvidenceNote",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "虚构WIN03 SUP-AR1凭证"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteEvidenceNote",
+        "lines": [
+          407,
+          407
+        ],
+        "anchor": "quoteEvidenceNote",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteEvidenceNote",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-116"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "quote.round.confirm",
+        "selector": "#confirmQuoteRound",
+        "scenario": "coverage-complete",
+        "dialog": "none"
+      },
+      "branch": "No missing/extra/duplicate; valid notes and nonempty draft",
+      "source": {
+        "function": "confirmQuoteRound.onclick",
+        "lines": [
+          4653,
+          4653
+        ],
+        "anchor": "覆盖检查仍有异常：漏报 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#confirmQuoteRound",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-117"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "supplier": "SUP-A",
+          "round": 1,
+          "version": 1,
+          "status": "confirmed",
+          "lines": 12
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "supplier": "SUP-A",
+            "round": 1,
+            "version": 1,
+            "status": "confirmed",
+            "lines": 12
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-118"
+    },
+    {
+      "kind": "select",
+      "selector": "#quoteImportSupplier",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          402,
+          402
+        ],
+        "anchor": "quoteImportSupplier",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "SUP-B"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteImportSupplier",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-119"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-36",
+        "selector": "[data-srm-ux-input-mode=\"file\"]",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-srm-ux-input-mode=\"file\"",
+        "lines": [
+          2349,
+          2349
+        ],
+        "anchor": "data-srm-ux-input-mode=\"file\"",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-srm-ux-input-mode=\"file\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-120"
+    },
+    {
+      "kind": "file",
+      "selector": "#quoteImportFile",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2378,
+          2378
+        ],
+        "anchor": "quoteImportFile",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "files": [
+          "fixtures/B-R1.xlsx"
+        ]
+      },
+      "branch": "Exact manifest-listed fictional file paths only; no business API writes",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteImportFile",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-121"
+    },
+    {
+      "kind": "wait-visible",
+      "selector": "#commitQuoteImport",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4688,
+          4688
+        ],
+        "anchor": "commitQuoteImport.onclick=",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "enabled": true,
+        "previewRows": 12
+      },
+      "branch": "Fresh XLSX parsed; stale or invalid preview rejected",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#commitQuoteImport",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-122"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "quote.import.commit",
+        "selector": "#commitQuoteImport",
+        "scenario": "all-valid",
+        "dialog": "none"
+      },
+      "branch": "Mutable draft; exact fixture has valid rows and zero skipped rows",
+      "source": {
+        "function": "commitQuoteImport.onclick",
+        "lines": [
+          4680,
+          4707
+        ],
+        "anchor": "是否只提交 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#commitQuoteImport",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-123"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-37",
+        "selector": "#quoteEvidenceNote",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "虚构WIN03 SUP-BR1凭证"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteEvidenceNote",
+        "lines": [
+          407,
+          407
+        ],
+        "anchor": "quoteEvidenceNote",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteEvidenceNote",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-124"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "quote.round.confirm",
+        "selector": "#confirmQuoteRound",
+        "scenario": "coverage-complete",
+        "dialog": "none"
+      },
+      "branch": "No missing/extra/duplicate; valid notes and nonempty draft",
+      "source": {
+        "function": "confirmQuoteRound.onclick",
+        "lines": [
+          4653,
+          4653
+        ],
+        "anchor": "覆盖检查仍有异常：漏报 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#confirmQuoteRound",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-125"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "supplier": "SUP-B",
+          "round": 1,
+          "version": 1,
+          "status": "confirmed",
+          "lines": 12
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "supplier": "SUP-B",
+            "round": 1,
+            "version": 1,
+            "status": "confirmed",
+            "lines": 12
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-126"
+    },
+    {
+      "kind": "select",
+      "selector": "#quoteImportSupplier",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          402,
+          402
+        ],
+        "anchor": "quoteImportSupplier",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "SUP-A"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteImportSupplier",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-127"
+    },
+    {
+      "kind": "capture-history",
+      "selector": "#quoteRoundSummary",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4598,
+          4598
+        ],
+        "anchor": "已确认提交不可覆盖修改。",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "name": "A-R1V1"
+      },
+      "branch": "Capture immutable full round before all subsequent mutations",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteRoundSummary",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "canonical historical round capture",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-128"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-38",
+        "selector": "#newQuoteRevision",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "newQuoteRevision.onclick=",
+        "lines": [
+          4635,
+          4635
+        ],
+        "anchor": "newQuoteRevision.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#newQuoteRevision",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-129"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-32",
+        "selector": "[data-srm-ux-input-mode=\"paste\"]",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-srm-ux-input-mode=\"paste\"",
+        "lines": [
+          2350,
+          2350
+        ],
+        "anchor": "data-srm-ux-input-mode=\"paste\"",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-srm-ux-input-mode=\"paste\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-130"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-33",
+        "selector": "#quotePaste",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "RFQ Line ID,报价单价,交期,MOQ,报价状态,物料备注\nRFQ-L00001,9.5,5,1,quoted,虚构同轮修正\n"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quotePaste",
+        "lines": [
+          2368,
+          2368
+        ],
+        "anchor": "quotePaste",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quotePaste",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-131"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-34",
+        "selector": "#quoteParsePaste",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteParsePaste.onclick=",
+        "lines": [
+          4655,
+          4655
+        ],
+        "anchor": "quoteParsePaste.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteParsePaste",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-132"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "quote.import.commit",
+        "selector": "#commitQuoteImport",
+        "scenario": "all-valid",
+        "dialog": "none"
+      },
+      "branch": "Mutable draft; exact fixture has valid rows and zero skipped rows",
+      "source": {
+        "function": "commitQuoteImport.onclick",
+        "lines": [
+          4680,
+          4707
+        ],
+        "anchor": "是否只提交 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#commitQuoteImport",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-133"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "quote.round.confirm",
+        "selector": "#confirmQuoteRound",
+        "scenario": "coverage-complete",
+        "dialog": "none"
+      },
+      "branch": "No missing/extra/duplicate; valid notes and nonempty draft",
+      "source": {
+        "function": "confirmQuoteRound.onclick",
+        "lines": [
+          4653,
+          4653
+        ],
+        "anchor": "覆盖检查仍有异常：漏报 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#confirmQuoteRound",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-134"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "supplier": "SUP-A",
+          "round": 1,
+          "version": 2,
+          "lines": 12,
+          "previousVersion": "exact A-R1V1"
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "supplier": "SUP-A",
+            "round": 1,
+            "version": 2,
+            "lines": 12,
+            "previousVersion": "exact A-R1V1"
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-135"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-39",
+        "selector": "#newQuoteRound",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "newQuoteRound.onclick=",
+        "lines": [
+          4634,
+          4634
+        ],
+        "anchor": "newQuoteRound.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#newQuoteRound",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-136"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-33",
+        "selector": "#quotePaste",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "RFQ Line ID,报价单价,交期,MOQ,报价状态,物料备注\nRFQ-L00001,1-9:9|10+:8,5,1,quoted,虚构第二轮阶梯\n"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quotePaste",
+        "lines": [
+          2368,
+          2368
+        ],
+        "anchor": "quotePaste",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quotePaste",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-137"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-34",
+        "selector": "#quoteParsePaste",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteParsePaste.onclick=",
+        "lines": [
+          4655,
+          4655
+        ],
+        "anchor": "quoteParsePaste.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteParsePaste",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-138"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "quote.import.commit",
+        "selector": "#commitQuoteImport",
+        "scenario": "all-valid",
+        "dialog": "none"
+      },
+      "branch": "Mutable draft; exact fixture has valid rows and zero skipped rows",
+      "source": {
+        "function": "commitQuoteImport.onclick",
+        "lines": [
+          4680,
+          4707
+        ],
+        "anchor": "是否只提交 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#commitQuoteImport",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-139"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "quote.round.confirm",
+        "selector": "#confirmQuoteRound",
+        "scenario": "coverage-anomalies",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "confirm",
+            "message": "覆盖检查仍有异常：漏报 11 项，多报 0 项，重复 0 项。仍要确认并锁定本次提交吗？",
+            "values": {
+              "missing": 11,
+              "extra": 0,
+              "duplicate": 0
+            },
+            "accept": false
+          }
+        ]
+      },
+      "branch": "Nonempty mutable round with explicit coverage anomaly counts",
+      "source": {
+        "function": "confirmQuoteRound.onclick",
+        "lines": [
+          4653,
+          4653
+        ],
+        "anchor": "覆盖检查仍有异常：漏报 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#qcMissing",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "11missing; NOT zero quote; still draft",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-140"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-40",
+        "selector": "#carryForwardMissing",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "carryForwardMissing.onclick=",
+        "lines": [
+          4755,
+          4755
+        ],
+        "anchor": "carryForwardMissing.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#carryForwardMissing",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-141"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-carry-line=\"RFQ-L00002\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4735,
+          4735
+        ],
+        "anchor": "data-carry-line",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-carry-line=\"RFQ-L00002\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-142"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-carry-line=\"RFQ-L00003\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4735,
+          4735
+        ],
+        "anchor": "data-carry-line",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-carry-line=\"RFQ-L00003\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-143"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-carry-line=\"RFQ-L00004\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4735,
+          4735
+        ],
+        "anchor": "data-carry-line",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-carry-line=\"RFQ-L00004\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-144"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-carry-line=\"RFQ-L00005\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4735,
+          4735
+        ],
+        "anchor": "data-carry-line",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-carry-line=\"RFQ-L00005\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-145"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-carry-line=\"RFQ-L00006\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4735,
+          4735
+        ],
+        "anchor": "data-carry-line",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-carry-line=\"RFQ-L00006\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-146"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-carry-line=\"RFQ-L00007\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4735,
+          4735
+        ],
+        "anchor": "data-carry-line",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-carry-line=\"RFQ-L00007\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-147"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-carry-line=\"RFQ-L00008\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4735,
+          4735
+        ],
+        "anchor": "data-carry-line",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-carry-line=\"RFQ-L00008\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-148"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-carry-line=\"RFQ-L00009\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4735,
+          4735
+        ],
+        "anchor": "data-carry-line",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-carry-line=\"RFQ-L00009\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-149"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-carry-line=\"RFQ-L00010\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4735,
+          4735
+        ],
+        "anchor": "data-carry-line",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-carry-line=\"RFQ-L00010\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-150"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-carry-line=\"RFQ-L00011\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4735,
+          4735
+        ],
+        "anchor": "data-carry-line",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-carry-line=\"RFQ-L00011\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-151"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-carry-line=\"RFQ-L00012\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4735,
+          4735
+        ],
+        "anchor": "data-carry-line",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-carry-line=\"RFQ-L00012\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-152"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-41",
+        "selector": "#carryEvidenceNote",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "虚构供应商逐项确认原轮原条件"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "carryEvidenceNote",
+        "lines": [
+          4736,
+          4736
+        ],
+        "anchor": "carryEvidenceNote",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#carryEvidenceNote",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-153"
+    },
+    {
+      "kind": "checked",
+      "selector": "#carryConfirmSource",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4737,
+          4737
+        ],
+        "anchor": "carryConfirmSource",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#carryConfirmSource",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-154"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "quote.carry.confirm",
+        "selector": "#confirmCarrySelection",
+        "scenario": "explicit-evidence",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "confirm",
+            "message": "确定按原轮次和原条件沿用这 11 项吗？其余漏报项保持漏报状态。",
+            "values": {
+              "count": 11
+            },
+            "accept": true
+          },
+          {
+            "type": "alert",
+            "message": "已按供应商确认依据沿用 11 项，其余漏报项目不变。",
+            "values": {
+              "count": 11
+            },
+            "accept": true
+          }
+        ]
+      },
+      "branch": "Selected carry rows; checked source and nonempty evidence",
+      "source": {
+        "function": "confirmCarrySelection.onclick",
+        "lines": [
+          4740,
+          4753
+        ],
+        "anchor": "确定按原轮次和原条件沿用这 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#confirmCarrySelection",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-155"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "quote.round.confirm",
+        "selector": "#confirmQuoteRound",
+        "scenario": "coverage-complete",
+        "dialog": "none"
+      },
+      "branch": "No missing/extra/duplicate; valid notes and nonempty draft",
+      "source": {
+        "function": "confirmQuoteRound.onclick",
+        "lines": [
+          4653,
+          4653
+        ],
+        "anchor": "覆盖检查仍有异常：漏报 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#confirmQuoteRound",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-156"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "supplier": "SUP-A",
+          "round": 2,
+          "version": 1,
+          "lines": 12,
+          "carried": 11,
+          "effectiveQty2": 9,
+          "history": "A-R1V1 immutable"
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "supplier": "SUP-A",
+            "round": 2,
+            "version": 1,
+            "lines": 12,
+            "carried": 11,
+            "effectiveQty2": 9,
+            "history": "A-R1V1 immutable"
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-157"
+    },
+    {
+      "kind": "select",
+      "selector": "#quoteImportSupplier",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          402,
+          402
+        ],
+        "anchor": "quoteImportSupplier",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "SUP-B"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteImportSupplier",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-158"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-38",
+        "selector": "#newQuoteRevision",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "newQuoteRevision.onclick=",
+        "lines": [
+          4635,
+          4635
+        ],
+        "anchor": "newQuoteRevision.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#newQuoteRevision",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-159"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-42",
+        "selector": "[data-srm-ux-input-mode=\"manual\"]",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-srm-ux-input-mode=\"manual\"",
+        "lines": [
+          2351,
+          2351
+        ],
+        "anchor": "data-srm-ux-input-mode=\"manual\"",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-srm-ux-input-mode=\"manual\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-160"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-43",
+        "selector": "#quoteManualItem",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "RFQ-L00002"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteManualItem",
+        "lines": [
+          2358,
+          2358
+        ],
+        "anchor": "quoteManualItem",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteManualItem",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-161"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-44",
+        "selector": "#quoteManualPrice",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "15"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteManualPrice",
+        "lines": [
+          2359,
+          2359
+        ],
+        "anchor": "quoteManualPrice",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteManualPrice",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-162"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-45",
+        "selector": "#quoteManualLead",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "5"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteManualLead",
+        "lines": [
+          2360,
+          2360
+        ],
+        "anchor": "quoteManualLead",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteManualLead",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-163"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-46",
+        "selector": "#quoteManualMoq",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "1"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteManualMoq",
+        "lines": [
+          2361,
+          2361
+        ],
+        "anchor": "quoteManualMoq",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteManualMoq",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-164"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-47",
+        "selector": "#quoteManualRemark",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "虚构手工修正"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteManualRemark",
+        "lines": [
+          2363,
+          2363
+        ],
+        "anchor": "quoteManualRemark",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteManualRemark",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-165"
+    },
+    {
+      "kind": "select",
+      "selector": "#quoteManualStatus",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2362,
+          2362
+        ],
+        "anchor": "quoteManualStatus",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "quoted"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteManualStatus",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-166"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-48",
+        "selector": "#quoteManualAdd",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "quoteManualAdd.onclick=",
+        "lines": [
+          4654,
+          4654
+        ],
+        "anchor": "quoteManualAdd.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteManualAdd",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-167"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "quote.import.commit",
+        "selector": "#commitQuoteImport",
+        "scenario": "all-valid",
+        "dialog": "none"
+      },
+      "branch": "Mutable draft; exact fixture has valid rows and zero skipped rows",
+      "source": {
+        "function": "commitQuoteImport.onclick",
+        "lines": [
+          4680,
+          4707
+        ],
+        "anchor": "是否只提交 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#commitQuoteImport",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-168"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "quote.round.confirm",
+        "selector": "#confirmQuoteRound",
+        "scenario": "coverage-complete",
+        "dialog": "none"
+      },
+      "branch": "No missing/extra/duplicate; valid notes and nonempty draft",
+      "source": {
+        "function": "confirmQuoteRound.onclick",
+        "lines": [
+          4653,
+          4653
+        ],
+        "anchor": "覆盖检查仍有异常：漏报 ",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#confirmQuoteRound",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-169"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "supplier": "SUP-B",
+          "round": 1,
+          "version": 2,
+          "lines": 12,
+          "priceLine2": 15
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "supplier": "SUP-B",
+            "round": 1,
+            "version": 2,
+            "lines": 12,
+            "priceLine2": 15
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-170"
+    }
+  ]
+}

@@ -1,0 +1,2280 @@
+{
+  "schemaVersion": 1,
+  "productSha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "name": "drawing-upload-version",
+  "purpose": "buyer-plan",
+  "scope": "Before quotes; service.store occurs BEFORE same-name/version GUI conflict: unreferenced file may be stored",
+  "steps": [
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "nav.items",
+        "selector": ".srm-v2-sideitem[data-srm-v2-tab='items']",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Reviewed valid enabled control; own isolated workspace",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "data-srm-v2-tab",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": ".srm-v2-sideitem[data-srm-v2-tab='items']",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-032"
+    },
+    {
+      "kind": "ensure-open",
+      "selector": "#uiOpenDrawings",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6949,
+          6949
+        ],
+        "anchor": "uiOpenDrawings",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "target": "#uiDrawingTools"
+      },
+      "branch": "Inspect target first; click only when hidden; no duplicate toggle",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#uiOpenDrawings",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-033"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00001"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-034"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-28",
+        "selector": "#pilotDrawingVersion",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "A"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "pilotDrawingVersion",
+        "lines": [
+          2008,
+          2008
+        ],
+        "anchor": "pilotDrawingVersion",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingVersion",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-035"
+    },
+    {
+      "kind": "file",
+      "selector": "#pilotDrawingFiles",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2009,
+          2009
+        ],
+        "anchor": "pilotDrawingFiles",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "files": [
+          "fixtures/pdf-v1/TST-001_A.pdf"
+        ]
+      },
+      "branch": "Exact manifest-listed fictional file paths only; no business API writes",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingFiles",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-036"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-29",
+        "selector": "#pilotDrawingUpload",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "upload.onclick=async()=>{",
+        "lines": [
+          5483,
+          5483
+        ],
+        "anchor": "upload.onclick=async()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingUpload",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-037"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "line": "RFQ-L00001",
+          "name": "TST-001_A.pdf",
+          "revision": "A",
+          "sha256": "cc9af426bb7573bea0b5b29d7fd435727c02d7ab0aedecd8fc197a1f0285f968"
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "line": "RFQ-L00001",
+            "name": "TST-001_A.pdf",
+            "revision": "A",
+            "sha256": "cc9af426bb7573bea0b5b29d7fd435727c02d7ab0aedecd8fc197a1f0285f968"
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-038"
+    },
+    {
+      "kind": "pdf-preview",
+      "selector": "[data-drawing=\"RFQ-L00001\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4811,
+          4811
+        ],
+        "anchor": "data-drawing=",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "line": "RFQ-L00001"
+      },
+      "branch": "Resolve exact source-bound dynamic thumbnail and own PDF viewer target; verify original bytes/render",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingInfo",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "actual PDF response hash + visible viewer",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "pdf-preview",
+      "id": "W03-039"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00002"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-040"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-28",
+        "selector": "#pilotDrawingVersion",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "A"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "pilotDrawingVersion",
+        "lines": [
+          2008,
+          2008
+        ],
+        "anchor": "pilotDrawingVersion",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingVersion",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-041"
+    },
+    {
+      "kind": "file",
+      "selector": "#pilotDrawingFiles",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2009,
+          2009
+        ],
+        "anchor": "pilotDrawingFiles",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "files": [
+          "fixtures/pdf-v1/TST-002_A.pdf"
+        ]
+      },
+      "branch": "Exact manifest-listed fictional file paths only; no business API writes",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingFiles",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-042"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-29",
+        "selector": "#pilotDrawingUpload",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "upload.onclick=async()=>{",
+        "lines": [
+          5483,
+          5483
+        ],
+        "anchor": "upload.onclick=async()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingUpload",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-043"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "line": "RFQ-L00002",
+          "name": "TST-002_A.pdf",
+          "revision": "A",
+          "sha256": "e54e7b731b64e68b43bb5acf64992f28654c9e646bbc178e96da576079f943c1"
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "line": "RFQ-L00002",
+            "name": "TST-002_A.pdf",
+            "revision": "A",
+            "sha256": "e54e7b731b64e68b43bb5acf64992f28654c9e646bbc178e96da576079f943c1"
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-044"
+    },
+    {
+      "kind": "pdf-preview",
+      "selector": "[data-drawing=\"RFQ-L00002\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4811,
+          4811
+        ],
+        "anchor": "data-drawing=",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "line": "RFQ-L00002"
+      },
+      "branch": "Resolve exact source-bound dynamic thumbnail and own PDF viewer target; verify original bytes/render",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingInfo",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "actual PDF response hash + visible viewer",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "pdf-preview",
+      "id": "W03-045"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00001"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-046"
+    },
+    {
+      "kind": "file",
+      "selector": "#pilotDrawingFiles",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2009,
+          2009
+        ],
+        "anchor": "pilotDrawingFiles",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "files": [
+          "fixtures/pdf-conflict/TST-001_A.pdf"
+        ]
+      },
+      "branch": "Exact manifest-listed fictional file paths only; no business API writes",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingFiles",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-047"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-29",
+        "selector": "#pilotDrawingUpload",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "upload.onclick=async()=>{",
+        "lines": [
+          5483,
+          5483
+        ],
+        "anchor": "upload.onclick=async()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingInfo",
+          "require": "图纸导入未完成：同名且同版本图纸已有不同内容，必须更换版本号：TST-001_A.pdf"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "association/history/state unchanged; original PDF bytes kept; may add unreferenced asset",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "asset inventory before/after",
+            "no incorrect association",
+            "DOM error, not JS alert"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-048"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-28",
+        "selector": "#pilotDrawingVersion",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "B"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "pilotDrawingVersion",
+        "lines": [
+          2008,
+          2008
+        ],
+        "anchor": "pilotDrawingVersion",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingVersion",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-049"
+    },
+    {
+      "kind": "file",
+      "selector": "#pilotDrawingFiles",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2009,
+          2009
+        ],
+        "anchor": "pilotDrawingFiles",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "files": [
+          "fixtures/pdf-v2/TST-001_A.pdf"
+        ]
+      },
+      "branch": "Exact manifest-listed fictional file paths only; no business API writes",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingFiles",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-050"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-29",
+        "selector": "#pilotDrawingUpload",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "upload.onclick=async()=>{",
+        "lines": [
+          5483,
+          5483
+        ],
+        "anchor": "upload.onclick=async()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingUpload",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-051"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "line": "RFQ-L00001",
+          "revision": "B",
+          "versionsOnLine": 2
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "line": "RFQ-L00001",
+            "revision": "B",
+            "versionsOnLine": 2
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-052"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00003"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-053"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingRequirement",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2019,
+          2019
+        ],
+        "anchor": "pilotDrawingRequirement",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "not_required"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingRequirement",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-054"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-30",
+        "selector": "#pilotDrawingStatusSet",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "applyStatus.onclick=()=>{",
+        "lines": [
+          5527,
+          5527
+        ],
+        "anchor": "applyStatus.onclick=()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingStatusSet",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-055"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00004"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-056"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingRequirement",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2019,
+          2019
+        ],
+        "anchor": "pilotDrawingRequirement",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "not_required"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingRequirement",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-057"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-30",
+        "selector": "#pilotDrawingStatusSet",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "applyStatus.onclick=()=>{",
+        "lines": [
+          5527,
+          5527
+        ],
+        "anchor": "applyStatus.onclick=()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingStatusSet",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-058"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00005"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-059"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingRequirement",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2019,
+          2019
+        ],
+        "anchor": "pilotDrawingRequirement",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "not_required"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingRequirement",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-060"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-30",
+        "selector": "#pilotDrawingStatusSet",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "applyStatus.onclick=()=>{",
+        "lines": [
+          5527,
+          5527
+        ],
+        "anchor": "applyStatus.onclick=()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingStatusSet",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-061"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00006"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-062"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingRequirement",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2019,
+          2019
+        ],
+        "anchor": "pilotDrawingRequirement",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "not_required"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingRequirement",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-063"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-30",
+        "selector": "#pilotDrawingStatusSet",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "applyStatus.onclick=()=>{",
+        "lines": [
+          5527,
+          5527
+        ],
+        "anchor": "applyStatus.onclick=()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingStatusSet",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-064"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00007"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-065"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingRequirement",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2019,
+          2019
+        ],
+        "anchor": "pilotDrawingRequirement",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "not_required"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingRequirement",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-066"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-30",
+        "selector": "#pilotDrawingStatusSet",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "applyStatus.onclick=()=>{",
+        "lines": [
+          5527,
+          5527
+        ],
+        "anchor": "applyStatus.onclick=()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingStatusSet",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-067"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00008"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-068"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingRequirement",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2019,
+          2019
+        ],
+        "anchor": "pilotDrawingRequirement",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "not_required"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingRequirement",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-069"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-30",
+        "selector": "#pilotDrawingStatusSet",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "applyStatus.onclick=()=>{",
+        "lines": [
+          5527,
+          5527
+        ],
+        "anchor": "applyStatus.onclick=()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingStatusSet",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-070"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00009"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-071"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingRequirement",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2019,
+          2019
+        ],
+        "anchor": "pilotDrawingRequirement",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "not_required"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingRequirement",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-072"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-30",
+        "selector": "#pilotDrawingStatusSet",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "applyStatus.onclick=()=>{",
+        "lines": [
+          5527,
+          5527
+        ],
+        "anchor": "applyStatus.onclick=()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingStatusSet",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-073"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00010"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-074"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingRequirement",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2019,
+          2019
+        ],
+        "anchor": "pilotDrawingRequirement",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "not_required"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingRequirement",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-075"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-30",
+        "selector": "#pilotDrawingStatusSet",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "applyStatus.onclick=()=>{",
+        "lines": [
+          5527,
+          5527
+        ],
+        "anchor": "applyStatus.onclick=()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingStatusSet",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-076"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00011"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-077"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingRequirement",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2019,
+          2019
+        ],
+        "anchor": "pilotDrawingRequirement",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "not_required"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingRequirement",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-078"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-30",
+        "selector": "#pilotDrawingStatusSet",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "applyStatus.onclick=()=>{",
+        "lines": [
+          5527,
+          5527
+        ],
+        "anchor": "applyStatus.onclick=()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingStatusSet",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-079"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingLine",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2007,
+          2007
+        ],
+        "anchor": "pilotDrawingLine",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "RFQ-L00012"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingLine",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-080"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotDrawingRequirement",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          2019,
+          2019
+        ],
+        "anchor": "pilotDrawingRequirement",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "not_required"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingRequirement",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-081"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-30",
+        "selector": "#pilotDrawingStatusSet",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "applyStatus.onclick=()=>{",
+        "lines": [
+          5527,
+          5527
+        ],
+        "anchor": "applyStatus.onclick=()=>{",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotDrawingStatusSet",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-082"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "pdfLinks": 3,
+          "notRequired": 10
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "pdfLinks": 3,
+            "notRequired": 10
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-083"
+    },
+    {
+      "kind": "reload",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6175,
+          6175
+        ],
+        "anchor": "window.addEventListener(\"beforeunload\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "key": "F5"
+      },
+      "branch": "Saved idle first; unexpected beforeunload stops safely",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#srmUxWorkspaceSaveSummary",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "exact memory/API/SQLite/history/PDF before-after",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-084"
+    }
+  ]
+}

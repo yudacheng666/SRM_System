@@ -1,0 +1,64 @@
+[
+  {
+    "id": "AUTHORING-01",
+    "type": "tool authoring syntax, before file write",
+    "evidence": "Tool call returned SyntaxError: missing ) after argument list; no command/product/browser operation ran",
+    "status": "Recorded; patch resubmitted using raw literal",
+    "detail": "Two tool-authoring JavaScript literal syntax errors occurred before file writes; neither was a Node test, browser action or business operation."
+  },
+  {
+    "id": "STATIC-01",
+    "type": "source binding / plan preparation",
+    "evidence": [
+      "logs/build-first.stderr.log",
+      "logs/build-source-first.cjs"
+    ],
+    "detail": "Guessed workspace navigation tab absent from frozen source; replaced by actual #uiAdminToggle source-bound handler. Source audit also corrected project/assignment navigation and reselect after F5. No browser was started."
+  },
+  {
+    "id": "STATIC-02",
+    "type": "static checker composition error",
+    "evidence": [
+      "preflight-first.json",
+      "logs/buyer-preflight-first.cjs"
+    ],
+    "detail": "Double-compilation of V1 compiled output added conditions/postconditions fields rejected by closed original schema;108 errors retained. Pass raw input to V1 preflight; disclose projection omitted supplier package file as all auxiliary. Do not weaken V1 schema."
+  },
+  {
+    "id": "STATIC-03",
+    "type": "read-only fixture auditor error",
+    "evidence": [
+      "logs/fixture-static-audit.stderr.log",
+      "logs/fixture-audit-first.cjs"
+    ],
+    "detail": "PDF xref entry slice started at second object; corrected static reader index4 to3. Original generated PDF bytes unchanged; no product rendering result inferred."
+  },
+  {
+    "id": "HARNESS-01",
+    "type": "Node test reporter evidence/launcher",
+    "evidence": [
+      "logs/v1-84-tests.stdout.log",
+      "logs/buyer-static-tests.stdout.log"
+    ],
+    "detail": "Default isolation output aggregated files (3 successful files;1 failed new test file), no case-level84/40 evidence. Final --test-isolation=none provides84/40 actual case records. Initial new file failure retained; per-case count unavailable, not fabricated."
+  },
+  {
+    "id": "HARNESS-02",
+    "type": "missing env in one diagnostic command",
+    "evidence": [
+      "logs/v1-schema-no-isolation.stdout.log",
+      "logs/v1-schema-no-isolation.stderr.log"
+    ],
+    "detail": "Diagnostic command omitted required SRM_FROZEN_SOURCE, exit1; next command explicitly provided pinned source and52schema tests passed. Not added to final unique counts."
+  },
+  {
+    "id": "PLAN-01",
+    "type": "full-plan genuine preparation blocker",
+    "evidence": [
+      "preflight-final.json",
+      "v1-whole-buyer-rejected.json",
+      "needs-review.json"
+    ],
+    "detail": "Full nine buyer documents not executable by V1: unknown wrapper metadata and unsupported control/oracle/lifecycle steps. Exit2 correctly blocks, not an accepted business PASS. Seven capability groups unresolved; no Windows continuation."
+  }
+]

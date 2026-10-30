@@ -1,0 +1,638 @@
+[
+  {
+    "label": "v1-84-tests",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "schema.test.cjs",
+      "runtime.test.cjs",
+      "adapter.test.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work/toolchain-v1",
+    "startedAt": "2026-10-30T10:50:23Z",
+    "elapsedSeconds": 3.127,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "buyer-static-tests",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "buyer-plan.test.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:26Z",
+    "elapsedSeconds": 26.089,
+    "exitCode": 1,
+    "expectedExit": 0
+  },
+  {
+    "label": "fixture-static-audit",
+    "command": [
+      "node",
+      "fixture-audit.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:52Z",
+    "elapsedSeconds": 0.114,
+    "exitCode": 1,
+    "expectedExit": 0
+  },
+  {
+    "label": "v1-original-positive-preflight",
+    "command": [
+      "node",
+      "toolchain-v1/preflight.cjs",
+      "/workspace/srm2aaa-product/prototype/m1-lite/index.html",
+      "v1-original-preflight-pass.json",
+      "toolchain-v1/actions/reviewed-contracts.json",
+      "toolchain-v1/actions/assignment-reviewed.json"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:52Z",
+    "elapsedSeconds": 0.097,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "full-buyer-preflight",
+    "command": [
+      "node",
+      "buyer-preflight.cjs",
+      "/workspace/srm2aaa-product",
+      "preflight-final.json"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:52Z",
+    "elapsedSeconds": 0.8,
+    "exitCode": 2,
+    "expectedExit": 2
+  },
+  {
+    "label": "syntax-build-buyer-plan.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/build-buyer-plan.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.057,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-buyer-plan.test.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/buyer-plan.test.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.047,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-buyer-preflight.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/buyer-preflight.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.046,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-fixture-audit.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/fixture-audit.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.048,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-source-probes.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/source-probes.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.051,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-toolchain-v1-adapter.test.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/adapter.test.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.039,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-toolchain-v1-build-policy.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/build-policy.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.055,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-toolchain-v1-cdp-adapter.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/cdp-adapter.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.036,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-toolchain-v1-guarded-driver.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/guarded-driver.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.053,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-toolchain-v1-preflight.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/preflight.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.042,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-toolchain-v1-runtime.test.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/runtime.test.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.052,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-toolchain-v1-schema.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/schema.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.047,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-toolchain-v1-schema.test.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/schema.test.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.054,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "syntax-toolchain-v1-verify-static.cjs",
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/verify-static.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "startedAt": "2026-10-30T10:50:53Z",
+    "elapsedSeconds": 0.042,
+    "exitCode": 0,
+    "expectedExit": 0
+  },
+  {
+    "label": "build-first",
+    "command": [
+      "node",
+      "build-buyer-plan.cjs",
+      "/workspace/srm2aaa-product"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {
+      "SRM_PRODUCT_ROOT": "/workspace/srm2aaa-product",
+      "SRM_FROZEN_SOURCE": "/workspace/srm2aaa-product/prototype/m1-lite/index.html"
+    },
+    "exitCode": 1,
+    "expectedExit": 0,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:45:50Z"
+  },
+  {
+    "label": "build-final",
+    "command": [
+      "node",
+      "build-buyer-plan.cjs",
+      "/workspace/srm2aaa-product"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {
+      "SRM_PRODUCT_ROOT": "/workspace/srm2aaa-product",
+      "SRM_FROZEN_SOURCE": "/workspace/srm2aaa-product/prototype/m1-lite/index.html"
+    },
+    "exitCode": 0,
+    "expectedExit": 0,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:46:25Z"
+  },
+  {
+    "label": "preflight-first",
+    "command": [
+      "node",
+      "buyer-preflight.cjs",
+      "/workspace/srm2aaa-product",
+      "preflight-first.json"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {
+      "SRM_PRODUCT_ROOT": "/workspace/srm2aaa-product",
+      "SRM_FROZEN_SOURCE": "/workspace/srm2aaa-product/prototype/m1-lite/index.html"
+    },
+    "exitCode": 2,
+    "expectedExit": 2,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:48:09Z"
+  },
+  {
+    "label": "preflight-final",
+    "command": [
+      "node",
+      "buyer-preflight.cjs",
+      "/workspace/srm2aaa-product",
+      "preflight-before-selection-review.json"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {
+      "SRM_PRODUCT_ROOT": "/workspace/srm2aaa-product",
+      "SRM_FROZEN_SOURCE": "/workspace/srm2aaa-product/prototype/m1-lite/index.html"
+    },
+    "exitCode": 2,
+    "expectedExit": 2,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:48:22Z"
+  },
+  {
+    "label": "v1-schema-no-isolation",
+    "command": [
+      "node",
+      "--test",
+      "--test-isolation=none",
+      "--test-reporter=tap",
+      "toolchain-v1/schema.test.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {},
+    "exitCode": 1,
+    "expectedExit": 0,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:52:23Z"
+  },
+  {
+    "label": "v1-schema-cases",
+    "command": [
+      "node",
+      "--test",
+      "--test-isolation=none",
+      "--test-reporter=tap",
+      "toolchain-v1/schema.test.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {
+      "SRM_PRODUCT_ROOT": "/workspace/srm2aaa-product",
+      "SRM_FROZEN_SOURCE": "/workspace/srm2aaa-product/prototype/m1-lite/index.html"
+    },
+    "exitCode": 0,
+    "expectedExit": 0,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:52:31Z"
+  },
+  {
+    "label": "v1-84-final",
+    "command": [
+      "node",
+      "--test",
+      "--test-isolation=none",
+      "--test-reporter=tap",
+      "toolchain-v1/schema.test.cjs",
+      "toolchain-v1/runtime.test.cjs",
+      "toolchain-v1/adapter.test.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {
+      "SRM_PRODUCT_ROOT": "/workspace/srm2aaa-product",
+      "SRM_FROZEN_SOURCE": "/workspace/srm2aaa-product/prototype/m1-lite/index.html"
+    },
+    "exitCode": 0,
+    "expectedExit": 0,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:52:50Z"
+  },
+  {
+    "label": "buyer-static-before-selection-review",
+    "command": [
+      "node",
+      "--test",
+      "--test-isolation=none",
+      "--test-reporter=tap",
+      "buyer-plan.test.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {
+      "SRM_PRODUCT_ROOT": "/workspace/srm2aaa-product",
+      "SRM_FROZEN_SOURCE": "/workspace/srm2aaa-product/prototype/m1-lite/index.html"
+    },
+    "exitCode": 0,
+    "expectedExit": 0,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:53:32Z"
+  },
+  {
+    "label": "fixture-static-final",
+    "command": [
+      "node",
+      "fixture-audit.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {
+      "SRM_PRODUCT_ROOT": "/workspace/srm2aaa-product",
+      "SRM_FROZEN_SOURCE": "/workspace/srm2aaa-product/prototype/m1-lite/index.html"
+    },
+    "exitCode": 0,
+    "expectedExit": 0,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:53:58Z"
+  },
+  {
+    "label": "build-selected-review",
+    "command": [
+      "node",
+      "build-buyer-plan.cjs",
+      "/workspace/srm2aaa-product"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {
+      "SRM_PRODUCT_ROOT": "/workspace/srm2aaa-product",
+      "SRM_FROZEN_SOURCE": "/workspace/srm2aaa-product/prototype/m1-lite/index.html"
+    },
+    "exitCode": 0,
+    "expectedExit": 0,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:54:20Z"
+  },
+  {
+    "label": "buyer-static-final",
+    "command": [
+      "node",
+      "--test",
+      "--test-isolation=none",
+      "--test-reporter=tap",
+      "buyer-plan.test.cjs"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {
+      "SRM_PRODUCT_ROOT": "/workspace/srm2aaa-product",
+      "SRM_FROZEN_SOURCE": "/workspace/srm2aaa-product/prototype/m1-lite/index.html"
+    },
+    "exitCode": 0,
+    "expectedExit": 0,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:54:50Z"
+  },
+  {
+    "label": "full-plan-final",
+    "command": [
+      "node",
+      "buyer-preflight.cjs",
+      "/workspace/srm2aaa-product",
+      "preflight-final.json"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {
+      "SRM_PRODUCT_ROOT": "/workspace/srm2aaa-product",
+      "SRM_FROZEN_SOURCE": "/workspace/srm2aaa-product/prototype/m1-lite/index.html"
+    },
+    "exitCode": 2,
+    "expectedExit": 2,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:55:19Z"
+  },
+  {
+    "label": "v1-whole-buyer",
+    "command": [
+      "node",
+      "toolchain-v1/preflight.cjs",
+      "/workspace/srm2aaa-product/prototype/m1-lite/index.html",
+      "v1-whole-buyer-rejected.json",
+      "actions/00-baseline-rebuild.json",
+      "actions/01-supplier-allocation.json",
+      "actions/02-drawing-upload-version.json",
+      "actions/03-supplier-packages.json",
+      "actions/04-quotes.json",
+      "actions/05-comparison.json",
+      "actions/06-persistence-offline.json",
+      "actions/07-backup-restore.json",
+      "actions/08-layout.json"
+    ],
+    "cwd": "/workspace/winplan2-work",
+    "environmentSelectors": {
+      "SRM_PRODUCT_ROOT": "/workspace/srm2aaa-product",
+      "SRM_FROZEN_SOURCE": "/workspace/srm2aaa-product/prototype/m1-lite/index.html"
+    },
+    "exitCode": 2,
+    "expectedExit": 2,
+    "exitProvenance": "actual tool command result; no reconstructed start time",
+    "logLastModifiedUtc": "2026-10-30T10:55:19Z"
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/build-buyer-plan.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/buyer-plan.test.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/buyer-preflight.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/fixture-audit.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/source-probes.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/adapter.test.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/build-policy.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/cdp-adapter.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/guarded-driver.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/preflight.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/runtime.test.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/schema.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/schema.test.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "/workspace/winplan2-work/toolchain-v1/verify-static.cjs"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,220 @@
+file,stepIndex,id,selector,kind,source,lines,sourceSchemaAudit,executableStatus,businessStatus,capability
+actions/00-baseline-rebuild.json,0,W03-001,#pilotNewWorkspace,native,prototype/m1-lite/index.html,"[6059, 6067]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/00-baseline-rebuild.json,1,W03-002,#uiRenameRfqBtn,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/00-baseline-rebuild.json,2,W03-003,#uiRfqNameInput,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/00-baseline-rebuild.json,3,W03-004,#uiRfqNameInput,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/00-baseline-rebuild.json,4,W03-005,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/00-baseline-rebuild.json,5,W03-006,.srm-v2-sideitem[data-srm-v2-tab='items'],native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/00-baseline-rebuild.json,6,W03-007,#toggleItemIntake,ensure-open,prototype/m1-lite/index.html,"[4119, 4119]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/00-baseline-rebuild.json,7,W03-008,#importFile,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/00-baseline-rebuild.json,8,W03-009,#confirmImportRows,wait-visible,prototype/m1-lite/index.html,"[4058, 4058]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/00-baseline-rebuild.json,9,W03-010,#confirmImportRows,native,prototype/m1-lite/index.html,"[4086, 4117]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/00-baseline-rebuild.json,10,W03-011,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/00-baseline-rebuild.json,11,W03-012,,reload,prototype/m1-lite/index.html,"[6175, 6175]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/00-baseline-rebuild.json,12,W03-013,.srm-v2-sideitem[data-srm-v2-tab='assign'],native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/00-baseline-rebuild.json,13,W03-014,#uiOpenSupplierTools,ensure-open,prototype/m1-lite/index.html,"[6984, 6984]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/00-baseline-rebuild.json,14,W03-015,#pilotSupplierExcel,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/00-baseline-rebuild.json,15,W03-016,#pilotImportSupplierConfirm,wait-visible,prototype/m1-lite/index.html,"[1951, 1951]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/00-baseline-rebuild.json,16,W03-017,#pilotImportSupplierConfirm,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/00-baseline-rebuild.json,17,W03-018,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/01-supplier-allocation.json,0,W03-019,.srm-v2-sideitem[data-srm-v2-tab='assign'],native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/01-supplier-allocation.json,1,W03-020,#selectAssignAll,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/01-supplier-allocation.json,2,W03-021,#supplierList [data-add='SUP-A'],native,prototype/m1-lite/index.html,"[4907, 5016]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/01-supplier-allocation.json,3,W03-022,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/01-supplier-allocation.json,4,W03-023,,reload,prototype/m1-lite/index.html,"[6175, 6175]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/01-supplier-allocation.json,5,W03-024,.srm-v2-sideitem[data-srm-v2-tab='assign'],native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/01-supplier-allocation.json,6,W03-025,#selectAssignAll,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/01-supplier-allocation.json,7,W03-026,#supplierList [data-add='SUP-B'],native,prototype/m1-lite/index.html,"[4907, 5016]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/01-supplier-allocation.json,8,W03-027,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/01-supplier-allocation.json,9,W03-028,,reload,prototype/m1-lite/index.html,"[6175, 6175]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/01-supplier-allocation.json,10,W03-029,.srm-v2-sideitem[data-srm-v2-tab='assign'],native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/01-supplier-allocation.json,11,W03-030,#selectAssignAll,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/01-supplier-allocation.json,12,W03-031,#supplierList [data-add='SUP-B'],duplicate-assignment,prototype/m1-lite/index.html,"[5008, 5008]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,0,W03-032,.srm-v2-sideitem[data-srm-v2-tab='items'],native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,1,W03-033,#uiOpenDrawings,ensure-open,prototype/m1-lite/index.html,"[6949, 6949]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,2,W03-034,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,3,W03-035,#pilotDrawingVersion,native,prototype/m1-lite/index.html,"[2008, 2008]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,4,W03-036,#pilotDrawingFiles,file,prototype/m1-lite/index.html,"[2009, 2009]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,5,W03-037,#pilotDrawingUpload,native,prototype/m1-lite/index.html,"[5483, 5483]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,6,W03-038,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/02-drawing-upload-version.json,7,W03-039,"[data-drawing=""RFQ-L00001""]",pdf-preview,prototype/m1-lite/index.html,"[4811, 4811]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,pdf-preview
+actions/02-drawing-upload-version.json,8,W03-040,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,9,W03-041,#pilotDrawingVersion,native,prototype/m1-lite/index.html,"[2008, 2008]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,10,W03-042,#pilotDrawingFiles,file,prototype/m1-lite/index.html,"[2009, 2009]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,11,W03-043,#pilotDrawingUpload,native,prototype/m1-lite/index.html,"[5483, 5483]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,12,W03-044,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/02-drawing-upload-version.json,13,W03-045,"[data-drawing=""RFQ-L00002""]",pdf-preview,prototype/m1-lite/index.html,"[4811, 4811]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,pdf-preview
+actions/02-drawing-upload-version.json,14,W03-046,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,15,W03-047,#pilotDrawingFiles,file,prototype/m1-lite/index.html,"[2009, 2009]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,16,W03-048,#pilotDrawingUpload,native,prototype/m1-lite/index.html,"[5483, 5483]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,17,W03-049,#pilotDrawingVersion,native,prototype/m1-lite/index.html,"[2008, 2008]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,18,W03-050,#pilotDrawingFiles,file,prototype/m1-lite/index.html,"[2009, 2009]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,19,W03-051,#pilotDrawingUpload,native,prototype/m1-lite/index.html,"[5483, 5483]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,20,W03-052,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/02-drawing-upload-version.json,21,W03-053,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,22,W03-054,#pilotDrawingRequirement,select,prototype/m1-lite/index.html,"[2019, 2019]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,23,W03-055,#pilotDrawingStatusSet,native,prototype/m1-lite/index.html,"[5527, 5527]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,24,W03-056,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,25,W03-057,#pilotDrawingRequirement,select,prototype/m1-lite/index.html,"[2019, 2019]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,26,W03-058,#pilotDrawingStatusSet,native,prototype/m1-lite/index.html,"[5527, 5527]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,27,W03-059,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,28,W03-060,#pilotDrawingRequirement,select,prototype/m1-lite/index.html,"[2019, 2019]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,29,W03-061,#pilotDrawingStatusSet,native,prototype/m1-lite/index.html,"[5527, 5527]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,30,W03-062,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,31,W03-063,#pilotDrawingRequirement,select,prototype/m1-lite/index.html,"[2019, 2019]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,32,W03-064,#pilotDrawingStatusSet,native,prototype/m1-lite/index.html,"[5527, 5527]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,33,W03-065,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,34,W03-066,#pilotDrawingRequirement,select,prototype/m1-lite/index.html,"[2019, 2019]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,35,W03-067,#pilotDrawingStatusSet,native,prototype/m1-lite/index.html,"[5527, 5527]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,36,W03-068,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,37,W03-069,#pilotDrawingRequirement,select,prototype/m1-lite/index.html,"[2019, 2019]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,38,W03-070,#pilotDrawingStatusSet,native,prototype/m1-lite/index.html,"[5527, 5527]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,39,W03-071,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,40,W03-072,#pilotDrawingRequirement,select,prototype/m1-lite/index.html,"[2019, 2019]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,41,W03-073,#pilotDrawingStatusSet,native,prototype/m1-lite/index.html,"[5527, 5527]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,42,W03-074,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,43,W03-075,#pilotDrawingRequirement,select,prototype/m1-lite/index.html,"[2019, 2019]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,44,W03-076,#pilotDrawingStatusSet,native,prototype/m1-lite/index.html,"[5527, 5527]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,45,W03-077,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,46,W03-078,#pilotDrawingRequirement,select,prototype/m1-lite/index.html,"[2019, 2019]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,47,W03-079,#pilotDrawingStatusSet,native,prototype/m1-lite/index.html,"[5527, 5527]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,48,W03-080,#pilotDrawingLine,select,prototype/m1-lite/index.html,"[2007, 2007]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,49,W03-081,#pilotDrawingRequirement,select,prototype/m1-lite/index.html,"[2019, 2019]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/02-drawing-upload-version.json,50,W03-082,#pilotDrawingStatusSet,native,prototype/m1-lite/index.html,"[5527, 5527]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/02-drawing-upload-version.json,51,W03-083,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/02-drawing-upload-version.json,52,W03-084,,reload,prototype/m1-lite/index.html,"[6175, 6175]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/03-supplier-packages.json,0,W03-085,#pilotReportOpen,ensure-open,prototype/m1-lite/index.html,"[1927, 1927]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/03-supplier-packages.json,1,W03-086,#pilotReportType,select,prototype/m1-lite/index.html,"[1959, 1959]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/03-supplier-packages.json,2,W03-087,#pilotReportSupplier,select,prototype/m1-lite/index.html,"[1963, 1963]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/03-supplier-packages.json,3,W03-088,#pilotReportDownload,download,prototype/m1-lite/index.html,"[1972, 1972]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,download-oracle
+actions/03-supplier-packages.json,4,W03-089,#pilotReportSupplier,select,prototype/m1-lite/index.html,"[1963, 1963]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/03-supplier-packages.json,5,W03-090,#pilotReportDownload,download,prototype/m1-lite/index.html,"[1972, 1972]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,download-oracle
+actions/03-supplier-packages.json,6,W03-091,#pilotReportDownloadAll,download,prototype/m1-lite/index.html,"[1973, 1973]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,download-oracle
+actions/04-quotes.json,0,W03-092,.srm-v2-sideitem[data-srm-v2-tab='quoteImport'],native,prototype/m1-lite/index.html,"[1876, 1876]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,1,W03-093,#quoteImportSupplier,select,prototype/m1-lite/index.html,"[402, 402]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,2,W03-094,"[data-srm-ux-input-mode=""paste""]",native,prototype/m1-lite/index.html,"[2350, 2350]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,3,W03-095,#quotePaste,native,prototype/m1-lite/index.html,"[2368, 2368]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,4,W03-096,#quoteParsePaste,native,prototype/m1-lite/index.html,"[4655, 4655]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,5,W03-097,#commitQuoteImport,native,prototype/m1-lite/index.html,"[4680, 4707]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,6,W03-098,#commitQuoteImport,native,prototype/m1-lite/index.html,"[4680, 4707]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,7,W03-099,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/04-quotes.json,8,W03-100,#quoteClearPreview,native,prototype/m1-lite/index.html,"[4657, 4657]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,9,W03-101,#quoteRoundBody [data-edit-quote='0'],native,prototype/m1-lite/index.html,"[4607, 4612]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,10,W03-102,#quoteRoundBody [data-edit-quote='0'],native,prototype/m1-lite/index.html,"[4607, 4612]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,11,W03-103,#quoteRoundBody [data-edit-quote='0'],native,prototype/m1-lite/index.html,"[4607, 4612]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,12,W03-104,#quoteRoundBody [data-edit-quote='0'],native,prototype/m1-lite/index.html,"[4607, 4612]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,13,W03-105,#quoteRoundBody [data-edit-quote='0'],native,prototype/m1-lite/index.html,"[4607, 4612]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,14,W03-106,#quoteRoundBody [data-edit-quote='0'],native,prototype/m1-lite/index.html,"[4607, 4612]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,15,W03-107,#quotePaste,native,prototype/m1-lite/index.html,"[2368, 2368]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,16,W03-108,#quoteParsePaste,native,prototype/m1-lite/index.html,"[4655, 4655]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,17,W03-109,#commitQuoteImport,native,prototype/m1-lite/index.html,"[4680, 4707]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,18,W03-110,#quoteClearPreview,native,prototype/m1-lite/index.html,"[4657, 4657]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,19,W03-111,#quoteImportSupplier,select,prototype/m1-lite/index.html,"[402, 402]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,20,W03-112,"[data-srm-ux-input-mode=""file""]",native,prototype/m1-lite/index.html,"[2349, 2349]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,21,W03-113,#quoteImportFile,file,prototype/m1-lite/index.html,"[2378, 2378]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,22,W03-114,#commitQuoteImport,wait-visible,prototype/m1-lite/index.html,"[4688, 4688]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,23,W03-115,#commitQuoteImport,native,prototype/m1-lite/index.html,"[4680, 4707]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,24,W03-116,#quoteEvidenceNote,native,prototype/m1-lite/index.html,"[407, 407]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,25,W03-117,#confirmQuoteRound,native,prototype/m1-lite/index.html,"[4653, 4653]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,26,W03-118,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/04-quotes.json,27,W03-119,#quoteImportSupplier,select,prototype/m1-lite/index.html,"[402, 402]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,28,W03-120,"[data-srm-ux-input-mode=""file""]",native,prototype/m1-lite/index.html,"[2349, 2349]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,29,W03-121,#quoteImportFile,file,prototype/m1-lite/index.html,"[2378, 2378]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,30,W03-122,#commitQuoteImport,wait-visible,prototype/m1-lite/index.html,"[4688, 4688]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,31,W03-123,#commitQuoteImport,native,prototype/m1-lite/index.html,"[4680, 4707]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,32,W03-124,#quoteEvidenceNote,native,prototype/m1-lite/index.html,"[407, 407]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,33,W03-125,#confirmQuoteRound,native,prototype/m1-lite/index.html,"[4653, 4653]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,34,W03-126,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/04-quotes.json,35,W03-127,#quoteImportSupplier,select,prototype/m1-lite/index.html,"[402, 402]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,36,W03-128,#quoteRoundSummary,capture-history,prototype/m1-lite/index.html,"[4598, 4598]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/04-quotes.json,37,W03-129,#newQuoteRevision,native,prototype/m1-lite/index.html,"[4635, 4635]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,38,W03-130,"[data-srm-ux-input-mode=""paste""]",native,prototype/m1-lite/index.html,"[2350, 2350]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,39,W03-131,#quotePaste,native,prototype/m1-lite/index.html,"[2368, 2368]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,40,W03-132,#quoteParsePaste,native,prototype/m1-lite/index.html,"[4655, 4655]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,41,W03-133,#commitQuoteImport,native,prototype/m1-lite/index.html,"[4680, 4707]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,42,W03-134,#confirmQuoteRound,native,prototype/m1-lite/index.html,"[4653, 4653]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,43,W03-135,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/04-quotes.json,44,W03-136,#newQuoteRound,native,prototype/m1-lite/index.html,"[4634, 4634]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,45,W03-137,#quotePaste,native,prototype/m1-lite/index.html,"[2368, 2368]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,46,W03-138,#quoteParsePaste,native,prototype/m1-lite/index.html,"[4655, 4655]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,47,W03-139,#commitQuoteImport,native,prototype/m1-lite/index.html,"[4680, 4707]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,48,W03-140,#confirmQuoteRound,native,prototype/m1-lite/index.html,"[4653, 4653]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,49,W03-141,#carryForwardMissing,native,prototype/m1-lite/index.html,"[4755, 4755]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,50,W03-142,"[data-carry-line=""RFQ-L00002""]",checked,prototype/m1-lite/index.html,"[4735, 4735]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,51,W03-143,"[data-carry-line=""RFQ-L00003""]",checked,prototype/m1-lite/index.html,"[4735, 4735]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,52,W03-144,"[data-carry-line=""RFQ-L00004""]",checked,prototype/m1-lite/index.html,"[4735, 4735]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,53,W03-145,"[data-carry-line=""RFQ-L00005""]",checked,prototype/m1-lite/index.html,"[4735, 4735]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,54,W03-146,"[data-carry-line=""RFQ-L00006""]",checked,prototype/m1-lite/index.html,"[4735, 4735]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,55,W03-147,"[data-carry-line=""RFQ-L00007""]",checked,prototype/m1-lite/index.html,"[4735, 4735]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,56,W03-148,"[data-carry-line=""RFQ-L00008""]",checked,prototype/m1-lite/index.html,"[4735, 4735]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,57,W03-149,"[data-carry-line=""RFQ-L00009""]",checked,prototype/m1-lite/index.html,"[4735, 4735]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,58,W03-150,"[data-carry-line=""RFQ-L00010""]",checked,prototype/m1-lite/index.html,"[4735, 4735]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,59,W03-151,"[data-carry-line=""RFQ-L00011""]",checked,prototype/m1-lite/index.html,"[4735, 4735]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,60,W03-152,"[data-carry-line=""RFQ-L00012""]",checked,prototype/m1-lite/index.html,"[4735, 4735]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,61,W03-153,#carryEvidenceNote,native,prototype/m1-lite/index.html,"[4736, 4736]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,62,W03-154,#carryConfirmSource,checked,prototype/m1-lite/index.html,"[4737, 4737]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,63,W03-155,#confirmCarrySelection,native,prototype/m1-lite/index.html,"[4740, 4753]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,64,W03-156,#confirmQuoteRound,native,prototype/m1-lite/index.html,"[4653, 4653]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,65,W03-157,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/04-quotes.json,66,W03-158,#quoteImportSupplier,select,prototype/m1-lite/index.html,"[402, 402]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,67,W03-159,#newQuoteRevision,native,prototype/m1-lite/index.html,"[4635, 4635]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,68,W03-160,"[data-srm-ux-input-mode=""manual""]",native,prototype/m1-lite/index.html,"[2351, 2351]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,69,W03-161,#quoteManualItem,native,prototype/m1-lite/index.html,"[2358, 2358]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,70,W03-162,#quoteManualPrice,native,prototype/m1-lite/index.html,"[2359, 2359]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,71,W03-163,#quoteManualLead,native,prototype/m1-lite/index.html,"[2360, 2360]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,72,W03-164,#quoteManualMoq,native,prototype/m1-lite/index.html,"[2361, 2361]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,73,W03-165,#quoteManualRemark,native,prototype/m1-lite/index.html,"[2363, 2363]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,74,W03-166,#quoteManualStatus,select,prototype/m1-lite/index.html,"[2362, 2362]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/04-quotes.json,75,W03-167,#quoteManualAdd,native,prototype/m1-lite/index.html,"[4654, 4654]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,76,W03-168,#commitQuoteImport,native,prototype/m1-lite/index.html,"[4680, 4707]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,77,W03-169,#confirmQuoteRound,native,prototype/m1-lite/index.html,"[4653, 4653]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/04-quotes.json,78,W03-170,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/05-comparison.json,0,W03-171,.srm-v2-sideitem[data-srm-v2-tab='quotes'],native,prototype/m1-lite/index.html,"[1877, 1877]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/05-comparison.json,1,W03-172,"#quoteTable [data-award=""RFQ-L00001|SUP-A""] .quotePrice",native,prototype/m1-lite/index.html,"[5363, 5363]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/05-comparison.json,2,W03-173,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/05-comparison.json,3,W03-174,"#quoteTable [data-award=""RFQ-L00002|SUP-B""] .quotePrice",native,prototype/m1-lite/index.html,"[5363, 5363]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/05-comparison.json,4,W03-175,#awardReasonConfirm,native,prototype/m1-lite/index.html,"[5408, 5408]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/05-comparison.json,5,W03-176,#awardReasonCancel,native,prototype/m1-lite/index.html,"[5407, 5407]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/05-comparison.json,6,W03-177,"#quoteTable [data-award=""RFQ-L00002|SUP-B""] .quotePrice",native,prototype/m1-lite/index.html,"[5363, 5363]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/05-comparison.json,7,W03-178,#awardReasonInput,native,prototype/m1-lite/index.html,"[43, 43]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/05-comparison.json,8,W03-179,#awardReasonConfirm,native,prototype/m1-lite/index.html,"[5408, 5408]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/05-comparison.json,9,W03-180,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/05-comparison.json,10,W03-181,#pilotReportOpen,ensure-open,prototype/m1-lite/index.html,"[1927, 1927]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/05-comparison.json,11,W03-182,#pilotReportType,select,prototype/m1-lite/index.html,"[1959, 1959]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/05-comparison.json,12,W03-183,"[data-report-supplier=""SUP-A""]",checked,prototype/m1-lite/index.html,"[6667, 6667]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/05-comparison.json,13,W03-184,"[data-report-supplier=""SUP-B""]",checked,prototype/m1-lite/index.html,"[6667, 6667]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/05-comparison.json,14,W03-185,#pilotReportDownload,download,prototype/m1-lite/index.html,"[1972, 1972]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,download-oracle
+actions/06-persistence-offline.json,0,W03-186,,reload,prototype/m1-lite/index.html,"[6175, 6175]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/06-persistence-offline.json,1,W03-187,,service-restart,prototype/m1-lite/run_local.bat,"[5, 5]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,windows-lifecycle
+actions/06-persistence-offline.json,2,W03-188,.srm-v2-sideitem[data-srm-v2-tab='project'],native,prototype/m1-lite/index.html,"[1873, 1873]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/06-persistence-offline.json,3,W03-189,#pilotNewWorkspace,native,prototype/m1-lite/index.html,"[6059, 6067]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/06-persistence-offline.json,4,W03-190,#uiRenameRfqBtn,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/06-persistence-offline.json,5,W03-191,#uiRfqNameInput,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/06-persistence-offline.json,6,W03-192,#uiRfqNameInput,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/06-persistence-offline.json,7,W03-193,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/06-persistence-offline.json,8,W03-194,#pilotHistoryWorkspace,select-archived-project,prototype/m1-lite/index.html,"[5773, 5773]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/06-persistence-offline.json,9,W03-195,#pilotSwitchWorkspace,native,prototype/m1-lite/index.html,"[6081, 6092]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/06-persistence-offline.json,10,W03-196,,service-stop,prototype/m1-lite/run_local.bat,"[5, 5]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,windows-lifecycle
+actions/06-persistence-offline.json,11,W03-197,#uiRenameRfqBtn,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/06-persistence-offline.json,12,W03-198,#uiRfqNameInput,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/06-persistence-offline.json,13,W03-199,#uiRfqNameInput,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/06-persistence-offline.json,14,W03-200,#pilotSaveWorkspace,offline-save,prototype/m1-lite/index.html,"[6142, 6142]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/06-persistence-offline.json,15,W03-201,,service-restart,prototype/m1-lite/run_local.bat,"[5, 5]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,windows-lifecycle
+actions/06-persistence-offline.json,16,W03-202,#pilotSaveWorkspace,native,prototype/m1-lite/index.html,"[1, 7000]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/06-persistence-offline.json,17,W03-203,,save-barrier,prototype/m1-lite/index.html,"[6137, 6137]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/06-persistence-offline.json,18,W03-204,,reload,prototype/m1-lite/index.html,"[6175, 6175]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/07-backup-restore.json,0,W03-205,#uiAdminToggle,native,prototype/m1-lite/index.html,"[6934, 6934]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/07-backup-restore.json,1,W03-206,#pilotS4DownloadFull,download,prototype/m1-lite/index.html,"[1921, 1921]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,download-oracle
+actions/07-backup-restore.json,2,W03-207,,empty-restore-target,prototype/m1-lite/run_local.bat,"[5, 5]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,windows-lifecycle
+actions/07-backup-restore.json,3,W03-208,#pilotS4BackupFile,downloaded-file,prototype/m1-lite/index.html,"[6378, 6378]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,download-oracle
+actions/07-backup-restore.json,4,W03-209,#pilotS4RestoreFull,native,prototype/m1-lite/index.html,"[6376, 6394]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/07-backup-restore.json,5,W03-210,,restore-audit,prototype/m1-lite/index.html,"[6386, 6386]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,save-sqlite-oracle
+actions/07-backup-restore.json,6,W03-211,#pilotS4BackupFile,downloaded-file,prototype/m1-lite/index.html,"[6378, 6378]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,download-oracle
+actions/07-backup-restore.json,7,W03-212,#pilotS4RestoreFull,nonempty-ui-refusal,prototype/m1-lite/index.html,"[6380, 6380]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,view-controls
+actions/07-backup-restore.json,8,W03-213,#pilotS4RestoreFull,nonempty-server-race,prototype/m1-lite/index.html,"[5919, 5919]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,nonempty-409-race
+actions/08-layout.json,0,W03-214,,viewport,prototype/m1-lite/index.html,"[48, 48]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,layout-observer
+actions/08-layout.json,1,W03-215,.srm-v2-sideitem[data-srm-v2-tab='quotes'],native,prototype/m1-lite/index.html,"[1877, 1877]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/08-layout.json,2,W03-216,#quoteTable tbody tr,layout-check,prototype/m1-lite/index.html,"[1379, 1379]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,layout-observer
+actions/08-layout.json,3,W03-217,,viewport,prototype/m1-lite/index.html,"[48, 48]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,layout-observer
+actions/08-layout.json,4,W03-218,.srm-v2-sideitem[data-srm-v2-tab='quotes'],native,prototype/m1-lite/index.html,"[1877, 1877]",PASS (binding/schema ONLY),V1 input only; not complete business step,NOT TESTED,V1.native-input
+actions/08-layout.json,5,W03-219,#quoteTable tbody tr,layout-check,prototype/m1-lite/index.html,"[1379, 1379]",PASS (binding/schema ONLY),NEEDS REVIEW,NOT TESTED,layout-observer

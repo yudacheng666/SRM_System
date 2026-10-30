@@ -1,0 +1,877 @@
+{
+  "schemaVersion": 1,
+  "productSha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "name": "baseline-rebuild",
+  "purpose": "buyer-plan",
+  "scope": "Fresh own root only; actual UI recreates same synthetic A/12/2, no legacy database restore",
+  "steps": [
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "workspace.new",
+        "selector": "#pilotNewWorkspace",
+        "scenario": "initial-empty",
+        "dialog": "none"
+      },
+      "branch": "Initial buyerMode=false; fresh isolated data directory",
+      "source": {
+        "function": "beginBuyer",
+        "lines": [
+          6059,
+          6067
+        ],
+        "anchor": "function beginBuyer()",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotNewWorkspace",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-001"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "workspace.rename",
+        "selector": "#uiRenameRfqBtn",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Reviewed valid enabled control; own isolated workspace",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "uiRenameRfqBtn",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#uiRenameRfqBtn",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-002"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "workspace.name",
+        "selector": "#uiRfqNameInput",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "虚构 WIN03 Alert 验收 A"
+      },
+      "branch": "Valid fictional input; validation errors handled as unknown dialogs",
+      "source": {
+        "function": "Input control",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "uiRfqNameInput",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#uiRfqNameInput",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-003"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "key",
+        "operation": "workspace.name",
+        "selector": "#uiRfqNameInput",
+        "scenario": "valid",
+        "dialog": "none",
+        "key": "Enter"
+      },
+      "branch": "Valid fictional input; validation errors handled as unknown dialogs",
+      "source": {
+        "function": "Input control",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "uiRfqNameInput",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#uiRfqNameInput",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-004"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "projectName": "虚构 WIN03 Alert 验收 A",
+          "items": 0
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "projectName": "虚构 WIN03 Alert 验收 A",
+            "items": 0
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-005"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "nav.items",
+        "selector": ".srm-v2-sideitem[data-srm-v2-tab='items']",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Reviewed valid enabled control; own isolated workspace",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "data-srm-v2-tab",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": ".srm-v2-sideitem[data-srm-v2-tab='items']",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-006"
+    },
+    {
+      "kind": "ensure-open",
+      "selector": "#toggleItemIntake",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4119,
+          4119
+        ],
+        "anchor": "toggleItemIntake.onclick",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "target": "#itemIntake"
+      },
+      "branch": "Inspect target first; click only when hidden; no duplicate toggle",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#toggleItemIntake",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-007"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "file",
+        "operation": "items.file",
+        "selector": "#importFile",
+        "scenario": "valid",
+        "dialog": "none",
+        "files": [
+          "fixtures/items12.xlsx"
+        ]
+      },
+      "branch": "Valid fictional input; validation errors handled as unknown dialogs",
+      "source": {
+        "function": "Input control",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "importFile",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#importFile",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-008"
+    },
+    {
+      "kind": "wait-visible",
+      "selector": "#confirmImportRows",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          4058,
+          4058
+        ],
+        "anchor": "confirmImportRows",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "enabled": true
+      },
+      "branch": "Async preview must exist before enabled check",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#confirmImportRows",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-009"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "materials.confirm",
+        "selector": "#confirmImportRows",
+        "scenario": "valid-no-conflict",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "alert",
+            "message": "新增 12 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。",
+            "values": {
+              "added": 12,
+              "merged": 0,
+              "separated": 0
+            },
+            "accept": true
+          }
+        ]
+      },
+      "branch": "Valid current preview: 12 new fictional rows, no conflict/error",
+      "source": {
+        "function": "addRowsToRfq",
+        "lines": [
+          4086,
+          4117
+        ],
+        "anchor": "function addRowsToRfq(rows)",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#confirmImportRows",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-010"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "items": 12,
+          "lineIds": [
+            "RFQ-L00001",
+            "RFQ-L00002",
+            "RFQ-L00003",
+            "RFQ-L00004",
+            "RFQ-L00005",
+            "RFQ-L00006",
+            "RFQ-L00007",
+            "RFQ-L00008",
+            "RFQ-L00009",
+            "RFQ-L00010",
+            "RFQ-L00011",
+            "RFQ-L00012"
+          ],
+          "quantities": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "items": 12,
+            "lineIds": [
+              "RFQ-L00001",
+              "RFQ-L00002",
+              "RFQ-L00003",
+              "RFQ-L00004",
+              "RFQ-L00005",
+              "RFQ-L00006",
+              "RFQ-L00007",
+              "RFQ-L00008",
+              "RFQ-L00009",
+              "RFQ-L00010",
+              "RFQ-L00011",
+              "RFQ-L00012"
+            ],
+            "quantities": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13
+            ]
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-011"
+    },
+    {
+      "kind": "reload",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6175,
+          6175
+        ],
+        "anchor": "window.addEventListener(\"beforeunload\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "key": "F5"
+      },
+      "branch": "Saved idle first; unexpected beforeunload stops safely",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#srmUxWorkspaceSaveSummary",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "exact memory/API/SQLite/history/PDF before-after",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-012"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "nav.assign",
+        "selector": ".srm-v2-sideitem[data-srm-v2-tab='assign']",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Reviewed valid enabled control; own isolated workspace",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "data-srm-v2-tab",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": ".srm-v2-sideitem[data-srm-v2-tab='assign']",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-013"
+    },
+    {
+      "kind": "ensure-open",
+      "selector": "#uiOpenSupplierTools",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6984,
+          6984
+        ],
+        "anchor": "uiOpenSupplierTools",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "target": "#uiSupplierTools"
+      },
+      "branch": "Inspect target first; click only when hidden; no duplicate toggle",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#uiOpenSupplierTools",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-014"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "file",
+        "operation": "suppliers.file",
+        "selector": "#pilotSupplierExcel",
+        "scenario": "valid",
+        "dialog": "none",
+        "files": [
+          "fixtures/suppliers.xlsx"
+        ]
+      },
+      "branch": "Valid fictional input; validation errors handled as unknown dialogs",
+      "source": {
+        "function": "Input control",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "pilotSupplierExcel",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotSupplierExcel",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-015"
+    },
+    {
+      "kind": "wait-visible",
+      "selector": "#pilotImportSupplierConfirm",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1951,
+          1951
+        ],
+        "anchor": "pilotImportSupplierConfirm",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "enabled": true
+      },
+      "branch": "Validated async supplier preview",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotImportSupplierConfirm",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-016"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "supplier.import",
+        "selector": "#pilotImportSupplierConfirm",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Reviewed valid enabled control; own isolated workspace",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "pilotImportSupplierConfirm",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotImportSupplierConfirm",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-017"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "items": 12,
+          "suppliers": [
+            "SUP-A",
+            "SUP-B"
+          ],
+          "links": 0
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "items": 12,
+            "suppliers": [
+              "SUP-A",
+              "SUP-B"
+            ],
+            "links": 0
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-018"
+    }
+  ]
+}

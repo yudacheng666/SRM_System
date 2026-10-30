@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 1,
+  "productSha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "name": "layout",
+  "purpose": "buyer-plan",
+  "scope": "Actual 1366x768 first priced row complete and 960 layout; no static-source visibility claims",
+  "steps": [
+    {
+      "kind": "viewport",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          48,
+          48
+        ],
+        "anchor": "body.srm-v2",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "width": 1366,
+        "height": 768
+      },
+      "branch": "Native Edge viewport/DPR recorded",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": null,
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "layout-observer",
+      "id": "W03-214"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-49",
+        "selector": ".srm-v2-sideitem[data-srm-v2-tab='quotes']",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-srm-v2-tab=\"quotes\"",
+        "lines": [
+          1877,
+          1877
+        ],
+        "anchor": "data-srm-v2-tab=\"quotes\"",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": ".srm-v2-sideitem[data-srm-v2-tab='quotes']",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-215"
+    },
+    {
+      "kind": "layout-check",
+      "selector": "#quoteTable tbody tr",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1379,
+          1379
+        ],
+        "anchor": "data-srm-ux-pending",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "width": 1366,
+        "height": 768,
+        "firstRowFullyVisible": true
+      },
+      "branch": "Actual populated row, scrollY0, clipping/overlay and screenshot;960 usable scrolling",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteTable",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "actual visible layout; data unchanged",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "layout-observer",
+      "id": "W03-216"
+    },
+    {
+      "kind": "viewport",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          48,
+          48
+        ],
+        "anchor": "body.srm-v2",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "width": 960,
+        "height": 768
+      },
+      "branch": "Native Edge viewport/DPR recorded",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": null,
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "layout-observer",
+      "id": "W03-217"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-49",
+        "selector": ".srm-v2-sideitem[data-srm-v2-tab='quotes']",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-srm-v2-tab=\"quotes\"",
+        "lines": [
+          1877,
+          1877
+        ],
+        "anchor": "data-srm-v2-tab=\"quotes\"",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": ".srm-v2-sideitem[data-srm-v2-tab='quotes']",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-218"
+    },
+    {
+      "kind": "layout-check",
+      "selector": "#quoteTable tbody tr",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1379,
+          1379
+        ],
+        "anchor": "data-srm-ux-pending",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "width": 960,
+        "height": 768,
+        "firstRowFullyVisible": false
+      },
+      "branch": "Actual populated row, scrollY0, clipping/overlay and screenshot;960 usable scrolling",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteTable",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "actual visible layout; data unchanged",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "layout-observer",
+      "id": "W03-219"
+    }
+  ]
+}
