@@ -1,0 +1,31 @@
+{
+  "group": "WIN-01",
+  "runtime": "Native Windows Python3.15.0",
+  "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "command": "python -m unittest discover -v -s prototype/m1-lite/backend -p \"test_*.py\"",
+  "exitCode": 0,
+  "ran": 44,
+  "unittestSeconds": 9.552,
+  "pass": 44,
+  "fail": 0,
+  "error": 0,
+  "skipped": 0,
+  "moduleCounts": {
+    "test_auto_backup": 10,
+    "test_s3_regression": 8,
+    "test_s4_backup": 8,
+    "test_s4_server": 4,
+    "test_server": 7,
+    "test_store": 7
+  },
+  "stdoutBytes": 0,
+  "stderrBytes": 12582,
+  "sourceFilesChecked": 146,
+  "sourceChanged": [],
+  "otherGates": {
+    "WIN-02": "NOT TESTED",
+    "WIN-03": "BLOCKED"
+  },
+  "overall": "NOT READY",
+  "status": "PASS"
+}
