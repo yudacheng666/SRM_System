@@ -27,6 +27,8 @@
 | D-020 | 2026-10-22 | VALID | GitHub + Markdown 主记忆；实质里程碑及时固化，按任务在授权文档分支提交 PR，新会话先读入口文件并核验仓库。 Checkpoint on substantive changes; no claim of autonomous background persistence. | 用户本次明确指令; 本次 docs-only PR |
 | D-021 | 2026-10-12（计划记录） | VALID | 首次采购员试用前保留 ERP 完全对接/审批/服务器功能为后续阶段；但真实 PDF 与安全恢复必须达到试用门槛。 Avoid scope creep while protecting buyer pilot quality. | 20261010_SRM_项目总控与最小试用计划.md |
 
+| D-022 | 2026-10-30 | VALID | GitHub Actions 是自动化验收首选；同 SHA/环境/用例已有 CI PASS 不再默认让 Codex 重跑。按低/中/高风险安排独立定向 UAT；CI 不可用时 Codex 仅补未测缺口，Windows Runner 优先，实机仅补专属场景；仍保留高风险合并门槛和用户批准。 CI-first, deduplicated risk-based independent UAT. | 用户 2026-10-30 明确指令；AGENTS.md 测试分级与去重 |
+
 ## Change handling / 决策变更规则
 
 - Never delete a superseded decision. Keep original ID, set SUPERSEDED, link successor and the explicit owner's latest approval date.
