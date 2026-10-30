@@ -1,0 +1,27 @@
+{
+  "group": "WIN-02",
+  "runtime": "v24.22.1",
+  "platform": "win32",
+  "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "command": "node --test prototype/m1-lite/tests/autosave_rules.test.cjs prototype/m1-lite/tests/supplier_package.test.cjs",
+  "exitCode": 0,
+  "tests": 10,
+  "pass": 10,
+  "fail": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "todo": 0,
+  "reportedDurationMs": 88.8195,
+  "moduleCounts": {
+    "autosave_rules.test.cjs": 4,
+    "supplier_package.test.cjs": 6
+  },
+  "sourceFilesChecked": 146,
+  "sourceChanged": [],
+  "stdoutBytes": 876,
+  "stderrBytes": 0,
+  "WIN01": "Prior PASS Python3.15; NOT RERUN",
+  "WIN03": "BLOCKED; readiness check only",
+  "overall": "NOT READY",
+  "status": "PASS"
+}

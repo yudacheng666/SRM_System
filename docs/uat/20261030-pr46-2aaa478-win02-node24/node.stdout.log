@@ -1,0 +1,18 @@
+✔ real changes save after idle; navigation/no-op does not save (2.7202ms)
+✔ new empty workspace needs an initial SQLite commit (2.0995ms)
+✔ busy, blocked, missing backend or halted failure prevent autosave (1.627ms)
+✔ revision does not influence unchanged snapshot fingerprints (1.9196ms)
+✔ supplier ZIPs preserve original names/bytes, isolate contents, and omit JSON (10.2962ms)
+✔ reused same PDF appears once per supplier ZIP (2.5929ms)
+✔ case-insensitive same-name different-content conflict is rejected (2.6079ms)
+✔ same filename in separate supplier ZIPs still contains the right bytes (3.0945ms)
+✔ unsafe names and corrupt PDF content block export (2.1933ms)
+✔ internal complete backup retains its separate private JSON index (2.657ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 88.8195
