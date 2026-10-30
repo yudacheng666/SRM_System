@@ -1,0 +1,1453 @@
+{
+  "schemaVersion": 1,
+  "productSha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "source": {
+    "path": "prototype/m1-lite/index.html",
+    "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+  },
+  "operations": [
+    {
+      "id": "materials.confirm",
+      "selector": "#confirmImportRows",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "addRowsToRfq",
+        "lines": [
+          4086,
+          4117
+        ],
+        "anchor": "function addRowsToRfq(rows)"
+      },
+      "scenarios": [
+        {
+          "id": "valid-no-conflict",
+          "when": [
+            "Valid current preview: 12 new fictional rows, no conflict/error"
+          ],
+          "dialogs": [
+            {
+              "type": "alert",
+              "message": {
+                "kind": "template",
+                "template": "新增 {added} 行；自动合并 {merged} 行；冲突确认分行 {separated} 行。合并前原始需求行已留存。",
+                "parameters": {
+                  "added": {
+                    "kind": "integer",
+                    "min": 12,
+                    "max": 12
+                  },
+                  "merged": {
+                    "kind": "integer",
+                    "min": 0,
+                    "max": 0
+                  },
+                  "separated": {
+                    "kind": "integer",
+                    "min": 0,
+                    "max": 0
+                  }
+                }
+              },
+              "decisions": [
+                "accept"
+              ]
+            }
+          ],
+          "postconditions": [
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        },
+        {
+          "id": "explicit-conflict-fixture",
+          "when": [
+            "Separate fixture: exactly1 conflicting row; valid current preview"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "template",
+                "template": "有 {count} 条相同编码存在属性或业务冲突，不能自动合并。是否明确保留为独立 RFQ 询价行？取消则本批次不导入。",
+                "parameters": {
+                  "count": {
+                    "kind": "integer",
+                    "min": 1,
+                    "max": 1
+                  }
+                }
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            },
+            {
+              "type": "alert",
+              "message": {
+                "kind": "template",
+                "template": "新增 {added} 行；自动合并 {merged} 行；冲突确认分行 {separated} 行。合并前原始需求行已留存。",
+                "parameters": {
+                  "added": {
+                    "kind": "integer",
+                    "min": 1,
+                    "max": 1
+                  },
+                  "merged": {
+                    "kind": "integer",
+                    "min": 0,
+                    "max": 0
+                  },
+                  "separated": {
+                    "kind": "integer",
+                    "min": 1,
+                    "max": 1
+                  }
+                }
+              },
+              "decisions": [
+                "accept"
+              ]
+            }
+          ],
+          "postconditions": [
+            "Cancel leaves whole batch untouched",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supplier.add.SUP-A",
+      "selector": "#supplierList [data-add='SUP-A']",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "applySupplierBulkChange",
+        "lines": [
+          4907,
+          5016
+        ],
+        "anchor": "function applySupplierBulkChange(lineIds,sid,mode,label)"
+      },
+      "scenarios": [
+        {
+          "id": "twelve-unlinked",
+          "when": [
+            "Exactly12 selected TST rows, no prior quote history, not linked to this supplier"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "template",
+                "template": "为选中物料添加供应商：即将变更 {count} 条物料与“{supplier}”的实际关联。\n涉及物料：{scope}\n注意：筛选后仍选中的隐藏物料也包含在内。\n确认后立即生效，是否继续？",
+                "parameters": {
+                  "count": {
+                    "kind": "integer",
+                    "min": 12,
+                    "max": 12
+                  },
+                  "supplier": {
+                    "kind": "enum",
+                    "values": [
+                      "虚构供应商A"
+                    ]
+                  },
+                  "scope": {
+                    "kind": "enum",
+                    "values": [
+                      "TST-001（规格：未填写，RFQ-L00001）、TST-002（规格：未填写，RFQ-L00002）、TST-003（规格：未填写，RFQ-L00003）、TST-004（规格：未填写，RFQ-L00004）、TST-005（规格：未填写，RFQ-L00005）、TST-006（规格：未填写，RFQ-L00006）、TST-007（规格：未填写，RFQ-L00007）、TST-008（规格：未填写，RFQ-L00008） 等 12 项"
+                    ]
+                  }
+                }
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "All12 exact supplier links (or unchanged on cancel)",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supplier.add.SUP-B",
+      "selector": "#supplierList [data-add='SUP-B']",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "applySupplierBulkChange",
+        "lines": [
+          4907,
+          5016
+        ],
+        "anchor": "function applySupplierBulkChange(lineIds,sid,mode,label)"
+      },
+      "scenarios": [
+        {
+          "id": "twelve-unlinked",
+          "when": [
+            "Exactly12 selected TST rows, no prior quote history, not linked to this supplier"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "template",
+                "template": "为选中物料添加供应商：即将变更 {count} 条物料与“{supplier}”的实际关联。\n涉及物料：{scope}\n注意：筛选后仍选中的隐藏物料也包含在内。\n确认后立即生效，是否继续？",
+                "parameters": {
+                  "count": {
+                    "kind": "integer",
+                    "min": 12,
+                    "max": 12
+                  },
+                  "supplier": {
+                    "kind": "enum",
+                    "values": [
+                      "虚构供应商B"
+                    ]
+                  },
+                  "scope": {
+                    "kind": "enum",
+                    "values": [
+                      "TST-001（规格：未填写，RFQ-L00001）、TST-002（规格：未填写，RFQ-L00002）、TST-003（规格：未填写，RFQ-L00003）、TST-004（规格：未填写，RFQ-L00004）、TST-005（规格：未填写，RFQ-L00005）、TST-006（规格：未填写，RFQ-L00006）、TST-007（规格：未填写，RFQ-L00007）、TST-008（规格：未填写，RFQ-L00008） 等 12 项"
+                    ]
+                  }
+                }
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "All12 exact supplier links (or unchanged on cancel)",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "item.edit.save",
+      "selector": "#itemEditSave",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "saveItemEdit",
+        "lines": [
+          3769,
+          3784
+        ],
+        "anchor": "function saveItemEdit()"
+      },
+      "scenarios": [
+        {
+          "id": "valid-edit",
+          "when": [
+            "Valid mutable item; no quote-history guard"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "exact",
+                "value": "保存此询价行修改？RFQ Line ID 和已分配供应商保持不变。"
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "LineID and existing suppliers unchanged",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "drawing.unlink",
+      "selector": "#pilotDrawingUnlink",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "unlink.onclick",
+        "lines": [
+          5519,
+          5526
+        ],
+        "anchor": "解除当前物料与这份图纸的关联？PDF 原件和其他物料的关联仍会保留。"
+      },
+      "scenarios": [
+        {
+          "id": "mutable-linked-row",
+          "when": [
+            "Existing selected PDF and mutable current row"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "exact",
+                "value": "解除当前物料与这份图纸的关联？PDF 原件和其他物料的关联仍会保留。"
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "Only chosen link removed; originalPDF/other links preserved",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "drawing.batch.confirm",
+      "selector": "#pilotBatchDrawingConfirm",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "batch drawing accept",
+        "lines": [
+          5680,
+          5700
+        ],
+        "anchor": "确认将 "
+      },
+      "scenarios": [
+        {
+          "id": "valid-batch",
+          "when": [
+            "Unique checked PDF candidates; unchanged baseline"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "template",
+                "template": "确认将 {pdfs} 份 PDF 关联到 {items} 条 RFQ 物料？请先核对编码、图号、行号和版本。保存后再用于供应商询价包。",
+                "parameters": {
+                  "pdfs": {
+                    "kind": "integer",
+                    "min": 1,
+                    "max": 12
+                  },
+                  "items": {
+                    "kind": "integer",
+                    "min": 1,
+                    "max": 12
+                  }
+                }
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "PDF hashes/LineIDs/versions and reload/package bytes",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quote.line.edit",
+      "selector": "#quoteRoundBody [data-edit-quote='0']",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "editQuoteLine",
+        "lines": [
+          4607,
+          4612
+        ],
+        "anchor": "function editQuoteLine(index)"
+      },
+      "scenarios": [
+        {
+          "id": "draft-line-zero",
+          "when": [
+            "Fixture draft round; line0 defaults price10/lead5/MOQ1/quoted/empty remark"
+          ],
+          "dialogs": [
+            {
+              "type": "prompt",
+              "message": {
+                "kind": "exact",
+                "value": "单价 / 阶梯价："
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ],
+              "defaultPrompt": {
+                "kind": "enum",
+                "values": [
+                  "10"
+                ]
+              }
+            },
+            {
+              "type": "prompt",
+              "message": {
+                "kind": "exact",
+                "value": "交期（天，可空）："
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ],
+              "defaultPrompt": {
+                "kind": "enum",
+                "values": [
+                  "5"
+                ]
+              }
+            },
+            {
+              "type": "prompt",
+              "message": {
+                "kind": "exact",
+                "value": "MOQ（可空）："
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ],
+              "defaultPrompt": {
+                "kind": "enum",
+                "values": [
+                  "1"
+                ]
+              }
+            },
+            {
+              "type": "prompt",
+              "message": {
+                "kind": "exact",
+                "value": "状态：quoted / noquote / cannot"
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ],
+              "defaultPrompt": {
+                "kind": "enum",
+                "values": [
+                  "quoted"
+                ]
+              }
+            },
+            {
+              "type": "prompt",
+              "message": {
+                "kind": "exact",
+                "value": "物料备注（可空）："
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ],
+              "defaultPrompt": {
+                "kind": "enum",
+                "values": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "postconditions": [
+            "Cancel any prompt leaves entire edit unchanged",
+            "All5 accepted => exact field values; historical versions unchanged",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quote.round.confirm",
+      "selector": "#confirmQuoteRound",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "confirmQuoteRound.onclick",
+        "lines": [
+          4653,
+          4653
+        ],
+        "anchor": "覆盖检查仍有异常：漏报 "
+      },
+      "scenarios": [
+        {
+          "id": "coverage-anomalies",
+          "when": [
+            "Nonempty mutable round with explicit coverage anomaly counts"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "template",
+                "template": "覆盖检查仍有异常：漏报 {missing} 项，多报 {extra} 项，重复 {duplicate} 项。仍要确认并锁定本次提交吗？",
+                "parameters": {
+                  "missing": {
+                    "kind": "integer",
+                    "min": 1,
+                    "max": 12
+                  },
+                  "extra": {
+                    "kind": "integer",
+                    "min": 0,
+                    "max": 12
+                  },
+                  "duplicate": {
+                    "kind": "integer",
+                    "min": 0,
+                    "max": 12
+                  }
+                }
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "Confirmed lock and exact coverage; immutable history",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        },
+        {
+          "id": "coverage-complete",
+          "when": [
+            "No missing/extra/duplicate; valid notes and nonempty draft"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "No dialog; confirmed locked round",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quote.import.commit",
+      "selector": "#commitQuoteImport",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "needs-review",
+      "source": {
+        "function": "commitQuoteImport.onclick",
+        "lines": [
+          4680,
+          4707
+        ],
+        "anchor": "是否只提交 "
+      },
+      "scenarios": [
+        {
+          "id": "partial-fixture",
+          "when": [
+            "NEEDS REVIEW: concrete fixture not yet finalized; proposed unknown-item noquote row2/BAD"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "template",
+                "template": "本次共 {total} 行，可提交 {valid} 行，拒绝/待检查 {skipped} 行。\n以下错误行不会保存，完整清单留在预览中：\n{details}\n是否只提交 {valid} 行？",
+                "parameters": {
+                  "total": {
+                    "kind": "integer",
+                    "min": 2,
+                    "max": 2
+                  },
+                  "valid": {
+                    "kind": "integer",
+                    "min": 1,
+                    "max": 1
+                  },
+                  "skipped": {
+                    "kind": "integer",
+                    "min": 1,
+                    "max": 1
+                  },
+                  "details": {
+                    "kind": "enum",
+                    "values": [
+                      "2 行 BAD：多报"
+                    ]
+                  }
+                }
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "Only valid row committed; skipped row remains preview",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quote.carry.confirm",
+      "selector": "#confirmCarrySelection",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "confirmCarrySelection.onclick",
+        "lines": [
+          4740,
+          4753
+        ],
+        "anchor": "确定按原轮次和原条件沿用这 "
+      },
+      "scenarios": [
+        {
+          "id": "explicit-evidence",
+          "when": [
+            "Selected carry rows; checked source and nonempty evidence"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "template",
+                "template": "确定按原轮次和原条件沿用这 {count} 项吗？其余漏报项保持漏报状态。",
+                "parameters": {
+                  "count": {
+                    "kind": "integer",
+                    "min": 1,
+                    "max": 12
+                  }
+                }
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            },
+            {
+              "type": "alert",
+              "message": {
+                "kind": "template",
+                "template": "已按供应商确认依据沿用 {count} 项，其余漏报项目不变。",
+                "parameters": {
+                  "count": {
+                    "kind": "integer",
+                    "min": 1,
+                    "max": 12
+                  }
+                }
+              },
+              "decisions": [
+                "accept"
+              ]
+            }
+          ],
+          "postconditions": [
+            "Only selected rows carried with evidence; missing remain missing",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supplier.remove",
+      "selector": "#supplierFirstList [data-pool-remove='SUP-A']",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "supplier remove handler",
+        "lines": [
+          4921,
+          4932
+        ],
+        "anchor": "移出本次询价？"
+      },
+      "scenarios": [
+        {
+          "id": "no-history",
+          "when": [
+            "SUP-A has no confirmed/nonempty quote history; mutable lines"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "template",
+                "template": "将“{supplier}”移出本次询价？\n同时会取消它当前关联的 {count} 个物料。",
+                "parameters": {
+                  "supplier": {
+                    "kind": "enum",
+                    "values": [
+                      "虚构供应商A"
+                    ]
+                  },
+                  "count": {
+                    "kind": "integer",
+                    "min": 0,
+                    "max": 12
+                  }
+                }
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "Only this supplier links removed; protected history unchanged",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s4.restore",
+      "selector": "#pilotS4RestoreFull",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "restoreS4Full",
+        "lines": [
+          6376,
+          6394
+        ],
+        "anchor": "async function restoreS4Full()"
+      },
+      "scenarios": [
+        {
+          "id": "fresh-empty-target",
+          "when": [
+            "Own truly empty data dir; valid selected full backup; buyerMode=false"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "exact",
+                "value": "确定将完整备份恢复到当前空白数据目录？系统会先校验文件；若目录已有数据，将拒绝恢复。"
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "Verified/restored counts; reloadworkspace/PDF identity",
+            "Nonempty409 is HTTP feedback, never a dialog",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "export.all",
+      "selector": "#pilotReportDownloadAll",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "export.all",
+        "lines": [
+          6690,
+          6764
+        ],
+        "anchor": "本批次缺图 "
+      },
+      "scenarios": [
+        {
+          "id": "missing-drawing",
+          "when": [
+            "withDrawing and missing>0; explicit pending count"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "template",
+                "template": "本批次缺图 {missing} 条、版本待确认 {pending} 条。待确认版本的 PDF 不会打包。仍导出已完成部分吗？",
+                "parameters": {
+                  "missing": {
+                    "kind": "integer",
+                    "min": 1,
+                    "max": 12
+                  },
+                  "pending": {
+                    "kind": "integer",
+                    "min": 0,
+                    "max": 12
+                  }
+                }
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "ActualZIP download; supplier filename/content isolation; PDF byte identity"
+          ]
+        },
+        {
+          "id": "complete-drawings",
+          "when": [
+            "No missing/pending or withDrawing=false"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Actual correct download; no dialog"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "export.one",
+      "selector": "#pilotReportDownload",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "export.one",
+        "lines": [
+          6690,
+          6764
+        ],
+        "anchor": "这家供应商缺图 "
+      },
+      "scenarios": [
+        {
+          "id": "missing-drawing",
+          "when": [
+            "withDrawing and missing>0; explicit pending count"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "template",
+                "template": "这家供应商缺图 {missing} 条、版本待确认 {pending} 条（这些 PDF 暂不打包），是否导出已完成部分？",
+                "parameters": {
+                  "missing": {
+                    "kind": "integer",
+                    "min": 1,
+                    "max": 12
+                  },
+                  "pending": {
+                    "kind": "integer",
+                    "min": 0,
+                    "max": 12
+                  }
+                }
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "ActualZIP download; supplier filename/content isolation; PDF byte identity"
+          ]
+        },
+        {
+          "id": "complete-drawings",
+          "when": [
+            "No missing/pending or withDrawing=false"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Actual correct download; no dialog"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workspace.new",
+      "selector": "#pilotNewWorkspace",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "beginBuyer",
+        "lines": [
+          6059,
+          6067
+        ],
+        "anchor": "function beginBuyer()"
+      },
+      "scenarios": [
+        {
+          "id": "initial-empty",
+          "when": [
+            "Initial buyerMode=false; fresh isolated data directory"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "New workspace identity; no prior RFQ overwrite",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        },
+        {
+          "id": "saved-buyer",
+          "when": [
+            "buyerMode=true and no unsaved business change"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "exact",
+                "value": "新建一笔空白询价？原来已保存的询价不会被删除。"
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        },
+        {
+          "id": "dirty-buyer",
+          "when": [
+            "buyerMode=true and unsaved business change"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "exact",
+                "value": "当前询价尚有未保存修改，新建将放弃这些修改。继续？"
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "Accept discards only active unsaved state; cancel preserves it",
+            "UI pending→saved for this modification",
+            "Exact workspace SQLite revision/data match",
+            "F5 preserves expected data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workspace.recover",
+      "selector": "#pilotResumeWorkspace",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "recover",
+        "lines": [
+          6068,
+          6080
+        ],
+        "anchor": "async function recover()"
+      },
+      "scenarios": [
+        {
+          "id": "dirty-buyer",
+          "when": [
+            "buyerMode=true, dirty=true"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "exact",
+                "value": "重新读取已保存询价会放弃当前未保存修改。继续？"
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "Exact saved workspace/revision, cancel preserves dirty state"
+          ]
+        },
+        {
+          "id": "clean",
+          "when": [
+            "No unsaved changes"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Exact saved workspace/revision"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workspace.switch",
+      "selector": "#pilotSwitchWorkspace",
+      "stepTypes": [
+        "click",
+        "dialogClick"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "switchArchived",
+        "lines": [
+          6081,
+          6092
+        ],
+        "anchor": "async function switchArchived()"
+      },
+      "scenarios": [
+        {
+          "id": "dirty-buyer",
+          "when": [
+            "Valid selected other workspace, buyerMode and dirty"
+          ],
+          "dialogs": [
+            {
+              "type": "confirm",
+              "message": {
+                "kind": "exact",
+                "value": "当前未保存修改将放弃，是否切换到另一笔询价？"
+              },
+              "decisions": [
+                "accept",
+                "cancel"
+              ]
+            }
+          ],
+          "postconditions": [
+            "Exact selected workspace; cancel preserves current state"
+          ]
+        },
+        {
+          "id": "clean",
+          "when": [
+            "Valid selected other workspace, no unsaved changes"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Exact selected workspace identity"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nav.items",
+      "selector": ".srm-v2-sideitem[data-srm-v2-tab='items']",
+      "stepTypes": [
+        "click"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "data-srm-v2-tab"
+      },
+      "scenarios": [
+        {
+          "id": "valid",
+          "when": [
+            "Reviewed valid enabled control; own isolated workspace"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Expected UI/state and save/reload checked separately"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nav.assign",
+      "selector": ".srm-v2-sideitem[data-srm-v2-tab='assign']",
+      "stepTypes": [
+        "click"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "data-srm-v2-tab"
+      },
+      "scenarios": [
+        {
+          "id": "valid",
+          "when": [
+            "Reviewed valid enabled control; own isolated workspace"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Expected UI/state and save/reload checked separately"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "items.intake",
+      "selector": "#toggleItemIntake",
+      "stepTypes": [
+        "click"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "toggleItemIntake.onclick"
+      },
+      "scenarios": [
+        {
+          "id": "valid",
+          "when": [
+            "Reviewed valid enabled control; own isolated workspace"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Expected UI/state and save/reload checked separately"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supplier.tools",
+      "selector": "#uiOpenSupplierTools",
+      "stepTypes": [
+        "click"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "uiOpenSupplierTools"
+      },
+      "scenarios": [
+        {
+          "id": "valid",
+          "when": [
+            "Reviewed valid enabled control; own isolated workspace"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Expected UI/state and save/reload checked separately"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supplier.import",
+      "selector": "#pilotImportSupplierConfirm",
+      "stepTypes": [
+        "click"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "pilotImportSupplierConfirm"
+      },
+      "scenarios": [
+        {
+          "id": "valid",
+          "when": [
+            "Reviewed valid enabled control; own isolated workspace"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Expected UI/state and save/reload checked separately"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "assign.selectAll",
+      "selector": "#selectAssignAll",
+      "stepTypes": [
+        "click"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "selectAssignAll.onclick"
+      },
+      "scenarios": [
+        {
+          "id": "valid",
+          "when": [
+            "Reviewed valid enabled control; own isolated workspace"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Expected UI/state and save/reload checked separately"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workspace.rename",
+      "selector": "#uiRenameRfqBtn",
+      "stepTypes": [
+        "click"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "uiRenameRfqBtn"
+      },
+      "scenarios": [
+        {
+          "id": "valid",
+          "when": [
+            "Reviewed valid enabled control; own isolated workspace"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Expected UI/state and save/reload checked separately"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workspace.save",
+      "selector": "#pilotSaveWorkspace",
+      "stepTypes": [
+        "click"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "pilotSaveWorkspace"
+      },
+      "scenarios": [
+        {
+          "id": "valid",
+          "when": [
+            "Reviewed valid enabled control; own isolated workspace"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Expected UI/state and save/reload checked separately"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workspace.name",
+      "selector": "#uiRfqNameInput",
+      "stepTypes": [
+        "fill",
+        "key"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "Input control",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "uiRfqNameInput"
+      },
+      "scenarios": [
+        {
+          "id": "valid",
+          "when": [
+            "Valid fictional input; validation errors handled as unknown dialogs"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Input/preview change visible; no data write claim"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "items.file",
+      "selector": "#importFile",
+      "stepTypes": [
+        "file"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "Input control",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "importFile"
+      },
+      "scenarios": [
+        {
+          "id": "valid",
+          "when": [
+            "Valid fictional input; validation errors handled as unknown dialogs"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Input/preview change visible; no data write claim"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "suppliers.file",
+      "selector": "#pilotSupplierExcel",
+      "stepTypes": [
+        "file"
+      ],
+      "reviewStatus": "reviewed",
+      "source": {
+        "function": "Input control",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "pilotSupplierExcel"
+      },
+      "scenarios": [
+        {
+          "id": "valid",
+          "when": [
+            "Valid fictional input; validation errors handled as unknown dialogs"
+          ],
+          "dialogs": [],
+          "postconditions": [
+            "Input/preview change visible; no data write claim"
+          ]
+        }
+      ]
+    }
+  ],
+  "needsReview": [
+    "Drawing upload/version/hash-conflict controls and exception branches: no actions admitted until reviewed",
+    "Quote manual/paste/tier/coverage fixture specifics; partial import details need actual fixture review before live UAT",
+    "S4 nonempty target UI feedback versus HTTP409: distinct assertions required",
+    "Other selectors, bulk supplier remove/toggle/copy and nonzero quote edit selectors are denied until separately registered",
+    "This contract fixture corpus is NOT a complete procurement plan and has NOT been run in a browser"
+  ]
+}

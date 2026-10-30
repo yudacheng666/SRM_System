@@ -1,0 +1,472 @@
+TAP version 13
+# Subtest: real adapter entry rejects bad plan before WebSocket constructor or connection
+ok 1 - real adapter entry rejects bad plan before WebSocket constructor or connection
+  ---
+  duration_ms: 32.7803
+  type: 'test'
+  ...
+# Subtest: real adapter entry rejects contract-only corpus before WebSocket
+ok 2 - real adapter entry rejects contract-only corpus before WebSocket
+  ---
+  duration_ms: 9.421
+  type: 'test'
+  ...
+# Subtest: native adapter + guard pipeline works with fully fake WebSocket; zero real sockets
+ok 3 - native adapter + guard pipeline works with fully fake WebSocket; zero real sockets
+  ---
+  duration_ms: 11.2396
+  type: 'test'
+  ...
+# Subtest: adapter unexpected dialog aborts pending mouse request without ACK or screenshot retry
+ok 4 - adapter unexpected dialog aborts pending mouse request without ACK or screenshot retry
+  ---
+  duration_ms: 10.5485
+  type: 'test'
+  ...
+# Subtest: same-session opening→ack→closed→original click completion; listener armed first
+ok 5 - same-session opening→ack→closed→original click completion; listener armed first
+  ---
+  duration_ms: 10.0941
+  type: 'test'
+  ...
+# Subtest: dialog:none runtime alert stops immediately; no accept/deny
+ok 6 - dialog:none runtime alert stops immediately; no accept/deny
+  ---
+  duration_ms: 8.6076
+  type: 'test'
+  ...
+# Subtest: dialog:none runtime confirm stops immediately; no accept/deny
+ok 7 - dialog:none runtime confirm stops immediately; no accept/deny
+  ---
+  duration_ms: 8.4061
+  type: 'test'
+  ...
+# Subtest: dialog:none runtime prompt stops immediately; no accept/deny
+ok 8 - dialog:none runtime prompt stops immediately; no accept/deny
+  ---
+  duration_ms: 8.6028
+  type: 'test'
+  ...
+# Subtest: runtime mismatched type never ACKed
+ok 9 - runtime mismatched type never ACKed
+  ---
+  duration_ms: 9.5849
+  type: 'test'
+  ...
+# Subtest: runtime mismatched message never ACKed
+ok 10 - runtime mismatched message never ACKed
+  ---
+  duration_ms: 9.7749
+  type: 'test'
+  ...
+# Subtest: runtime mismatched prompt default never ACKed
+ok 11 - runtime mismatched prompt default never ACKed
+  ---
+  duration_ms: 9.8935
+  type: 'test'
+  ...
+# Subtest: wrongSession fails closed with no foreign-session ACK
+ok 12 - wrongSession fails closed with no foreign-session ACK
+  ---
+  duration_ms: 12.0214
+  type: 'test'
+  ...
+# Subtest: wrongTarget fails closed with no foreign-session ACK
+ok 13 - wrongTarget fails closed with no foreign-session ACK
+  ---
+  duration_ms: 7.7827
+  type: 'test'
+  ...
+# Subtest: wrongClose fails closed with no foreign-session ACK
+ok 14 - wrongClose fails closed with no foreign-session ACK
+  ---
+  duration_ms: 8.7301
+  type: 'test'
+  ...
+# Subtest: five sequential prompts accept exact explicit texts even if next opens before ACK response
+ok 15 - five sequential prompts accept exact explicit texts even if next opens before ACK response
+  ---
+  duration_ms: 6.9922
+  type: 'test'
+  ...
+# Subtest: prompt cancel at 0 sends accept:false, no text, no later prompt
+ok 16 - prompt cancel at 0 sends accept:false, no text, no later prompt
+  ---
+  duration_ms: 8.6561
+  type: 'test'
+  ...
+# Subtest: prompt cancel at 1 sends accept:false, no text, no later prompt
+ok 17 - prompt cancel at 1 sends accept:false, no text, no later prompt
+  ---
+  duration_ms: 7.4792
+  type: 'test'
+  ...
+# Subtest: prompt cancel at 2 sends accept:false, no text, no later prompt
+ok 18 - prompt cancel at 2 sends accept:false, no text, no later prompt
+  ---
+  duration_ms: 5.9141
+  type: 'test'
+  ...
+# Subtest: prompt cancel at 3 sends accept:false, no text, no later prompt
+ok 19 - prompt cancel at 3 sends accept:false, no text, no later prompt
+  ---
+  duration_ms: 7.2988
+  type: 'test'
+  ...
+# Subtest: prompt cancel at 4 sends accept:false, no text, no later prompt
+ok 20 - prompt cancel at 4 sends accept:false, no text, no later prompt
+  ---
+  duration_ms: 8.2666
+  type: 'test'
+  ...
+# Subtest: confirm cancel no automatic following success alert
+ok 21 - confirm cancel no automatic following success alert
+  ---
+  duration_ms: 5.8589
+  type: 'test'
+  ...
+# Subtest: confirm→success alert ordered and exact
+ok 22 - confirm→success alert ordered and exact
+  ---
+  duration_ms: 8.2364
+  type: 'test'
+  ...
+# Subtest: extra unplanned dialog safely stops with no extra ACK
+ok 23 - extra unplanned dialog safely stops with no extra ACK
+  ---
+  duration_ms: 8.207
+  type: 'test'
+  ...
+# Subtest: dialog while enabling Page stops before first click
+ok 24 - dialog while enabling Page stops before first click
+  ---
+  duration_ms: 6.1364
+  type: 'test'
+  ...
+# Subtest: bounded failure neverOpens cleans up without late/foreign ACK
+ok 25 - bounded failure neverOpens cleans up without late/foreign ACK
+  ---
+  duration_ms: 48.0131
+  type: 'test'
+  ...
+# Subtest: bounded failure noClosed cleans up without late/foreign ACK
+ok 26 - bounded failure noClosed cleans up without late/foreign ACK
+  ---
+  duration_ms: 45.8101
+  type: 'test'
+  ...
+# Subtest: bounded failure ackFail cleans up without late/foreign ACK
+ok 27 - bounded failure ackFail cleans up without late/foreign ACK
+  ---
+  duration_ms: 7.5102
+  type: 'test'
+  ...
+# Subtest: bounded failure clickFail cleans up without late/foreign ACK
+ok 28 - bounded failure clickFail cleans up without late/foreign ACK
+  ---
+  duration_ms: 10.9007
+  type: 'test'
+  ...
+# Subtest: bounded failure wrongResult cleans up without late/foreign ACK
+ok 29 - bounded failure wrongResult cleans up without late/foreign ACK
+  ---
+  duration_ms: 13.8119
+  type: 'test'
+  ...
+# Subtest: compiled snapshot cannot be changed by launch callback
+ok 30 - compiled snapshot cannot be changed by launch callback
+  ---
+  duration_ms: 10.6609
+  type: 'test'
+  ...
+# Subtest: all reviewed source-bound contract scenarios PASS static preflight
+ok 31 - all reviewed source-bound contract scenarios PASS static preflight
+  ---
+  duration_ms: 10.3922
+  type: 'test'
+  ...
+# Subtest: known SUP-A ordinary click rejected, with structured file/index/policy reason
+ok 32 - known SUP-A ordinary click rejected, with structured file/index/policy reason
+  ---
+  duration_ms: 8.206
+  type: 'test'
+  ...
+# Subtest: known SUP-B ordinary click rejected
+ok 33 - known SUP-B ordinary click rejected
+  ---
+  duration_ms: 8.8176
+  type: 'test'
+  ...
+# Subtest: correct SUP-A/SUP-B dialogClick accepted
+ok 34 - correct SUP-A/SUP-B dialogClick accepted
+  ---
+  duration_ms: 8.5899
+  type: 'test'
+  ...
+# Subtest: unknown step
+ok 35 - unknown step
+  ---
+  duration_ms: 10.954
+  type: 'test'
+  ...
+# Subtest: unknown selector
+ok 36 - unknown selector
+  ---
+  duration_ms: 9.266
+  type: 'test'
+  ...
+# Subtest: selector alias does not bypass policy
+ok 37 - selector alias does not bypass policy
+  ---
+  duration_ms: 8.3161
+  type: 'test'
+  ...
+# Subtest: operation/selector substitution
+ok 38 - operation/selector substitution
+  ---
+  duration_ms: 8.7483
+  type: 'test'
+  ...
+# Subtest: missing selector
+ok 39 - missing selector
+  ---
+  duration_ms: 8.0253
+  type: 'test'
+  ...
+# Subtest: missing dialog declaration
+ok 40 - missing dialog declaration
+  ---
+  duration_ms: 8.1405
+  type: 'test'
+  ...
+# Subtest: missing dialog type
+ok 41 - missing dialog type
+  ---
+  duration_ms: 5.8647
+  type: 'test'
+  ...
+# Subtest: missing message
+ok 42 - missing message
+  ---
+  duration_ms: 8.7025
+  type: 'test'
+  ...
+# Subtest: missing accept
+ok 43 - missing accept
+  ---
+  duration_ms: 7.3742
+  type: 'test'
+  ...
+# Subtest: type mismatch
+ok 44 - type mismatch
+  ---
+  duration_ms: 5.7073
+  type: 'test'
+  ...
+# Subtest: message prefix alone rejected
+ok 45 - message prefix alone rejected
+  ---
+  duration_ms: 7.1138
+  type: 'test'
+  ...
+# Subtest: message suffix injection rejected
+ok 46 - message suffix injection rejected
+  ---
+  duration_ms: 8.2794
+  type: 'test'
+  ...
+# Subtest: string accept rejected
+ok 47 - string accept rejected
+  ---
+  duration_ms: 5.5149
+  type: 'test'
+  ...
+# Subtest: wrong supplier in explicit template
+ok 48 - wrong supplier in explicit template
+  ---
+  duration_ms: 8.7938
+  type: 'test'
+  ...
+# Subtest: wrong count rejected
+ok 49 - wrong count rejected
+  ---
+  duration_ms: 7.4512
+  type: 'test'
+  ...
+# Subtest: wrong exact scope rejected
+ok 50 - wrong exact scope rejected
+  ---
+  duration_ms: 6.2794
+  type: 'test'
+  ...
+# Subtest: extra template parameter
+ok 51 - extra template parameter
+  ---
+  duration_ms: 8.2033
+  type: 'test'
+  ...
+# Subtest: missing template parameter
+ok 52 - missing template parameter
+  ---
+  duration_ms: 8.4165
+  type: 'test'
+  ...
+# Subtest: unknown trigger condition
+ok 53 - unknown trigger condition
+  ---
+  duration_ms: 5.396
+  type: 'test'
+  ...
+# Subtest: unexpected step field
+ok 54 - unexpected step field
+  ---
+  duration_ms: 6.4221
+  type: 'test'
+  ...
+# Subtest: dialogClick cannot declare none
+ok 55 - dialogClick cannot declare none
+  ---
+  duration_ms: 7.2635
+  type: 'test'
+  ...
+# Subtest: state-changing click dialog:none explicit and valid no-dialog branch accepted
+ok 56 - state-changing click dialog:none explicit and valid no-dialog branch accepted
+  ---
+  duration_ms: 13.0154
+  type: 'test'
+  ...
+# Subtest: conditional clean versus dirty workspace strategy cannot be swapped
+ok 57 - conditional clean versus dirty workspace strategy cannot be swapped
+  ---
+  duration_ms: 7.7984
+  type: 'test'
+  ...
+# Subtest: accept/cancel permitted confirm strategy
+ok 58 - accept/cancel permitted confirm strategy
+  ---
+  duration_ms: 5.5052
+  type: 'test'
+  ...
+# Subtest: alert cancel forbidden
+ok 59 - alert cancel forbidden
+  ---
+  duration_ms: 7.4497
+  type: 'test'
+  ...
+# Subtest: five prompts require all explicit input/default strategies
+ok 60 - five prompts require all explicit input/default strategies
+  ---
+  duration_ms: 11.978
+  type: 'test'
+  ...
+# Subtest: prompt default required and matched
+ok 61 - prompt default required and matched
+  ---
+  duration_ms: 15.2726
+  type: 'test'
+  ...
+# Subtest: prompt cancellation safely truncates entire edit at position 0
+ok 62 - prompt cancellation safely truncates entire edit at position 0
+  ---
+  duration_ms: 7.5627
+  type: 'test'
+  ...
+# Subtest: prompt cancellation safely truncates entire edit at position 1
+ok 63 - prompt cancellation safely truncates entire edit at position 1
+  ---
+  duration_ms: 14.9239
+  type: 'test'
+  ...
+# Subtest: prompt cancellation safely truncates entire edit at position 2
+ok 64 - prompt cancellation safely truncates entire edit at position 2
+  ---
+  duration_ms: 9.2229
+  type: 'test'
+  ...
+# Subtest: prompt cancellation safely truncates entire edit at position 3
+ok 65 - prompt cancellation safely truncates entire edit at position 3
+  ---
+  duration_ms: 12.3417
+  type: 'test'
+  ...
+# Subtest: prompt cancellation safely truncates entire edit at position 4
+ok 66 - prompt cancellation safely truncates entire edit at position 4
+  ---
+  duration_ms: 9.7271
+  type: 'test'
+  ...
+# Subtest: prompt cancel must explicitly declare cancel, not input
+ok 67 - prompt cancel must explicitly declare cancel, not input
+  ---
+  duration_ms: 5.842
+  type: 'test'
+  ...
+# Subtest: accepted prompt sequence cannot truncate or continue after cancel
+ok 68 - accepted prompt sequence cannot truncate or continue after cancel
+  ---
+  duration_ms: 16.6524
+  type: 'test'
+  ...
+# Subtest: confirm→alert exact ordered sequence and explicit cancel
+ok 69 - confirm→alert exact ordered sequence and explicit cancel
+  ---
+  duration_ms: 15.4966
+  type: 'test'
+  ...
+# Subtest: static identity/source mismatch fail closed
+ok 70 - static identity/source mismatch fail closed
+  ---
+  duration_ms: 1.2086
+  type: 'test'
+  ...
+# Subtest: unknown/unreviewed operations denied
+ok 71 - unknown/unreviewed operations denied
+  ---
+  duration_ms: 8.8433
+  type: 'test'
+  ...
+# Subtest: catalogued NEEDS REVIEW fixture is denied before execution
+ok 72 - catalogued NEEDS REVIEW fixture is denied before execution
+  ---
+  duration_ms: 6.7597
+  type: 'test'
+  ...
+# Subtest: policy forbids duplicate selectors and generic wildcard/regex matchers
+ok 73 - policy forbids duplicate selectors and generic wildcard/regex matchers
+  ---
+  duration_ms: 0.9763
+  type: 'test'
+  ...
+# Subtest: file traversal/absolute paths and executable wait expressions rejected
+ok 74 - file traversal/absolute paths and executable wait expressions rejected
+  ---
+  duration_ms: 20.7774
+  type: 'test'
+  ...
+# Subtest: whole multi-file manifest fails before launch, even if earlier file valid
+ok 75 - whole multi-file manifest fails before launch, even if earlier file valid
+  ---
+  duration_ms: 5.9532
+  type: 'test'
+  ...
+# Subtest: contract corpus cannot be accidentally executed as a buyer plan
+ok 76 - contract corpus cannot be accidentally executed as a buyer plan
+  ---
+  duration_ms: 7.0658
+  type: 'test'
+  ...
+# Subtest: static CLI exits2 and writes machine-readable rejection without runtime import
+ok 77 - static CLI exits2 and writes machine-readable rejection without runtime import
+  ---
+  duration_ms: 57.7058
+  type: 'test'
+  ...
+1..77
+# tests 77
+# suites 0
+# pass 77
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 557.1701

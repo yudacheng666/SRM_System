@@ -1,0 +1,207 @@
+[
+  {
+    "label": "build-policy",
+    "executable": "existing-native-node",
+    "args": [
+      "build-policy.cjs"
+    ],
+    "expectedExit": 0,
+    "actualExit": 0,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "2d54f323517111a8823f2ac699fefc48955a59d05cad4750a9ff5700e32bd88b",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "syntax-adapter.test",
+    "executable": "existing-native-node",
+    "args": [
+      "--check",
+      "adapter.test.cjs"
+    ],
+    "expectedExit": 0,
+    "actualExit": 0,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "syntax-build-policy",
+    "executable": "existing-native-node",
+    "args": [
+      "--check",
+      "build-policy.cjs"
+    ],
+    "expectedExit": 0,
+    "actualExit": 0,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "syntax-cdp-adapter",
+    "executable": "existing-native-node",
+    "args": [
+      "--check",
+      "cdp-adapter.cjs"
+    ],
+    "expectedExit": 0,
+    "actualExit": 0,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "syntax-guarded-driver",
+    "executable": "existing-native-node",
+    "args": [
+      "--check",
+      "guarded-driver.cjs"
+    ],
+    "expectedExit": 0,
+    "actualExit": 0,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "syntax-preflight",
+    "executable": "existing-native-node",
+    "args": [
+      "--check",
+      "preflight.cjs"
+    ],
+    "expectedExit": 0,
+    "actualExit": 0,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "syntax-runtime.test",
+    "executable": "existing-native-node",
+    "args": [
+      "--check",
+      "runtime.test.cjs"
+    ],
+    "expectedExit": 0,
+    "actualExit": 0,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "syntax-schema",
+    "executable": "existing-native-node",
+    "args": [
+      "--check",
+      "schema.cjs"
+    ],
+    "expectedExit": 0,
+    "actualExit": 0,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "syntax-schema.test",
+    "executable": "existing-native-node",
+    "args": [
+      "--check",
+      "schema.test.cjs"
+    ],
+    "expectedExit": 0,
+    "actualExit": 0,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "syntax-verify-static",
+    "executable": "existing-native-node",
+    "args": [
+      "--check",
+      "verify-static.cjs"
+    ],
+    "expectedExit": 0,
+    "actualExit": 0,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "tests-final",
+    "executable": "existing-native-node",
+    "args": [
+      "--test",
+      "--test-reporter=tap",
+      "schema.test.cjs",
+      "runtime.test.cjs",
+      "adapter.test.cjs"
+    ],
+    "expectedExit": 0,
+    "actualExit": 0,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "dddbc5eec1f4bb0013539e19adeef933fa99363830ae43d8efc358581013337c",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "preflight-positive",
+    "executable": "existing-native-node",
+    "args": [
+      "preflight.cjs",
+      "<FROZEN_SOURCE>",
+      "preflight-pass.json",
+      "actions/reviewed-contracts.json",
+      "actions/assignment-reviewed.json"
+    ],
+    "expectedExit": 0,
+    "actualExit": 0,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "4724df78c0d67ac313d587f088515710cd4af50bde2694e9720fb8239bf176ff",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "preflight-negative-assignment",
+    "executable": "existing-native-node",
+    "args": [
+      "preflight.cjs",
+      "<FROZEN_SOURCE>",
+      "preflight-reject-assignment.json",
+      "negative/assignment-plain-click.json"
+    ],
+    "expectedExit": 2,
+    "actualExit": 2,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "5f9322836f014c65bfc1dbe0e1ec3d6c7d18aa6dfd898f7824abc42cbf83e078",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "preflight-negative-json",
+    "executable": "existing-native-node",
+    "args": [
+      "preflight.cjs",
+      "<FROZEN_SOURCE>",
+      "preflight-reject-json.json",
+      "negative/malformed.json"
+    ],
+    "expectedExit": 2,
+    "actualExit": 2,
+    "signal": null,
+    "error": null,
+    "stdoutSha256": "7a41fc97fab4327b46e02744f9be0f63af0e87ae2c9affec51e9ae1084ed5bdf",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

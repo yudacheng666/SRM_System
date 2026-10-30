@@ -1,0 +1,108 @@
+{
+  "readOnly": true,
+  "branch": "test/20261022-pr46-c2737f0-temp-ci",
+  "prBase": "feat/20261022-srm-ui-ux-structural",
+  "commitSkipCi": true,
+  "workflows": [
+    {
+      "file": "m0-p0-regression.yml",
+      "sha256": "00be315de37e2fd264c8278a080444a5bfd32539f3306078d6041c64c20393a3",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261009-m0-p0-fixes\n  workflow_dispatch:"
+    },
+    {
+      "file": "m0-p1-regression.yml",
+      "sha256": "e5f36b789b4b8d115671896d4ed6229c7c21483b42145ea4d2d1fbde5253105c",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261009-m0-p1-fixes\n  workflow_dispatch:"
+    },
+    {
+      "file": "m0-p2-regression.yml",
+      "sha256": "3a435c6121504bf06d40f184ce6022c6250b2924f177ac101d32e9f566cea386",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261009-m0-p2-fixes\n  workflow_dispatch:"
+    },
+    {
+      "file": "m0-playwright-acceptance.yml",
+      "sha256": "3acaf9c5573a8d3f436d27a61ddc92e023328b9cbc5a050dd1bca0cdc16799ed",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261009-m0-playwright-acceptance\n  workflow_dispatch:"
+    },
+    {
+      "file": "m0-selected-common-scope.yml",
+      "sha256": "ed147de0f96dff5136b4a83d755f364c02a5f17c33171d9dae84618dc5680f36",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261009-m0-selected-common-scope\n  workflow_dispatch:"
+    },
+    {
+      "file": "m0-uat-feedback-browser.yml",
+      "sha256": "9f8425c2d6255c9037e9baaa29ab5ba31cee1a5dc37a0742bd858607f49f5ed9",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261009-m0-uat-feedback\n  workflow_dispatch:"
+    },
+    {
+      "file": "m1-b0-lean-offline.yml",
+      "sha256": "d19808bf148c797bbee73310ef9f388464f251493cccbfd9cccd458296c21aa3",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261010-m1-b0-lean-foundation\n  workflow_dispatch:"
+    },
+    {
+      "file": "m1-b1-core-model.yml",
+      "sha256": "4d6e16a79a9f9ba80c8d4b1df6fb7b6dd25c274dc3b24a2b412cc4c12999ba25",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261010-m1-b1-core-model\n  workflow_dispatch:"
+    },
+    {
+      "file": "m1-lite-batch-drawing-match.yml",
+      "sha256": "bf98d2b30724e39f9cb0bf0b46bed0a5ed32a8c9ca7aefe7cfba9337a52acdea",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261013-m1-lite-batch-drawing-match\n  workflow_dispatch:"
+    },
+    {
+      "file": "m1-lite-erp-quote-notes.yml",
+      "sha256": "fdbef5812a00a2b06522c62744d8e0d290e1f2c7b6d4f93cc598a7c427aa4ca8",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261012-m1-lite-erp-fields-quote-notes\n  workflow_dispatch:"
+    },
+    {
+      "file": "m1-lite-full-backup-batch-rfq.yml",
+      "sha256": "b3f3ff9b54ffebbb8b18374791dc5b21f66baf6c75afaaba642ba5850a6212a6",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261013-m1-lite-full-backup-batch-rfq\n  workflow_dispatch:"
+    },
+    {
+      "file": "m1-lite-manual-save.yml",
+      "sha256": "33f9c2b10104e03c8303a0fc05417358da42fe82032789649790bc0ac47b58d7",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261011-m1-lite-manual-save\n  workflow_dispatch:"
+    },
+    {
+      "file": "m1-lite-multiple-rfqs.yml",
+      "sha256": "a0409491f033238515262a90e67a68452c5a7c5fc32657af9fd9820e6999081e",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261013-m1-lite-multiple-rfqs\n  workflow_dispatch:"
+    },
+    {
+      "file": "m1-lite-native-xlsx.yml",
+      "sha256": "a811eb923a4c1e83e1aca10574ec582853ac982be1792fbd55dede0877203297",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261012-m1-lite-native-xlsx\n  workflow_dispatch:"
+    },
+    {
+      "file": "m1-lite-portable-backup.yml",
+      "sha256": "e6231adcb66c35324781b68f09e43a5d0596ef9d11d7d1675e992b3277c346e6",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261011-m1-lite-portable-backup\n  workflow_dispatch:"
+    },
+    {
+      "file": "m1-lite-real-pdf-drawings.yml",
+      "sha256": "4dfde36654b3192ed796cc5977c068978c4ef8fff17a47548640ddc320f20567",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261013-m1-lite-real-pdf-drawings-plan\n  workflow_dispatch:"
+    },
+    {
+      "file": "m1-lite-rfq-comparison-exports.yml",
+      "sha256": "8c6362388465d7623d6c9ebaafb8c96864717bc01de4f0f4e9419131ab6b66d4",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261012-m1-lite-rfq-comparison-exports\n  workflow_dispatch:"
+    },
+    {
+      "file": "m1-lite-safe-import.yml",
+      "sha256": "fdb782dcfb65b43e7dd61d4535d82167e8318b81b4a95b0d4936ad4679d87ccf",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261011-m1-lite-safe-import\n  workflow_dispatch:"
+    },
+    {
+      "file": "srm-s3-regression.yml",
+      "sha256": "92bf34b65d7dad1ec1219bf2b54504f11d60225a090afa4e881a759133ca883a",
+      "events": "on:\n  push:\n    branches:\n      - draft/20261013-m1-storage-ui-audit\n      - test/20261014-issue3-playwright\n      - fix/20261020-s4-backup-dirty-guard\n      - fix/20261020-s4-visible-block-feedback\n  pull_request:\n    branches:\n      - draft/20261013-m1-storage-ui-audit\n      - feat/20261019-srm-ui-v3-integration\n      - fix/20261020-s4-backup-dirty-guard\n  workflow_dispatch:\n"
+    },
+    {
+      "file": "srm-ui-v2-unified-acceptance.yml",
+      "sha256": "0cb705bc1a8cfb63dde25150cd18451050283e5d008373a90d428d4147546bec",
+      "events": "on:\n  pull_request:\n    branches:\n      - draft/20261013-m1-storage-ui-audit\n      # 中文：PR24 集成候选的修复 PR 也必须执行完整 UI 验收。\n      # English: Gate fixes targeting the PR24 integration branch with the full UI suite.\n      - feat/20261019-srm-ui-v3-integration\n  workflow_dispatch:"
+    }
+  ]
+}
