@@ -1,0 +1,9 @@
+SRM local prototype: http://127.0.0.1:8792/
+S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.
+SQLite API check: http://127.0.0.1:8792/storage-check
+127.0.0.1 - - [16/Oct/2026 15:39:44] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:39:44] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:39:46] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:39:48] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:39:48] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:39:48] "GET /api/backups/auto/status HTTP/1.1" 200 -

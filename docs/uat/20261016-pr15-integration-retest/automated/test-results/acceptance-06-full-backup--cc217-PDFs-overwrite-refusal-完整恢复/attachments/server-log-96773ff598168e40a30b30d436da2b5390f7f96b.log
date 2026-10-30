@@ -1,0 +1,82 @@
+SRM local prototype: http://127.0.0.1:8765/
+S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.
+SQLite API check: http://127.0.0.1:8765/storage-check
+127.0.0.1 - - [16/Oct/2026 15:34:32] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:32] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:33] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:33] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:33] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:33] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:34] "GET /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:34:34] "GET /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:34:34] "GET /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:34:35] "GET /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:34:36] "GET /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:34:37] "PUT /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 200 -
+S4 automatic full backup created: SRM_FULL_20261016_153437_d7322591.zip
+127.0.0.1 - - [16/Oct/2026 15:34:37] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:37] "GET /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:40] "PUT /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:40] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:40] "GET /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:43] "PUT /api/assets/RFQ-1792164874306-16F3RG/b75eb44a3675b9624ae02c74fdd1047fa28c8480a03f0a176f14b37dc46f9427 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:43] "PUT /api/assets/RFQ-1792164874306-16F3RG/b324f7affb4c155c35adb6b51ba43d3549f0d1455393f42713c49137a3be184c HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:44] "PUT /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:44] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:44] "GET /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:52] "PUT /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:52] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:53] "GET /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:54] "GET /api/workspaces/RFQ-1792164894110-LYL4T7 HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:34:54] "GET /api/workspaces/RFQ-1792164894110-LYL4T7 HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:34:55] "GET /api/workspaces/RFQ-1792164894110-LYL4T7 HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:34:56] "GET /api/workspaces/RFQ-1792164894110-LYL4T7 HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:34:56] "PUT /api/workspaces/RFQ-1792164894110-LYL4T7 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:56] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "GET /api/workspaces/RFQ-1792164894110-LYL4T7 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "PUT /api/workspaces/RFQ-1792164894110-LYL4T7 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "GET /api/workspaces/RFQ-1792164894110-LYL4T7 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "GET /api/workspaces/RFQ-1792164894110-LYL4T7 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "GET /api/workspaces/RFQ-1792164894110-LYL4T7?revision=1 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "GET /api/workspaces/RFQ-1792164894110-LYL4T7?revision=2 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "GET /api/workspaces/RFQ-1792164874306-16F3RG HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "GET /api/workspaces/RFQ-1792164874306-16F3RG?revision=1 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "GET /api/workspaces/RFQ-1792164874306-16F3RG?revision=2 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "GET /api/workspaces/RFQ-1792164874306-16F3RG?revision=3 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:57] "GET /api/workspaces/RFQ-1792164874306-16F3RG?revision=4 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:58] "POST /api/backups/full HTTP/1.1" 201 -
+127.0.0.1 - - [16/Oct/2026 15:34:58] "GET /api/backups/full/SRM_FULL_20261016_153458_7b971ad6.zip HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:34:58] "GET /api/backups/full/SRM_FULL_20261016_153458_7b971ad6.zip HTTP/1.1" 200 -
+SRM local prototype: http://127.0.0.1:8766/
+S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.
+SQLite API check: http://127.0.0.1:8766/storage-check
+127.0.0.1 - - [16/Oct/2026 15:35:00] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:01] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:02] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:03] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:03] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:35:03] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:03] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:06] "POST /api/backups/full/restore HTTP/1.1" 200 -
+S4 automatic full backup created: SRM_FULL_20261016_153506_83785a6f.zip
+127.0.0.1 - - [16/Oct/2026 15:35:06] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:07] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:08] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:08] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:08] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:08] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:08] "GET /api/workspaces/RFQ-1792164894110-LYL4T7?revision=1 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:08] "GET /api/workspaces/RFQ-1792164894110-LYL4T7?revision=2 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:08] "GET /api/workspaces/RFQ-1792164874306-16F3RG?revision=1 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:08] "GET /api/workspaces/RFQ-1792164874306-16F3RG?revision=2 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:08] "GET /api/workspaces/RFQ-1792164874306-16F3RG?revision=3 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:09] "GET /api/workspaces/RFQ-1792164874306-16F3RG?revision=4 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:09] "GET /api/assets/RFQ-1792164874306-16F3RG/b75eb44a3675b9624ae02c74fdd1047fa28c8480a03f0a176f14b37dc46f9427 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:09] "GET /api/assets/RFQ-1792164874306-16F3RG/b75eb44a3675b9624ae02c74fdd1047fa28c8480a03f0a176f14b37dc46f9427 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:09] "GET /api/assets/RFQ-1792164874306-16F3RG/b324f7affb4c155c35adb6b51ba43d3549f0d1455393f42713c49137a3be184c HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:09] "GET /api/assets/RFQ-1792164874306-16F3RG/b324f7affb4c155c35adb6b51ba43d3549f0d1455393f42713c49137a3be184c HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:10] "POST /api/active/select HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:10] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:35:11] "POST /api/backups/full/restore HTTP/1.1" 409 -

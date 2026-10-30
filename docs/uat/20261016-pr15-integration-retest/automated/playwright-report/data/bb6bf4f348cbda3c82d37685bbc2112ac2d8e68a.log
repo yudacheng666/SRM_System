@@ -1,0 +1,19 @@
+SRM local prototype: http://127.0.0.1:8791/
+S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.
+SQLite API check: http://127.0.0.1:8791/storage-check
+127.0.0.1 - - [16/Oct/2026 15:40:33] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:40:33] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:40:34] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:40:34] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:40:35] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:40:35] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:40:41] "GET /api/workspaces/RFQ-1792165236252-AVH60C HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:40:41] "GET /api/workspaces/RFQ-1792165236252-AVH60C HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:40:42] "GET /api/workspaces/RFQ-1792165236252-AVH60C HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:40:42] "GET /api/workspaces/RFQ-1792165236252-AVH60C HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:40:43] "GET /api/workspaces/RFQ-1792165236252-AVH60C HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:40:45] "GET /api/workspaces/RFQ-1792165236252-AVH60C HTTP/1.1" 404 -
+127.0.0.1 - - [16/Oct/2026 15:40:45] "PUT /api/workspaces/RFQ-1792165236252-AVH60C HTTP/1.1" 200 -
+S4 automatic full backup created: SRM_FULL_20261016_154045_8fe5ed9c.zip
+127.0.0.1 - - [16/Oct/2026 15:40:45] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [16/Oct/2026 15:40:46] "GET /api/workspaces/RFQ-1792165236252-AVH60C HTTP/1.1" 200 -
