@@ -1,0 +1,615 @@
+{
+  "url": "http://127.0.0.1:8765/",
+  "title": "SRM Lite · 采购询价工作台",
+  "text": "S\nSRM\n采购业务系统\n询价 · 比价 · 定标\n工作空间\n询价项目\n物料与图纸\n供应商分配\n报价回收\n比价议价\n管理工具\n数据与备份\n字段设置\n 本地业务系统\n数据保存在本机\n询价与比价\nSRM 采购工作台\n修改内容会自动保存到本机，也可以点击“保存”。\n本机工作模式\n询价项目\n数据与备份\n字段设置\n当前询价项目\n虚构 WIN03 Alert 验收 A\n修改名称\n已保存\n数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。\n采购业务流程\n① 询价项目\n② 物料与图纸\n③ 供应商分配\n④ 报价回收\n⑤ 比价议价\n02 / 物料与图纸\n物料与图纸\nⓘ\n搜索\n清空搜索\n+ 添加询价物料\n删除选中物料\n批量更新字段值\n图纸匹配与管理\n全选\n本页全选\n反选\n本页反选\n取消选择\n选择\tRFQ Line ID\t存货编码\t图纸\t存货名称\t规格型号\t所属类别\t询价数量\t询价单位\t已分配供应商\n搜索清空\t\t\t\t\t\t\t\t\t\n\tRFQ-L00012\tTST-012\t缺图纸\t虚构物料12\t\t虚构类别\t13\t件\t0\n\tRFQ-L00011\tTST-011\t缺图纸\t虚构物料11\t\t虚构类别\t12\t件\t0\n\tRFQ-L00010\tTST-010\t缺图纸\t虚构物料10\t\t虚构类别\t11\t件\t0\n\tRFQ-L00009\tTST-009\t缺图纸\t虚构物料9\t\t虚构类别\t10\t件\t0\n\tRFQ-L00008\tTST-008\t缺图纸\t虚构物料8\t\t虚构类别\t9\t件\t0\n\tRFQ-L00007\tTST-007\t缺图纸\t虚构物料7\t\t虚构类别\t8\t件\t0\n\tRFQ-L00006\tTST-006\t缺图纸\t虚构物料6\t\t虚构类别\t7\t件\t0\n\tRFQ-L00005\tTST-005\t缺图纸\t虚构物料5\t\t虚构类别\t6\t件\t0\n\tRFQ-L00004\tTST-004\t缺图纸\t虚构物料4\t\t虚构类别\t5\t件\t0\n\tRFQ-L00003\tTST-003\t缺图纸\t虚构物料3\t\t虚构类别\t4\t件\t0\n\tRFQ-L00002\tTST-002\t缺图纸\t虚构物料2\t\t虚构类别\t3\t件\t0\n\tRFQ-L00001\tTST-001\t缺图纸\t虚构物料1\t\t虚构类别\t2\t件\t0\n筛选结果 12 项 · 第 1/1 页 · 已选择 0 项\n上一页\n…\n1\n下一页\n当前排序：1.新增顺序降序 \n修改内容自动保存；备份与恢复请前往“数据与备份”。",
+  "controls": [
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "询价项目",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "物料与图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "供应商分配",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "报价回收",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "比价议价",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "数据与备份",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "字段设置",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "uiProjectJump",
+      "type": "button",
+      "text": "询价项目",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "uiAdminToggle",
+      "type": "button",
+      "text": "数据与备份",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "uiFieldSettings",
+      "type": "button",
+      "text": "字段设置",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "uiRenameRfqBtn",
+      "type": "button",
+      "text": "修改名称",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "① 询价项目",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "② 物料与图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "③ 供应商分配",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "④ 报价回收",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "⑤ 比价议价",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "ⓘ",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "itemSearch",
+      "type": "text",
+      "text": "全字段模糊搜索",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "runItemSearch",
+      "type": "submit",
+      "text": "搜索",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "clearItemSearch",
+      "type": "submit",
+      "text": "清空搜索",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "toggleItemIntake",
+      "type": "submit",
+      "text": "+ 添加询价物料",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "deleteSelectedItems",
+      "type": "submit",
+      "text": "删除选中物料",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "toggleFieldTools",
+      "type": "submit",
+      "text": "批量更新字段值",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "uiOpenDrawings",
+      "type": "button",
+      "text": "图纸匹配与管理",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "itemSelectAll",
+      "type": "submit",
+      "text": "全选",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "itemSelectPage",
+      "type": "submit",
+      "text": "本页全选",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "itemInvertAll",
+      "type": "submit",
+      "text": "反选",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "itemInvertPage",
+      "type": "submit",
+      "text": "本页反选",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "clearItemSelection",
+      "type": "submit",
+      "text": "取消选择",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "RFQ Line ID",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "存货编码",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "存货名称",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "规格型号",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "所属类别",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "询价数量",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "询价单位",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "已分配供应商",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "applyColumnSearch",
+      "type": "submit",
+      "text": "搜索",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "clearColumnSearch",
+      "type": "submit",
+      "text": "清空",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "text",
+      "text": "模糊搜索",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "text",
+      "text": "模糊搜索",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "text",
+      "text": "模糊搜索",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "text",
+      "text": "模糊搜索",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "text",
+      "text": "模糊搜索",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "text",
+      "text": "模糊搜索",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "text",
+      "text": "模糊搜索",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "text",
+      "text": "模糊搜索",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "checkbox",
+      "text": "",
+      "value": "on",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "缺图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "checkbox",
+      "text": "",
+      "value": "on",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "缺图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "checkbox",
+      "text": "",
+      "value": "on",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "缺图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "checkbox",
+      "text": "",
+      "value": "on",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "缺图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "checkbox",
+      "text": "",
+      "value": "on",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "缺图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "checkbox",
+      "text": "",
+      "value": "on",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "缺图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "checkbox",
+      "text": "",
+      "value": "on",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "缺图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "checkbox",
+      "text": "",
+      "value": "on",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "缺图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "checkbox",
+      "text": "",
+      "value": "on",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "缺图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "checkbox",
+      "text": "",
+      "value": "on",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "缺图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "checkbox",
+      "text": "",
+      "value": "on",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "缺图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "type": "checkbox",
+      "text": "",
+      "value": "on",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "缺图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "上一页",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "1",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "下一页",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "多字段排序说明",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "查看说明",
+      "value": "",
+      "disabled": false
+    }
+  ]
+}

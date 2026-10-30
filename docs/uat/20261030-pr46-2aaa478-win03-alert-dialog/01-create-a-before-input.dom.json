@@ -1,0 +1,207 @@
+{
+  "url": "http://127.0.0.1:8765/",
+  "title": "SRM Lite · 采购询价工作台",
+  "text": "S\nSRM\n采购业务系统\n询价 · 比价 · 定标\n工作空间\n询价项目\n物料与图纸\n供应商分配\n报价回收\n比价议价\n管理工具\n数据与备份\n字段设置\n 本地业务系统\n数据保存在本机\n询价与比价\nSRM 采购工作台\n演示数据不会保存；新建询价后可保存到本机。\n本机演示模式（不保存）\n询价项目\n数据与备份\n字段设置\n当前询价项目\n演示数据（不保存）\n保存状态待确认\n这是演示数据，不会保存。请新建一笔询价开始正式操作。\n采购业务流程\n① 询价项目\n② 物料与图纸\n③ 供应商分配\n④ 报价回收\n⑤ 比价议价\n01 / 询价项目\n询价项目\n下一步：物料与图纸\n\n01\n建立询价\n02\n准备清单\n03\n推进询价\n新建\n保存\n历史询价 \n选择已保存的其他询价\n打开所选历史询价\n修改内容自动保存；备份与恢复请前往“数据与备份”。",
+  "controls": [
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "询价项目",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "物料与图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "供应商分配",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "报价回收",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "比价议价",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "数据与备份",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "字段设置",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "uiProjectJump",
+      "type": "button",
+      "text": "询价项目",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "uiAdminToggle",
+      "type": "button",
+      "text": "数据与备份",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "uiFieldSettings",
+      "type": "button",
+      "text": "字段设置",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "① 询价项目",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "② 物料与图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "③ 供应商分配",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "④ 报价回收",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "submit",
+      "text": "⑤ 比价议价",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "查看说明",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "uiProjectNextItems",
+      "type": "button",
+      "text": "下一步：物料与图纸",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "查看说明",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "查看说明",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "查看说明",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "type": "button",
+      "text": "查看说明",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "pilotNewWorkspace",
+      "type": "button",
+      "text": "新建",
+      "value": "",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "pilotSaveWorkspace",
+      "type": "button",
+      "text": "保存",
+      "value": "",
+      "disabled": true
+    },
+    {
+      "tag": "SELECT",
+      "id": "pilotHistoryWorkspace",
+      "type": "select-one",
+      "text": "选择已保存的其他询价",
+      "value": "",
+      "disabled": true
+    },
+    {
+      "tag": "BUTTON",
+      "id": "pilotSwitchWorkspace",
+      "type": "button",
+      "text": "打开所选历史询价",
+      "value": "",
+      "disabled": true
+    }
+  ]
+}

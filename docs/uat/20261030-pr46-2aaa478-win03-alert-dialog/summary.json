@@ -1,0 +1,189 @@
+{
+  "group": "WIN-03",
+  "status": "BLOCKED",
+  "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "stageA": "PASS: materialalert same-session handled; pending->saved; SQLite12; F5 persists",
+  "workspaceId": "RFQ-1793340543627-NJTJR9",
+  "baselineRevision": 1,
+  "afterImportRevision": 2,
+  "afterImportItems": 12,
+  "rfqLineIDs": [
+    "RFQ-L00001",
+    "RFQ-L00002",
+    "RFQ-L00003",
+    "RFQ-L00004",
+    "RFQ-L00005",
+    "RFQ-L00006",
+    "RFQ-L00007",
+    "RFQ-L00008",
+    "RFQ-L00009",
+    "RFQ-L00010",
+    "RFQ-L00011",
+    "RFQ-L00012"
+  ],
+  "pendingObserved": true,
+  "savedAfterPending": true,
+  "afterF5Revision": 2,
+  "afterF5Items": 12,
+  "materialDialogLifecycle": [
+    {
+      "time": "2026-10-30T06:09:16.349Z",
+      "action": "02-dialog-materials",
+      "targetId": "FA1F5D7F2DB48652C7D5C3CFC695517A",
+      "sessionId": "E1D1C43EA06AA9502E26C26A33778737",
+      "stage": "dialog-prearmed",
+      "selector": "#confirmImportRows",
+      "expectedMessage": "新增 12 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。",
+      "expectedType": "alert"
+    },
+    {
+      "time": "2026-10-30T06:09:16.414Z",
+      "action": "02-dialog-materials",
+      "targetId": "FA1F5D7F2DB48652C7D5C3CFC695517A",
+      "sessionId": "E1D1C43EA06AA9502E26C26A33778737",
+      "stage": "dialog-opening-observed",
+      "event": {
+        "method": "Page.javascriptDialogOpening",
+        "params": {
+          "url": "http://127.0.0.1:8765/",
+          "frameId": "FA1F5D7F2DB48652C7D5C3CFC695517A",
+          "message": "新增 12 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。",
+          "type": "alert",
+          "hasBrowserHandler": true,
+          "defaultPrompt": ""
+        },
+        "sessionId": "E1D1C43EA06AA9502E26C26A33778737"
+      }
+    },
+    {
+      "time": "2026-10-30T06:09:16.417Z",
+      "action": "02-dialog-materials",
+      "targetId": "FA1F5D7F2DB48652C7D5C3CFC695517A",
+      "sessionId": "E1D1C43EA06AA9502E26C26A33778737",
+      "stage": "dialog-closed-observed",
+      "event": {
+        "method": "Page.javascriptDialogClosed",
+        "params": {
+          "frameId": "FA1F5D7F2DB48652C7D5C3CFC695517A",
+          "result": true,
+          "userInput": ""
+        },
+        "sessionId": "E1D1C43EA06AA9502E26C26A33778737"
+      }
+    },
+    {
+      "time": "2026-10-30T06:09:16.424Z",
+      "action": "02-dialog-materials",
+      "targetId": "FA1F5D7F2DB48652C7D5C3CFC695517A",
+      "sessionId": "E1D1C43EA06AA9502E26C26A33778737",
+      "stage": "mouse-release-promise-resolved"
+    }
+  ],
+  "stageB": {
+    "supplierImport": "PASS",
+    "persistedItems": 12,
+    "persistedSuppliers": 2,
+    "finalRevision": 3,
+    "assignmentLinks": 0,
+    "blocker": "Ordinaryclick used for supplier bulk confirmation; same-session dialogClick omitted; subsequent one bounded Page.enable probe timedout; no assignment replay"
+  },
+  "timeouts": [
+    {
+      "connectionId": "9e9ab94c-2719-4011-989b-4ad269582895",
+      "id": 11,
+      "sessionId": "9423A51DF685943E5DD095BC5CC1F206",
+      "method": "Input.dispatchMouseEvent",
+      "issued": "2026-10-30T06:12:07.559Z",
+      "elapsedMs": null,
+      "deadlineMs": 12000,
+      "timeout": "2026-10-30T06:12:19.563Z"
+    },
+    {
+      "connectionId": "9e9ab94c-2719-4011-989b-4ad269582895",
+      "id": 12,
+      "sessionId": "9423A51DF685943E5DD095BC5CC1F206",
+      "method": "Runtime.evaluate",
+      "issued": "2026-10-30T06:12:19.565Z",
+      "elapsedMs": null,
+      "deadlineMs": 12000,
+      "timeout": "2026-10-30T06:12:31.571Z"
+    },
+    {
+      "connectionId": "9e9ab94c-2719-4011-989b-4ad269582895",
+      "id": 13,
+      "sessionId": "9423A51DF685943E5DD095BC5CC1F206",
+      "method": "Page.captureScreenshot",
+      "issued": "2026-10-30T06:12:31.572Z",
+      "elapsedMs": null,
+      "deadlineMs": 30000,
+      "timeout": "2026-10-30T06:13:01.576Z"
+    },
+    {
+      "connectionId": "4491d3bf-a8fd-4958-9bd3-5c9a27945eee",
+      "id": 2,
+      "sessionId": "2296D53334A2C86EA666958139D64470",
+      "method": "Page.enable",
+      "issued": "2026-10-30T06:14:20.475Z",
+      "elapsedMs": null,
+      "deadlineMs": 12000,
+      "timeout": "2026-10-30T06:14:32.479Z"
+    }
+  ],
+  "dialogs": [
+    {
+      "time": "2026-10-30T06:09:16.376Z",
+      "connectionId": "11ddc4bd-d527-4432-be28-ca2f96a184c2",
+      "direction": "in",
+      "message": {
+        "method": "Page.javascriptDialogOpening",
+        "params": {
+          "url": "http://127.0.0.1:8765/",
+          "frameId": "FA1F5D7F2DB48652C7D5C3CFC695517A",
+          "message": "新增 12 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。",
+          "type": "alert",
+          "hasBrowserHandler": true,
+          "defaultPrompt": ""
+        },
+        "sessionId": "E1D1C43EA06AA9502E26C26A33778737"
+      }
+    },
+    {
+      "time": "2026-10-30T06:09:16.416Z",
+      "connectionId": "11ddc4bd-d527-4432-be28-ca2f96a184c2",
+      "direction": "in",
+      "message": {
+        "method": "Page.javascriptDialogClosed",
+        "params": {
+          "frameId": "FA1F5D7F2DB48652C7D5C3CFC695517A",
+          "result": true,
+          "userInput": ""
+        },
+        "sessionId": "E1D1C43EA06AA9502E26C26A33778737"
+      }
+    },
+    {
+      "time": "2026-10-30T06:12:07.561Z",
+      "connectionId": "9e9ab94c-2719-4011-989b-4ad269582895",
+      "direction": "in",
+      "message": {
+        "method": "Page.javascriptDialogOpening",
+        "params": {
+          "url": "http://127.0.0.1:8765/",
+          "frameId": "FA1F5D7F2DB48652C7D5C3CFC695517A",
+          "message": "为选中物料添加供应商：即将变更 12 条物料与“虚构供应商A”的实际关联。\n涉及物料：TST-001（规格：未填写，RFQ-L00001）、TST-002（规格：未填写，RFQ-L00002）、TST-003（规格：未填写，RFQ-L00003）、TST-004（规格：未填写，RFQ-L00004）、TST-005（规格：未填写，RFQ-L00005）、TST-006（规格：未填写，RFQ-L00006）、TST-007（规格：未填写，RFQ-L00007）、TST-008（规格：未填写，RFQ-L00008） 等 12 项\n注意：筛选后仍选中的隐藏物料也包含在内。\n确认后立即生效，是否继续？",
+          "type": "confirm",
+          "hasBrowserHandler": true,
+          "defaultPrompt": ""
+        },
+        "sessionId": "9423A51DF685943E5DD095BC5CC1F206"
+      }
+    }
+  ],
+  "sourceFilesChecked": 146,
+  "sourceChanged": [],
+  "confirmedProductFailures": 0,
+  "WIN01": "Prior PASS not rerun",
+  "WIN02": "Prior PASS not rerun",
+  "Linux": "Prior PASS not rerun",
+  "overall": "NOT READY"
+}

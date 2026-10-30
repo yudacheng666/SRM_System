@@ -1,0 +1,17 @@
+{
+ "source":"Observed native tool return records; original protocol and driver logs retained",
+ "commands":[
+  {"command":"node --check cdp.cjs/act-alert.cjs/preflight.cjs; node preflight.cjs","exitCode":0},
+  {"command":"start-service.ps1 -> exact original run_local.bat","state":"running then Ctrl+C to own exec","stopWrapperExit":1},
+  {"command":"original synthetic fixture generator + native HTTP identity + act-alert01-create-a","exitCode":0},
+  {"command":"act-alert02-dialog-materials","exitCode":0},
+  {"command":"act-alert03-f5-materials","exitCode":0},
+  {"command":"act-alert04-open-suppliers","exitCode":0},
+  {"command":"act-alert05-supplier-import","exitCode":0},
+  {"command":"act-alert06-assign-all","exitCode":1,"error":"Input mouse release12s; failure DOM12s and screenshot30s also timeout"},
+  {"command":"read-only active plus one inspect.cjs current-state probe","exitCode":1,"note":"GET succeeded; Page.enable12s timeout; no assignment replay"},
+  {"command":"node stop-browser.cjs","exitCode":0},
+  {"command":"native cleanup/environment audit","exitCode":0}
+ ],
+ "setupPatchNote":"Initial patch operation was rejected before file mutation because delete/add targeted the same path; created new act-alert.cjs instead. No native execution failure or product modification resulted."
+}
