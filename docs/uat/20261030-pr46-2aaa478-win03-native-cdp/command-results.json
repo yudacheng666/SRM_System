@@ -1,0 +1,10 @@
+{
+  "source": "Observed tool-command return records; not fabricated subprocess output",
+  "commands": [
+    {"command":"node preflight.cjs","exitCode":0,"note":"One native Edge launch, bootstrap CDP/aboutblank screenshot success"},
+    {"command":"original fixtures.py <RUN_ROOT>/fixtures; native HTTP hash; node act.cjs 01-load.json","exitCode":1,"note":"Fixture generation/HTTP succeeded; act failed Page.captureScreenshot independent driver deadline; error screenshot captured"},
+    {"command":"original run_local.bat","start":"running normally; own8765 service","stop":"Ctrl+C to task exec session","wrapperExitCode":1},
+    {"command":"node stop-browser.cjs","exitCode":0,"note":"Browser.close on task-only fresh-profile endpoint"},
+    {"command":"native CIM and exclusive port bind cleanup verification","exitCode":0,"note":"Task service/browser gone;8765 and61109 free"}
+  ]
+}

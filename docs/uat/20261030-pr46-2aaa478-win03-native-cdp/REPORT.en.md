@@ -1,0 +1,17 @@
+# WIN-03 native Windows Edge/CDP bounded preflight
+
+WIN-03 BLOCKED; full purchaser UAT NOT TESTED. WIN-01/02 existing PASS unchanged, no completed suites rerun. Overall NOT READY.
+
+Important new fact: installed native Windows Edge156.0.4314.50 DOES start in a new throwaway profile and accepts existing Node24.22.1 built-in WebSocket CDP. This is not an absent-browser diagnosis. One launch only, Windows11 x64 build26200.9711, headless=new, OS-allocated debug port61109 verified bound only127.0.0.1, browserPID14724. Fresh about:blank target and bootstrap screenshot succeeded. preflight.json controlReady=true denotes only bootstrap, not complete interaction/UAT.
+
+Exact frozen source2aaa478c8f1966e41b9372d9d989c383dbaa1972 was used. All146 original source/test/CI Git blob and SHA256 identities match before/after; PR46 HEAD unchanged. Complete source was previously materialized from immutable GitHub tree/raw blobs, not a git checkout. One fresh tree fetch this run hit a transport error; existing trusted immutable manifest was reverified locally. Disk and actual HTTP HTML SHA256 match bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3.
+
+Fresh BAT servicePID31636 used new data-origin; service-only BROWSER hook routed auto-open to task-owned CDP/profile, preventing personal-profile fallback. Actual /api/health, network navigation, title and visible DOM of exact app were captured at1366x768. Original fixture generator prepared synthetic XLSX and valid two-page PDFs, but none were imported/uploaded; no E2E suite was run.
+
+Independent driver failed its first application screenshot wait at12000ms, command exit1. Trace shows request id11 at05:01:53.769Z responded05:02:05.844Z (12075ms, about75ms late). The catch block made one error-evidence screenshot request id12, which succeeded in125ms and saved unedited01-load.failure.png showing the actual SRM demo page. This evidence snapshot is not a second browser launch/preflight rerun and does not erase the original timeout. No product assertion failed. Initial blanket unavailable-browser assumptions are no longer valid; remaining obstacle this round is a driver deadline and unverified input/UAT.
+
+Actual Input.* command count is0. No RFQ create/save, imports, PDF association/preview, supplier ZIP download, quotation/award/history, reload/offline-save, UI backup/restore or quoted-row/960layout scope completed. These remain NOT TESTED. Stop after this one bounded preflight as instructed; no hidden timeout relaxation, repeated broken connector, new installation or rerun.
+
+Raw CDP event trace (screenshot payloads replaced with markers, PNGs separately retained), DOM, startup/driver failures, exact scripts, native process/loopback identity and screenshots are archived. This is not a Playwright trace. Profile/cache/SQLite are not uploaded. Fresh profile only, synthetic app/demo data only. Text copies redact user/root paths; PNG bytes unchanged; raw/published checksums retained.
+
+Own BAT stopped by Ctrl+C (wrapper exit1), own browser closed by Browser.close (cleanup exit0). Native CIM confirms service/browser PIDs gone, task-profile browser process count0; exclusive binds prove8765 and61109 free. No unknown/user process killed. Only fresh WIN03 evidence directory appended to existing DraftPR50; source/tests/CI/main/M1/old evidence unchanged, no Actions/software installation/merge/closure. Future separately authorized continuation can use proven native Edge+Node CDP, with honest driver correction and full UAT still required.

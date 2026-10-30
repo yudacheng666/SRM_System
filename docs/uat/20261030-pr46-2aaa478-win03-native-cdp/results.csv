@@ -1,0 +1,18 @@
+scope,id,status,detail
+group,WIN-01,PRIOR PASS,Existing Python3.15 44/44 unchanged; not rerun
+group,WIN-02,PRIOR PASS,Existing Node24 10/10 unchanged; not rerun
+group,WIN-03,BLOCKED,Single native preflight driver screenshot deadline; complete purchaser scope not executed
+preflight,SOURCE-146,PASS,All146 original blob andSHA256 before/after identical
+preflight,NATIVE-EDGE-START,PASS,One new-profile nativeEdge launchPID14724
+preflight,LOOPBACK-CDP,PASS,Native127.0.0.1:61109 only; Node24WebSocket connects
+preflight,BLANK-PAGE-CAPTURE,PASS,Bootstrap screenshot saved; not fullcontrol/UAT
+preflight,APP-DOM-HTTP,PASS,Real exactSHA appDOM andHTTP identity captured
+driver,APP-SCREENSHOT-DEADLINE,FAIL,Driver-only12000ms deadline; actual first response12075ms; commandexit1
+evidence,APP-ERROR-SCREENSHOT,CAPTURED,Error-evidence capture125ms; real1366x768 uneditedPNG; not UATPASS
+unexecuted,INPUT-CLICK-TYPING,NOT TESTED,ActualCDPInput commands0
+unexecuted,BUYER-RFQ-IMPORT-PDF-ZIP,NOT TESTED,Full purchaser steps not started
+unexecuted,QUOTES-AWARDS-HISTORY,NOT TESTED,Not started
+unexecuted,RELOAD-OFFLINE-SAVE,NOT TESTED,Not started
+unexecuted,UI-FULL-BACKUP-RESTORE,NOT TESTED,Not started
+unexecuted,QUOTED-ROW-AND-960-LAYOUT,NOT TESTED,Only initial1366x768 demo page observed
+cleanup,OWN-PROCESSES-PORTS,PASS,Ownservice/browsergone;8765 and61109 free
