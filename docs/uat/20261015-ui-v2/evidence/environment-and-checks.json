@@ -1,0 +1,79 @@
+{
+  "base_sha": "49cd430b5b695f281e7f81931d174cbc1fb32cb5",
+  "browser": "Chromium 154.0.8037.57 (headless real browser)",
+  "playwright": "1.58.2",
+  "python": "3.12.14",
+  "node": "24.19.0",
+  "actual_data_root": "/tmp/srm-v2-data",
+  "restore_data_root": "/tmp/srm-v2-restore",
+  "ports": [
+    8825,
+    8826
+  ],
+  "first_project": "RFQ-1792067805618-H0OZ0C",
+  "final_item_count": 13,
+  "final_quote_submissions": [
+    {
+      "supplier": "UAT-A",
+      "round": 1,
+      "version": 1,
+      "status": "confirmed",
+      "lines": 3
+    },
+    {
+      "supplier": "UAT-B",
+      "round": 1,
+      "version": 1,
+      "status": "confirmed",
+      "lines": 3
+    },
+    {
+      "supplier": "UAT-A",
+      "round": 2,
+      "version": 1,
+      "status": "confirmed",
+      "lines": 1
+    },
+    {
+      "supplier": "UAT-A",
+      "round": 2,
+      "version": 2,
+      "status": "confirmed",
+      "lines": 1
+    },
+    {
+      "supplier": "UAT-C",
+      "round": 1,
+      "version": 1,
+      "status": "confirmed",
+      "lines": 2
+    }
+  ],
+  "independent_calculation": {
+    "A_common": 255.0,
+    "B_common": 274,
+    "A_own": 415.0,
+    "B_own": 524,
+    "lowest_combination": 659.0,
+    "nonlowest_B001_selected_total": 684
+  },
+  "manual_source_observed": {
+    "lineId": "RFQ-L00004",
+    "itemId": "TST-004",
+    "price": 50,
+    "tiers": [],
+    "lead": 6,
+    "moq": 1,
+    "status": "quoted",
+    "remark": "",
+    "source": "import",
+    "original": {
+      "price": "50",
+      "lead": "6",
+      "moq": "1",
+      "status": "quoted"
+    },
+    "updatedAt": "2026-10-15T12:49:41.868Z"
+  },
+  "ci_run": "https://github.com/yudacheng666/SRM_System/actions/runs/38732490714"
+}

@@ -1,0 +1,41 @@
+{
+  "read_only_sqlite_verification": "PASS: both workspace snapshots/revisions and both PDF hashes identical immediately after restore",
+  "evidence": {
+    "/tmp/srm-v2-data": {
+      "workspaces": [
+        {
+          "id": "RFQ-1792067805618-H0OZ0C",
+          "revision": 20,
+          "snapshot_sha256": "b100224ee13544811a4086172fc854c3f4209c0903077cfcd4729e2a723ad582"
+        },
+        {
+          "id": "RFQ-1792068854556-3X4X4E",
+          "revision": 4,
+          "snapshot_sha256": "36ec0a6de9458a6727d1796bd6a24a3052894b8f72f17cd929349da9140fe154"
+        }
+      ],
+      "pdf_sha256": [
+        "b324f7affb4c155c35adb6b51ba43d3549f0d1455393f42713c49137a3be184c",
+        "b75eb44a3675b9624ae02c74fdd1047fa28c8480a03f0a176f14b37dc46f9427"
+      ]
+    },
+    "/tmp/srm-v2-restore": {
+      "workspaces": [
+        {
+          "id": "RFQ-1792067805618-H0OZ0C",
+          "revision": 20,
+          "snapshot_sha256": "b100224ee13544811a4086172fc854c3f4209c0903077cfcd4729e2a723ad582"
+        },
+        {
+          "id": "RFQ-1792068854556-3X4X4E",
+          "revision": 4,
+          "snapshot_sha256": "36ec0a6de9458a6727d1796bd6a24a3052894b8f72f17cd929349da9140fe154"
+        }
+      ],
+      "pdf_sha256": [
+        "b324f7affb4c155c35adb6b51ba43d3549f0d1455393f42713c49137a3be184c",
+        "b75eb44a3675b9624ae02c74fdd1047fa28c8480a03f0a176f14b37dc46f9427"
+      ]
+    }
+  }
+}
