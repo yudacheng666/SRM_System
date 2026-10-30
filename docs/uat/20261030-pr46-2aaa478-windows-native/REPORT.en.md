@@ -1,0 +1,15 @@
+# Native Windows checkpoint report
+
+NOT READY: WIN-01 NOT TESTED (Python 3.13 unavailable), WIN-02 NOT TESTED (Node 22 and npm unavailable), WIN-03 BLOCKED with partial native BAT/API checks completed. No group PASS and no confirmed product FAIL. Existing Python 3.15/Node 24 results do not replace required versions.
+
+Product commit 2aaa478c8f1966e41b9372d9d989c383dbaa1972 was checked against PR46 before and after testing. All 146 original GitHub tree blobs were materialized and verified; final source/test/CI hashes remain unchanged. Disk and actual HTTP HTML SHA256: bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3. Native Windows x64 build 26200.9711, CMD, PowerShell 7.6.5 and Windows PowerShell 5.1 were actually executed.
+
+Six supplemental checkpoints passed: source identity; BAT startup from root and a Chinese/space working directory; two synthetic RFQs and PDF payload persistence across BAT restart; PDF API cross-workspace isolation; full S4 backup; restore into another newly created empty data root followed by HTTP409 nonempty rejection with unchanged complete logical SQLite dump and PDF hashes. These are not a completed buyer UI workflow or full test suites. The PDF fixtures are 68-byte backend payloads, not evidence of rendering real drawings. The second RFQ, item/supplier/quote fixtures were created via API.
+
+Initial browser automation timed out around the new-RFQ confirmation. Native computer control then stopped because it could not confidently determine the browser URL. User authorized one retry; the native browser connection was unavailable and browser inventory contained only IAB/MCP Apps. No screenshots/traces exist for delivery. Buyer imports, real PDF rendering/association, F5/close-browser persistence, supplier ZIP export, offline-save message, file-lock fault injection and tampered ZIP were not completed.
+
+One supplemental driver fault is retained: after creating RFQ B, driver attempted PDF upload to inactive A, correctly rejected HTTP400. The explicit checkpoint correction selects the intended RFQ with expectedActive before upload. Original seed log exit1 is retained; assets/backup/restore commands exit0. This continued checkpoints on the same synthetic database; it is not a clean full buyer rerun.
+
+All task servers (PIDs22468/15704/24252) were stopped via their exec sessions. Wrapper exits were1, not claimed as graceful application exit0. Native process enumeration confirmed zero task servers; exclusive bind confirmed port8765 free. Only task-created synthetic roots were used; no business directory was read or overwritten. Published copies redact local root/user paths; business results and errors remain unchanged.
+
+Only the new Windows evidence directory is appended to existing PR50, with [skip ci]. Workflows were inspected and do not target this evidence branch/PR base. No product/test/CI edits, Linux reruns, Actions dispatch, merge or PR closure. See the Chinese report for complete limitations and raw evidence map.

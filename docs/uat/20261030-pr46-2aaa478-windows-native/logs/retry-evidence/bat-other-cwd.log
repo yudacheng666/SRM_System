@@ -1,0 +1,16 @@
+SRM local prototype: http://127.0.0.1:8765/
+S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.
+SQLite API check: http://127.0.0.1:8765/storage-check
+127.0.0.1 - - [30/Oct/2026 11:14:28] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Oct/2026 11:14:28] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [30/Oct/2026 11:14:28] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [30/Oct/2026 11:14:28] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [30/Oct/2026 11:14:51] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [30/Oct/2026 11:14:51] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [30/Oct/2026 11:14:51] "GET /api/workspaces/RFQ-SYNTHETIC-WIN-RETRY-B HTTP/1.1" 200 -
+127.0.0.1 - - [30/Oct/2026 11:14:51] "GET /api/workspaces/RFQ-1793329742476-I9FOFK HTTP/1.1" 200 -
+127.0.0.1 - - [30/Oct/2026 11:14:51] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [30/Oct/2026 11:14:51] "GET /api/assets/RFQ-1793329742476-I9FOFK/4330e81a8125b56f17a74258131df917abcee09ec1a9d3a0c6872a5ba213f185 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Oct/2026 11:14:51] "GET /api/assets/RFQ-SYNTHETIC-WIN-RETRY-B/0683ed6261176bcd2f19bcd13f68d715ef8bdfd5da6cc15d6a126c8f6d522b75 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Oct/2026 11:14:51] "POST /api/backups/full HTTP/1.1" 201 -
+127.0.0.1 - - [30/Oct/2026 11:14:51] "GET /api/backups/full/SRM_FULL_20261030_111451_5a2bf695.zip HTTP/1.1" 200 -

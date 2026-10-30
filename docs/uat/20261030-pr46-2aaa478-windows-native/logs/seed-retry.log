@@ -1,0 +1,11 @@
+{"method": "GET", "route": "/api/workspaces", "status": 200, "response": {"workspaces": [{"workspaceId": "RFQ-1793329742476-I9FOFK", "revision": 2, "updatedAt": "2026-10-30T03:09:12.606042+00:00", "projectName": "虚构 Windows 专项 A"}]}}
+{"method": "GET", "route": "/api/workspaces/RFQ-1793329742476-I9FOFK", "status": 200, "response": {"workspace": {"format": "srm-workspace", "schemaVersion": 1, "workspaceId": "RFQ-1793329742476-I9FOFK", "origin": "buyer", "revision": 2, "state": {"items": [], "suppliers": [], "assignments": [], "quoteRounds": [], "awards": [], "awardReasons": [], "manualAwards": [], "awardReviewIds": [], "supplierPool": [], "selectedCompareSuppliers": [], "customFields": [], "projectName": "虚构 Windows 专项 A", "lineSeq": 0, "createdSeq": 0, "quoteComparisonMode": "returned"}}}}
+{"method": "GET", "route": "/api/active", "status": 200, "response": {"workspace": {"format": "srm-workspace", "schemaVersion": 1, "workspaceId": "RFQ-1793329742476-I9FOFK", "origin": "buyer", "revision": 2, "state": {"items": [], "suppliers": [], "assignments": [], "quoteRounds": [], "awards": [], "awardReasons": [], "manualAwards": [], "awardReviewIds": [], "supplierPool": [], "selectedCompareSuppliers": [], "customFields": [], "projectName": "虚构 Windows 专项 A", "lineSeq": 0, "createdSeq": 0, "quoteComparisonMode": "returned"}}, "activeId": "RFQ-1793329742476-I9FOFK"}}
+{"method": "PUT", "route": "/api/workspaces/RFQ-1793329742476-I9FOFK", "status": 200, "response": {"saved": true, "workspaceId": "RFQ-1793329742476-I9FOFK", "revision": 3}}
+{"method": "PUT", "route": "/api/workspaces/RFQ-SYNTHETIC-WIN-RETRY-B", "status": 200, "response": {"saved": true, "workspaceId": "RFQ-SYNTHETIC-WIN-RETRY-B", "revision": 1}}
+{"method": "PUT", "route": "/api/assets/RFQ-1793329742476-I9FOFK/4330e81a8125b56f17a74258131df917abcee09ec1a9d3a0c6872a5ba213f185", "status": 400, "response": {"error": "PDF upload requires the currently active RFQ"}}
+Traceback (most recent call last):
+  File "<ISOLATED_ROOT>\windows-checkpoint.py", line 71, in <module>
+    assert call('PUT',route,raw,'application/pdf',{'X-SRM-Filename':urllib.parse.quote('虚构 drawing '+tag+'.pdf')})[0] == 200
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
