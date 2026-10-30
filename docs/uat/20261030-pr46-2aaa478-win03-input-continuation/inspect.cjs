@@ -1,0 +1,2 @@
+const fs=require('node:fs'),path=require('node:path');const {CDP}=require('./cdp.cjs');
+(async()=>{const p=JSON.parse(fs.readFileSync(path.join(__dirname,'preflight.json')));const c=await new CDP(p.browserWebSocket,path.join(__dirname,'cdp-trace.jsonl')).connect();try{await c.page(p.targetId);const value=await c.eval(process.argv[2]||'document.body.innerText');console.log(JSON.stringify(value,null,2));}finally{c.close();}})().catch(e=>{console.error(e.stack);process.exitCode=1});

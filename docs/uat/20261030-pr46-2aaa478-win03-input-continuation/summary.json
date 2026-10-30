@@ -1,0 +1,145 @@
+{
+  "group": "WIN-03",
+  "status": "BLOCKED",
+  "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "sourceFilesChecked": 146,
+  "sourceChanged": [],
+  "inputChain": "PASS: real Input mouse/text, changedRFQname, dynamic saveACK",
+  "inputCommands": {
+    "Input.dispatchMouseEvent": 26,
+    "Input.dispatchKeyEvent": 14,
+    "Input.insertText": 2
+  },
+  "twoRFQUI": "PASS: A/B created named saved; read-only persisted records confirm both",
+  "materials": "PARTIAL: real XLSX12row preview and confirmation alert; final persisted active items0, NOT successful import/save",
+  "screenshotDeadlineMs": 30000,
+  "generalCDPDeadlineMs": 12000,
+  "DOMBusinessWaitMs": 8000,
+  "screenshots": [
+    {
+      "connectionId": "05816e86-0e83-48e7-ba1a-c6a66c7bf07b",
+      "id": 32,
+      "sessionId": "379107A0ECB72A170E3EE52B19537C1A",
+      "method": "Page.captureScreenshot",
+      "issued": "2026-10-30T05:27:34.736Z",
+      "deadlineMs": 30000,
+      "returned": "2026-10-30T05:27:34.845Z",
+      "elapsedMs": 109
+    },
+    {
+      "connectionId": "edfeae45-8c46-4167-878c-b251b60e2ea3",
+      "id": 7,
+      "sessionId": "FAB01ECD27D6C4F69B69FEFDBFB73605",
+      "method": "Page.captureScreenshot",
+      "issued": "2026-10-30T05:29:02.493Z",
+      "deadlineMs": 30000,
+      "returned": "2026-10-30T05:29:16.538Z",
+      "elapsedMs": 14045
+    },
+    {
+      "connectionId": "ac6ab2bd-88e1-49bc-8541-acb735aad732",
+      "id": 52,
+      "sessionId": "6BD327174FE73DED409BB8472F544609",
+      "method": "Page.captureScreenshot",
+      "issued": "2026-10-30T05:29:19.629Z",
+      "deadlineMs": 30000,
+      "returned": "2026-10-30T05:29:19.790Z",
+      "elapsedMs": 161
+    },
+    {
+      "connectionId": "6082f5e0-9409-4258-8a12-4ed30635ce51",
+      "id": 35,
+      "sessionId": "E15B2C4C0D145F02079D20A4034AD382",
+      "method": "Page.captureScreenshot",
+      "issued": "2026-10-30T05:30:08.769Z",
+      "deadlineMs": 30000,
+      "elapsedMs": null,
+      "timeout": "2026-10-30T05:30:38.775Z"
+    },
+    {
+      "connectionId": "5d25da9d-aa77-46cb-8b72-83e779e49f4d",
+      "id": 3,
+      "sessionId": "31E608B9B9AE8913932440077E35F0B6",
+      "method": "Page.captureScreenshot",
+      "issued": "2026-10-30T05:31:20.721Z",
+      "deadlineMs": 30000,
+      "elapsedMs": null,
+      "timeout": "2026-10-30T05:31:50.727Z"
+    }
+  ],
+  "timeouts": [
+    {
+      "connectionId": "6082f5e0-9409-4258-8a12-4ed30635ce51",
+      "id": 34,
+      "sessionId": "E15B2C4C0D145F02079D20A4034AD382",
+      "method": "Input.dispatchMouseEvent",
+      "issued": "2026-10-30T05:29:56.752Z",
+      "deadlineMs": 12000,
+      "elapsedMs": null,
+      "timeout": "2026-10-30T05:30:08.767Z"
+    },
+    {
+      "connectionId": "6082f5e0-9409-4258-8a12-4ed30635ce51",
+      "id": 35,
+      "sessionId": "E15B2C4C0D145F02079D20A4034AD382",
+      "method": "Page.captureScreenshot",
+      "issued": "2026-10-30T05:30:08.769Z",
+      "deadlineMs": 30000,
+      "elapsedMs": null,
+      "timeout": "2026-10-30T05:30:38.775Z"
+    },
+    {
+      "connectionId": "5d25da9d-aa77-46cb-8b72-83e779e49f4d",
+      "id": 2,
+      "sessionId": "31E608B9B9AE8913932440077E35F0B6",
+      "method": "Page.enable",
+      "issued": "2026-10-30T05:31:08.712Z",
+      "deadlineMs": 12000,
+      "elapsedMs": null,
+      "timeout": "2026-10-30T05:31:20.720Z"
+    },
+    {
+      "connectionId": "5d25da9d-aa77-46cb-8b72-83e779e49f4d",
+      "id": 3,
+      "sessionId": "31E608B9B9AE8913932440077E35F0B6",
+      "method": "Page.captureScreenshot",
+      "issued": "2026-10-30T05:31:20.721Z",
+      "deadlineMs": 30000,
+      "elapsedMs": null,
+      "timeout": "2026-10-30T05:31:50.727Z"
+    }
+  ],
+  "dialogs": [
+    {
+      "time": "2026-10-30T05:29:16.668Z",
+      "connectionId": "ac6ab2bd-88e1-49bc-8541-acb735aad732",
+      "url": "http://127.0.0.1:8765/",
+      "frameId": "F7303967CBF31B17E063E465B6710CF3",
+      "message": "新建一笔空白询价？原来已保存的询价不会被删除。",
+      "type": "confirm",
+      "hasBrowserHandler": true,
+      "defaultPrompt": ""
+    },
+    {
+      "time": "2026-10-30T05:29:56.769Z",
+      "connectionId": "6082f5e0-9409-4258-8a12-4ed30635ce51",
+      "url": "http://127.0.0.1:8765/",
+      "frameId": "F7303967CBF31B17E063E465B6710CF3",
+      "message": "新增 12 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。",
+      "type": "alert",
+      "hasBrowserHandler": true,
+      "defaultPrompt": ""
+    }
+  ],
+  "finalActiveItemCount": 0,
+  "confirmedProductFailures": 0,
+  "driverIssues": [
+    "prelaunch parse error corrected and preserved",
+    "unhandled material import success alert -> mouse release timeout",
+    "subsequent dialog acknowledgement returned No dialog is showing",
+    "Page.enable12000ms timeout plus error screenshot30000ms timeout; stopped"
+  ],
+  "WIN01": "Prior PASS not rerun",
+  "WIN02": "Prior PASS not rerun",
+  "overall": "NOT READY"
+}

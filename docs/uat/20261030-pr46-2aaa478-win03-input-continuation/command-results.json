@@ -1,0 +1,17 @@
+{
+ "source":"Observed native tool-command returns; raw CDP events provide independent protocol record",
+ "commands":[
+  {"command":"node preflight.cjs (before comment fix)","exitCode":1,"note":"SyntaxError before browser spawn; original broken source preserved"},
+  {"command":"node --check cdp.cjs; node --check act.cjs; node --check preflight.cjs; node preflight.cjs","exitCode":0},
+  {"command":"original run_local.bat in fresh process environment","state":"running normally until task cleanup","stopWrapperExit":1},
+  {"command":"fixture generator + HTTP identity + node act.cjs 01-input-chain.json","exitCode":0},
+  {"command":"node act.cjs 01b-save-ack.json","exitCode":0},
+  {"command":"node act.cjs 02-second-rfq.json","exitCode":0},
+  {"command":"node act.cjs 03-import-materials.json","exitCode":1,"error":"Input.dispatchMouseEvent timeout; error capture also30000ms timeout"},
+  {"command":"node ack-dialog.cjs","exitCode":1,"error":"CDP-32602 No dialog is showing; no action replay"},
+  {"command":"node act.cjs 03b-materials-verified.json","exitCode":1,"error":"Page.enable timeout; error capture30000ms timeout"},
+  {"command":"read-only final workspace/active GET and existing artifact inspection","exitCode":0},
+  {"command":"node stop-browser.cjs","exitCode":0},
+  {"command":"native own PID/profile/port cleanup verification","exitCode":0}
+ ]
+}
