@@ -29,6 +29,22 @@
 - Do not run two concurrent branches as competing writers to the same canonical memory file. Use a single documentation PR queue or rebase/reconcile before writing.
   不允许并行分支相互覆盖主状态文件。
 
+## CI-first, risk-based acceptance & quota protection / 测试分级与去重（2026-10-30 新决策）
+
+**规则：优先 GitHub Actions 自动回归；Codex Cloud 仅做增量、独立、无法由 CI 充分替代的验收。不要重复测试浪费额度。**
+
+1. **每轮先核对证据**：确认 PR 产品 HEAD、测试 SHA、变更文件、已有 GitHub Actions job（含 OS/浏览器/实际服务路径）、日志/trace、PASS/FAIL/SKIP/NOT TESTED。相同 SHA、用例、配置、执行环境及断言已有可核验 PASS，则**默认不允许 Codex 重跑同套脚本**。仅当新改动影响已有结果、证据缺失/失效或出现具体新风险时才重测，并说明原因。
+2. **CI 为默认自动验收入口**：ChatGPT 负责开发和补足自动化用例；GitHub Actions 在有额度时执行单元/集成/Chromium/Windows Runner 测试；优先审查其证据。CI 失败要先定位原因，不得改用 Linux Codex 重复全套并把原 CI FAIL 说成已通过。
+3. **风险分级决定 Codex 是否必要**：
+   - 低风险：文档、注释、纯文案、无业务逻辑影响的调整 → 仅必要静态检查/受影响 CI；默认不安排 Codex。
+   - 中风险：普通 UI/交互、导入展示、非破坏性流程 → CI + 定向浏览器检查；仅未覆盖的采购员操作、视觉/可用性问题或特定故障交 Codex。
+   - 高风险：RFQ 身份/分配、报价历史/轮次/阶梯价/定标与比价口径、PDF 供应商隔离、S4 备份恢复、数据持久化/覆盖、程序更新和安全边界 → 精确 SHA CI + **针对遗漏风险的一轮独立 Codex 探索性验收**（若高风险必须项尚未覆盖，不得跳过而宣称 READY）。无需重跑全部已通过的自动脚本。
+4. **派单最小化**：每个 Codex 任务必须列出已通过且不重测的范围、CI 未覆盖的新增目标、明确验收方式、风险及终止条件。失败/修复后只复验原失败和受影响回归；无新变更、无新风险或无证据缺口不重复派单。Codex TEST-ONLY 不修改产品代码、原测试、CI 或主记忆。
+5. **Windows 与配额限制**：优先用 GitHub Windows Runner + 真实 Chromium 验证可自动化的 Windows 链路；只有原生文件对话框、打印、Excel、用户真实设备等不能等价替代的部分才安排专项实机，禁止逐轮让用户重复测试。GitHub Actions 额度不足/不可用时，仅让 Codex **替代此前没有有效 PASS 证据的必要测试**，记录替代条件和 NOT TESTED；不得将替测冒充 CI 全绿。额度恢复后只补关键缺口，不盲目重跑全部历史 PASS。
+6. **合并判定与旧规则衔接**：保留高风险原有准确 SHA CI、必要独立验收及用户明确批准的门槛；普通低风险改动不再无条件要求“CI 全绿 + Codex 完整 UAT + Windows 实机”三件套。CI 异常或未测不得标 PASS；若需例外合并必须用户逐项明确批准，并披露剩余风险。记录精确 SHA、已有证据链接、新增测试和未测项。文档规则修改本身不触发额外 Codex 全回归。
+
+English summary: Review existing exact-SHA CI evidence first; don't replay passing suites in Codex. Run GitHub CI by default, select incremental independent UAT based on risk, use Windows runners before on-site Windows, and use Codex as quota fallback only for missing tests. Preserve explicit approval and safety gates.
+
 ## Memory checkpoint triggers / 自动固化触发器
 
 Perform a memory checkpoint as part of the **same authorized task** immediately after:
@@ -50,8 +66,8 @@ Checkpoint procedure / 固化动作：
 
 ## Acceptance, safety and privacy / 验收、安全与隐私
 
-- Exact-SHA successful developer CI precedes new independent Codex testing; a failed or unverified job is not PASS.
-  新产品候选先过准确 SHA 的开发者 CI，再交 Codex Cloud 独立验收。
+- Normally require successful exact-SHA developer CI before risk-required independent Codex UAT. If CI is unavailable due to quotas or outages, Codex may cover only necessary missing cases, explicitly marked as substitute evidence (not CI PASS); high-risk merge exceptions need the owner's explicit approval.
+  常规先核对准确 SHA CI；配额异常仅定向替测，不宣称 CI PASS，高风险例外须用户明确批准。
 - Preserve accepted RFQ identities, quotation history, tier-price semantics, supplier isolation and S4 restore protections; scope changes require an owner-confirmed decision.
   不擅自变更已确认的采购业务不变量。
 - Never commit identifiable enterprise/person/supplier/customer/product data, actual pricing, original emails, or private screenshots; use fictional fixtures only, even though the repo is private.
