@@ -1805,14 +1805,19 @@ body.srm-v2 #quoteImport #quoteCoverageDetails{overflow-wrap:anywhere;font-size:
 
 /* 2026-10-29 buyer-requested tooltip disclosure, visual-only. Dynamic statuses,
  * labels, errors, warnings, required decisions, metrics and validators remain visible. */
-body.srm-v2 .srm-hint{display:inline-flex;position:relative;align-items:center;vertical-align:middle;isolation:isolate;min-width:22px}
-body.srm-v2 .srm-hint-button{display:inline-flex;align-items:center;justify-content:center;width:23px;height:23px;min-width:23px;padding:0;border:1px solid #cfdee9;border-radius:50%;background:#f6fafc;color:#53758e;cursor:help;line-height:1}
+body.srm-v2 .srm-hint{display:inline-flex;position:relative;align-items:center;vertical-align:middle;isolation:isolate;min-width:20px}
+body.srm-v2 .srm-hint-button{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;min-width:20px;padding:0;border:0;border-radius:50%;background:transparent;color:#53758e;cursor:help;line-height:1}
 body.srm-v2 .srm-hint-button:hover,body.srm-v2 .srm-hint-button:focus-visible,body.srm-v2 .srm-hint.is-open .srm-hint-button{background:#eaf4fb;color:#205c90;border-color:#97b9d3}
 body.srm-v2 .srm-hint-pop{position:fixed;left:12px;right:auto;top:12px;z-index:180;box-sizing:border-box;display:block;min-width:165px;width:max-content;max-width:min(360px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow-y:auto;overscroll-behavior:contain;padding:11px 13px;border-radius:6px;background:#1e354a;color:white;border:1px solid #304e64;text-align:left;font-size:13px;font-weight:450;line-height:1.65;white-space:normal;overflow-wrap:anywhere;box-shadow:0 9px 26px #14253b30;visibility:hidden;opacity:0;pointer-events:none}
 body.srm-v2 .srm-hint:hover .srm-hint-pop,body.srm-v2 .srm-hint:focus-within .srm-hint-pop,body.srm-v2 .srm-hint.is-open .srm-hint-pop{visibility:visible;opacity:1;pointer-events:auto}
 body.srm-v2 .srm-hint.is-dismissed .srm-hint-pop{visibility:hidden!important;opacity:0!important;pointer-events:none!important}
 body.srm-v2 .srm-v3-pageMeta .srm-hint-pop,body.srm-v2 #settings .toolbar .srm-hint-pop{left:auto;right:0}
 body.srm-v2 .srm-page-help{display:inline-flex;margin-top:5px}
+/* Keep the page heading and its help glyph on one centered baseline; no other layout changes. */
+body.srm-v2 .srm-v3-pageMain>h2{display:inline-block;vertical-align:middle}
+body.srm-v2 .srm-v3-pageMain>.srm-page-help{display:inline-flex;align-items:center;vertical-align:middle;margin:0 0 0 6px}
+body.srm-v2 .srm-hint-button svg{width:17px;height:17px;display:block;flex:none}
+body.srm-v2 .srm-hint-button:focus-visible{outline:2px solid #97b9d3;outline-offset:2px}
 body.srm-v2 .srm-v3-pageMeta{max-width:44px}
 body.srm-v2 .srm-v4-project-guide{max-width:840px;grid-template-columns:1fr!important;margin-top:10px!important;overflow:visible!important}
 body.srm-v2 .srm-v4-guide-main{padding:16px 18px!important}
@@ -7191,7 +7196,7 @@ function addGeneratedPageHints(){
     button.setAttribute("aria-label","查看说明");
     button.setAttribute("aria-expanded","false");
     button.title="查看说明";
-    button.textContent="ⓘ";
+    button.innerHTML='<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
     var popup=document.createElement("span");
     popup.className="srm-hint-pop";
     popup.id="srm-generated-hint-"+pair[0];
