@@ -1815,7 +1815,7 @@ body.srm-v2 .srm-v3-pageMeta .srm-hint-pop,body.srm-v2 #settings .toolbar .srm-h
 body.srm-v2 .srm-page-help{display:inline-flex;margin-top:5px}
 /* Keep the page heading and its help glyph on one centered baseline; no other layout changes. */
 body.srm-v2 .srm-v3-pageMain>h2{display:inline-block;vertical-align:middle}
-body.srm-v2 .srm-v3-pageMain>.srm-page-help{display:inline-flex;align-items:center;vertical-align:middle;margin:0 0 0 6px}
+body.srm-v2 .srm-v3-pageMain>.srm-page-help{display:inline-flex;align-items:center;vertical-align:middle;margin:0}
 body.srm-v2 .srm-hint-button svg{width:17px;height:17px;display:block;flex:none}
 body.srm-v2 .srm-hint-button:focus-visible{outline:2px solid #97b9d3;outline-offset:2px}
 body.srm-v2 .srm-v3-pageMeta{max-width:44px}
@@ -1825,11 +1825,13 @@ body.srm-v2 .srm-v4-guide-main>p{margin:5px 0!important}
 body.srm-v2 .srm-v4-guide-steps{margin-top:9px}
 body.srm-v2 .srm-v4-guide-steps>div{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:11px 13px!important}
 body.srm-v2 .srm-v4-guide-steps>div>span:first-child,body.srm-v2 .srm-v4-guide-steps>div strong{margin:0!important}
+body.srm-v2 .srm-v4-guide-steps>div>strong,body.srm-v2 .srm-v4-guide-steps>div>small{display:inline-flex;align-items:center;line-height:20px}
+body.srm-v2 .srm-v4-guide-steps>div>small{height:20px;align-self:center}
 body.srm-v2 .srm-v4-guide-steps .srm-hint{margin-left:auto}
 body.srm-v2 .panel .small:has(>.srm-hint),body.srm-v2 .panel .muted:has(>.srm-hint){font-size:13px}
 body.srm-v2 .cardhead .srm-hint{margin-left:5px}
 body.srm-v2 #quoteImport .srm-ux-intake-modes .srm-hint{margin-left:auto}
-body.srm-v2 :is(.srm-v4-demo-tip,.srm-v4-live-tip):has(.srm-hint){display:inline-flex!important;margin:4px 0 0!important}
+body.srm-v2 :is(.srm-v4-demo-tip,.srm-v4-live-tip):has(.srm-hint){display:inline-flex!important;align-items:center;gap:4px;line-height:20px;margin:4px 0 0!important}
 body.srm-v2.ui-buyer-mode .srm-v4-demo-tip{display:none!important}
 body.srm-v2:not(.ui-buyer-mode) .srm-v4-live-tip{display:none!important}
 body.srm-v2 #settings .settingsGrid{grid-template-columns:minmax(0,1fr)}
@@ -2065,8 +2067,8 @@ body.srm-v2 .srm-v3-pageKicker{letter-spacing:.035em}
       <div class="srm-v4-guide-main">
         
         
-        <p class="srm-v4-demo-tip"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-40" aria-describedby="srm-hint-40" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-40" class="srm-hint-pop" role="tooltip">当前显示演示数据。点击上方“新建”，开始一笔能够保存的正式询价。</span></span></p>
-        <p class="srm-v4-live-tip"><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-41" aria-describedby="srm-hint-41" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-41" class="srm-hint-pop" role="tooltip">核对当前项目名称和保存状态，再依次完善清单、供应商与报价。</span></span></p>
+        <p class="srm-v4-demo-tip"><strong class="srm-v4-guide-label">询价工作指引</strong><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-40" aria-describedby="srm-hint-40" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-40" class="srm-hint-pop" role="tooltip">当前显示演示数据。点击上方“新建”，开始一笔能够保存的正式询价。</span></span></p>
+        <p class="srm-v4-live-tip"><strong class="srm-v4-guide-label">询价工作指引</strong><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-41" aria-describedby="srm-hint-41" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-41" class="srm-hint-pop" role="tooltip">核对当前项目名称和保存状态，再依次完善清单、供应商与报价。</span></span></p>
         <div class="srm-v4-guide-steps">
           <div><span>01</span><strong>建立询价</strong><small><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-37" aria-describedby="srm-hint-37" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-37" class="srm-hint-pop" role="tooltip">新建项目，确定本次询价范围</span></span></small></div>
           <div><span>02</span><strong>准备清单</strong><small><span class="srm-hint"><button type="button" class="srm-hint-button" aria-label="查看说明" aria-expanded="false" aria-controls="srm-hint-38" aria-describedby="srm-hint-38" title="查看说明"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><span id="srm-hint-38" class="srm-hint-pop" role="tooltip">整理物料、数量和关联图纸</span></span></small></div>
