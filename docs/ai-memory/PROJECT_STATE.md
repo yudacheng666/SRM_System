@@ -14,7 +14,7 @@
 
 | Layer / 层级 | Verified ref / 准确版本 | Status / 状态 |
 | --- | --- | --- |
-| 正式主线 / Main | main @ \`f330de510f97c552629052ff1841d7223194e7f8\` | M0 prototype and comparison only; **not M1**, no new release |
+| 正式主线 / Main | main @ `9ee26c2c1db67263fa1155fedc08ba17053ef33f` | M1 Lite promoted on 2026-11-03 via PR #52; official main now contains the validated M1 source tree. Not yet deployed to company servers. |
 | M1 开发分支 / Development | draft/20261013-m1-storage-ui-audit @ `cdf25af58736253bbf5343ceccdf543cf1119631` | Same product tree as main after PR #52 promotion; continue feature development here before future main promotions. |
 | 已批准 UI 设计 / Design | [#44](https://github.com/yudacheng666/SRM_System/pull/44) Draft @ \`8e643520\` | Architecture and acceptance matrix only, not product code |
 | 并行历史候选 / Alternate | [#45](https://github.com/yudacheng666/SRM_System/pull/45) Draft @ `4480482c5bbb280257c06aa44889706705663280` | Still open and unmerged; overlaps the now-merged #46 UI files, diverged alternative. Do not merge without a separate reconciliation decision. |
