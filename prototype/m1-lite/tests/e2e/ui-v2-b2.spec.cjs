@@ -33,8 +33,11 @@ const test=base.extend({
 });
 const status=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 const open=async(page,id)=>{
+  if(id==='#uiProjectDetails')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiDataTools'||id==='#srmUxStatusDetails')await page.locator('#uiAdminToggle').click();
+  if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
   const el=page.locator(id);
-  if(!await el.evaluate(n=>n.open))await el.locator('summary').click();
+  if(!await el.evaluate(n=>n.open))await el.locator(':scope > summary').click();
   await expect(el).toHaveAttribute('open','');
 };
 for(const viewport of [{width:1366,height:768},{width:1600,height:900}]){
@@ -44,6 +47,7 @@ test('B2 allocation real-browser '+viewport.width+'x'+viewport.height,async({pag
   await open(page,'#uiProjectDetails');
   await page.locator('#pilotNewWorkspace').click();
   await expect(page.locator('#pilotModeBadge')).not.toContainText('演示');
+  await page.locator('.ui-workNav .tab[data-tab="items"]').click();
   await page.locator('#toggleItemIntake').click();
   await page.locator('#importFile').setInputFiles(path.join(app.fixture,'items12.xlsx'));
   await expect(page.locator('#confirmImportRows')).toBeEnabled();

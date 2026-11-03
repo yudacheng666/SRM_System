@@ -30,11 +30,17 @@ const test=base.extend({
  }
 });
 const snap=page=>page.evaluate(()=>window.SRMPilot.snapshot());
-async function open(page,id){const e=page.locator(id);if(!await e.evaluate(x=>x.open))await e.locator('summary').click()}
+async function open(page,id){
+ if(id==='#uiProjectDetails')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiDataTools'||id==='#srmUxStatusDetails')await page.locator('#uiAdminToggle').click();
+ if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
+ const e=page.locator(id);if(!await e.evaluate(x=>x.open))await e.locator(':scope > summary').click()
+}
 async function createBuyer(page){
   await open(page,'#uiProjectDetails');
   await page.locator('#pilotNewWorkspace').click();
   await expect(page.locator('#pilotModeBadge')).not.toContainText('演示');
+  await page.locator('.ui-workNav .tab[data-tab="items"]').click();
   await page.locator('#toggleItemIntake').click();
 }
 test('ERP01: canonical aliases, optional original columns and conflicting identities are explicit',async({page,app})=>{
@@ -393,8 +399,10 @@ test('ERP09: second-round scope shows specification and preserves selected line 
   expect(saved.find(r=>r.roundNo===1)?.lines.map(x=>x.lineId).sort()).toEqual([m120.lineId,m220.lineId].sort());
   expect(saved.find(r=>r.roundNo===2)?.lines.map(x=>x.lineId)).toEqual([m220.lineId]);
   await page.locator('.srm-v2-sideitem[data-srm-v2-tab="quotes"]').click();
-  await expect(page.locator('#quoteTable')).toContainText('规格：120W');
-  await expect(page.locator('#quoteTable')).toContainText('规格：220W');
+  // 中文：比价表规格按新设计在同一行展示，不再强制保留旧“规格：”字面。
+  // English: Check true specs in current inline material cells without enforcing obsolete copy.
+  await expect(page.locator('#quoteTable')).toContainText('120W');
+  await expect(page.locator('#quoteTable')).toContainText('220W');
   await expect(page.locator('#quoteTable')).toContainText('¥9.00');
   await expect(page.locator('#quoteTable')).toContainText('¥10.00');
 });

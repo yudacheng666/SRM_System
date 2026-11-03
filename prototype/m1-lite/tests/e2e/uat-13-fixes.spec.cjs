@@ -33,13 +33,17 @@ const test=base.extend({
 });
 const snapshot=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 async function ensureOpen(page,id){
+  if(id==='#uiProjectDetails')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiDataTools'||id==='#srmUxStatusDetails')await page.locator('#uiAdminToggle').click();
+  if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
   const el=page.locator(id);
-  if(!await el.evaluate(n=>n.open))await el.locator('summary').click();
+  if(!await el.evaluate(n=>n.open))await el.locator(':scope > summary').click();
   await expect(el).toHaveAttribute('open','');
 }
 async function start(page,app,{suppliers=false}={}){
   await ensureOpen(page,'#uiProjectDetails');
   await page.locator('#pilotNewWorkspace').click();
+  await page.locator('.ui-workNav .tab[data-tab="items"]').click();
   await page.locator('#toggleItemIntake').click();
   await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'items12.xlsx'));
   await expect(page.locator('#confirmImportRows')).toBeEnabled();
@@ -134,14 +138,18 @@ test('UAT-02 manual, pasted and CSV file quotation sources remain distinct in st
 test('UAT-03 refused restore is visible within current backup section while project drawer collapsed',async({page,app})=>{
   await start(page,app);
   await ensureOpen(page,'#uiDataTools');
-  await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
+  await expect(page.locator('#project')).not.toBeVisible();
+  await expect(page.locator('#backup')).toBeVisible();
   await page.locator('#pilotS4BackupFile').setInputFiles(path.join(app.fixtures,'broken.zip'));
   await page.locator('#pilotS4RestoreFull').click();
   const message=page.locator('#uiDataTools #pilotS4RestoreFeedback');
   await expect(message).toBeVisible();
-  await expect(message).toContainText('禁止直接恢复覆盖');
+  await expect(message).toContainText('不能直接覆盖恢复');
+  await expect(message).toContainText('空白数据目录');
+  await expect(message).not.toContainText(/RESTORE_[A-Z_]+/);
   await expect(message).toHaveAttribute('role','alert');
-  await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');
+  await expect(page.locator('#project')).not.toBeVisible();
+  await expect(page.locator('#backup')).toBeVisible();
 });
 test('UAT-04 item editor Escape, dirty cancel and keyboard focus confinement',async({page,app})=>{
   await page.setViewportSize({width:1024,height:768});

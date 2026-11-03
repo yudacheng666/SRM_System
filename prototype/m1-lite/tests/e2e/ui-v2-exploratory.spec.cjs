@@ -38,16 +38,26 @@ const test=base.extend({
   }
 });
 async function ensureOpen(page,id){
+  // 中文：项目是常驻第一步，供应商管理属于分配页，备份入口属于项目页。
+  // English: Navigate to the owning workflow panel before accessing drawers.
+  if(id==='#uiProjectDetails')
+    await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiDataTools')
+    await page.locator('#uiAdminToggle').click();
+  if(id==='#uiSupplierTools')
+    await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
   const drawer=page.locator(id);
-  if(!await drawer.evaluate(el=>el.open))await drawer.locator('summary').click();
+  if(!await drawer.evaluate(el=>el.open))await drawer.locator(':scope > summary').click();
 }
 async function ensureClosed(page,id){
+  if(id==='#uiProjectDetails')return;
   const drawer=page.locator(id);
-  if(await drawer.evaluate(el=>el.open))await drawer.locator('summary').click();
+  if(await drawer.evaluate(el=>el.open))await drawer.locator(':scope > summary').click();
 }
 async function seed(page,app){
   await ensureOpen(page,'#uiProjectDetails');
   await page.locator('#pilotNewWorkspace').click();
+  await page.locator('.ui-workNav .tab[data-tab="items"]').click();
   await page.locator('#toggleItemIntake').click();
   await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'items12.xlsx'));
   await expect(page.locator('#confirmImportRows')).toBeEnabled();
@@ -114,7 +124,7 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
         tableScrollable:!!tablewrap&&tablewrap.scrollWidth>tablewrap.clientWidth+2,
         panelButtons:actionable.length,
         hiddenOffscreenControls:outOfViewport,
-        saveMessage:document.getElementById('srmV2LiveStatus')?.textContent?.trim()
+        saveMessage:document.getElementById('srmUxWorkspaceSaveSummary')?.textContent?.trim()
       };
     },{stage,selector});
     measurements.push(m);
@@ -158,12 +168,31 @@ test('EXPLORATORY: desktop stages, control visibility and geometry '+size.width+
   await expect(page.locator('#items')).toHaveClass(/active/);
   const outline=await page.locator('.srm-v2-sideitem[data-srm-v2-tab="items"]').evaluate(el=>getComputedStyle(el).outlineStyle);
   expect(outline).not.toBe('none');
-  // 中文：项目/备份入口应打开原有工具抽屉，不能隐藏业务入口。
-  // English: Project and backup sidebar actions must reveal original management controls.
-  await page.locator('[data-srm-v2-action="project"]').click();
+  // 中文：询价项目/数据备份入口需独占侧栏高亮，点击其他导航项才切换。
+  // English: Action drawers must keep one exclusive sidebar selection until navigating away.
+  const projectNav=page.locator('[data-srm-v2-tab="project"]');
+  const adminNav=page.locator('[data-srm-v2-action="admin"]');
+  const itemsNav=page.locator('.srm-v2-sideitem[data-srm-v2-tab="items"]');
+  await projectNav.click();
   await expect(page.locator('#uiProjectDetails')).toHaveAttribute('open','');
-  await page.locator('[data-srm-v2-action="admin"]').click();
+  await expect(projectNav).toHaveAttribute('aria-current','page');
+  await expect(itemsNav).not.toHaveAttribute('aria-current','page');
+  await page.locator('#uiProjectJump').click();
+  await expect(projectNav).toHaveAttribute('aria-current','page');
+  await adminNav.click();
   await expect(page.locator('#uiDataTools')).toHaveAttribute('open','');
+  await expect(adminNav).toHaveAttribute('aria-current','page');
+  await expect(projectNav).not.toHaveAttribute('aria-current','page');
+  await itemsNav.click();
+  await expect(itemsNav).toHaveAttribute('aria-current','page');
+  await expect(adminNav).not.toHaveAttribute('aria-current','page');
+  await projectNav.click();
+  await expect(projectNav).toHaveAttribute('aria-current','page');
+  await itemsNav.click();
+  await expect(projectNav).not.toHaveAttribute('aria-current','page');
+  await expect(itemsNav).toHaveAttribute('aria-current','page');
+  // 中文：导航高亮不应改变当前采购业务快照。
+  // English: Sidebar visual routing must not mutate persisted RFQ data.
   expect(errors).toEqual([]);
   const report=info.outputPath('exploratory-layout-'+size.width+'.json');
   fs.writeFileSync(report,JSON.stringify({viewport:size,measurements,errors},null,2));

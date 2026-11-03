@@ -34,13 +34,19 @@ const test=base.extend({
 });
 const snap=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 async function open(page,id){
+ if(id==='#uiProjectDetails')await page.locator('.ui-workNav .tab[data-tab="project"]').click();
+  if(id==='#uiDataTools'||id==='#srmUxStatusDetails')await page.locator('#uiAdminToggle').click();
+ if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab="assign"]').click();
  const d=page.locator(id);
- if(!await d.evaluate(n=>n.open))await d.locator('summary').click();
+ if(!await d.evaluate(n=>n.open))await d.locator(':scope > summary').click();
  await expect(d).toHaveAttribute('open','');
 }
 async function close(page,id){
+ // 中文：项目/备份管理为独立固定页面，不可点击隐藏的 summary 折叠按钮。
+ // English: Dedicated project and admin pages must not be collapsed by legacy tests.
+ if(id==='#uiProjectDetails'||id==='#uiDataTools')return;
  const d=page.locator(id);
- if(await d.evaluate(n=>n.open))await d.locator('summary').click();
+ if(await d.evaluate(n=>n.open))await d.locator(':scope > summary').click();
 }
 for (const viewport of [{width:1366,height:768},{width:1600,height:900}]){
 test('B3 quote and comparison with real SQLite '+viewport.width+'x'+viewport.height,async({page,app},info)=>{
@@ -48,6 +54,7 @@ test('B3 quote and comparison with real SQLite '+viewport.width+'x'+viewport.hei
  await page.setViewportSize(viewport);
  await open(page,'#uiProjectDetails');
  await page.locator('#pilotNewWorkspace').click();
+ await page.locator('.ui-workNav .tab[data-tab="items"]').click();
  await page.locator('#toggleItemIntake').click();
  await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'items12.xlsx'));
  await expect(page.locator('#confirmImportRows')).toBeEnabled();
@@ -140,6 +147,7 @@ test('B3 tied-lowest manual award semantics and persistence / 并列最低定标
  await page.setViewportSize({width:1366,height:768});
  await open(page,'#uiProjectDetails');
  await page.locator('#pilotNewWorkspace').click();
+ await page.locator('.ui-workNav .tab[data-tab="items"]').click();
  await page.locator('#toggleItemIntake').click();
  await page.locator('#importFile').setInputFiles(path.join(app.fixtures,'items12.xlsx'));
  await expect(page.locator('#confirmImportRows')).toBeEnabled();
@@ -182,7 +190,7 @@ test('B3 tied-lowest manual award semantics and persistence / 并列最低定标
  await expect(metrics.nth(3).locator('strong')).toHaveText('1'); // unresolved tied minimum
  const tieB=page.locator('#quoteTable td[data-award="'+tieItem.lineId+'|SUP-B"]');
  await expect(tieB).toBeVisible();
- await tieB.click();
+ await tieB.locator('.quotePrice').click();
  // Both confirmed suppliers offered ¥20 on this line; supplier B is still a valid minimum.
  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');
  await expect(metrics.nth(2).locator('strong')).toHaveText('1');
@@ -195,13 +203,13 @@ test('B3 tied-lowest manual award semantics and persistence / 并列最低定标
  expect(current.state.awardReasons.some(x=>x.key===tieItem.lineId)).toBe(false);
  // A truly higher quote (12 vs 8) still needs an explicit reason, including in bulk logic.
  const higherB=page.locator('#quoteTable td[data-award="'+dearerItem.lineId+'|SUP-B"]');
- await higherB.click();
+ await higherB.locator('.quotePrice').click();
  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','false');
  await expect(page.locator('#awardReasonContext')).toContainText('并非最低报价');
  await page.locator('#awardReasonCancel').click();
  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');
  expect((await snap(page)).state.manualAwards).toHaveLength(1);
- await higherB.click();
+ await higherB.locator('.quotePrice').click();
  await page.locator('#awardReasonInput').fill('虚构测试：交期和保障条款更适合');
  await page.locator('#awardReasonConfirm').click();
  await expect(page.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','true');

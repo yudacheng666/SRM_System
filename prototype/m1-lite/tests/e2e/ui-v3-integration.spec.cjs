@@ -59,7 +59,7 @@ test('UI V3 integration: theme, active navigation and responsive workspace / 视
       stylesheet:!!document.querySelector('#ui-v3-integration-styles')
     };
   });
-  expect(theme.title).toContain('UI V3');
+  expect(theme.title).toBe('SRM Lite · 采购询价工作台');
   // 中文：V3.1 的浅灰背景来自已确认的结构层，而非旧版 V3 首批色值。
   // English: Expect the approved V3.1 workspace token, not the earlier transitional theme.
   expect(theme.bodyBackground).toBe('rgb(246, 248, 251)');
@@ -73,7 +73,11 @@ test('UI V3 integration: theme, active navigation and responsive workspace / 视
     const intro=page.locator('#srmV3PageStage-'+stage);
     await expect(intro).toBeVisible();
     await expect(intro.locator('h2')).not.toBeEmpty();
-    expect(await intro.locator('.srm-v3-pageKicker').textContent()).toMatch(/\d\d|ADMIN/);
+    const kicker=(await intro.locator('.srm-v3-pageKicker').textContent()).trim();
+    // 中文：采购流程保留两位步骤编号；设置页使用已批准的中文业务名称，不再要求旧 ADMIN。
+    // English: Workflow stages keep numbered kickers; settings uses its approved Chinese label.
+    if(stage==='settings')expect(kicker).toBe('系统设置');
+    else expect(kicker,stage+' should retain a two-digit workflow step').toMatch(/^\d{2}\s*\//);
   }
   await expect(page.locator('.srm-v3-flow-label')).toContainText('采购业务流程');
   await expect(page.locator('#srmV3QuoteLockHint')).toHaveCount(1);
