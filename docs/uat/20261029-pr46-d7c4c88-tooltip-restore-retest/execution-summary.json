@@ -1,0 +1,46 @@
+{
+  "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483",
+  "verdict": "NOT READY: original full E2E not green; not whole-product acceptance",
+  "requirementRows": {
+    "PASS": 30,
+    "FAIL": 2,
+    "NOT TESTED": 3
+  },
+  "automation": {
+    "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483",
+    "platform": "Linux supplemental; not native Windows",
+    "PythonPASS": 44,
+    "NodePASS": 10,
+    "Chromium": {
+      "startTime": "2026-10-29T08:11:49.230Z",
+      "duration": 890764.205,
+      "expected": 53,
+      "skipped": 0,
+      "unexpected": 5,
+      "flaky": 0
+    },
+    "fullPASS": 107,
+    "fullFAIL": 5,
+    "total": 112,
+    "failureGroups": {
+      "STALE_RESTORE_WORDING": 1,
+      "AMBIGUOUS_PARENT_ROW_CLICK": 3,
+      "THEME_EXPECTATION_MISMATCH": 1
+    },
+    "GitHubActions": "NOT RUN; not claimed green",
+    "originalTestsAndCIUnmodified": true
+  },
+  "overlappingCounts": "Requirement rows, prior17/prior6 and83 tooltip samples overlap suite/business scope; do not add them as independent test totals",
+  "confirmedNewProductIssues": {
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "originalTestFailures": 5,
+  "originalIndependentTimeouts": 1,
+  "firstTimeoutRootCause": "UNKNOWN",
+  "Windows": "3 NOT TESTED",
+  "ActionsTriggered": false,
+  "mergedOrClosed": false,
+  "historicalResultsTransferred": false
+}

@@ -1,0 +1,57 @@
+{
+  "originalFullSuiteFailures": [
+    {
+      "id": "P3-TEST-01",
+      "severity": "P3 test-maintenance, not a confirmed product defect",
+      "status": "FAIL",
+      "classification": "STALE_PAGE_KICKER_LANGUAGE_ASSERTION",
+      "title": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+      "file": "ui-v3-integration.spec.cjs",
+      "assertionLine": 76,
+      "cleanError": "Error: expect(received).toMatch(expected)\n\nExpected pattern: /\\d\\d|ADMIN/\nReceived string:  \"系统设置\"\n\n  74 |     await expect(intro).toBeVisible();\n  75 |     await expect(intro.locator('h2')).not.toBeEmpty();\n> 76 |     expect(await intro.locator('.srm-v3-pageKicker').textContent()).toMatch(/\\d\\d|ADMIN/);\n     |                                                                     ^\n  77 |   }\n  78 |   await expect(page.locator('.srm-v3-flow-label')).toContainText('采购业务流程');\n  79 |   await expect(page.locator('#srmV3QuoteLockHint')).toHaveCount(1);\n    at /workspace/srmfbb-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:76:69",
+      "repro": "Run unmodified full npm run test:e2e; UI V3 case passes approved background then reaches system-settings kicker.",
+      "expectedByOriginalTest": "/\\d\\d|ADMIN/",
+      "actualUI": "系统设置",
+      "buyerImpact": "No data loss or failed purchasing action established; current buyer-language UI conflicts with legacy technical-language assertion. Full automation gate remains red.",
+      "suggestion": "ChatGPT verify intended Chinese route caption and update the obsolete test semantically, preserving all later navigation/layout/state checks. Codex did not change it.",
+      "laterAssertions": "NOT REACHED after line76; independent six-page checks do not imply every later assertion passed",
+      "evidence": "automation/failures/FAIL-01/failure.json"
+    }
+  ],
+  "independentHarnessErrors": [
+    {
+      "id": "H-01",
+      "type": "STDIN_CLOSED_AT_BOOTSTRAP",
+      "status": "BLOCKED startup,0business operations/0search clicks",
+      "evidence": "bootstrap-launch-error.json",
+      "trace": "NOT AVAILABLE; command channel closed before export, no business trace claimed",
+      "retained": "bootstrap-stdin-closed/evidence"
+    },
+    {
+      "id": "H-02",
+      "type": "WRONG_NEW_VERIFIER_FIXTURE_DIRECTORY",
+      "status": "Original command FAIL exit1; no content assertion FAIL before missing file",
+      "raw": "independent/evidence/raw-first-error.json",
+      "stderr": "independent/evidence/export-validation.stderr",
+      "trace": "independent/evidence/trace-first-attempt.zip",
+      "correction": "export-verifier-correction.json",
+      "supplement": "continuation/evidence/export-checks.json;46PASS using immutable original-download copies"
+    },
+    {
+      "id": "H-03",
+      "type": "MISSING_RESUME_VIEWPORT_CONFIGURATION",
+      "status": "Original save method BLOCKED ReferenceError before viewport loop",
+      "raw": "continuation/evidence/raw-first-error.json",
+      "trace": "continuation/evidence/trace-first-attempt.zip",
+      "correction": "resume-context-correction.json",
+      "supplement": "completion/evidence; real save/conflict/outage/restores completed; source checkpoint equality checked before resuming"
+    }
+  ],
+  "firstSearch": {
+    "calls": 1,
+    "status": "NOT REPRODUCED; ROOT CAUSE UNKNOWN",
+    "rawFrames": "independent/evidence/assign-search-first-frames.jsonl",
+    "noRetry": true
+  },
+  "policy": "Corrections only to newly created independent evidence methods/launcher; originals and all failed traces untouched. No original suite rerun, no force/no timeout increase/no delayed workaround."
+}

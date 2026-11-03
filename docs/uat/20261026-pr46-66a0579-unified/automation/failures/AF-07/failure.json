@@ -1,0 +1,46 @@
+{
+  "id": "AF-07",
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "classification": "OUTDATED_DRAWER_ASSERTION",
+  "assessment": "Expects project drawer collapsed; dedicated project page intentionally keeps controls open and hides the old summary.",
+  "specFile": "acceptance.spec.cjs",
+  "specStartLine": 590,
+  "title": "44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见",
+  "status": "FAIL",
+  "rawErrors": [
+    {
+      "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+    },
+    {
+      "location": {
+        "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+        "column": 101,
+        "line": 612
+      },
+      "message": "Error: locator.click: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#uiProjectDetails').locator(':scope > summary')\u001b[22m\n\u001b[2m    - locator resolved to <summary title=\"已自动保存第 2 版（6:56:35 AM）\">…</summary>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    146 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\n\n  610 |   await openTools(page,'#uiDataTools');\n  611 |   const projectDrawer=page.locator('#uiProjectDetails');\n> 612 |   if(await projectDrawer.evaluate(node=>node.open)) await projectDrawer.locator(':scope > summary').click();\n      |                                                                                                     ^\n  613 |   await expect(projectDrawer).not.toHaveAttribute('open','');\n  614 |   const button=page.locator('#pilotS4DownloadFull');\n  615 |   await button.scrollIntoViewIfNeeded();\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:612:101"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/test-failed-1.png"
+    },
+    {
+      "name": "server-log",
+      "contentType": "text/plain",
+      "path": "/tmp/srm66-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/attachments/server-log-c7b6717cc643798c0ab9a6126e0163d4274709a4.log"
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "path": "/tmp/srm66-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/error-context.md"
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/trace.zip"
+    }
+  ],
+  "laterAssertions": "NOT REACHED; do not infer their PASS from independent tests"
+}

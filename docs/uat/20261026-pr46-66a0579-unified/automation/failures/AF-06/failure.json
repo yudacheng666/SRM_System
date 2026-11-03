@@ -1,0 +1,43 @@
+{
+  "id": "AF-06",
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "classification": "OUTDATED_DRAWER_ASSERTION",
+  "assessment": "Expects project drawer collapsed; dedicated project page intentionally keeps controls open and hides the old summary.",
+  "specFile": "acceptance.spec.cjs",
+  "specStartLine": 452,
+  "title": "13 compact laptop item table after import / 1366首屏物料可见",
+  "status": "FAIL",
+  "rawErrors": [
+    {
+      "location": {
+        "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+        "column": 55,
+        "line": 458
+      },
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#uiProjectDetails')\nExpected: not \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"not toHaveAttribute\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiProjectDetails')\u001b[22m\n\u001b[2m    19 × locator resolved to <details open=\"\" id=\"uiProjectDetails\" class=\"ui-projectDetails\">…</details>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n\n\n  456 |   await fresh(page);\n  457 |   await items(page,app);\n> 458 |   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');\n      |                                                       ^\n  459 |   await expect(page.locator('#itemIntake')).not.toBeVisible();\n  460 |   async function checkFirstRow(label) {\n  461 |     await page.evaluate(() => window.scrollTo({top:0,behavior:'instant'}));\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:458:55"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/test-failed-1.png"
+    },
+    {
+      "name": "server-log",
+      "contentType": "text/plain",
+      "path": "/tmp/srm66-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/attachments/server-log-0341e3b132ef657aaab099f311661cb615729b4f.log"
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "path": "/tmp/srm66-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/error-context.md"
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/trace.zip"
+    }
+  ],
+  "laterAssertions": "NOT REACHED; do not infer their PASS from independent tests"
+}

@@ -1,0 +1,18 @@
+from pathlib import Path
+import os,hashlib,json,subprocess
+r=Path('/tmp/pr46-run');repo=Path('/tmp/srm-pr46');stage=r/'raw-stage';stage.mkdir();seen={};manifest=[]
+for directory in ['test-results','playwright-report']:
+ for src in sorted((repo/directory).rglob('*')):
+  if not src.is_file():continue
+  rel=src.relative_to(repo);dst=stage/rel;dst.parent.mkdir(parents=True,exist_ok=True);h=hashlib.sha256(src.read_bytes()).hexdigest();os.link(seen.get(h,src),dst);seen.setdefault(h,dst);manifest.append({'path':str(rel),'sha256':h,'bytes':src.stat().st_size})
+(r/'evidence/automated-original-files.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2));print('RAW FILES',len(manifest),'unique',len(seen),flush=True)
+with(r/'automated-originals.tar.zst').open('wb')as out:
+ tar=subprocess.Popen(['tar','-cf','-','test-results','playwright-report'],cwd=stage,stdout=subprocess.PIPE)
+ z=subprocess.run(['zstd','--long=27','-T2','-5'],stdin=tar.stdout,stdout=out,stderr=subprocess.PIPE);tar.stdout.close();assert tar.wait()==0;assert z.returncode==0,z.stderr.decode()
+p=r/'automated-originals.tar.zst';chunk=40*1024*1024;parts=[]
+with p.open('rb')as f:
+ for n in range(100):
+  data=f.read(chunk)
+  if not data:break
+  dst=r/'evidence'/f'automated-originals.tar.zst.part{n:02}';dst.write_bytes(data);parts.append({'file':dst.name,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+(r/'evidence/archive-manifest.json').write_text(json.dumps({'format':'tar.zst split at40MiB; lossless, tar hardlinks deduplicate identical HTML/test-result data','archiveBytes':p.stat().st_size,'archiveSHA256':hashlib.sha256(p.read_bytes()).hexdigest(),'originalFiles':len(manifest),'uniqueByteContents':len(seen),'parts':parts,'restore':'cat automated-originals.tar.zst.part* > automated-originals.tar.zst; tar --zstd -xf automated-originals.tar.zst; verify against automated-original-files.json'},indent=2));print('ALL_RAW_ARCHIVED',p.stat().st_size,'bytes',len(parts),'parts',flush=True)

@@ -1,0 +1,71 @@
+{
+  "id": "5e985e4de76c97ef5c0f-aca2fa19ee9b0e76c757",
+  "title": "UAT-03 refused restore is visible within current backup section while project drawer collapsed",
+  "file": "uat-13-fixes.spec.cjs",
+  "line": 138,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 13,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 21981,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#uiDataTools #pilotS4RestoreFeedback')\nExpected substring: \u001b[32m\"禁止直接恢复覆盖\"\u001b[39m\nReceived string:    \u001b[31m\"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiDataTools #pilotS4RestoreFeedback')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"alert\" aria-live=\"assertive\" id=\"pilotS4RestoreFeedback\">当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。</div>\u001b[22m\n\u001b[2m       - unexpected value \"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[22m\n",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#uiDataTools #pilotS4RestoreFeedback')\nExpected substring: \u001b[32m\"禁止直接恢复覆盖\"\u001b[39m\nReceived string:    \u001b[31m\"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiDataTools #pilotS4RestoreFeedback')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"alert\" aria-live=\"assertive\" id=\"pilotS4RestoreFeedback\">当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。</div>\u001b[22m\n\u001b[2m       - unexpected value \"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[22m\n\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:147:25",
+        "location": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs",
+          "column": 25,
+          "line": 147
+        },
+        "snippet": "  145 |   const message=page.locator('#uiDataTools #pilotS4RestoreFeedback');\n  146 |   await expect(message).toBeVisible();\n> 147 |   await expect(message).toContainText('禁止直接恢复覆盖');\n      |                         ^\n  148 |   await expect(message).toHaveAttribute('role','alert');\n  149 |   await expect(page.locator('#project')).not.toBeVisible();\n  150 |   await expect(page.locator('#backup')).toBeVisible();"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs",
+            "column": 25,
+            "line": 147
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#uiDataTools #pilotS4RestoreFeedback')\nExpected substring: \u001b[32m\"禁止直接恢复覆盖\"\u001b[39m\nReceived string:    \u001b[31m\"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiDataTools #pilotS4RestoreFeedback')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"alert\" aria-live=\"assertive\" id=\"pilotS4RestoreFeedback\">当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。</div>\u001b[22m\n\u001b[2m       - unexpected value \"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[22m\n\n\n  145 |   const message=page.locator('#uiDataTools #pilotS4RestoreFeedback');\n  146 |   await expect(message).toBeVisible();\n> 147 |   await expect(message).toContainText('禁止直接恢复覆盖');\n      |                         ^\n  148 |   await expect(message).toHaveAttribute('role','alert');\n  149 |   await expect(page.locator('#project')).not.toBeVisible();\n  150 |   await expect(page.locator('#backup')).toBeVisible();\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:147:25"
+        }
+      ],
+      "stdout": [],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-29T06:39:05.954Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/test-failed-1.png"
+        },
+        {
+          "name": "uat-fixes-server",
+          "contentType": "text/plain",
+          "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/attachments/uat-fixes-server-b77774f44dc24b61352a472cd0a2475bec77acff.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs",
+        "column": 25,
+        "line": 147
+      }
+    }
+  ]
+}

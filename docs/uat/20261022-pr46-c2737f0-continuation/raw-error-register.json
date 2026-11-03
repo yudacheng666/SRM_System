@@ -1,0 +1,90 @@
+{
+  "productSHA": "c2737f0221a7b529114da2df363e062e75c7544c",
+  "previousRound": {
+    "evidenceCommit": "75a06ab23a5e2d93c169651f511ccbedb035e468",
+    "originalRecordsUnchanged": true,
+    "automation102Rerun": false,
+    "originalDriverErrors": 2,
+    "originalIndependentCounts": {
+      "PASS": 0,
+      "FAIL": 0,
+      "BLOCKED": 1,
+      "NOT TESTED": 13
+    }
+  },
+  "newRound": {
+    "attempts": 3,
+    "driverCorrectionsAllowed": 2,
+    "driverCorrectionsUsed": 2,
+    "unresolvedDriverBlocks": 0,
+    "caseCounts": {
+      "PASS": 12,
+      "FAIL": 2,
+      "BLOCKED": 0,
+      "NOT TESTED": 0
+    },
+    "nativeWindowsNotTested": 3
+  },
+  "driverErrors": [
+    {
+      "id": "CONT-DRIVER-01",
+      "classification": "DRIVER_ERROR",
+      "status": "CORRECTED AND RETESTED",
+      "error": "Save helper returned before actual autosave acknowledgement",
+      "raw": "attempt-01/evidence/raw-first-error.json",
+      "detail": "correction-01.json",
+      "diff": "correction-01.diff",
+      "retest": "attempt-02/evidence/browser.jsonl"
+    },
+    {
+      "id": "CONT-DRIVER-02",
+      "classification": "DRIVER_ERROR",
+      "status": "CORRECTED AND RETESTED",
+      "error": "Validator expected sharded physical PDF path inside intentionally flattened S4 ZIP; hashes already equal",
+      "raw": "attempt-02/evidence/s4-checks.json",
+      "detail": "correction-02.json",
+      "diff": "correction-02.diff",
+      "retest": "attempt-03/evidence/s4-checks.json"
+    }
+  ],
+  "findings": [
+    {
+      "id": "UX-01",
+      "severity": "P2",
+      "type": "UI / business presentation design gap",
+      "case": "C05",
+      "confirmed": true,
+      "dataCorruption": false,
+      "summary": "Separate manually awarded amount1979 missing; mixed7064 is correctly labelled including suggestions",
+      "evidence": [
+        "manual-amount-proof.json",
+        "attempt-02/evidence/OBS-manual-amount-not-separated.png"
+      ]
+    },
+    {
+      "id": "UX-02",
+      "severity": "P3",
+      "type": "UI / operational experience",
+      "case": "V01",
+      "confirmed": true,
+      "falseSaveAcknowledgement": false,
+      "summary": "Technical live status mirror remains in top header alongside concise saved status",
+      "evidence": [
+        "attempt-03/evidence/V01-1366-quotes.png",
+        "attempt-03/evidence/V01-1024-quotes.png"
+      ]
+    }
+  ],
+  "expectedNegativeChecks": [
+    {
+      "id": "NONEMPTY-RESTORE",
+      "status": "PASS",
+      "expectedHttp": 409,
+      "error": "RESTORE_REJECTED",
+      "message": "RESTORE_TARGET_NOT_EMPTY",
+      "evidence": "attempt-03/evidence/nonempty-restore-response.json"
+    }
+  ],
+  "rawNamingMap": "Frozen drawing step logged W04; final authorized case is W02. Frozen save-status helper used W02; final case is W01. Final W04 is W04-S4. C05/V01 raw PASS labels cover numerical/geometry checks only; final design review FAIL remains authoritative. Raw logs not rewritten.",
+  "releaseConclusion": "NOT READY; design acceptance gaps; no official GitHub Actions PASS claim"
+}

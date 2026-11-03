@@ -1,0 +1,18 @@
+id,status,title_zh_en,actual_result,evidence
+Q01,PASS,真实第二轮 XLSX 报价导入 / Actual round-two XLSX intake,A R2: 3 selected + 9 explicit carry; confirmed 12 lines,attempt-02/evidence/Q02-carry-preview-protected.png
+Q02,PASS,导入、带入、条款草稿刷新安全 / Preview and draft safety,"Unconfirmed preview and carry selection retained, no premature DB commit; draft note saved only after real ACK",attempt-02/evidence/Q02-after-unsaved-note-refresh.json
+Q03,PASS,确认历史、同轮版本、阶梯价 / Locked history and tiers,"A R1V1/R1V2/R2V1 + B/C confirmed; old V1 unchanged, explicit version differences",attempt-02/evidence/Q03-same-round-version-difference.png
+Q04,PASS,精简、完整列与行详情 / Compact/full/details,"7→12→7 columns, actual terms/details; view operations leave SQLite unchanged",attempt-02/evidence/Q04-compact-and-line-details.png
+C01,PASS,12 条待决定跨页与数量 / Pending-only 10+2,"Page2 shows original L11/L12; award L12 removes it; final 3 manual/9 pending, 12 overall",attempt-02/evidence/C01-page2-after-manual-selection.png
+C02,PASS,漏报不作零与适用阶梯价 / Missing vs zero and tiers,A L4 cannot/L6 no quote; B valid; L1 qty5 applicable118; L7 qty100 applicable2.25,attempt-02/evidence/export-checks.json
+C03,PASS,并列最低与只读展开 / Ties and non-awarding disclosure,L5 A/B75 tied; choosing B requires no reason; opening detail does not award,attempt-02/evidence/C05-scoped-amounts-and-decisions.png
+C04,PASS,高价理由取消、必填与保存 / Higher-price justification,L2 B82 vs A20: cancel/no reason cannot award; accepted reason survives refresh/restart/restore,attempt-02/evidence/final-workspace.json
+C05,FAIL,"金额口径、人工金额及实际导出 / Scope totals, manual amount and exports","Numeric/CSV/XLSX checks PASS; P2 UX-01: separate manual-only total1979 absent, mixed7064 explicitly includes suggestions",manual-amount-proof.json
+W01,PASS,跨 RFQ、F5、服务重启与真实保存 / RFQ persistence and ACK,Two RFQs isolated; all DB rows/history/PDFs persist; saved status requires actual server equality,attempt-02/evidence/W01-after-service-restart.json
+W02,PASS,PDF 唯一、多候选、未匹配 / PDF matching,Candidate counts1/2/0; no commit before confirm; explicit L2/L3/L4 association; exact original names/bytes,attempt-02/evidence/W04-confirmed-drawing-links.png
+W03,PASS,供应商询价包隔离 / Supplier package isolation,A/B12 rows+3PDFs each; C2 rows/0PDF; blank requested prices; no internal JSON/other-supplier leak; all ZIPs verified,attempt-02/evidence/export-checks.json
+W04,PASS,S4 完整性与恢复安全 / Full S4 and safe restore,11 archive checks; empty target UI POST200 exact DB/PDF restore; nonempty UI refusal + HTTP409 leave all rows/bytes unchanged,attempt-03/evidence/s4-checks.json
+V01,FAIL,三尺寸真实 UI / Three-size actual UI,Geometry/navigation/keyboard/scroll PASS; P3 UX-02: duplicate technical save mirror remains visible beside concise saved state,attempt-03/evidence/V01-1366-quotes.png
+WIN-01,NOT TESTED,原生 Windows Python3.13 / Native Windows backend,No native Windows runtime; Linux not equivalent,identity-start.json
+WIN-02,NOT TESTED,原生 Windows Node / Native Windows business,No native Windows runtime; no Actions used,identity-start.json
+WIN-03,NOT TESTED,PowerShell、批处理与试用启动 / Native Windows launchers,No actual Windows shell/desktop,identity-start.json

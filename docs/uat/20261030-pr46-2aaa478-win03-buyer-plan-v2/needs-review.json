@@ -1,0 +1,184 @@
+[
+  {
+    "capability": "save-sqlite-oracle",
+    "status": "NEEDS REVIEW",
+    "stepCount": 28,
+    "reason": "V1 postconditions are prose, not executable save observer/F5/read-only SQLite oracle; must add prearmed ACK-bound runtime assertions.",
+    "examples": [
+      {
+        "file": "actions/00-baseline-rebuild.json",
+        "stepIndex": 4,
+        "id": "W03-005",
+        "selector": null,
+        "operation": "save-barrier"
+      },
+      {
+        "file": "actions/00-baseline-rebuild.json",
+        "stepIndex": 10,
+        "id": "W03-011",
+        "selector": null,
+        "operation": "save-barrier"
+      },
+      {
+        "file": "actions/00-baseline-rebuild.json",
+        "stepIndex": 11,
+        "id": "W03-012",
+        "selector": null,
+        "operation": "reload"
+      }
+    ]
+  },
+  {
+    "capability": "view-controls",
+    "status": "NEEDS REVIEW",
+    "stepCount": 65,
+    "reason": "V1 no select/checked/ensure-open/typed wait/file PDF dispatcher; declare exact source-bound actions but cannot relabel as unchecked checkpoint.",
+    "examples": [
+      {
+        "file": "actions/00-baseline-rebuild.json",
+        "stepIndex": 6,
+        "id": "W03-007",
+        "selector": "#toggleItemIntake",
+        "operation": "ensure-open"
+      },
+      {
+        "file": "actions/00-baseline-rebuild.json",
+        "stepIndex": 8,
+        "id": "W03-009",
+        "selector": "#confirmImportRows",
+        "operation": "wait-visible"
+      },
+      {
+        "file": "actions/00-baseline-rebuild.json",
+        "stepIndex": 13,
+        "id": "W03-014",
+        "selector": "#uiOpenSupplierTools",
+        "operation": "ensure-open"
+      }
+    ]
+  },
+  {
+    "capability": "pdf-preview",
+    "status": "NEEDS REVIEW",
+    "stepCount": 2,
+    "reason": "Own PDF viewer multi-target session and actual rendering/hash observation requires a reviewed guard/adapter extension.",
+    "examples": [
+      {
+        "file": "actions/02-drawing-upload-version.json",
+        "stepIndex": 7,
+        "id": "W03-039",
+        "selector": "[data-drawing=\"RFQ-L00001\"]",
+        "operation": "pdf-preview"
+      },
+      {
+        "file": "actions/02-drawing-upload-version.json",
+        "stepIndex": 13,
+        "id": "W03-045",
+        "selector": "[data-drawing=\"RFQ-L00002\"]",
+        "operation": "pdf-preview"
+      }
+    ]
+  },
+  {
+    "capability": "download-oracle",
+    "status": "NEEDS REVIEW",
+    "stepCount": 7,
+    "reason": "V1 has no download event/completed-file/nested ZIP+XLSX/PDF validation dispatcher; fixtures are not downloaded results.",
+    "examples": [
+      {
+        "file": "actions/03-supplier-packages.json",
+        "stepIndex": 3,
+        "id": "W03-088",
+        "selector": "#pilotReportDownload",
+        "operation": "download"
+      },
+      {
+        "file": "actions/03-supplier-packages.json",
+        "stepIndex": 5,
+        "id": "W03-090",
+        "selector": "#pilotReportDownload",
+        "operation": "download"
+      },
+      {
+        "file": "actions/03-supplier-packages.json",
+        "stepIndex": 6,
+        "id": "W03-091",
+        "selector": "#pilotReportDownloadAll",
+        "operation": "download"
+      }
+    ]
+  },
+  {
+    "capability": "windows-lifecycle",
+    "status": "NEEDS REVIEW",
+    "stepCount": 4,
+    "reason": "Own BAT PID ancestry/port ownership/restart/empty target switching not implemented by V1; old Windows PIDs/paths may not be reused.",
+    "examples": [
+      {
+        "file": "actions/06-persistence-offline.json",
+        "stepIndex": 1,
+        "id": "W03-187",
+        "selector": null,
+        "operation": "service-restart"
+      },
+      {
+        "file": "actions/06-persistence-offline.json",
+        "stepIndex": 10,
+        "id": "W03-196",
+        "selector": null,
+        "operation": "service-stop"
+      },
+      {
+        "file": "actions/06-persistence-offline.json",
+        "stepIndex": 15,
+        "id": "W03-201",
+        "selector": null,
+        "operation": "service-restart"
+      }
+    ]
+  },
+  {
+    "capability": "nonempty-409-race",
+    "status": "NEEDS REVIEW",
+    "stepCount": 1,
+    "reason": "Ordinary nonempty GUI blocks before HTTP. Need reviewed two-session GUI-only population/stale-empty-page fixture to actually reach409 without API business writes.",
+    "examples": [
+      {
+        "file": "actions/07-backup-restore.json",
+        "stepIndex": 8,
+        "id": "W03-213",
+        "selector": "#pilotS4RestoreFull",
+        "operation": "nonempty-server-race"
+      }
+    ]
+  },
+  {
+    "capability": "layout-observer",
+    "status": "NEEDS REVIEW",
+    "stepCount": 4,
+    "reason": "V1 has no viewport/row clipping screenshot assertion dispatcher; cannot infer real visibility from CSS.",
+    "examples": [
+      {
+        "file": "actions/08-layout.json",
+        "stepIndex": 0,
+        "id": "W03-214",
+        "selector": null,
+        "operation": "viewport"
+      },
+      {
+        "file": "actions/08-layout.json",
+        "stepIndex": 2,
+        "id": "W03-216",
+        "selector": "#quoteTable tbody tr",
+        "operation": "layout-check"
+      },
+      {
+        "file": "actions/08-layout.json",
+        "stepIndex": 3,
+        "id": "W03-217",
+        "selector": null,
+        "operation": "viewport"
+      }
+    ]
+  }
+]

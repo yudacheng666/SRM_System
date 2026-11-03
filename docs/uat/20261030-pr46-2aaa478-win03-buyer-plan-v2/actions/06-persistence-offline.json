@@ -1,0 +1,846 @@
+{
+  "schemaVersion": 1,
+  "productSha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "name": "persistence-offline",
+  "purpose": "buyer-plan",
+  "scope": "F5; own BAT only; second independent project; offline saved label must be truthful",
+  "steps": [
+    {
+      "kind": "reload",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6175,
+          6175
+        ],
+        "anchor": "window.addEventListener(\"beforeunload\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "key": "F5"
+      },
+      "branch": "Saved idle first; unexpected beforeunload stops safely",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#srmUxWorkspaceSaveSummary",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "exact memory/API/SQLite/history/PDF before-after",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-186"
+    },
+    {
+      "kind": "service-restart",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/run_local.bat",
+        "lines": [
+          5,
+          5
+        ],
+        "anchor": "set \"SERVER=%~dp0backend\\server.py\"",
+        "sha256": "23272b279bea5a5e84566c277342c1a4634518049ee56caf165482a46e386406"
+      },
+      "args": {
+        "cwd": "new Chinese space directory",
+        "port": 8765
+      },
+      "branch": "Native Windows own-task PID/port/paths only; no unknown process termination",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#srmUxWorkspaceSaveSummary",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "all stored rows/revisions/history/PDF unchanged",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "windows-lifecycle",
+      "id": "W03-187"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-55",
+        "selector": ".srm-v2-sideitem[data-srm-v2-tab='project']",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-srm-v2-tab=\"project\"",
+        "lines": [
+          1873,
+          1873
+        ],
+        "anchor": "data-srm-v2-tab=\"project\"",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": ".srm-v2-sideitem[data-srm-v2-tab='project']",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-188"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "workspace.new",
+        "selector": "#pilotNewWorkspace",
+        "scenario": "saved-buyer",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "confirm",
+            "message": "新建一笔空白询价？原来已保存的询价不会被删除。",
+            "values": {},
+            "accept": true
+          }
+        ]
+      },
+      "branch": "buyerMode=true and no unsaved business change",
+      "source": {
+        "function": "beginBuyer",
+        "lines": [
+          6059,
+          6067
+        ],
+        "anchor": "function beginBuyer()",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotNewWorkspace",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-189"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "workspace.rename",
+        "selector": "#uiRenameRfqBtn",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Reviewed valid enabled control; own isolated workspace",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "uiRenameRfqBtn",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#uiRenameRfqBtn",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-190"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "workspace.name",
+        "selector": "#uiRfqNameInput",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "虚构 WIN03 B"
+      },
+      "branch": "Valid fictional input; validation errors handled as unknown dialogs",
+      "source": {
+        "function": "Input control",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "uiRfqNameInput",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#uiRfqNameInput",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-191"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "key",
+        "operation": "workspace.name",
+        "selector": "#uiRfqNameInput",
+        "scenario": "valid",
+        "dialog": "none",
+        "key": "Enter"
+      },
+      "branch": "Valid fictional input; validation errors handled as unknown dialogs",
+      "source": {
+        "function": "Input control",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "uiRfqNameInput",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#uiRfqNameInput",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-192"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "projectName": "虚构 WIN03 B",
+          "items": 0,
+          "suppliers": 0,
+          "oldA": "unchanged"
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "projectName": "虚构 WIN03 B",
+            "items": 0,
+            "suppliers": 0,
+            "oldA": "unchanged"
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-193"
+    },
+    {
+      "kind": "select-archived-project",
+      "selector": "#pilotHistoryWorkspace",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          5773,
+          5773
+        ],
+        "anchor": "const historyPicker=document.getElementById(\"pilotHistoryWorkspace\")",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "name": "虚构 WIN03 Alert 验收 A"
+      },
+      "branch": "Resolve runtime workspace ID by exact name; do not hardcode historical ID",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotHistoryWorkspace",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-194"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "workspace.switch",
+        "selector": "#pilotSwitchWorkspace",
+        "scenario": "clean",
+        "dialog": "none"
+      },
+      "branch": "Valid selected other workspace, no unsaved changes",
+      "source": {
+        "function": "switchArchived",
+        "lines": [
+          6081,
+          6092
+        ],
+        "anchor": "async function switchArchived()",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotSwitchWorkspace",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-195"
+    },
+    {
+      "kind": "service-stop",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/run_local.bat",
+        "lines": [
+          5,
+          5
+        ],
+        "anchor": "set \"SERVER=%~dp0backend\\server.py\"",
+        "sha256": "23272b279bea5a5e84566c277342c1a4634518049ee56caf165482a46e386406"
+      },
+      "args": {
+        "port": 8765
+      },
+      "branch": "Native Windows own-task PID/port/paths only; no unknown process termination",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#srmUxWorkspaceSaveSummary",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "all stored rows/revisions/history/PDF unchanged",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "windows-lifecycle",
+      "id": "W03-196"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "workspace.rename",
+        "selector": "#uiRenameRfqBtn",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Reviewed valid enabled control; own isolated workspace",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "uiRenameRfqBtn",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#uiRenameRfqBtn",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-197"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "workspace.name",
+        "selector": "#uiRfqNameInput",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "虚构 WIN03 A 离线修改"
+      },
+      "branch": "Valid fictional input; validation errors handled as unknown dialogs",
+      "source": {
+        "function": "Input control",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "uiRfqNameInput",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#uiRfqNameInput",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-198"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "key",
+        "operation": "workspace.name",
+        "selector": "#uiRfqNameInput",
+        "scenario": "valid",
+        "dialog": "none",
+        "key": "Enter"
+      },
+      "branch": "Valid fictional input; validation errors handled as unknown dialogs",
+      "source": {
+        "function": "Input control",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "uiRfqNameInput",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#uiRfqNameInput",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-199"
+    },
+    {
+      "kind": "offline-save",
+      "selector": "#pilotSaveWorkspace",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6142,
+          6142
+        ],
+        "anchor": "未保存成功，请不要关闭页面：",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {},
+      "branch": "Service truly unavailable; explicit save; draft retained; no successful PUT; persisted data unchanged",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#srmUxWorkspaceSaveSummary",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "truthful failed/unsaved, no false success",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-200"
+    },
+    {
+      "kind": "service-restart",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/run_local.bat",
+        "lines": [
+          5,
+          5
+        ],
+        "anchor": "set \"SERVER=%~dp0backend\\server.py\"",
+        "sha256": "23272b279bea5a5e84566c277342c1a4634518049ee56caf165482a46e386406"
+      },
+      "args": {
+        "cwd": "repository root",
+        "port": 8765
+      },
+      "branch": "Native Windows own-task PID/port/paths only; no unknown process termination",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#srmUxWorkspaceSaveSummary",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "all stored rows/revisions/history/PDF unchanged",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "windows-lifecycle",
+      "id": "W03-201"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "workspace.save",
+        "selector": "#pilotSaveWorkspace",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Reviewed valid enabled control; own isolated workspace",
+      "source": {
+        "function": "UI handler",
+        "lines": [
+          1,
+          7000
+        ],
+        "anchor": "pilotSaveWorkspace",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotSaveWorkspace",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-202"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "projectName": "虚构 WIN03 A 离线修改",
+          "history": "exact"
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "projectName": "虚构 WIN03 A 离线修改",
+            "history": "exact"
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-203"
+    },
+    {
+      "kind": "reload",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6175,
+          6175
+        ],
+        "anchor": "window.addEventListener(\"beforeunload\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "key": "F5"
+      },
+      "branch": "Saved idle first; unexpected beforeunload stops safely",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#srmUxWorkspaceSaveSummary",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "exact memory/API/SQLite/history/PDF before-after",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-204"
+    }
+  ]
+}

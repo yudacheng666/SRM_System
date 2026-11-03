@@ -1,0 +1,182 @@
+{
+  "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "command": {
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+    "command": [
+      "node",
+      "/workspace/uat2aaa/methods/run-independent.cjs"
+    ],
+    "cwd": "/workspace",
+    "startUTC": "2026-10-29T15:56:42.568Z",
+    "durationSeconds": 487.44,
+    "exitCode": 0,
+    "status": "PASS",
+    "activeStep": "14-layout-observation.js",
+    "error": null,
+    "trace": "/workspace/uat2aaa/independent/evidence/independent-complete-trace.zip",
+    "noninteractive": true,
+    "automaticRetries": 0,
+    "originalTestsProductAndCIUnmodified": true
+  },
+  "checkRecords": 1122,
+  "allCheckRecordsPASS": true,
+  "scopeComplete": [
+    {
+      "time": "2026-10-29T15:56:57.338Z",
+      "kind": "scope-complete",
+      "id": "CORE-01",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-29T15:57:10.273Z",
+      "kind": "scope-complete",
+      "id": "CORE-02",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-29T15:57:28.967Z",
+      "kind": "scope-complete",
+      "id": "CORE-03",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-29T15:57:58.358Z",
+      "kind": "scope-complete",
+      "id": "CORE-04",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-29T15:57:59.968Z",
+      "kind": "scope-complete",
+      "id": "UX09-INDEPENDENT",
+      "status": "EXECUTED; metric verdict retained"
+    },
+    {
+      "time": "2026-10-29T15:58:13.487Z",
+      "kind": "scope-complete",
+      "id": "CORE-05",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-29T15:58:20.864Z",
+      "kind": "scope-complete",
+      "id": "COPY-populated",
+      "status": "executed; audit verdict in copy/tooltip records"
+    },
+    {
+      "time": "2026-10-29T15:58:44.586Z",
+      "kind": "scope-complete",
+      "id": "LAYOUT",
+      "status": "EXECUTED; failures retained as observations"
+    },
+    {
+      "time": "2026-10-29T16:03:04.275Z",
+      "kind": "scope-complete",
+      "id": "TOOLTIP-KEYBOARD",
+      "status": "EXECUTED; individual verdicts retained",
+      "instances": 83
+    },
+    {
+      "time": "2026-10-29T16:03:17.004Z",
+      "kind": "scope-complete",
+      "id": "BACKUP-CATEGORIES",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-29T16:03:23.203Z",
+      "kind": "scope-complete",
+      "id": "CORE-06",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-29T16:03:57.190Z",
+      "kind": "scope-complete",
+      "id": "CORE-07",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-29T16:04:20.287Z",
+      "kind": "scope-complete",
+      "id": "CORE-08",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-29T16:04:28.371Z",
+      "kind": "scope-complete",
+      "id": "SAVE-OFFLINE",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-29T16:04:38.612Z",
+      "kind": "scope-complete",
+      "id": "S4-STORED-NEGATIVE",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-29T16:04:43.717Z",
+      "kind": "scope-complete",
+      "id": "ORIGINAL-FAILURE-TRIAGE",
+      "status": "PASS; does not overwrite original suite failures"
+    },
+    {
+      "time": "2026-10-29T16:04:47.223Z",
+      "kind": "scope-complete",
+      "id": "OPTIONAL-FOLD",
+      "status": "PASS accessibility; optional efficiency suggestion retained"
+    }
+  ],
+  "tooltipInstances": 83,
+  "tooltipPerWidth": {
+    "1024": 28,
+    "1366": 27,
+    "1600": 28
+  },
+  "layoutStates": 18,
+  "visualScreenshotsManuallyReviewed": 18,
+  "copyStates": 40,
+  "fileChecks": {
+    "export-checks.json": 46,
+    "backup-class-checks.json": 30,
+    "s4-checks.json": 11
+  },
+  "firstPricedRow1366": {
+    "height": 41.78125,
+    "top": 701.140625,
+    "bottom": 742.921875,
+    "viewport": 768,
+    "scrollY": 0,
+    "line": "RFQ-L00001",
+    "priceCenter": 721.53125,
+    "detailCenter": 721.53125,
+    "text": "缺图纸\nUAA-DUP · 虚构采购验收部件1 · 长规格-1-测试型\n\t¥118.00\n交期 · MOQ · 轮次\n\t¥119.00\n交期 · MOQ · 轮次\n\t¥121.00\n交期 · MOQ · 轮次\n\t系统建议 · 待人工确认\n虚构复验甲方制造"
+  },
+  "firstSearch": {
+    "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+    "outcome": "NOT REPRODUCED; ROOT CAUSE UNKNOWN",
+    "clickCalls": 1,
+    "samples": 20,
+    "rAF": 18,
+    "buttonBoxRanges": {
+      "x": {
+        "min": 849.03125,
+        "max": 849.03125
+      },
+      "y": {
+        "min": 488.703125,
+        "max": 488.703125
+      },
+      "width": {
+        "min": 45,
+        "max": 45
+      },
+      "height": {
+        "min": 32.25,
+        "max": 32.25
+      }
+    },
+    "allCenterHitsButton": true,
+    "raw": "assign-search-first-frames.jsonl",
+    "inference": "One normally delivered current-SHA click; no original root cause or fix established."
+  },
+  "oneFreshRun": "Noninteractive runner; no product/browser-error retry or data checkpoint reuse"
+}

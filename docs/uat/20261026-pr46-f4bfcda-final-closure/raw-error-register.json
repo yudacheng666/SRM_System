@@ -1,0 +1,26 @@
+{
+  "productSHA": "f4bfcda8efdf3998c833ed25c3193a056fdde451",
+  "originalAutomationFailures": [],
+  "independentDriverErrors": [
+    {
+      "classification": "TEST_FIXTURE_ORACLE_MISSING",
+      "evidence": "independent/evidence/raw-first-error.json",
+      "correction": "driver-fixture-correction-01.json",
+      "first24ChecksPASS": true,
+      "newEmptyAttempt02Completed": true
+    }
+  ],
+  "driverCorrections": 1,
+  "allSuccessfulAndFailedRecordsRetained": true,
+  "expectedSafetyResponses": {
+    "realSQLiteConflict": 409,
+    "validSTOREDPDFHashMismatch": 400,
+    "nonemptyRestore": 409
+  },
+  "environmentNotes": [
+    "Node24.19 differs from recommended22; native Windows unavailable",
+    "NO_COLOR/FORCE_COLOR Node warning retained in raw stderr"
+  ],
+  "identityCollectionNote": "Early read-only root fetch against transient original8765 failed between app fixtures; no test assertion or driver change. Definitive startup HTTP identity captured on independent9865 before business actions; all original captured root responses later hashed from trace.",
+  "traceGaps": "See per-phase trace-integrity and http-trace-identity; no missing traces asserted without inventory"
+}

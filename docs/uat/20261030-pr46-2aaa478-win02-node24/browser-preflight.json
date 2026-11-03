@@ -1,0 +1,46 @@
+{
+  "time": "2026-10-30T12:00:38.0616070+08:00",
+  "browserInventoryObservation": "cua.listBrowsers returned only IAB id3 and MCP Apps id1; no native Edge/Chrome connector",
+  "nativeBinaryCandidatesPresent": [
+    {
+      "path": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "version": "156.0.4314.50",
+      "present": true,
+      "nativeExecutionVerified": false
+    },
+    {
+      "path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "version": "156.0.8078.48",
+      "present": true,
+      "nativeExecutionVerified": false
+    }
+  ],
+  "playwrightResolution": {
+    "roots": [
+      "<SOURCE_ROOT>",
+      "C:\\Users\\<WINDOWS_USER>\\.cache\\codex-runtimes\\codex-primary-runtime"
+    ],
+    "modules": [
+      {
+        "name": "playwright",
+        "resolved": null,
+        "code": "MODULE_NOT_FOUND"
+      },
+      {
+        "name": "@playwright/test",
+        "resolved": null,
+        "code": "MODULE_NOT_FOUND"
+      },
+      {
+        "name": "playwright-core",
+        "resolved": null,
+        "code": "MODULE_NOT_FOUND"
+      }
+    ]
+  },
+  "installedOrDownloaded": false,
+  "browserLaunched": false,
+  "serviceStarted": false,
+  "scope": "User requested WIN02 execution plus WIN03 readiness check only; no GUI workflow attempted",
+  "result": "WIN-03 remains BLOCKED; installed browser binary presence is not usable automation or GUI acceptance"
+}

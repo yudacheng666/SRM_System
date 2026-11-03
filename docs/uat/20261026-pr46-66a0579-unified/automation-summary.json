@@ -1,0 +1,56 @@
+{
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "python": {
+    "PASS": 44,
+    "FAIL": 0,
+    "command": "python -m unittest discover -v -s prototype/m1-lite/backend -p test_*.py"
+  },
+  "node": {
+    "PASS": 10,
+    "FAIL": 0,
+    "command": "npm test"
+  },
+  "chromium": {
+    "PASS": 40,
+    "FAIL": 15,
+    "SKIP": 0,
+    "RETRY": 0,
+    "command": "npm run test:e2e"
+  },
+  "totalTestCases": {
+    "PASS": 94,
+    "FAIL": 15
+  },
+  "installation": {
+    "firstNpmCi": {
+      "exitCode": 254,
+      "classification": "ENVIRONMENT_CACHE_PATH",
+      "evidence": "automation/npm-ci/stderr.log"
+    },
+    "taskLocalCacheNpmCi": {
+      "exitCode": 0,
+      "cache": "/tmp/uat66/npm-cache",
+      "evidence": "automation/npm-ci-cache-retry/command.json"
+    }
+  },
+  "independentUX": {
+    "PASS": 7,
+    "FAIL": 1,
+    "BLOCKED": 1,
+    "NOT TESTED": 0
+  },
+  "independentCoreSubcases": {
+    "PASS": 11,
+    "BLOCKED": 1
+  },
+  "nativeWindows": {
+    "NOT TESTED": 3
+  },
+  "driverProtocol": {
+    "runtimeFaults": 3,
+    "correctionsUsed": 2,
+    "limit": 2,
+    "fourthBrowserRun": false
+  },
+  "verdict": "NOT READY for current development acceptance; not GitHub Actions PASS"
+}

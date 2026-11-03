@@ -1,0 +1,46 @@
+{
+  "id": "AF-01",
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "classification": "OUTDATED_NAVIGATION_PATH",
+  "assessment": "Driver targets a hidden/inactive page control or old global drawer instead of entering the dedicated current project/material/admin page.",
+  "specFile": "acceptance.spec.cjs",
+  "specStartLine": 139,
+  "title": "01 startup, demo isolation, autosave, navigation and restart / 启动与隔离",
+  "status": "FAIL",
+  "rawErrors": [
+    {
+      "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+    },
+    {
+      "location": {
+        "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+        "column": 37,
+        "line": 147
+      },
+      "message": "Error: locator.fill: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#itemSearch')\u001b[22m\n\u001b[2m    - locator resolved to <input type=\"text\" id=\"itemSearch\" placeholder=\"全字段模糊搜索\"/>\u001b[22m\n\u001b[2m    - fill(\"TST-001\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    154 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying fill action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\n\n  145 |   await expect.poll(async () => (await (await fetch(baseURL+'/api/backups/auto/status')).json()).retained).toBe(1);\n  146 |   const revision=(await snapshot(page)).revision;\n> 147 |   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();\n      |                                     ^\n  148 |   await tab(page,'assign'); await page.locator('#assignStateFilter').selectOption({index:1});\n  149 |   await page.locator('#runAssignSearch').click(); await tab(page,'items');\n  150 |   // 中文：负向断言需要跨越完整自动保存窗口。\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:147:37"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/test-failed-1.png"
+    },
+    {
+      "name": "server-log",
+      "contentType": "text/plain",
+      "path": "/tmp/srm66-product/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/attachments/server-log-b47eadcfa3624781c35e090493640e4d7b6afe00.log"
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "path": "/tmp/srm66-product/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/error-context.md"
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/trace.zip"
+    }
+  ],
+  "laterAssertions": "NOT REACHED; do not infer their PASS from independent tests"
+}

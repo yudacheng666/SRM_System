@@ -1,0 +1,13 @@
+{
+  "number": 2,
+  "limit": 2,
+  "remaining": 0,
+  "time": "2026-10-26T11:14:47.668286+00:00",
+  "classification": "INDEPENDENT_DRIVER_PATH_ERROR",
+  "raw": "attempt-02/evidence/raw-first-error.json",
+  "stderr": "attempt-02/evidence/export-validation.stderr",
+  "rootCause": "Archived export validator retained relative attempt-03/evidence path while actual current files were attempt02; failed before content assertions. Preflight missed this path.",
+  "correction": "Pass real evidence root as explicit argument; derive matching downloads directory; retain every46 numerical/file/byte assertion. Fresh attempt03 independent restart.",
+  "preventiveAudit": "Unexecuted independent conflict response audit avoids known CDP body cache; real status/UI/DB checks retained. S4 negative will use supported Node HTTP body capture.",
+  "productExistingTestsCIUnchanged": true
+}

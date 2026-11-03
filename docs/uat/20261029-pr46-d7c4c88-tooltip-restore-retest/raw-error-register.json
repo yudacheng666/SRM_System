@@ -1,0 +1,83 @@
+{
+  "originalSuiteFailures": [
+    {
+      "id": "AF-01",
+      "severity": "P3 test/expectation maintenance; not confirmed product severity",
+      "classification": "STALE_RESTORE_WORDING",
+      "title": "08 bad PDF and damaged ZIP never contaminate saved data / 异常回归",
+      "file": "acceptance.spec.cjs",
+      "line": 354,
+      "status": "FAIL",
+      "interpretation": "Original test still requires 未成功; actual Chinese refusal says 完整备份恢复未完成. Independent malformed ZIP400 and unchanged target PASS.",
+      "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#pilotSaveStatus')\nExpected substring: \"未成功\"\nReceived string:    \"完整备份恢复未完成。请确认文件来自“下载完整备份（询价数据 + 图纸）”且文件完整无损；如仍失败，请检查本机服务日志。\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#pilotSaveStatus')\n    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" id=\"pilotSaveStatus\" class=\"small dangertext\">完整备份恢复未完成。请确认文件来自“下载完整备份（询价数据 + 图纸）”且文件完整无损；如仍失败，…</div>\n       - unexpected value \"完整备份恢复未完成。请确认文件来自“下载完整备份（询价数据 + 图纸）”且文件完整无损；如仍失败，请检查本机服务日志。\"\n\n\n  363 |     await openTools(other,'#uiDataTools');\n  364 |     await other.locator('#pilotS4BackupFile').setInputFiles(path.join(app.fixtures,'broken.zip'));await other.locator('#pilotS4RestoreFull').click();\n> 365 |     await expect(other.locator('#pilotSaveStatus')).toContainText('未成功');expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toHaveLength(0);\n      |                                                     ^\n  366 |   } finally {await other.close();}\n  367 | });\n  368 |\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:365:53",
+      "laterAssertions": "NOT REACHED after original failure; independent PASS does not overwrite original FAIL",
+      "evidence": "automation/failures/FAIL-01/failure.json"
+    },
+    {
+      "id": "AF-02",
+      "severity": "P3 test/expectation maintenance; not confirmed product severity",
+      "classification": "AMBIGUOUS_PARENT_ROW_CLICK",
+      "title": "15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离",
+      "file": "acceptance.spec.cjs",
+      "line": 589,
+      "status": "FAIL",
+      "interpretation": "Original parent-row center click hits nested 移出本次询价 button, confirmed by actual trace confirm dialogs and independent elementFromPoint at same x415.57,y828.95. Name selection and assigned export work; original later business assertions NOT REACHED.",
+      "cleanError": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('#supplierFirstTitle')\nExpected substring: \"虚构供应商B\"\nReceived string:    \"选择左侧供应商\"\nTimeout: 15000ms\n\nCall log:\n  - Expect \"toContainText\" with timeout 15000ms\n  - waiting for locator('#supplierFirstTitle')\n    14 × locator resolved to <b id=\"supplierFirstTitle\">选择左侧供应商</b>\n       - unexpected value \"选择左侧供应商\"\n\n\n  597 |   await page.locator('[data-mode=\"supplierFirst\"]').click();\n  598 |   await page.locator('[data-sf-s=\"SUP-B\"]').click();\n> 599 |   await expect(page.locator('#supplierFirstTitle')).toContainText('虚构供应商B');\n      |                                                     ^\n  600 |   await fresh(page);\n  601 |   const second=await snapshot(page);\n  602 |   expect(second.workspaceId).not.toBe(originalId);\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:599:53",
+      "laterAssertions": "NOT REACHED after original failure; independent PASS does not overwrite original FAIL",
+      "evidence": "automation/failures/FAIL-02/failure.json"
+    },
+    {
+      "id": "AF-03",
+      "severity": "P3 test/expectation maintenance; not confirmed product severity",
+      "classification": "AMBIGUOUS_PARENT_ROW_CLICK",
+      "title": "45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出",
+      "file": "acceptance.spec.cjs",
+      "line": 684,
+      "status": "FAIL",
+      "interpretation": "Original parent-row center click hits nested 移出本次询价 button, confirmed by actual trace confirm dialogs and independent elementFromPoint at same x415.57,y828.95. Name selection and assigned export work; original later business assertions NOT REACHED.",
+      "cleanError": "Error: expect(locator).toBeVisible() failed\n\nLocator:  locator('#pilotReportPanel')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 15000ms\n  - waiting for locator('#pilotReportPanel')\n    19 × locator resolved to <div id=\"pilotReportPanel\">…</div>\n       - unexpected value \"hidden\"\n\n\n  692 |   await page.locator('[data-sf-s=\"SUP-A\"]').click();\n  693 |   await page.locator('#generateBtn').click();\n> 694 |   await expect(page.locator('#pilotReportPanel')).toBeVisible();\n      |                                                   ^\n  695 |   await page.locator('#pilotReportSupplier').selectOption('SUP-A');\n  696 |   const optional=page.locator('#pilotReportFields input:not([disabled])').first();\n  697 |   await expect(optional).toBeVisible();\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:694:51",
+      "laterAssertions": "NOT REACHED after original failure; independent PASS does not overwrite original FAIL",
+      "evidence": "automation/failures/FAIL-03/failure.json"
+    },
+    {
+      "id": "AF-04",
+      "severity": "P3 test/expectation maintenance; not confirmed product severity",
+      "classification": "AMBIGUOUS_PARENT_ROW_CLICK",
+      "title": "46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分",
+      "file": "acceptance.spec.cjs",
+      "line": 718,
+      "status": "FAIL",
+      "interpretation": "Original parent-row center click hits nested 移出本次询价 button, confirmed by actual trace confirm dialogs and independent elementFromPoint at same x415.57,y828.95. Name selection and assigned export work; original later business assertions NOT REACHED.",
+      "cleanError": "Error: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [\"将“虚构供应商B”移出本次询价？\n同时会取消它当前关联的 12 个物料。\", \"新建一笔空白询价？原来已保存的询价不会被删除。\"]\n\n  731 |   await openProject(page);\n  732 |   await page.locator('#pilotNewWorkspace').click();\n> 733 |   expect(dialogs).toHaveLength(1);\n      |                   ^\n  734 |   expect(dialogs[0]).toContain('新建一笔空白询价');\n  735 |   expect(dialogs[0]).not.toContain('未保存修改');\n  736 |   expect((await snapshot(page)).state).toEqual(before.state);\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:733:19",
+      "laterAssertions": "NOT REACHED after original failure; independent PASS does not overwrite original FAIL",
+      "evidence": "automation/failures/FAIL-04/failure.json"
+    },
+    {
+      "id": "AF-05",
+      "severity": "P3 test/expectation maintenance; not confirmed product severity",
+      "classification": "THEME_EXPECTATION_MISMATCH",
+      "title": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+      "file": "ui-v3-integration.spec.cjs",
+      "line": 45,
+      "status": "FAIL",
+      "interpretation": "Expected #F6F8FB; actual #F5F7F9 from current UI. Treat as unresolved design/test expectation mismatch, not an established purchasing logic defect.",
+      "cleanError": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"rgb(246, 248, 251)\"\nReceived: \"rgb(245, 247, 249)\"\n\n  63 |   // 中文：V3.1 的浅灰背景来自已确认的结构层，而非旧版 V3 首批色值。\n  64 |   // English: Expect the approved V3.1 workspace token, not the earlier transitional theme.\n> 65 |   expect(theme.bodyBackground).toBe('rgb(246, 248, 251)');\n     |                                ^\n  66 |   expect(theme.bodyFont).toContain('Segoe UI');\n  67 |   expect(theme.stylesheet).toBeTruthy();\n  68 |   // 中文：保证所有正式业务面板具有 V3.1 层级，而不是仅修改导航颜色。\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:65:32",
+      "laterAssertions": "NOT REACHED after original failure; independent PASS does not overwrite original FAIL",
+      "evidence": "automation/failures/FAIL-05/failure.json"
+    }
+  ],
+  "independentFirstAttempt": {
+    "status": "FAIL preserved",
+    "raw": "independent/evidence/raw-first-error.json",
+    "trace": "independent/evidence/trace-first-attempt.zip",
+    "rootCause": "UNKNOWN",
+    "sequentialRepeat": "New fresh data/browser, unchanged business methods except absolute runtime paths and current generated fixture bytes; no force, fixed-delay workaround, timeout increase or assertion weakening",
+    "notAFixClaim": true
+  },
+  "attempt02": {
+    "strictCheckAndObservationFAIL": 0,
+    "scope": "All recorded scope-complete methods in independent-summary.json",
+    "trace": "attempt-02/evidence/independent-complete-trace.zip"
+  },
+  "expectedSafetyErrors": "400 malformed/archive/hash,409 nonempty/stale revision, intentional service outage are expected negative controls, not discarded product failures"
+}

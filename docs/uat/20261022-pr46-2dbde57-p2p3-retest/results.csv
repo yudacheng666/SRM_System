@@ -1,0 +1,12 @@
+id,status,title_zh_en,actual_result,evidence
+P2-01,PASS,人工3项金额与理论/建议区分 / Three manual awards versus theory/suggestions,"1979.00 / 3 items;6940.00 theory;7064.00 mixed, independently checked actual UI and saved state",independent/evidence/P2-3-manual-1979-theory6940-mixed7064.png
+P2-02,PASS,价格与实际导出不变 / Prices and actual exported files,46 actual CSV/XLSX/supplier ZIP/PDF assertions PASS; no source DB changes,independent/evidence/export-checks.json
+P2-03,PASS,"零人工、重置、重新选与F5 / Reset, zero-manual, reselection and F5",No manual zero masquerading as quote; real reselection returns1979/3 and persists,independent/evidence/P2-zero-after-reset.png
+P2-04,PASS,真实新报价待复核排除 / Exclude real pending-review award,"B L2 revised82→83, actual review flag; only2 eligible manual lines1815; original confirmed history unchanged",independent/evidence/P2-excludes-pending-review-1815-2-lines.png
+P2-05,PASS,12行无有效报价 / Twelve materials without valid bids,"Fresh formal RFQ with12 real imported lines and no quotations: zero manual, explicit no confirmed award",independent/evidence/P2-no-effective-quotation-zero-manual.png
+P3-01,PASS,三尺寸已保存与技术详情 / Three-size saved and diagnostics,"Five pages × three viewports, one persistent concise indicator; mirror absent; original three diagnostics reachable",independent/evidence/P3-saved-1024-quotes.png
+P3-02,PASS,三尺寸真实未保存/保存中 / Three-size genuine pending request,"Real PUT held then continued, DB unchanged until actual response; summary pending not saved, eventual real200 ACK",independent/evidence/P3-pending-diagnostics-1366.png
+P3-03,PASS,三尺寸真实SQLite冲突 / Three-size actual SQLite conflict,"Two actual tabs produce409; sole concise error status, diagnostic409, unsaved memory retained, committed DB untouched",independent/evidence/P3-conflict-http.json
+WIN-01,NOT TESTED,原生Windows Python3.13 / Native Windows backend,No native Windows environment; not inferred from Linux,identity-start.json
+WIN-02,NOT TESTED,原生Windows Node / Native Windows Node,No native Windows environment,identity-start.json
+WIN-03,NOT TESTED,PowerShell/批处理/本机试用 / Native Windows launchers,No actual Windows shell or desktop,identity-start.json

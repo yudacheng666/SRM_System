@@ -1,0 +1,121 @@
+
+> srm_system@1.0.0 test:e2e
+> playwright test
+
+
+Running 50 tests using 1 worker
+
+
+  ✓   1 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:134:1 › 01 startup, demo isolation, autosave, navigation and restart / 启动与隔离 (18.5s)
+
+  ✓   2 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:153:1 › 02 XLSX 12/100, duplicates and invalid format / 物料 (11.9s)
+
+  ✓   3 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:170:1 › 03 suppliers and bidirectional additive allocation / 供应商与分配 (13.5s)
+
+  ✓   4 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:185:1 › 04 real quote imports, rounds, tiers, immutable confirmation and comparison XLSX / 报价比价 (16.6s)
+
+  ✓   5 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:230:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包 (16.8s)
+
+  ✓   6 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:261:1 › 06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复 (21.8s)
+
+  ✓   7 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:297:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败 (19.1s)
+
+  ✓   8 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:314:1 › 08 bad PDF and damaged ZIP never contaminate saved data / 异常回归 (9.5s)
+
+  ✓   9 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:329:1 › 09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台操作 (13.1s)
+
+  ✓  10 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:358:1 › 10 buyer continuous allocation to items and drawing select without reload / 跨步骤实时同步 (12.0s)
+
+  ✓  11 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:383:1 › 11 formal RFQ identity in missing-quote CSV and working export shortcut / 单据追溯 (9.8s)
+
+  ✓  12 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:415:1 › 12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离 (20.7s)
+
+  ✓  13 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:445:1 › 13 compact laptop item table after import / 1366首屏物料可见 (10.7s)
+
+  ✓  14 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:476:1 › 14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯 (26.5s)
+
+  ✓  15 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:537:1 › 15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离 (17.4s)
+
+  ✓  16 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:581:1 › 44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见 (14.7s)
+
+  ✓  17 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:632:1 › 45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出 (14.0s)
+
+  ✓  18 prototype/m1-lite/tests/e2e/acceptance.spec.cjs:666:1 › 46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分 (15.1s)
+
+  ✓  19 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:40:1 › ERP01: canonical aliases, optional original columns and conflicting identities are explicit (2.2s)
+
+  ✓  20 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:57:1 › ERP02: real XLSX keeps metadata, separates same code with different specs, and survives SQLite refresh (9.1s)
+
+  ✓  21 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:89:1 › ERP03: equal specifications merge quantity; conflicting canonical and alias header blocks commit (3.3s)
+
+  ✓  22 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:110:1 › ERP05: wide 220-column ERP source survives native XLSX importer and remains internal metadata (7.4s)
+
+  ✓  23 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:133:1 › ERP04: new ERP fields are searchable/editable, internal-vs-supplier export boundaries hold (15.9s)
+
+  ✓  24 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:206:1 › ERP06: repeated internal XLSX export and UI import keep current/source RFQ IDs distinct (18.5s)
+
+  ✓  25 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:257:1 › ERP07: specifications visibly distinguish drawing candidates and supplier allocation (3.7s)
+
+  ✓  26 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:285:1 › ERP08: confirmed cannot supply remains visible in comparison, not a zero-priced offer (8.8s)
+
+  ✓  27 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:332:1 › ERP09: second-round scope shows specification and preserves selected line identities (11.1s)
+
+  ✓  28 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:405:1 › ERP10: settings provide three correct XLSX import templates and one header-aware CSV template (10.3s)
+
+  ✓  29 prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:519:1 › ERP11: rejected and canceled material previews do not alter line sequence or saved workspace (20.4s)
+
+  ✓  30 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:60:1 › UAT-01 categories follow active imported RFQ in both allocation views (3.9s)
+
+  ✓  31 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:85:1 › UAT-02 manual, pasted and CSV file quotation sources remain distinct in stored state (11.8s)
+
+  ✓  32 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:134:1 › UAT-03 refused restore is visible within current backup section while project drawer collapsed (3.9s)
+
+  ✓  33 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:146:1 › UAT-04 item editor Escape, dirty cancel and keyboard focus confinement (4.1s)
+
+  ✓  34 prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:173:1 › UAT-07 drawing guidance reflects currently selected formal RFQ material (2.8s)
+
+  ✓  35 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:65:1 › UX quote: focused intake, non-destructive refresh, compact rows and details / 报价回收安全刷新 (5.9s)
+
+  ✓  36 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:103:1 › UX comparison: decision-first disclosure, priced details and workspace status / 比价与状态层级 (6.5s)
+
+  ✓  37 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:144:1 › UX pending-only: filtered pagination and award state / 待决定筛选真实分页 (7.7s)
+
+  ✓  38 prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:179:1 › UX manual-only: buyer-approved amount distinct from suggested totals / 人工定标金额独立显示 (6.6s)
+SRM_UI_V2_B1_METRIC={"viewport":{"width":1366,"height":768},"documentWidth":1366,"scrollY":0,"sidebar":{"width":224,"height":768},"tableTop":0,"firstRowTop":547.90625,"firstRowBottom":616.84375,"bodyFont":"14px","tableFont":"12.5px"}
+  ✓  39 prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:53:3 › UI V2 B1 real workspace and visual layout 1366x768 (13.5s)
+SRM_UI_V2_B1_METRIC={"viewport":{"width":1600,"height":900},"documentWidth":1600,"scrollY":0,"sidebar":{"width":224,"height":900},"tableTop":0,"firstRowTop":611.328125,"firstRowBottom":680.265625,"bodyFont":"14px","tableFont":"12.5px"}
+  ✓  40 prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:53:3 › UI V2 B1 real workspace and visual layout 1600x900 (9.7s)
+SRM_UI_V2_B2_METRIC={"width":1366,"height":768,"documentWidth":1366,"scrollY":0,"navBottom":255.84375,"rowTop":643.546875,"rowBottom":731.5625}
+  ✓  41 prototype/m1-lite/tests/e2e/ui-v2-b2.spec.cjs:41:1 › B2 allocation real-browser 1366x768 (7.0s)
+SRM_UI_V2_B2_METRIC={"width":1600,"height":900,"documentWidth":1600,"scrollY":0,"navBottom":274.375,"rowTop":679.96875,"rowBottom":767.984375}
+  ✓  42 prototype/m1-lite/tests/e2e/ui-v2-b2.spec.cjs:41:1 › B2 allocation real-browser 1600x900 (8.5s)
+SRM_UI_V2_B3_QUOTE_METRIC={"viewport":{"width":1366,"height":768},"documentWidth":1366,"roundTop":1377.140625,"coverageTop":961.796875,"firstImportTop":527.515625,"primaryVisible":["confirmQuoteRound"]}
+SRM_UI_V2_B3_COMPARE_METRIC={"width":1366,"height":768,"documentWidth":1366,"tableTop":825.84375,"comparableScopeTop":659.34375}
+  ✓  43 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:46:1 › B3 quote and comparison with real SQLite 1366x768 (10.0s)
+SRM_UI_V2_B3_QUOTE_METRIC={"viewport":{"width":1600,"height":900},"documentWidth":1600,"roundTop":1391.0625,"coverageTop":971.71875,"firstImportTop":598.9375,"primaryVisible":["confirmQuoteRound"]}
+SRM_UI_V2_B3_COMPARE_METRIC={"width":1600,"height":900,"documentWidth":1600,"tableTop":889.265625,"comparableScopeTop":722.765625}
+  ✓  44 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:46:1 › B3 quote and comparison with real SQLite 1600x900 (10.7s)
+
+  ✓  45 prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:138:1 › B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态 (12.5s)
+SRM_V2_EXPLORE_METRIC={"stage":"items","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1268.015625,"bottom":1268.015625,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":268.34375,"width":926,"height":915.671875,"bottom":1184.015625,"right":1008},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":57,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"assign","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1218.90625,"bottom":1218.90625,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":268.34375,"width":926,"height":866.5625,"bottom":1134.90625,"right":1008},"table":{"x":92,"y":604.90625,"width":577.390625,"height":1035.578125,"bottom":1640.484375,"right":669.390625},"tablewrap":{"x":91,"y":603.90625,"width":579.390625,"height":480,"bottom":1083.90625,"right":670.390625},"firstDataRow":{"x":92,"y":633.296875,"width":577.390625,"height":84.015625,"bottom":717.3125,"right":669.390625},"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":49,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quoteImport","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1697.640625,"bottom":1697.640625,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":268.34375,"width":926,"height":1345.296875,"bottom":1613.640625,"right":1008},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":{"x":82,"y":570.015625,"width":926,"height":431,"bottom":1001.015625,"right":1008},"quoteReview":{"x":82,"y":1013.015625,"width":926,"height":408.78125,"bottom":1421.796875,"right":1008},"confirmButton":{"x":877.984375,"y":1369.796875,"width":114.015625,"height":38,"bottom":1407.796875,"right":992},"tableScrollable":false,"panelButtons":27,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quotes","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1402.625,"bottom":1402.625,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":268.34375,"width":926,"height":1050.28125,"bottom":1318.625,"right":1008},"table":{"x":101,"y":860.59375,"width":888,"height":39.84375,"bottom":900.4375,"right":989},"tablewrap":{"x":100,"y":859.59375,"width":890,"height":41.84375,"bottom":901.4375,"right":990},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":6,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"settings","width":1024,"height":768,"scrollY":0,"documentWidth":1024,"sidebar":{"x":0,"y":0,"width":62,"height":768,"bottom":768,"right":62},"app":{"x":0,"y":0,"width":1024,"height":1382.546875,"bottom":1382.546875,"right":1024},"appContentLeft":82,"panel":{"x":82,"y":268.34375,"width":926,"height":1030.203125,"bottom":1298.546875,"right":1008},"table":null,"tablewrap":null,"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":7,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+  ✓  46 prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:77:1 › EXPLORATORY: desktop stages, control visibility and geometry 1024x768 (6.4s)
+SRM_V2_EXPLORE_METRIC={"stage":"items","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1250.515625,"bottom":1250.515625,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":250.84375,"width":1088,"height":915.671875,"bottom":1166.515625,"right":1339},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":57,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"assign","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1226.40625,"bottom":1226.40625,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":261.84375,"width":1088,"height":880.5625,"bottom":1142.40625,"right":1339},"table":{"x":267,"y":605.40625,"width":701.03125,"height":1087.578125,"bottom":1692.984375,"right":968.03125},"tablewrap":{"x":266,"y":604.40625,"width":703.03125,"height":480,"bottom":1084.40625,"right":969.03125},"firstDataRow":{"x":267,"y":637.796875,"width":701.03125,"height":88.015625,"bottom":725.8125,"right":968.03125},"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":49,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quoteImport","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1495.140625,"bottom":1495.140625,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":250.84375,"width":1088,"height":1160.296875,"bottom":1411.140625,"right":1339},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":{"x":251,"y":527.515625,"width":1088,"height":335.5,"bottom":863.015625,"right":1339},"quoteReview":{"x":251,"y":875.015625,"width":1088,"height":344.28125,"bottom":1219.296875,"right":1339},"confirmButton":{"x":1208.984375,"y":1167.296875,"width":114.015625,"height":38,"bottom":1205.296875,"right":1323},"tableScrollable":false,"panelButtons":27,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quotes","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1367.875,"bottom":1367.875,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":250.84375,"width":1088,"height":1033.03125,"bottom":1283.875,"right":1339},"table":{"x":270,"y":825.84375,"width":1050,"height":39.84375,"bottom":865.6875,"right":1320},"tablewrap":{"x":269,"y":824.84375,"width":1052,"height":41.84375,"bottom":866.6875,"right":1321},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":6,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"settings","width":1366,"height":768,"scrollY":0,"documentWidth":1366,"sidebar":{"x":0,"y":0,"width":224,"height":768,"bottom":768,"right":224},"app":{"x":0,"y":0,"width":1366,"height":1365.046875,"bottom":1365.046875,"right":1366},"appContentLeft":251,"panel":{"x":251,"y":250.84375,"width":1088,"height":1030.203125,"bottom":1281.046875,"right":1339},"table":null,"tablewrap":null,"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":7,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+  ✓  47 prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:77:1 › EXPLORATORY: desktop stages, control visibility and geometry 1366x768 (6.2s)
+SRM_V2_EXPLORE_METRIC={"stage":"items","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1313.9375,"bottom":1313.9375,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":283.375,"width":1322,"height":946.5625,"bottom":1229.9375,"right":1573},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":57,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"assign","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1262.828125,"bottom":1262.828125,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":283.375,"width":1322,"height":895.453125,"bottom":1178.828125,"right":1573},"table":{"x":267,"y":641.828125,"width":860.15625,"height":1087.578125,"bottom":1729.40625,"right":1127.15625},"tablewrap":{"x":266,"y":640.828125,"width":862.15625,"height":480,"bottom":1120.828125,"right":1128.15625},"firstDataRow":{"x":267,"y":674.21875,"width":860.15625,"height":88.015625,"bottom":762.234375,"right":1127.15625},"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":49,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quoteImport","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1513.0625,"bottom":1513.0625,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":283.375,"width":1322,"height":1145.6875,"bottom":1429.0625,"right":1573},"table":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"tablewrap":{"x":0,"y":0,"width":0,"height":0,"bottom":0,"right":0},"firstDataRow":null,"quoteIntake":{"x":251,"y":598.9375,"width":1322,"height":274,"bottom":872.9375,"right":1573},"quoteReview":{"x":251,"y":884.9375,"width":1322,"height":344.28125,"bottom":1229.21875,"right":1573},"confirmButton":{"x":1442.984375,"y":1177.21875,"width":114.015625,"height":38,"bottom":1215.21875,"right":1557},"tableScrollable":false,"panelButtons":27,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"quotes","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1413.296875,"bottom":1413.296875,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":283.375,"width":1322,"height":1045.921875,"bottom":1329.296875,"right":1573},"table":{"x":270,"y":889.265625,"width":1284,"height":39.84375,"bottom":929.109375,"right":1554},"tablewrap":{"x":269,"y":888.265625,"width":1286,"height":41.84375,"bottom":930.109375,"right":1555},"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":6,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+SRM_V2_EXPLORE_METRIC={"stage":"settings","width":1600,"height":900,"scrollY":0,"documentWidth":1600,"sidebar":{"x":0,"y":0,"width":224,"height":900,"bottom":900,"right":224},"app":{"x":0,"y":0,"width":1600,"height":1448.46875,"bottom":1448.46875,"right":1600},"appContentLeft":251,"panel":{"x":251,"y":283.375,"width":1322,"height":1081.09375,"bottom":1364.46875,"right":1573},"table":null,"tablewrap":null,"firstDataRow":null,"quoteIntake":null,"quoteReview":null,"confirmButton":null,"tableScrollable":false,"panelButtons":7,"hiddenOffscreenControls":[],"saveMessage":"保存状态待确认"}
+  ✓  48 prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:77:1 › EXPLORATORY: desktop stages, control visibility and geometry 1600x900 (6.0s)
+  ✓  49 prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:45:1 › UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归 (10.8s)
+  ✓  50 prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:111:1 › UI V3.1 P2 buyer layout and semantic controls / 正式 RFQ 标题、抽屉、分配与决策 (5.0s)
+
+  50 passed (9.8m)

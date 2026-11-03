@@ -1,0 +1,71 @@
+{
+  "id": "405cc0014031cae14de1-4c044cafe2f36c404146",
+  "title": "UX manual-only: buyer-approved amount distinct from suggested totals / 人工定标金额独立显示",
+  "file": "ui-ux-structural.spec.cjs",
+  "line": 183,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 4,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 22395,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#srmUxManualAwardSummary')\nExpected substring: \u001b[32m\"¥191.00\"\u001b[39m\nReceived string:    \u001b[31m\"采购员已确认金额：¥63.00（1 项，排除自动建议和待复核项）\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#srmUxManualAwardSummary')\u001b[22m\n\u001b[2m    19 × locator resolved to <div class=\"srm-ux-manual-total\" id=\"srmUxManualAwardSummary\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"采购员已确认金额：¥63.00（1 项，排除自动建议和待复核项）\"\u001b[22m\n",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#srmUxManualAwardSummary')\nExpected substring: \u001b[32m\"¥191.00\"\u001b[39m\nReceived string:    \u001b[31m\"采购员已确认金额：¥63.00（1 项，排除自动建议和待复核项）\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#srmUxManualAwardSummary')\u001b[22m\n\u001b[2m    19 × locator resolved to <div class=\"srm-ux-manual-total\" id=\"srmUxManualAwardSummary\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"采购员已确认金额：¥63.00（1 项，排除自动建议和待复核项）\"\u001b[22m\n\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:203:25",
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+          "column": 25,
+          "line": 203
+        },
+        "snippet": "  201 |   }\n  202 |   await expect(summary).toContainText('采购员已确认金额：');\n> 203 |   await expect(summary).toContainText('¥'+(totalCents/100).toFixed(2));\n      |                         ^\n  204 |   await expect(summary).toContainText('（3 项，排除自动建议和待复核项）');\n  205 |   await expect(page.locator('#srmV31DecisionBoard')).toContainText('人工已选');\n  206 |   expect((await snapshot(page)).state.manualAwards).toHaveLength(3);"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+            "column": 25,
+            "line": 203
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#srmUxManualAwardSummary')\nExpected substring: \u001b[32m\"¥191.00\"\u001b[39m\nReceived string:    \u001b[31m\"采购员已确认金额：¥63.00（1 项，排除自动建议和待复核项）\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#srmUxManualAwardSummary')\u001b[22m\n\u001b[2m    19 × locator resolved to <div class=\"srm-ux-manual-total\" id=\"srmUxManualAwardSummary\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"采购员已确认金额：¥63.00（1 项，排除自动建议和待复核项）\"\u001b[22m\n\n\n  201 |   }\n  202 |   await expect(summary).toContainText('采购员已确认金额：');\n> 203 |   await expect(summary).toContainText('¥'+(totalCents/100).toFixed(2));\n      |                         ^\n  204 |   await expect(summary).toContainText('（3 项，排除自动建议和待复核项）');\n  205 |   await expect(page.locator('#srmV31DecisionBoard')).toContainText('人工已选');\n  206 |   expect((await snapshot(page)).state.manualAwards).toHaveLength(3);\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:203:25"
+        }
+      ],
+      "stdout": [],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-26T11:26:27.668Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/tmp/srm795-product/test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/test-failed-1.png"
+        },
+        {
+          "name": "ux-structural-server-log",
+          "contentType": "text/plain",
+          "path": "/tmp/srm795-product/test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/attachments/ux-structural-server-log-a61124e894d05334968165a1d412eb966edbb9f1.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/tmp/srm795-product/test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/tmp/srm795-product/test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+        "column": 25,
+        "line": 203
+      }
+    }
+  ]
+}

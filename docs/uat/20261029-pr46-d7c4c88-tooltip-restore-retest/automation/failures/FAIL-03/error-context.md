@@ -1,0 +1,160 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary "SRM 功能导航" [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: S
+      - generic [ref=e6]:
+        - text: SRM
+        - generic [ref=e7]: 采购业务系统
+    - generic [ref=e8]: 询价 · 比价 · 定标
+    - generic [ref=e9]: 工作空间
+    - button "询价项目" [ref=e10] [cursor=pointer]:
+      - img [ref=e12]
+      - generic [ref=e15]: 询价项目
+    - button "物料与图纸" [ref=e16] [cursor=pointer]:
+      - img [ref=e18]
+      - generic [ref=e23]: 物料与图纸
+    - button "供应商与分配" [ref=e24] [cursor=pointer]:
+      - img [ref=e26]
+      - generic [ref=e29]: 供应商分配
+    - button "报价回收" [ref=e30] [cursor=pointer]:
+      - img [ref=e32]
+      - generic [ref=e35]: 报价回收
+    - button "比价议价" [ref=e36] [cursor=pointer]:
+      - img [ref=e38]
+      - generic [ref=e40]: 比价议价
+    - separator [ref=e41]
+    - generic [ref=e42]: 管理工具
+    - button "数据与备份" [ref=e43] [cursor=pointer]:
+      - img [ref=e45]
+      - generic [ref=e47]: 数据与备份
+    - button "字段设置" [ref=e48] [cursor=pointer]:
+      - img [ref=e50]
+      - generic [ref=e54]: 字段设置
+    - generic [ref=e55]:
+      - text: 本地业务系统
+      - text: 数据保存在本机
+  - banner [ref=e57]:
+    - generic [ref=e58]:
+      - generic [ref=e59]: 询价与比价
+      - heading "SRM 采购工作台" [level=1] [ref=e60]
+      - generic [ref=e61]: 修改内容会自动保存到本机，也可以点击“保存”。
+    - generic [ref=e62]:
+      - generic [ref=e63]: 本机工作模式
+      - button "询价项目" [ref=e64] [cursor=pointer]
+      - button "数据与备份" [ref=e65] [cursor=pointer]
+      - button "字段设置" [ref=e66] [cursor=pointer]
+  - generic "当前询价工作摘要" [ref=e67]:
+    - generic [ref=e68]:
+      - text: 当前询价项目
+      - generic [ref=e69]:
+        - generic [ref=e70]: 未命名询价（2026-10-29 08:19）
+        - button "修改名称" [ref=e71] [cursor=pointer]
+    - status [ref=e73]: 已保存
+  - generic [ref=e74]: 数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。
+  - navigation "询价业务流程" [ref=e75]:
+    - strong [ref=e77]: ◉采购业务流程
+    - tablist [ref=e78]:
+      - tab "› ① 询价项目" [ref=e79] [cursor=pointer]
+      - tab "› ② 物料与图纸" [ref=e80] [cursor=pointer]
+      - tab "› ③ 供应商分配" [selected] [ref=e81] [cursor=pointer]
+      - tab "› ④ 报价回收" [ref=e82] [cursor=pointer]
+      - tab "⑤ 比价议价" [ref=e83] [cursor=pointer]
+  - text: ▴ ▾ 批量选择
+  - generic [ref=e84]:
+    - generic [ref=e85]:
+      - generic [ref=e86]:
+        - generic [ref=e87]: 03 / 供应商分配
+        - heading "供应商分配" [level=2] [ref=e88]
+        - button "查看说明" [ref=e91]: ⓘ
+      - generic [ref=e92]:
+        - button "查看分配操作 ↓" [ref=e93] [cursor=pointer]
+        - button "添加 / 导入供应商" [ref=e94] [cursor=pointer]
+    - group [ref=e95]:
+      - generic "供应商管理与 Excel 导入 查看操作说明 ▾" [ref=e96] [cursor=pointer]:
+        - text: 供应商管理与 Excel 导入
+        - button "查看操作说明" [ref=e98]:
+          - img [ref=e99]
+        - text: ▾
+    - generic [ref=e102]:
+      - generic [ref=e103]:
+        - text: 拟询价物料
+        - generic [ref=e104]: "12"
+      - generic [ref=e105]:
+        - text: 已分配 ≥1 家
+        - generic [ref=e106]: "12"
+      - generic [ref=e107]:
+        - text: 仅 1 家
+        - generic [ref=e108]: "12"
+      - generic [ref=e109]:
+        - text: 未分配
+        - generic [ref=e110]: "0"
+    - generic [ref=e111]:
+      - generic [ref=e112]:
+        - generic [ref=e113]:
+          - button "按物料分配供应商" [ref=e114] [cursor=pointer]: 按物料
+          - button "按供应商分配物料" [ref=e115] [cursor=pointer]: 按供应商
+        - generic [ref=e116]:
+          - button "预览询价单" [ref=e117] [cursor=pointer]
+          - button "导出已分配询价单" [active] [ref=e118] [cursor=pointer]
+      - generic [ref=e120]: 已将供应商移出本次询价，并取消 12 条物料关联。
+    - generic [ref=e121]:
+      - generic [ref=e122]:
+        - generic [ref=e123]:
+          - generic [ref=e124]: 本次询价供应商
+          - generic [ref=e125]:
+            - textbox "搜索本次供应商（名称/编码）" [ref=e126]
+            - button "搜索" [ref=e127] [cursor=pointer]
+            - button "清空条件" [ref=e128] [cursor=pointer]
+            - button "+ 添加供应商到本次询价" [ref=e129] [cursor=pointer]
+        - generic [ref=e130]:
+          - button "查看说明" [ref=e133]:
+            - img [ref=e134]
+          - generic [ref=e139]:
+            - generic [ref=e140]:
+              - text: 虚构供应商B
+              - generic [ref=e141]: SUP-B · 本次 Excel 导入
+            - generic [ref=e142]:
+              - generic [ref=e143]: 12 项
+              - button "移出本次询价" [ref=e144] [cursor=pointer]
+          - generic [ref=e145]:
+            - generic [ref=e146]: 筛选结果 1 家 · 第 1/1 页
+            - generic [ref=e148]:
+              - button "上一页" [ref=e149] [cursor=pointer]
+              - generic [ref=e150]: …
+              - button "1" [ref=e151] [cursor=pointer]
+              - button "下一页" [ref=e152] [cursor=pointer]
+      - generic [ref=e153]:
+        - generic [ref=e154]:
+          - generic [ref=e155]: 选择左侧供应商
+          - generic [ref=e156]:
+            - textbox "全字段模糊搜索" [ref=e157]
+            - combobox [ref=e158]:
+              - option "全部分类" [selected]
+              - option "虚构类别"
+            - button "搜索" [ref=e159] [cursor=pointer]
+            - button "清空条件" [ref=e160] [cursor=pointer]
+            - generic [ref=e161]: 当前供应商关联操作
+            - combobox [ref=e162]:
+              - option "复制其他供应商的物料范围…" [selected]
+              - option "虚构供应商B"
+            - button "复制为起点" [ref=e163] [cursor=pointer]
+            - button "关联全部筛选物料" [ref=e164] [cursor=pointer]
+            - button "关联本页物料" [ref=e165] [cursor=pointer]
+            - button "反转筛选范围关联" [ref=e166] [cursor=pointer]
+            - button "反转本页关联" [ref=e167] [cursor=pointer]
+            - button "取消全部筛选关联" [ref=e168] [cursor=pointer]
+        - table [ref=e171]:
+          - rowgroup [ref=e172]:
+            - row "当前供应商 物料 / RFQ行 询价数量 分类 全部关联方" [ref=e173]:
+              - columnheader "当前供应商" [ref=e174]
+              - columnheader "物料 / RFQ行" [ref=e175]
+              - columnheader "询价数量" [ref=e176]
+              - columnheader "分类" [ref=e177]
+              - columnheader "全部关联方" [ref=e178]
+          - rowgroup
+  - text: ✓
+  - generic [ref=e180]: 修改内容自动保存；备份与恢复请前往“数据与备份”。
+```

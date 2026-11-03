@@ -1,0 +1,403 @@
+{
+  "schemaVersion": 1,
+  "productSha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "name": "backup-restore",
+  "purpose": "buyer-plan",
+  "scope": "GUI actual full archive; separate empty target; normal nonempty UI early-return vs a separately needed backend409 race",
+  "steps": [
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-56",
+        "selector": "#uiAdminToggle",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "one(\"uiAdminToggle\").addEventListener(\"click\"",
+        "lines": [
+          6934,
+          6934
+        ],
+        "anchor": "one(\"uiAdminToggle\").addEventListener(\"click\"",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#uiAdminToggle",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-205"
+    },
+    {
+      "kind": "download",
+      "selector": "#pilotS4DownloadFull",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1921,
+          1921
+        ],
+        "anchor": "pilotS4DownloadFull",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "artifact": "s4-full",
+        "workspaces": 2,
+        "pdfLinks": 3,
+        "allRevisions": true,
+        "sqliteIntegrity": "ok",
+        "manifestHashes": true,
+        "originalPdfBytes": true
+      },
+      "branch": "Prearm bound download event before GUI click; inspect actual completed file, never use API writes",
+      "postconditions": [
+        {
+          "kind": "download",
+          "require": "WillBegin/progress completion + actual file path/size/hash; nested ZIP CRC, XLSX fields and PDF bytes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "workspaces": 2,
+            "pdfLinks": 3,
+            "allRevisions": true,
+            "sqliteIntegrity": "ok",
+            "manifestHashes": true,
+            "originalPdfBytes": true
+          }
+        },
+        {
+          "kind": "workspace",
+          "oracle": "all rows/history/PDF unchanged by export",
+          "revision": "exact-equal"
+        }
+      ],
+      "capability": "download-oracle",
+      "id": "W03-206"
+    },
+    {
+      "kind": "empty-restore-target",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/run_local.bat",
+        "lines": [
+          5,
+          5
+        ],
+        "anchor": "set \"SERVER=%~dp0backend\\server.py\"",
+        "sha256": "23272b279bea5a5e84566c277342c1a4634518049ee56caf165482a46e386406"
+      },
+      "args": {
+        "newRandomDataRoot": true,
+        "sourceDataUntouched": true,
+        "port": 8765
+      },
+      "branch": "Native Windows own-task PID/port/paths only; no unknown process termination",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#srmUxWorkspaceSaveSummary",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "all stored rows/revisions/history/PDF unchanged",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "windows-lifecycle",
+      "id": "W03-207"
+    },
+    {
+      "kind": "downloaded-file",
+      "selector": "#pilotS4BackupFile",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6378,
+          6378
+        ],
+        "anchor": "s4FileInput.files?.[0]",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "artifact": "s4-full"
+      },
+      "branch": "Use actual completed captured backup; never a preseeded fake ZIP",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotS4BackupFile",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "download-oracle",
+      "id": "W03-208"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "dialogClick",
+        "operation": "s4.restore",
+        "selector": "#pilotS4RestoreFull",
+        "scenario": "fresh-empty-target",
+        "dialog": "expected",
+        "expect": [
+          {
+            "type": "confirm",
+            "message": "确定将完整备份恢复到当前空白数据目录？系统会先校验文件；若目录已有数据，将拒绝恢复。",
+            "values": {},
+            "accept": true
+          }
+        ]
+      },
+      "branch": "Own truly empty data dir; valid selected full backup; buyerMode=false",
+      "source": {
+        "function": "restoreS4Full",
+        "lines": [
+          6376,
+          6394
+        ],
+        "anchor": "async function restoreS4Full()",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotS4RestoreFull",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-209"
+    },
+    {
+      "kind": "restore-audit",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6386,
+          6386
+        ],
+        "anchor": "if(!result.verified||!result.restored)",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "artifact": "s4-full",
+        "workspaces": 2
+      },
+      "branch": "Wait verified/restored response and reload; compare all versions/rows/history/PDF bytes",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": null,
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-210"
+    },
+    {
+      "kind": "downloaded-file",
+      "selector": "#pilotS4BackupFile",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6378,
+          6378
+        ],
+        "anchor": "s4FileInput.files?.[0]",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "artifact": "s4-full"
+      },
+      "branch": "Same valid backup on already restored nonempty target",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotS4BackupFile",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "download-oracle",
+      "id": "W03-211"
+    },
+    {
+      "kind": "nonempty-ui-refusal",
+      "selector": "#pilotS4RestoreFull",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6380,
+          6380
+        ],
+        "anchor": "if(buyerMode){restoreNotice(\"当前数据目录已有询价",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "restoreRequests": 0
+      },
+      "branch": "buyerMode true: DOM warning only; NO confirm, NO restore HTTP, not409",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotS4RestoreFeedback",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "当前数据目录已有询价，不能直接覆盖恢复。; all target persistent state unchanged",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-212"
+    },
+    {
+      "kind": "nonempty-server-race",
+      "selector": "#pilotS4RestoreFull",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          5919,
+          5919
+        ],
+        "anchor": "RESTORE_TARGET_NOT_EMPTY",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expectedHttp": 409,
+        "twoSessions": true
+      },
+      "branch": "NEEDS REVIEW: stale empty page plus target populated by another GUI session; exact session/dialog/timing fixture not approved",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotS4RestoreFeedback",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "actual backend409; all logical rows/PDF/persistent file bytes unchanged",
+          "revision": "exact-equal"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "nonempty-409-race",
+      "id": "W03-213"
+    }
+  ]
+}

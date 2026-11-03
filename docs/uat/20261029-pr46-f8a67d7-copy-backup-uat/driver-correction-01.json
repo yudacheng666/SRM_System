@@ -1,0 +1,10 @@
+{
+  "timeUTC": "2026-10-29T06:35:11.608034+00:00",
+  "classification": "INDEPENDENT_DRIVER_NULL_PRECONDITION",
+  "actual": "Before New, formal SRMPilot.snapshot() is legitimately null in demo mode. Optional initial tooltip-state audit dereferenced .state.",
+  "raw": "independent/evidence/raw-first-error.json",
+  "trace": "independent/evidence/trace-first-attempt.zip",
+  "fix": "Record null before/after initial demo-only hints; after formal RFQ creation, full state-object comparison remains unchanged. Original product/tests/CI untouched. New empty attempt02.",
+  "businessAssertionsWeakened": false,
+  "newDataDirectory": "/workspace/uatf8/attempt-02/data"
+}

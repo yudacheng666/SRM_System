@@ -1,0 +1,226 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary "SRM 功能导航" [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: S
+      - generic [ref=e6]:
+        - text: SRM
+        - generic [ref=e7]: PROCUREMENT
+    - generic [ref=e8]: 采购协同 · 内部工作台
+    - generic [ref=e9]: 工作空间
+    - button "询价项目" [ref=e10] [cursor=pointer]:
+      - generic [ref=e11]: ▤
+      - generic [ref=e12]: 询价项目
+    - button "物料与图纸" [ref=e13] [cursor=pointer]:
+      - generic [ref=e14]: ▦
+      - generic [ref=e15]: 物料与图纸
+    - button "供应商与分配" [ref=e16] [cursor=pointer]:
+      - generic [ref=e17]: ♧
+      - generic [ref=e18]: 供应商分配
+    - button "报价回收" [ref=e19] [cursor=pointer]:
+      - generic [ref=e20]: ▣
+      - generic [ref=e21]: 报价回收
+    - button "比价议价" [ref=e22] [cursor=pointer]:
+      - generic [ref=e23]: ▥
+      - generic [ref=e24]: 比价议价
+    - separator [ref=e25]
+    - generic [ref=e26]: 管理工具
+    - button "数据与备份" [ref=e27] [cursor=pointer]:
+      - generic [ref=e28]: ◫
+      - generic [ref=e29]: 数据与备份
+    - button "字段设置" [ref=e30] [cursor=pointer]:
+      - generic [ref=e31]: ⚙
+      - generic [ref=e32]: 字段设置
+    - generic [ref=e33]:
+      - text: 本地业务工作台
+      - text: V3.1 风格接入 · 待验收
+  - banner [ref=e35]:
+    - generic [ref=e36]:
+      - generic [ref=e37]: 询价与比价
+      - heading "SRM 采购工作台" [level=1] [ref=e38]
+      - generic [ref=e39]: 修改内容会自动保存到本机，也可以点击“保存”。
+    - generic [ref=e40]:
+      - generic [ref=e41]: 本机工作模式
+      - button "询价项目" [ref=e42] [cursor=pointer]
+      - button "数据与备份" [ref=e43] [cursor=pointer]
+      - button "字段设置" [ref=e44] [cursor=pointer]
+  - generic "当前询价工作摘要" [ref=e45]:
+    - generic [ref=e46]:
+      - text: 当前询价项目
+      - generic [ref=e47]:
+        - generic [ref=e48]: 未命名询价（2026-10-26 07:07）
+        - button "修改名称" [ref=e49] [cursor=pointer]
+    - status [ref=e51]: 已保存
+  - generic [ref=e52]: 数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。
+  - navigation "询价业务流程" [ref=e53]:
+    - strong [ref=e55]: ◉采购业务流程
+    - tablist [ref=e56]:
+      - tab "› ① 询价项目" [ref=e57] [cursor=pointer]
+      - tab "› ② 物料与图纸" [ref=e58] [cursor=pointer]
+      - tab "› ③ 供应商分配" [ref=e59] [cursor=pointer]
+      - tab "› ④ 报价回收" [selected] [ref=e60] [cursor=pointer]
+      - tab "⑤ 比价议价" [ref=e61] [cursor=pointer]
+  - text: ▴ ▾ 批量选择 ▾
+  - generic [ref=e62]:
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - generic [ref=e65]: 04 / QUOTE INTAKE
+        - heading "报价回收 / 轮次与版本" [level=2] [ref=e66]
+        - paragraph [ref=e67]: 选择供应商与轮次，录入并核验报价；已确认的历史版本保持只读。
+      - generic [ref=e68]: 报价录入 · 异常核验 · 版本确认
+    - generic [ref=e70]:
+      - generic [ref=e71]: 报价回收与核验 先选供应商与轮次，再导入报价、检查异常并确认
+      - generic [ref=e72]:
+        - generic [ref=e73]: 01 供应商与轮次
+        - combobox "本轮报价供应商" [ref=e74]:
+          - option "虚构供应商A (SUP-A)" [selected]
+          - option "虚构供应商B (SUP-B)"
+        - combobox [ref=e75]:
+          - option "第 1 轮 · 第1版 · 已确认"
+          - option "第 2 轮 · 第1版 · 已确认" [selected]
+        - button "+ 新增下一轮" [ref=e76] [cursor=pointer]
+        - button "+ 新增本轮新版本" [ref=e77] [cursor=pointer]
+        - button "设置本轮议价范围" [disabled] [ref=e78]
+        - generic [ref=e79]: 02 报价凭证与条款
+        - combobox "本轮报价凭证类型" [disabled] [ref=e80]:
+          - option "邮件及原始附件" [selected]
+          - option "聊天截图"
+          - option "单独PDF/文件"
+          - option "其他凭证/手工录入"
+        - textbox "报价来源文件/凭证说明" [disabled] [ref=e81]
+        - generic [ref=e82]:
+          - text: 本轮供应商商务备注
+          - textbox "本轮供应商商务备注" [disabled] [ref=e83]:
+            - /placeholder: 报价有效期、运费、税、付款方式等整份报价条款
+    - group "报价录入方式" [ref=e84]:
+      - generic [ref=e85]: 录入方式
+      - button "全部方式" [pressed] [ref=e86] [cursor=pointer]
+      - button "文件导入" [ref=e87] [cursor=pointer]
+      - button "批量粘贴" [ref=e88] [cursor=pointer]
+      - button "单条补录" [ref=e89] [cursor=pointer]
+      - generic [ref=e90]: 只切换显示，不清空草稿或预览
+    - generic [ref=e91]:
+      - generic [ref=e92]:
+        - heading "单条输入" [level=3] [ref=e93]
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - text: 物料编码 / RFQ Line ID
+            - textbox "物料编码 / RFQ Line ID" [ref=e96]:
+              - /placeholder: 唯一物料编码 / RFQ Line ID
+              - text: TST-001
+          - generic [ref=e97]:
+            - text: 单价 / 阶梯价（元/物料单位）
+            - textbox "单价 / 阶梯价（元/物料单位）" [ref=e98]:
+              - /placeholder: 如 100 或 1-99:100|100+:90
+              - text: "16.75"
+          - generic [ref=e99]:
+            - text: 交期（天）
+            - textbox "交期（天）" [ref=e100]:
+              - /placeholder: 天
+              - text: "5"
+          - generic [ref=e101]:
+            - text: MOQ（最小起订量，物料单位）
+            - textbox "MOQ（最小起订量，物料单位）" [ref=e102]:
+              - /placeholder: 数量
+              - text: "1"
+          - generic [ref=e103]:
+            - text: 报价状态
+            - combobox "报价状态" [ref=e104]:
+              - option "正常报价" [selected]
+              - option "未报价"
+              - option "不供货"
+          - generic [ref=e105]:
+            - text: 物料备注
+            - textbox "物料备注" [ref=e106]:
+              - /placeholder: 替代型号、限制、包装等
+          - button "加入预览" [ref=e107] [cursor=pointer]
+        - generic [ref=e108]: M0 现按人民币（元/物料单位）、天和物料数量显示。正式币种、税口径、采购单位后续以 ERP / 询价字段为准。
+      - generic [ref=e109]:
+        - heading "剪贴板批量粘贴" [level=3] [ref=e110]
+        - textbox "第一行是表头，须含 RFQ Line ID 或存货编码（兼容旧名物料编码）。 存货编码,报价单价,交期,MOQ,报价状态,物料备注 ITEM-00001,100,7,10,正常报价,可替代品牌" [ref=e111]:
+          - /placeholder: "第一行是表头，须含 RFQ Line ID 或存货编码（兼容旧名物料编码）。\n存货编码,报价单价,交期,MOQ,报价状态,物料备注\nITEM-00001,100,7,10,正常报价,可替代品牌"
+          - text: 存货编码,报价单价,交期,MOQ,报价状态 TST-001,17.25,7,1,正常报价 TST-002,23.75,9,1,正常报价
+        - generic [ref=e112]:
+          - button "读取剪贴板" [ref=e113] [cursor=pointer]
+          - button "解析预览" [ref=e114] [cursor=pointer]
+          - button "清空输入" [ref=e115] [cursor=pointer]
+          - button "清空预览" [ref=e116] [cursor=pointer]
+      - generic [ref=e117]:
+        - heading "文件导入" [level=3] [ref=e118]
+        - button "Choose File" [ref=e119]
+        - generic [ref=e120]: 支持真实 Excel .xlsx、CSV、TXT 和复制粘贴。必须含 RFQ Line ID 或存货编码；只处理当前选中的供应商和报价轮次。
+        - button "字段映射" [ref=e121] [cursor=pointer]
+        - button "仅模拟：查看虚构报价" [disabled] [ref=e122]
+        - status
+    - generic [ref=e124]:
+      - generic [ref=e125]:
+        - text: 虚构供应商A · 第 2 轮 · 第1版
+        - generic [ref=e126]: 已确认/锁定
+        - generic [ref=e127]: 轮次表示议价阶段；版本表示同一轮报价的更正提交。已确认提交不可覆盖修改。
+      - generic [ref=e128]:
+        - generic [ref=e129]:
+          - generic [ref=e130]: 本轮应报价
+          - generic [ref=e131]: "12"
+        - generic [ref=e132]:
+          - generic [ref=e133]: 已报价
+          - generic [ref=e134]: "1"
+        - generic [ref=e135]:
+          - generic [ref=e136]: 明确未报价
+          - generic [ref=e137]: "0"
+        - generic [ref=e138]:
+          - generic [ref=e139]: 不供货
+          - generic [ref=e140]: "0"
+        - generic [ref=e141]:
+          - generic [ref=e142]: 漏报
+          - generic [ref=e143]: "11"
+        - generic [ref=e144]:
+          - generic [ref=e145]: 多报
+          - generic [ref=e146]: "0"
+        - generic [ref=e147]:
+          - generic [ref=e148]: 重复
+          - generic [ref=e149]: "0"
+      - generic [ref=e150]:
+        - generic [ref=e151]: 漏报项目：TST-002(RFQ-L00002)、TST-003(RFQ-L00003)、TST-004(RFQ-L00004)、TST-005(RFQ-L00005)、TST-006(RFQ-L00006)、TST-007(RFQ-L00007)、TST-008(RFQ-L00008)、TST-009(RFQ-L00009)、TST-010(RFQ-L00010)、TST-011(RFQ-L00011)、TST-012(RFQ-L00012)
+        - generic [ref=e152]: 多报项目：无
+        - generic [ref=e153]: 重复项目：无
+      - button "导出本供应商本轮漏报 CSV" [ref=e154] [cursor=pointer]
+      - generic [ref=e155]:
+        - generic [ref=e156]: 03 完成异常核验后确认本轮
+        - button "确认本次提交" [disabled] [ref=e157]
+        - generic [ref=e158]: ✓ 已确认并锁定 · 修改请新建版本
+    - generic [ref=e159]:
+      - generic [ref=e160]:
+        - generic [ref=e161]: 当前轮次报价明细 紧凑浏览，按需展开交期、MOQ、阶梯价与来源
+        - generic [ref=e162]:
+          - button "↻ 刷新显示" [ref=e163] [cursor=pointer]
+          - button "详细列" [ref=e164] [cursor=pointer]
+          - button "选择沿用上轮项目…" [disabled] [ref=e165]
+      - generic [ref=e166]:
+        - generic [ref=e167]: 本轮应报价范围 12 项；当前提交已记录 1 项。
+        - table [ref=e169]:
+          - rowgroup [ref=e170]:
+            - row "存货编码 / RFQ Line ID / 存货名称 询价数量（询价单位） 上轮单价（元/单位） 本轮适用单价（元/单位） 单价变化 报价状态 操作" [ref=e171]:
+              - columnheader "存货编码 / RFQ Line ID / 存货名称" [ref=e172]
+              - columnheader "询价数量（询价单位）" [ref=e173]
+              - columnheader "上轮单价（元/单位）" [ref=e174]
+              - columnheader "本轮适用单价（元/单位）" [ref=e175]
+              - columnheader "单价变化" [ref=e176]
+              - columnheader "报价状态" [ref=e177]
+              - columnheader "操作" [ref=e178]
+          - rowgroup [ref=e179]:
+            - row "TST-001 RFQ-L00001 · 规格：未填写 2 ¥17.25 ¥16.75 -0.50 / -2.90% 正常报价 详情 修改" [ref=e180]:
+              - cell "TST-001 RFQ-L00001 · 规格：未填写" [ref=e181]:
+                - text: TST-001
+                - text: RFQ-L00001 · 规格：未填写
+              - cell "2" [ref=e182]
+              - cell "¥17.25" [ref=e183]
+              - cell "¥16.75" [ref=e184]
+              - cell "-0.50 / -2.90%" [ref=e185]
+              - cell "正常报价" [ref=e186]
+              - cell "详情 修改" [ref=e187]:
+                - button "详情" [ref=e188] [cursor=pointer]
+                - button "修改" [disabled] [ref=e189]
+  - generic [ref=e190]: 修改内容自动保存；备份与恢复请前往“数据与备份”。
+```

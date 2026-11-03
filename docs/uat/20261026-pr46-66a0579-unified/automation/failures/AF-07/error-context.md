@@ -1,0 +1,103 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary "SRM 功能导航" [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: S
+      - generic [ref=e6]:
+        - text: SRM
+        - generic [ref=e7]: PROCUREMENT
+    - generic [ref=e8]: 采购协同 · 内部工作台
+    - generic [ref=e9]: 工作空间
+    - button "询价项目" [ref=e10] [cursor=pointer]:
+      - generic [ref=e11]: ▤
+      - generic [ref=e12]: 询价项目
+    - button "物料与图纸" [ref=e13] [cursor=pointer]:
+      - generic [ref=e14]: ▦
+      - generic [ref=e15]: 物料与图纸
+    - button "供应商与分配" [ref=e16] [cursor=pointer]:
+      - generic [ref=e17]: ♧
+      - generic [ref=e18]: 供应商分配
+    - button "报价回收" [ref=e19] [cursor=pointer]:
+      - generic [ref=e20]: ▣
+      - generic [ref=e21]: 报价回收
+    - button "比价议价" [ref=e22] [cursor=pointer]:
+      - generic [ref=e23]: ▥
+      - generic [ref=e24]: 比价议价
+    - separator [ref=e25]
+    - generic [ref=e26]: 管理工具
+    - button "数据与备份" [ref=e27] [cursor=pointer]:
+      - generic [ref=e28]: ◫
+      - generic [ref=e29]: 数据与备份
+    - button "字段设置" [ref=e30] [cursor=pointer]:
+      - generic [ref=e31]: ⚙
+      - generic [ref=e32]: 字段设置
+    - generic [ref=e33]:
+      - text: 本地业务工作台
+      - text: V3.1 风格接入 · 待验收
+  - banner [ref=e35]:
+    - generic [ref=e36]:
+      - generic [ref=e37]: 询价与比价
+      - heading "SRM 采购工作台" [level=1] [ref=e38]
+      - generic [ref=e39]: 修改内容会自动保存到本机，也可以点击“保存”。
+    - generic [ref=e40]:
+      - generic [ref=e41]: 本机工作模式
+      - button "询价项目" [ref=e42] [cursor=pointer]
+      - button "数据与备份" [active] [ref=e43] [cursor=pointer]
+      - button "字段设置" [ref=e44] [cursor=pointer]
+  - generic "当前询价工作摘要" [ref=e45]:
+    - generic [ref=e46]:
+      - text: 当前询价项目
+      - generic [ref=e47]:
+        - generic [ref=e48]: 未命名询价（2026-10-26 06:56）
+        - button "修改名称" [ref=e49] [cursor=pointer]
+    - status [ref=e51]: 保存状态待确认
+  - generic [ref=e52]: 数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。
+  - navigation "询价业务流程" [ref=e53]:
+    - strong [ref=e55]: ◉采购业务流程
+    - tablist [ref=e56]:
+      - tab "› ① 询价项目" [ref=e57] [cursor=pointer]
+      - tab "› ② 物料与图纸" [ref=e58] [cursor=pointer]
+      - tab "› ③ 供应商分配" [ref=e59] [cursor=pointer]
+      - tab "› ④ 报价回收" [ref=e60] [cursor=pointer]
+      - tab "⑤ 比价议价" [ref=e61] [cursor=pointer]
+  - region "数据与备份" [ref=e62]:
+    - generic [ref=e64]:
+      - generic [ref=e65]: 管理工具
+      - heading "数据与备份 / 备份与恢复" [level=2] [ref=e66]
+      - paragraph [ref=e67]: 在这里集中备份、恢复及管理业务单据，不影响询价项目的日常操作。
+    - group [ref=e68]:
+      - text: ▴
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - strong [ref=e71]: 数据安全与恢复
+          - text: S4 完整备份 · 空数据恢复 · 兼容资料
+        - generic "保存与自动备份状态" [ref=e72]:
+          - group [ref=e73]:
+            - generic "查看保存与备份详情" [ref=e74]
+        - generic [ref=e75]:
+          - button "备份当前询价 JSON" [disabled] [ref=e76]
+          - button "备份全部询价 JSON" [disabled] [ref=e77]
+          - button "旧版 JSON+PDF 资料 ZIP（不可用于 S4 恢复）" [disabled] [ref=e78]
+          - button "下载 S4 完整备份（SQLite + PDF）" [disabled] [ref=e79]
+          - alert [ref=e80]: 检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。
+          - generic [ref=e81]:
+            - text: 选择 S4 完整备份 ZIP
+            - button "选择 S4 完整备份 ZIP" [ref=e82]
+          - button "恢复完整备份（仅空白数据）" [disabled] [ref=e83]
+        - generic [ref=e85]: S4 完整 ZIP 可用于新电脑或空白数据目录恢复；已有询价时系统会拒绝覆盖。旧测试 ZIP 不能作为 S4 完整备份。
+        - generic [ref=e86]:
+          - strong [ref=e87]: 业务单据导出
+          - text: 供应商询价单 · 内部比价议价单 · Excel
+        - generic [ref=e88]:
+          - button "导出业务数据 Excel（3 Sheet）" [disabled] [ref=e89]
+          - button "导出询价单 / 比价议价单" [disabled] [ref=e90]
+        - generic [ref=e91]: 必须先保存到本机，再下载 JSON 文件备份；文件不含原始邮件、PDF 等附件。已有正式工作不允许被导入文件覆盖。
+        - generic [ref=e92]:
+          - strong [ref=e93]: 辅助操作
+          - generic [ref=e94]: “重新读取”会放弃本页尚未保存的修改；不是恢复旧版本或备份。
+          - button "重新读取已保存数据" [disabled] [ref=e95]
+  - text: ▾ 批量选择 ▴ ✓
+  - generic [ref=e96]: 修改内容自动保存；备份与恢复请前往“数据与备份”。
+```

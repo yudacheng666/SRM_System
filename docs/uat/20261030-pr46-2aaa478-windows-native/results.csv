@@ -1,0 +1,14 @@
+scope,id,status,detail
+group,WIN-01,NOT TESTED,Python3.13 prerequisite BLOCKED; py -3.13 --version exit1; full unittest not run
+group,WIN-02,NOT TESTED,Node22 prerequisite BLOCKED; Node24.22.1 only; npm unavailable; npm ci/test not run
+group,WIN-03,BLOCKED,Partial native BAT/API checks executed; native browser buyer workflow unavailable
+supplement,SUP-01,PASS,Exact SHA full146 Git blob identity and final unchanged verification
+supplement,SUP-02,PASS,Native BAT startup from source root and Chinese-space other working directory
+supplement,SUP-03,PASS,API snapshots quotes and2 PDF payloads unchanged after BAT restart
+supplement,SUP-04,PASS,PDF bytes roundtrip and cross-workspace API404
+supplement,SUP-05,PASS,Full S4 backup201 verified2RFQ2PDF38558bytes
+supplement,SUP-06,PASS,Empty target restore200; nonempty rejection409; complete logicalDB andPDF hashes unchanged
+uncompleted,BUYER-UI,NOT TESTED,Full buyer imports/realPDF/ZIP/F5/offline-save UI incomplete
+uncompleted,WINDOWS-LOCK-INJECTION,NOT TESTED,No explicit lock conflict injection
+uncompleted,TAMPERED-ZIP,NOT TESTED,Not executed
+driver,ACTIVE-RFQ-UPLOAD,FAIL,Driver only; inactive target correctly rejected400; one checkpoint correction; productFAIL0

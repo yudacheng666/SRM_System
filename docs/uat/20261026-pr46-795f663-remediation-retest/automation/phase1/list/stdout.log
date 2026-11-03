@@ -1,0 +1,22 @@
+
+> srm_system@1.0.0 test:e2e
+> playwright test --list --grep 01\ startup,\ demo\ isolation,\ autosave,\ navigation\ and\ restart\ /\ 启动与隔离|05\ PDF\ matching,\ manual\ correction,\ refresh\ and\ scoped\ supplier\ ZIP\ /\ 图纸询价包|06\ full\ backup\ restore:\ actual\ imported\ quotes,\ history,\ PDFs,\ overwrite\ refusal\ /\ 完整恢复|07\ real\ service\ disconnect\ and\ stale\-tab\ 409\ halt\ autosave\ /\ 自动保存失败|12\ supplier\ status\ and\ report\ context\ reset\ on\ RFQ\ change\ /\ 保存提示与跨询价报告隔离|13\ compact\ laptop\ item\ table\ after\ import\ /\ 1366首屏物料可见|44\ S4\ blocked\-download\ reason\ stays\ visible\ beside\ the\ action\ /\ 备份阻止原因始终可见|46\ P3\-NAV\-01\ view\ navigation\ versus\ actual\ unsaved\ edit\ /\ 只读导航与真实脏数据区分|ERP09:\ second\-round\ scope\ shows\ specification\ and\ preserves\ selected\ line\ identities|UX\ project\ title:\ Chinese\ label,\ rename,\ history\ and\ reload\ /\ 询价名称真实保存|UX\ project\ page:\ first\ workflow\ stage,\ visible\ controls,\ stage\ switching\ /\ 询价项目独立首页|UX\ admin:\ backup\ page\ separate\ from\ RFQ,\ concise\ labels\ /\ 独立备份页与简短项目按钮|UX\ item\ rows:\ single\-line\ drawing\ badge\ and\ compact\ row\ /\ 物料行高及缺图纸标识|B3\ quote\ and\ comparison\ with\ real\ SQLite\ 1366x768|B3\ quote\ and\ comparison\ with\ real\ SQLite\ 1600x900|UX09\ exact\ 1366\ comparison\ density\ and\ first\-row\ reachability\ /\ 比价紧凑性复验
+
+Listing tests:
+  acceptance.spec.cjs:139:1 › 01 startup, demo isolation, autosave, navigation and restart / 启动与隔离
+  acceptance.spec.cjs:236:1 › 05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包
+  acceptance.spec.cjs:267:1 › 06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复
+  acceptance.spec.cjs:303:1 › 07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败
+  acceptance.spec.cjs:423:1 › 12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离
+  acceptance.spec.cjs:457:1 › 13 compact laptop item table after import / 1366首屏物料可见
+  acceptance.spec.cjs:596:1 › 44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见
+  acceptance.spec.cjs:680:1 › 46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分
+  erp-core-alignment.spec.cjs:338:1 › ERP09: second-round scope shows specification and preserves selected line identities
+  ui-ux-structural.spec.cjs:217:1 › UX project title: Chinese label, rename, history and reload / 询价名称真实保存
+  ui-ux-structural.spec.cjs:257:1 › UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页
+  ui-ux-structural.spec.cjs:286:1 › UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮
+  ui-ux-structural.spec.cjs:312:1 › UX item rows: single-line drawing badge and compact row / 物料行高及缺图纸标识
+  ui-ux-structural.spec.cjs:374:1 › UX09 exact 1366 comparison density and first-row reachability / 比价紧凑性复验
+  ui-v2-b3.spec.cjs:52:1 › B3 quote and comparison with real SQLite 1366x768
+  ui-v2-b3.spec.cjs:52:1 › B3 quote and comparison with real SQLite 1600x900
+Total: 16 tests in 4 files

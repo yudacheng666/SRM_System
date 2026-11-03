@@ -1,0 +1,20 @@
+scope,id,status,detail
+group,WIN-01,PRIOR PASS,Not rerun
+group,WIN-02,PRIOR PASS,Not rerun
+group,WIN-03,BLOCKED,Partial real UI; native dialog/control stall and30s error capture timeout
+driver,PRELAUNCH-COMMENT,FAIL,Parse error before browser execution; preserved and fixed; syntax checks exit0
+subcheck,REAL-INPUT-CHAIN,PASS,Mouse26 key14 text2 commands; actual RFQ name changed
+subcheck,DYNAMIC-SAVE-ACK,PASS,Strict dynamic status verified after early in-progress snapshot
+subcheck,TWO-RFQ-UI-CREATE-SAVE,PASS,A/B UI created named saved; read-only persistence cross-check
+subcheck,SCREENSHOT-30S-POLICY,PASS,Three real returns109/14045/161ms; old12s would reject14.045s
+subcheck,MATERIAL-XLSX-PREVIEW,PASS,Actual selected workbook12 validrows; preview DOM retained
+business,MATERIAL-IMPORT-SAVE,BLOCKED,Confirm once successalert then control stall; final persisteditems0
+driver,UNHANDLED-IMPORT-ALERT,FAIL,Mouse release12000ms timeout; no import replay
+driver,DIALOG-ACK-DIAGNOSTIC,FAIL,CDP-32602 No dialog is showing; not recorded as successful ack
+driver,PAGE-ENABLE-AND-CAPTURE,BLOCKED,Page.enable12000ms and error screenshot30000ms; stopped
+scope,SUPPLIERS-ASSIGN-PDF-ZIP,NOT TESTED,Not reached
+scope,QUOTES-TIERS-AWARDS-HISTORY,NOT TESTED,Not reached
+scope,RELOAD-OFFLINE-SAVE,NOT TESTED,Not reached
+scope,UI-BACKUP-RESTORE-409,NOT TESTED,Not reached
+scope,QUOTED-ROW-1366-AND-960,NOT TESTED,Only initial1366 and later756x488 RFQ pages observed
+cleanup,OWN-PIDS-PORTS,PASS,OwnEdge30436/service30956 gone;8765/57842 free

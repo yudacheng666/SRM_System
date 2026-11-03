@@ -1,0 +1,145 @@
+{
+  "listing": {
+    "workspaces": [
+      {
+        "workspaceId": "RFQ-SYNTHETIC-WIN-RETRY-B",
+        "revision": 1,
+        "updatedAt": "2026-10-30T03:13:33.476874+00:00",
+        "projectName": "虚构 Windows 专项 B（API补充）"
+      },
+      {
+        "workspaceId": "RFQ-1793329742476-I9FOFK",
+        "revision": 3,
+        "updatedAt": "2026-10-30T03:13:33.471100+00:00",
+        "projectName": "虚构 Windows 专项 A"
+      }
+    ]
+  },
+  "records": {
+    "RFQ-SYNTHETIC-WIN-RETRY-B": {
+      "workspace": {
+        "format": "srm-workspace",
+        "schemaVersion": 1,
+        "workspaceId": "RFQ-SYNTHETIC-WIN-RETRY-B",
+        "origin": "buyer",
+        "revision": 1,
+        "state": {
+          "items": [
+            {
+              "id": "SYN-ITEM-B",
+              "lineId": "SYN-LINE-B",
+              "name": "虚构零件 B"
+            }
+          ],
+          "suppliers": [],
+          "assignments": [],
+          "quoteRounds": [],
+          "awards": [],
+          "awardReasons": [],
+          "manualAwards": [],
+          "awardReviewIds": [],
+          "supplierPool": [],
+          "selectedCompareSuppliers": [],
+          "customFields": [],
+          "projectName": "虚构 Windows 专项 B（API补充）",
+          "lineSeq": 0,
+          "createdSeq": 0,
+          "quoteComparisonMode": "returned"
+        }
+      }
+    },
+    "RFQ-1793329742476-I9FOFK": {
+      "workspace": {
+        "format": "srm-workspace",
+        "schemaVersion": 1,
+        "workspaceId": "RFQ-1793329742476-I9FOFK",
+        "origin": "buyer",
+        "revision": 3,
+        "state": {
+          "items": [
+            {
+              "id": "SYN-ITEM-A",
+              "lineId": "SYN-LINE-A",
+              "name": "虚构零件 A"
+            }
+          ],
+          "suppliers": [
+            {
+              "id": "SYN-SUP-A",
+              "name": "虚构供应商 A"
+            }
+          ],
+          "assignments": [
+            {
+              "key": "SYN-LINE-A",
+              "values": [
+                "SYN-SUP-A"
+              ]
+            }
+          ],
+          "quoteRounds": [
+            {
+              "supplierId": "SYN-SUP-A",
+              "roundNo": 1,
+              "revisionNo": 1,
+              "status": "confirmed",
+              "lines": [
+                {
+                  "lineId": "SYN-LINE-A",
+                  "price": 100
+                }
+              ],
+              "expectedLineIds": [
+                "SYN-LINE-A"
+              ]
+            }
+          ],
+          "awards": [],
+          "awardReasons": [],
+          "manualAwards": [],
+          "awardReviewIds": [],
+          "supplierPool": [],
+          "selectedCompareSuppliers": [],
+          "customFields": [],
+          "projectName": "虚构 Windows 专项 A",
+          "lineSeq": 0,
+          "createdSeq": 0,
+          "quoteComparisonMode": "returned"
+        }
+      }
+    }
+  },
+  "active": {
+    "workspace": {
+      "format": "srm-workspace",
+      "schemaVersion": 1,
+      "workspaceId": "RFQ-SYNTHETIC-WIN-RETRY-B",
+      "origin": "buyer",
+      "revision": 1,
+      "state": {
+        "items": [
+          {
+            "id": "SYN-ITEM-B",
+            "lineId": "SYN-LINE-B",
+            "name": "虚构零件 B"
+          }
+        ],
+        "suppliers": [],
+        "assignments": [],
+        "quoteRounds": [],
+        "awards": [],
+        "awardReasons": [],
+        "manualAwards": [],
+        "awardReviewIds": [],
+        "supplierPool": [],
+        "selectedCompareSuppliers": [],
+        "customFields": [],
+        "projectName": "虚构 Windows 专项 B（API补充）",
+        "lineSeq": 0,
+        "createdSeq": 0,
+        "quoteComparisonMode": "returned"
+      }
+    },
+    "activeId": "RFQ-SYNTHETIC-WIN-RETRY-B"
+  }
+}

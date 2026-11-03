@@ -1,0 +1,46 @@
+{
+  "id": "AF-08",
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "classification": "OUTDATED_NAVIGATION_PATH",
+  "assessment": "Driver targets a hidden/inactive page control or old global drawer instead of entering the dedicated current project/material/admin page.",
+  "specFile": "acceptance.spec.cjs",
+  "specStartLine": 675,
+  "title": "46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分",
+  "status": "FAIL",
+  "rawErrors": [
+    {
+      "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+    },
+    {
+      "location": {
+        "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+        "column": 22,
+        "line": 699
+      },
+      "message": "Error: locator.uncheck: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#sfItemBody input[data-sfi]').first()\u001b[22m\n\u001b[2m    - locator resolved to <input checked type=\"checkbox\" data-sfi=\"RFQ-L00001\"/>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    155 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\n\n  697 |   const allocatedBox=page.locator('#sfItemBody input[data-sfi]').first();\n  698 |   await expect(allocatedBox).toBeChecked();\n> 699 |   await allocatedBox.uncheck();\n      |                      ^\n  700 |   expect((await snapshot(page)).state.assignments).not.toEqual(before.state.assignments);\n  701 |   // 中文：change 事件与捕获阶段结束后应识别真修改；不用点击返回同一瞬间作脆弱断言。\n  702 |   // English: Wait for post-change signature reconciliation; never infer a dirty flag from clicks.\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:699:22"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/test-failed-1.png"
+    },
+    {
+      "name": "server-log",
+      "contentType": "text/plain",
+      "path": "/tmp/srm66-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/attachments/server-log-272e4b8f57d877812b9269cd4833b02bdceccfca.log"
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "path": "/tmp/srm66-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/error-context.md"
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/trace.zip"
+    }
+  ],
+  "laterAssertions": "NOT REACHED; do not infer their PASS from independent tests"
+}

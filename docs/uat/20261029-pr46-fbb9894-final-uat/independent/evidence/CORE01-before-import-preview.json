@@ -1,0 +1,58 @@
+{
+  "tables": {
+    "app_state": {
+      "columns": [
+        "key",
+        "value"
+      ],
+      "rows": [
+        [
+          "active_workspace",
+          "RFQ-1793286048726-A7D2ME"
+        ]
+      ]
+    },
+    "workspaces": {
+      "columns": [
+        "workspace_id",
+        "revision",
+        "snapshot_json",
+        "updated_at"
+      ],
+      "rows": [
+        [
+          "RFQ-1793286048726-A7D2ME",
+          1,
+          "{\"format\":\"srm-workspace\",\"schemaVersion\":1,\"workspaceId\":\"RFQ-1793286048726-A7D2ME\",\"origin\":\"buyer\",\"revision\":1,\"state\":{\"items\":[],\"suppliers\":[],\"assignments\":[],\"quoteRounds\":[],\"awards\":[],\"awardReasons\":[],\"manualAwards\":[],\"awardReviewIds\":[],\"supplierPool\":[],\"selectedCompareSuppliers\":[],\"customFields\":[],\"projectName\":\"虚构十月标准件询价（最终独立验收）\",\"lineSeq\":0,\"createdSeq\":0,\"quoteComparisonMode\":\"returned\"}}",
+          "2026-10-29T15:00:51.869085+00:00"
+        ]
+      ]
+    },
+    "workspace_versions": {
+      "columns": [
+        "workspace_id",
+        "revision",
+        "snapshot_json",
+        "committed_at"
+      ],
+      "rows": [
+        [
+          "RFQ-1793286048726-A7D2ME",
+          1,
+          "{\"format\":\"srm-workspace\",\"schemaVersion\":1,\"workspaceId\":\"RFQ-1793286048726-A7D2ME\",\"origin\":\"buyer\",\"revision\":1,\"state\":{\"items\":[],\"suppliers\":[],\"assignments\":[],\"quoteRounds\":[],\"awards\":[],\"awardReasons\":[],\"manualAwards\":[],\"awardReviewIds\":[],\"supplierPool\":[],\"selectedCompareSuppliers\":[],\"customFields\":[],\"projectName\":\"虚构十月标准件询价（最终独立验收）\",\"lineSeq\":0,\"createdSeq\":0,\"quoteComparisonMode\":\"returned\"}}",
+          "2026-10-29T15:00:51.869085+00:00"
+        ]
+      ]
+    },
+    "assets": {
+      "columns": [
+        "workspace_id",
+        "sha256",
+        "original_name",
+        "size"
+      ],
+      "rows": []
+    }
+  },
+  "pdf": {}
+}

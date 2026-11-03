@@ -1,0 +1,29 @@
+TAP version 13
+# Subtest: toolchain-v1/schema.test.cjs
+not ok 1 - toolchain-v1/schema.test.cjs
+  ---
+  duration_ms: 1.463871
+  type: 'test'
+  location: '/workspace/winplan2-work/toolchain-v1/schema.test.cjs:1:1'
+  error: 'Set SRM_FROZEN_SOURCE to exact-SHA readonly index.html'
+  stack: |-
+    Object.<anonymous> (/workspace/winplan2-work/toolchain-v1/schema.test.cjs:10:41)
+    Module._compile (node:internal/modules/cjs/loader:1872:14)
+    Object..js (node:internal/modules/cjs/loader:2003:10)
+    Module.load (node:internal/modules/cjs/loader:1594:32)
+    Module._load (node:internal/modules/cjs/loader:1396:12)
+    wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    loadCJSModuleWithModuleLoad (node:internal/modules/esm/translators:372:15)
+    ModuleWrap.<anonymous> (node:internal/modules/esm/translators:244:9)
+    ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    async node:internal/modules/esm/loader:643:26
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 41.381128

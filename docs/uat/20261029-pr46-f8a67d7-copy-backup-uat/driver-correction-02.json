@@ -1,0 +1,11 @@
+{
+  "timeUTC": "2026-10-29T06:50:40.773935+00:00",
+  "classification": "INDEPENDENT_DRIVER_OUTDATED_REFUSAL_TEXT",
+  "raw": "attempt-02/evidence/raw-first-error.json",
+  "trace": "attempt-02/evidence/trace-first-attempt.zip",
+  "actual": "Nonempty UI safely refused; test expected literal 禁止 while approved current wording says 不能直接覆盖恢复. Prior hash refusal and positive restore checks actually completed.",
+  "action": "Keep executed driver and its FAIL unchanged. New separately named supplemental nonempty scenario verifies current user-facing refusal plus real backend409 and complete unchanged target. New browser context reconnects only current-task isolated SQLite; no older SHA data used, no passed flow rerun.",
+  "remainingScope": "Nonempty backend check and true service-disconnect save check",
+  "productExistingTestsCIUnmodified": true,
+  "recordedDriverCorrectionsThisTask": 2
+}

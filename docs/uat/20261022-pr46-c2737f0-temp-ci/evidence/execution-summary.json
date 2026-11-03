@@ -1,0 +1,36 @@
+{
+  "testCommandsExecuted": 5,
+  "automatedCases": {
+    "python": 43,
+    "node": 10,
+    "chromium": 49,
+    "pass": 102,
+    "fail": 0,
+    "skipped": 0
+  },
+  "driverErrors": [
+    {
+      "attempt": "independent-attempt1",
+      "raw": "independent-attempt1/raw-first-error.json",
+      "error": "W04 unique ambiguous unmatched preview all represented",
+      "classification": "TEST_DRIVER_ERROR",
+      "productDefect": false
+    },
+    {
+      "attempt": "independent",
+      "raw": "independent/raw-first-error.json",
+      "error": "page.waitForFunction: TypeError: Cannot read properties of null (reading 'disabled')\n    at eval (eval at predicate (eval at evaluate (:290:30)), <anonymous>:1:50)\n    at predicate (eval at evaluate (:290:30), <anonymous>:7:23)\n    at next (eval at evaluate (:290:30), <anonymous>:29:29)\n    at eval (eval at evaluate (:290:30), <anonymous>:42:9)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "classification": "TEST_DRIVER_ERROR",
+      "productDefect": false
+    }
+  ],
+  "documentedCorrections": 1,
+  "reruns": 1,
+  "remainingCorrectionAllowance": 0,
+  "scopeStoppedReason": "Second unexpected independent driver error after single allowed correction. No further browser execution.",
+  "secondErrorDiagnosis": "Guardlessly dereferencing document.querySelector(#confirmImportRows).disabled while asynchronous XLSX preview is not yet rendered. Screenshot shortly after shows the correct12-row preview. Stack points to Playwright predicate, not product JS.",
+  "environmentBlocker": "npx playwright install --with-deps chromium exited1: su authentication failure. Existing /usr/bin/chromium used with supported SRM_CHROMIUM_PATH; actual full suite49 passed.",
+  "productConfirmedDefects": [],
+  "independentUATComplete": false,
+  "productOrTestsModified": false
+}

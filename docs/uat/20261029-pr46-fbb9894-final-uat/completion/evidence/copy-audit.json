@@ -1,0 +1,1640 @@
+[
+  {
+    "label": "actual-pending-1024",
+    "time": "2026-10-29T15:17:08.549Z",
+    "title": "SRM Lite · 采购询价工作台",
+    "url": "http://127.0.0.1:9865/",
+    "active": "backup",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "scrollY": 0,
+    "body": "S\n询价与比价\nSRM 采购工作台\n修改内容会自动保存到本机，也可以点击“保存”。\n本机工作模式\n询价项目\n数据与备份\n字段设置\n当前询价项目\n虚构验收询价（未保存名称安全验证）\n修改名称\n保存状态待确认\n数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。\n① 询价项目\n② 物料与图纸\n③ 供应商分配\n④ 报价回收\n⑤ 比价议价\n数据管理\n数据与备份\n备份与恢复数据备份 · 完整恢复 · 资料导出\n查看保存与备份详情\n备份当前询价（仅数据）\n备份全部询价（仅数据）\n导出询价与图纸资料包\n下载完整备份（询价数据 + 图纸）\n检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。\n选择完整备份文件 \n恢复完整备份（仅限空白数据）\n完整备份文件可用于新电脑或空白数据目录恢复；已有询价时系统会拒绝覆盖。资料包不能代替完整备份恢复。\n业务单据导出供应商询价单 · 内部比价议价单 · Excel\n导出业务数据 Excel（3 Sheet）\n导出询价单 / 比价议价单\n备份安全\n数据备份不含原始邮件、聊天截图等报价凭证；仅数据备份不含图纸。恢复前请确认目标，已有数据时系统会拒绝覆盖。\n辅助操作\n会放弃未保存修改\n重新读取已保存数据\n修改内容自动保存；备份与恢复请前往“数据与备份”。",
+    "attributes": [
+      {
+        "tag": "ASIDE",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "SRM 功能导航"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "字段设置"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "字段设置"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "当前询价工作摘要"
+      },
+      {
+        "tag": "NAV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价业务流程"
+      },
+      {
+        "tag": "SECTION",
+        "id": "backup",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "保存与自动备份状态"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "pilotExportComplete",
+        "attribute": "title",
+        "text": "导出询价数据和图纸供查看与留存；不含原始邮件、聊天截图等报价凭证，不能代替完整备份。"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看备份安全说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看备份安全说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "重新读取说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "重新读取说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "pilotResumeWorkspace",
+        "attribute": "title",
+        "text": "重新读取当前已保存的数据；未保存修改会被放弃。此操作不会导入备份。"
+      }
+    ],
+    "hits": []
+  },
+  {
+    "label": "actual-pending-1366",
+    "time": "2026-10-29T15:17:08.835Z",
+    "title": "SRM Lite · 采购询价工作台",
+    "url": "http://127.0.0.1:9865/",
+    "active": "backup",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "scrollY": 0,
+    "body": "S\nSRM\n采购业务系统\n询价 · 比价 · 定标\n工作空间\n询价项目\n物料与图纸\n供应商分配\n报价回收\n比价议价\n管理工具\n数据与备份\n字段设置\n 本地业务系统\n数据保存在本机\n询价与比价\nSRM 采购工作台\n修改内容会自动保存到本机，也可以点击“保存”。\n本机工作模式\n询价项目\n数据与备份\n字段设置\n当前询价项目\n虚构验收询价（未保存名称安全验证）\n修改名称\n保存状态待确认\n数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。\n采购业务流程\n① 询价项目\n② 物料与图纸\n③ 供应商分配\n④ 报价回收\n⑤ 比价议价\n数据管理\n数据与备份\n备份与恢复数据备份 · 完整恢复 · 资料导出\n查看保存与备份详情\n备份当前询价（仅数据）\n备份全部询价（仅数据）\n导出询价与图纸资料包\n下载完整备份（询价数据 + 图纸）\n检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。\n选择完整备份文件 \n恢复完整备份（仅限空白数据）\n完整备份文件可用于新电脑或空白数据目录恢复；已有询价时系统会拒绝覆盖。资料包不能代替完整备份恢复。\n业务单据导出供应商询价单 · 内部比价议价单 · Excel\n导出业务数据 Excel（3 Sheet）\n导出询价单 / 比价议价单\n备份安全\n数据备份不含原始邮件、聊天截图等报价凭证；仅数据备份不含图纸。恢复前请确认目标，已有数据时系统会拒绝覆盖。\n辅助操作\n会放弃未保存修改\n重新读取已保存数据\n修改内容自动保存；备份与恢复请前往“数据与备份”。",
+    "attributes": [
+      {
+        "tag": "ASIDE",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "SRM 功能导航"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "字段设置"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "字段设置"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "当前询价工作摘要"
+      },
+      {
+        "tag": "NAV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价业务流程"
+      },
+      {
+        "tag": "SECTION",
+        "id": "backup",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "保存与自动备份状态"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "pilotExportComplete",
+        "attribute": "title",
+        "text": "导出询价数据和图纸供查看与留存；不含原始邮件、聊天截图等报价凭证，不能代替完整备份。"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看备份安全说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看备份安全说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "重新读取说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "重新读取说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "pilotResumeWorkspace",
+        "attribute": "title",
+        "text": "重新读取当前已保存的数据；未保存修改会被放弃。此操作不会导入备份。"
+      }
+    ],
+    "hits": []
+  },
+  {
+    "label": "actual-pending-1600",
+    "time": "2026-10-29T15:17:09.118Z",
+    "title": "SRM Lite · 采购询价工作台",
+    "url": "http://127.0.0.1:9865/",
+    "active": "backup",
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "scrollY": 0,
+    "body": "S\nSRM\n采购业务系统\n询价 · 比价 · 定标\n工作空间\n询价项目\n物料与图纸\n供应商分配\n报价回收\n比价议价\n管理工具\n数据与备份\n字段设置\n 本地业务系统\n数据保存在本机\n询价与比价\nSRM 采购工作台\n修改内容会自动保存到本机，也可以点击“保存”。\n本机工作模式\n询价项目\n数据与备份\n字段设置\n当前询价项目\n虚构验收询价（未保存名称安全验证）\n修改名称\n保存状态待确认\n数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。\n采购业务流程\n① 询价项目\n② 物料与图纸\n③ 供应商分配\n④ 报价回收\n⑤ 比价议价\n数据管理\n数据与备份\n备份与恢复数据备份 · 完整恢复 · 资料导出\n查看保存与备份详情\n备份当前询价（仅数据）\n备份全部询价（仅数据）\n导出询价与图纸资料包\n下载完整备份（询价数据 + 图纸）\n检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。\n选择完整备份文件 \n恢复完整备份（仅限空白数据）\n完整备份文件可用于新电脑或空白数据目录恢复；已有询价时系统会拒绝覆盖。资料包不能代替完整备份恢复。\n业务单据导出供应商询价单 · 内部比价议价单 · Excel\n导出业务数据 Excel（3 Sheet）\n导出询价单 / 比价议价单\n备份安全\n数据备份不含原始邮件、聊天截图等报价凭证；仅数据备份不含图纸。恢复前请确认目标，已有数据时系统会拒绝覆盖。\n辅助操作\n会放弃未保存修改\n重新读取已保存数据\n修改内容自动保存；备份与恢复请前往“数据与备份”。",
+    "attributes": [
+      {
+        "tag": "ASIDE",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "SRM 功能导航"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "字段设置"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "字段设置"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "当前询价工作摘要"
+      },
+      {
+        "tag": "NAV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价业务流程"
+      },
+      {
+        "tag": "SECTION",
+        "id": "backup",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "保存与自动备份状态"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "pilotExportComplete",
+        "attribute": "title",
+        "text": "导出询价数据和图纸供查看与留存；不含原始邮件、聊天截图等报价凭证，不能代替完整备份。"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看备份安全说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看备份安全说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "重新读取说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "重新读取说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "pilotResumeWorkspace",
+        "attribute": "title",
+        "text": "重新读取当前已保存的数据；未保存修改会被放弃。此操作不会导入备份。"
+      }
+    ],
+    "hits": []
+  },
+  {
+    "label": "actual-conflict-1024",
+    "time": "2026-10-29T15:17:17.795Z",
+    "title": "SRM Lite · 采购询价工作台",
+    "url": "http://127.0.0.1:9865/",
+    "active": "project",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "scrollY": 0,
+    "body": "S\n询价与比价\nSRM 采购工作台\n修改内容会自动保存到本机，也可以点击“保存”。\n本机工作模式\n询价项目\n数据与备份\n字段设置\n当前询价项目\n虚构旧标签未保存名称\n修改名称\n保存异常 · 查看详情\n数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。\n① 询价项目\n② 物料与图纸\n③ 供应商分配\n④ 报价回收\n⑤ 比价议价\n01 / 询价项目\n询价项目\n下一步：物料与图纸\n\n01\n建立询价\n02\n准备清单\n03\n推进询价\n新建\n保存\n历史询价 \n选择已保存的其他询价\n虚构分页与隔离询价（第二项目） · 第 4 版\n打开所选历史询价\n修改内容自动保存；备份与恢复请前往“数据与备份”。",
+    "attributes": [
+      {
+        "tag": "ASIDE",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "SRM 功能导航"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "字段设置"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "字段设置"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "当前询价工作摘要"
+      },
+      {
+        "tag": "NAV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价业务流程"
+      },
+      {
+        "tag": "SECTION",
+        "id": "project",
+        "attribute": "aria-label",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价工作指引"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "SELECT",
+        "id": "pilotHistoryWorkspace",
+        "attribute": "aria-label",
+        "text": "本机已保存的历史询价"
+      }
+    ],
+    "hits": []
+  },
+  {
+    "label": "actual-conflict-1366",
+    "time": "2026-10-29T15:17:18.745Z",
+    "title": "SRM Lite · 采购询价工作台",
+    "url": "http://127.0.0.1:9865/",
+    "active": "backup",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "scrollY": 0,
+    "body": "S\nSRM\n采购业务系统\n询价 · 比价 · 定标\n工作空间\n询价项目\n物料与图纸\n供应商分配\n报价回收\n比价议价\n管理工具\n数据与备份\n字段设置\n 本地业务系统\n数据保存在本机\n询价与比价\nSRM 采购工作台\n修改内容会自动保存到本机，也可以点击“保存”。\n本机工作模式\n询价项目\n数据与备份\n字段设置\n当前询价项目\n虚构旧标签未保存名称\n修改名称\n保存异常 · 查看详情\n数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。\n采购业务流程\n① 询价项目\n② 物料与图纸\n③ 供应商分配\n④ 报价回收\n⑤ 比价议价\n数据管理\n数据与备份\n备份与恢复数据备份 · 完整恢复 · 资料导出\n查看保存与备份详情\n备份当前询价（仅数据）\n备份全部询价（仅数据）\n导出询价与图纸资料包\n下载完整备份（询价数据 + 图纸）\n检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。\n选择完整备份文件 \n恢复完整备份（仅限空白数据）\n完整备份文件可用于新电脑或空白数据目录恢复；已有询价时系统会拒绝覆盖。资料包不能代替完整备份恢复。\n业务单据导出供应商询价单 · 内部比价议价单 · Excel\n导出业务数据 Excel（3 Sheet）\n导出询价单 / 比价议价单\n备份安全\n数据备份不含原始邮件、聊天截图等报价凭证；仅数据备份不含图纸。恢复前请确认目标，已有数据时系统会拒绝覆盖。\n辅助操作\n会放弃未保存修改\n重新读取已保存数据\n修改内容自动保存；备份与恢复请前往“数据与备份”。",
+    "attributes": [
+      {
+        "tag": "ASIDE",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "SRM 功能导航"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "字段设置"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "字段设置"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "当前询价工作摘要"
+      },
+      {
+        "tag": "NAV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价业务流程"
+      },
+      {
+        "tag": "SECTION",
+        "id": "backup",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "保存与自动备份状态"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "pilotExportComplete",
+        "attribute": "title",
+        "text": "导出询价数据和图纸供查看与留存；不含原始邮件、聊天截图等报价凭证，不能代替完整备份。"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看备份安全说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看备份安全说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "重新读取说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "重新读取说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "pilotResumeWorkspace",
+        "attribute": "title",
+        "text": "重新读取当前已保存的数据；未保存修改会被放弃。此操作不会导入备份。"
+      }
+    ],
+    "hits": []
+  },
+  {
+    "label": "actual-conflict-1600",
+    "time": "2026-10-29T15:17:19.581Z",
+    "title": "SRM Lite · 采购询价工作台",
+    "url": "http://127.0.0.1:9865/",
+    "active": "backup",
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "scrollY": 0,
+    "body": "S\nSRM\n采购业务系统\n询价 · 比价 · 定标\n工作空间\n询价项目\n物料与图纸\n供应商分配\n报价回收\n比价议价\n管理工具\n数据与备份\n字段设置\n 本地业务系统\n数据保存在本机\n询价与比价\nSRM 采购工作台\n修改内容会自动保存到本机，也可以点击“保存”。\n本机工作模式\n询价项目\n数据与备份\n字段设置\n当前询价项目\n虚构旧标签未保存名称\n修改名称\n保存异常 · 查看详情\n数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。\n采购业务流程\n① 询价项目\n② 物料与图纸\n③ 供应商分配\n④ 报价回收\n⑤ 比价议价\n数据管理\n数据与备份\n备份与恢复数据备份 · 完整恢复 · 资料导出\n查看保存与备份详情\n备份当前询价（仅数据）\n备份全部询价（仅数据）\n导出询价与图纸资料包\n下载完整备份（询价数据 + 图纸）\n检测到尚未保存的业务修改，完整备份已暂停。请先等待自动保存完成或点击“保存到本机”，再重新下载。\n选择完整备份文件 \n恢复完整备份（仅限空白数据）\n完整备份文件可用于新电脑或空白数据目录恢复；已有询价时系统会拒绝覆盖。资料包不能代替完整备份恢复。\n业务单据导出供应商询价单 · 内部比价议价单 · Excel\n导出业务数据 Excel（3 Sheet）\n导出询价单 / 比价议价单\n备份安全\n数据备份不含原始邮件、聊天截图等报价凭证；仅数据备份不含图纸。恢复前请确认目标，已有数据时系统会拒绝覆盖。\n辅助操作\n会放弃未保存修改\n重新读取已保存数据\n修改内容自动保存；备份与恢复请前往“数据与备份”。",
+    "attributes": [
+      {
+        "tag": "ASIDE",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "SRM 功能导航"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "字段设置"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "字段设置"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "当前询价工作摘要"
+      },
+      {
+        "tag": "NAV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价业务流程"
+      },
+      {
+        "tag": "SECTION",
+        "id": "backup",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "保存与自动备份状态"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "pilotExportComplete",
+        "attribute": "title",
+        "text": "导出询价数据和图纸供查看与留存；不含原始邮件、聊天截图等报价凭证，不能代替完整备份。"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看备份安全说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看备份安全说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "重新读取说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "重新读取说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "pilotResumeWorkspace",
+        "attribute": "title",
+        "text": "重新读取当前已保存的数据；未保存修改会被放弃。此操作不会导入备份。"
+      }
+    ],
+    "hits": []
+  },
+  {
+    "label": "real-service-offline",
+    "time": "2026-10-29T15:17:25.035Z",
+    "title": "SRM Lite · 采购询价工作台",
+    "url": "http://127.0.0.1:9865/",
+    "active": "project",
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "scrollY": 0,
+    "body": "S\nSRM\n采购业务系统\n询价 · 比价 · 定标\n工作空间\n询价项目\n物料与图纸\n供应商分配\n报价回收\n比价议价\n管理工具\n数据与备份\n字段设置\n 本地业务系统\n数据保存在本机\n询价与比价\nSRM 采购工作台\n修改内容会自动保存到本机，也可以点击“保存”。\n本机工作模式\n询价项目\n数据与备份\n字段设置\n当前询价项目\n虚构离线保存拒绝验收\n修改名称\n保存异常 · 查看详情\n数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。\n采购业务流程\n① 询价项目\n② 物料与图纸\n③ 供应商分配\n④ 报价回收\n⑤ 比价议价\n01 / 询价项目\n询价项目\n下一步：物料与图纸\n\n01\n建立询价\n02\n准备清单\n03\n推进询价\n新建\n保存\n历史询价 \n选择已保存的其他询价\n虚构分页与隔离询价（第二项目） · 第 4 版\n打开所选历史询价\n修改内容自动保存；备份与恢复请前往“数据与备份”。",
+    "attributes": [
+      {
+        "tag": "ASIDE",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "SRM 功能导航"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "字段设置"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "字段设置"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "当前询价工作摘要"
+      },
+      {
+        "tag": "NAV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价业务流程"
+      },
+      {
+        "tag": "SECTION",
+        "id": "project",
+        "attribute": "aria-label",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价工作指引"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "SELECT",
+        "id": "pilotHistoryWorkspace",
+        "attribute": "aria-label",
+        "text": "本机已保存的历史询价"
+      }
+    ],
+    "hits": []
+  },
+  {
+    "label": "offline-restart-saved",
+    "time": "2026-10-29T15:17:26.663Z",
+    "title": "SRM Lite · 采购询价工作台",
+    "url": "http://127.0.0.1:9865/",
+    "active": "project",
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "scrollY": 0,
+    "body": "S\nSRM\n采购业务系统\n询价 · 比价 · 定标\n工作空间\n询价项目\n物料与图纸\n供应商分配\n报价回收\n比价议价\n管理工具\n数据与备份\n字段设置\n 本地业务系统\n数据保存在本机\n询价与比价\nSRM 采购工作台\n修改内容会自动保存到本机，也可以点击“保存”。\n本机工作模式\n询价项目\n数据与备份\n字段设置\n当前询价项目\n虚构离线保存拒绝验收\n修改名称\n已保存\n数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。\n采购业务流程\n① 询价项目\n② 物料与图纸\n③ 供应商分配\n④ 报价回收\n⑤ 比价议价\n01 / 询价项目\n询价项目\n下一步：物料与图纸\n\n01\n建立询价\n02\n准备清单\n03\n推进询价\n新建\n保存\n历史询价 \n选择已保存的其他询价\n虚构分页与隔离询价（第二项目） · 第 4 版\n打开所选历史询价\n修改内容自动保存；备份与恢复请前往“数据与备份”。",
+    "attributes": [
+      {
+        "tag": "ASIDE",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "SRM 功能导航"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "字段设置"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "字段设置"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "当前询价工作摘要"
+      },
+      {
+        "tag": "NAV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价业务流程"
+      },
+      {
+        "tag": "SECTION",
+        "id": "project",
+        "attribute": "aria-label",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价工作指引"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "SELECT",
+        "id": "pilotHistoryWorkspace",
+        "attribute": "aria-label",
+        "text": "本机已保存的历史询价"
+      }
+    ],
+    "hits": []
+  },
+  {
+    "label": "final-backup",
+    "time": "2026-10-29T15:17:35.368Z",
+    "title": "SRM Lite · 采购询价工作台",
+    "url": "http://127.0.0.1:9865/",
+    "active": "backup",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "scrollY": 231,
+    "body": "S\nSRM\n采购业务系统\n询价 · 比价 · 定标\n工作空间\n询价项目\n物料与图纸\n供应商分配\n报价回收\n比价议价\n管理工具\n数据与备份\n字段设置\n 本地业务系统\n数据保存在本机\n询价与比价\nSRM 采购工作台\n修改内容会自动保存到本机，也可以点击“保存”。\n本机工作模式\n询价项目\n数据与备份\n字段设置\n当前询价项目\n虚构离线保存拒绝验收\n修改名称\n已保存\n数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。\n采购业务流程\n① 询价项目\n② 物料与图纸\n③ 供应商分配\n④ 报价回收\n⑤ 比价议价\n数据管理\n数据与备份\n备份与恢复数据备份 · 完整恢复 · 资料导出\n查看保存与备份详情\n备份当前询价（仅数据）\n备份全部询价（仅数据）\n导出询价与图纸资料包\n下载完整备份（询价数据 + 图纸）\n选择完整备份文件 \n恢复完整备份（仅限空白数据）\n完整备份文件可用于新电脑或空白数据目录恢复；已有询价时系统会拒绝覆盖。资料包不能代替完整备份恢复。\n业务单据导出供应商询价单 · 内部比价议价单 · Excel\n导出业务数据 Excel（3 Sheet）\n导出询价单 / 比价议价单\n业务单据 Excel 导出\n单据类型 \n供应商询价单\n内部比价议价单\n询价供应商 \n虚构复验甲方制造 (UFB-A)\n虚构复验乙方精工 (UFB-B)\n虚构复验丙方零件 (UFB-C)\n供应商询价单列\nRFQ Line ID *\n存货编码 *\n存货名称 *\n询价数量 *\n询价单位 *\n报价单价 *\n报价状态 *\n所属类别\n规格型号\n交期\nMOQ\n物料备注\n下载当前供应商询价 Excel\n全部参与供应商打包 ZIP\n已发起供应商询价 Excel+PDF ZIP 下载：12 条物料；缺图 8 条、版本待确认 0 条，详见关联清单。\n备份安全\n数据备份不含原始邮件、聊天截图等报价凭证；仅数据备份不含图纸。恢复前请确认目标，已有数据时系统会拒绝覆盖。\n辅助操作\n会放弃未保存修改\n重新读取已保存数据\n修改内容自动保存；备份与恢复请前往“数据与备份”。",
+    "attributes": [
+      {
+        "tag": "ASIDE",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "SRM 功能导航"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价项目"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "物料与图纸"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "供应商与分配"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "报价回收"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "比价议价"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "字段设置"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "字段设置"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "当前询价工作摘要"
+      },
+      {
+        "tag": "NAV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "询价业务流程"
+      },
+      {
+        "tag": "SECTION",
+        "id": "backup",
+        "attribute": "aria-label",
+        "text": "数据与备份"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "保存与自动备份状态"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "pilotExportComplete",
+        "attribute": "title",
+        "text": "导出询价数据和图纸供查看与留存；不含原始邮件、聊天截图等报价凭证，不能代替完整备份。"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看说明"
+      },
+      {
+        "tag": "INPUT",
+        "id": "",
+        "attribute": "title",
+        "text": "必要的身份/追溯字段，不可取消"
+      },
+      {
+        "tag": "INPUT",
+        "id": "",
+        "attribute": "title",
+        "text": "必要的身份/追溯字段，不可取消"
+      },
+      {
+        "tag": "INPUT",
+        "id": "",
+        "attribute": "title",
+        "text": "必要的身份/追溯字段，不可取消"
+      },
+      {
+        "tag": "INPUT",
+        "id": "",
+        "attribute": "title",
+        "text": "必要的身份/追溯字段，不可取消"
+      },
+      {
+        "tag": "INPUT",
+        "id": "",
+        "attribute": "title",
+        "text": "必要的身份/追溯字段，不可取消"
+      },
+      {
+        "tag": "INPUT",
+        "id": "",
+        "attribute": "title",
+        "text": "必要的身份/追溯字段，不可取消"
+      },
+      {
+        "tag": "INPUT",
+        "id": "",
+        "attribute": "title",
+        "text": "必要的身份/追溯字段，不可取消"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "查看备份安全说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "查看备份安全说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "title",
+        "text": "重新读取说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "attribute": "aria-label",
+        "text": "重新读取说明"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "pilotResumeWorkspace",
+        "attribute": "title",
+        "text": "重新读取当前已保存的数据；未保存修改会被放弃。此操作不会导入备份。"
+      }
+    ],
+    "hits": []
+  }
+]

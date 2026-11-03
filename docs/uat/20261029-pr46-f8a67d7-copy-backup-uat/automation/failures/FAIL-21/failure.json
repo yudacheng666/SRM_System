@@ -1,0 +1,91 @@
+{
+  "id": "36cd1b3ff825093287b7-a171d305e1c2cc5a7aa1",
+  "title": "EXPLORATORY: desktop stages, control visibility and geometry 1366x768",
+  "file": "ui-v2-exploratory.spec.cjs",
+  "line": 87,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 20,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 5687,
+      "error": {
+        "message": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m",
+        "stack": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76",
+        "location": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+          "column": 76,
+          "line": 132
+        },
+        "snippet": "  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+            "column": 76,
+            "line": 132
+          },
+          "message": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n\n  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76"
+        }
+      ],
+      "stdout": [
+        {
+          "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1138.078125,\"bottom\":1138.078125,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":230.890625,\"width\":1088,\"height\":823.1875,\"bottom\":1054.078125,\"right\":1339},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":60,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+        },
+        {
+          "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1251.453125,\"bottom\":1251.453125,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":242.890625,\"width\":1088,\"height\":924.5625,\"bottom\":1167.453125,\"right\":1339},\"table\":{\"x\":267,\"y\":690.078125,\"width\":701.03125,\"height\":416.125,\"bottom\":1106.203125,\"right\":968.03125},\"tablewrap\":{\"x\":266,\"y\":689.078125,\"width\":703.03125,\"height\":418.125,\"bottom\":1107.203125,\"right\":969.03125},\"firstDataRow\":{\"x\":267,\"y\":723.203125,\"width\":701.03125,\"height\":32,\"bottom\":755.203125,\"right\":968.03125},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":58,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+        },
+        {
+          "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1512,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1569.234375,\"bottom\":1569.234375,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":230.890625,\"width\":1088,\"height\":1254.34375,\"bottom\":1485.234375,\"right\":1339},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":251,\"y\":610.875,\"width\":1088,\"height\":342.53125,\"bottom\":953.40625,\"right\":1339},\"quoteReview\":{\"x\":251,\"y\":965.40625,\"width\":1088,\"height\":342.734375,\"bottom\":1308.140625,\"right\":1339},\"confirmButton\":{\"x\":1200,\"y\":1253.890625,\"width\":123,\"height\":40.25,\"bottom\":1294.140625,\"right\":1323},\"tableScrollable\":false,\"panelButtons\":33,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+        }
+      ],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-29T06:42:39.550Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "explore-1366-items",
+          "contentType": "image/png",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-items-69ae50dd5a3c9e346fe52a923ab71ba9f492e9ab.png"
+        },
+        {
+          "name": "explore-1366-assign",
+          "contentType": "image/png",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-assign-742b0ed36e528b4ff42eb3678966a66b547602eb.png"
+        },
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/test-failed-1.png"
+        },
+        {
+          "name": "isolated-server-log",
+          "contentType": "text/plain",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/isolated-server-log-c1641e47d311ccceb85afa850d5424c5f91e44d8.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+        "column": 76,
+        "line": 132
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "checksPASS": 240,
+  "checksFAIL": 0,
+  "observationsPASS": 87,
+  "scopeCompleted": [
+    {
+      "time": "2026-10-26T07:11:15.977Z",
+      "kind": "scope-complete",
+      "id": "CORE-01",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-26T07:11:27.847Z",
+      "kind": "scope-complete",
+      "id": "CORE-02",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-26T07:11:38.907Z",
+      "kind": "scope-complete",
+      "id": "CORE-03",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-26T07:11:57.585Z",
+      "kind": "scope-complete",
+      "id": "CORE-04",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-26T07:12:01.760Z",
+      "kind": "scope-complete",
+      "id": "CORE-05",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-26T07:12:20.481Z",
+      "kind": "scope-complete",
+      "id": "UI-THREE-SIZES",
+      "status": "EXECUTED; final visual/row-density review separate"
+    },
+    {
+      "time": "2026-10-26T07:12:23.273Z",
+      "kind": "scope-complete",
+      "id": "CORE-06",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-26T07:12:46.005Z",
+      "kind": "scope-complete",
+      "id": "CORE-07",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-26T07:13:03.351Z",
+      "kind": "scope-complete",
+      "id": "CORE-08",
+      "status": "PASS"
+    }
+  ],
+  "runtimeErrors": [
+    {
+      "time": "2026-10-26T07:13:12.087Z",
+      "kind": "unanticipated-error",
+      "message": "response.json: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache",
+      "stack": "response.json: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache\n    at eval (<anonymous>:7:497)\n    at async eval (<anonymous>:1:279)\n    at async /tmp/uat66/methods/driver.cjs:19:576"
+    }
+  ],
+  "pageErrors": [],
+  "screenshots": 66
+}

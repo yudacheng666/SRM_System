@@ -1,0 +1,373 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary "SRM 功能导航" [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: S
+      - generic [ref=e6]:
+        - text: SRM
+        - generic [ref=e7]: 采购业务系统
+    - generic [ref=e8]: 询价 · 比价 · 定标
+    - generic [ref=e9]: 工作空间
+    - button "询价项目" [ref=e10] [cursor=pointer]:
+      - img [ref=e12]
+      - generic [ref=e15]: 询价项目
+    - button "物料与图纸" [ref=e16] [cursor=pointer]:
+      - img [ref=e18]
+      - generic [ref=e23]: 物料与图纸
+    - button "供应商与分配" [ref=e24] [cursor=pointer]:
+      - img [ref=e26]
+      - generic [ref=e29]: 供应商分配
+    - button "报价回收" [ref=e30] [cursor=pointer]:
+      - img [ref=e32]
+      - generic [ref=e35]: 报价回收
+    - button "比价议价" [ref=e36] [cursor=pointer]:
+      - img [ref=e38]
+      - generic [ref=e40]: 比价议价
+    - separator [ref=e41]
+    - generic [ref=e42]: 管理工具
+    - button "数据与备份" [ref=e43] [cursor=pointer]:
+      - img [ref=e45]
+      - generic [ref=e47]: 数据与备份
+    - button "字段设置" [ref=e48] [cursor=pointer]:
+      - img [ref=e50]
+      - generic [ref=e54]: 字段设置
+    - generic [ref=e55]:
+      - text: 本地业务系统
+      - text: 数据保存在本机
+  - banner [ref=e57]:
+    - generic [ref=e58]:
+      - generic [ref=e59]: 询价与比价
+      - heading "SRM 采购工作台" [level=1] [ref=e60]
+      - generic [ref=e61]: 修改内容会自动保存到本机，也可以点击“保存”。
+    - generic [ref=e62]:
+      - generic [ref=e63]: 本机工作模式
+      - button "询价项目" [ref=e64] [cursor=pointer]
+      - button "数据与备份" [ref=e65] [cursor=pointer]
+      - button "字段设置" [ref=e66] [cursor=pointer]
+  - generic "当前询价工作摘要" [ref=e67]:
+    - generic [ref=e68]:
+      - text: 当前询价项目
+      - generic [ref=e69]:
+        - generic [ref=e70]: 未命名询价（2026-10-29 08:14）
+        - button "修改名称" [ref=e71] [cursor=pointer]
+    - status [ref=e73]: 已保存
+  - generic [ref=e74]: 数据会自动保存在这台电脑上。需要备份或转移时，请使用“数据与备份”。
+  - navigation "询价业务流程" [ref=e75]:
+    - strong [ref=e77]: ◉采购业务流程
+    - tablist [ref=e78]:
+      - tab "› ① 询价项目" [ref=e79] [cursor=pointer]
+      - tab "› ② 物料与图纸" [selected] [ref=e80] [cursor=pointer]
+      - tab "› ③ 供应商分配" [ref=e81] [cursor=pointer]
+      - tab "› ④ 报价回收" [ref=e82] [cursor=pointer]
+      - tab "⑤ 比价议价" [ref=e83] [cursor=pointer]
+  - text: ▴
+  - generic [ref=e84]:
+    - generic [ref=e86]:
+      - generic [ref=e87]: 02 / 物料与图纸
+      - heading "物料与图纸" [level=2] [ref=e88]
+      - button "查看说明" [ref=e91]: ⓘ
+    - group [ref=e92]:
+      - generic "PDF 图纸匹配与关联管理 ▴" [ref=e93] [cursor=pointer]
+      - generic [ref=e95]:
+        - heading "真实 PDF 图纸管理（仅当前询价）" [level=3] [ref=e96]
+        - button "查看说明" [ref=e99]:
+          - img [ref=e100]
+        - generic "PDF 图纸匹配步骤" [ref=e103]:
+          - generic [ref=e104]: 1 选择图纸
+          - generic [ref=e105]: 2 匹配预览
+          - generic [ref=e106]: 3 处理多候选
+          - generic [ref=e107]: 4 确认关联并保存
+        - generic [ref=e108]:
+          - heading "批量图纸匹配（先预览，后确认）" [level=4] [ref=e109]
+          - button "查看说明" [ref=e112]:
+            - img [ref=e113]
+          - generic [ref=e116]:
+            - button "Choose File" [ref=e117]
+            - generic [ref=e118]:
+              - text: 无法识别版本时采用
+              - textbox "无法识别版本时采用" [ref=e119]: A
+            - button "执行匹配预览" [ref=e120] [cursor=pointer]
+            - button "清空预览" [ref=e121] [cursor=pointer]
+          - generic [ref=e122]:
+            - generic [ref=e123]: 未选择待人工指定的 PDF
+            - generic [ref=e124]:
+              - text: 手工指定到
+              - combobox "手工指定到" [ref=e125]
+            - button "指定给选中文件" [disabled] [ref=e126]
+            - button "确认建立选中关联" [disabled] [ref=e127]
+          - generic [ref=e128]: 请选择一组真实 PDF 并执行匹配预览；所有候选均需核对确认，未自动关联。
+          - generic:
+            - table
+        - generic [ref=e129]:
+          - generic [ref=e130]:
+            - text: 选择 RFQ 物料行
+            - combobox "选择 RFQ 物料行" [ref=e131]:
+              - option "TST-001 · 虚构物料1 · 规格 未填写 · RFQ-L00001" [selected]
+              - option "TST-002 · 虚构物料2 · 规格 未填写 · RFQ-L00002"
+              - option "TST-003 · 虚构物料3 · 规格 未填写 · RFQ-L00003"
+              - option "TST-004 · 虚构物料4 · 规格 未填写 · RFQ-L00004"
+              - option "TST-005 · 虚构物料5 · 规格 未填写 · RFQ-L00005"
+              - option "TST-006 · 虚构物料6 · 规格 未填写 · RFQ-L00006"
+              - option "TST-007 · 虚构物料7 · 规格 未填写 · RFQ-L00007"
+              - option "TST-008 · 虚构物料8 · 规格 未填写 · RFQ-L00008"
+              - option "TST-009 · 虚构物料9 · 规格 未填写 · RFQ-L00009"
+              - option "TST-010 · 虚构物料10 · 规格 未填写 · RFQ-L00010"
+              - option "TST-011 · 虚构物料11 · 规格 未填写 · RFQ-L00011"
+              - option "TST-012 · 虚构物料12 · 规格 未填写 · RFQ-L00012"
+          - generic [ref=e132]:
+            - text: 图纸版本
+            - textbox "图纸版本" [ref=e133]: A
+          - button "Choose File" [ref=e134]
+          - button "保存并关联选定 PDF" [ref=e135] [cursor=pointer]
+        - generic [ref=e136]:
+          - generic [ref=e137]:
+            - text: 复用本询价已有 PDF
+            - combobox "复用本询价已有 PDF" [ref=e138]
+          - button "关联到当前物料" [ref=e139] [cursor=pointer]
+          - generic [ref=e140]:
+            - text: 本行已关联
+            - combobox "本行已关联" [ref=e141]
+          - button "解除关联" [ref=e142] [cursor=pointer]
+        - generic [ref=e143]:
+          - generic [ref=e144]:
+            - text: 图纸要求
+            - combobox "图纸要求" [ref=e145]:
+              - option "需要图纸" [selected]
+              - option "无需图纸"
+              - option "版本待确认"
+          - button "更新状态" [ref=e146] [cursor=pointer]
+          - generic [ref=e147]: 图纸导入未完成：图纸：文件不是有效 PDF 格式
+    - generic [ref=e148]:
+      - generic [ref=e150]:
+        - textbox "全字段模糊搜索" [ref=e151]
+        - button "搜索" [ref=e152] [cursor=pointer]
+        - button "清空搜索" [ref=e153] [cursor=pointer]
+        - button "+ 添加询价物料" [ref=e154] [cursor=pointer]
+        - button "删除选中物料" [ref=e155] [cursor=pointer]
+        - button "批量更新字段值" [ref=e156] [cursor=pointer]
+        - button "图纸匹配与管理" [ref=e157] [cursor=pointer]
+      - generic [ref=e158]:
+        - generic [ref=e159]:
+          - text: 批量选择
+          - button "全选" [ref=e160] [cursor=pointer]
+          - button "本页全选" [ref=e161] [cursor=pointer]
+          - button "反选" [ref=e162] [cursor=pointer]
+          - button "本页反选" [ref=e163] [cursor=pointer]
+          - button "取消选择" [ref=e164] [cursor=pointer]
+        - table [ref=e166]:
+          - rowgroup [ref=e167]:
+            - row "选择 RFQ Line ID 存货编码 图纸 存货名称 规格型号 所属类别 询价数量 询价单位 已分配供应商" [ref=e168]:
+              - columnheader "选择" [ref=e169]
+              - columnheader "RFQ Line ID" [ref=e170]:
+                - button "RFQ Line ID" [ref=e171] [cursor=pointer]
+              - columnheader "存货编码" [ref=e172]:
+                - button "存货编码" [ref=e173] [cursor=pointer]
+              - columnheader "图纸" [ref=e174]
+              - columnheader "存货名称" [ref=e175]:
+                - button "存货名称" [ref=e176] [cursor=pointer]
+              - columnheader "规格型号" [ref=e177]:
+                - button "规格型号" [ref=e178] [cursor=pointer]
+              - columnheader "所属类别" [ref=e179]:
+                - button "所属类别" [ref=e180] [cursor=pointer]
+              - columnheader "询价数量" [ref=e181]:
+                - button "询价数量" [ref=e182] [cursor=pointer]
+              - columnheader "询价单位" [ref=e183]:
+                - button "询价单位" [ref=e184] [cursor=pointer]
+              - columnheader "已分配供应商" [ref=e185]:
+                - button "已分配供应商" [ref=e186] [cursor=pointer]
+            - row "搜索 清空" [ref=e187]:
+              - columnheader "搜索 清空" [ref=e188]:
+                - button "搜索" [ref=e189] [cursor=pointer]
+                - button "清空" [ref=e190] [cursor=pointer]
+              - columnheader [ref=e191]:
+                - textbox "模糊搜索" [ref=e192]
+              - columnheader [ref=e193]:
+                - textbox "模糊搜索" [ref=e194]
+              - columnheader [ref=e195]
+              - columnheader [ref=e196]:
+                - textbox "模糊搜索" [ref=e197]
+              - columnheader [ref=e198]:
+                - textbox "模糊搜索" [ref=e199]
+              - columnheader [ref=e200]:
+                - textbox "模糊搜索" [ref=e201]
+              - columnheader [ref=e202]:
+                - textbox "模糊搜索" [ref=e203]
+              - columnheader [ref=e204]:
+                - textbox "模糊搜索" [ref=e205]
+              - columnheader [ref=e206]:
+                - textbox "模糊搜索" [ref=e207]
+          - rowgroup [ref=e208]:
+            - row "RFQ-L00012 TST-012 缺图纸；点击查看图纸关联 虚构物料12 虚构类别 13 件 0" [ref=e209]:
+              - cell [ref=e210]:
+                - checkbox [ref=e211]
+              - cell "RFQ-L00012" [ref=e212]
+              - cell "TST-012" [ref=e213]
+              - cell "缺图纸；点击查看图纸关联" [ref=e214]:
+                - button "缺图纸；点击查看图纸关联" [ref=e215] [cursor=pointer]: 缺图纸
+              - cell "虚构物料12" [ref=e216]
+              - cell [ref=e217]
+              - cell "虚构类别" [ref=e218]
+              - cell "13" [ref=e219]
+              - cell "件" [ref=e220]
+              - cell "0" [ref=e221]
+            - row "RFQ-L00011 TST-011 缺图纸；点击查看图纸关联 虚构物料11 虚构类别 12 件 0" [ref=e222]:
+              - cell [ref=e223]:
+                - checkbox [ref=e224]
+              - cell "RFQ-L00011" [ref=e225]
+              - cell "TST-011" [ref=e226]
+              - cell "缺图纸；点击查看图纸关联" [ref=e227]:
+                - button "缺图纸；点击查看图纸关联" [ref=e228] [cursor=pointer]: 缺图纸
+              - cell "虚构物料11" [ref=e229]
+              - cell [ref=e230]
+              - cell "虚构类别" [ref=e231]
+              - cell "12" [ref=e232]
+              - cell "件" [ref=e233]
+              - cell "0" [ref=e234]
+            - row "RFQ-L00010 TST-010 缺图纸；点击查看图纸关联 虚构物料10 虚构类别 11 件 0" [ref=e235]:
+              - cell [ref=e236]:
+                - checkbox [ref=e237]
+              - cell "RFQ-L00010" [ref=e238]
+              - cell "TST-010" [ref=e239]
+              - cell "缺图纸；点击查看图纸关联" [ref=e240]:
+                - button "缺图纸；点击查看图纸关联" [ref=e241] [cursor=pointer]: 缺图纸
+              - cell "虚构物料10" [ref=e242]
+              - cell [ref=e243]
+              - cell "虚构类别" [ref=e244]
+              - cell "11" [ref=e245]
+              - cell "件" [ref=e246]
+              - cell "0" [ref=e247]
+            - row "RFQ-L00009 TST-009 缺图纸；点击查看图纸关联 虚构物料9 虚构类别 10 件 0" [ref=e248]:
+              - cell [ref=e249]:
+                - checkbox [ref=e250]
+              - cell "RFQ-L00009" [ref=e251]
+              - cell "TST-009" [ref=e252]
+              - cell "缺图纸；点击查看图纸关联" [ref=e253]:
+                - button "缺图纸；点击查看图纸关联" [ref=e254] [cursor=pointer]: 缺图纸
+              - cell "虚构物料9" [ref=e255]
+              - cell [ref=e256]
+              - cell "虚构类别" [ref=e257]
+              - cell "10" [ref=e258]
+              - cell "件" [ref=e259]
+              - cell "0" [ref=e260]
+            - row "RFQ-L00008 TST-008 缺图纸；点击查看图纸关联 虚构物料8 虚构类别 9 件 0" [ref=e261]:
+              - cell [ref=e262]:
+                - checkbox [ref=e263]
+              - cell "RFQ-L00008" [ref=e264]
+              - cell "TST-008" [ref=e265]
+              - cell "缺图纸；点击查看图纸关联" [ref=e266]:
+                - button "缺图纸；点击查看图纸关联" [ref=e267] [cursor=pointer]: 缺图纸
+              - cell "虚构物料8" [ref=e268]
+              - cell [ref=e269]
+              - cell "虚构类别" [ref=e270]
+              - cell "9" [ref=e271]
+              - cell "件" [ref=e272]
+              - cell "0" [ref=e273]
+            - row "RFQ-L00007 TST-007 缺图纸；点击查看图纸关联 虚构物料7 虚构类别 8 件 0" [ref=e274]:
+              - cell [ref=e275]:
+                - checkbox [ref=e276]
+              - cell "RFQ-L00007" [ref=e277]
+              - cell "TST-007" [ref=e278]
+              - cell "缺图纸；点击查看图纸关联" [ref=e279]:
+                - button "缺图纸；点击查看图纸关联" [ref=e280] [cursor=pointer]: 缺图纸
+              - cell "虚构物料7" [ref=e281]
+              - cell [ref=e282]
+              - cell "虚构类别" [ref=e283]
+              - cell "8" [ref=e284]
+              - cell "件" [ref=e285]
+              - cell "0" [ref=e286]
+            - row "RFQ-L00006 TST-006 缺图纸；点击查看图纸关联 虚构物料6 虚构类别 7 件 0" [ref=e287]:
+              - cell [ref=e288]:
+                - checkbox [ref=e289]
+              - cell "RFQ-L00006" [ref=e290]
+              - cell "TST-006" [ref=e291]
+              - cell "缺图纸；点击查看图纸关联" [ref=e292]:
+                - button "缺图纸；点击查看图纸关联" [ref=e293] [cursor=pointer]: 缺图纸
+              - cell "虚构物料6" [ref=e294]
+              - cell [ref=e295]
+              - cell "虚构类别" [ref=e296]
+              - cell "7" [ref=e297]
+              - cell "件" [ref=e298]
+              - cell "0" [ref=e299]
+            - row "RFQ-L00005 TST-005 缺图纸；点击查看图纸关联 虚构物料5 虚构类别 6 件 0" [ref=e300]:
+              - cell [ref=e301]:
+                - checkbox [ref=e302]
+              - cell "RFQ-L00005" [ref=e303]
+              - cell "TST-005" [ref=e304]
+              - cell "缺图纸；点击查看图纸关联" [ref=e305]:
+                - button "缺图纸；点击查看图纸关联" [ref=e306] [cursor=pointer]: 缺图纸
+              - cell "虚构物料5" [ref=e307]
+              - cell [ref=e308]
+              - cell "虚构类别" [ref=e309]
+              - cell "6" [ref=e310]
+              - cell "件" [ref=e311]
+              - cell "0" [ref=e312]
+            - row "RFQ-L00004 TST-004 缺图纸；点击查看图纸关联 虚构物料4 虚构类别 5 件 0" [ref=e313]:
+              - cell [ref=e314]:
+                - checkbox [ref=e315]
+              - cell "RFQ-L00004" [ref=e316]
+              - cell "TST-004" [ref=e317]
+              - cell "缺图纸；点击查看图纸关联" [ref=e318]:
+                - button "缺图纸；点击查看图纸关联" [ref=e319] [cursor=pointer]: 缺图纸
+              - cell "虚构物料4" [ref=e320]
+              - cell [ref=e321]
+              - cell "虚构类别" [ref=e322]
+              - cell "5" [ref=e323]
+              - cell "件" [ref=e324]
+              - cell "0" [ref=e325]
+            - row "RFQ-L00003 TST-003 缺图纸；点击查看图纸关联 虚构物料3 虚构类别 4 件 0" [ref=e326]:
+              - cell [ref=e327]:
+                - checkbox [ref=e328]
+              - cell "RFQ-L00003" [ref=e329]
+              - cell "TST-003" [ref=e330]
+              - cell "缺图纸；点击查看图纸关联" [ref=e331]:
+                - button "缺图纸；点击查看图纸关联" [ref=e332] [cursor=pointer]: 缺图纸
+              - cell "虚构物料3" [ref=e333]
+              - cell [ref=e334]
+              - cell "虚构类别" [ref=e335]
+              - cell "4" [ref=e336]
+              - cell "件" [ref=e337]
+              - cell "0" [ref=e338]
+            - row "RFQ-L00002 TST-002 缺图纸；点击查看图纸关联 虚构物料2 虚构类别 3 件 0" [ref=e339]:
+              - cell [ref=e340]:
+                - checkbox [ref=e341]
+              - cell "RFQ-L00002" [ref=e342]
+              - cell "TST-002" [ref=e343]
+              - cell "缺图纸；点击查看图纸关联" [ref=e344]:
+                - button "缺图纸；点击查看图纸关联" [ref=e345] [cursor=pointer]: 缺图纸
+              - cell "虚构物料2" [ref=e346]
+              - cell [ref=e347]
+              - cell "虚构类别" [ref=e348]
+              - cell "3" [ref=e349]
+              - cell "件" [ref=e350]
+              - cell "0" [ref=e351]
+            - row "RFQ-L00001 TST-001 缺图纸；点击查看图纸关联 虚构物料1 虚构类别 2 件 0" [ref=e352]:
+              - cell [ref=e353]:
+                - checkbox [ref=e354]
+              - cell "RFQ-L00001" [ref=e355]
+              - cell "TST-001" [ref=e356]
+              - cell "缺图纸；点击查看图纸关联" [ref=e357]:
+                - button "缺图纸；点击查看图纸关联" [ref=e358] [cursor=pointer]: 缺图纸
+              - cell "虚构物料1" [ref=e359]
+              - cell [ref=e360]
+              - cell "虚构类别" [ref=e361]
+              - cell "2" [ref=e362]
+              - cell "件" [ref=e363]
+              - cell "0" [ref=e364]
+        - generic [ref=e365]:
+          - generic [ref=e366]: 筛选结果 12 项 · 第 1/1 页 · 已选择 0 项
+          - generic [ref=e368]:
+            - button "上一页" [ref=e369] [cursor=pointer]
+            - generic [ref=e370]: …
+            - button "1" [ref=e371] [cursor=pointer]
+            - button "下一页" [ref=e372] [cursor=pointer]
+        - generic [ref=e373]:
+          - text: 当前排序：1.新增顺序降序
+          - button "多字段排序说明" [ref=e375]:
+            - img [ref=e376]
+        - button "查看说明" [ref=e381]:
+          - img [ref=e382]
+  - text: ▾ ✓
+  - generic [ref=e385]: 修改内容自动保存；备份与恢复请前往“数据与备份”。
+```

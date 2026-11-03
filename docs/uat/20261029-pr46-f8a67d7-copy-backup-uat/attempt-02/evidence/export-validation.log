@@ -1,0 +1,47 @@
+PASS UF8-A ZIP CRC
+PASS UF8-A no internal JSON
+PASS UF8-A exact assigned RFQ lines
+PASS UF8-A exact quantities
+PASS UF8-A quote prices remain blank
+PASS UF8-A no competitor IDs
+PASS UF8-A no internal reason
+PASS UF8-A exact scoped original PDF bytes
+PASS UF8-B ZIP CRC
+PASS UF8-B no internal JSON
+PASS UF8-B exact assigned RFQ lines
+PASS UF8-B exact quantities
+PASS UF8-B quote prices remain blank
+PASS UF8-B no competitor IDs
+PASS UF8-B no internal reason
+PASS UF8-B exact scoped original PDF bytes
+PASS UF8-C ZIP CRC
+PASS UF8-C no internal JSON
+PASS UF8-C exact assigned RFQ lines
+PASS UF8-C exact quantities
+PASS UF8-C quote prices remain blank
+PASS UF8-C no competitor IDs
+PASS UF8-C no internal reason
+PASS UF8-C exact scoped original PDF bytes
+PASS CSV exact10 common lines
+PASS CSV true RFQ identity
+PASS CSV independently calculated totals
+PASS CSV every amount equals quantity times applicable price
+PASS comparison second-page selection remains true120
+PASS comparison high-price reason persists
+PASS comparison actual high selected unit82
+PASS comparison stable12 RFQ lines
+ALL_EXPORT_CHECKS_PASS 32
+PASS all suppliers outer CRC
+PASS all suppliers exact nested names
+PASS UF8-A nested CRC
+PASS UF8-A nested assigned lines
+PASS UF8-A nested blank supplier prices
+PASS UF8-A nested exact PDF scope/bytes
+PASS UF8-B nested CRC
+PASS UF8-B nested assigned lines
+PASS UF8-B nested blank supplier prices
+PASS UF8-B nested exact PDF scope/bytes
+PASS UF8-C nested CRC
+PASS UF8-C nested assigned lines
+PASS UF8-C nested blank supplier prices
+PASS UF8-C nested exact PDF scope/bytes

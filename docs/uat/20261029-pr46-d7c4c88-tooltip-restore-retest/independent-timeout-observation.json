@@ -1,0 +1,12 @@
+{
+  "timeUTC": "2026-10-29T08:25:44.709978+00:00",
+  "productSHA": "d7c4c88abd354ebdc5d3bfedfc9199e278c48483",
+  "firstStatus": "FAIL preserved; actionability timeout on visible #runAssignSearch",
+  "rootCause": "UNKNOWN",
+  "originalError": "independent/evidence/raw-first-error.json",
+  "originalTrace": "independent/evidence/trace-first-attempt.zip",
+  "runtimeObservation": "runtime-observation.json; CPU quota2,memory max events,exec-server pong_timeout observed. These do not establish causation.",
+  "followup": "After complete original suite ends, run same independent business scripts in a fresh browser/data directory. Only runtime paths change; same normal click/no force/no new fixed delay/no timeout increase/no assertion relaxation.",
+  "notAFixClaim": "A later PASS cannot prove the first timeout fixed; report separately",
+  "originalProductTestsCIUnmodified": true
+}

@@ -1,0 +1,39 @@
+npm warn tarball tarball data for playwright-core@https://registry.npmjs.org/playwright-core/-/playwright-core-1.58.2.tgz (sha512-yZkEtftgwS8CsfYo7nm0KE8jsvm6i/PTgVtB8DL726wNf6H2IMsDuxCpJj59KDaxCtSnrWan2AeDqM7JBaultg==) seems to be corrupted. Trying again.
+npm warn tarball tarball data for playwright@https://registry.npmjs.org/playwright/-/playwright-1.58.2.tgz (sha512-vA30H8Nvkq/cPBnNw4Q8TWz1EJyqgpuinBcHET0YVJVFldr8JDNiU9LaWAE1KqSkRYazuaBhTpB5ZzShOezQ6A==) seems to be corrupted. Trying again.
+npm warn tarball tarball data for @playwright/test@https://registry.npmjs.org/@playwright/test/-/test-1.58.2.tgz (sha512-akea+6bHYBBfA9uQqSYmlJXn61cTa+jbO87xVLCWbTqbWadRVmhxlXATaOjOgcBaWU4ePo0wB41KMFv3o35IXA==) seems to be corrupted. Trying again.
+npm warn tarball tarball data for @playwright/test@https://registry.npmjs.org/@playwright/test/-/test-1.58.2.tgz (sha512-akea+6bHYBBfA9uQqSYmlJXn61cTa+jbO87xVLCWbTqbWadRVmhxlXATaOjOgcBaWU4ePo0wB41KMFv3o35IXA==) seems to be corrupted. Trying again.
+npm warn tarball tarball data for playwright-core@https://registry.npmjs.org/playwright-core/-/playwright-core-1.58.2.tgz (sha512-yZkEtftgwS8CsfYo7nm0KE8jsvm6i/PTgVtB8DL726wNf6H2IMsDuxCpJj59KDaxCtSnrWan2AeDqM7JBaultg==) seems to be corrupted. Trying again.
+npm warn tarball tarball data for playwright@https://registry.npmjs.org/playwright/-/playwright-1.58.2.tgz (sha512-vA30H8Nvkq/cPBnNw4Q8TWz1EJyqgpuinBcHET0YVJVFldr8JDNiU9LaWAE1KqSkRYazuaBhTpB5ZzShOezQ6A==) seems to be corrupted. Trying again.
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/tmp/srm66-product/node_modules/playwright-core/lib/utils/isomorphic/cssTokenizer.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/tmp/srm66-product/node_modules/playwright/lib/transform/babelBundleImpl.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/tmp/srm66-product/node_modules/playwright-core/lib/server/utils'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/tmp/srm66-product/node_modules/playwright-core/lib/vite/traceViewer'
+npm warn cleanup Failed to remove some directories [
+npm warn cleanup   [
+npm warn cleanup     '/tmp/srm66-product/node_modules/playwright-core',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/tmp/srm66-product/node_modules/playwright-core'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/tmp/srm66-product/node_modules/playwright-core'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/tmp/srm66-product/node_modules',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/tmp/srm66-product/node_modules/playwright-core'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/tmp/srm66-product/node_modules/playwright-core'
+npm warn cleanup     }
+npm warn cleanup   ]
+npm warn cleanup ]
+npm error code ENOENT
+npm error syscall mkdir
+npm error path /home/agent/.npm/_cacache
+npm error errno -2
+npm error enoent ENOENT: no such file or directory, mkdir '/home/agent/.npm/_cacache'
+npm error enoent This is related to npm not being able to find a file.
+npm error enoent
+npm error Log files were not written due to an error writing to the directory: /home/agent/.npm/_logs
+npm error You can rerun the command with `--loglevel=verbose` to see the logs in your terminal

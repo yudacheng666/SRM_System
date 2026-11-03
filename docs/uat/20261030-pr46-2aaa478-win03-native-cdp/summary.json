@@ -1,0 +1,40 @@
+{
+  "group": "WIN-03",
+  "status": "BLOCKED",
+  "productSHA": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "sourceFilesChecked": 146,
+  "changed": [],
+  "bootstrapNativeCDP": "PASS",
+  "nativeAppNavigationAndDOM": "PASS",
+  "realAppScreenshotFile": "01-load.failure.png",
+  "screenshotTimeout": "First app Page.captureScreenshot exceeded independent driver12000ms deadline; subsequent error-evidence capture succeeded; stopped without a second browser launch/preflight",
+  "screenshotRequests": [
+    {
+      "requestedAt": "2026-10-30T04:59:41.625Z",
+      "id": 8,
+      "sessionId": "328C55ADB86C7BF63970C8DFCF50462D",
+      "responseAt": "2026-10-30T04:59:41.790Z",
+      "elapsedMs": 165
+    },
+    {
+      "requestedAt": "2026-10-30T05:01:53.769Z",
+      "id": 11,
+      "sessionId": "E5229C9F421796C4872F47027B853F13",
+      "responseAt": "2026-10-30T05:02:05.844Z",
+      "elapsedMs": 12075
+    },
+    {
+      "requestedAt": "2026-10-30T05:02:05.780Z",
+      "id": 12,
+      "sessionId": "E5229C9F421796C4872F47027B853F13",
+      "responseAt": "2026-10-30T05:02:05.905Z",
+      "elapsedMs": 125
+    }
+  ],
+  "actualInputCommands": 0,
+  "purchaserUAT": "NOT TESTED",
+  "WIN01": "Prior PASS; not rerun",
+  "WIN02": "Prior PASS; not rerun",
+  "overall": "NOT READY",
+  "confirmedProductFailures": 0
+}

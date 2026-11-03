@@ -1,0 +1,68 @@
+{
+  "confirmedNewProductDefects": [],
+  "previousProductFindings": [
+    {
+      "id": "P3-UI-01",
+      "status": "PASS on sole current SHA within tested scope",
+      "evidence": "attempt-02/evidence/tooltip-retest.json",
+      "scope": "83 popup instances/18 page layouts/6 original overflow cases; no claim about untested devices"
+    },
+    {
+      "id": "P3-COPY-02",
+      "status": "PASS on sole current SHA within tested scope",
+      "evidence": "attempt-02/evidence/S4-audited-backend-rejection.json",
+      "scope": "Wrong package, valid-PDF hash mismatch and nonempty refusals translated; raw codes remain only backend/diagnostic logs"
+    }
+  ],
+  "testMaintenance": [
+    {
+      "id": "P3-TEST-01",
+      "severity": "P3, test maintenance",
+      "problem": "Damaged ZIP still expects obsolete 未成功 token",
+      "repro": "Run unmodified complete E2E; acceptance.spec.cjs:365",
+      "expected": "Verify actual refusal and target unchanged using supported UI feedback",
+      "actual": "Raw suite FAIL although independent400/unchanged-target checks PASS",
+      "evidence": "automation/failures/FAIL-01",
+      "suggestion": "Developer update only the obsolete copy expectation while keeping refusal/data assertions"
+    },
+    {
+      "id": "P3-TEST-02",
+      "severity": "P3, test driver",
+      "problem": "Supplier parent-row center click invokes nested removal, not supplier selection",
+      "repro": "At1440x1000 run acceptance15,45,46. Selector [data-sf-s] center lies on data-pool-remove button. Existing handler accepts for15/45 and dismisses for46.",
+      "expected": "Intended supplier selection should target the supplier label/selection area and assert no deletion dialog",
+      "actual": "15/45 remove an intended supplier;46 sees extra confirm. Later intended checks not reached.",
+      "evidence": [
+        "original-supplier-dialog-events.json",
+        "attempt-02/evidence/original-failure-center-hit.json",
+        "attempt-02/evidence/TRIAGE-real-supplier-name-selection.png"
+      ],
+      "suggestion": "ChatGPT repair precise original test locators; keep all isolation/export/dirty and history assertions. Codex did not edit original tests."
+    },
+    {
+      "id": "P3-TEST-03",
+      "severity": "P3, visual expectation mismatch",
+      "problem": "UI integration still requires background#F6F8FB while actual currentUI renders#F5F7F9",
+      "repro": "Run original ui-v3-integration.spec.cjs:65",
+      "expected": "One approved current design token shared by product and test",
+      "actual": "Original test FAIL; no purchasing calculation or data corruption established",
+      "evidence": "automation/failures/FAIL-05",
+      "suggestion": "ChatGPT confirm approved theme token, then align product or test as appropriate; no silent relaxation by tester"
+    }
+  ],
+  "unknown": [
+    {
+      "id": "OBS-D7-01",
+      "status": "ROOT CAUSE UNKNOWN",
+      "problem": "First independent #runAssignSearch click timed out waiting actionability; screenshot shows visible control",
+      "evidence": [
+        "independent/evidence/raw-first-error.json",
+        "independent/evidence/trace-first-attempt.zip",
+        "independent-timeout-observation.json",
+        "runtime-observation.json"
+      ],
+      "facts": "Full automatic suite was concurrent; exec-server pong_timeout also observed; no OOM kill. Fresh sequential same-method run completed.",
+      "notEstablished": "No evidence establishes product, driver or environment as root cause; later PASS does not demonstrate a fix."
+    }
+  ]
+}

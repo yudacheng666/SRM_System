@@ -1,0 +1,10 @@
+await nav('quotes');await p.locator('#resetAwards').click();await check('P2 reset leaves zero manual identities',(await snap()).state.manualAwards,[]);
+await expect(p.locator('#srmUxManualAwardSummary')).toContainText('尚无人工确认的有效定标（0 项');
+await check('P2 no manual misleading zero priced award',!(await p.locator('#srmUxManualAwardSummary').innerText()).includes('¥0.00'),true);
+await saved();await p.locator('#srmUxManualAwardSummary').scrollIntoViewIfNeeded();await shot('P2-zero-after-reset');
+await p.locator('[data-award="'+ids[4]+'|U46-B"]').click();await p.locator('[data-award="'+ids[1]+'|U46-B"]').click();
+await expect(p.locator('#awardReasonModal')).toHaveAttribute('aria-hidden','false');await p.locator('#awardReasonInput').fill('完全虚构46：乙方交期与保障更适合本询价');await p.locator('#awardReasonConfirm').click();
+await p.locator('#quotePager [data-pg="1"]').click();await p.locator('[data-award="'+ids[11]+'|U46-A"]').click();
+await expect(p.locator('#srmUxManualAwardSummary')).toContainText('¥1979.00');await expect(p.locator('#srmUxManualAwardSummary')).toContainText('3 项');await saved();
+await p.reload();await saved();await nav('quotes');await expect(p.locator('#srmUxManualAwardSummary')).toContainText('¥1979.00');
+await check('P2 reselected persisted three manuals',(await snap()).state.manualAwards,[ids[1],ids[4],ids[11]]);log('case-complete',{id:'P2-03',status:'PASS'});

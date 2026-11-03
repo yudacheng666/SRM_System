@@ -1,0 +1,21 @@
+SRM local prototype: http://127.0.0.1:8765/
+S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.
+SQLite API check: http://127.0.0.1:8765/storage-check
+127.0.0.1 - - [29/Oct/2026 06:33:35] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 06:33:35] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 06:33:36] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 06:33:36] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 06:33:36] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 06:33:36] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 06:33:37] "GET /api/workspaces/RFQ-1793255616906-NV5J2D HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 06:33:37] "GET /api/workspaces/RFQ-1793255616906-NV5J2D HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 06:33:37] "GET /api/workspaces/RFQ-1793255616906-NV5J2D HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 06:33:37] "GET /api/workspaces/RFQ-1793255616906-NV5J2D HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 06:33:38] "GET /api/workspaces/RFQ-1793255616906-NV5J2D HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 06:33:39] "PUT /api/workspaces/RFQ-1793255616906-NV5J2D HTTP/1.1" 200 -
+S4 automatic full backup created: SRM_FULL_20261029_063339_2c8d37f1.zip
+127.0.0.1 - - [29/Oct/2026 06:33:39] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 06:33:40] "GET /api/workspaces/RFQ-1793255616906-NV5J2D HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 06:33:43] "PUT /api/workspaces/RFQ-1793255616906-NV5J2D HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 06:33:43] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 06:33:43] "GET /api/workspaces/RFQ-1793255616906-NV5J2D HTTP/1.1" 200 -

@@ -1,0 +1,108 @@
+{
+  "victim": "assets/59651d4a93db82ac1975bbcbca9d7101e1b8202d6b388a98c7f6c5713b8b4907.pdf",
+  "expectedManifestSHA256": "59651d4a93db82ac1975bbcbca9d7101e1b8202d6b388a98c7f6c5713b8b4907",
+  "actualChangedSHA256": "12203181475e51d6c36f94b719d59681da96b33148253762250c53a311b528af",
+  "manifestSHA256": "c34ae78de5465f6e87f944b2088efb2d03463bef7cb91d53a7524003921d194f",
+  "sourceZipSHA256": "18d626d9fb09d4943c34beb84689b8b1de9d0a5922bccacc9d658941a6d53d5f",
+  "tamperedZipSHA256": "602c2f1a713eb1b5f4e1ae3bba58b475fff6dc76f3a11872131ac03c3466d96b",
+  "byteChangeOffset": 303,
+  "checks": [
+    {
+      "name": "source CRC",
+      "actual": null,
+      "expected": null,
+      "pass": true
+    },
+    {
+      "name": "same PDF length",
+      "actual": 892,
+      "expected": 892,
+      "pass": true
+    },
+    {
+      "name": "exactly one PDF byte changed",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "source matches manifest",
+      "actual": "59651d4a93db82ac1975bbcbca9d7101e1b8202d6b388a98c7f6c5713b8b4907",
+      "expected": "59651d4a93db82ac1975bbcbca9d7101e1b8202d6b388a98c7f6c5713b8b4907",
+      "pass": true
+    },
+    {
+      "name": "changed content differs from manifest",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "valid modified ZIP CRC",
+      "actual": null,
+      "expected": null,
+      "pass": true
+    },
+    {
+      "name": "same names/order",
+      "actual": [
+        "manifest.json",
+        "database/srm.sqlite3",
+        "assets/59651d4a93db82ac1975bbcbca9d7101e1b8202d6b388a98c7f6c5713b8b4907.pdf",
+        "assets/5e8c8894877d836a40a80e0d578e4085268ccacd08e9a9ea3ae2f658779ccfbe.pdf",
+        "assets/f7088666c22377e9e464b5e0b02fda0f057f48c0c5ee07d16f8a3544206e33f8.pdf"
+      ],
+      "expected": [
+        "manifest.json",
+        "database/srm.sqlite3",
+        "assets/59651d4a93db82ac1975bbcbca9d7101e1b8202d6b388a98c7f6c5713b8b4907.pdf",
+        "assets/5e8c8894877d836a40a80e0d578e4085268ccacd08e9a9ea3ae2f658779ccfbe.pdf",
+        "assets/f7088666c22377e9e464b5e0b02fda0f057f48c0c5ee07d16f8a3544206e33f8.pdf"
+      ],
+      "pass": true
+    },
+    {
+      "name": "all entries ZIP_STORED",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "no encrypted/directory entries",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "manifest bytes unchanged",
+      "actual": {
+        "sha256": "c34ae78de5465f6e87f944b2088efb2d03463bef7cb91d53a7524003921d194f",
+        "size": 1187
+      },
+      "expected": {
+        "sha256": "c34ae78de5465f6e87f944b2088efb2d03463bef7cb91d53a7524003921d194f",
+        "size": 1187
+      },
+      "pass": true
+    },
+    {
+      "name": "all non-victim entries unchanged",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "manifest expected size unchanged and actual same",
+      "actual": 892,
+      "expected": 892,
+      "pass": true
+    },
+    {
+      "name": "PDF CRC matches changed bytes",
+      "actual": 4184522083,
+      "expected": 4184522083,
+      "pass": true
+    }
+  ],
+  "checksPASS": 13
+}

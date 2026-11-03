@@ -1,0 +1,91 @@
+{
+  "productSHA": "f4bfcda8efdf3998c833ed25c3193a056fdde451",
+  "phase1": {
+    "startTime": "2026-10-26T12:04:22.761Z",
+    "duration": 137693.30399999997,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "phase2": {
+    "PythonPASS": 44,
+    "NodePASS": 10,
+    "Chromium": {
+      "startTime": "2026-10-26T12:06:56.570Z",
+      "duration": 1016749.528,
+      "expected": 56,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "fullPASS": 110,
+    "fullFAIL": 0,
+    "total": 110
+  },
+  "commands": {
+    "python-backend": {
+      "productSHA": "f4bfcda8efdf3998c833ed25c3193a056fdde451",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-v",
+        "-s",
+        "prototype/m1-lite/backend",
+        "-p",
+        "test_*.py"
+      ],
+      "cwd": "/workspace/srmf4-product",
+      "startUTC": "2026-10-26T12:06:41.210736+00:00",
+      "durationSeconds": 10.916,
+      "exitCode": 0,
+      "originalTestsUnmodified": true
+    },
+    "npm-ci": {
+      "productSHA": "f4bfcda8efdf3998c833ed25c3193a056fdde451",
+      "command": [
+        "npm",
+        "ci"
+      ],
+      "cwd": "/workspace/srmf4-product",
+      "startUTC": "2026-10-26T12:06:52.128435+00:00",
+      "durationSeconds": 1.591,
+      "exitCode": 0,
+      "originalTestsUnmodified": true
+    },
+    "node-business": {
+      "productSHA": "f4bfcda8efdf3998c833ed25c3193a056fdde451",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "cwd": "/workspace/srmf4-product",
+      "startUTC": "2026-10-26T12:06:53.720584+00:00",
+      "durationSeconds": 0.546,
+      "exitCode": 0,
+      "originalTestsUnmodified": true
+    },
+    "chromium-e2e": {
+      "productSHA": "f4bfcda8efdf3998c833ed25c3193a056fdde451",
+      "command": [
+        "npm",
+        "run",
+        "test:e2e"
+      ],
+      "cwd": "/workspace/srmf4-product",
+      "startUTC": "2026-10-26T12:06:54.268100+00:00",
+      "durationSeconds": 1021.069,
+      "exitCode": 0,
+      "originalTestsUnmodified": true
+    }
+  },
+  "officialGitHubActions": "NOT RUN / not a GitHub Actions SUCCESS",
+  "runtime": {
+    "python": "3.12.14",
+    "node": "v24.19.0",
+    "chromium": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+    "OS": "Linux-6.18.55-x86_64-with-glibc2.41"
+  }
+}

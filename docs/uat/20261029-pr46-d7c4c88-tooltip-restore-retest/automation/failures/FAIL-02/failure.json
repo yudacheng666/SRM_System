@@ -1,0 +1,66 @@
+{
+  "id": "ca3536bea9e5ab96e253-b0095856581d78ca5165",
+  "title": "15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离",
+  "file": "acceptance.spec.cjs",
+  "line": 589,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 1,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 85511,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#supplierFirstTitle')\nExpected substring: \u001b[32m\"\u001b[7m虚构\u001b[27m供应商\u001b[7mB\u001b[27m\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m选择左侧\u001b[27m供应商\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#supplierFirstTitle')\u001b[22m\n\u001b[2m    14 × locator resolved to <b id=\"supplierFirstTitle\">选择左侧供应商</b>\u001b[22m\n\u001b[2m       - unexpected value \"选择左侧供应商\"\u001b[22m\n",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#supplierFirstTitle')\nExpected substring: \u001b[32m\"\u001b[7m虚构\u001b[27m供应商\u001b[7mB\u001b[27m\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m选择左侧\u001b[27m供应商\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#supplierFirstTitle')\u001b[22m\n\u001b[2m    14 × locator resolved to <b id=\"supplierFirstTitle\">选择左侧供应商</b>\u001b[22m\n\u001b[2m       - unexpected value \"选择左侧供应商\"\u001b[22m\n\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:599:53",
+        "location": {
+          "file": "/workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 53,
+          "line": 599
+        },
+        "snippet": "  597 |   await page.locator('[data-mode=\"supplierFirst\"]').click();\n  598 |   await page.locator('[data-sf-s=\"SUP-B\"]').click();\n> 599 |   await expect(page.locator('#supplierFirstTitle')).toContainText('虚构供应商B');\n      |                                                     ^\n  600 |   await fresh(page);\n  601 |   const second=await snapshot(page);\n  602 |   expect(second.workspaceId).not.toBe(originalId);"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 53,
+            "line": 599
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#supplierFirstTitle')\nExpected substring: \u001b[32m\"\u001b[7m虚构\u001b[27m供应商\u001b[7mB\u001b[27m\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m选择左侧\u001b[27m供应商\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#supplierFirstTitle')\u001b[22m\n\u001b[2m    14 × locator resolved to <b id=\"supplierFirstTitle\">选择左侧供应商</b>\u001b[22m\n\u001b[2m       - unexpected value \"选择左侧供应商\"\u001b[22m\n\n\n  597 |   await page.locator('[data-mode=\"supplierFirst\"]').click();\n  598 |   await page.locator('[data-sf-s=\"SUP-B\"]').click();\n> 599 |   await expect(page.locator('#supplierFirstTitle')).toContainText('虚构供应商B');\n      |                                                     ^\n  600 |   await fresh(page);\n  601 |   const second=await snapshot(page);\n  602 |   expect(second.workspaceId).not.toBe(originalId);\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:599:53"
+        }
+      ],
+      "stdout": [],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-29T08:16:53.508Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/workspace/srmd7-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/test-failed-1.png"
+        },
+        {
+          "name": "server-log",
+          "contentType": "text/plain",
+          "path": "/workspace/srmd7-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/attachments/server-log-60ef4473c8f01527a4296bec86c4798f55eaa599.log"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/workspace/srmd7-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+        "column": 53,
+        "line": 599
+      }
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+[
+  {
+    "caseDirectory": "ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态",
+    "originalCellClicks": [
+      {
+        "traceMember": "0-trace.trace",
+        "event": {
+          "type": "before",
+          "callId": "call@1139",
+          "startTime": 856206.767,
+          "class": "Frame",
+          "method": "click",
+          "params": {
+            "selector": "#quoteTable td[data-award=\"RFQ-L00001|SUP-B\"]",
+            "strict": true,
+            "timeout": 0
+          },
+          "stepId": "pw:api@103",
+          "pageId": "page@bae5cec23124df2eb4ee647f27086521",
+          "beforeSnapshot": "before@call@1139"
+        }
+      }
+    ],
+    "screenshot": "test-failed-1.png",
+    "readOnlyAssessment": "Original screenshot shows targeted price detail expanded rather than manual award after whole-cell center click. Independent actual .quotePrice button path completed expected pending/count/reason/persistence checks. Original FAIL remains, later original assertions NOT REACHED."
+  },
+  {
+    "caseDirectory": "ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页",
+    "originalCellClicks": [
+      {
+        "traceMember": "0-trace.trace",
+        "event": {
+          "type": "before",
+          "callId": "call@3611",
+          "startTime": 679728.245,
+          "class": "Frame",
+          "method": "click",
+          "params": {
+            "selector": "#quoteTable td.awardSelectable >> nth=0",
+            "strict": true,
+            "timeout": 0
+          },
+          "stepId": "pw:api@93",
+          "pageId": "page@de2b796299ea8a6e08049c305a49c323",
+          "beforeSnapshot": "before@call@3611"
+        }
+      }
+    ],
+    "screenshot": "test-failed-1.png",
+    "readOnlyAssessment": "Original screenshot shows targeted price detail expanded rather than manual award after whole-cell center click. Independent actual .quotePrice button path completed expected pending/count/reason/persistence checks. Original FAIL remains, later original assertions NOT REACHED."
+  },
+  {
+    "caseDirectory": "ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示",
+    "originalCellClicks": [
+      {
+        "traceMember": "0-trace.trace",
+        "event": {
+          "type": "before",
+          "callId": "call@95",
+          "startTime": 704375.378,
+          "class": "Frame",
+          "method": "click",
+          "params": {
+            "selector": "#quoteTable td[data-award=\"RFQ-L00001|SUP-A\"]",
+            "strict": true,
+            "timeout": 0
+          },
+          "stepId": "pw:api@90",
+          "pageId": "page@e8b60a8c724a4d2d1d2aeb5f65536802",
+          "beforeSnapshot": "before@call@95"
+        }
+      },
+      {
+        "traceMember": "0-trace.trace",
+        "event": {
+          "type": "before",
+          "callId": "call@97",
+          "startTime": 704504.267,
+          "class": "Frame",
+          "method": "click",
+          "params": {
+            "selector": "#quoteTable td[data-award=\"RFQ-L00002|SUP-A\"]",
+            "strict": true,
+            "timeout": 0
+          },
+          "stepId": "pw:api@91",
+          "pageId": "page@e8b60a8c724a4d2d1d2aeb5f65536802",
+          "beforeSnapshot": "before@call@97"
+        }
+      },
+      {
+        "traceMember": "0-trace.trace",
+        "event": {
+          "type": "before",
+          "callId": "call@99",
+          "startTime": 704604.564,
+          "class": "Frame",
+          "method": "click",
+          "params": {
+            "selector": "#quoteTable td[data-award=\"RFQ-L00003|SUP-A\"]",
+            "strict": true,
+            "timeout": 0
+          },
+          "stepId": "pw:api@92",
+          "pageId": "page@e8b60a8c724a4d2d1d2aeb5f65536802",
+          "beforeSnapshot": "before@call@99"
+        }
+      }
+    ],
+    "screenshot": "test-failed-1.png",
+    "readOnlyAssessment": "Original screenshot shows targeted price detail expanded rather than manual award after whole-cell center click. Independent actual .quotePrice button path completed expected pending/count/reason/persistence checks. Original FAIL remains, later original assertions NOT REACHED."
+  }
+]

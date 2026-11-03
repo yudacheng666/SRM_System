@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 1,
+  "productSha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "name": "supplier-packages",
+  "purpose": "buyer-plan",
+  "scope": "Both suppliers12 assigned rows; valid versions, no missing/pending. Visible supplier manifest is allowed; internal association state is forbidden",
+  "steps": [
+    {
+      "kind": "ensure-open",
+      "selector": "#pilotReportOpen",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1927,
+          1927
+        ],
+        "anchor": "pilotReportOpen",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "target": "#pilotReportPanel"
+      },
+      "branch": "Inspect target first; click only when hidden; no duplicate toggle",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotReportOpen",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-085"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotReportType",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1959,
+          1959
+        ],
+        "anchor": "pilotReportType",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "rfq"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotReportType",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-086"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotReportSupplier",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1963,
+          1963
+        ],
+        "anchor": "pilotReportSupplier",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "SUP-A"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotReportSupplier",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-087"
+    },
+    {
+      "kind": "download",
+      "selector": "#pilotReportDownload",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1972,
+          1972
+        ],
+        "anchor": "pilotReportDownload",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "artifact": "supplier-SUP-A",
+        "supplier": "SUP-A",
+        "lines": 12,
+        "pdfLinks": 3,
+        "missing": 0,
+        "pending": 0,
+        "noOtherSupplierOrQuotes": true,
+        "noInternalRelationJson": true,
+        "allowPublic": "图纸关联清单.json"
+      },
+      "branch": "Prearm bound download event before GUI click; inspect actual completed file, never use API writes",
+      "postconditions": [
+        {
+          "kind": "download",
+          "require": "WillBegin/progress completion + actual file path/size/hash; nested ZIP CRC, XLSX fields and PDF bytes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "supplier": "SUP-A",
+            "lines": 12,
+            "pdfLinks": 3,
+            "missing": 0,
+            "pending": 0,
+            "noOtherSupplierOrQuotes": true,
+            "noInternalRelationJson": true,
+            "allowPublic": "图纸关联清单.json"
+          }
+        },
+        {
+          "kind": "workspace",
+          "oracle": "all rows/history/PDF unchanged by export",
+          "revision": "exact-equal"
+        }
+      ],
+      "capability": "download-oracle",
+      "id": "W03-088"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotReportSupplier",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1963,
+          1963
+        ],
+        "anchor": "pilotReportSupplier",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "SUP-B"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotReportSupplier",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-089"
+    },
+    {
+      "kind": "download",
+      "selector": "#pilotReportDownload",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1972,
+          1972
+        ],
+        "anchor": "pilotReportDownload",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "artifact": "supplier-SUP-B",
+        "supplier": "SUP-B",
+        "lines": 12,
+        "pdfLinks": 3,
+        "missing": 0,
+        "pending": 0,
+        "noOtherSupplierOrQuotes": true,
+        "noInternalRelationJson": true,
+        "allowPublic": "图纸关联清单.json"
+      },
+      "branch": "Prearm bound download event before GUI click; inspect actual completed file, never use API writes",
+      "postconditions": [
+        {
+          "kind": "download",
+          "require": "WillBegin/progress completion + actual file path/size/hash; nested ZIP CRC, XLSX fields and PDF bytes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "supplier": "SUP-B",
+            "lines": 12,
+            "pdfLinks": 3,
+            "missing": 0,
+            "pending": 0,
+            "noOtherSupplierOrQuotes": true,
+            "noInternalRelationJson": true,
+            "allowPublic": "图纸关联清单.json"
+          }
+        },
+        {
+          "kind": "workspace",
+          "oracle": "all rows/history/PDF unchanged by export",
+          "revision": "exact-equal"
+        }
+      ],
+      "capability": "download-oracle",
+      "id": "W03-090"
+    },
+    {
+      "kind": "download",
+      "selector": "#pilotReportDownloadAll",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1973,
+          1973
+        ],
+        "anchor": "pilotReportDownloadAll",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "artifact": "all-suppliers",
+        "entries": [
+          "RFQ_SUP-A.zip",
+          "RFQ_SUP-B.zip"
+        ],
+        "validateEachNestedSupplier": true,
+        "originalPdfBytes": true
+      },
+      "branch": "Prearm bound download event before GUI click; inspect actual completed file, never use API writes",
+      "postconditions": [
+        {
+          "kind": "download",
+          "require": "WillBegin/progress completion + actual file path/size/hash; nested ZIP CRC, XLSX fields and PDF bytes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "entries": [
+              "RFQ_SUP-A.zip",
+              "RFQ_SUP-B.zip"
+            ],
+            "validateEachNestedSupplier": true,
+            "originalPdfBytes": true
+          }
+        },
+        {
+          "kind": "workspace",
+          "oracle": "all rows/history/PDF unchanged by export",
+          "revision": "exact-equal"
+        }
+      ],
+      "capability": "download-oracle",
+      "id": "W03-091"
+    }
+  ]
+}

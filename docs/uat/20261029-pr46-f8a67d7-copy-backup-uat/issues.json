@@ -1,0 +1,44 @@
+[
+  {
+    "id": "P3-UI-01",
+    "severity": "P3",
+    "category": "UI visual / operation experience",
+    "pages": "报价回收、数据与备份；1024比价亦受影响",
+    "problem": "Tooltip overflow remains in document geometry even while visibility:hidden; actual hovered popovers clip at viewport edges.",
+    "buyerImpact": "Horizontal scroll/blank area and unreadable help, including backup-safety details. Main permanent safety warning remains visible; no confirmed data loss.",
+    "reproduction": [
+      "Use exactSHA, viewport1366x768 at100%",
+      "Open 报价回收:document.scrollWidth1512 vsviewport1366 even after Escape/blur",
+      "Open 数据与备份 and hover right-side 备份安全 icon:popup right1646 >1366; repeat1024/1600"
+    ],
+    "expected": "Tooltip fits viewport and hidden helper does not widen document; full text accessible",
+    "actual": "Independent layout-overflow.json and54real tooltip samples;6original E2E geometry failures support same regression",
+    "evidence": [
+      "attempt-02/evidence/TIP-17-populated-backup.png",
+      "attempt-02/evidence/LAYOUT-1366-quoteImport.png",
+      "attempt-02/evidence/layout-overflow.json",
+      "attempt-02/evidence/tooltip-audit.json"
+    ],
+    "suggestion": "Collision-aware flip/shift placement and hidden-popup layout containment; verify keyboard/touch access, do not merely relax overflow assertions."
+  },
+  {
+    "id": "P3-COPY-02",
+    "severity": "P3",
+    "category": "Buyer-facing exception copy / operation experience",
+    "pages": "数据与备份 / recovery errors",
+    "problem": "Actual restore errors expose raw internal identifiers rather than actionable buyer-language explanations.",
+    "reproduction": [
+      "Export actual 询价与图纸资料包",
+      "Start exact same product with another empty isolated data directory",
+      "Select that ZIP in 完整备份 restore and confirm"
+    ],
+    "expected": "Explain wrong package category in plain Chinese and direct buyer to 下载完整备份, while retaining safe refusal.",
+    "actual": "完整恢复未成功：RESTORE_INVALID_ARCHIVE_ENTRIES（HTTP400）; valid PDF-content hash mismatch also exposes RESTORE_PDF_HASH_MISMATCH. Both protect data correctly.",
+    "evidence": [
+      "attempt-02/evidence/BACKUP-archive-restore-refused.png",
+      "attempt-02/evidence/archive-rejection-real-backend.json",
+      "attempt-02/evidence/S4-STORED-hash-mismatch-real-UI.png"
+    ],
+    "suggestion": "Translate known restore error categories into actionable Chinese; retain technical codes in diagnostic logs/details and keep backend400/409/nonempty protections."
+  }
+]

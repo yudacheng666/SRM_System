@@ -1,0 +1,2699 @@
+{
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "stats": {
+    "startTime": "2026-10-26T06:49:43.839Z",
+    "duration": 1201016.0089999998,
+    "expected": 40,
+    "skipped": 0,
+    "unexpected": 15,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "id": "ca3536bea9e5ab96e253-b08ff03a3a81c6a1a501",
+      "title": "01 startup, demo isolation, autosave, navigation and restart / 启动与隔离",
+      "file": "acceptance.spec.cjs",
+      "line": 139,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 0,
+          "parallelIndex": 0,
+          "status": "timedOut",
+          "duration": 90505,
+          "error": {
+            "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m",
+            "stack": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+          },
+          "errors": [
+            {
+              "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+            },
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 37,
+                "line": 147
+              },
+              "message": "Error: locator.fill: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#itemSearch')\u001b[22m\n\u001b[2m    - locator resolved to <input type=\"text\" id=\"itemSearch\" placeholder=\"全字段模糊搜索\"/>\u001b[22m\n\u001b[2m    - fill(\"TST-001\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    154 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying fill action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\n\n  145 |   await expect.poll(async () => (await (await fetch(baseURL+'/api/backups/auto/status')).json()).retained).toBe(1);\n  146 |   const revision=(await snapshot(page)).revision;\n> 147 |   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();\n      |                                     ^\n  148 |   await tab(page,'assign'); await page.locator('#assignStateFilter').selectOption({index:1});\n  149 |   await page.locator('#runAssignSearch').click(); await tab(page,'items');\n  150 |   // 中文：负向断言需要跨越完整自动保存窗口。\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:147:37"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:49:46.121Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/attachments/server-log-b47eadcfa3624781c35e090493640e4d7b6afe00.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/tmp/srm66-product/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-0560973a7bee78b6625d",
+      "title": "02 XLSX 12/100, duplicates and invalid format / 物料",
+      "file": "acceptance.spec.cjs",
+      "line": 158,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 1,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 13096,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:51:19.240Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-02-XLSX-12-100-duplicates-and-invalid-format-物料/attachments/server-log-f4c1540e1280b1f00c36de9866e3666b0b1541e7.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-02-XLSX-12-100-duplicates-and-invalid-format-物料/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-4e1e1e4aee0fa2dadaf4",
+      "title": "03 suppliers and bidirectional additive allocation / 供应商与分配",
+      "file": "acceptance.spec.cjs",
+      "line": 175,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 1,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 14109,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:51:33.222Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-03-suppliers-an-eb55d--additive-allocation-供应商与分配/attachments/server-log-2e7cd74127ceaaf336249fb03af1db1e9d00c626.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-03-suppliers-an-eb55d--additive-allocation-供应商与分配/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-81c343d3eefc9c4af4c7",
+      "title": "04 real quote imports, rounds, tiers, immutable confirmation and comparison XLSX / 报价比价",
+      "file": "acceptance.spec.cjs",
+      "line": 190,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 1,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 18006,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:51:47.921Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "comparison.xlsx",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/attachments/comparison-xlsx-43078531d20a474dbc1a7770bf778a1029fed504.xlsx"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/attachments/server-log-bbf2867d147c5bec753c64c413e4f9792ed8acc8.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-c1656022b669a384566f",
+      "title": "05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包",
+      "file": "acceptance.spec.cjs",
+      "line": 235,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 1,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 27132,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotModeBadge')\nExpected substring: \u001b[32m\"\u001b[7m正\u001b[27m式\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m本机工作模\u001b[27m式\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotModeBadge')\u001b[22m\n\u001b[2m    19 × locator resolved to <span class=\"badge\" id=\"pilotModeBadge\">本机工作模式</span>\u001b[22m\n\u001b[2m       - unexpected value \"本机工作模式\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotModeBadge')\nExpected substring: \u001b[32m\"\u001b[7m正\u001b[27m式\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m本机工作模\u001b[27m式\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotModeBadge')\u001b[22m\n\u001b[2m    19 × locator resolved to <span class=\"badge\" id=\"pilotModeBadge\">本机工作模式</span>\u001b[22m\n\u001b[2m       - unexpected value \"本机工作模式\"\u001b[22m\n\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:237:49",
+            "location": {
+              "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 49,
+              "line": 237
+            },
+            "snippet": "  235 | test('05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包', async ({page,app},info)=>{\n  236 |   await allocated(page,app); await drawings(page,app); await page.reload();\n> 237 |   await expect(page.locator('#pilotModeBadge')).toContainText('正式');\n      |                                                 ^\n  238 |   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();\n  239 |   await page.locator('#itemBody [data-drawing]').filter({hasText:'PDF'}).first().click();\n  240 |   await expect(page.locator('#drawingLarge iframe')).toBeVisible();"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 49,
+                "line": 237
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotModeBadge')\nExpected substring: \u001b[32m\"\u001b[7m正\u001b[27m式\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m本机工作模\u001b[27m式\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotModeBadge')\u001b[22m\n\u001b[2m    19 × locator resolved to <span class=\"badge\" id=\"pilotModeBadge\">本机工作模式</span>\u001b[22m\n\u001b[2m       - unexpected value \"本机工作模式\"\u001b[22m\n\n\n  235 | test('05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包', async ({page,app},info)=>{\n  236 |   await allocated(page,app); await drawings(page,app); await page.reload();\n> 237 |   await expect(page.locator('#pilotModeBadge')).toContainText('正式');\n      |                                                 ^\n  238 |   await page.locator('#itemSearch').fill('TST-001'); await page.locator('#runItemSearch').click();\n  239 |   await page.locator('#itemBody [data-drawing]').filter({hasText:'PDF'}).first().click();\n  240 |   await expect(page.locator('#drawingLarge iframe')).toBeVisible();\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:237:49"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:52:07.178Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/server-log-e3c70ee8d2e549f8f4f73190bffed6d463539f94.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/tmp/srm66-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 49,
+            "line": 237
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-dce559d57ef77f19df04",
+      "title": "06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复",
+      "file": "acceptance.spec.cjs",
+      "line": 266,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 2,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 38704,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotModeBadge')\nExpected substring: \u001b[32m\"\u001b[7m正\u001b[27m式\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m本机工作模\u001b[27m式\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotModeBadge')\u001b[22m\n\u001b[2m    - waiting for navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"http://127.0.0.1:8766/\"\u001b[22m\n\u001b[2m    14 × locator resolved to <span class=\"badge\" id=\"pilotModeBadge\">本机工作模式</span>\u001b[22m\n\u001b[2m       - unexpected value \"本机工作模式\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotModeBadge')\nExpected substring: \u001b[32m\"\u001b[7m正\u001b[27m式\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m本机工作模\u001b[27m式\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotModeBadge')\u001b[22m\n\u001b[2m    - waiting for navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"http://127.0.0.1:8766/\"\u001b[22m\n\u001b[2m    14 × locator resolved to <span class=\"badge\" id=\"pilotModeBadge\">本机工作模式</span>\u001b[22m\n\u001b[2m       - unexpected value \"本机工作模式\"\u001b[22m\n\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:284:52",
+            "location": {
+              "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 52,
+              "line": 284
+            },
+            "snippet": "  282 |     await openTools(other,'#uiDataTools');\n  283 |     await other.locator('#pilotS4BackupFile').setInputFiles(file); await other.locator('#pilotS4RestoreFull').click();\n> 284 |     await expect(other.locator('#pilotModeBadge')).toContainText('正式');\n      |                                                    ^\n  285 |     expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toEqual(index);\n  286 |     for(const [id,versions] of Object.entries(originals)) for(const w of versions) expect((await (await fetch('http://127.0.0.1:8766/api/workspaces/'+id+'?revision='+w.revision)).json()).workspace).toEqual(w);\n  287 |     for(const item of ws.state.items) for(const pdf of item.drawings||[]) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 52,
+                "line": 284
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotModeBadge')\nExpected substring: \u001b[32m\"\u001b[7m正\u001b[27m式\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m本机工作模\u001b[27m式\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotModeBadge')\u001b[22m\n\u001b[2m    - waiting for navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"http://127.0.0.1:8766/\"\u001b[22m\n\u001b[2m    14 × locator resolved to <span class=\"badge\" id=\"pilotModeBadge\">本机工作模式</span>\u001b[22m\n\u001b[2m       - unexpected value \"本机工作模式\"\u001b[22m\n\n\n  282 |     await openTools(other,'#uiDataTools');\n  283 |     await other.locator('#pilotS4BackupFile').setInputFiles(file); await other.locator('#pilotS4RestoreFull').click();\n> 284 |     await expect(other.locator('#pilotModeBadge')).toContainText('正式');\n      |                                                    ^\n  285 |     expect((await (await fetch('http://127.0.0.1:8766/api/workspaces')).json()).workspaces).toEqual(index);\n  286 |     for(const [id,versions] of Object.entries(originals)) for(const w of versions) expect((await (await fetch('http://127.0.0.1:8766/api/workspaces/'+id+'?revision='+w.revision)).json()).workspace).toEqual(w);\n  287 |     for(const item of ws.state.items) for(const pdf of item.drawings||[]) {\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:284:52"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:52:36.513Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "full-backup.zip",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/attachments/full-backup-zip-66c8d87e540d69fd544d45f09cfefa205be43e8b.zip"
+            },
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/attachments/server-log-691af733d1565032d0334c0ec59a5f7868dfc5cd.log"
+            },
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/test-failed-2.png"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/tmp/srm66-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 52,
+            "line": 284
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-1178afe33aed6ddbf394",
+      "title": "07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败",
+      "file": "acceptance.spec.cjs",
+      "line": 302,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 3,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 23103,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotModeBadge')\nExpected substring: \u001b[32m\"\u001b[7m正\u001b[27m式\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m本机工作模\u001b[27m式\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotModeBadge')\u001b[22m\n\u001b[2m    18 × locator resolved to <span class=\"badge\" id=\"pilotModeBadge\">本机工作模式</span>\u001b[22m\n\u001b[2m       - unexpected value \"本机工作模式\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotModeBadge')\nExpected substring: \u001b[32m\"\u001b[7m正\u001b[27m式\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m本机工作模\u001b[27m式\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotModeBadge')\u001b[22m\n\u001b[2m    18 × locator resolved to <span class=\"badge\" id=\"pilotModeBadge\">本机工作模式</span>\u001b[22m\n\u001b[2m       - unexpected value \"本机工作模式\"\u001b[22m\n\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:305:78",
+            "location": {
+              "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 78,
+              "line": 305
+            },
+            "snippet": "  303 |   await fresh(page); const stale=await browser.newPage();stale.on('dialog',d=>d.accept());\n  304 |   try {\n> 305 |     await stale.goto(baseURL);await expect(stale.locator('#pilotModeBadge')).toContainText('正式');\n      |                                                                              ^\n  306 |     await openTools(stale,'#uiSupplierTools'); await openTools(page,'#uiSupplierTools');\n  307 |     await items(page,app);await save(page);const good=await snapshot(page);\n  308 |     await stale.locator('#pilotCounterpartyCode').fill('CP-STALE');await stale.locator('#pilotSupplierName').fill('虚构旧标签');await stale.locator('#pilotAddSupplier').click();"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 78,
+                "line": 305
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotModeBadge')\nExpected substring: \u001b[32m\"\u001b[7m正\u001b[27m式\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7m本机工作模\u001b[27m式\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotModeBadge')\u001b[22m\n\u001b[2m    18 × locator resolved to <span class=\"badge\" id=\"pilotModeBadge\">本机工作模式</span>\u001b[22m\n\u001b[2m       - unexpected value \"本机工作模式\"\u001b[22m\n\n\n  303 |   await fresh(page); const stale=await browser.newPage();stale.on('dialog',d=>d.accept());\n  304 |   try {\n> 305 |     await stale.goto(baseURL);await expect(stale.locator('#pilotModeBadge')).toContainText('正式');\n      |                                                                              ^\n  306 |     await openTools(stale,'#uiSupplierTools'); await openTools(page,'#uiSupplierTools');\n  307 |     await items(page,app);await save(page);const good=await snapshot(page);\n  308 |     await stale.locator('#pilotCounterpartyCode').fill('CP-STALE');await stale.locator('#pilotSupplierName').fill('虚构旧标签');await stale.locator('#pilotAddSupplier').click();\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:305:78"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:53:18.494Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/attachments/server-log-16b2ac5198f01a88471c0834536f7f8449745b02.log"
+            },
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-2.png"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/tmp/srm66-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 78,
+            "line": 305
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-a488f844c6f195c0bccb",
+      "title": "08 bad PDF and damaged ZIP never contaminate saved data / 异常回归",
+      "file": "acceptance.spec.cjs",
+      "line": 319,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 4,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 11659,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:53:44.077Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-08-bad-PDF-and--a971f-contaminate-saved-data-异常回归/attachments/server-log-2203dd217efd0a479ce82251944e84552d4681c2.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-08-bad-PDF-and--a971f-contaminate-saved-data-异常回归/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-35d7c012889a43b2ee8e",
+      "title": "09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台操作",
+      "file": "acceptance.spec.cjs",
+      "line": 334,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 4,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 14013,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:53:56.685Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-09-UI-V1-naviga-1e321-te-do-not-mutate-data-工作台操作/attachments/server-log-8d477f23f21a818929924f9fe76c7344472b181b.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-09-UI-V1-naviga-1e321-te-do-not-mutate-data-工作台操作/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-d299a063098400ef69ce",
+      "title": "10 buyer continuous allocation to items and drawing select without reload / 跨步骤实时同步",
+      "file": "acceptance.spec.cjs",
+      "line": 365,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 4,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 9023,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:54:11.041Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-10-buyer-contin-86e89-lect-without-reload-跨步骤实时同步/attachments/server-log-39f651a85c27b371737473849e7969166b693fd5.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-10-buyer-contin-86e89-lect-without-reload-跨步骤实时同步/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-96e86a6d84c5c7843f47",
+      "title": "11 formal RFQ identity in missing-quote CSV and working export shortcut / 单据追溯",
+      "file": "acceptance.spec.cjs",
+      "line": 390,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 4,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 10852,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:54:20.456Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-11-formal-RFQ-i-a6c3e-orking-export-shortcut-单据追溯/attachments/server-log-7e7a90542dc4b85f4fdeaede1dedeff3cb891078.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-11-formal-RFQ-i-a6c3e-orking-export-shortcut-单据追溯/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-549722d3ec6ef27a6755",
+      "title": "12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离",
+      "file": "acceptance.spec.cjs",
+      "line": 422,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 4,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 35110,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#pilotReportPanel')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotReportPanel')\u001b[22m\n\u001b[2m    18 × locator resolved to <div id=\"pilotReportPanel\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#pilotReportPanel')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotReportPanel')\u001b[22m\n\u001b[2m    18 × locator resolved to <div id=\"pilotReportPanel\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:442:51",
+            "location": {
+              "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 51,
+              "line": 442
+            },
+            "snippet": "  440 |   await expect(page.locator('#pilotReportHint')).toContainText('已发起供应商询价');\n  441 |   await fresh(page);\n> 442 |   await expect(page.locator('#pilotReportPanel')).toBeVisible();\n      |                                                   ^\n  443 |   await expect(page.locator('#pilotReportSupplier option')).toHaveCount(0);\n  444 |   await expect(page.locator('#pilotReportSupplierGroup')).toBeEmpty();\n  445 |   await expect(page.locator('#pilotReportHint')).not.toContainText('已发起');"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 51,
+                "line": 442
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#pilotReportPanel')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotReportPanel')\u001b[22m\n\u001b[2m    18 × locator resolved to <div id=\"pilotReportPanel\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  440 |   await expect(page.locator('#pilotReportHint')).toContainText('已发起供应商询价');\n  441 |   await fresh(page);\n> 442 |   await expect(page.locator('#pilotReportPanel')).toBeVisible();\n      |                                                   ^\n  443 |   await expect(page.locator('#pilotReportSupplier option')).toHaveCount(0);\n  444 |   await expect(page.locator('#pilotReportSupplierGroup')).toBeEmpty();\n  445 |   await expect(page.locator('#pilotReportHint')).not.toContainText('已发起');\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:442:51"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:54:31.925Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/attachments/server-log-de8638139152eab73224b935c9983d8e0a214b91.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/tmp/srm66-product/test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 51,
+            "line": 442
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-3ac0d490a8a60ca7329d",
+      "title": "13 compact laptop item table after import / 1366首屏物料可见",
+      "file": "acceptance.spec.cjs",
+      "line": 452,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 5,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 21422,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#uiProjectDetails')\nExpected: not \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"not toHaveAttribute\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiProjectDetails')\u001b[22m\n\u001b[2m    19 × locator resolved to <details open=\"\" id=\"uiProjectDetails\" class=\"ui-projectDetails\">…</details>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#uiProjectDetails')\nExpected: not \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"not toHaveAttribute\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiProjectDetails')\u001b[22m\n\u001b[2m    19 × locator resolved to <details open=\"\" id=\"uiProjectDetails\" class=\"ui-projectDetails\">…</details>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:458:55",
+            "location": {
+              "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 55,
+              "line": 458
+            },
+            "snippet": "  456 |   await fresh(page);\n  457 |   await items(page,app);\n> 458 |   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');\n      |                                                       ^\n  459 |   await expect(page.locator('#itemIntake')).not.toBeVisible();\n  460 |   async function checkFirstRow(label) {\n  461 |     await page.evaluate(() => window.scrollTo({top:0,behavior:'instant'}));"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 55,
+                "line": 458
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#uiProjectDetails')\nExpected: not \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"not toHaveAttribute\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiProjectDetails')\u001b[22m\n\u001b[2m    19 × locator resolved to <details open=\"\" id=\"uiProjectDetails\" class=\"ui-projectDetails\">…</details>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n\n\n  456 |   await fresh(page);\n  457 |   await items(page,app);\n> 458 |   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');\n      |                                                       ^\n  459 |   await expect(page.locator('#itemIntake')).not.toBeVisible();\n  460 |   async function checkFirstRow(label) {\n  461 |     await page.evaluate(() => window.scrollTo({top:0,behavior:'instant'}));\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:458:55"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:55:10.015Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/attachments/server-log-0341e3b132ef657aaab099f311661cb615729b4f.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/tmp/srm66-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 55,
+            "line": 458
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-5d5113f25198ed26359f",
+      "title": "14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯",
+      "file": "acceptance.spec.cjs",
+      "line": 485,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 6,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 29033,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:55:33.562Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "common-scope-csv-rfq-identity",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/attachments/common-scope-csv-rfq-identity-657e64c4fabfecbddd0d48bba1b133317e3b4921.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/attachments/server-log-47bc06a9404b6ea207ee0e7ef9f34f1bd89bcf8b.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-b0095856581d78ca5165",
+      "title": "15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离",
+      "file": "acceptance.spec.cjs",
+      "line": 546,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 6,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 20322,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:56:04.646Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "supplier-context-cross-rfq",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/attachments/supplier-context-cross-rfq-7d9313f69c811282bbd0dcdc092a8702ff1403c0.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/attachments/server-log-9bd6c2c6ce23c3b55ee7d5937b67ca53f50d9e05.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-b226fb69ab0017eb6517",
+      "title": "44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见",
+      "file": "acceptance.spec.cjs",
+      "line": 590,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 6,
+          "parallelIndex": 0,
+          "status": "timedOut",
+          "duration": 90571,
+          "error": {
+            "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m",
+            "stack": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+          },
+          "errors": [
+            {
+              "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+            },
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 101,
+                "line": 612
+              },
+              "message": "Error: locator.click: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#uiProjectDetails').locator(':scope > summary')\u001b[22m\n\u001b[2m    - locator resolved to <summary title=\"已自动保存第 2 版（6:56:35 AM）\">…</summary>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    146 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\n\n  610 |   await openTools(page,'#uiDataTools');\n  611 |   const projectDrawer=page.locator('#uiProjectDetails');\n> 612 |   if(await projectDrawer.evaluate(node=>node.open)) await projectDrawer.locator(':scope > summary').click();\n      |                                                                                                     ^\n  613 |   await expect(projectDrawer).not.toHaveAttribute('open','');\n  614 |   const button=page.locator('#pilotS4DownloadFull');\n  615 |   await button.scrollIntoViewIfNeeded();\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:612:101"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:56:25.660Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/attachments/server-log-c7b6717cc643798c0ab9a6126e0163d4274709a4.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/tmp/srm66-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-77967790303a41d57ea5",
+      "title": "45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出",
+      "file": "acceptance.spec.cjs",
+      "line": 641,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 7,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 13014,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:57:57.936Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "P2-first-supplier-package",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/attachments/P2-first-supplier-package-a5c10dd971bf224c1f81bc6c923ccf71146260b9.zip"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/attachments/server-log-30b1efddc5e7e5b5786a80af9880a23349f0bc93.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-a07463745d96e93af5ef",
+      "title": "46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分",
+      "file": "acceptance.spec.cjs",
+      "line": 675,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 7,
+          "parallelIndex": 0,
+          "status": "timedOut",
+          "duration": 90729,
+          "error": {
+            "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m",
+            "stack": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+          },
+          "errors": [
+            {
+              "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+            },
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 22,
+                "line": 699
+              },
+              "message": "Error: locator.uncheck: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#sfItemBody input[data-sfi]').first()\u001b[22m\n\u001b[2m    - locator resolved to <input checked type=\"checkbox\" data-sfi=\"RFQ-L00001\"/>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    155 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\n\n  697 |   const allocatedBox=page.locator('#sfItemBody input[data-sfi]').first();\n  698 |   await expect(allocatedBox).toBeChecked();\n> 699 |   await allocatedBox.uncheck();\n      |                      ^\n  700 |   expect((await snapshot(page)).state.assignments).not.toEqual(before.state.assignments);\n  701 |   // 中文：change 事件与捕获阶段结束后应识别真修改；不用点击返回同一瞬间作脆弱断言。\n  702 |   // English: Wait for post-change signature reconciliation; never infer a dirty flag from clicks.\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:699:22"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:58:12.989Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/attachments/server-log-272e4b8f57d877812b9269cd4833b02bdceccfca.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/tmp/srm66-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-a68af19a620ee518497e",
+      "title": "ERP01: canonical aliases, optional original columns and conflicting identities are explicit",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 46,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 8,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 1926,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:59:45.706Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP01-c-e459c-ing-identities-are-explicit/attachments/erp-server-log-6b7193064565ad603d73c5db74089ee008cdae70.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP01-c-e459c-ing-identities-are-explicit/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-f27d4af0c977a2cf36a0",
+      "title": "ERP02: real XLSX keeps metadata, separates same code with different specs, and survives SQLite refresh",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 63,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 8,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 6737,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:59:48.139Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-items",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP02-r-440bf-and-survives-SQLite-refresh/attachments/erp-items-c7883cd8d649c91bead155896b7053e8f05a4b88.png"
+            },
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP02-r-440bf-and-survives-SQLite-refresh/attachments/erp-server-log-6b8ac2f26502395aedb4b9d30bf262555ab153d3.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP02-r-440bf-and-survives-SQLite-refresh/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-09e36311280be15fec7f",
+      "title": "ERP03: equal specifications merge quantity; conflicting canonical and alias header blocks commit",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 95,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 8,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 2959,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:59:55.129Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP03-e-e77a0--alias-header-blocks-commit/attachments/erp-server-log-9ccf979efc846f3c2a340ac32d1e3615b7ca9056.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP03-e-e77a0--alias-header-blocks-commit/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-db10b92e22e207651131",
+      "title": "ERP05: wide 220-column ERP source survives native XLSX importer and remains internal metadata",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 116,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 8,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 2870,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T06:59:58.291Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP05-w-02d2d-d-remains-internal-metadata/attachments/erp-server-log-a9e16c347d672f95e0e7528d63dfc7ffbbcdc0bc.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP05-w-02d2d-d-remains-internal-metadata/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-be0f7e132a3d2fc3798a",
+      "title": "ERP04: new ERP fields are searchable/editable, internal-vs-supplier export boundaries hold",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 139,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 8,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 9217,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:00:01.300Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP04-n-799d5-lier-export-boundaries-hold/attachments/erp-server-log-36e4448d1e97ebdc167896333b7b24fd68d4444e.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP04-n-799d5-lier-export-boundaries-hold/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-37754402a4a3c627cd28",
+      "title": "ERP06: repeated internal XLSX export and UI import keep current/source RFQ IDs distinct",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 212,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 8,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 18171,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:00:11.137Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP06-r-958ca-ent-source-RFQ-IDs-distinct/attachments/erp-server-log-4be083a0c8f6732baea81ebdb4cf72613f239f4a.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP06-r-958ca-ent-source-RFQ-IDs-distinct/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-c2aa5e1b31a668f3a80d",
+      "title": "ERP07: specifications visibly distinguish drawing candidates and supplier allocation",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 263,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 8,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 3629,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:00:29.818Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "pr15-spec-decisions",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP07-s-ddc7e-tes-and-supplier-allocation/attachments/pr15-spec-decisions-cb2b7640af6758ff83dfb2690d181ed85299a5b8.png"
+            },
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP07-s-ddc7e-tes-and-supplier-allocation/attachments/erp-server-log-3935c4560baf2b47bc17691442325583b2f1fdf9.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP07-s-ddc7e-tes-and-supplier-allocation/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-9081b6fa56cdce17a83b",
+      "title": "ERP08: confirmed cannot supply remains visible in comparison, not a zero-priced offer",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 291,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 8,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 8552,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:00:33.822Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP08-c-89e25-son-not-a-zero-priced-offer/attachments/erp-server-log-87ead7391fc43e2bb0516fdf3fe636be774dda63.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP08-c-89e25-son-not-a-zero-priced-offer/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-0f10040befdadb775bd8",
+      "title": "ERP09: second-round scope shows specification and preserves selected line identities",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 338,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 8,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 21316,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#quoteTable')\nExpected substring: \u001b[32m\"规格：120W\"\u001b[39m\nReceived string:    \u001b[31m\"存货历史采购价（未接入）虚构供应商A选择全部适用系统建议 / 人工决定缺图纸ERP-A1 · 虚构电机 · 120W—（未接入）¥9.00交期 · MOQ · 轮次数量 10 · 交期 3 天 · MOQ 1 · 第1轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-A1 · 虚构电机 · 220W—（未接入）¥10.00交期 · MOQ · 轮次数量 3 · 交期 4 天 · MOQ 1 · 第2轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-B2 · 虚构轴套 · M16—（未接入）未报价未选择\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#quoteTable')\u001b[22m\n\u001b[2m    19 × locator resolved to <table class=\"table\" id=\"quoteTable\">…</table>\u001b[22m\n\u001b[2m       - unexpected value \"存货历史采购价（未接入）虚构供应商A选择全部适用系统建议 / 人工决定缺图纸ERP-A1 · 虚构电机 · 120W—（未接入）¥9.00交期 · MOQ · 轮次数量 10 · 交期 3 天 · MOQ 1 · 第1轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-A1 · 虚构电机 · 220W—（未接入）¥10.00交期 · MOQ · 轮次数量 3 · 交期 4 天 · MOQ 1 · 第2轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-B2 · 虚构轴套 · M16—（未接入）未报价未选择\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#quoteTable')\nExpected substring: \u001b[32m\"规格：120W\"\u001b[39m\nReceived string:    \u001b[31m\"存货历史采购价（未接入）虚构供应商A选择全部适用系统建议 / 人工决定缺图纸ERP-A1 · 虚构电机 · 120W—（未接入）¥9.00交期 · MOQ · 轮次数量 10 · 交期 3 天 · MOQ 1 · 第1轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-A1 · 虚构电机 · 220W—（未接入）¥10.00交期 · MOQ · 轮次数量 3 · 交期 4 天 · MOQ 1 · 第2轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-B2 · 虚构轴套 · M16—（未接入）未报价未选择\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#quoteTable')\u001b[22m\n\u001b[2m    19 × locator resolved to <table class=\"table\" id=\"quoteTable\">…</table>\u001b[22m\n\u001b[2m       - unexpected value \"存货历史采购价（未接入）虚构供应商A选择全部适用系统建议 / 人工决定缺图纸ERP-A1 · 虚构电机 · 120W—（未接入）¥9.00交期 · MOQ · 轮次数量 10 · 交期 3 天 · MOQ 1 · 第1轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-A1 · 虚构电机 · 220W—（未接入）¥10.00交期 · MOQ · 轮次数量 3 · 交期 4 天 · MOQ 1 · 第2轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-B2 · 虚构轴套 · M16—（未接入）未报价未选择\"\u001b[22m\n\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:402:45",
+            "location": {
+              "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs",
+              "column": 45,
+              "line": 402
+            },
+            "snippet": "  400 |   expect(saved.find(r=>r.roundNo===2)?.lines.map(x=>x.lineId)).toEqual([m220.lineId]);\n  401 |   await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();\n> 402 |   await expect(page.locator('#quoteTable')).toContainText('规格：120W');\n      |                                             ^\n  403 |   await expect(page.locator('#quoteTable')).toContainText('规格：220W');\n  404 |   await expect(page.locator('#quoteTable')).toContainText('¥9.00');\n  405 |   await expect(page.locator('#quoteTable')).toContainText('¥10.00');"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs",
+                "column": 45,
+                "line": 402
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#quoteTable')\nExpected substring: \u001b[32m\"规格：120W\"\u001b[39m\nReceived string:    \u001b[31m\"存货历史采购价（未接入）虚构供应商A选择全部适用系统建议 / 人工决定缺图纸ERP-A1 · 虚构电机 · 120W—（未接入）¥9.00交期 · MOQ · 轮次数量 10 · 交期 3 天 · MOQ 1 · 第1轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-A1 · 虚构电机 · 220W—（未接入）¥10.00交期 · MOQ · 轮次数量 3 · 交期 4 天 · MOQ 1 · 第2轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-B2 · 虚构轴套 · M16—（未接入）未报价未选择\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#quoteTable')\u001b[22m\n\u001b[2m    19 × locator resolved to <table class=\"table\" id=\"quoteTable\">…</table>\u001b[22m\n\u001b[2m       - unexpected value \"存货历史采购价（未接入）虚构供应商A选择全部适用系统建议 / 人工决定缺图纸ERP-A1 · 虚构电机 · 120W—（未接入）¥9.00交期 · MOQ · 轮次数量 10 · 交期 3 天 · MOQ 1 · 第1轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-A1 · 虚构电机 · 220W—（未接入）¥10.00交期 · MOQ · 轮次数量 3 · 交期 4 天 · MOQ 1 · 第2轮/第1版系统建议 · 待人工确认虚构供应商A缺图纸ERP-B2 · 虚构轴套 · M16—（未接入）未报价未选择\"\u001b[22m\n\n\n  400 |   expect(saved.find(r=>r.roundNo===2)?.lines.map(x=>x.lineId)).toEqual([m220.lineId]);\n  401 |   await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();\n> 402 |   await expect(page.locator('#quoteTable')).toContainText('规格：120W');\n      |                                             ^\n  403 |   await expect(page.locator('#quoteTable')).toContainText('规格：220W');\n  404 |   await expect(page.locator('#quoteTable')).toContainText('¥9.00');\n  405 |   await expect(page.locator('#quoteTable')).toContainText('¥10.00');\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs:402:45"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:00:42.867Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "pr16-negotiation-scope",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/attachments/pr16-negotiation-scope-98dcade5a395e4468cc2e9041b537a6b49a0555f.png"
+            },
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/test-failed-1.png"
+            },
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/attachments/erp-server-log-719234d5915b6a37a8197dc967ee1ed44775d09c.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/erp-core-alignment.spec.cjs",
+            "column": 45,
+            "line": 402
+          }
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-94b8c5bdfc2e08e37a5a",
+      "title": "ERP10: settings provide three correct XLSX import templates and one header-aware CSV template",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 411,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 6661,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:01:06.426Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "settings-import-templates",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP10-s-2b653-e-header-aware-CSV-template/attachments/settings-import-templates-983ecd2047fa1c02c44cbf275c7617444e2de618.png"
+            },
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP10-s-2b653-e-header-aware-CSV-template/attachments/erp-server-log-3ea9369bb647b48407d9a0f9bea4c34d51ab83d1.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP10-s-2b653-e-header-aware-CSV-template/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-2385039051a129317158",
+      "title": "ERP11: rejected and canceled material previews do not alter line sequence or saved workspace",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 525,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 20461,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:01:14.078Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP11-r-74660-sequence-or-saved-workspace/attachments/erp-server-log-162e21502823da15e4701b75059079fb06a543a8.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/erp-core-alignment-ERP11-r-74660-sequence-or-saved-workspace/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5e985e4de76c97ef5c0f-080fcb9946a910db2cd8",
+      "title": "UAT-01 categories follow active imported RFQ in both allocation views",
+      "file": "uat-13-fixes.spec.cjs",
+      "line": 64,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 6257,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:01:35.281Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "uat-fixes-server",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/uat-13-fixes-UAT-01-catego-59dcf-FQ-in-both-allocation-views/attachments/uat-fixes-server-4517244b99fd2fd4b9f2bdcba3ddacd2d8f93d70.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/uat-13-fixes-UAT-01-catego-59dcf-FQ-in-both-allocation-views/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5e985e4de76c97ef5c0f-ea386f9da37a14f81eb5",
+      "title": "UAT-02 manual, pasted and CSV file quotation sources remain distinct in stored state",
+      "file": "uat-13-fixes.spec.cjs",
+      "line": 89,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 8578,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:01:41.839Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "uat-fixes-server",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/uat-13-fixes-UAT-02-manual-0d170-in-distinct-in-stored-state/attachments/uat-fixes-server-f38c5f2fbb1be3367ddfa74c9832b5a524a184e9.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/uat-13-fixes-UAT-02-manual-0d170-in-distinct-in-stored-state/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5e985e4de76c97ef5c0f-aca2fa19ee9b0e76c757",
+      "title": "UAT-03 refused restore is visible within current backup section while project drawer collapsed",
+      "file": "uat-13-fixes.spec.cjs",
+      "line": 138,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 3036,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:01:51.021Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "uat-fixes-server",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/attachments/uat-fixes-server-06bd05b8b54be63fa3d763604a8f65e7fcd7bbce.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5e985e4de76c97ef5c0f-bf5c5dc4c7ee263b21f5",
+      "title": "UAT-04 item editor Escape, dirty cancel and keyboard focus confinement",
+      "file": "uat-13-fixes.spec.cjs",
+      "line": 152,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 3745,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:01:54.327Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "uat-fixes-server",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/uat-13-fixes-UAT-04-item-e-322c0--keyboard-focus-confinement/attachments/uat-fixes-server-3507ee16fac39ef9b148a67078882cc3f2e12037.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/uat-13-fixes-UAT-04-item-e-322c0--keyboard-focus-confinement/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5e985e4de76c97ef5c0f-ea263c36d3140ac39e16",
+      "title": "UAT-07 drawing guidance reflects currently selected formal RFQ material",
+      "file": "uat-13-fixes.spec.cjs",
+      "line": 179,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 2627,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:01:58.315Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "uat-fixes-server",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/uat-13-fixes-UAT-07-drawin-4ee65-elected-formal-RFQ-material/attachments/uat-fixes-server-ae64a61d9081878e835c7af7484267d23753fe17.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/uat-13-fixes-UAT-07-drawin-4ee65-elected-formal-RFQ-material/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-fa7f1f9c783409ca0ebd",
+      "title": "UX quote: focused intake, non-destructive refresh, compact rows and details / 报价回收安全刷新",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 69,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 5896,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:02:01.125Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-quote--958c8-t-rows-and-details-报价回收安全刷新/attachments/ux-structural-server-log-aa7febdc5fa4b3cdc5962f74d2ea46b4ff81e969.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-quote--958c8-t-rows-and-details-报价回收安全刷新/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-fb3222e1cb7a1341a6af",
+      "title": "UX comparison: decision-first disclosure, priced details and workspace status / 比价与状态层级",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 107,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 6210,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:02:07.608Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-compar-69322-nd-workspace-status-比价与状态层级/attachments/ux-structural-server-log-a5c580229c104bc917f8ae583cdda51c6d8cbc41.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-compar-69322-nd-workspace-status-比价与状态层级/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-165bc7283c257ea8db3a",
+      "title": "UX pending-only: filtered pagination and award state / 待决定筛选真实分页",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 148,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 5634,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:02:14.401Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/attachments/ux-structural-server-log-4a23fa14f460e46b199dd06df0788e1af10e0c65.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-4c044cafe2f36c404146",
+      "title": "UX manual-only: buyer-approved amount distinct from suggested totals / 人工定标金额独立显示",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 183,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 5438,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:02:20.528Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/attachments/ux-structural-server-log-8e5159c0a6773e000528b35af1ed2b17a926cb47.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-b8397d8e6d9dbfe009cf",
+      "title": "UX project title: Chinese label, rename, history and reload / 询价名称真实保存",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 217,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "timedOut",
+          "duration": 90080,
+          "error": {
+            "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m",
+            "stack": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+          },
+          "errors": [
+            {
+              "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+            },
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+                "column": 90,
+                "line": 40
+              },
+              "message": "Error: locator.click: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.ui-workNav .tab[data-tab=\"project\"]')\u001b[22m\n\n\n  38 | const snapshot=page=>page.evaluate(()=>window.SRMPilot.snapshot());\n  39 | async function open(page,id){\n> 40 |   if(id==='#uiProjectDetails')await page.locator('.ui-workNav .tab[data-tab=\"project\"]').click();\n     |                                                                                          ^\n  41 |   if(id==='#uiDataTools'||id==='#srmUxStatusDetails')await page.locator('#uiAdminToggle').click();\n  42 |   if(id==='#uiSupplierTools')await page.locator('.ui-workNav .tab[data-tab=\"assign\"]').click();\n  43 |   const drawer=page.locator(id);\n    at open (/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:40:90)\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:219:9"
+            }
+          ],
+          "stdout": [],
+          "stderr": [],
+          "retry": 0,
+          "startTime": "2026-10-26T07:02:26.394Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-projec-8461c-history-and-reload-询价名称真实保存/test-failed-1.png"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-projec-8461c-history-and-reload-询价名称真实保存/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-5f513e6d244adb41b132",
+      "title": "UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 257,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 10,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 15379,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.ui-workNav .tab')\nExpected: \u001b[32m5\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('.ui-workNav .tab')\u001b[22m\n\u001b[2m    18 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.ui-workNav .tab')\nExpected: \u001b[32m5\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('.ui-workNav .tab')\u001b[22m\n\u001b[2m    18 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:260:24",
+            "location": {
+              "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+              "column": 24,
+              "line": 260
+            },
+            "snippet": "  258 |   const errors=[];page.on('pageerror',e=>errors.push(e.message));\n  259 |   const stages=page.locator('.ui-workNav .tab');\n> 260 |   await expect(stages).toHaveCount(5);\n      |                        ^\n  261 |   await expect(stages.first()).toHaveText('① 询价项目');\n  262 |   await expect(page.locator('#project')).toHaveClass(/active/);\n  263 |   await expect(page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"project\"]')).toHaveAttribute('aria-current','page');"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+                "column": 24,
+                "line": 260
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.ui-workNav .tab')\nExpected: \u001b[32m5\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('.ui-workNav .tab')\u001b[22m\n\u001b[2m    18 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n  258 |   const errors=[];page.on('pageerror',e=>errors.push(e.message));\n  259 |   const stages=page.locator('.ui-workNav .tab');\n> 260 |   await expect(stages).toHaveCount(5);\n      |                        ^\n  261 |   await expect(stages.first()).toHaveText('① 询价项目');\n  262 |   await expect(page.locator('#project')).toHaveClass(/active/);\n  263 |   await expect(page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"project\"]')).toHaveAttribute('aria-current','page');\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:260:24"
+            }
+          ],
+          "stdout": [],
+          "stderr": [],
+          "retry": 0,
+          "startTime": "2026-10-26T07:03:57.953Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-projec-12a8a-ls-stage-switching-询价项目独立首页/test-failed-1.png"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-projec-12a8a-ls-stage-switching-询价项目独立首页/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+            "column": 24,
+            "line": 260
+          }
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-3b6aaa2b6297f6ef9990",
+      "title": "UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 286,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 11,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 15527,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#project')\nExpected pattern: \u001b[32m/active/\u001b[39m\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveClass\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#project')\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#project')\nExpected pattern: \u001b[32m/active/\u001b[39m\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveClass\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#project')\u001b[22m\n\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:288:42",
+            "location": {
+              "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+              "column": 42,
+              "line": 288
+            },
+            "snippet": "  286 | test('UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮',async({page})=>{\n  287 |   const errors=[];page.on('pageerror',e=>errors.push(e.message));\n> 288 |   await expect(page.locator('#project')).toHaveClass(/active/);\n      |                                          ^\n  289 |   await expect(page.locator('#pilotNewWorkspace')).toHaveText('新建');\n  290 |   await expect(page.locator('#pilotSaveWorkspace')).toHaveText('保存');\n  291 |   await expect(page.locator('#project #pilotS4DownloadFull')).toHaveCount(0);"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+                "column": 42,
+                "line": 288
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#project')\nExpected pattern: \u001b[32m/active/\u001b[39m\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveClass\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#project')\u001b[22m\n\n\n  286 | test('UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮',async({page})=>{\n  287 |   const errors=[];page.on('pageerror',e=>errors.push(e.message));\n> 288 |   await expect(page.locator('#project')).toHaveClass(/active/);\n      |                                          ^\n  289 |   await expect(page.locator('#pilotNewWorkspace')).toHaveText('新建');\n  290 |   await expect(page.locator('#pilotSaveWorkspace')).toHaveText('保存');\n  291 |   await expect(page.locator('#project #pilotS4DownloadFull')).toHaveCount(0);\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:288:42"
+            }
+          ],
+          "stdout": [],
+          "stderr": [],
+          "retry": 0,
+          "startTime": "2026-10-26T07:04:16.185Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-admin--b8629-concise-labels-独立备份页与简短项目按钮/test-failed-1.png"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-admin--b8629-concise-labels-独立备份页与简短项目按钮/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+            "column": 42,
+            "line": 288
+          }
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-aec3e3815a53ed3f90c8",
+      "title": "UX item rows: single-line drawing badge and compact row / 物料行高及缺图纸标识",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 312,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 12,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 20134,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#itemBody tr').first()\nTimeout: 15000ms\n\u001b[32m- Expected substring  - 1\u001b[39m\n\u001b[31m+ Received string     + 7\u001b[39m\n\n\u001b[32m- TST-001\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+ \u001b[43m    \u001b[49m\u001b[39m\n\u001b[31m+     RFQ-L00012TST-012缺图纸\u001b[39m\n\u001b[31m+     虚构物料12虚构类别13\u001b[39m\n\u001b[31m+     件2\u001b[39m\n\u001b[31m+ \u001b[43m    \u001b[49m\u001b[39m\n\u001b[31m+ \u001b[43m  \u001b[49m\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#itemBody tr').first()\u001b[22m\n\u001b[2m    18 × locator resolved to <tr title=\"双击编辑此询价行\" data-edit-line=\"RFQ-L00012\">…</tr>\u001b[22m\n\u001b[2m       - unexpected value \"\u001b[22m\n\u001b[2m    \u001b[22m\n\u001b[2m    RFQ-L00012TST-012缺图纸\u001b[22m\n\u001b[2m    虚构物料12虚构类别13\u001b[22m\n\u001b[2m    件2\u001b[22m\n\u001b[2m    \u001b[22m\n\u001b[2m  \"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#itemBody tr').first()\nTimeout: 15000ms\n\u001b[32m- Expected substring  - 1\u001b[39m\n\u001b[31m+ Received string     + 7\u001b[39m\n\n\u001b[32m- TST-001\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+ \u001b[43m    \u001b[49m\u001b[39m\n\u001b[31m+     RFQ-L00012TST-012缺图纸\u001b[39m\n\u001b[31m+     虚构物料12虚构类别13\u001b[39m\n\u001b[31m+     件2\u001b[39m\n\u001b[31m+ \u001b[43m    \u001b[49m\u001b[39m\n\u001b[31m+ \u001b[43m  \u001b[49m\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#itemBody tr').first()\u001b[22m\n\u001b[2m    18 × locator resolved to <tr title=\"双击编辑此询价行\" data-edit-line=\"RFQ-L00012\">…</tr>\u001b[22m\n\u001b[2m       - unexpected value \"\u001b[22m\n\u001b[2m    \u001b[22m\n\u001b[2m    RFQ-L00012TST-012缺图纸\u001b[22m\n\u001b[2m    虚构物料12虚构类别13\u001b[22m\n\u001b[2m    件2\u001b[22m\n\u001b[2m    \u001b[22m\n\u001b[2m  \"\u001b[22m\n\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:326:54",
+            "location": {
+              "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+              "column": 54,
+              "line": 326
+            },
+            "snippet": "  324 |   const height=await rows.first().evaluate(el=>el.getBoundingClientRect().height);\n  325 |   expect(height).toBeLessThanOrEqual(40);\n> 326 |   await expect(page.locator('#itemBody tr').first()).toContainText('TST-001');\n      |                                                      ^\n  327 |   await missing.first().click();\n  328 |   await expect(page.locator('#drawingModal')).toHaveClass(/open/);\n  329 |   expect(errors).toEqual([]);"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+                "column": 54,
+                "line": 326
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#itemBody tr').first()\nTimeout: 15000ms\n\u001b[32m- Expected substring  - 1\u001b[39m\n\u001b[31m+ Received string     + 7\u001b[39m\n\n\u001b[32m- TST-001\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+ \u001b[43m    \u001b[49m\u001b[39m\n\u001b[31m+     RFQ-L00012TST-012缺图纸\u001b[39m\n\u001b[31m+     虚构物料12虚构类别13\u001b[39m\n\u001b[31m+     件2\u001b[39m\n\u001b[31m+ \u001b[43m    \u001b[49m\u001b[39m\n\u001b[31m+ \u001b[43m  \u001b[49m\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#itemBody tr').first()\u001b[22m\n\u001b[2m    18 × locator resolved to <tr title=\"双击编辑此询价行\" data-edit-line=\"RFQ-L00012\">…</tr>\u001b[22m\n\u001b[2m       - unexpected value \"\u001b[22m\n\u001b[2m    \u001b[22m\n\u001b[2m    RFQ-L00012TST-012缺图纸\u001b[22m\n\u001b[2m    虚构物料12虚构类别13\u001b[22m\n\u001b[2m    件2\u001b[22m\n\u001b[2m    \u001b[22m\n\u001b[2m  \"\u001b[22m\n\n\n  324 |   const height=await rows.first().evaluate(el=>el.getBoundingClientRect().height);\n  325 |   expect(height).toBeLessThanOrEqual(40);\n> 326 |   await expect(page.locator('#itemBody tr').first()).toContainText('TST-001');\n      |                                                      ^\n  327 |   await missing.first().click();\n  328 |   await expect(page.locator('#drawingModal')).toHaveClass(/open/);\n  329 |   expect(errors).toEqual([]);\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:326:54"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:04:33.866Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/test-failed-1.png"
+            },
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/attachments/ux-structural-server-log-d373e7a5cd13a250911538b4ee434bc0faf0c138.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+            "column": 54,
+            "line": 326
+          }
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-8fe0749560277682e466",
+      "title": "UX allocation: shared compact material list and missing drawing / 供应商物料列表紧凑布局",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 335,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 5351,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:04:56.186Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-alloca-6ed05-missing-drawing-供应商物料列表紧凑布局/attachments/ux-structural-server-log-8d373c80205d6977ac0c52e1c72d22f1435106a7.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-alloca-6ed05-missing-drawing-供应商物料列表紧凑布局/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "be37453cde8da053d6b1-36d5b34cd5c3bfbab825",
+      "title": "UI V2 B1 real workspace and visual layout 1366x768",
+      "file": "ui-v2-b1.spec.cjs",
+      "line": 53,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 10067,
+          "errors": [],
+          "stdout": [
+            {
+              "text": "SRM_UI_V2_B1_METRIC={\"viewport\":{\"width\":1366,\"height\":768},\"documentWidth\":1366,\"scrollY\":0,\"sidebar\":{\"width\":224,\"height\":768},\"tableTop\":0,\"firstRowTop\":516.40625,\"firstRowBottom\":548.40625,\"bodyFont\":\"14px\",\"tableFont\":\"12.5px\"}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:05:02.246Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "SRM-V2-B1-1366-items",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/attachments/SRM-V2-B1-1366-items-4da40150525debcfb5fcd65609b7709fc0985af6.png"
+            },
+            {
+              "name": "ui-v2-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/attachments/ui-v2-server-log-c919e50c9d76efd2478a859646672ea9ae2da7ae.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "be37453cde8da053d6b1-7edc718898954fe26e5f",
+      "title": "UI V2 B1 real workspace and visual layout 1600x900",
+      "file": "ui-v2-b1.spec.cjs",
+      "line": 53,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 15689,
+          "errors": [],
+          "stdout": [
+            {
+              "text": "SRM_UI_V2_B1_METRIC={\"viewport\":{\"width\":1600,\"height\":900},\"documentWidth\":1600,\"scrollY\":0,\"sidebar\":{\"width\":224,\"height\":900},\"tableTop\":0,\"firstRowTop\":575.828125,\"firstRowBottom\":607.828125,\"bodyFont\":\"14px\",\"tableFont\":\"12.5px\"}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:05:13.079Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "SRM-V2-B1-1600-items",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/attachments/SRM-V2-B1-1600-items-8e3a94e3ed90b7c979c139f36e7fdb439cf972a7.png"
+            },
+            {
+              "name": "ui-v2-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/attachments/ui-v2-server-log-a804afd306760fdde030f17b05fa11fabad04089.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40b54dbc01a542bfc0bb-78a47f9b824463129de2",
+      "title": "B2 allocation real-browser 1366x768",
+      "file": "ui-v2-b2.spec.cjs",
+      "line": 44,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 6964,
+          "errors": [],
+          "stdout": [
+            {
+              "text": "SRM_UI_V2_B2_METRIC={\"width\":1366,\"height\":768,\"documentWidth\":1366,\"scrollY\":0,\"navBottom\":225.34375,\"rowTop\":679.046875,\"rowBottom\":711.046875}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:05:29.189Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "supplier-first-1366",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b2-B2-allocation-real-browser-1366x768/attachments/supplier-first-1366-5ae66d12fbf6dd84f6fb1fd97e10bbb6e9bb3bc4.png"
+            },
+            {
+              "name": "item-first-1366",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b2-B2-allocation-real-browser-1366x768/attachments/item-first-1366-a9232ea0b9c6a09fd22d1116216aa0227152763b.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b2-B2-allocation-real-browser-1366x768/attachments/server-log-327324a497f4023691e90854c70f09f8657560aa.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b2-B2-allocation-real-browser-1366x768/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40b54dbc01a542bfc0bb-7d165276071833c85100",
+      "title": "B2 allocation real-browser 1600x900",
+      "file": "ui-v2-b2.spec.cjs",
+      "line": 44,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 6842,
+          "errors": [],
+          "stdout": [
+            {
+              "text": "SRM_UI_V2_B2_METRIC={\"width\":1600,\"height\":900,\"documentWidth\":1600,\"scrollY\":0,\"navBottom\":238.875,\"rowTop\":710.46875,\"rowBottom\":742.46875}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:05:36.699Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "supplier-first-1600",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b2-B2-allocation-real-browser-1600x900/attachments/supplier-first-1600-57094e374646b174361e2bd355a9c91f5facc368.png"
+            },
+            {
+              "name": "item-first-1600",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b2-B2-allocation-real-browser-1600x900/attachments/item-first-1600-07f4da267d2ef287a3d0a432e761040fe3733044.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b2-B2-allocation-real-browser-1600x900/attachments/server-log-77b4c21f87b5e5f7b39b2cfa5fd7caa885c25aa1.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b2-B2-allocation-real-browser-1600x900/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "16f3aa108219d9d3c2c6-17755cc7fd0fdaffb3bc",
+      "title": "B3 quote and comparison with real SQLite 1366x768",
+      "file": "ui-v2-b3.spec.cjs",
+      "line": 49,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "timedOut",
+          "duration": 91062,
+          "error": {
+            "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m",
+            "stack": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+          },
+          "errors": [
+            {
+              "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+            },
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+                "column": 69,
+                "line": 46
+              },
+              "message": "Error: locator.click: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#uiProjectDetails').locator(':scope > summary')\u001b[22m\n\u001b[2m    - locator resolved to <summary title=\"检测到业务数据修改，等待操作结束\">…</summary>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    157 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\n\n  44 | async function close(page,id){\n  45 |  const d=page.locator(id);\n> 46 |  if(await d.evaluate(n=>n.open))await d.locator(':scope > summary').click();\n     |                                                                     ^\n  47 | }\n  48 | for (const viewport of [{width:1366,height:768},{width:1600,height:900}]){\n  49 | test('B3 quote and comparison with real SQLite '+viewport.width+'x'+viewport.height,async({page,app},info)=>{\n    at close (/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:46:69)\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:97:2"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:05:44.028Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/attachments/server-log-bcc27737077ccc33ba0220b9a8347ebbd5847209.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "16f3aa108219d9d3c2c6-39854897cd4822bbebc9",
+      "title": "B3 quote and comparison with real SQLite 1600x900",
+      "file": "ui-v2-b3.spec.cjs",
+      "line": 49,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "timedOut",
+          "duration": 90740,
+          "error": {
+            "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m",
+            "stack": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+          },
+          "errors": [
+            {
+              "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+            },
+            {
+              "location": {
+                "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+                "column": 69,
+                "line": 46
+              },
+              "message": "Error: locator.click: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#uiProjectDetails').locator(':scope > summary')\u001b[22m\n\u001b[2m    - locator resolved to <summary title=\"检测到业务数据修改，等待操作结束\">…</summary>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    156 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is not visible\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\n\n  44 | async function close(page,id){\n  45 |  const d=page.locator(id);\n> 46 |  if(await d.evaluate(n=>n.open))await d.locator(':scope > summary').click();\n     |                                                                     ^\n  47 | }\n  48 | for (const viewport of [{width:1366,height:768},{width:1600,height:900}]){\n  49 | test('B3 quote and comparison with real SQLite '+viewport.width+'x'+viewport.height,async({page,app},info)=>{\n    at close (/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:46:69)\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:97:2"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:07:17.990Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/attachments/server-log-8894f094521915df952876c2f95a6741b7465452.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "16f3aa108219d9d3c2c6-ff84a7b28d3cde58bcfc",
+      "title": "B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态",
+      "file": "ui-v2-b3.spec.cjs",
+      "line": 142,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 15,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 10627,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:08:51.204Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/attachments/server-log-4453830819b09325f5cce1d79aa424bf756b480b.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "36cd1b3ff825093287b7-d568f2875261860c1b5c",
+      "title": "EXPLORATORY: desktop stages, control visibility and geometry 1024x768",
+      "file": "ui-v2-exploratory.spec.cjs",
+      "line": 87,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 15,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 8077,
+          "errors": [],
+          "stdout": [
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1094.40625,\"bottom\":1094.40625,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":224.34375,\"width\":926,\"height\":786.0625,\"bottom\":1010.40625,\"right\":1008},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":57,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1159.296875,\"bottom\":1159.296875,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":224.34375,\"width\":926,\"height\":850.953125,\"bottom\":1075.296875,\"right\":1008},\"table\":{\"x\":92,\"y\":611.90625,\"width\":577.390625,\"height\":411.390625,\"bottom\":1023.296875,\"right\":669.390625},\"tablewrap\":{\"x\":91,\"y\":610.90625,\"width\":579.390625,\"height\":413.390625,\"bottom\":1024.296875,\"right\":670.390625},\"firstDataRow\":{\"x\":92,\"y\":640.296875,\"width\":577.390625,\"height\":32,\"bottom\":672.296875,\"right\":669.390625},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":54,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1632.890625,\"bottom\":1632.890625,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":224.34375,\"width\":926,\"height\":1324.546875,\"bottom\":1548.890625,\"right\":1008},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":82,\"y\":526.015625,\"width\":926,\"height\":431,\"bottom\":957.015625,\"right\":1008},\"quoteReview\":{\"x\":82,\"y\":969.015625,\"width\":926,\"height\":408.78125,\"bottom\":1377.796875,\"right\":1008},\"confirmButton\":{\"x\":877.984375,\"y\":1325.796875,\"width\":114.015625,\"height\":38,\"bottom\":1363.796875,\"right\":992},\"tableScrollable\":false,\"panelButtons\":27,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quotes\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1358.625,\"bottom\":1358.625,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":224.34375,\"width\":926,\"height\":1050.28125,\"bottom\":1274.625,\"right\":1008},\"table\":{\"x\":101,\"y\":816.59375,\"width\":888,\"height\":39.84375,\"bottom\":856.4375,\"right\":989},\"tablewrap\":{\"x\":100,\"y\":815.59375,\"width\":890,\"height\":41.84375,\"bottom\":857.4375,\"right\":990},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":6,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"settings\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1195.578125,\"bottom\":1195.578125,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":224.34375,\"width\":926,\"height\":887.234375,\"bottom\":1111.578125,\"right\":1008},\"table\":null,\"tablewrap\":null,\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":7,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:09:02.901Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "explore-1024-items",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-items-e3201258eae4d1852609015432b211105c54f28b.png"
+            },
+            {
+              "name": "explore-1024-assign",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-assign-a0213a97272babf15eb54c6a4b5f8ab3ac5fb7e1.png"
+            },
+            {
+              "name": "explore-1024-quoteImport",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-quoteImport-582fd92668d312ce944d9f1d95803401bbfcbb25.png"
+            },
+            {
+              "name": "explore-1024-quotes",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-quotes-b6d562d9953d534391920d47adf8fb8ee2607ee9.png"
+            },
+            {
+              "name": "explore-1024-settings",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-settings-5043df48bf7b7542bbf5a729c481f1846f0bca91.png"
+            },
+            {
+              "name": "metrics-1024",
+              "contentType": "application/json",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/metrics-1024-09f261bf26bc29641f3f3a18861144a96c9828ec.json"
+            },
+            {
+              "name": "isolated-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/isolated-server-log-8fddad4a1faad7224a0f51c1b7ac080b3f97d92a.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "36cd1b3ff825093287b7-a171d305e1c2cc5a7aa1",
+      "title": "EXPLORATORY: desktop stages, control visibility and geometry 1366x768",
+      "file": "ui-v2-exploratory.spec.cjs",
+      "line": 87,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 15,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 7021,
+          "errors": [],
+          "stdout": [
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1089.40625,\"bottom\":1089.40625,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":219.34375,\"width\":1088,\"height\":786.0625,\"bottom\":1005.40625,\"right\":1339},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":57,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1199.296875,\"bottom\":1199.296875,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":231.34375,\"width\":1088,\"height\":883.953125,\"bottom\":1115.296875,\"right\":1339},\"table\":{\"x\":267,\"y\":640.90625,\"width\":701.03125,\"height\":415.390625,\"bottom\":1056.296875,\"right\":968.03125},\"tablewrap\":{\"x\":266,\"y\":639.90625,\"width\":703.03125,\"height\":417.390625,\"bottom\":1057.296875,\"right\":969.03125},\"firstDataRow\":{\"x\":267,\"y\":673.296875,\"width\":701.03125,\"height\":32,\"bottom\":705.296875,\"right\":968.03125},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":54,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1442.890625,\"bottom\":1442.890625,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":219.34375,\"width\":1088,\"height\":1139.546875,\"bottom\":1358.890625,\"right\":1339},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":251,\"y\":496.015625,\"width\":1088,\"height\":335.5,\"bottom\":831.515625,\"right\":1339},\"quoteReview\":{\"x\":251,\"y\":843.515625,\"width\":1088,\"height\":344.28125,\"bottom\":1187.796875,\"right\":1339},\"confirmButton\":{\"x\":1208.984375,\"y\":1135.796875,\"width\":114.015625,\"height\":38,\"bottom\":1173.796875,\"right\":1323},\"tableScrollable\":false,\"panelButtons\":27,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quotes\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1336.375,\"bottom\":1336.375,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":219.34375,\"width\":1088,\"height\":1033.03125,\"bottom\":1252.375,\"right\":1339},\"table\":{\"x\":270,\"y\":794.34375,\"width\":1050,\"height\":39.84375,\"bottom\":834.1875,\"right\":1320},\"tablewrap\":{\"x\":269,\"y\":793.34375,\"width\":1052,\"height\":41.84375,\"bottom\":835.1875,\"right\":1321},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":6,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"settings\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1190.578125,\"bottom\":1190.578125,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":219.34375,\"width\":1088,\"height\":887.234375,\"bottom\":1106.578125,\"right\":1339},\"table\":null,\"tablewrap\":null,\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":7,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:09:11.846Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "explore-1366-items",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-items-23dc9ce443ec52abf979bd1b0aa4aba5656324d3.png"
+            },
+            {
+              "name": "explore-1366-assign",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-assign-95cbb6da088b965c62c2f5326b941951ce9752a0.png"
+            },
+            {
+              "name": "explore-1366-quoteImport",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-quoteImport-8f924c8692fd9485d8599e939d9dfdb0c84b555c.png"
+            },
+            {
+              "name": "explore-1366-quotes",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-quotes-2b7dae8eb80ae30aa59fffd98c17599f62043213.png"
+            },
+            {
+              "name": "explore-1366-settings",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-settings-c6efd96cf669daabe92c25577aa103b790d4c0c5.png"
+            },
+            {
+              "name": "metrics-1366",
+              "contentType": "application/json",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/metrics-1366-074445160f593a3b7d302fe119b4db4bc7b7140e.json"
+            },
+            {
+              "name": "isolated-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/isolated-server-log-12fd1b1722b964d692937e48b4b5bb9755687d8b.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "36cd1b3ff825093287b7-312d24236b4c51ca307c",
+      "title": "EXPLORATORY: desktop stages, control visibility and geometry 1600x900",
+      "file": "ui-v2-exploratory.spec.cjs",
+      "line": 87,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 15,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 7274,
+          "errors": [],
+          "stdout": [
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1148.828125,\"bottom\":1148.828125,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":247.875,\"width\":1322,\"height\":816.953125,\"bottom\":1064.828125,\"right\":1573},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":57,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1230.71875,\"bottom\":1230.71875,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":247.875,\"width\":1322,\"height\":898.84375,\"bottom\":1146.71875,\"right\":1573},\"table\":{\"x\":267,\"y\":672.328125,\"width\":860.15625,\"height\":415.390625,\"bottom\":1087.71875,\"right\":1127.15625},\"tablewrap\":{\"x\":266,\"y\":671.328125,\"width\":862.15625,\"height\":417.390625,\"bottom\":1088.71875,\"right\":1128.15625},\"firstDataRow\":{\"x\":267,\"y\":704.71875,\"width\":860.15625,\"height\":32,\"bottom\":736.71875,\"right\":1127.15625},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":54,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1456.8125,\"bottom\":1456.8125,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":247.875,\"width\":1322,\"height\":1124.9375,\"bottom\":1372.8125,\"right\":1573},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":251,\"y\":563.4375,\"width\":1322,\"height\":274,\"bottom\":837.4375,\"right\":1573},\"quoteReview\":{\"x\":251,\"y\":849.4375,\"width\":1322,\"height\":344.28125,\"bottom\":1193.71875,\"right\":1573},\"confirmButton\":{\"x\":1442.984375,\"y\":1141.71875,\"width\":114.015625,\"height\":38,\"bottom\":1179.71875,\"right\":1557},\"tableScrollable\":false,\"panelButtons\":27,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quotes\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1377.796875,\"bottom\":1377.796875,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":247.875,\"width\":1322,\"height\":1045.921875,\"bottom\":1293.796875,\"right\":1573},\"table\":{\"x\":270,\"y\":853.765625,\"width\":1284,\"height\":39.84375,\"bottom\":893.609375,\"right\":1554},\"tablewrap\":{\"x\":269,\"y\":852.765625,\"width\":1286,\"height\":41.84375,\"bottom\":894.609375,\"right\":1555},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":6,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"settings\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1270,\"bottom\":1270,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":247.875,\"width\":1322,\"height\":938.125,\"bottom\":1186,\"right\":1573},\"table\":null,\"tablewrap\":null,\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":7,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-26T07:09:19.580Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "explore-1600-items",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-items-ed7a44c034851a9a9a5073203bf2b28342a893c2.png"
+            },
+            {
+              "name": "explore-1600-assign",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-assign-fb1b12d3fc845b1916ef5dc1427e1aaef7432c02.png"
+            },
+            {
+              "name": "explore-1600-quoteImport",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-quoteImport-41e93d12ff174538c1ddb3a9e0e30f564fe5d783.png"
+            },
+            {
+              "name": "explore-1600-quotes",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-quotes-bc88d3e5e9b5ac8d3e7fad0988e623b5c0fa7b58.png"
+            },
+            {
+              "name": "explore-1600-settings",
+              "contentType": "image/png",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-settings-3fe4f05f58292e1d7cc0ed7c169487e4191a6f7f.png"
+            },
+            {
+              "name": "metrics-1600",
+              "contentType": "application/json",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/metrics-1600-a5e69f437f9495b084d08c4ce83409d4ab98c296.json"
+            },
+            {
+              "name": "isolated-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/isolated-server-log-99ff2c5085bb162308fd27a8fd9a679ba2c3bcb8.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f95fb36e88536e4fd7f8-3f3b95cb7962d03787a7",
+      "title": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+      "file": "ui-v3-integration.spec.cjs",
+      "line": 45,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 15,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 9746,
+          "errors": [],
+          "stdout": [],
+          "stderr": [],
+          "retry": 0,
+          "startTime": "2026-10-26T07:09:27.601Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "srm-v3-ui-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/attachments/srm-v3-ui-server-log-97ef9a40cb743365581b0425b883f7af9dc96e56.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f95fb36e88536e4fd7f8-c321b5048683cb05cfaf",
+      "title": "UI V3.1 P2 buyer layout and semantic controls / 正式 RFQ 标题、抽屉、分配与决策",
+      "file": "ui-v3-integration.spec.cjs",
+      "line": 111,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 15,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 5855,
+          "errors": [],
+          "stdout": [],
+          "stderr": [],
+          "retry": 0,
+          "startTime": "2026-10-26T07:09:38.142Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "srm-v3-ui-server-log",
+              "contentType": "text/plain",
+              "path": "/tmp/srm66-product/test-results/ui-v3-integration-UI-V3-1--67357-controls-正式-RFQ-标题、抽屉、分配与决策/attachments/srm-v3-ui-server-log-545b76d646801ce644c1c85b3e7caee33232c8d2.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/tmp/srm66-product/test-results/ui-v3-integration-UI-V3-1--67357-controls-正式-RFQ-标题、抽屉、分配与决策/trace.zip"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

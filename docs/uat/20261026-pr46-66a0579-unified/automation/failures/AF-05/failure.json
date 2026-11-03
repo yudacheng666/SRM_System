@@ -1,0 +1,43 @@
+{
+  "id": "AF-05",
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "classification": "OUTDATED_NAVIGATION_PATH",
+  "assessment": "Driver targets a hidden/inactive page control or old global drawer instead of entering the dedicated current project/material/admin page.",
+  "specFile": "acceptance.spec.cjs",
+  "specStartLine": 422,
+  "title": "12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离",
+  "status": "FAIL",
+  "rawErrors": [
+    {
+      "location": {
+        "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+        "column": 51,
+        "line": 442
+      },
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#pilotReportPanel')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotReportPanel')\u001b[22m\n\u001b[2m    18 × locator resolved to <div id=\"pilotReportPanel\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  440 |   await expect(page.locator('#pilotReportHint')).toContainText('已发起供应商询价');\n  441 |   await fresh(page);\n> 442 |   await expect(page.locator('#pilotReportPanel')).toBeVisible();\n      |                                                   ^\n  443 |   await expect(page.locator('#pilotReportSupplier option')).toHaveCount(0);\n  444 |   await expect(page.locator('#pilotReportSupplierGroup')).toBeEmpty();\n  445 |   await expect(page.locator('#pilotReportHint')).not.toContainText('已发起');\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:442:51"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/test-failed-1.png"
+    },
+    {
+      "name": "server-log",
+      "contentType": "text/plain",
+      "path": "/tmp/srm66-product/test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/attachments/server-log-de8638139152eab73224b935c9983d8e0a214b91.log"
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "path": "/tmp/srm66-product/test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/error-context.md"
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/trace.zip"
+    }
+  ],
+  "laterAssertions": "NOT REACHED; do not infer their PASS from independent tests"
+}

@@ -1,0 +1,9 @@
+from pathlib import Path
+import runpy,sys,json,hashlib
+r=Path('/tmp/pr46-run/fixtures');sys.argv=['fixtures.py',str(r)];m=runpy.run_path('/tmp/srm-pr46/prototype/m1-lite/tests/e2e/fixtures.py');xlsx=m['xlsx'];pdf=m['pdf'];qty=[5,2,3,4,5,6,100,8,9,10,11,12];items=[]
+for i,q in enumerate(qty,1):items.append(['U46-DUP'if i<=2 else f'U46-{i:03}',f'虚构46采购物料{i}',f'M{i:02} / 虚构规格','虚构采购类',q,'件'])
+xlsx('independent-items.xlsx',[['存货编码','存货名称','规格型号','所属类别','询价数量','询价单位']]+items)
+xlsx('independent-suppliers.xlsx',[['往来单位编码','供应商编码','往来单位名称'],['U46-CP-A','U46-A','虚构46精工甲'],['U46-CP-B','U46-B','虚构46制造乙'],['U46-CP-C','U46-C','虚构46供应丙']])
+for n,label in [('U46-003_A.pdf','FICTIONAL U46 UNIQUE'),('U46-DUP_A.pdf','FICTIONAL U46 AMBIGUOUS'),('U46-no-match.pdf','FICTIONAL U46 UNMATCHED')]:pdf(n,label)
+(r/'business-expected.json').write_text(json.dumps({'qty':qty,'A':[118,20,30,None,75,None,2.25,80,90,100,110,120],'B':[119,82,32,40,75,60,2.35,82,92,102,112,122],'C':[121,None,None,None,77,None,None,None,None,None,None,None],'theoretical':6940,'manualAfter3':1979,'combinedSuggestionsAfter3':7064},indent=2))
+print('Independent synthetic fixture files generated')

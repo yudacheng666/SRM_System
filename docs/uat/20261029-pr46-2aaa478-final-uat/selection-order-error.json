@@ -1,0 +1,17 @@
+{
+  "timeUTC": "2026-10-29T15:55:09.966066+00:00",
+  "classification": "Independent automation-launch selection/order error; no product/test modification",
+  "firstFocusedExitCode": 1,
+  "firstFocusedActualCases": 0,
+  "error": "No tests found",
+  "cause": "Anchored grep ^UI V3 integration: did not match Playwright full test title including file/suite prefix",
+  "action": "SIGINT only own current Playwright CLI to preserve interrupted artifacts; then run unmodified focused case with non-anchored exact title and fresh complete Python/Node/Chromium in required order",
+  "originalRunnerPID": [
+    20532
+  ],
+  "signalledCLI": [
+    20707
+  ],
+  "noFailedProductAssertionOverwritten": true,
+  "finalOriginalSuiteRetriesWillRemainZero": true
+}

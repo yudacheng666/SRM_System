@@ -1,0 +1,23 @@
+{
+  "time": "2026-10-22T08:37:14.481524+00:00",
+  "correctionNumber": 1,
+  "maxAllowed": 1,
+  "classification": "TEST DRIVER ERROR, not product defect",
+  "originalFailure": "Independent table-text check incorrectly searched 多候选; actual table says 多个候选·需确认. Raw UI screenshot/text proves correct1unique,1multiple,1unmatched.",
+  "unchangedBusinessStateAtError": true,
+  "fix": "Use actual current table label and add exact candidate counts1/2/0, preserving intended checks. No product, existing test or CI assertion edits.",
+  "rerun": "New clean /tmp/pr46-uat-attempt2/data, reconstruct only necessary UI setup then rerun affected drawing case and subsequent planned independent scope; preserve attempt1 data/log/trace/source.",
+  "rawEvidence": "independent-attempt1/",
+  "originalFrozenDriver": "driver-attempt1/",
+  "correctedFileHashes": {
+    "console.cjs": "87b72d74be909f0d05e9fb99b6a1e8c2fbe93b28c3b8ccad3e4ea07cbef71cc1",
+    "steps/07-visual.js": "ff71eaeed44660e2cef97c0efee87ed0242dd76fdb61baacfd32503431925fc0",
+    "steps/06-S4.js": "87efb021ad56797273577c775c985a5413ef19bfca4fe653449b5f035ebd0375",
+    "steps/05-workspace-exports.js": "56a0c1a269dc149f2c6298c7201cdffe56ec9d732ee74a97f6dd37af4292d976",
+    "steps/04-comparison.js": "6306e170eb72c86626bbbc09379123b53b6c3939aa1b20b158684ecaf1dca5d0",
+    "steps/03-quotes.js": "83b49cd14248e4f405080be2f56c41dfb4f761eb013b971bfbf07f7616af1f2d",
+    "steps/02-drawings.js": "09d274dffb158821c0b4f48541819f8c6292997f9083e8236fad6d87edc6809f",
+    "steps/01-setup.js": "fd60efe19a8f07cba57093a9b5f66b8e7d24e55c6afff5d1edf1258d2de14349"
+  },
+  "secondUnanticipatedErrorPolicy": "Stop and report if any second unexpected driver error; no further correction"
+}

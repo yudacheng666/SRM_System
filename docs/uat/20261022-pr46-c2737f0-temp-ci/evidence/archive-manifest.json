@@ -1,0 +1,40 @@
+{
+  "format": "tar.zst split at40MiB; lossless, tar hardlinks deduplicate identical HTML/test-result data",
+  "archiveBytes": 228430737,
+  "archiveSHA256": "58f247456bef8f9448c0dfda63eeed0846a62239055ee1aef38d9696ddb67d5b",
+  "originalFiles": 390,
+  "uniqueByteContents": 161,
+  "parts": [
+    {
+      "file": "automated-originals.tar.zst.part00",
+      "bytes": 41943040,
+      "sha256": "cac7f1a19fed781156751e5723e59dfa7292c4b4b978c3d0d736201860e7bf85"
+    },
+    {
+      "file": "automated-originals.tar.zst.part01",
+      "bytes": 41943040,
+      "sha256": "97d172f195ffa5b66e04e913149683fd04f248a2fef512c7ef069384feabe022"
+    },
+    {
+      "file": "automated-originals.tar.zst.part02",
+      "bytes": 41943040,
+      "sha256": "f655a0789b632326dd016e4601710a187a1ab9a25bfd611a699a117968b2c332"
+    },
+    {
+      "file": "automated-originals.tar.zst.part03",
+      "bytes": 41943040,
+      "sha256": "7ddc1763d6d67101b7375e84ea91f3859701f565e871aefb16084a2d687c4944"
+    },
+    {
+      "file": "automated-originals.tar.zst.part04",
+      "bytes": 41943040,
+      "sha256": "90f57c67e38ea5908f0f6c07eb5a6a30eae900abaf8ce1a29ec39788846735c6"
+    },
+    {
+      "file": "automated-originals.tar.zst.part05",
+      "bytes": 18715537,
+      "sha256": "2ec323dffb609d6431dfe792ecc9a798a9db5647bb8196120ccecbedbd87d947"
+    }
+  ],
+  "restore": "cat automated-originals.tar.zst.part* > automated-originals.tar.zst; tar --zstd -xf automated-originals.tar.zst; verify against automated-original-files.json"
+}

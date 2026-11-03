@@ -1,0 +1,67 @@
+{
+  "id": "f95fb36e88536e4fd7f8-3f3b95cb7962d03787a7",
+  "title": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+  "file": "ui-v3-integration.spec.cjs",
+  "line": 45,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 4,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 2094,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"rgb(24\u001b[7m6\u001b[27m, 24\u001b[7m8\u001b[27m, 2\u001b[7m51\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(24\u001b[7m5\u001b[27m, 24\u001b[7m7\u001b[27m, 2\u001b[7m49\u001b[27m)\"\u001b[39m",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"rgb(24\u001b[7m6\u001b[27m, 24\u001b[7m8\u001b[27m, 2\u001b[7m51\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(24\u001b[7m5\u001b[27m, 24\u001b[7m7\u001b[27m, 2\u001b[7m49\u001b[27m)\"\u001b[39m\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:65:32",
+        "location": {
+          "file": "/workspace/srmd7-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+          "column": 32,
+          "line": 65
+        },
+        "snippet": "  63 |   // 中文：V3.1 的浅灰背景来自已确认的结构层，而非旧版 V3 首批色值。\n  64 |   // English: Expect the approved V3.1 workspace token, not the earlier transitional theme.\n> 65 |   expect(theme.bodyBackground).toBe('rgb(246, 248, 251)');\n     |                                ^\n  66 |   expect(theme.bodyFont).toContain('Segoe UI');\n  67 |   expect(theme.stylesheet).toBeTruthy();\n  68 |   // 中文：保证所有正式业务面板具有 V3.1 层级，而不是仅修改导航颜色。"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/workspace/srmd7-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+            "column": 32,
+            "line": 65
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"rgb(24\u001b[7m6\u001b[27m, 24\u001b[7m8\u001b[27m, 2\u001b[7m51\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(24\u001b[7m5\u001b[27m, 24\u001b[7m7\u001b[27m, 2\u001b[7m49\u001b[27m)\"\u001b[39m\n\n  63 |   // 中文：V3.1 的浅灰背景来自已确认的结构层，而非旧版 V3 首批色值。\n  64 |   // English: Expect the approved V3.1 workspace token, not the earlier transitional theme.\n> 65 |   expect(theme.bodyBackground).toBe('rgb(246, 248, 251)');\n     |                                ^\n  66 |   expect(theme.bodyFont).toContain('Segoe UI');\n  67 |   expect(theme.stylesheet).toBeTruthy();\n  68 |   // 中文：保证所有正式业务面板具有 V3.1 层级，而不是仅修改导航颜色。\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:65:32"
+        }
+      ],
+      "stdout": [],
+      "stderr": [],
+      "retry": 0,
+      "startTime": "2026-10-29T08:26:27.959Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/workspace/srmd7-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/test-failed-1.png"
+        },
+        {
+          "name": "srm-v3-ui-server-log",
+          "contentType": "text/plain",
+          "path": "/workspace/srmd7-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/attachments/srm-v3-ui-server-log-3956707d4b329bd68eac397f34ed49a872b8d8e1.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/workspace/srmd7-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/workspace/srmd7-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/workspace/srmd7-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+        "column": 32,
+        "line": 65
+      }
+    }
+  ]
+}

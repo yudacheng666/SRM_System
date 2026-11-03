@@ -1,0 +1,201 @@
+{
+  "skipCICommit": true,
+  "noDispatch": true,
+  "currentProductWorkflowFilters": [
+    {
+      "workflow": "m1-lite-full-backup-batch-rfq.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261013-m1-lite-full-backup-batch-rfq"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m0-p0-regression.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261009-m0-p0-fixes"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m1-lite-erp-quote-notes.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261012-m1-lite-erp-fields-quote-notes"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m0-uat-feedback-browser.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261009-m0-uat-feedback"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m1-lite-multiple-rfqs.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261013-m1-lite-multiple-rfqs"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m1-lite-native-xlsx.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261012-m1-lite-native-xlsx"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m1-b1-core-model.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261010-m1-b1-core-model"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "srm-s3-regression.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261013-m1-storage-ui-audit",
+        "test/20261014-issue3-playwright",
+        "fix/20261020-s4-backup-dirty-guard",
+        "fix/20261020-s4-visible-block-feedback"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "srm-s3-regression.yml",
+      "event": "pull_request",
+      "branch": "feat/20261022-srm-ui-ux-structural",
+      "patterns": [
+        "draft/20261013-m1-storage-ui-audit",
+        "feat/20261019-srm-ui-v3-integration",
+        "fix/20261020-s4-backup-dirty-guard"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m0-playwright-acceptance.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261009-m0-playwright-acceptance"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m0-p2-regression.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261009-m0-p2-fixes"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m0-selected-common-scope.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261009-m0-selected-common-scope"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "srm-ui-v2-unified-acceptance.yml",
+      "event": "pull_request",
+      "branch": "feat/20261022-srm-ui-ux-structural",
+      "patterns": [
+        "draft/20261013-m1-storage-ui-audit",
+        "feat/20261019-srm-ui-v3-integration"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m0-p1-regression.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261009-m0-p1-fixes"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m1-lite-batch-drawing-match.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261013-m1-lite-batch-drawing-match"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m1-lite-portable-backup.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261011-m1-lite-portable-backup"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m1-lite-rfq-comparison-exports.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261012-m1-lite-rfq-comparison-exports"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m1-lite-safe-import.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261011-m1-lite-safe-import"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m1-lite-real-pdf-drawings.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261013-m1-lite-real-pdf-drawings-plan"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m1-b0-lean-offline.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261010-m1-b0-lean-foundation"
+      ],
+      "matches": false
+    },
+    {
+      "workflow": "m1-lite-manual-save.yml",
+      "event": "push",
+      "branch": "test/20261022-pr46-c2737f0-temp-ci",
+      "patterns": [
+        "draft/20261011-m1-lite-manual-save"
+      ],
+      "matches": false
+    }
+  ]
+}

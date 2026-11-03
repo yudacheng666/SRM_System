@@ -1,0 +1,250 @@
+TAP version 13
+# Subtest: all nine complete buyer candidate files/218 steps scanned; NO full-plan PASS
+ok 1 - all nine complete buyer candidate files/218 steps scanned; NO full-plan PASS
+  ---
+  duration_ms: 781.581813
+  type: 'test'
+  ...
+# Subtest: no contract-test corpus substituted for actual buyer files
+ok 2 - no contract-test corpus substituted for actual buyer files
+  ---
+  duration_ms: 583.884806
+  type: 'test'
+  ...
+# Subtest: late invalid file still rejected before ANY injected launch/CDP/HTTP/write
+ok 3 - late invalid file still rejected before ANY injected launch/CDP/HTTP/write
+  ---
+  duration_ms: 615.788559
+  type: 'test'
+  ...
+# Subtest: valid syntax but unsupported full plan is blocked before launch too
+ok 4 - valid syntax but unsupported full plan is blocked before launch too
+  ---
+  duration_ms: 616.442694
+  type: 'test'
+  ...
+# Subtest: known SUP-A plain click rejected with real file/step index
+ok 5 - known SUP-A plain click rejected with real file/step index
+  ---
+  duration_ms: 659.134751
+  type: 'test'
+  ...
+# Subtest: known SUP-B plain click rejected with real file/step index
+ok 6 - known SUP-B plain click rejected with real file/step index
+  ---
+  duration_ms: 617.485409
+  type: 'test'
+  ...
+# Subtest: missing postconditions
+ok 7 - missing postconditions
+  ---
+  duration_ms: 647.943897
+  type: 'test'
+  ...
+# Subtest: unknown field
+ok 8 - unknown field
+  ---
+  duration_ms: 598.566909
+  type: 'test'
+  ...
+# Subtest: wrong source range
+ok 9 - wrong source range
+  ---
+  duration_ms: 625.439666
+  type: 'test'
+  ...
+# Subtest: source hash wrong
+ok 10 - source hash wrong
+  ---
+  duration_ms: 613.522574
+  type: 'test'
+  ...
+# Subtest: unknown native selector
+ok 11 - unknown native selector
+  ---
+  duration_ms: 588.173854
+  type: 'test'
+  ...
+# Subtest: checkpoint cannot bypass
+ok 12 - checkpoint cannot bypass
+  ---
+  duration_ms: 593.082075
+  type: 'test'
+  ...
+# Subtest: native unknown input
+ok 13 - native unknown input
+  ---
+  duration_ms: 604.190797
+  type: 'test'
+  ...
+# Subtest: native dialog policy missing
+ok 14 - native dialog policy missing
+  ---
+  duration_ms: 586.366629
+  type: 'test'
+  ...
+# Subtest: native capability substitution
+ok 15 - native capability substitution
+  ---
+  duration_ms: 622.077795
+  type: 'test'
+  ...
+# Subtest: manifest omission/order difference rejected
+ok 16 - manifest omission/order difference rejected
+  ---
+  duration_ms: 571.995123
+  type: 'test'
+  ...
+# Subtest: whole frozen source mismatch rejected
+ok 17 - whole frozen source mismatch rejected
+  ---
+  duration_ms: 24.749977
+  type: 'test'
+  ...
+# Subtest: fixture file content changed rejected before runtime
+ok 18 - fixture file content changed rejected before runtime
+  ---
+  duration_ms: 966.953442
+  type: 'test'
+  ...
+# Subtest: fixture path traversal rejected
+ok 19 - fixture path traversal rejected
+  ---
+  duration_ms: 590.548101
+  type: 'test'
+  ...
+# Subtest: unregistered file rejected
+ok 20 - unregistered file rejected
+  ---
+  duration_ms: 1497.937226
+  type: 'test'
+  ...
+# Subtest: unknown postcondition kind rejected, not treated as successful no-op
+ok 21 - unknown postcondition kind rejected, not treated as successful no-op
+  ---
+  duration_ms: 817.448126
+  type: 'test'
+  ...
+# Subtest: aux cannot hide native confirm inside dialog expected
+ok 22 - aux cannot hide native confirm inside dialog expected
+  ---
+  duration_ms: 589.420226
+  type: 'test'
+  ...
+# Subtest: missing source/selector fields not silently skipped
+ok 23 - missing source/selector fields not silently skipped
+  ---
+  duration_ms: 1286.613815
+  type: 'test'
+  ...
+# Subtest: duplicate step identity rejected
+ok 24 - duplicate step identity rejected
+  ---
+  duration_ms: 833.429085
+  type: 'test'
+  ...
+# Subtest: arbitrary viewport not admitted
+ok 25 - arbitrary viewport not admitted
+  ---
+  duration_ms: 705.638234
+  type: 'test'
+  ...
+# Subtest: closed unknown native text/JS field rejected
+ok 26 - closed unknown native text/JS field rejected
+  ---
+  duration_ms: 555.726748
+  type: 'test'
+  ...
+# Subtest: partial quote fixture evaluated by unchanged frozen parser uses row THREE not old guessed2
+ok 27 - partial quote fixture evaluated by unchanged frozen parser uses row THREE not old guessed2
+  ---
+  duration_ms: 45.76366
+  type: 'test'
+  ...
+# Subtest: cancel decision does not mutate pure source round; valid/invalid partition exact
+ok 28 - cancel decision does not mutate pure source round; valid/invalid partition exact
+  ---
+  duration_ms: 36.88953
+  type: 'test'
+  ...
+# Subtest: tier fixture resolves actual qty2 to9, overlapping9 rejected by frozen parser
+ok 29 - tier fixture resolves actual qty2 to9, overlapping9 rejected by frozen parser
+  ---
+  duration_ms: 24.543535
+  type: 'test'
+  ...
+# Subtest: frozen quote validator preserves noquote as null price, not zero
+ok 30 - frozen quote validator preserves noquote as null price, not zero
+  ---
+  duration_ms: 12.058146
+  type: 'test'
+  ...
+# Subtest: frozen quote validator detects actual duplicate identity
+ok 31 - frozen quote validator detects actual duplicate identity
+  ---
+  duration_ms: 15.176515
+  type: 'test'
+  ...
+# Subtest: actual fixture ZIP CRCs and workbook rows/headers are valid
+ok 32 - actual fixture ZIP CRCs and workbook rows/headers are valid
+  ---
+  duration_ms: 15.158296
+  type: 'test'
+  ...
+# Subtest: all four PDF fixtures have internally correct xref and lengths; NOT rendering PASS
+ok 33 - all four PDF fixtures have internally correct xref and lengths; NOT rendering PASS
+  ---
+  duration_ms: 6.878032
+  type: 'test'
+  ...
+# Subtest: invalid PDF fixture rejected by static parser
+ok 34 - invalid PDF fixture rejected by static parser
+  ---
+  duration_ms: 0.61773
+  type: 'test'
+  ...
+# Subtest: corrupt actual XLSX fixture CRC rejected
+ok 35 - corrupt actual XLSX fixture CRC rejected
+  ---
+  duration_ms: 1.272688
+  type: 'test'
+  ...
+# Subtest: S4 ordinary nonempty GUI plan explicitly expects ZERO restore requests, not409
+ok 36 - S4 ordinary nonempty GUI plan explicitly expects ZERO restore requests, not409
+  ---
+  duration_ms: 570.440043
+  type: 'test'
+  ...
+# Subtest: hash-conflict plan does not falsely require uploaded orphan asset absent
+ok 37 - hash-conflict plan does not falsely require uploaded orphan asset absent
+  ---
+  duration_ms: 4.04807
+  type: 'test'
+  ...
+# Subtest: all five prompt cancellations retain explicit exact default and stop sequence
+ok 38 - all five prompt cancellations retain explicit exact default and stop sequence
+  ---
+  duration_ms: 3.129681
+  type: 'test'
+  ...
+# Subtest: full-plan gate cannot be opened by changing JSON capability registry or metadata
+ok 39 - full-plan gate cannot be opened by changing JSON capability registry or metadata
+  ---
+  duration_ms: 613.082158
+  type: 'test'
+  ...
+# Subtest: V1 imported schema/guard/CDP adapter files still exact prior evidence bytes
+ok 40 - V1 imported schema/guard/CDP adapter files still exact prior evidence bytes
+  ---
+  duration_ms: 1.927532
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19220.338308

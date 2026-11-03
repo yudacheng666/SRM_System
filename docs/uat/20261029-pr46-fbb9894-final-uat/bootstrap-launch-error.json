@@ -1,0 +1,14 @@
+{
+  "timeUTC": "2026-10-29T15:00:05.218460+00:00",
+  "classification": "Independent harness startup error, not product defect",
+  "error": "write_stdin failed: stdin is closed for this session; rerun exec_command with tty=true to keep stdin open",
+  "businessOperationsExecuted": 0,
+  "assignSearchClickCalls": 0,
+  "retained": "bootstrap-stdin-closed/evidence/browser.jsonl and main-server.log; no completed trace was exportable because command channel already closed",
+  "correction": "Launch same methods with tty=true, new empty independent data folder; original bootstrap folder retained",
+  "stoppedOwnProcessRoots": [
+    15724
+  ],
+  "stoppedOwnDescendants": 11,
+  "originalProductTestsCIChanged": false
+}

@@ -1,0 +1,32 @@
+id,category,status,name,observed,evidence,productSHA
+UX-01,buyerUX,PASS,Plain Chinese and truthful single save status,Actual pending200/real409 across3sizes; technical details retained,attempt-02/evidence/UX01-1366-genuine-SQLite-conflict.png,f4bfcda8efdf3998c833ed25c3193a056fdde451
+UX-02,buyerUX,PASS,Named RFQs and immutable identity,"New/rename/history/switch/F5/service restart, full state/PDF/history identical",attempt-02/evidence/UX02-two-named-projects-after-restart.png,f4bfcda8efdf3998c833ed25c3193a056fdde451
+UX-03,buyerUX,PASS,One active navigation,Header/sidebar/workflow transitions;7pages×3sizes,attempt-02/evidence/UX-1366-project.png,f4bfcda8efdf3998c833ed25c3193a056fdde451
+UX-04,buyerUX,PASS,Permanent first Project page,Actual direct controls/five workflow steps/next stage,attempt-02/evidence/UX-1366-project.png,f4bfcda8efdf3998c833ed25c3193a056fdde451
+UX-05,buyerUX,PASS,Separate admin and safety,Reread cancel/dirty guards/current S4+valid STORED hash rejection/empty+nonempty restore,attempt-02/evidence/S4-audited-backend-rejection.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+UX-06,buyerUX,PASS,Compact materials and pagination,"Real12 +52, preview50+2/final52/filter/page selection",attempt-02/evidence/UX06-real-52-items-second-page.png,f4bfcda8efdf3998c833ed25c3193a056fdde451
+UX-07,buyerUX,PASS,Real drawing states,Missing/PDF/not_required; original multi-page PDF bytes and viewer,attempt-02/evidence/UX07-three-real-drawing-states.png,f4bfcda8efdf3998c833ed25c3193a056fdde451
+UX-08,buyerUX,PASS,Supplier allocation,Both views append/dedup/remove/search; horizontal hover identities;52-row cross-page,attempt-02/evidence/UX08-1366-supplier-first.png,f4bfcda8efdf3998c833ed25c3193a056fdde451
+UX-09,buyerUX,PASS,Comparison density and controls,"1366 whole first row visible at scrollY0,actual≤44px,aligned price/details;3sizes and real selections/amounts",attempt-02/evidence/UX09-independent-before-awards.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+CORE-01,coreBusiness,PASS,Excel preview and commit,12fresh lines/same-code distinct-spec identities/preview not persisted,attempt-02/evidence/CORE01-after-import-preview.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+CORE-02,coreBusiness,PASS,Real PDF matching and originals,1/2/0candidates/manual match/original bytes,attempt-02/evidence/CORE02-clicked-correct-real-PDF.png,f4bfcda8efdf3998c833ed25c3193a056fdde451
+CORE-03,coreBusiness,PASS,Many-to-many suppliers,"A/B12,C2;append/dedup/remove/two views",attempt-02/evidence/UX08-item-first-multiple-suppliers.png,f4bfcda8efdf3998c833ed25c3193a056fdde451
+CORE-04,coreBusiness,PASS,Quote rounds/revisions/tiers/preview safety,5confirmed/50history lines;V1immutable;9explicit carries;tiers118/2.25;file/paste/manual,attempt-02/evidence/Q04-all-confirmed.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+CORE-05,coreBusiness,PASS,Manual decisions and comparison,Pending10+2;75/75tie;82vs20reason;manual3/1979 vs theory6940/mixed7064,attempt-02/evidence/C05-scoped-amounts-and-decisions.png,f4bfcda8efdf3998c833ed25c3193a056fdde451
+CORE-06,coreBusiness,PASS,Actual ZIP/CSV/XLSX exports,46content/CRC/row/math/PDF/supplier-isolation checks,attempt-02/evidence/export-checks.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+CORE-07,coreBusiness,PASS,RFQ switch/F5/service restart,Fresh52-line second RFQ/full state/history/PDF preserved,attempt-02/evidence/CORE07-after-service-restart.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+CORE-08,coreBusiness,PASS,Actual pending/ACK/conflict,"HeldPUT/200,real stale409,committed winner preserved and no false saved",attempt-02/evidence/CORE08-conflict-http.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+CORE-09A,coreBusiness,PASS,S4 integrity,11CRC/manifestDB SHA/SQLite integrity/4table rows/PDF checks,attempt-02/evidence/s4-checks.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+CORE-09B,coreBusiness,PASS,Empty restore,RealUI200/full2RFQ/history/PDF/manual1979 restored,attempt-02/evidence/S4-positive-control-restored.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+CORE-09C,coreBusiness,PASS,Nonempty refusal,UIrefusal and409RESTORE_TARGET_NOT_EMPTY/full target unchanged,attempt-02/evidence/S4-nonempty-backend.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+CORE-09D,coreBusiness,PASS,Valid ZIP_STORED content hash negative,Same-length1PDFbyte/manifest unchanged/validCRC;UI+Node400PDF_HASH_MISMATCH/target unchanged,attempt-02/evidence/S4-audited-backend-rejection.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+WIN-01,nativeWindows,NOT TESTED,Native Windows Python3.13,No native Windows available,identity-end.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+WIN-02,nativeWindows,NOT TESTED,Native Windows Node22,No native Windows available,identity-end.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+WIN-03,nativeWindows,NOT TESTED,Native Windows PowerShell/BAT/local launch safety,No native Windows available,identity-end.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+TARGET-01,targeted7,PASS,"05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包",Whole unchanged current-SHA original test completed,targeted-seven-results.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+TARGET-02,targeted7,PASS,07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败,Whole unchanged current-SHA original test completed,targeted-seven-results.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+TARGET-03,targeted7,PASS,13 compact laptop item table after import / 1366首屏物料可见,Whole unchanged current-SHA original test completed,targeted-seven-results.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+TARGET-04,targeted7,PASS,UX pending-only: filtered pagination and award state / 待决定筛选真实分页,Whole unchanged current-SHA original test completed,targeted-seven-results.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+TARGET-05,targeted7,PASS,UX manual-only: buyer-approved amount distinct from suggested totals / 人工定标金额独立显示,Whole unchanged current-SHA original test completed,targeted-seven-results.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+TARGET-06,targeted7,PASS,UX09 exact 1366 comparison density and first-row reachability / 比价紧凑性复验,Whole unchanged current-SHA original test completed,targeted-seven-results.json,f4bfcda8efdf3998c833ed25c3193a056fdde451
+TARGET-07,targeted7,PASS,B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态,Whole unchanged current-SHA original test completed,targeted-seven-results.json,f4bfcda8efdf3998c833ed25c3193a056fdde451

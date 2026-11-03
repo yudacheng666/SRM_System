@@ -1,0 +1,503 @@
+{
+  "schemaVersion": 1,
+  "productSha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "name": "STATIC-CONTRACTS-NOT-A-BUYER-PLAN",
+  "purpose": "contract-test",
+  "steps": [
+    {
+      "type": "dialogClick",
+      "operation": "materials.confirm",
+      "selector": "#confirmImportRows",
+      "scenario": "valid-no-conflict",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "alert",
+          "message": "新增 12 行；自动合并 0 行；冲突确认分行 0 行。合并前原始需求行已留存。",
+          "values": {
+            "added": 12,
+            "merged": 0,
+            "separated": 0
+          },
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "materials.confirm",
+      "selector": "#confirmImportRows",
+      "scenario": "explicit-conflict-fixture",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "有 1 条相同编码存在属性或业务冲突，不能自动合并。是否明确保留为独立 RFQ 询价行？取消则本批次不导入。",
+          "values": {
+            "count": 1
+          },
+          "accept": true
+        },
+        {
+          "type": "alert",
+          "message": "新增 1 行；自动合并 0 行；冲突确认分行 1 行。合并前原始需求行已留存。",
+          "values": {
+            "added": 1,
+            "merged": 0,
+            "separated": 1
+          },
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "supplier.add.SUP-A",
+      "selector": "#supplierList [data-add='SUP-A']",
+      "scenario": "twelve-unlinked",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "为选中物料添加供应商：即将变更 12 条物料与“虚构供应商A”的实际关联。\n涉及物料：TST-001（规格：未填写，RFQ-L00001）、TST-002（规格：未填写，RFQ-L00002）、TST-003（规格：未填写，RFQ-L00003）、TST-004（规格：未填写，RFQ-L00004）、TST-005（规格：未填写，RFQ-L00005）、TST-006（规格：未填写，RFQ-L00006）、TST-007（规格：未填写，RFQ-L00007）、TST-008（规格：未填写，RFQ-L00008） 等 12 项\n注意：筛选后仍选中的隐藏物料也包含在内。\n确认后立即生效，是否继续？",
+          "values": {
+            "count": 12,
+            "supplier": "虚构供应商A",
+            "scope": "TST-001（规格：未填写，RFQ-L00001）、TST-002（规格：未填写，RFQ-L00002）、TST-003（规格：未填写，RFQ-L00003）、TST-004（规格：未填写，RFQ-L00004）、TST-005（规格：未填写，RFQ-L00005）、TST-006（规格：未填写，RFQ-L00006）、TST-007（规格：未填写，RFQ-L00007）、TST-008（规格：未填写，RFQ-L00008） 等 12 项"
+          },
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "supplier.add.SUP-B",
+      "selector": "#supplierList [data-add='SUP-B']",
+      "scenario": "twelve-unlinked",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "为选中物料添加供应商：即将变更 12 条物料与“虚构供应商B”的实际关联。\n涉及物料：TST-001（规格：未填写，RFQ-L00001）、TST-002（规格：未填写，RFQ-L00002）、TST-003（规格：未填写，RFQ-L00003）、TST-004（规格：未填写，RFQ-L00004）、TST-005（规格：未填写，RFQ-L00005）、TST-006（规格：未填写，RFQ-L00006）、TST-007（规格：未填写，RFQ-L00007）、TST-008（规格：未填写，RFQ-L00008） 等 12 项\n注意：筛选后仍选中的隐藏物料也包含在内。\n确认后立即生效，是否继续？",
+          "values": {
+            "count": 12,
+            "supplier": "虚构供应商B",
+            "scope": "TST-001（规格：未填写，RFQ-L00001）、TST-002（规格：未填写，RFQ-L00002）、TST-003（规格：未填写，RFQ-L00003）、TST-004（规格：未填写，RFQ-L00004）、TST-005（规格：未填写，RFQ-L00005）、TST-006（规格：未填写，RFQ-L00006）、TST-007（规格：未填写，RFQ-L00007）、TST-008（规格：未填写，RFQ-L00008） 等 12 项"
+          },
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "item.edit.save",
+      "selector": "#itemEditSave",
+      "scenario": "valid-edit",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "保存此询价行修改？RFQ Line ID 和已分配供应商保持不变。",
+          "values": {},
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "drawing.unlink",
+      "selector": "#pilotDrawingUnlink",
+      "scenario": "mutable-linked-row",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "解除当前物料与这份图纸的关联？PDF 原件和其他物料的关联仍会保留。",
+          "values": {},
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "drawing.batch.confirm",
+      "selector": "#pilotBatchDrawingConfirm",
+      "scenario": "valid-batch",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "确认将 2 份 PDF 关联到 2 条 RFQ 物料？请先核对编码、图号、行号和版本。保存后再用于供应商询价包。",
+          "values": {
+            "pdfs": 2,
+            "items": 2
+          },
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "quote.line.edit",
+      "selector": "#quoteRoundBody [data-edit-quote='0']",
+      "scenario": "draft-line-zero",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "prompt",
+          "message": "单价 / 阶梯价：",
+          "values": {},
+          "accept": true,
+          "defaultPrompt": "10",
+          "promptText": {
+            "mode": "text",
+            "value": "10"
+          }
+        },
+        {
+          "type": "prompt",
+          "message": "交期（天，可空）：",
+          "values": {},
+          "accept": true,
+          "defaultPrompt": "5",
+          "promptText": {
+            "mode": "text",
+            "value": "5"
+          }
+        },
+        {
+          "type": "prompt",
+          "message": "MOQ（可空）：",
+          "values": {},
+          "accept": true,
+          "defaultPrompt": "1",
+          "promptText": {
+            "mode": "text",
+            "value": "1"
+          }
+        },
+        {
+          "type": "prompt",
+          "message": "状态：quoted / noquote / cannot",
+          "values": {},
+          "accept": true,
+          "defaultPrompt": "quoted",
+          "promptText": {
+            "mode": "text",
+            "value": "quoted"
+          }
+        },
+        {
+          "type": "prompt",
+          "message": "物料备注（可空）：",
+          "values": {},
+          "accept": true,
+          "defaultPrompt": "",
+          "promptText": {
+            "mode": "text",
+            "value": ""
+          }
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "quote.round.confirm",
+      "selector": "#confirmQuoteRound",
+      "scenario": "coverage-anomalies",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "覆盖检查仍有异常：漏报 1 项，多报 0 项，重复 0 项。仍要确认并锁定本次提交吗？",
+          "values": {
+            "missing": 1,
+            "extra": 0,
+            "duplicate": 0
+          },
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "click",
+      "operation": "quote.round.confirm",
+      "selector": "#confirmQuoteRound",
+      "scenario": "coverage-complete",
+      "dialog": "none"
+    },
+    {
+      "type": "dialogClick",
+      "operation": "quote.carry.confirm",
+      "selector": "#confirmCarrySelection",
+      "scenario": "explicit-evidence",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "确定按原轮次和原条件沿用这 12 项吗？其余漏报项保持漏报状态。",
+          "values": {
+            "count": 12
+          },
+          "accept": true
+        },
+        {
+          "type": "alert",
+          "message": "已按供应商确认依据沿用 12 项，其余漏报项目不变。",
+          "values": {
+            "count": 12
+          },
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "supplier.remove",
+      "selector": "#supplierFirstList [data-pool-remove='SUP-A']",
+      "scenario": "no-history",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "将“虚构供应商A”移出本次询价？\n同时会取消它当前关联的 12 个物料。",
+          "values": {
+            "supplier": "虚构供应商A",
+            "count": 12
+          },
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "s4.restore",
+      "selector": "#pilotS4RestoreFull",
+      "scenario": "fresh-empty-target",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "确定将完整备份恢复到当前空白数据目录？系统会先校验文件；若目录已有数据，将拒绝恢复。",
+          "values": {},
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "export.all",
+      "selector": "#pilotReportDownloadAll",
+      "scenario": "missing-drawing",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "本批次缺图 1 条、版本待确认 0 条。待确认版本的 PDF 不会打包。仍导出已完成部分吗？",
+          "values": {
+            "missing": 1,
+            "pending": 0
+          },
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "click",
+      "operation": "export.all",
+      "selector": "#pilotReportDownloadAll",
+      "scenario": "complete-drawings",
+      "dialog": "none"
+    },
+    {
+      "type": "dialogClick",
+      "operation": "export.one",
+      "selector": "#pilotReportDownload",
+      "scenario": "missing-drawing",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "这家供应商缺图 1 条、版本待确认 0 条（这些 PDF 暂不打包），是否导出已完成部分？",
+          "values": {
+            "missing": 1,
+            "pending": 0
+          },
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "click",
+      "operation": "export.one",
+      "selector": "#pilotReportDownload",
+      "scenario": "complete-drawings",
+      "dialog": "none"
+    },
+    {
+      "type": "click",
+      "operation": "workspace.new",
+      "selector": "#pilotNewWorkspace",
+      "scenario": "initial-empty",
+      "dialog": "none"
+    },
+    {
+      "type": "dialogClick",
+      "operation": "workspace.new",
+      "selector": "#pilotNewWorkspace",
+      "scenario": "saved-buyer",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "新建一笔空白询价？原来已保存的询价不会被删除。",
+          "values": {},
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "workspace.new",
+      "selector": "#pilotNewWorkspace",
+      "scenario": "dirty-buyer",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "当前询价尚有未保存修改，新建将放弃这些修改。继续？",
+          "values": {},
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "workspace.recover",
+      "selector": "#pilotResumeWorkspace",
+      "scenario": "dirty-buyer",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "重新读取已保存询价会放弃当前未保存修改。继续？",
+          "values": {},
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "click",
+      "operation": "workspace.recover",
+      "selector": "#pilotResumeWorkspace",
+      "scenario": "clean",
+      "dialog": "none"
+    },
+    {
+      "type": "dialogClick",
+      "operation": "workspace.switch",
+      "selector": "#pilotSwitchWorkspace",
+      "scenario": "dirty-buyer",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "当前未保存修改将放弃，是否切换到另一笔询价？",
+          "values": {},
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "click",
+      "operation": "workspace.switch",
+      "selector": "#pilotSwitchWorkspace",
+      "scenario": "clean",
+      "dialog": "none"
+    },
+    {
+      "type": "click",
+      "operation": "nav.items",
+      "selector": ".srm-v2-sideitem[data-srm-v2-tab='items']",
+      "scenario": "valid",
+      "dialog": "none"
+    },
+    {
+      "type": "click",
+      "operation": "nav.assign",
+      "selector": ".srm-v2-sideitem[data-srm-v2-tab='assign']",
+      "scenario": "valid",
+      "dialog": "none"
+    },
+    {
+      "type": "click",
+      "operation": "items.intake",
+      "selector": "#toggleItemIntake",
+      "scenario": "valid",
+      "dialog": "none"
+    },
+    {
+      "type": "click",
+      "operation": "supplier.tools",
+      "selector": "#uiOpenSupplierTools",
+      "scenario": "valid",
+      "dialog": "none"
+    },
+    {
+      "type": "click",
+      "operation": "supplier.import",
+      "selector": "#pilotImportSupplierConfirm",
+      "scenario": "valid",
+      "dialog": "none"
+    },
+    {
+      "type": "click",
+      "operation": "assign.selectAll",
+      "selector": "#selectAssignAll",
+      "scenario": "valid",
+      "dialog": "none"
+    },
+    {
+      "type": "click",
+      "operation": "workspace.rename",
+      "selector": "#uiRenameRfqBtn",
+      "scenario": "valid",
+      "dialog": "none"
+    },
+    {
+      "type": "click",
+      "operation": "workspace.save",
+      "selector": "#pilotSaveWorkspace",
+      "scenario": "valid",
+      "dialog": "none"
+    },
+    {
+      "type": "fill",
+      "operation": "workspace.name",
+      "selector": "#uiRfqNameInput",
+      "scenario": "valid",
+      "dialog": "none",
+      "text": "虚构 TEST-ONLY 合同样例"
+    },
+    {
+      "type": "file",
+      "operation": "items.file",
+      "selector": "#importFile",
+      "scenario": "valid",
+      "dialog": "none",
+      "files": [
+        "fixtures/items12.xlsx"
+      ]
+    },
+    {
+      "type": "file",
+      "operation": "suppliers.file",
+      "selector": "#pilotSupplierExcel",
+      "scenario": "valid",
+      "dialog": "none",
+      "files": [
+        "fixtures/suppliers.xlsx"
+      ]
+    }
+  ]
+}

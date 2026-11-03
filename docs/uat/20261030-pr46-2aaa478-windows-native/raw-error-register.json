@@ -1,0 +1,11 @@
+{
+  "note": "Browser/source-acquisition entries are transcribed observations from tool returns, not raw screenshots or browser traces. seed-retry.log is an actual preserved command log.",
+  "productFailCount": 0,
+  "errors": [
+    {"kind":"environment","stage":"sandbox startup","message":"Initial shell socket/CIM/WindowsApps access restrictions; approved native shell startup and HTTP later succeeded"},
+    {"kind":"browser-control","stage":"initial UI","messages":["Timed out after 10000ms waiting for CDP command Page.getFrameTree","Timed out after 2612ms waiting for CDP command Input.dispatchMouseEvent","Timed out after 10000ms waiting for CDP command Emulation.setFocusEmulationEnabled"],"observedPage":"New RFQ confirmation after saving synthetic A","result":"UI path not completed"},
+    {"kind":"computer-use safety stop","stage":"initial native fallback","message":"Could not determine current browser URL with enough confidence; stopped"},
+    {"kind":"environment","stage":"user-authorized one retry","message":"Browser is not available: 2","inventory":["ChatGPT in-app browser","Codex MCP Apps"],"result":"No native Edge/Chrome connector available"},
+    {"kind":"driver-only","stage":"supplemental seed","commandExit":1,"httpStatus":400,"message":"PDF upload requires the currently active RFQ","originalLog":"logs/seed-retry.log","correction":"Added assets checkpoint explicitly selecting intended RFQ with expectedActive before upload; same synthetic DB checkpoint continuation; no clean full buyer rerun claim","followupExits":{"assets":0,"backup":0,"restore":0}}
+  ]
+}

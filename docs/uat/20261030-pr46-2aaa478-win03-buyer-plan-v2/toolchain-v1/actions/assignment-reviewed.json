@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "productSha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "name": "ASSIGNMENT-INTERACTION-CONTRACT-NOT-EXECUTED",
+  "purpose": "contract-test",
+  "steps": [
+    {
+      "type": "click",
+      "operation": "assign.selectAll",
+      "selector": "#selectAssignAll",
+      "scenario": "valid",
+      "dialog": "none"
+    },
+    {
+      "type": "dialogClick",
+      "operation": "supplier.add.SUP-A",
+      "selector": "#supplierList [data-add='SUP-A']",
+      "scenario": "twelve-unlinked",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "为选中物料添加供应商：即将变更 12 条物料与“虚构供应商A”的实际关联。\n涉及物料：TST-001（规格：未填写，RFQ-L00001）、TST-002（规格：未填写，RFQ-L00002）、TST-003（规格：未填写，RFQ-L00003）、TST-004（规格：未填写，RFQ-L00004）、TST-005（规格：未填写，RFQ-L00005）、TST-006（规格：未填写，RFQ-L00006）、TST-007（规格：未填写，RFQ-L00007）、TST-008（规格：未填写，RFQ-L00008） 等 12 项\n注意：筛选后仍选中的隐藏物料也包含在内。\n确认后立即生效，是否继续？",
+          "values": {
+            "count": 12,
+            "supplier": "虚构供应商A",
+            "scope": "TST-001（规格：未填写，RFQ-L00001）、TST-002（规格：未填写，RFQ-L00002）、TST-003（规格：未填写，RFQ-L00003）、TST-004（规格：未填写，RFQ-L00004）、TST-005（规格：未填写，RFQ-L00005）、TST-006（规格：未填写，RFQ-L00006）、TST-007（规格：未填写，RFQ-L00007）、TST-008（规格：未填写，RFQ-L00008） 等 12 项"
+          },
+          "accept": true
+        }
+      ]
+    },
+    {
+      "type": "dialogClick",
+      "operation": "supplier.add.SUP-B",
+      "selector": "#supplierList [data-add='SUP-B']",
+      "scenario": "twelve-unlinked",
+      "dialog": "expected",
+      "expect": [
+        {
+          "type": "confirm",
+          "message": "为选中物料添加供应商：即将变更 12 条物料与“虚构供应商B”的实际关联。\n涉及物料：TST-001（规格：未填写，RFQ-L00001）、TST-002（规格：未填写，RFQ-L00002）、TST-003（规格：未填写，RFQ-L00003）、TST-004（规格：未填写，RFQ-L00004）、TST-005（规格：未填写，RFQ-L00005）、TST-006（规格：未填写，RFQ-L00006）、TST-007（规格：未填写，RFQ-L00007）、TST-008（规格：未填写，RFQ-L00008） 等 12 项\n注意：筛选后仍选中的隐藏物料也包含在内。\n确认后立即生效，是否继续？",
+          "values": {
+            "count": 12,
+            "supplier": "虚构供应商B",
+            "scope": "TST-001（规格：未填写，RFQ-L00001）、TST-002（规格：未填写，RFQ-L00002）、TST-003（规格：未填写，RFQ-L00003）、TST-004（规格：未填写，RFQ-L00004）、TST-005（规格：未填写，RFQ-L00005）、TST-006（规格：未填写，RFQ-L00006）、TST-007（规格：未填写，RFQ-L00007）、TST-008（规格：未填写，RFQ-L00008） 等 12 项"
+          },
+          "accept": true
+        }
+      ]
+    }
+  ]
+}

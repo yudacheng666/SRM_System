@@ -1,0 +1,9 @@
+global.sizes=[[1024,768],[1366,768],[1600,900]];
+global.inspectStatus=async(name)=>{await close('#srmUxStatusDetails');await close('#uiProjectDetails');await p.evaluate(()=>window.scrollTo(0,0));
+ const actual=await p.evaluate(()=>{const ids=['srmUxWorkspaceSaveSummary','srmV2LiveStatus','pilotSaveStatus','pilotAutosaveStatus','pilotAutoBackupStatus'];return ids.map(id=>{const e=document.getElementById(id);return{id,exists:!!e,visible:!!e&&e.checkVisibility({checkOpacity:true,checkVisibilityCSS:true}),text:e?.textContent,rect:e?{x:e.getBoundingClientRect().x,y:e.getBoundingClientRect().y,width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height}:null}})});
+ log('status-evidence',{name,width:(await p.viewportSize()).width,actual});await check(name+' exactly one visible mounted save/status node',actual.filter(x=>x.visible).map(x=>x.id),['srmUxWorkspaceSaveSummary']);await check(name+' legacy header mirror absent',await p.locator('#srmV2LiveStatus').count(),0);await shot(name);
+};
+for(const[width,height]of sizes){await p.setViewportSize({width,height});await saved();for(const tab of ['items','assign','quoteImport','quotes','settings']){await nav(tab);await inspectStatus('P3-saved-'+width+'-'+tab);await check('P3 saved summary truthful '+width+' '+tab,await p.locator('#srmUxWorkspaceSaveSummary').innerText(),'已保存');}
+ await open('#uiProjectDetails');await open('#srmUxStatusDetails');for(const id of ['pilotSaveStatus','pilotAutosaveStatus','pilotAutoBackupStatus'])await expect(p.locator('#'+id)).toBeVisible();
+ await check('P3 original version diagnostics retained '+width,(await p.locator('#pilotAutosaveStatus').innerText()).includes('版'),true);await p.locator('#srmUxStatusDetails').scrollIntoViewIfNeeded();await shot('P3-saved-diagnostics-'+width);await close('#srmUxStatusDetails');await close('#uiProjectDetails');}
+log('case-complete',{id:'P3-01',status:'PASS'});

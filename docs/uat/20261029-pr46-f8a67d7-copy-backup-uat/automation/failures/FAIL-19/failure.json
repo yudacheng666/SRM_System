@@ -1,0 +1,75 @@
+{
+  "id": "16f3aa108219d9d3c2c6-39854897cd4822bbebc9",
+  "title": "B3 quote and comparison with real SQLite 1600x900",
+  "file": "ui-v2-b3.spec.cjs",
+  "line": 52,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 18,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 11821,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:112:37",
+        "location": {
+          "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+          "column": 37,
+          "line": 112
+        },
+        "snippet": "  110 |  }));\n  111 |  console.log('SRM_UI_V2_B3_QUOTE_METRIC='+JSON.stringify(quoteMetrics));\n> 112 |  expect(quoteMetrics.documentWidth).toBeLessThanOrEqual(viewport.width+2);\n      |                                     ^\n  113 |  await page.screenshot({path:info.outputPath('b3-quote-'+viewport.width+'.png'),fullPage:true});\n  114 |  await info.attach('b3-quote-'+viewport.width,{path:info.outputPath('b3-quote-'+viewport.width+'.png'),contentType:'image/png'});\n  115 |  await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+            "column": 37,
+            "line": 112
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m\n\n  110 |  }));\n  111 |  console.log('SRM_UI_V2_B3_QUOTE_METRIC='+JSON.stringify(quoteMetrics));\n> 112 |  expect(quoteMetrics.documentWidth).toBeLessThanOrEqual(viewport.width+2);\n      |                                     ^\n  113 |  await page.screenshot({path:info.outputPath('b3-quote-'+viewport.width+'.png'),fullPage:true});\n  114 |  await info.attach('b3-quote-'+viewport.width,{path:info.outputPath('b3-quote-'+viewport.width+'.png'),contentType:'image/png'});\n  115 |  await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:112:37"
+        }
+      ],
+      "stdout": [
+        {
+          "text": "SRM_UI_V2_B3_QUOTE_METRIC={\"viewport\":{\"width\":1600,\"height\":900},\"documentWidth\":1746,\"roundTop\":1451.09375,\"coverageTop\":1011.75,\"firstImportTop\":654.5,\"primaryVisible\":[\"confirmQuoteRound\"]}\n"
+        }
+      ],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-29T06:42:02.209Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/test-failed-1.png"
+        },
+        {
+          "name": "server-log",
+          "contentType": "text/plain",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/attachments/server-log-fc868a8dc1a54c2ee4db4d1a6df7a7fb10c26dd0.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+        "column": 37,
+        "line": 112
+      }
+    }
+  ]
+}

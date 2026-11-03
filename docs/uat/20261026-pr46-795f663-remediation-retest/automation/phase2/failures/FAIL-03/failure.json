@@ -1,0 +1,71 @@
+{
+  "id": "ca3536bea9e5ab96e253-3ac0d490a8a60ca7329d",
+  "title": "13 compact laptop item table after import / 1366首屏物料可见",
+  "file": "acceptance.spec.cjs",
+  "line": 457,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 2,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 25823,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#uiProjectDetails')\nExpected: not \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"not toHaveAttribute\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiProjectDetails')\u001b[22m\n\u001b[2m    18 × locator resolved to <details open=\"\" id=\"uiProjectDetails\" class=\"ui-projectDetails\">…</details>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#uiProjectDetails')\nExpected: not \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"not toHaveAttribute\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiProjectDetails')\u001b[22m\n\u001b[2m    18 × locator resolved to <details open=\"\" id=\"uiProjectDetails\" class=\"ui-projectDetails\">…</details>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:486:55",
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 55,
+          "line": 486
+        },
+        "snippet": "  484 |   // English: Buyer UI displays a readable title, with the stable internal key in diagnostics.\n  485 |   await expect(page.locator('#uiCurrentRfq')).toContainText('未命名询价');\n> 486 |   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');\n      |                                                       ^\n  487 |   await checkFirstRow('Fresh page reload');\n  488 | });\n  489 |"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 55,
+            "line": 486
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#uiProjectDetails')\nExpected: not \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"not toHaveAttribute\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiProjectDetails')\u001b[22m\n\u001b[2m    18 × locator resolved to <details open=\"\" id=\"uiProjectDetails\" class=\"ui-projectDetails\">…</details>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n\n\n  484 |   // English: Buyer UI displays a readable title, with the stable internal key in diagnostics.\n  485 |   await expect(page.locator('#uiCurrentRfq')).toContainText('未命名询价');\n> 486 |   await expect(page.locator('#uiProjectDetails')).not.toHaveAttribute('open','');\n      |                                                       ^\n  487 |   await checkFirstRow('Fresh page reload');\n  488 | });\n  489 |\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:486:55"
+        }
+      ],
+      "stdout": [],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-26T11:21:09.007Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/tmp/srm795-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/test-failed-1.png"
+        },
+        {
+          "name": "server-log",
+          "contentType": "text/plain",
+          "path": "/tmp/srm795-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/attachments/server-log-43f2aded2748c8f59a626b047a470b2fcd3e3df7.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/tmp/srm795-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/tmp/srm795-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+        "column": 55,
+        "line": 486
+      }
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "kind": "PURE FROZEN-SOURCE SIMULATION, NOT BUSINESS EXECUTION",
+  "productSha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "sourceSha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3",
+  "partial": {
+    "fixtureText": "RFQ Line ID,报价单价,交期,MOQ,报价状态,物料备注\nRFQ-L00001,10,5,1,quoted,\nBAD,,,,noquote,\n",
+    "parsed": [
+      {
+        "itemRef": "RFQ-L00001",
+        "price": "10",
+        "lead": "5",
+        "moq": "1",
+        "status": "quoted",
+        "remark": "",
+        "_rowNo": 2,
+        "_errors": []
+      },
+      {
+        "itemRef": "BAD",
+        "price": "",
+        "lead": "",
+        "moq": "",
+        "status": "noquote",
+        "remark": "",
+        "_rowNo": 3,
+        "_errors": []
+      }
+    ],
+    "validCount": 1,
+    "skippedCount": 1,
+    "details": "3 行 BAD：多报",
+    "message": "本次共 2 行，可提交 1 行，拒绝/待检查 1 行。\n以下错误行不会保存，完整清单留在预览中：\n3 行 BAD：多报\n是否只提交 1 行？"
+  },
+  "tier": {
+    "price": null,
+    "tiers": [
+      {
+        "min": 1,
+        "max": 9,
+        "price": 9
+      },
+      {
+        "min": 10,
+        "max": null,
+        "price": 8
+      }
+    ],
+    "errors": []
+  },
+  "effectiveForQty2": 9,
+  "overlap": {
+    "price": null,
+    "tiers": [
+      {
+        "min": 1,
+        "max": 9,
+        "price": 9
+      },
+      {
+        "min": 9,
+        "max": null,
+        "price": 8
+      }
+    ],
+    "errors": [
+      "阶梯区间重叠"
+    ]
+  },
+  "promptDefaults": [
+    "10",
+    "5",
+    "1",
+    "quoted",
+    ""
+  ],
+  "fragments": [
+    {
+      "sha256": "d4365a0976c39dd727069ebd76923c6010627ea7f99cb8fa304390b87c159a54",
+      "startLine": 3895,
+      "endLine": 3899,
+      "code": "function parseOptionalNumber(raw,label){\n  const s=String(raw??\"\").trim();if(!s)return{value:null,error:null};\n  const n=Number(s);if(!Number.isFinite(n)||n<0)return{value:null,error:label+\"格式错误\"};return{value:n,error:null};\n}\n"
+    },
+    {
+      "sha256": "a8f73729e2e33f9f8337091bd76e1bc1c9e4786d961eee6fd55d9bb1f9dbda28",
+      "startLine": 3903,
+      "endLine": 3945,
+      "code": "function parseHeaderTable(text,keyHeaders){\n  const raw=String(text||\"\").replace(/\\r\\n?/g,\"\\n\").replace(/^\\uFEFF/,\"\");\n  // 中文：优先按 Tab 分列，否则允许中英文逗号在一张表内混合，保留双引号内分隔符。\n  // English: Prefer Tab where present; otherwise accept mixed Chinese/ASCII commas outside quoted cells.\n  const first=raw.split(\"\\n\")[0]||\"\";\n  const tabDelimited=first.includes(\"\\t\");\n  // 中文：报价含“备注”列时，中文逗号及分号是正文而不是分隔符，避免条款被拆成多行。\n  // English: Preserve Chinese punctuation and semicolons in quotation remark columns.\n  const hasRemarkColumn=/物料备注|报价备注|备注/.test(first);\n  const records=[];let row=[],field=\"\",inside=false;\n  for(let i=0;i<raw.length;i++){\n    const ch=raw[i];\n    if(ch==='\"'){\n      if(inside&&raw[i+1]==='\"'){field+='\"';i++;}else inside=!inside;\n    }else if(!inside&&(tabDelimited?ch===\"\\t\":ch===\",\"||(!hasRemarkColumn&&ch===\"，\"))){row.push(field.trim());field=\"\";}\n    else if(!inside&&(ch===\"\\n\"||(!hasRemarkColumn&&(ch===\"；\"||ch===\";\")))){\n      row.push(field.trim());field=\"\";\n      if(row.some(v=>v!==\"\"))records.push(row);\n      row=[];\n    }else field+=ch;\n  }\n  if(inside)return{headers:[],rows:[],errors:[\"CSV 双引号未闭合\"],warnings:[]};\n  row.push(field.trim());if(row.some(v=>v!==\"\"))records.push(row);\n  if(!records.length)return{headers:[],rows:[],errors:[\"第一行必须是表头\"],warnings:[]};\n  const headers=records[0],errors=[],warnings=[];\n  const duplicate=headers.filter((h,i)=>h&&headers.indexOf(h)!==i);\n  if(duplicate.length)errors.push(\"重复列标题：\"+[...new Set(duplicate)].join(\"、\"));\n  if(headers.some(h=>!h))errors.push(\"表头存在空列名\");\n  if(!keyHeaders.some(k=>headers.includes(k)))errors.push(\"缺少必需主键标题：\"+keyHeaders.join(\" 或 \"));\n  const rows=records.slice(1).map((cells,i)=>{\n    // 中文：允许省略尾部可选单元格，主键和数量/单位等必填值由各业务解析器校验。\n    // English: Pad missing trailing cells; business parsers still validate required keys and values.\n    if(cells.length>headers.length)errors.push(\"第 \"+(i+2)+\" 行数据列数 \"+cells.length+\" 超过表头 \"+headers.length+\"，请检查是否错位\");\n    const data={};headers.forEach((h,j)=>data[h]=cells[j]??\"\");\n    return{data,rowNo:i+2};\n  });\n  return{headers,rows,errors,warnings};\n}\nfunction findHeaderValue(row,headers){\n  for(const h of headers){if(Object.prototype.hasOwnProperty.call(row,h))return row[h]}\n  return\"\";\n}\n"
+    },
+    {
+      "sha256": "0125212b85bb78c7314795a4a6cb9066ebad6b6743acfe2635740b38b8581d40",
+      "startLine": 4293,
+      "endLine": 4294,
+      "code": "function resolveQuoteItem(ref){const x=String(ref||\"\").trim(),byLine=items.find(it=>it.lineId===x);if(byLine)return byLine;const byCode=items.filter(it=>it.id===x);return byCode.length===1?byCode[0]:null}\n"
+    },
+    {
+      "sha256": "13482ee38c51ba13ba19cba2f4c186ab6814eb2ea49121e15f94bdec3fd84d56",
+      "startLine": 4298,
+      "endLine": 4327,
+      "code": "function parseQuoteRows(text){\n  const table=parseHeaderTable(text,[\"RFQ Line ID\",\"存货编码\",\"物料编码\"]);\n  if(table.errors.length){const rows=[];rows._headerErrors=table.errors;return rows}\n  const result=table.rows.map(({data,rowNo})=>{\n    const line=String(data[\"RFQ Line ID\"]||\"\").trim(),\n      code=String(findHeaderValue(data,[\"存货编码\",\"物料编码\"])||\"\").trim(),\n      price=findHeaderValue(data,[\"报价单价\",\"单价\",\"阶梯价\",\"价格\",\"报价\"]),\n      lead=findHeaderValue(data,[\"交期\",\"交期天数\"]),\n      moq=findHeaderValue(data,[\"MOQ\",\"最小起订量\"]),\n      rawStatus=findHeaderValue(data,[\"报价状态\",\"状态\"]),\n       remark=findHeaderValue(data,[\"物料备注\",\"报价备注\",\"备注\"]);\n    const status=rawStatus|| (price?\"quoted\":\"review\"),errors=[];\n    if(!line&&!code)errors.push(\"第 \"+rowNo+\" 行缺少报价行身份\");\n    if(line&&code){\n      const obj=items.find(it=>it.lineId===line);\n      if(obj&&obj.id!==code)errors.push(\"第 \"+rowNo+\" 行 RFQ Line ID 与存货编码不匹配\");\n    }\n    return{itemRef:line||code,price,lead,moq,status,remark,_rowNo:rowNo,_errors:errors};\n  });\n  result._headers=table.headers;return result;\n}\nfunction normalizeQuoteStatus(v){\n  const s=String(v||\"quoted\").trim().toLowerCase();\n  if([\"未报价\",\"noquote\",\"no quote\"].includes(s))return\"noquote\";\n  if([\"不供货\",\"不能供货\",\"cannot\",\"cannot supply\"].includes(s))return\"cannot\";\n  if([\"quoted\",\"报价\",\"正常报价\"].includes(s))return\"quoted\";\n  if([\"review\",\"待检查\"].includes(s))return\"review\";\n  return null;\n}\n"
+    },
+    {
+      "sha256": "60ab1f301d774e079f4ea59447c940c06850a37a2e5f847e048543919a1ae6af",
+      "startLine": 4331,
+      "endLine": 4351,
+      "code": "function parseTierPrice(raw){\n  const s=String(raw??\"\").trim(),errors=[];\n  if(!s)return{price:null,tiers:[],errors:[\"价格不能为空\"]};\n  if(!s.includes(\":\")){const n=Number(s);return Number.isFinite(n)&&n>=0?{price:n,tiers:[],errors:[]}:{price:null,tiers:[],errors:[\"单价格式错误\"]}}\n  const tiers=[];\n  s.split(/[|｜]/).map(x=>x.trim()).filter(Boolean).forEach(part=>{\n    const pos=part.lastIndexOf(\":\");if(pos<=0){errors.push(\"阶梯格式错误：\"+part);return}\n    const range=part.slice(0,pos).trim(),priceRaw=part.slice(pos+1).trim(),price=Number(priceRaw);\n    if(!Number.isFinite(price)||price<0){errors.push(\"阶梯价格错误：\"+part);return}\n    let min,max=null;\n    if(/^\\d+(?:\\.\\d+)?\\+$/.test(range))min=Number(range.slice(0,-1));\n    else if(/^\\d+(?:\\.\\d+)?-\\d+(?:\\.\\d+)?$/.test(range)){const p=range.split(\"-\").map(Number);min=p[0];max=p[1]}\n    else {errors.push(\"阶梯区间错误：\"+range);return}\n    if(!(min>0)||max!==null&&max<min){errors.push(\"阶梯区间反向或非法：\"+range);return}\n    tiers.push({min,max,price});\n  });\n  tiers.sort((a,b)=>a.min-b.min);\n  for(let i=1;i<tiers.length;i++){const prev=tiers[i-1],cur=tiers[i];if(prev.max===null||cur.min<=prev.max)errors.push(\"阶梯区间重叠\")}\n  return{price:null,tiers,errors};\n}\n"
+    },
+    {
+      "sha256": "fae7f9ea97cf5770af71a707240d72ee846f6022874bccf3ff326db3d337e229",
+      "startLine": 4355,
+      "endLine": 4362,
+      "code": "function effectivePriceForLine(line,qty){\n  if(!line||line.status!==\"quoted\")return null;\n  if(!line.tiers?.length)return line.price==null||!Number.isFinite(Number(line.price))?null:Number(line.price);\n  const q=Number(qty);if(!Number.isFinite(q)||q<=0)return null;\n  const hit=line.tiers.find(t=>q>=t.min&&(t.max==null||q<=t.max));\n  return hit?Number(hit.price):null;\n}\n"
+    },
+    {
+      "sha256": "627e5c7f47ff36e0d337b0cb75f447bd93fca1f541518ec6efe96348e8c0319c",
+      "startLine": 4369,
+      "endLine": 4396,
+      "code": "function validateQuotePreview(rows){\n  // 中文：防止采购员先打开报价页、后又增加供应商分配，而第一轮尚无报价时错误显示“多报”。\n  // English: Refresh empty first-round draft scope even if the buyer revisited assignments after opening quotation import.\n  ensureFirstRound();\n  const round=currentQuoteRound(),expected=new Set(expectedIdsForRound(round)),resolved=rows.map(r=>({...r,item:resolveQuoteItem(r.itemRef)})),seen=new Map();\n  resolved.forEach(r=>{const key=r.item?.lineId||r.itemRef;seen.set(key,(seen.get(key)||0)+1)});\n  return resolved.map(r=>{\n    const status=normalizeQuoteStatus(r.status),lineId=r.item?.lineId||r.itemRef,itemId=r.item?.id||\"\",duplicate=(seen.get(lineId)||0)>1,codeMatches=items.filter(x=>x.id===String(r.itemRef||\"\").trim()).length,ambiguous=!r.item&&codeMatches>1,errors=[];if(!status)errors.push(\"报价状态无法识别\");if(status===\"review\")errors.push(\"价格和状态均为空，请核对\");if(r._errors?.length)errors.push(...r._errors);if(typeof (r.remark??\"\")!==\"string\"||String(r.remark??\"\").length>2000)errors.push(\"物料备注超过 2000 字或不是文本\");if(ambiguous)errors.push(\"物料编码对应多条 RFQ 行，请使用 RFQ Line ID\");\n    let check=\"已报价\";\n    if(status===\"review\")check=\"待检查\";else if(ambiguous)check=\"数据错误\";else if(duplicate)check=\"重复\";else if(!r.item||!expected.has(lineId))check=\"多报\";else if(status===\"noquote\")check=\"明确未报价\";else if(status===\"cannot\")check=\"不供货\";\n    let parsed={price:null,tiers:[],errors:[]},lead={value:null,error:null},moq={value:null,error:null},effective=null;\n    if(status===\"quoted\"){\n      parsed=parseTierPrice(r.price);errors.push(...parsed.errors);\n      lead=parseOptionalNumber(r.lead,\"交期\");moq=parseOptionalNumber(r.moq,\"MOQ\");if(lead.error)errors.push(lead.error);if(moq.error)errors.push(moq.error);\n      effective=effectivePriceForLine({status,price:parsed.price,tiers:parsed.tiers},r.item?.qty);\n      if(!parsed.errors.length&&effective==null)errors.push(\"RFQ数量没有适用的阶梯价格\");\n    }\n    if(errors.length&&[\"已报价\"].includes(check))check=\"数据错误\";if(!status)check=\"数据错误\";\n    // 中文：明确区分未知物料、未分配供应商和不在本轮范围，避免所有情况只显示“多报”。\n    // English: Distinguish unknown items, missing supplier assignment and lines outside the current round scope.\n    const scopeReason=check===\"多报\"?\n      !r.item?\"找不到对应物料或 RFQ Line ID\":\n      !getSet(lineId).has(round.supplierId)?\"该物料尚未分配给当前供应商\":\n      \"该物料未纳入本轮应报价范围\":\"\";\n    return {...r,status,lineId,itemId,priceParsed:parsed,leadValue:lead.value,moqValue:moq.value,effectivePrice:effective,errors,coverageCheck:check,scopeReason};\n  });\n}\n"
+    },
+    {
+      "sha256": "31ff006546a5e54fefdec91ff9797a0eeb27602b6591622daee69a63d2e29637",
+      "startLine": 4678,
+      "endLine": 4688,
+      "code": "function planQuoteImportCommit(rows){\n  const checked=validateQuotePreview(rows.map(r=>r._rawInput||r));\n  const valid=[],skipped=[];\n  checked.forEach((r,i)=>{\n    const candidate={...r,_rawInput:rows[i]._rawInput||rows[i],_entryMethod:rows[i]._entryMethod||\"import\"};\n    if([\"已报价\",\"明确未报价\",\"不供货\"].includes(r.coverageCheck)&&!r.errors.length)valid.push(candidate);\n    else skipped.push(candidate);\n  });\n  return{valid,skipped,total:checked.length};\n}\n"
+    }
+  ]
+}

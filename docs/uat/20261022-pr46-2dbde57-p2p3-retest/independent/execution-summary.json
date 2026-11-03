@@ -1,0 +1,1380 @@
+{
+  "cases": [
+    {
+      "time": "2026-10-22T13:12:22.692Z",
+      "kind": "case-complete",
+      "id": "P2-01",
+      "status": "PASS",
+      "basis": "actual prior fictional S4 restored through new product UI, current computation and state independently verified"
+    },
+    {
+      "time": "2026-10-22T13:14:03.977Z",
+      "kind": "case-complete",
+      "id": "P2-02",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-22T13:14:52.741Z",
+      "kind": "case-complete",
+      "id": "P2-03",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-22T13:15:25.036Z",
+      "kind": "case-complete",
+      "id": "P2-04",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-22T13:15:44.742Z",
+      "kind": "case-complete",
+      "id": "P2-05",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-22T13:16:27.166Z",
+      "kind": "case-complete",
+      "id": "P3-01",
+      "status": "PASS"
+    },
+    {
+      "time": "2026-10-22T13:17:05.889Z",
+      "kind": "case-complete",
+      "id": "P3-02",
+      "status": "PASS",
+      "note": "Real pending PUT held then continued without fake response; exact database unchanged before release and genuine200 persisted afterward"
+    },
+    {
+      "time": "2026-10-22T13:17:55.353Z",
+      "kind": "case-complete",
+      "id": "P3-03",
+      "status": "PASS",
+      "note": "Real two-tab SQLite revision conflict409, no fake network response, unsaved stale state retained and never acknowledged"
+    }
+  ],
+  "checks": {
+    "PASS": 117
+  },
+  "runtimeErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "console": [
+    {
+      "time": "2026-10-22T13:11:54.839Z",
+      "kind": "console",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "time": "2026-10-22T13:17:45.923Z",
+      "kind": "console",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    }
+  ],
+  "screenshots": 34,
+  "statusSamples": [
+    {
+      "time": "2026-10-22T13:16:07.494Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1024-items",
+      "width": 1024,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 938.984375,
+            "y": 102.59375,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:08.806Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1024-assign",
+      "width": 1024,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 938.984375,
+            "y": 102.59375,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:09.792Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1024-quoteImport",
+      "width": 1024,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 938.984375,
+            "y": 102.59375,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:10.854Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1024-quotes",
+      "width": 1024,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 938.984375,
+            "y": 102.59375,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:11.748Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1024-settings",
+      "width": 1024,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 938.984375,
+            "y": 102.59375,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:14.703Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1366-items",
+      "width": 1366,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 1269.984375,
+            "y": 90.09375,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:15.658Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1366-assign",
+      "width": 1366,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 1267.984375,
+            "y": 93.09375,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:16.383Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1366-quoteImport",
+      "width": 1366,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 1269.984375,
+            "y": 90.09375,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:17.103Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1366-quotes",
+      "width": 1366,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 1269.984375,
+            "y": 90.09375,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:18.239Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1366-settings",
+      "width": 1366,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 1269.984375,
+            "y": 90.09375,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:21.369Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1600-items",
+      "width": 1600,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 1501.984375,
+            "y": 105.625,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:22.277Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1600-assign",
+      "width": 1600,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 1501.984375,
+            "y": 105.625,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:23.369Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1600-quoteImport",
+      "width": 1600,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 1501.984375,
+            "y": 105.625,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:24.279Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1600-quotes",
+      "width": 1600,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 1501.984375,
+            "y": 105.625,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:25.156Z",
+      "kind": "status-evidence",
+      "name": "P3-saved-1600-settings",
+      "width": 1600,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "已保存",
+          "rect": {
+            "x": 1501.984375,
+            "y": 105.625,
+            "width": 58.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "SQLite 自动保存成功：RFQ-1792674936385-V994ZL（第 2 版）。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：已自动保存第 2 版（1:15:44 PM）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:16:59.801Z",
+      "kind": "status-evidence",
+      "name": "P3-pending-1024",
+      "width": 1024,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "保存状态待确认",
+          "rect": {
+            "x": 890.984375,
+            "y": 102.59375,
+            "width": 106.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "已添加供应商：虚构复验等待真实保存供应商；正在等待自动保存，也可手动保存。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：正在自动保存……",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:17:02.234Z",
+      "kind": "status-evidence",
+      "name": "P3-pending-1366",
+      "width": 1366,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "保存状态待确认",
+          "rect": {
+            "x": 1221.984375,
+            "y": 90.09375,
+            "width": 106.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "已添加供应商：虚构复验等待真实保存供应商；正在等待自动保存，也可手动保存。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：正在自动保存……",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:17:03.816Z",
+      "kind": "status-evidence",
+      "name": "P3-pending-1600",
+      "width": 1600,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "保存状态待确认",
+          "rect": {
+            "x": 1453.984375,
+            "y": 105.625,
+            "width": 106.015625,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "已添加供应商：虚构复验等待真实保存供应商；正在等待自动保存，也可手动保存。",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：正在自动保存……",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:17:46.592Z",
+      "kind": "status-evidence",
+      "name": "P3-conflict-1024",
+      "width": 1024,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "保存异常 · 查看详情",
+          "rect": {
+            "x": 861.546875,
+            "y": 102.59375,
+            "width": 135.453125,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "未保存成功，请不要关闭页面：Workspace revision changed; refusing overwrite（HTTP 409）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：保存失败，已停止自动重试；请检查并手动保存。Workspace revision changed; refusing overwrite（HTTP 409）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:17:48.972Z",
+      "kind": "status-evidence",
+      "name": "P3-conflict-1366",
+      "width": 1366,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "保存异常 · 查看详情",
+          "rect": {
+            "x": 1192.546875,
+            "y": 90.09375,
+            "width": 135.453125,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "未保存成功，请不要关闭页面：Workspace revision changed; refusing overwrite（HTTP 409）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：保存失败，已停止自动重试；请检查并手动保存。Workspace revision changed; refusing overwrite（HTTP 409）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    },
+    {
+      "time": "2026-10-22T13:17:51.698Z",
+      "kind": "status-evidence",
+      "name": "P3-conflict-1600",
+      "width": 1600,
+      "actual": [
+        {
+          "id": "srmUxWorkspaceSaveSummary",
+          "exists": true,
+          "visible": true,
+          "text": "保存异常 · 查看详情",
+          "rect": {
+            "x": 1424.546875,
+            "y": 105.625,
+            "width": 135.453125,
+            "height": 30
+          }
+        },
+        {
+          "id": "srmV2LiveStatus",
+          "exists": false,
+          "visible": false,
+          "rect": null
+        },
+        {
+          "id": "pilotSaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "未保存成功，请不要关闭页面：Workspace revision changed; refusing overwrite（HTTP 409）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutosaveStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动保存：保存失败，已停止自动重试；请检查并手动保存。Workspace revision changed; refusing overwrite（HTTP 409）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "id": "pilotAutoBackupStatus",
+          "exists": true,
+          "visible": false,
+          "text": "自动备份：最近 10/22/2026, 1:12:21 PM，保留 1 份（上限 7 份）",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ]
+    }
+  ]
+}

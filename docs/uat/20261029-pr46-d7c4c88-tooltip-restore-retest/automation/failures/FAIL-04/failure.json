@@ -1,0 +1,71 @@
+{
+  "id": "ca3536bea9e5ab96e253-a07463745d96e93af5ef",
+  "title": "46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分",
+  "file": "acceptance.spec.cjs",
+  "line": 718,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 3,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 10758,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m1\u001b[39m\nReceived length: \u001b[31m2\u001b[39m\nReceived array:  \u001b[31m[\"将“虚构供应商B”移出本次询价？\u001b[39m\n\u001b[31m同时会取消它当前关联的 12 个物料。\", \"新建一笔空白询价？原来已保存的询价不会被删除。\"]\u001b[39m",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m1\u001b[39m\nReceived length: \u001b[31m2\u001b[39m\nReceived array:  \u001b[31m[\"将“虚构供应商B”移出本次询价？\u001b[39m\n\u001b[31m同时会取消它当前关联的 12 个物料。\", \"新建一笔空白询价？原来已保存的询价不会被删除。\"]\u001b[39m\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:733:19",
+        "location": {
+          "file": "/workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+          "column": 19,
+          "line": 733
+        },
+        "snippet": "  731 |   await openProject(page);\n  732 |   await page.locator('#pilotNewWorkspace').click();\n> 733 |   expect(dialogs).toHaveLength(1);\n      |                   ^\n  734 |   expect(dialogs[0]).toContain('新建一笔空白询价');\n  735 |   expect(dialogs[0]).not.toContain('未保存修改');\n  736 |   expect((await snapshot(page)).state).toEqual(before.state);"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 19,
+            "line": 733
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m1\u001b[39m\nReceived length: \u001b[31m2\u001b[39m\nReceived array:  \u001b[31m[\"将“虚构供应商B”移出本次询价？\u001b[39m\n\u001b[31m同时会取消它当前关联的 12 个物料。\", \"新建一笔空白询价？原来已保存的询价不会被删除。\"]\u001b[39m\n\n  731 |   await openProject(page);\n  732 |   await page.locator('#pilotNewWorkspace').click();\n> 733 |   expect(dialogs).toHaveLength(1);\n      |                   ^\n  734 |   expect(dialogs[0]).toContain('新建一笔空白询价');\n  735 |   expect(dialogs[0]).not.toContain('未保存修改');\n  736 |   expect((await snapshot(page)).state).toEqual(before.state);\n    at /workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:733:19"
+        }
+      ],
+      "stdout": [],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-29T08:19:44.995Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/workspace/srmd7-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/test-failed-1.png"
+        },
+        {
+          "name": "server-log",
+          "contentType": "text/plain",
+          "path": "/workspace/srmd7-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/attachments/server-log-c41c209e8e3f3cf4372014ec1bbd5fc4f36fb356.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/workspace/srmd7-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/workspace/srmd7-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/workspace/srmd7-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+        "column": 19,
+        "line": 733
+      }
+    }
+  ]
+}

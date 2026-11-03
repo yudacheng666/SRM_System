@@ -1,0 +1,58 @@
+{
+  "id": "ca3536bea9e5ab96e253-1178afe33aed6ddbf394",
+  "title": "07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败",
+  "file": "acceptance.spec.cjs",
+  "line": 303,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 1,
+      "parallelIndex": 0,
+      "status": "timedOut",
+      "duration": 90779,
+      "error": {
+        "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m",
+        "stack": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+      },
+      "errors": [
+        {
+          "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+        },
+        {
+          "message": "Error: End of central directory record signature not found. Either not a zip file, or file is truncated."
+        }
+      ],
+      "stdout": [],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-26T11:05:30.084Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/tmp/srm795-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-2.png"
+        },
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/tmp/srm795-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-1.png"
+        },
+        {
+          "name": "server-log",
+          "contentType": "text/plain",
+          "path": "/tmp/srm795-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/attachments/server-log-118db4a3bee0679e6fce3ecce443f1bcf4a482e3.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/tmp/srm795-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/error-context.md"
+        }
+      ]
+    }
+  ]
+}

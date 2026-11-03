@@ -1,0 +1,188 @@
+{
+  "attempt-01": {
+    "checkPASS": 190,
+    "checkFAIL": 0,
+    "scopes": [
+      {
+        "time": "2026-10-26T06:52:53.216Z",
+        "kind": "scope-complete",
+        "id": "CORE-01",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T06:54:04.618Z",
+        "kind": "scope-complete",
+        "id": "CORE-02",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T06:55:06.804Z",
+        "kind": "scope-complete",
+        "id": "CORE-03",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T06:57:01.169Z",
+        "kind": "scope-complete",
+        "id": "CORE-04",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T06:58:18.172Z",
+        "kind": "scope-complete",
+        "id": "CORE-05",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T06:59:25.919Z",
+        "kind": "scope-complete",
+        "id": "UI-THREE-SIZES",
+        "status": "EXECUTED; final visual/row-density review separate"
+      },
+      {
+        "time": "2026-10-26T07:01:39.494Z",
+        "kind": "scope-complete",
+        "id": "CORE-06",
+        "status": "PASS"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2026-10-26T07:02:54.972Z",
+        "kind": "unanticipated-error",
+        "message": "expect(locator).toHaveCount(expected) failed\n\nLocator:  locator('#importPreview tbody tr')\nExpected: 52\nReceived: 50\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.count\" with timeout 5000ms\n  - waiting for locator('#importPreview tbody tr')\n    9 × locator resolved to 50 elements\n      - unexpected value \"50\"\n",
+        "stack": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  locator('#importPreview tbody tr')\nExpected: 52\nReceived: 50\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.have.count\" with timeout 5000ms\n  - waiting for locator('#importPreview tbody tr')\n    9 × locator resolved to 50 elements\n      - unexpected value \"50\"\n\n    at Proxy.<anonymous> (/tmp/srm66-product/node_modules/playwright/lib/matchers/expect.js:213:24)\n    at eval (eval at global.run (/tmp/uat66/methods/driver.cjs:18:145), <anonymous>:3:268)\n    at async eval (eval at <anonymous> (/tmp/uat66/methods/driver.cjs:19:582), <anonymous>:1:12)\n    at async /tmp/uat66/methods/driver.cjs:19:576"
+      }
+    ],
+    "screenshots": 50,
+    "pageErrors": []
+  },
+  "attempt-02": {
+    "checkPASS": 202,
+    "checkFAIL": 1,
+    "scopes": [
+      {
+        "time": "2026-10-26T07:06:02.937Z",
+        "kind": "scope-complete",
+        "id": "CORE-01",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T07:06:14.009Z",
+        "kind": "scope-complete",
+        "id": "CORE-02",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T07:06:24.555Z",
+        "kind": "scope-complete",
+        "id": "CORE-03",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T07:06:42.175Z",
+        "kind": "scope-complete",
+        "id": "CORE-04",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T07:06:46.982Z",
+        "kind": "scope-complete",
+        "id": "CORE-05",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T07:07:07.341Z",
+        "kind": "scope-complete",
+        "id": "UI-THREE-SIZES",
+        "status": "EXECUTED; final visual/row-density review separate"
+      },
+      {
+        "time": "2026-10-26T07:07:10.504Z",
+        "kind": "scope-complete",
+        "id": "CORE-06",
+        "status": "PASS"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2026-10-26T07:07:34.059Z",
+        "kind": "unanticipated-error",
+        "message": "UX-02 history shows both meaningful Chinese names",
+        "stack": "Error: UX-02 history shows both meaningful Chinese names\n    at global.check (/tmp/uat66/methods/driver.cjs:4:191)\n    at eval (eval at global.run (/tmp/uat66/methods/driver.cjs:18:145), <anonymous>:6:261)\n    at async eval (eval at <anonymous> (/tmp/uat66/methods/driver.cjs:19:582), <anonymous>:1:198)\n    at async /tmp/uat66/methods/driver.cjs:19:576"
+      }
+    ],
+    "screenshots": 52,
+    "pageErrors": []
+  },
+  "attempt-03": {
+    "checkPASS": 240,
+    "checkFAIL": 0,
+    "scopes": [
+      {
+        "time": "2026-10-26T07:11:15.977Z",
+        "kind": "scope-complete",
+        "id": "CORE-01",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T07:11:27.847Z",
+        "kind": "scope-complete",
+        "id": "CORE-02",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T07:11:38.907Z",
+        "kind": "scope-complete",
+        "id": "CORE-03",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T07:11:57.585Z",
+        "kind": "scope-complete",
+        "id": "CORE-04",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T07:12:01.760Z",
+        "kind": "scope-complete",
+        "id": "CORE-05",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T07:12:20.481Z",
+        "kind": "scope-complete",
+        "id": "UI-THREE-SIZES",
+        "status": "EXECUTED; final visual/row-density review separate"
+      },
+      {
+        "time": "2026-10-26T07:12:23.273Z",
+        "kind": "scope-complete",
+        "id": "CORE-06",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T07:12:46.005Z",
+        "kind": "scope-complete",
+        "id": "CORE-07",
+        "status": "PASS"
+      },
+      {
+        "time": "2026-10-26T07:13:03.351Z",
+        "kind": "scope-complete",
+        "id": "CORE-08",
+        "status": "PASS"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2026-10-26T07:13:12.087Z",
+        "kind": "unanticipated-error",
+        "message": "response.json: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache",
+        "stack": "response.json: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache\n    at eval (<anonymous>:7:497)\n    at async eval (<anonymous>:1:279)\n    at async /tmp/uat66/methods/driver.cjs:19:576"
+      }
+    ],
+    "screenshots": 66,
+    "pageErrors": []
+  }
+}

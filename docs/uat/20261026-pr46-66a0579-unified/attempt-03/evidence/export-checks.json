@@ -1,0 +1,666 @@
+[
+  {
+    "label": "U66-A ZIP CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "U66-A no internal JSON",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "U66-A exact assigned RFQ lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-A exact quantities",
+    "actual": [
+      5.0,
+      2.0,
+      3.0,
+      4.0,
+      5.0,
+      6.0,
+      100.0,
+      8.0,
+      9.0,
+      10.0,
+      11.0,
+      12.0
+    ],
+    "expected": [
+      5,
+      2,
+      3,
+      4,
+      5,
+      6,
+      100,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-A quote prices remain blank",
+    "actual": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-A no competitor IDs",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "U66-A no internal reason",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "U66-A exact scoped original PDF bytes",
+    "actual": {
+      "UF26-DUP_A.pdf": "2542f1df224e8b3e7377de32a284c43e552df84ba98532499b19141c228e0bda",
+      "UF26-003_A.pdf": "81e9fcf62df89a71aba12840116462e5b5ece0d20ab02cab3235f35cb4c88772",
+      "UF26-unmatched.pdf": "e79063c1726ca653c392c7a74f4d58a47b868a5ad9b0c105c5a2148ac0e00a42"
+    },
+    "expected": {
+      "UF26-003_A.pdf": "81e9fcf62df89a71aba12840116462e5b5ece0d20ab02cab3235f35cb4c88772",
+      "UF26-DUP_A.pdf": "2542f1df224e8b3e7377de32a284c43e552df84ba98532499b19141c228e0bda",
+      "UF26-unmatched.pdf": "e79063c1726ca653c392c7a74f4d58a47b868a5ad9b0c105c5a2148ac0e00a42"
+    },
+    "pass": true
+  },
+  {
+    "label": "U66-B ZIP CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "U66-B no internal JSON",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "U66-B exact assigned RFQ lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-B exact quantities",
+    "actual": [
+      5.0,
+      2.0,
+      3.0,
+      4.0,
+      5.0,
+      6.0,
+      100.0,
+      8.0,
+      9.0,
+      10.0,
+      11.0,
+      12.0
+    ],
+    "expected": [
+      5,
+      2,
+      3,
+      4,
+      5,
+      6,
+      100,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-B quote prices remain blank",
+    "actual": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-B no competitor IDs",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "U66-B no internal reason",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "U66-B exact scoped original PDF bytes",
+    "actual": {
+      "UF26-DUP_A.pdf": "2542f1df224e8b3e7377de32a284c43e552df84ba98532499b19141c228e0bda",
+      "UF26-003_A.pdf": "81e9fcf62df89a71aba12840116462e5b5ece0d20ab02cab3235f35cb4c88772",
+      "UF26-unmatched.pdf": "e79063c1726ca653c392c7a74f4d58a47b868a5ad9b0c105c5a2148ac0e00a42"
+    },
+    "expected": {
+      "UF26-003_A.pdf": "81e9fcf62df89a71aba12840116462e5b5ece0d20ab02cab3235f35cb4c88772",
+      "UF26-DUP_A.pdf": "2542f1df224e8b3e7377de32a284c43e552df84ba98532499b19141c228e0bda",
+      "UF26-unmatched.pdf": "e79063c1726ca653c392c7a74f4d58a47b868a5ad9b0c105c5a2148ac0e00a42"
+    },
+    "pass": true
+  },
+  {
+    "label": "U66-C ZIP CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "U66-C no internal JSON",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "U66-C exact assigned RFQ lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00005"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00005"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-C exact quantities",
+    "actual": [
+      5.0,
+      5.0
+    ],
+    "expected": [
+      5,
+      5
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-C quote prices remain blank",
+    "actual": [
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-C no competitor IDs",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "U66-C no internal reason",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "U66-C exact scoped original PDF bytes",
+    "actual": {},
+    "expected": {},
+    "pass": true
+  },
+  {
+    "label": "CSV exact10 common lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00005",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00005",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "CSV true RFQ identity",
+    "actual": [
+      "RFQ-1792998664339-KTRMNW"
+    ],
+    "expected": [
+      "RFQ-1792998664339-KTRMNW"
+    ],
+    "pass": true
+  },
+  {
+    "label": "CSV independently calculated totals",
+    "actual": [
+      6420.0,
+      6665.0
+    ],
+    "expected": [
+      6420.0,
+      6665.0
+    ],
+    "pass": true
+  },
+  {
+    "label": "CSV every amount equals quantity times applicable price",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  },
+  {
+    "label": "comparison second-page selection remains true120",
+    "actual": 120.0,
+    "expected": 120,
+    "pass": true
+  },
+  {
+    "label": "comparison high-price reason persists",
+    "actual": "完全虚构统一26：乙方交期与保障更适合本询价",
+    "expected": "完全虚构统一26：乙方交期与保障更适合本询价",
+    "pass": true
+  },
+  {
+    "label": "comparison actual high selected unit82",
+    "actual": 82.0,
+    "expected": 82,
+    "pass": true
+  },
+  {
+    "label": "comparison stable12 RFQ lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "all suppliers outer CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "all suppliers exact nested names",
+    "actual": [
+      "RFQ_U66-A.zip",
+      "RFQ_U66-B.zip",
+      "RFQ_U66-C.zip"
+    ],
+    "expected": [
+      "RFQ_U66-A.zip",
+      "RFQ_U66-B.zip",
+      "RFQ_U66-C.zip"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-A nested CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "U66-A nested assigned lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-A nested blank supplier prices",
+    "actual": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-A nested exact PDF scope/bytes",
+    "actual": {
+      "UF26-DUP_A.pdf": "2542f1df224e8b3e7377de32a284c43e552df84ba98532499b19141c228e0bda",
+      "UF26-003_A.pdf": "81e9fcf62df89a71aba12840116462e5b5ece0d20ab02cab3235f35cb4c88772",
+      "UF26-unmatched.pdf": "e79063c1726ca653c392c7a74f4d58a47b868a5ad9b0c105c5a2148ac0e00a42"
+    },
+    "expected": {
+      "UF26-003_A.pdf": "81e9fcf62df89a71aba12840116462e5b5ece0d20ab02cab3235f35cb4c88772",
+      "UF26-DUP_A.pdf": "2542f1df224e8b3e7377de32a284c43e552df84ba98532499b19141c228e0bda",
+      "UF26-unmatched.pdf": "e79063c1726ca653c392c7a74f4d58a47b868a5ad9b0c105c5a2148ac0e00a42"
+    },
+    "pass": true
+  },
+  {
+    "label": "U66-B nested CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "U66-B nested assigned lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-B nested blank supplier prices",
+    "actual": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-B nested exact PDF scope/bytes",
+    "actual": {
+      "UF26-DUP_A.pdf": "2542f1df224e8b3e7377de32a284c43e552df84ba98532499b19141c228e0bda",
+      "UF26-003_A.pdf": "81e9fcf62df89a71aba12840116462e5b5ece0d20ab02cab3235f35cb4c88772",
+      "UF26-unmatched.pdf": "e79063c1726ca653c392c7a74f4d58a47b868a5ad9b0c105c5a2148ac0e00a42"
+    },
+    "expected": {
+      "UF26-003_A.pdf": "81e9fcf62df89a71aba12840116462e5b5ece0d20ab02cab3235f35cb4c88772",
+      "UF26-DUP_A.pdf": "2542f1df224e8b3e7377de32a284c43e552df84ba98532499b19141c228e0bda",
+      "UF26-unmatched.pdf": "e79063c1726ca653c392c7a74f4d58a47b868a5ad9b0c105c5a2148ac0e00a42"
+    },
+    "pass": true
+  },
+  {
+    "label": "U66-C nested CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "U66-C nested assigned lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00005"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00005"
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-C nested blank supplier prices",
+    "actual": [
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "U66-C nested exact PDF scope/bytes",
+    "actual": {},
+    "expected": {},
+    "pass": true
+  }
+]

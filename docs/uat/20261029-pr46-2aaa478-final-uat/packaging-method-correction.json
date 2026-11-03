@@ -1,0 +1,9 @@
+{
+  "classification": "Evidence archiver variable collision, not product/browser failure",
+  "originalError": "FileNotFoundError: archive path used last original artifact relative filename instead of phase label",
+  "originalLog": "archive-focused.initial-error.log",
+  "originalMethod": "archive-results.initial.py",
+  "correction": "Dedicated archiveLabel variable; originals not changed, archive extraction/hash revalidation required",
+  "originalArtifactsUnchanged": true,
+  "browserTestsRerun": false
+}

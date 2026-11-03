@@ -1,0 +1,148 @@
+{
+  "PR46": {
+    "start": {
+      "head": "c2737f0221a7b529114da2df363e062e75c7544c",
+      "branch": "feat/20261022-srm-ui-ux-structural",
+      "draft": true
+    },
+    "end": {
+      "head": "c2737f0221a7b529114da2df363e062e75c7544c",
+      "draft": true
+    },
+    "comments": [
+      {
+        "id": 6334483993,
+        "body": "## 开发阶段进度与 CI 启动阻塞 / Developer progress and CI startup blocker\n\n**Exact HEAD / SHA:** `ee2ee3b2cde630e4fa0d4dd51e111962015a9312`. Compared against baseline, only `prototype/m1-lite/index.html` and **new** `prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs` changed. Existing tests, CI, SQLite backend, export and S4 implementation untouched.\n\n### Static developer validation / 静态验证\n- All **8 inline JavaScript blocks** in actual M1 Lite index.html parse successfully using V8 function compilation; no syntax failures.\n- New E2E test source also parses successfully.\n- Existing selectors, import/award model and live node IDs were retained; this is **not** equivalent to successful browser/SQLite E2E.\n\n### CI result / 当前 CI\n- [UI V2 Unified run 39734723908](https://github.com/yudacheng666/SRM_System/actions/runs/39734723908): FAIL before runner/test steps.\n- [S3/S4 Regression run 39734723925](https://github.com/yudacheng666/SRM_System/actions/runs/39734723925): FAIL before runner/test steps.\n- **All four Linux and Windows jobs** show `steps=[]`, `runner_id=0 or null`, blank runner name and termination ~2–7 seconds after start. Logs unavailable (GitHub returns 404 BlobNotFound). One controlled retry of a Windows UI job produced the same no-runner/no-step failure.\n- These observations support an **Actions runner allocation / account infrastructure / workflow preflight blocker**, rather than a demonstrated product-test assertion failure. Exact account-side cause has not been confirmed; past artifact quota warning alone does not prove this is the same cause.\n\n### Gate / 门槛\n**DEVELOPMENT-CODE-COMMITTED; AUTOMATED-TEST-NOT-EXECUTED; NOT READY FOR CODEX.** Do not merge this PR or main. Do not claim either workflow PASS. Next prerequisite is to inspect the GitHub Actions job UI for the no-runner reason (billing/usage limits, policy, or runner availability) and resolve it. Then re-run both exact-HEAD workflows; if they execute and report functional failures, ChatGPT must diagnose/fix them before any independent Codex UAT.\n\n中文：这是产品候选与测试用例已提交、但 GitHub 执行环境尚未真正启动测试的状态；不能把工具静态解析通过等同正式测试通过。",
+        "url": "https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6334483993"
+      },
+      {
+        "id": 6334950699,
+        "body": "## 最新开发核对 / Developer checkpoint — 2026-10-22\n\n**Current integration HEAD / 当前候选：** `c157040a39e929f062273f6bbb242f6d38fbb3b5`，Draft PR #46，开发基线与 `main` 未修改。\n\n### 修正 / Change\n- 在 8 份现有及新增 Chromium E2E 文件中，仅将 11 处 `details` 展开按钮选择器限定为直接子 `summary`（`:scope > summary`），并使 `#uiProjectDetails > summary` 精确定位。\n- 因新增保存/备份技术详情被嵌入项目操作折叠区，原 `locator('summary')` 会误命中多个嵌套 `summary`，这一问题在已通过 CI 的 PR #45 调整过程中也曾出现。\n- **本提交仅修改测试定位器**；不修改产品 UI/报价业务/SQLite/Excel/PDF/S4，也没有删除或放宽业务断言。\n\n### 精确 SHA 的 CI / CI on exact HEAD\n- [S3/S4 run 39738425452](https://github.com/yudacheng666/SRM_System/actions/runs/39738425452): **FAIL before runner launch**.\n- [UI Unified run 39738425462](https://github.com/yudacheng666/SRM_System/actions/runs/39738425462): **FAIL before runner launch**.\n- 四个 Linux/Windows jobs 均 `steps=[]`，无分配的 `runner_name`，启动至结束仅约 3 秒，测试命令 **未运行**。不能据此声称产品 E2E 不通过，更不能声称通过。\n- PR #45 的既有 `4480482c...` 两套 CI 均 SUCCESS，但它是**另一分支独立候选**，不自动证明 PR #46 的新 UI 安全。不要合并两个候选或把它们视为一个已验收版本。\n\n**阻断项 / Blocker:** 仓库拥有者需在 Actions 失败作业页面查看「未启动」提示，并检查账户 Billing/Actions 使用额度、付款或限制；另排查 GitHub 服务故障/runner 分配问题。现有 API 信息不足以确认究竟是哪一项。解除后重新运行本 SHA 两套 CI，如出现真实测试失败，开发方再修产品；CI 全绿后才交 Codex Cloud TEST-ONLY 定向验收。\n\n**Gate:** NOT CI-VALIDATED; NO CODEX UAT; NO MERGE to baseline/main.",
+        "url": "https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6334950699"
+      },
+      {
+        "id": 6335678763,
+        "body": "## ChatGPT 续开发检查点 / UI continuation checkpoint — 2026-10-22\n\n**当前 Draft HEAD：** [`c2737f0221a7b529114da2df363e062e75c7544c`](https://github.com/yudacheng666/SRM_System/commit/c2737f0221a7b529114da2df363e062e75c7544c)\n\n- 修复比价页面“仅显示待人工决定”：真实有效报价待决定集合先筛选再分页，切换筛选重置页码；保留整表原始报价索引及全量决策概览、金额分析。\n- Fixed pending-only pagination at the underlying list level, preserving original item indices for bid lookup and full-scope analytics.\n- 新增真实 Chromium + 隔离 SQLite 的 **12 条虚构物料** E2E 回归用例，覆盖 10+2 分页、纯视图筛选、人工定标后的待处理数及总体统计。\n- Added isolated synthetic 12-line GUI regression, not yet executed.\n- 已核实 **8 段内嵌 JS + 新测试 JS 静态语法解析 PASS**，并未声称 E2E PASS。\n\n**本 SHA 自动触发的 GitHub CI：** [UI 39743002722](https://github.com/yudacheng666/SRM_System/actions/runs/39743002722) / [S3/S4 39743002740](https://github.com/yudacheng666/SRM_System/actions/runs/39743002740) 均在分配 runner 前结束：四个 job 全部 `steps=[]`，未运行测试。之前用户提供的作业 Annotation 指示账户付款失败或支出额度需增加，具体子原因尚不确定。用户决定暂不充值，待十一月核实。**不得把此环境失败判定为产品 E2E 失败，也不得判定通过。**\n\n**记忆固化：** [Draft docs-only PR #48](https://github.com/yudacheng666/SRM_System/pull/48)，已更新 PROJECT_STATE 和续开发 Session；主记忆提交不与代码 PR 混写。\n\n**严格门槛：** PR #46 保持 Draft；不合并到 M1/main，不交 Codex Cloud TEST-ONLY；十一月检查 Actions 执行限制解除后重跑准确最终 SHA 的 CI，真实程序失败由 ChatGPT 修复，全绿后再做一轮定向独立验收。\n\nNo SQLite/ERP/PDF/business export/S4 API or security rule changes in this commit.",
+        "url": "https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6335678763"
+      },
+      {
+        "id": 6335844250,
+        "body": "@codex 请在 Codex Cloud 独立执行 **TEST-ONLY** 任务 [GitHub Issue #49](https://github.com/yudacheng666/SRM_System/issues/49)。**这是执行测试任务，不是普通 PR code review，也不是产品修复。**\n\nRun the full instructions in **Issue #49** against the exact frozen product SHA `c2737f0221a7b529114da2df363e062e75c7544c` on branch `feat/20261022-srm-ui-ux-structural`:\n- Use a cloud execution environment (NOT GitHub Actions runners); perform real local Python/Node/Chromium/SQLite tests and targeted buyer UX checks using only synthetic isolated data.\n- Follow the existing SRM `AGENTS.md` TEST-ONLY restrictions. This is a **user-authorized temporary pre-CI exception due to Actions account billing limit**, **not** permission to merge or to mark CI PASS.\n- **Do not modify product code, existing tests, workflows, project AI memory or main.** Preserve failures; do not silently fix assertions.\n- Create **one evidence-only Draft PR** based on the exact tested SHA targeting this product branch, with bilingual reports, case matrix, logs/traces/screenshots and raw failures as specified in #49.\n- Report exact-SHA PASS/FAIL/NOT TESTED/BLOCKED, tests actually run, limitations, and the evidence PR URL in both #49 and this PR conversation.\n- If cloud tooling or environment cannot execute, report **BLOCKED with evidence**, do not fabricate PASS.\n\n请直接执行，不要等待 GitHub Actions 恢复；不要修改任何产品代码。 / Execute the independent task now if this integration supports cloud-task dispatch; otherwise explicitly report that dispatch is unavailable.",
+        "url": "https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6335844250"
+      },
+      {
+        "id": 6335847373,
+        "body": "To use Codex here, [create an environment for this repo](https://chatgpt.com/codex/cloud/settings/environments).",
+        "url": "https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6335847373"
+      }
+    ]
+  },
+  "PR44": {
+    "head": "8e643520b756a9a961552a9e0379e0ba9e540e8c",
+    "body": "## 目的 / Purpose\n\n将 Windows 首轮实操标注与报价回收/比价议价的新意见统一为可实施的 UI 整改方案，而非逐个做零散 CSS 修补。\nConsolidate Windows UAT feedback and quote/comparison UX comments into one implementable restructuring plan.\n\n**开发基线 / Baseline**: draft/20261013-m1-storage-ui-audit @ f117cf3ca512a4ca7e1eec505b5e28744159343f\n\n### 交付 / Deliverables\n\n1. docs/ui/20261022_SRM_UI_结构整改总方案_V1.md — 中英双语：根因、信息架构、文本线框图、报价回收紧凑视图、安全刷新、比价决策三层结构、共用设计规范、逐阶段实施及参考案例。\n2. docs/ui/20261022_SRM_UI_实施验收矩阵_V1.md — 中英双语：反馈追溯、真实代码触点、业务不变量、开发者 GitHub CI 测试、Codex TEST-ONLY 定向验收、回滚与合并门槛。\n\n### 决定原则 / Key decisions\n\n- 报价回收：主表 7 列左右、普通行目标 40–44px、按需展开备注/阶梯价/交期/MOQ；刷新显示不创建轮次或新版本，不覆盖未保存草稿。\n- Quote intake: compact primary rows, on-demand details, and a view-only refresh that does not overwrite drafts.\n- 比价议价：决策总览 → 逐物料报价与人工定标 → 自身范围/共同范围/理论最低分别统计。\n- Comparison: decision overview → line-level award → totals separated by valid comparison scope.\n- 统一 RFQ 号和保存状态；业务导出与 S4 恢复管理分离；图纸批量匹配步骤化。\n- Consolidate RFQ/save context; separate exports from S4 operations; streamline drawing matching.\n- 维护 SQLite、报价历史与锁定、最低价并列、非最低理由、阶梯适用价、供应商隔离、原始 PDF、S4 安全等已验收业务语义。\n- Preserve all previously accepted persistence, pricing, provenance, scope, and backup safety semantics.\n\n### 范围与批准门槛 / Scope and approval gate\n\n**DESIGN-ONLY.** Compared against exact baseline: 2 files added under docs/ui; no product code, backend, existing tests or CI changes.\n这是设计候选 PR，不是 UI 实施 PR，保持 Draft 等待用户评审，不合并开发基线或 main。\nThis draft is for design review, not product implementation or delivery; do not merge as a release.\n\n开发版 S3/S4 post-merge CI [39430062548](https://github.com/yudacheng666/SRM_System/actions/runs/39430062548) SUCCESS，但该结果不能代替未来新 UI 的 CI。\nExisting baseline CI success does not validate future UI implementation.\n\n用户明确批准布局和交互后，ChatGPT 在同一个产品开发 PR 中分段实现、增加自动化回归并核对 CI；稳定后 Codex Cloud 再做一次有证据的定向 TEST-ONLY 真实浏览器业务验收。\nAfter design approval, ChatGPT implements in one gated product PR; Codex independently performs one targeted TEST-ONLY UAT run.\n\n### 设计参考 / Pattern references\n- SAP Ariba Bid Analysis: https://help.sap.com/docs/strategic-sourcing/managing-events-with-guided-sourcing/using-bid-analysis-to-award-guided-sourcing-events\n- SAP Ariba Scenarios and Awards: https://help.sap.com/docs/ariba-apis/event-management-api/creating-scenarios-and-awards-with-event-management-api\n- Oracle Negotiation Award Lines: https://docs.oracle.com/en/cloud/saas/procurement/26d/fapra/op-suppliernegotiationawards-auctionheaderid-child-lines-get.html\n\n以上仅参考采购决策信息层级，不引入大型平台新增业务复杂性。\nThese are presentation-pattern references only, not scope expansion.",
+    "comments": [
+      {
+        "id": 6334483459,
+        "body": "## 用户已批准实施 / Owner approval to implement\n\n用户确认设计方向“可以”。设计文档继续作为结构和验收依据，不将 Draft 设计 PR 合并成产品功能。\n\nChatGPT 已从准确基线 `f117cf3ca512a4ca7e1eec505b5e28744159343f` 新建正式产品改造候选 [PR #46](https://github.com/yudacheng666/SRM_System/pull/46)：报价回收紧凑模式/详情/安全刷新、比价三层展示、工作区保存状态与图纸流程，以及独立 Chromium + SQLite 回归用例。开发基线和 main 尚未合并修改。\n\nEnglish: Design direction approved by owner. PR #46 is the separate actual product implementation; this design PR remains Draft as a design record.",
+        "url": "https://github.com/yudacheng666/SRM_System/pull/44#issuecomment-6334483459"
+      }
+    ]
+  },
+  "issue49": {
+    "url": "https://github.com/yudacheng666/SRM_System/issues/49",
+    "title": "[TEST-ONLY][PR46 c2737f0] Codex Cloud 临时独立测试（Actions 受限，不替代 CI）",
+    "issue_number": 49,
+    "body": "## 授权与性质 / Authorization & scope\n\n用户同意：**仅在 GitHub Actions 因账户计费/额度问题无法分配 runner 的期间，允许 Codex Cloud 提前做独立 TEST-ONLY 预验收**；原“准确 SHA 的 GitHub CI 全绿 → 正式独立验收 → 用户批准后合并”规则仍然保留。本任务**不是 CI PASS，也不是发布许可**。\n\nOwner authorizes a temporary independent Codex Cloud TEST-ONLY **pre-CI check** while GitHub Actions cannot allocate runners. Do not promote this to a formal release gate.\n\n**Repository:** `yudacheng666/SRM_System`\n**Product PR:** [#46](https://github.com/yudacheng666/SRM_System/pull/46) (Draft)\n**Required exact product SHA:** `c2737f0221a7b529114da2df363e062e75c7544c`\n**Product ref:** `feat/20261022-srm-ui-ux-structural`\n**Design + acceptance criteria:** [PR #44](https://github.com/yudacheng666/SRM_System/pull/44) and `docs/ui/20261022_SRM_UI_实施验收矩阵_V1.md` on its design ref.\n**Why CI is unavailable:** [UI workflow 39743002722](https://github.com/yudacheng666/SRM_System/actions/runs/39743002722) and [S3/S4 workflow 39743002740](https://github.com/yudacheng666/SRM_System/actions/runs/39743002740): four jobs `steps=[]`, no runners; GitHub annotation reports recent payment failure **or** insufficient spending limit. This is an environment/account block, not an observed failing product assertion.\n\n## 1. 固定代码及环境 / Freeze source and environment\n\n1. Read `AGENTS.md`, `docs/ai-memory/PROJECT_STATE.md`, `DECISIONS.md` from M1 development branch `draft/20261013-m1-storage-ui-audit`. Also read this Issue, #46, #44 and directly relevant tests. Memory proposals on PR #48 are not automatically merged.\n2. Fetch #46 remote head, record start and end HEAD with `git rev-parse`. **Run on the exact SHA above**; if the remote head moved, mark BLOCKED and report; don't silently test another SHA.\n3. Use a fresh isolated temp `SRM_DATA_DIR` for each real-browser scenario; synthetic fixtures only; no actual buyer RFQ, vendor quotes, original client documents, external services or credentials.\n4. Record actual runner OS, Node/Python versions, browser binary and any missing runtime capabilities. GitHub Actions is **not** available for the task; use Codex Cloud execution, not `workflow_dispatch`, CI rerun or GitHub-hosted runners.\n\n## 2. 开发者套件独立重跑 / Independent local equivalents of blocked CI\n\nAttempt, in a suitable Cloud Linux environment, the actual repository commands from `.github/workflows/srm-ui-v2-unified-acceptance.yml` and `srm-s3-regression.yml`:\n\n```sh\npython -m unittest discover -v -s prototype/m1-lite/backend -p 'test_*.py'\nnpm ci\nnpm test\nnpx playwright install --with-deps chromium\nnpm run test:e2e\n```\n\nRecord exit codes, totals, elapsed test scope and logs **per command**. Run the newly added `prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs` as part of E2E; do not skip, alter or quarantine any failing test. In particular cover 12 synthetic lines (10+2 paging).\n\nFor Windows-only PowerShell/batch-launcher checks, execute only if an actual Windows runner is available *outside GitHub Actions*. Otherwise mark NOT TESTED (platform unavailable); do not call Linux emulation equivalent to native Windows PASS. Do not consume GitHub Actions allowance through retries.\n\n## 3. 定向真实采购业务验收 / Targeted Chromium+SQLite buyer UAT\n\nPreserve screenshots, network/API observations and before/after isolated SQLite state where material:\n\n- **Q01–Q04 报价回收:** file/XLSX or paste import, draft preview; refresh must not destroy unconfirmed preview/unsaved note, rewrite SQLite, create a round/revision or misstate save acknowledgement; compact/full columns and actual RFQ Line ID/tiers/lead/MOQ/evidence details.\n- **C01–C05 比价议价:** 12-line pending-only genuine filtered pagination (10+2 and no false blank page), selection of one real priced item removes it from pending view, full-scope decision overview preserved; price values, same-scope totals, no zero-value missing bids; tied-lowest selection allowed, higher-price selection demands a persisted reason; opening supplier terms must not award.\n- **W01–W04 工作区/安全:** one authoritative RFQ/save status; business exports vs S4 administration; unique/ambiguous PDF association keeps original bytes and line identity; supplier ZIP isolation, S4 complete ZIP and empty-directory-only restore plus nonempty rejection on **isolated synthetic** database.\n- **V01 可用性:** 1024×768 / 1366×768 / 1600×900 visible/scrollable main actions, headings and dense price tables. Report UX/readability separately from functional correctness. Screenshots must reflect actual browser rendering.\n\nUse PR #44 UX IDs and acceptance matrix as the source of exact expectations. If exhaustive historical C03–C09 or native Windows is unavailable, explicitly label NOT TESTED rather than manufacturing green coverage. Keep a focused run; no stress/destructive tests against real directories.\n\n## 4. TEST-ONLY 严格禁止 / Restrictions\n\n- **NEVER edit product code, existing test code, CI workflows, AGENTS.md, PROJECT_STATE.md or DECISIONS.md**; do not fix failures in this task. No merges, rebases, force pushes, closing PRs or writing to main/M1/product branches.\n- If a test fixture/driver error occurs, preserve original failure and allow at most one documented runner-only correction/rerun; do not change assertions to pass or hide failures.\n- If a genuine data-loss, export leakage, pricing corruption or S4 security defect is observed, stop affected risky scenarios and report immediately. Other independent non-risky checks may continue.\n- No real company, personal, vendor, product or pricing identifiers in reports, logs or screenshots; commit synthetic/test-only evidence.\n\n## 5. 必须回写 GitHub / Required GitHub deliverables\n\nCreate **one Draft evidence-only PR** from a fresh `test/20261022-pr46-c2737f0-temp-ci` branch based on the frozen product SHA, targeting `feat/20261022-srm-ui-ux-structural`. Only add paths under `docs/uat/20261022-pr46-c2737f0-temp-ci/`:\n\n- `REPORT.zh-CN.md`, `REPORT.en.md`: exact SHA, platform, test commands, counts, UX vs business findings, confirmed defects, limitations and next-step recommendation.\n- `results.csv`: each case with PASS / FAIL / NOT TESTED / BLOCKED and evidence pointer.\n- `raw-error-register.json`: raw failures, driver corrections and retest count; no silent deletion.\n- `evidence/`: real screenshots, logs, traces and relevant generated-file verification, as available and safe.\n- Links to UI/S3-S4 failed *no-runner* jobs as context, clearly separated from actual Codex local test results.\n\nAfter creating the Draft evidence PR, comment **both on this Issue and on product PR #46** with: evidence PR URL, exact product SHA, executed/not-executed commands, numeric result, any P1/P2/P3 issue, and blocked scope. Keep issue open for developer response.\n\n**Outcome meaning:** Codex Cloud tests, even if all PASS, are **temporary pre-CI evidence only**. GitHub Actions official exact-SHA verification, ChatGPT review and owner authorization remain mandatory before merging either product branch or main.\n\n**中英双语按行对应，保持真实错误与证据，不修产品。 / Bilingual reports; test only, preserve raw evidence; no product edits.**",
+    "state": "open",
+    "user": {
+      "login": "yudacheng666",
+      "name": "yudacheng666",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/227731428?v=4",
+      "id": 227731428
+    },
+    "assignees": null,
+    "labels": null,
+    "milestone": null,
+    "state_reason": null,
+    "comments": 2,
+    "created_at": "2026-10-22T08:01:57Z",
+    "updated_at": "2026-10-22T08:03:26Z",
+    "closed_at": null,
+    "display_url": "https://github.com/yudacheng666/SRM_System/issues/49",
+    "display_title": "[TEST-ONLY][PR46 c2737f0] Codex Cloud 临时独立测试（Actions 受限，不替代 CI）"
+  },
+  "CI": {
+    "runs": {
+      "workflow_runs": [
+        {
+          "id": 39743002740,
+          "name": "SRM S3/S4 Regression",
+          "status": "completed",
+          "conclusion": "failure",
+          "run_number": 184,
+          "jobs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39743002740/jobs",
+          "logs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39743002740/logs",
+          "workflow_id": 383906368
+        },
+        {
+          "id": 39743002722,
+          "name": "SRM UI V2 Unified Candidate Acceptance",
+          "status": "completed",
+          "conclusion": "failure",
+          "run_number": 79,
+          "jobs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39743002722/jobs",
+          "logs_url": "https://api.github.com/repos/yudacheng666/SRM_System/actions/runs/39743002722/logs",
+          "workflow_id": 385464786
+        }
+      ]
+    },
+    "jobs": [
+      {
+        "jobs": [
+          {
+            "id": 119704582922,
+            "name": "linux-real-browser",
+            "status": "completed",
+            "conclusion": "failure",
+            "run_id": 39743002722,
+            "logs_url": null,
+            "steps": null
+          },
+          {
+            "id": 119704582926,
+            "name": "windows-business-safety",
+            "status": "completed",
+            "conclusion": "failure",
+            "run_id": 39743002722,
+            "logs_url": null,
+            "steps": null
+          }
+        ]
+      },
+      {
+        "jobs": [
+          {
+            "id": 119704582935,
+            "name": "Synthetic Chromium acceptance on Linux",
+            "status": "completed",
+            "conclusion": "failure",
+            "run_id": 39743002740,
+            "logs_url": null,
+            "steps": null
+          },
+          {
+            "id": 119704583301,
+            "name": "SQLite S4 restore and supplier ZIP regression on Windows",
+            "status": "completed",
+            "conclusion": "failure",
+            "run_id": 39743002740,
+            "logs_url": null,
+            "steps": null
+          }
+        ]
+      }
+    ]
+  },
+  "memoryReadFrom": "draft/20261013-m1-storage-ui-audit; fixed product SHA has no AGENTS or canonical memory files"
+}

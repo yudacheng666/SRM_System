@@ -1,0 +1,61 @@
+{
+  "format": "gzip tar, lossless original paths; content-identical files are standard tar hardlinks",
+  "originalFiles": 395,
+  "uniqueContents": 163,
+  "allOriginalFileHashesRevalidatedAfterArchive": true,
+  "archiveBytes": 327851040,
+  "archiveSHA256": "65e988e719e57d3028063fc783f68c3c2a3a2518387eef071ff9d1fbd5ad8454",
+  "parts": [
+    {
+      "file": "playwright-all-raw.tar.gz.part000",
+      "bytes": 33554432,
+      "sha256": "5c2fdd783caef662fb3c9e02a5ea52c59625e37e8de7f6a2199af928a2e89b35"
+    },
+    {
+      "file": "playwright-all-raw.tar.gz.part001",
+      "bytes": 33554432,
+      "sha256": "96f026c1d68882713aadd52b198149d5c39ec0e4eadc2c833f44395c9b6fa0b8"
+    },
+    {
+      "file": "playwright-all-raw.tar.gz.part002",
+      "bytes": 33554432,
+      "sha256": "61d7c052a13bb7220fd501252b00a4ab1f2a6da96e5f61b4d7e188529b05eade"
+    },
+    {
+      "file": "playwright-all-raw.tar.gz.part003",
+      "bytes": 33554432,
+      "sha256": "c39b7d29bb33b37eee6b9b3536dd2d73deefb6c5c57b231c5dfa82c2878a83a4"
+    },
+    {
+      "file": "playwright-all-raw.tar.gz.part004",
+      "bytes": 33554432,
+      "sha256": "3bba9c6f12e283bb1890ee447e31b62053f4060b9d26aa24efb87a28860a7854"
+    },
+    {
+      "file": "playwright-all-raw.tar.gz.part005",
+      "bytes": 33554432,
+      "sha256": "127a5f9f14d49d401f639611757e35e64192726400bf20190e18cd623fce2b69"
+    },
+    {
+      "file": "playwright-all-raw.tar.gz.part006",
+      "bytes": 33554432,
+      "sha256": "44e18899bd6f7fcaef804480741104679e0fe14dec44db968ba6b164bff5c578"
+    },
+    {
+      "file": "playwright-all-raw.tar.gz.part007",
+      "bytes": 33554432,
+      "sha256": "69f240f49d9c83c59c30c1aaf787e52ecf4d6f5c9ff607cf7cebee9a33f745f3"
+    },
+    {
+      "file": "playwright-all-raw.tar.gz.part008",
+      "bytes": 33554432,
+      "sha256": "ebdb1ca2470576699f40c832b74b0c3a4944308cf620374e1ec3d243d0760c7c"
+    },
+    {
+      "file": "playwright-all-raw.tar.gz.part009",
+      "bytes": 25861152,
+      "sha256": "26f1e3f6e9199cef5d8c23ec51b9be1fa0e3affba30d5886f54fee0b9b64f567"
+    }
+  ],
+  "restoreCommand": "cat playwright-all-raw.tar.gz.part* | tar -xz -f -"
+}

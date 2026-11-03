@@ -1,0 +1,71 @@
+{
+  "id": "405cc0014031cae14de1-4ddae970d06a6bac4924",
+  "title": "UX09 exact 1366 comparison density and first-row reachability / 比价紧凑性复验",
+  "file": "ui-ux-structural.spec.cjs",
+  "line": 374,
+  "status": "unexpected",
+  "results": [
+    {
+      "workerIndex": 5,
+      "parallelIndex": 0,
+      "status": "failed",
+      "duration": 5982,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m44\u001b[39m\nReceived:    \u001b[31m44.4375\u001b[39m",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m44\u001b[39m\nReceived:    \u001b[31m44.4375\u001b[39m\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:400:26",
+        "location": {
+          "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+          "column": 26,
+          "line": 400
+        },
+        "snippet": "  398 |       priceCenter:(price.top+price.bottom)/2,detailCenter:(detail.top+detail.bottom)/2};\n  399 |   });\n> 400 |   expect(measure.height).toBeLessThanOrEqual(44);\n      |                          ^\n  401 |   expect(measure.top).toBeLessThan(measure.viewport);\n  402 |   expect(Math.abs(measure.priceCenter-measure.detailCenter)).toBeLessThanOrEqual(10);\n  403 |   await cells.first().locator('.srm-ux-bid-details summary').click();"
+      },
+      "errors": [
+        {
+          "location": {
+            "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+            "column": 26,
+            "line": 400
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m44\u001b[39m\nReceived:    \u001b[31m44.4375\u001b[39m\n\n  398 |       priceCenter:(price.top+price.bottom)/2,detailCenter:(detail.top+detail.bottom)/2};\n  399 |   });\n> 400 |   expect(measure.height).toBeLessThanOrEqual(44);\n      |                          ^\n  401 |   expect(measure.top).toBeLessThan(measure.viewport);\n  402 |   expect(Math.abs(measure.priceCenter-measure.detailCenter)).toBeLessThanOrEqual(10);\n  403 |   await cells.first().locator('.srm-ux-bid-details summary').click();\n    at /tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:400:26"
+        }
+      ],
+      "stdout": [],
+      "stderr": [
+        {
+          "buffer": ""
+        }
+      ],
+      "retry": 0,
+      "startTime": "2026-10-26T11:27:28.826Z",
+      "annotations": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/tmp/srm795-product/test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/test-failed-1.png"
+        },
+        {
+          "name": "ux-structural-server-log",
+          "contentType": "text/plain",
+          "path": "/tmp/srm795-product/test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/attachments/ux-structural-server-log-92147abeaca2adaaad7a369e4da68ea6d54367fc.log"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/tmp/srm795-product/test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/tmp/srm795-product/test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/trace.zip"
+        }
+      ],
+      "errorLocation": {
+        "file": "/tmp/srm795-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+        "column": 26,
+        "line": 400
+      }
+    }
+  ]
+}

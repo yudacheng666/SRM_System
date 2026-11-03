@@ -1,0 +1,19 @@
+[
+  {
+    "id": "P3-TEST-01",
+    "severity": "P3 test-maintenance, not a confirmed product defect",
+    "status": "FAIL",
+    "classification": "STALE_PAGE_KICKER_LANGUAGE_ASSERTION",
+    "title": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+    "file": "ui-v3-integration.spec.cjs",
+    "assertionLine": 76,
+    "cleanError": "Error: expect(received).toMatch(expected)\n\nExpected pattern: /\\d\\d|ADMIN/\nReceived string:  \"系统设置\"\n\n  74 |     await expect(intro).toBeVisible();\n  75 |     await expect(intro.locator('h2')).not.toBeEmpty();\n> 76 |     expect(await intro.locator('.srm-v3-pageKicker').textContent()).toMatch(/\\d\\d|ADMIN/);\n     |                                                                     ^\n  77 |   }\n  78 |   await expect(page.locator('.srm-v3-flow-label')).toContainText('采购业务流程');\n  79 |   await expect(page.locator('#srmV3QuoteLockHint')).toHaveCount(1);\n    at /workspace/srmfbb-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:76:69",
+    "repro": "Run unmodified full npm run test:e2e; UI V3 case passes approved background then reaches system-settings kicker.",
+    "expectedByOriginalTest": "/\\d\\d|ADMIN/",
+    "actualUI": "系统设置",
+    "buyerImpact": "No data loss or failed purchasing action established; current buyer-language UI conflicts with legacy technical-language assertion. Full automation gate remains red.",
+    "suggestion": "ChatGPT verify intended Chinese route caption and update the obsolete test semantically, preserving all later navigation/layout/state checks. Codex did not change it.",
+    "laterAssertions": "NOT REACHED after line76; independent six-page checks do not imply every later assertion passed",
+    "evidence": "automation/failures/FAIL-01/failure.json"
+  }
+]

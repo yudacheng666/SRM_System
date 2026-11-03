@@ -1,0 +1,666 @@
+[
+  {
+    "label": "UF8-A ZIP CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "UF8-A no internal JSON",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "UF8-A exact assigned RFQ lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-A exact quantities",
+    "actual": [
+      5.0,
+      2.0,
+      3.0,
+      4.0,
+      5.0,
+      6.0,
+      100.0,
+      8.0,
+      9.0,
+      10.0,
+      11.0,
+      12.0
+    ],
+    "expected": [
+      5,
+      2,
+      3,
+      4,
+      5,
+      6,
+      100,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-A quote prices remain blank",
+    "actual": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-A no competitor IDs",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "UF8-A no internal reason",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "UF8-A exact scoped original PDF bytes",
+    "actual": {
+      "UF8-DUP_A.pdf": "fc3d222872b390eafc5ece6c9751c554b3543c73c78fa1361560748a7d9aac24",
+      "UF8-003_A.pdf": "91bf5983aa5fcd4bd045227c1d2642749289123a458a44206c54c780ac0dcd7d",
+      "UF8-unmatched.pdf": "9c5cbd11841f5b9532348817fe2d50751339f67ebf0967e2c30cabf66abcc2a2"
+    },
+    "expected": {
+      "UF8-003_A.pdf": "91bf5983aa5fcd4bd045227c1d2642749289123a458a44206c54c780ac0dcd7d",
+      "UF8-DUP_A.pdf": "fc3d222872b390eafc5ece6c9751c554b3543c73c78fa1361560748a7d9aac24",
+      "UF8-unmatched.pdf": "9c5cbd11841f5b9532348817fe2d50751339f67ebf0967e2c30cabf66abcc2a2"
+    },
+    "pass": true
+  },
+  {
+    "label": "UF8-B ZIP CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "UF8-B no internal JSON",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "UF8-B exact assigned RFQ lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-B exact quantities",
+    "actual": [
+      5.0,
+      2.0,
+      3.0,
+      4.0,
+      5.0,
+      6.0,
+      100.0,
+      8.0,
+      9.0,
+      10.0,
+      11.0,
+      12.0
+    ],
+    "expected": [
+      5,
+      2,
+      3,
+      4,
+      5,
+      6,
+      100,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-B quote prices remain blank",
+    "actual": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-B no competitor IDs",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "UF8-B no internal reason",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "UF8-B exact scoped original PDF bytes",
+    "actual": {
+      "UF8-DUP_A.pdf": "fc3d222872b390eafc5ece6c9751c554b3543c73c78fa1361560748a7d9aac24",
+      "UF8-003_A.pdf": "91bf5983aa5fcd4bd045227c1d2642749289123a458a44206c54c780ac0dcd7d",
+      "UF8-unmatched.pdf": "9c5cbd11841f5b9532348817fe2d50751339f67ebf0967e2c30cabf66abcc2a2"
+    },
+    "expected": {
+      "UF8-003_A.pdf": "91bf5983aa5fcd4bd045227c1d2642749289123a458a44206c54c780ac0dcd7d",
+      "UF8-DUP_A.pdf": "fc3d222872b390eafc5ece6c9751c554b3543c73c78fa1361560748a7d9aac24",
+      "UF8-unmatched.pdf": "9c5cbd11841f5b9532348817fe2d50751339f67ebf0967e2c30cabf66abcc2a2"
+    },
+    "pass": true
+  },
+  {
+    "label": "UF8-C ZIP CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "UF8-C no internal JSON",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "UF8-C exact assigned RFQ lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00005"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00005"
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-C exact quantities",
+    "actual": [
+      5.0,
+      5.0
+    ],
+    "expected": [
+      5,
+      5
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-C quote prices remain blank",
+    "actual": [
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-C no competitor IDs",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "UF8-C no internal reason",
+    "actual": false,
+    "expected": false,
+    "pass": true
+  },
+  {
+    "label": "UF8-C exact scoped original PDF bytes",
+    "actual": {},
+    "expected": {},
+    "pass": true
+  },
+  {
+    "label": "CSV exact10 common lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00005",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00005",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "CSV true RFQ identity",
+    "actual": [
+      "RFQ-1793255776550-RX4HNP"
+    ],
+    "expected": [
+      "RFQ-1793255776550-RX4HNP"
+    ],
+    "pass": true
+  },
+  {
+    "label": "CSV independently calculated totals",
+    "actual": [
+      6420.0,
+      6665.0
+    ],
+    "expected": [
+      6420.0,
+      6665.0
+    ],
+    "pass": true
+  },
+  {
+    "label": "CSV every amount equals quantity times applicable price",
+    "actual": true,
+    "expected": true,
+    "pass": true
+  },
+  {
+    "label": "comparison second-page selection remains true120",
+    "actual": 120.0,
+    "expected": 120,
+    "pass": true
+  },
+  {
+    "label": "comparison high-price reason persists",
+    "actual": "完全虚构验收795：乙方交期与保障更适合本询价",
+    "expected": "完全虚构验收795：乙方交期与保障更适合本询价",
+    "pass": true
+  },
+  {
+    "label": "comparison actual high selected unit82",
+    "actual": 82.0,
+    "expected": 82,
+    "pass": true
+  },
+  {
+    "label": "comparison stable12 RFQ lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "all suppliers outer CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "all suppliers exact nested names",
+    "actual": [
+      "RFQ_UF8-A.zip",
+      "RFQ_UF8-B.zip",
+      "RFQ_UF8-C.zip"
+    ],
+    "expected": [
+      "RFQ_UF8-A.zip",
+      "RFQ_UF8-B.zip",
+      "RFQ_UF8-C.zip"
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-A nested CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "UF8-A nested assigned lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-A nested blank supplier prices",
+    "actual": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-A nested exact PDF scope/bytes",
+    "actual": {
+      "UF8-DUP_A.pdf": "fc3d222872b390eafc5ece6c9751c554b3543c73c78fa1361560748a7d9aac24",
+      "UF8-003_A.pdf": "91bf5983aa5fcd4bd045227c1d2642749289123a458a44206c54c780ac0dcd7d",
+      "UF8-unmatched.pdf": "9c5cbd11841f5b9532348817fe2d50751339f67ebf0967e2c30cabf66abcc2a2"
+    },
+    "expected": {
+      "UF8-003_A.pdf": "91bf5983aa5fcd4bd045227c1d2642749289123a458a44206c54c780ac0dcd7d",
+      "UF8-DUP_A.pdf": "fc3d222872b390eafc5ece6c9751c554b3543c73c78fa1361560748a7d9aac24",
+      "UF8-unmatched.pdf": "9c5cbd11841f5b9532348817fe2d50751339f67ebf0967e2c30cabf66abcc2a2"
+    },
+    "pass": true
+  },
+  {
+    "label": "UF8-B nested CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "UF8-B nested assigned lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00002",
+      "RFQ-L00003",
+      "RFQ-L00004",
+      "RFQ-L00005",
+      "RFQ-L00006",
+      "RFQ-L00007",
+      "RFQ-L00008",
+      "RFQ-L00009",
+      "RFQ-L00010",
+      "RFQ-L00011",
+      "RFQ-L00012"
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-B nested blank supplier prices",
+    "actual": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-B nested exact PDF scope/bytes",
+    "actual": {
+      "UF8-DUP_A.pdf": "fc3d222872b390eafc5ece6c9751c554b3543c73c78fa1361560748a7d9aac24",
+      "UF8-003_A.pdf": "91bf5983aa5fcd4bd045227c1d2642749289123a458a44206c54c780ac0dcd7d",
+      "UF8-unmatched.pdf": "9c5cbd11841f5b9532348817fe2d50751339f67ebf0967e2c30cabf66abcc2a2"
+    },
+    "expected": {
+      "UF8-003_A.pdf": "91bf5983aa5fcd4bd045227c1d2642749289123a458a44206c54c780ac0dcd7d",
+      "UF8-DUP_A.pdf": "fc3d222872b390eafc5ece6c9751c554b3543c73c78fa1361560748a7d9aac24",
+      "UF8-unmatched.pdf": "9c5cbd11841f5b9532348817fe2d50751339f67ebf0967e2c30cabf66abcc2a2"
+    },
+    "pass": true
+  },
+  {
+    "label": "UF8-C nested CRC",
+    "actual": null,
+    "expected": null,
+    "pass": true
+  },
+  {
+    "label": "UF8-C nested assigned lines",
+    "actual": [
+      "RFQ-L00001",
+      "RFQ-L00005"
+    ],
+    "expected": [
+      "RFQ-L00001",
+      "RFQ-L00005"
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-C nested blank supplier prices",
+    "actual": [
+      "",
+      ""
+    ],
+    "expected": [
+      "",
+      ""
+    ],
+    "pass": true
+  },
+  {
+    "label": "UF8-C nested exact PDF scope/bytes",
+    "actual": {},
+    "expected": {},
+    "pass": true
+  }
+]

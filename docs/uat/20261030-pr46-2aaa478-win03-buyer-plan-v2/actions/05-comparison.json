@@ -1,0 +1,680 @@
+{
+  "schemaVersion": 1,
+  "productSha": "2aaa478c8f1966e41b9372d9d989c383dbaa1972",
+  "name": "comparison",
+  "purpose": "buyer-plan",
+  "scope": "DOM reason modal is not native confirm. A9*2 + B15*3 =63 for two manual awards",
+  "steps": [
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-49",
+        "selector": ".srm-v2-sideitem[data-srm-v2-tab='quotes']",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-srm-v2-tab=\"quotes\"",
+        "lines": [
+          1877,
+          1877
+        ],
+        "anchor": "data-srm-v2-tab=\"quotes\"",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": ".srm-v2-sideitem[data-srm-v2-tab='quotes']",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-171"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-50",
+        "selector": "#quoteTable [data-award=\"RFQ-L00001|SUP-A\"] .quotePrice",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-award=",
+        "lines": [
+          5363,
+          5363
+        ],
+        "anchor": "data-award=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteTable [data-award=\"RFQ-L00001|SUP-A\"] .quotePrice",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-172"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "manual": [
+            "RFQ-L00001"
+          ],
+          "noReason": true
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "manual": [
+              "RFQ-L00001"
+            ],
+            "noReason": true
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-173"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-51",
+        "selector": "#quoteTable [data-award=\"RFQ-L00002|SUP-B\"] .quotePrice",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-award=",
+        "lines": [
+          5363,
+          5363
+        ],
+        "anchor": "data-award=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteTable [data-award=\"RFQ-L00002|SUP-B\"] .quotePrice",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-174"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-52",
+        "selector": "#awardReasonConfirm",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "awardReasonConfirm.onclick=",
+        "lines": [
+          5408,
+          5408
+        ],
+        "anchor": "awardReasonConfirm.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#awardReasonValidation",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "请填写非最低价选择的具体原因；未保存任何更改。",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-175"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-53",
+        "selector": "#awardReasonCancel",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "awardReasonCancel.onclick=",
+        "lines": [
+          5407,
+          5407
+        ],
+        "anchor": "awardReasonCancel.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#awardReasonCancel",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-176"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-51",
+        "selector": "#quoteTable [data-award=\"RFQ-L00002|SUP-B\"] .quotePrice",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "data-award=",
+        "lines": [
+          5363,
+          5363
+        ],
+        "anchor": "data-award=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#quoteTable [data-award=\"RFQ-L00002|SUP-B\"] .quotePrice",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-177"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "fill",
+        "operation": "reviewed-54",
+        "selector": "#awardReasonInput",
+        "scenario": "valid",
+        "dialog": "none",
+        "text": "虚构交期与服务优先"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "awardReasonInput",
+        "lines": [
+          43,
+          43
+        ],
+        "anchor": "awardReasonInput",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#awardReasonInput",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-178"
+    },
+    {
+      "kind": "native",
+      "input": {
+        "type": "click",
+        "operation": "reviewed-52",
+        "selector": "#awardReasonConfirm",
+        "scenario": "valid",
+        "dialog": "none"
+      },
+      "branch": "Exact fictional fixture; enabled visible control; reviewed no-dialog branch",
+      "source": {
+        "function": "awardReasonConfirm.onclick=",
+        "lines": [
+          5408,
+          5408
+        ],
+        "anchor": "awardReasonConfirm.onclick=",
+        "path": "prototype/m1-lite/index.html",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#awardReasonConfirm",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "V1.native-input",
+      "id": "W03-179"
+    },
+    {
+      "kind": "save-barrier",
+      "selector": null,
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6137,
+          6137
+        ],
+        "anchor": "window.dispatchEvent(new CustomEvent(\"srm:workspace-saved\"",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "expected": {
+          "manual": [
+            "RFQ-L00001",
+            "RFQ-L00002"
+          ],
+          "manualCount": 2,
+          "manualAmount": 63,
+          "reasonLine2": "虚构交期与服务优先"
+        }
+      },
+      "branch": "Prearm observer BEFORE preceding mutation; pending→real PUT200→event dirty=false; do not infer success from label",
+      "postconditions": [
+        {
+          "kind": "save",
+          "require": "pre r, actual acknowledged n>=r+1 for changed state; memory/API/readonly SQLite exact at n; no unrelated RFQ writes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "manual": [
+              "RFQ-L00001",
+              "RFQ-L00002"
+            ],
+            "manualCount": 2,
+            "manualAmount": 63,
+            "reasonLine2": "虚构交期与服务优先"
+          }
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "pre revision/state",
+            "pending timeline",
+            "request/response revision",
+            "srm:workspace-saved",
+            "SQLite snapshot",
+            "F5 comparison"
+          ]
+        }
+      ],
+      "capability": "save-sqlite-oracle",
+      "id": "W03-180"
+    },
+    {
+      "kind": "ensure-open",
+      "selector": "#pilotReportOpen",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1927,
+          1927
+        ],
+        "anchor": "pilotReportOpen",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "target": "#pilotReportPanel"
+      },
+      "branch": "Inspect target first; click only when hidden; no duplicate toggle",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotReportOpen",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-181"
+    },
+    {
+      "kind": "select",
+      "selector": "#pilotReportType",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1959,
+          1959
+        ],
+        "anchor": "pilotReportType",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": "comparison"
+      },
+      "branch": "Native keyboard option selection; no assignment of DOM/business state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "#pilotReportType",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-182"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-report-supplier=\"SUP-A\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6667,
+          6667
+        ],
+        "anchor": "data-report-supplier",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-report-supplier=\"SUP-A\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-183"
+    },
+    {
+      "kind": "checked",
+      "selector": "[data-report-supplier=\"SUP-B\"]",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          6667,
+          6667
+        ],
+        "anchor": "data-report-supplier",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "value": true
+      },
+      "branch": "Idempotent checkbox based on actual checked state",
+      "postconditions": [
+        {
+          "kind": "dom",
+          "target": "[data-report-supplier=\"SUP-B\"]",
+          "require": "Visible intended state; read actual DOM, no force/hidden-control click"
+        },
+        {
+          "kind": "workspace",
+          "oracle": "same-as-intended-UI-operation",
+          "revision": "actual-ACK-bound"
+        },
+        {
+          "kind": "evidence",
+          "require": [
+            "bound session/Input/dialog events",
+            "DOM snapshot",
+            "screenshot",
+            "read-only API/SQLite and hashes as applicable"
+          ]
+        }
+      ],
+      "capability": "view-controls",
+      "id": "W03-184"
+    },
+    {
+      "kind": "download",
+      "selector": "#pilotReportDownload",
+      "dialog": "none",
+      "source": {
+        "path": "prototype/m1-lite/index.html",
+        "lines": [
+          1972,
+          1972
+        ],
+        "anchor": "pilotReportDownload",
+        "sha256": "bf1415deb388b35ea36c12c46773e3eea75fe22dfb02d7aac7720d40d9d438d3"
+      },
+      "args": {
+        "artifact": "comparison",
+        "sheets": 2,
+        "manualCount": 2,
+        "manualAmount": 63,
+        "missingNotZero": true,
+        "fullHistory": true
+      },
+      "branch": "Prearm bound download event before GUI click; inspect actual completed file, never use API writes",
+      "postconditions": [
+        {
+          "kind": "download",
+          "require": "WillBegin/progress completion + actual file path/size/hash; nested ZIP CRC, XLSX fields and PDF bytes"
+        },
+        {
+          "kind": "expected",
+          "value": {
+            "sheets": 2,
+            "manualCount": 2,
+            "manualAmount": 63,
+            "missingNotZero": true,
+            "fullHistory": true
+          }
+        },
+        {
+          "kind": "workspace",
+          "oracle": "all rows/history/PDF unchanged by export",
+          "revision": "exact-equal"
+        }
+      ],
+      "capability": "download-oracle",
+      "id": "W03-185"
+    }
+  ]
+}

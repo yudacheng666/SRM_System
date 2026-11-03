@@ -1,0 +1,163 @@
+[
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "02 XLSX 12/100, duplicates and invalid format / 物料",
+    "status": "expected",
+    "file": "acceptance.spec.cjs",
+    "line": 160
+  },
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "03 suppliers and bidirectional additive allocation / 供应商与分配",
+    "status": "expected",
+    "file": "acceptance.spec.cjs",
+    "line": 177
+  },
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "04 real quote imports, rounds, tiers, immutable confirmation and comparison XLSX / 报价比价",
+    "status": "expected",
+    "file": "acceptance.spec.cjs",
+    "line": 192
+  },
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包",
+    "status": "expected",
+    "file": "acceptance.spec.cjs",
+    "line": 237
+  },
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复",
+    "status": "expected",
+    "file": "acceptance.spec.cjs",
+    "line": 271
+  },
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败",
+    "status": "expected",
+    "file": "acceptance.spec.cjs",
+    "line": 334
+  },
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "08 bad PDF and damaged ZIP never contaminate saved data / 异常回归",
+    "status": "unexpected",
+    "file": "acceptance.spec.cjs",
+    "line": 354
+  },
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "11 formal RFQ identity in missing-quote CSV and working export shortcut / 单据追溯",
+    "status": "expected",
+    "file": "acceptance.spec.cjs",
+    "line": 425
+  },
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯",
+    "status": "expected",
+    "file": "acceptance.spec.cjs",
+    "line": 528
+  },
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离",
+    "status": "unexpected",
+    "file": "acceptance.spec.cjs",
+    "line": 589
+  },
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见",
+    "status": "expected",
+    "file": "acceptance.spec.cjs",
+    "line": 633
+  },
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出",
+    "status": "unexpected",
+    "file": "acceptance.spec.cjs",
+    "line": 684
+  },
+  {
+    "prior": "OUTDATED_SAVE_WORDING",
+    "title": "46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分",
+    "status": "unexpected",
+    "file": "acceptance.spec.cjs",
+    "line": 718
+  },
+  {
+    "prior": "OUTDATED_REFUSAL_WORDING",
+    "title": "UAT-03 refused restore is visible within current backup section while project drawer collapsed",
+    "status": "expected",
+    "file": "uat-13-fixes.spec.cjs",
+    "line": 138
+  },
+  {
+    "prior": "CONFIRMED_HORIZONTAL_OVERFLOW",
+    "title": "UX visual system: shared six-page design and SVG navigation / 六页统一视觉回归",
+    "status": "expected",
+    "file": "ui-ux-structural.spec.cjs",
+    "line": 417
+  },
+  {
+    "prior": "OUTDATED_FONT_ASSERTION",
+    "title": "UI V2 B1 real workspace and visual layout 1366x768",
+    "status": "expected",
+    "file": "ui-v2-b1.spec.cjs",
+    "line": 53
+  },
+  {
+    "prior": "OUTDATED_FONT_ASSERTION",
+    "title": "UI V2 B1 real workspace and visual layout 1600x900",
+    "status": "expected",
+    "file": "ui-v2-b1.spec.cjs",
+    "line": 53
+  },
+  {
+    "prior": "CONFIRMED_HORIZONTAL_OVERFLOW",
+    "title": "B3 quote and comparison with real SQLite 1366x768",
+    "status": "expected",
+    "file": "ui-v2-b3.spec.cjs",
+    "line": 52
+  },
+  {
+    "prior": "CONFIRMED_HORIZONTAL_OVERFLOW",
+    "title": "B3 quote and comparison with real SQLite 1600x900",
+    "status": "expected",
+    "file": "ui-v2-b3.spec.cjs",
+    "line": 52
+  },
+  {
+    "prior": "CONFIRMED_HORIZONTAL_OVERFLOW",
+    "title": "EXPLORATORY: desktop stages, control visibility and geometry 1024x768",
+    "status": "expected",
+    "file": "ui-v2-exploratory.spec.cjs",
+    "line": 87
+  },
+  {
+    "prior": "CONFIRMED_HORIZONTAL_OVERFLOW",
+    "title": "EXPLORATORY: desktop stages, control visibility and geometry 1366x768",
+    "status": "expected",
+    "file": "ui-v2-exploratory.spec.cjs",
+    "line": 87
+  },
+  {
+    "prior": "CONFIRMED_HORIZONTAL_OVERFLOW",
+    "title": "EXPLORATORY: desktop stages, control visibility and geometry 1600x900",
+    "status": "expected",
+    "file": "ui-v2-exploratory.spec.cjs",
+    "line": 87
+  },
+  {
+    "prior": "OUTDATED_INTERNAL_TITLE_ASSERTION",
+    "title": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+    "status": "unexpected",
+    "file": "ui-v3-integration.spec.cjs",
+    "line": 45
+  }
+]

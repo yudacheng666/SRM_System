@@ -1,0 +1,25 @@
+SRM local prototype: http://127.0.0.1:8765/
+S4 SQLite + PDF backup/restore active. Run the SRM page through this local server, never file://.
+SQLite API check: http://127.0.0.1:8765/storage-check
+127.0.0.1 - - [26/Oct/2026 06:53:19] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:53:19] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:53:20] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:53:20] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:53:20] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:53:20] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:53:20] "GET /api/backups/auto/status HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:53:20] "GET /api/workspaces/RFQ-1792997600689-TYPQHI HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:53:20] "GET /api/workspaces/RFQ-1792997600689-TYPQHI HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:53:21] "GET /api/workspaces/RFQ-1792997600689-TYPQHI HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:53:21] "GET /api/workspaces/RFQ-1792997600689-TYPQHI HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:53:22] "GET /api/workspaces/RFQ-1792997600689-TYPQHI HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:53:23] "GET /api/workspaces/RFQ-1792997600689-TYPQHI HTTP/1.1" 404 -
+127.0.0.1 - - [26/Oct/2026 06:53:23] "PUT /api/workspaces/RFQ-1792997600689-TYPQHI HTTP/1.1" 200 -
+S4 automatic full backup created: SRM_FULL_20261026_065323_2702cdf2.zip
+127.0.0.1 - - [26/Oct/2026 06:53:23] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:53:24] "GET /api/workspaces/RFQ-1792997600689-TYPQHI HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:53:25] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:53:25] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:53:26] "GET /api/active HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:53:26] "GET /api/workspaces HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 06:53:26] "GET /api/backups/auto/status HTTP/1.1" 200 -

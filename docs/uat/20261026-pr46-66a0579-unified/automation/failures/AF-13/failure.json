@@ -1,0 +1,43 @@
+{
+  "id": "AF-13",
+  "productSHA": "66a0579d88177143737b109efb3a8790c6cce053",
+  "classification": "WRONG_SORT_ASSUMPTION",
+  "assessment": "Assumes first imported item is first row, but actual default is newest-first descending and first row is TST-012.",
+  "specFile": "ui-ux-structural.spec.cjs",
+  "specStartLine": 312,
+  "title": "UX item rows: single-line drawing badge and compact row / 物料行高及缺图纸标识",
+  "status": "FAIL",
+  "rawErrors": [
+    {
+      "location": {
+        "file": "/tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+        "column": 54,
+        "line": 326
+      },
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#itemBody tr').first()\nTimeout: 15000ms\n\u001b[32m- Expected substring  - 1\u001b[39m\n\u001b[31m+ Received string     + 7\u001b[39m\n\n\u001b[32m- TST-001\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+ \u001b[43m    \u001b[49m\u001b[39m\n\u001b[31m+     RFQ-L00012TST-012缺图纸\u001b[39m\n\u001b[31m+     虚构物料12虚构类别13\u001b[39m\n\u001b[31m+     件2\u001b[39m\n\u001b[31m+ \u001b[43m    \u001b[49m\u001b[39m\n\u001b[31m+ \u001b[43m  \u001b[49m\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#itemBody tr').first()\u001b[22m\n\u001b[2m    18 × locator resolved to <tr title=\"双击编辑此询价行\" data-edit-line=\"RFQ-L00012\">…</tr>\u001b[22m\n\u001b[2m       - unexpected value \"\u001b[22m\n\u001b[2m    \u001b[22m\n\u001b[2m    RFQ-L00012TST-012缺图纸\u001b[22m\n\u001b[2m    虚构物料12虚构类别13\u001b[22m\n\u001b[2m    件2\u001b[22m\n\u001b[2m    \u001b[22m\n\u001b[2m  \"\u001b[22m\n\n\n  324 |   const height=await rows.first().evaluate(el=>el.getBoundingClientRect().height);\n  325 |   expect(height).toBeLessThanOrEqual(40);\n> 326 |   await expect(page.locator('#itemBody tr').first()).toContainText('TST-001');\n      |                                                      ^\n  327 |   await missing.first().click();\n  328 |   await expect(page.locator('#drawingModal')).toHaveClass(/open/);\n  329 |   expect(errors).toEqual([]);\n    at /tmp/srm66-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:326:54"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/test-failed-1.png"
+    },
+    {
+      "name": "ux-structural-server-log",
+      "contentType": "text/plain",
+      "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/attachments/ux-structural-server-log-d373e7a5cd13a250911538b4ee434bc0faf0c138.log"
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/error-context.md"
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "path": "/tmp/srm66-product/test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/trace.zip"
+    }
+  ],
+  "laterAssertions": "NOT REACHED; do not infer their PASS from independent tests"
+}

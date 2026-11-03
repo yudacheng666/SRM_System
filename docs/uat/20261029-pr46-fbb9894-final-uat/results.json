@@ -1,0 +1,335 @@
+[
+  {
+    "id": "HEAD",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Exact detached checkout/PR HEAD/actual HTTP",
+    "evidence": "http-trace-identity.json",
+    "notes": "87 actual root-page responses match exact source HTML",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "PY",
+    "platform": "Linux/Python3.12",
+    "status": "PASS",
+    "scope": "Full original Python backend suite",
+    "evidence": "automation/python-backend/stderr.log",
+    "notes": "44PASS",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "NODE",
+    "platform": "Linux/Node24",
+    "status": "PASS",
+    "scope": "Full original Node business suite",
+    "evidence": "automation/node-business/stdout.log",
+    "notes": "10PASS",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "E2E",
+    "platform": "Linux/Chromium",
+    "status": "FAIL",
+    "scope": "Complete unmodified Chromium suite",
+    "evidence": "automation/failure-classification.json",
+    "notes": "57PASS/1FAIL/0skip/0retry; exit1",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "FOCUS-1",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "08 bad PDF and damaged ZIP never contaminate saved data / 异常回归",
+    "evidence": "focus-original-five/CASE-01/case.json",
+    "notes": "Original case completed with all downstream assertions; no early stopping at prior failure point",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "FOCUS-2",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离",
+    "evidence": "focus-original-five/CASE-02/case.json",
+    "notes": "Original case completed with all downstream assertions; no early stopping at prior failure point",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "FOCUS-3",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出",
+    "evidence": "focus-original-five/CASE-03/case.json",
+    "notes": "Original case completed with all downstream assertions; no early stopping at prior failure point",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "FOCUS-4",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分",
+    "evidence": "focus-original-five/CASE-04/case.json",
+    "notes": "Original case completed with all downstream assertions; no early stopping at prior failure point",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "FOCUS-5",
+    "platform": "Linux/Chromium",
+    "status": "FAIL",
+    "scope": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+    "evidence": "focus-original-five/CASE-05/case.json",
+    "notes": "Approved#F6F8FB background PASS; later system-settings kicker assertion FAIL",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "V31-BG",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Approved V3.1#F6F8FB background on6pages×3sizes",
+    "evidence": "independent/evidence/layout-overflow.json",
+    "notes": "Specific previous background failure point passes; whole UI case still FAIL later",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "UI-VISUAL",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Six-page actual visual review and18screens",
+    "evidence": "visual-review.json",
+    "notes": "Shared fonts/color/navigation, no major first-screen overlap; not whole-product perfection",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "UI-OVERFLOW",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Six pages×3sizes document width",
+    "evidence": "independent/evidence/layout-overflow.json",
+    "notes": "18current measurements, document width within viewport; table scrolling remains allowed",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "TIP-MOUSE",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Mouse hover popup bounds",
+    "evidence": "independent/evidence/tooltip-retest.json",
+    "notes": "83 actual visible instances across1024/1366/1600; data/history/PDF unchanged",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "TIP-TAB",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Actual keyboard Tab opens popup with in-viewport bounds",
+    "evidence": "independent/evidence/tooltip-retest.json",
+    "notes": "83 actual visible instances across1024/1366/1600; data/history/PDF unchanged",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "TIP-ESC",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Escape closes even with hover/focus retained",
+    "evidence": "independent/evidence/tooltip-retest.json",
+    "notes": "83 actual visible instances across1024/1366/1600; data/history/PDF unchanged",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "TIP-PIN",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Click-to-pin and click-away close",
+    "evidence": "independent/evidence/tooltip-retest.json",
+    "notes": "83 actual visible instances across1024/1366/1600; data/history/PDF unchanged",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "FIRST-ROW",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "1366x768 complete first actual quoted row",
+    "evidence": "independent/evidence/UX09-independent-before-awards.json",
+    "notes": "top701.140625,bottom742.921875,height41.78125,scrollY0",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "SEARCH-FIRST",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "First normal assignment search click delivered",
+    "evidence": "independent/evidence/assign-search-first-result.json",
+    "notes": "NOT REPRODUCED; ROOT CAUSE UNKNOWN;1click,19samples/17rAF,original15s timeout,no force/retry",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "BAD-ZIP",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Malformed ZIP refusal,no raw error code,target unchanged",
+    "evidence": "independent/evidence/BACKUP-malformed-zip-friendly-rejection.png",
+    "notes": "Real400 and unchanged target",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "WRONG-KIND",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Inquiry/drawing archive rejected as full restore",
+    "evidence": "independent/evidence/archive-rejection-real-backend.json",
+    "notes": "Real400; actionable Chinese; target unchanged",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "HASH",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Valid STORED PDF hash tamper rejected",
+    "evidence": "completion/evidence/S4-audited-backend-rejection.json",
+    "notes": "Same-length one-byte change,validCRC,unchangedmanifest;400RESTORE_PDF_HASH_MISMATCH; target byte/semantic/directory equality",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "RESTORE-EMPTY",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Correct full archive restores empty target",
+    "evidence": "completion/evidence/S4-positive-control-restored.json",
+    "notes": "Real200;2RFQ/allstored tables/quotehistory/PDF equal source",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "RESTORE-NONEMPTY",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Nonempty target refuses overwrite",
+    "evidence": "completion/evidence/S4-nonempty-backend.json",
+    "notes": "Actual409; friendlyUI; entire restored data unchanged",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "ZIP-CONTENT",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Actual backup ZIP/SQLite/PDF contents",
+    "evidence": "completion/evidence/s4-checks.json",
+    "notes": "11full integrity checks;30backup-class checks separately",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "SUPPLIER-ISOLATION",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Additive relations and cross-RFQ supplier isolation",
+    "evidence": "continuation/evidence/CORE07-after-service-restart.json",
+    "notes": "12line original+52line secondRFQ; no supplier/quote/PDF leakage",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "HISTORY",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Confirmed quotation versions/rounds immutable",
+    "evidence": "independent/evidence/Q04-all-confirmed.json",
+    "notes": "5confirmed revisions/50history lines;V1 retained;explicit9carry andtiers118/2.25",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "AWARD",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Ties,non-lowest reasons and manual totals",
+    "evidence": "independent/evidence/C05-scoped-amounts-and-decisions.png",
+    "notes": "Manual3/1979 distinct from theory6940/mixed7064;pending9",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "SAVE-PENDING",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Honest in-flight save and backup guard at3sizes",
+    "evidence": "completion/evidence/CORE08-while-held.json",
+    "notes": "Real heldPUT; no falseSaved; real200 before committedSaved; interrupted prior harness preserved",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "SAVE-CONFLICT",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Actual SQLite stale-tab409 protection",
+    "evidence": "completion/evidence/CORE08-conflict-http.json",
+    "notes": "Winner data/history/PDF preserved; stale draft retained; details visible",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "SAVE-OFFLINE",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Actual service-down error and restart/manual save",
+    "evidence": "completion/evidence/offline-after-manual-save.json",
+    "notes": "Truthful failure;old persisted revisions andquote rounds retained;200+F5",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "EXPORT",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Actual downloaded supplierZIP/CSV/XLSX contents",
+    "evidence": "continuation/evidence/export-checks.json",
+    "notes": "46PASS on byte-identical original current-SHA downloads; first verifier path error retained",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "PERSIST",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Cross-RFQ,F5 and real service restart",
+    "evidence": "continuation/evidence/CORE07-after-service-restart.json",
+    "notes": "All stored rows and3PDF hashes remain equal",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "MATERIAL-PDF",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Actual import and unique/ambiguous/unmatched drawing match",
+    "evidence": "independent/evidence/CORE02-clicked-correct-real-PDF.png",
+    "notes": "Fresh XLSX12lines;3actualPDFs;preview does not save;download original bytes",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "NAME-EXPORT",
+    "platform": "Linux/Chromium",
+    "status": "PASS",
+    "scope": "Actual supplier-name selection and assigned export intent",
+    "evidence": "completion/evidence/original-failure-triage-export.json",
+    "notes": "XLSX/PDF ZIP/no privateJSON; no saved data mutation",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "WIN-1",
+    "platform": "Native Windows",
+    "status": "NOT TESTED",
+    "scope": "Native Windows Python3.13 backend",
+    "evidence": "identity-start.json",
+    "notes": "No native Windows connected; Linux is not substituted",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "WIN-2",
+    "platform": "Native Windows",
+    "status": "NOT TESTED",
+    "scope": "Native Windows Node22 business",
+    "evidence": "identity-start.json",
+    "notes": "No native Windows connected; Linux is not substituted",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  },
+  {
+    "id": "WIN-3",
+    "platform": "Native Windows",
+    "status": "NOT TESTED",
+    "scope": "Native Windows isolated installation/data,CMD/BAT/Edge and filesystem/restore safety",
+    "evidence": "identity-start.json",
+    "notes": "No native Windows connected; Linux is not substituted",
+    "productSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0"
+  }
+]

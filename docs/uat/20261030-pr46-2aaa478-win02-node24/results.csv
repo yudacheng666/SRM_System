@@ -1,0 +1,11 @@
+number,module,test_name,status,duration_ms
+"1","autosave_rules.test.cjs","real changes save after idle; navigation/no-op does not save","PASS","2.7202"
+"2","autosave_rules.test.cjs","new empty workspace needs an initial SQLite commit","PASS","2.0995"
+"3","autosave_rules.test.cjs","busy, blocked, missing backend or halted failure prevent autosave","PASS","1.627"
+"4","autosave_rules.test.cjs","revision does not influence unchanged snapshot fingerprints","PASS","1.9196"
+"5","supplier_package.test.cjs","supplier ZIPs preserve original names/bytes, isolate contents, and omit JSON","PASS","10.2962"
+"6","supplier_package.test.cjs","reused same PDF appears once per supplier ZIP","PASS","2.5929"
+"7","supplier_package.test.cjs","case-insensitive same-name different-content conflict is rejected","PASS","2.6079"
+"8","supplier_package.test.cjs","same filename in separate supplier ZIPs still contains the right bytes","PASS","3.0945"
+"9","supplier_package.test.cjs","unsafe names and corrupt PDF content block export","PASS","2.1933"
+"10","supplier_package.test.cjs","internal complete backup retains its separate private JSON index","PASS","2.657"

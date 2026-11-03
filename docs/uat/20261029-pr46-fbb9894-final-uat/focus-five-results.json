@@ -1,0 +1,46 @@
+{
+  "soleCurrentProductSHA": "fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0",
+  "wholeCases": {
+    "PASS": 4,
+    "FAIL": 1
+  },
+  "specificPriorFailurePoints": "Malformed ZIP copy,3supplier selections and approved background all passed; one whole case now fails later at legacy ADMIN caption expectation",
+  "historicalResultTransfer": false,
+  "cases": [
+    {
+      "title": "08 bad PDF and damaged ZIP never contaminate saved data / 异常回归",
+      "wholeCaseStatus": "PASS",
+      "evidence": "focus-original-five/CASE-01",
+      "allOriginalBusinessAssertionsCompleted": true,
+      "note": "Original case completed with all downstream assertions; no early stopping at prior failure point"
+    },
+    {
+      "title": "15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离",
+      "wholeCaseStatus": "PASS",
+      "evidence": "focus-original-five/CASE-02",
+      "allOriginalBusinessAssertionsCompleted": true,
+      "note": "Original case completed with all downstream assertions; no early stopping at prior failure point"
+    },
+    {
+      "title": "45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出",
+      "wholeCaseStatus": "PASS",
+      "evidence": "focus-original-five/CASE-03",
+      "allOriginalBusinessAssertionsCompleted": true,
+      "note": "Original case completed with all downstream assertions; no early stopping at prior failure point"
+    },
+    {
+      "title": "46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分",
+      "wholeCaseStatus": "PASS",
+      "evidence": "focus-original-five/CASE-04",
+      "allOriginalBusinessAssertionsCompleted": true,
+      "note": "Original case completed with all downstream assertions; no early stopping at prior failure point"
+    },
+    {
+      "title": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+      "wholeCaseStatus": "FAIL",
+      "evidence": "focus-original-five/CASE-05",
+      "allOriginalBusinessAssertionsCompleted": false,
+      "note": "Approved#F6F8FB background PASS; later system-settings kicker assertion FAIL"
+    }
+  ]
+}

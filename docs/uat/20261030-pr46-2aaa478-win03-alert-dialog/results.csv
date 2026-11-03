@@ -1,0 +1,20 @@
+scope,id,status,detail
+group,WIN-01,PRIOR PASS,Not rerun
+group,WIN-02,PRIOR PASS,Not rerun
+group,WIN-03,BLOCKED,StageA passed; later bulk assignment confirm caller omission
+stageA,EXPECTED-ALERT-SAME-SESSION,PASS,Opening->same-sessionaccept->Closed->mouseReleased completion recorded
+stageA,DYNAMIC-PENDING-SAVED,PASS,True pending then autoSaved; no manual material save
+stageA,EXACT-SQLITE-12-LINES,PASS,BoundRFQ revision1->2;12uniqueLineIDs
+stageA,REAL-F5-PERSISTENCE,PASS,InputF5; sameRFQ revision2/items12/UI12
+stageB,SUPPLIER-UI-IMPORT,PASS,RealXLSXpreview/UIconfirm; revision3/suppliers2
+stageB,ASSIGNMENT-CONFIRM,BLOCKED,Plainclick omitted dialogClick; actual confirm opened; zero persistedlinks
+driver,ASSIGNMENT-MOUSE-RELEASE,FAIL,OrdinaryInput12s timeout; not productFAIL
+driver,FAILURE-DOM-AND-SCREENSHOT,BLOCKED,Runtime12s and capture30s timeouts; fullstacks recorded
+driver,BOUNDED-CURRENT-STATE,BLOCKED,SinglePage.enable12s probe failed; no replay
+scope,RFQ-B,NOT TESTED,Not reached this fresh round
+scope,PDF-AND-SUPPLIER-ZIP,NOT TESTED,Not reached
+scope,QUOTES-AWARDS-HISTORY,NOT TESTED,Not reached
+scope,RESTART-OFFLINE-SAVE,NOT TESTED,Not reached
+scope,UI-BACKUP-RESTORE-409,NOT TESTED,Not reached
+scope,QUOTED-ROW-AND-960,NOT TESTED,Not reached
+cleanup,OWN-PROCESSES-PORTS,PASS,22828/36608 gone;8765/64031 free

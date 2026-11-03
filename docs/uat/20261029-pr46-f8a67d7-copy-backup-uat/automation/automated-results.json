@@ -1,0 +1,3052 @@
+{
+  "stats": {
+    "startTime": "2026-10-29T06:29:40.146Z",
+    "duration": 809076.078,
+    "expected": 34,
+    "skipped": 0,
+    "unexpected": 23,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "id": "ca3536bea9e5ab96e253-b08ff03a3a81c6a1a501",
+      "title": "01 startup, demo isolation, autosave, navigation and restart / 启动与隔离",
+      "file": "acceptance.spec.cjs",
+      "line": 139,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 0,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 18187,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:29:42.411Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "startup",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/attachments/startup-18082e47b9d504e7785850ff10afe0346af9c49a.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/attachments/server-log-532d927ca741f5543219a7f60366c58480dc93a4.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-01-startup-demo-615df-avigation-and-restart-启动与隔离/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-0560973a7bee78b6625d",
+      "title": "02 XLSX 12/100, duplicates and invalid format / 物料",
+      "file": "acceptance.spec.cjs",
+      "line": 159,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 0,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 21971,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:160:45",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 71
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:160:45"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:30:01.661Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-02-XLSX-12-100-duplicates-and-invalid-format-物料/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-02-XLSX-12-100-duplicates-and-invalid-format-物料/attachments/server-log-5e8f6806ac8fd27167a5f6f07e0df9628d90ae83.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-02-XLSX-12-100-duplicates-and-invalid-format-物料/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-02-XLSX-12-100-duplicates-and-invalid-format-物料/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-4e1e1e4aee0fa2dadaf4",
+      "title": "03 suppliers and bidirectional additive allocation / 供应商与分配",
+      "file": "acceptance.spec.cjs",
+      "line": 176,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 1,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 23642,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:177:3",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 71
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:177:3"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:30:25.534Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-03-suppliers-an-eb55d--additive-allocation-供应商与分配/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-03-suppliers-an-eb55d--additive-allocation-供应商与分配/attachments/server-log-f709fa542c002deff00c628be875ca45282fc490.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-03-suppliers-an-eb55d--additive-allocation-供应商与分配/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-03-suppliers-an-eb55d--additive-allocation-供应商与分配/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-81c343d3eefc9c4af4c7",
+      "title": "04 real quote imports, rounds, tiers, immutable confirmation and comparison XLSX / 报价比价",
+      "file": "acceptance.spec.cjs",
+      "line": 191,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 2,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 23953,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:192:3",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 71
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:192:3"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:30:51.535Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/attachments/server-log-3e5df321f7bf2096886d6d7e3070eed18c473c19.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-04-real-quote-i-f93f8-on-and-comparison-XLSX-报价比价/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-c1656022b669a384566f",
+      "title": "05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图纸询价包",
+      "file": "acceptance.spec.cjs",
+      "line": 236,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 3,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 24077,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:237:3",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 71
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:237:3"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:31:17.978Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/attachments/server-log-d8a8d6b9964d3fa13c41f511d678c8e052a6c3d2.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-05-PDF-matching-3b2be-d-scoped-supplier-ZIP-图纸询价包/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-dce559d57ef77f19df04",
+      "title": "06 full backup restore: actual imported quotes, history, PDFs, overwrite refusal / 完整恢复",
+      "file": "acceptance.spec.cjs",
+      "line": 270,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 4,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 26352,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:271:3",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 71
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:271:3"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:31:44.477Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/attachments/server-log-449f0dfeb65a145996c341081fd1bdea85728294.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-06-full-backup--cc217-PDFs-overwrite-refusal-完整恢复/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-1178afe33aed6ddbf394",
+      "title": "07 real service disconnect and stale-tab 409 halt autosave / 自动保存失败",
+      "file": "acceptance.spec.cjs",
+      "line": 306,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 5,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 26952,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:311:27",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 71
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:311:27"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:32:13.489Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/attachments/server-log-37533585629eb380c4fe3af2294f9ccea349afcb.log"
+            },
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/test-failed-2.png"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-07-real-service-dd079-ab-409-halt-autosave-自动保存失败/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-a488f844c6f195c0bccb",
+      "title": "08 bad PDF and damaged ZIP never contaminate saved data / 异常回归",
+      "file": "acceptance.spec.cjs",
+      "line": 326,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 6,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 22506,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:327:43",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 71
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:327:43"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:32:43.502Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-08-bad-PDF-and--a971f-contaminate-saved-data-异常回归/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-08-bad-PDF-and--a971f-contaminate-saved-data-异常回归/attachments/server-log-214d2a8cf6a64d7c21c62c85dea9167ae15244d7.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-08-bad-PDF-and--a971f-contaminate-saved-data-异常回归/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-08-bad-PDF-and--a971f-contaminate-saved-data-异常回归/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-35d7c012889a43b2ee8e",
+      "title": "09 UI V1 navigation, drawers and RFQ state do not mutate data / 工作台操作",
+      "file": "acceptance.spec.cjs",
+      "line": 341,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 7,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 14491,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:33:08.450Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-09-UI-V1-naviga-1e321-te-do-not-mutate-data-工作台操作/attachments/server-log-bd0aaabee688adbca0f281077ccf686b4532f003.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-09-UI-V1-naviga-1e321-te-do-not-mutate-data-工作台操作/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-d299a063098400ef69ce",
+      "title": "10 buyer continuous allocation to items and drawing select without reload / 跨步骤实时同步",
+      "file": "acceptance.spec.cjs",
+      "line": 372,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 7,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 10008,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:33:24.105Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-10-buyer-contin-86e89-lect-without-reload-跨步骤实时同步/attachments/server-log-bdc4ade62bb9085593494c4d7faf90eb1ed3b8f2.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-10-buyer-contin-86e89-lect-without-reload-跨步骤实时同步/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-96e86a6d84c5c7843f47",
+      "title": "11 formal RFQ identity in missing-quote CSV and working export shortcut / 单据追溯",
+      "file": "acceptance.spec.cjs",
+      "line": 397,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 7,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 24976,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:400:3",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 71
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:400:3"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:33:34.608Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-11-formal-RFQ-i-a6c3e-orking-export-shortcut-单据追溯/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-11-formal-RFQ-i-a6c3e-orking-export-shortcut-单据追溯/attachments/server-log-dd42bc97238f7c1169dc419e4a8fbd0c9285e0ab.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-11-formal-RFQ-i-a6c3e-orking-export-shortcut-单据追溯/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-11-formal-RFQ-i-a6c3e-orking-export-shortcut-单据追溯/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-549722d3ec6ef27a6755",
+      "title": "12 supplier status and report context reset on RFQ change / 保存提示与跨询价报告隔离",
+      "file": "acceptance.spec.cjs",
+      "line": 429,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 8,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 21641,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:34:01.486Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/attachments/server-log-80ca10bccddde4dcb882ebe01f116c6d212d9503.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-12-supplier-sta-791b7--on-RFQ-change-保存提示与跨询价报告隔离/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-3ac0d490a8a60ca7329d",
+      "title": "13 compact laptop item table after import / 1366首屏物料可见",
+      "file": "acceptance.spec.cjs",
+      "line": 463,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 8,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 11300,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:34:24.175Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/attachments/server-log-f4234f2c4b83357b319e5125c606608f5390058a.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-13-compact-lapt-43439-ble-after-import-1366首屏物料可见/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-5d5113f25198ed26359f",
+      "title": "14 common-scope CSV uses the real RFQ ID across two workspaces and restart / 同范围报价追溯",
+      "file": "acceptance.spec.cjs",
+      "line": 500,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 8,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 23358,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:537:3",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 71
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:537:3"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:34:35.776Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/attachments/server-log-c824cbf9eec47e34979f1728134067c8b7592c0e.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-14-common-scope-6c1a4-kspaces-and-restart-同范围报价追溯/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-b0095856581d78ca5165",
+      "title": "15 new RFQ clears stale supplier-first context without corrupting saved RFQs / 供应商跨询价隔离",
+      "file": "acceptance.spec.cjs",
+      "line": 561,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 9,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 23491,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:565:3",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 71
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:565:3"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:35:01.043Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/attachments/server-log-d9076d139e9e61058c90a9191ef6482740048680.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-15-new-RFQ-clea-1710f-rupting-saved-RFQs-供应商跨询价隔离/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-b226fb69ab0017eb6517",
+      "title": "44 S4 blocked-download reason stays visible beside the action / 备份阻止原因始终可见",
+      "file": "acceptance.spec.cjs",
+      "line": 605,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 10,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 24386,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已自动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已自动保存；无待保存修改\"\u001b[39m\nTimeout: 12000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 12000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    16 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已自动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已自动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已自动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已自动保存；无待保存修改\"\u001b[39m\nTimeout: 12000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 12000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    16 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已自动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已自动保存；无待保存修改\"\u001b[22m\n\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:647:54",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 647
+            },
+            "snippet": "  645 |   // English: Release the real SQLite PUT; only an acknowledged clean save may clear feedback.\n  646 |   releaseSave();\n> 647 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已自动保存第',{timeout:12000});\n      |                                                      ^\n  648 |   await expect(feedback).toBeHidden();\n  649 |   await expect(button).toBeEnabled();\n  650 | });"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 647
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已自动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已自动保存；无待保存修改\"\u001b[39m\nTimeout: 12000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 12000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    16 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已自动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已自动保存；无待保存修改\"\u001b[22m\n\n\n  645 |   // English: Release the real SQLite PUT; only an acknowledged clean save may clear feedback.\n  646 |   releaseSave();\n> 647 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已自动保存第',{timeout:12000});\n      |                                                      ^\n  648 |   await expect(feedback).toBeHidden();\n  649 |   await expect(button).toBeEnabled();\n  650 | });\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:647:54"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:35:27.126Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/attachments/server-log-65c980163efa102ed276665f211304969f466e4d.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-44-S4-blocked-d-7270f-eside-the-action-备份阻止原因始终可见/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 647
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-77967790303a41d57ea5",
+      "title": "45 P2-EXPORT-01 first supplier package export after view-only choices / 首次供应商包正常导出",
+      "file": "acceptance.spec.cjs",
+      "line": 655,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 11,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 27277,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:656:3",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 71
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    18 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:656:3"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:35:54.855Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/attachments/server-log-d0346dd3c0372489c6602f7d64eae39172f26239.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-45-P2-EXPORT-01-c411d-iew-only-choices-首次供应商包正常导出/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca3536bea9e5ab96e253-a07463745d96e93af5ef",
+      "title": "46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与真实脏数据区分",
+      "file": "acceptance.spec.cjs",
+      "line": 689,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 12,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 26787,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:690:3",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+              "column": 54,
+              "line": 71
+            },
+            "snippet": "  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+                "column": 54,
+                "line": 71
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#pilotAutosaveStatus')\nExpected substring: \u001b[32m\"已手动保存第\"\u001b[39m\nReceived string:    \u001b[31m\"自动保存：已手动保存；无待保存修改\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#pilotAutosaveStatus')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"status\" aria-live=\"polite\" class=\"small muted\" id=\"pilotAutosaveStatus\">自动保存：已手动保存；无待保存修改</div>\u001b[22m\n\u001b[2m       - unexpected value \"自动保存：已手动保存；无待保存修改\"\u001b[22m\n\n\n  69 |   const done=page.waitForResponse(r=>r.request().method()==='PUT'&&r.url().includes('/api/workspaces/'));\n  70 |   await page.locator('#pilotSaveWorkspace').click(); expect((await done).status()).toBe(200); await saved(page);\n> 71 |   await expect(page.locator('#pilotAutosaveStatus')).toContainText('已手动保存第');\n     |                                                      ^\n  72 |   if(original!=='project')await tab(page,original);\n  73 | }\n  74 | async function items(page, app, file = 'items12.xlsx', count = 12) {\n    at save (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:71:54)\n    at allocated (/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:91:3)\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs:690:3"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:36:24.830Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/attachments/server-log-ea17c8c5be3df9622744267690731bb067ee1b05.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/acceptance-46-P3-NAV-01-vi-c4db5-l-unsaved-edit-只读导航与真实脏数据区分/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/acceptance.spec.cjs",
+            "column": 54,
+            "line": 71
+          }
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-a68af19a620ee518497e",
+      "title": "ERP01: canonical aliases, optional original columns and conflicting identities are explicit",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 46,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 3792,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:36:55.490Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP01-c-e459c-ing-identities-are-explicit/attachments/erp-server-log-6b32b80a49c7edbde0a6522912e83f0a1da034cc.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP01-c-e459c-ing-identities-are-explicit/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-f27d4af0c977a2cf36a0",
+      "title": "ERP02: real XLSX keeps metadata, separates same code with different specs, and survives SQLite refresh",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 63,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 8041,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:37:00.323Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-items",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP02-r-440bf-and-survives-SQLite-refresh/attachments/erp-items-4ca98a2eae93d1bf9ea2aed16c2c39db543c5a03.png"
+            },
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP02-r-440bf-and-survives-SQLite-refresh/attachments/erp-server-log-06effd915f10a8569acabc7358dd6b832cc42b20.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP02-r-440bf-and-survives-SQLite-refresh/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-09e36311280be15fec7f",
+      "title": "ERP03: equal specifications merge quantity; conflicting canonical and alias header blocks commit",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 95,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 5539,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:37:08.803Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP03-e-e77a0--alias-header-blocks-commit/attachments/erp-server-log-4c0870a65499760a81d20ce49c51a1cac87251b8.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP03-e-e77a0--alias-header-blocks-commit/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-db10b92e22e207651131",
+      "title": "ERP05: wide 220-column ERP source survives native XLSX importer and remains internal metadata",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 116,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 4980,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:37:14.780Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP05-w-02d2d-d-remains-internal-metadata/attachments/erp-server-log-b0cf9c882af254a58633a843a52508ba519f65d3.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP05-w-02d2d-d-remains-internal-metadata/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-be0f7e132a3d2fc3798a",
+      "title": "ERP04: new ERP fields are searchable/editable, internal-vs-supplier export boundaries hold",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 139,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 15318,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:37:20.170Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP04-n-799d5-lier-export-boundaries-hold/attachments/erp-server-log-ede310e41da46a2dd1c07309a36a31ba09fd4817.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP04-n-799d5-lier-export-boundaries-hold/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-37754402a4a3c627cd28",
+      "title": "ERP06: repeated internal XLSX export and UI import keep current/source RFQ IDs distinct",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 212,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 20104,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:37:36.221Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP06-r-958ca-ent-source-RFQ-IDs-distinct/attachments/erp-server-log-914f622ffc6ed2e1df4c6c848c0412f5c10a9c98.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP06-r-958ca-ent-source-RFQ-IDs-distinct/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-c2aa5e1b31a668f3a80d",
+      "title": "ERP07: specifications visibly distinguish drawing candidates and supplier allocation",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 263,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 4126,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:37:56.799Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "pr15-spec-decisions",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP07-s-ddc7e-tes-and-supplier-allocation/attachments/pr15-spec-decisions-10749c3e05c1f93765d16d863b5a935f29aced7e.png"
+            },
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP07-s-ddc7e-tes-and-supplier-allocation/attachments/erp-server-log-c2a104436cd950400c7fd4b9fd6dcd387880c395.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP07-s-ddc7e-tes-and-supplier-allocation/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-9081b6fa56cdce17a83b",
+      "title": "ERP08: confirmed cannot supply remains visible in comparison, not a zero-priced offer",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 291,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 9699,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:38:01.278Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP08-c-89e25-son-not-a-zero-priced-offer/attachments/erp-server-log-b26a090509fcc3531fc1fc5f5619c9f4c726d0d8.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP08-c-89e25-son-not-a-zero-priced-offer/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-0f10040befdadb775bd8",
+      "title": "ERP09: second-round scope shows specification and preserves selected line identities",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 338,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 7684,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:38:11.555Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "pr16-negotiation-scope",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/attachments/pr16-negotiation-scope-6ef8f69e6cd89c59a388a2f4ae1d335d1e12d6b2.png"
+            },
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/attachments/erp-server-log-2ba1006fd9ac70329bcf3a1ff8e67f559e2b4579.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP09-s-f50de-es-selected-line-identities/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-94b8c5bdfc2e08e37a5a",
+      "title": "ERP10: settings provide three correct XLSX import templates and one header-aware CSV template",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 413,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 7746,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:38:19.974Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "settings-import-templates",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP10-s-2b653-e-header-aware-CSV-template/attachments/settings-import-templates-3693021994ad95ba32dcc0ba7cdb804c59ec4a30.png"
+            },
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP10-s-2b653-e-header-aware-CSV-template/attachments/erp-server-log-c4523ae47f27da755baa4e356d67ab225af993df.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP10-s-2b653-e-header-aware-CSV-template/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "92331258ef9746e52039-2385039051a129317158",
+      "title": "ERP11: rejected and canceled material previews do not alter line sequence or saved workspace",
+      "file": "erp-core-alignment.spec.cjs",
+      "line": 527,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 20152,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:38:28.595Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "erp-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP11-r-74660-sequence-or-saved-workspace/attachments/erp-server-log-c55c9efda770a871a62c74edf22314d22b82af46.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/erp-core-alignment-ERP11-r-74660-sequence-or-saved-workspace/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5e985e4de76c97ef5c0f-080fcb9946a910db2cd8",
+      "title": "UAT-01 categories follow active imported RFQ in both allocation views",
+      "file": "uat-13-fixes.spec.cjs",
+      "line": 64,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 5620,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:38:49.112Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "uat-fixes-server",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-01-catego-59dcf-FQ-in-both-allocation-views/attachments/uat-fixes-server-0ee5f67ad731368c0c0c8ef84dd1c260d209c41c.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-01-catego-59dcf-FQ-in-both-allocation-views/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5e985e4de76c97ef5c0f-ea386f9da37a14f81eb5",
+      "title": "UAT-02 manual, pasted and CSV file quotation sources remain distinct in stored state",
+      "file": "uat-13-fixes.spec.cjs",
+      "line": 89,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 10320,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:38:55.042Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "uat-fixes-server",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-02-manual-0d170-in-distinct-in-stored-state/attachments/uat-fixes-server-c791f52613feeafd33bf73c47e5959b1b5e89f36.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-02-manual-0d170-in-distinct-in-stored-state/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5e985e4de76c97ef5c0f-aca2fa19ee9b0e76c757",
+      "title": "UAT-03 refused restore is visible within current backup section while project drawer collapsed",
+      "file": "uat-13-fixes.spec.cjs",
+      "line": 138,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 13,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 21981,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#uiDataTools #pilotS4RestoreFeedback')\nExpected substring: \u001b[32m\"禁止直接恢复覆盖\"\u001b[39m\nReceived string:    \u001b[31m\"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiDataTools #pilotS4RestoreFeedback')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"alert\" aria-live=\"assertive\" id=\"pilotS4RestoreFeedback\">当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。</div>\u001b[22m\n\u001b[2m       - unexpected value \"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#uiDataTools #pilotS4RestoreFeedback')\nExpected substring: \u001b[32m\"禁止直接恢复覆盖\"\u001b[39m\nReceived string:    \u001b[31m\"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiDataTools #pilotS4RestoreFeedback')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"alert\" aria-live=\"assertive\" id=\"pilotS4RestoreFeedback\">当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。</div>\u001b[22m\n\u001b[2m       - unexpected value \"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[22m\n\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:147:25",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs",
+              "column": 25,
+              "line": 147
+            },
+            "snippet": "  145 |   const message=page.locator('#uiDataTools #pilotS4RestoreFeedback');\n  146 |   await expect(message).toBeVisible();\n> 147 |   await expect(message).toContainText('禁止直接恢复覆盖');\n      |                         ^\n  148 |   await expect(message).toHaveAttribute('role','alert');\n  149 |   await expect(page.locator('#project')).not.toBeVisible();\n  150 |   await expect(page.locator('#backup')).toBeVisible();"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs",
+                "column": 25,
+                "line": 147
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#uiDataTools #pilotS4RestoreFeedback')\nExpected substring: \u001b[32m\"禁止直接恢复覆盖\"\u001b[39m\nReceived string:    \u001b[31m\"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#uiDataTools #pilotS4RestoreFeedback')\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"alert\" aria-live=\"assertive\" id=\"pilotS4RestoreFeedback\">当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。</div>\u001b[22m\n\u001b[2m       - unexpected value \"当前数据目录已有询价，不能直接覆盖恢复。请在空白数据目录中启动本系统，再执行恢复。\"\u001b[22m\n\n\n  145 |   const message=page.locator('#uiDataTools #pilotS4RestoreFeedback');\n  146 |   await expect(message).toBeVisible();\n> 147 |   await expect(message).toContainText('禁止直接恢复覆盖');\n      |                         ^\n  148 |   await expect(message).toHaveAttribute('role','alert');\n  149 |   await expect(page.locator('#project')).not.toBeVisible();\n  150 |   await expect(page.locator('#backup')).toBeVisible();\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs:147:25"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:39:05.954Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/test-failed-1.png"
+            },
+            {
+              "name": "uat-fixes-server",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/attachments/uat-fixes-server-b77774f44dc24b61352a472cd0a2475bec77acff.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-03-refuse-7b08d-le-project-drawer-collapsed/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/uat-13-fixes.spec.cjs",
+            "column": 25,
+            "line": 147
+          }
+        }
+      ]
+    },
+    {
+      "id": "5e985e4de76c97ef5c0f-bf5c5dc4c7ee263b21f5",
+      "title": "UAT-04 item editor Escape, dirty cancel and keyboard focus confinement",
+      "file": "uat-13-fixes.spec.cjs",
+      "line": 152,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 4969,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:39:29.945Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "uat-fixes-server",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-04-item-e-322c0--keyboard-focus-confinement/attachments/uat-fixes-server-71c7dc1fb5dc53b6a922dd2c65ef0ef2275c3907.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-04-item-e-322c0--keyboard-focus-confinement/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5e985e4de76c97ef5c0f-ea263c36d3140ac39e16",
+      "title": "UAT-07 drawing guidance reflects currently selected formal RFQ material",
+      "file": "uat-13-fixes.spec.cjs",
+      "line": 179,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 3402,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:39:35.555Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "uat-fixes-server",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-07-drawin-4ee65-elected-formal-RFQ-material/attachments/uat-fixes-server-ce9b1f85c662ee6b80ca3ab9923c1f52d07f9b80.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/uat-13-fixes-UAT-07-drawin-4ee65-elected-formal-RFQ-material/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-fa7f1f9c783409ca0ebd",
+      "title": "UX quote: focused intake, non-destructive refresh, compact rows and details / 报价回收安全刷新",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 69,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 7283,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:39:39.201Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-quote--958c8-t-rows-and-details-报价回收安全刷新/attachments/ux-structural-server-log-003ed25d3d80c909fc2058924dd2188039f82b85.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-quote--958c8-t-rows-and-details-报价回收安全刷新/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-fb3222e1cb7a1341a6af",
+      "title": "UX comparison: decision-first disclosure, priced details and workspace status / 比价与状态层级",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 107,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 7473,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:39:47.201Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-compar-69322-nd-workspace-status-比价与状态层级/attachments/ux-structural-server-log-7b187e47499b810a58a0869b736f52f508400cda.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-compar-69322-nd-workspace-status-比价与状态层级/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-165bc7283c257ea8db3a",
+      "title": "UX pending-only: filtered pagination and award state / 待决定筛选真实分页",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 148,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 7572,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:39:55.240Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/attachments/ux-structural-server-log-bf4780c60a3d483e2d2c099fb4c646354fa4220f.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-pendin-6d86b-n-and-award-state-待决定筛选真实分页/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-4c044cafe2f36c404146",
+      "title": "UX manual-only: buyer-approved amount distinct from suggested totals / 人工定标金额独立显示",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 185,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 7174,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:40:03.490Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/attachments/ux-structural-server-log-8f71eb61aa633546bdd13062d854bb3258d1e6ec.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-manual-2ad0e-suggested-totals-人工定标金额独立显示/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-b8397d8e6d9dbfe009cf",
+      "title": "UX project title: Chinese label, rename, history and reload / 询价名称真实保存",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 219,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 10959,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:40:11.301Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-projec-8461c-history-and-reload-询价名称真实保存/attachments/ux-structural-server-log-ec0d408e097e9ed4284cb202649fd60f18d1b35d.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-projec-8461c-history-and-reload-询价名称真实保存/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-5f513e6d244adb41b132",
+      "title": "UX project page: first workflow stage, visible controls, stage switching / 询价项目独立首页",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 259,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 3253,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:40:22.591Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-projec-12a8a-ls-stage-switching-询价项目独立首页/attachments/ux-structural-server-log-2fefc0a8ae852286616ffbf0fc68e67368f4d45f.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-projec-12a8a-ls-stage-switching-询价项目独立首页/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-3b6aaa2b6297f6ef9990",
+      "title": "UX admin: backup page separate from RFQ, concise labels / 独立备份页与简短项目按钮",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 288,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 3473,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:40:26.040Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-admin--b8629-concise-labels-独立备份页与简短项目按钮/attachments/ux-structural-server-log-080ba4b79eb84901989af07046e76f95fd07071e.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-admin--b8629-concise-labels-独立备份页与简短项目按钮/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-aec3e3815a53ed3f90c8",
+      "title": "UX item rows: single-line drawing badge and compact row / 物料行高及缺图纸标识",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 314,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 5583,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:40:29.632Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/attachments/ux-structural-server-log-990f01aed4036a863a3d1af56b03e4ef6cd4349b.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-item-r-7b3a1--and-compact-row-物料行高及缺图纸标识/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-8fe0749560277682e466",
+      "title": "UX allocation: shared compact material list and missing drawing / 供应商物料列表紧凑布局",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 339,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 6525,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:40:35.621Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-alloca-6ed05-missing-drawing-供应商物料列表紧凑布局/attachments/ux-structural-server-log-df0f573e87eaf26382d673bf7cec418fe21147e0.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-alloca-6ed05-missing-drawing-供应商物料列表紧凑布局/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-4ddae970d06a6bac4924",
+      "title": "UX09 exact 1366 comparison density and first-row reachability / 比价紧凑性复验",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 376,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 6213,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:40:42.608Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/attachments/ux-structural-server-log-85cb08a723e011a00a74fb0015a1e3b33070c0d1.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX09-exac-25295-st-row-reachability-比价紧凑性复验/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "405cc0014031cae14de1-35878e5147136c14dd23",
+      "title": "UX visual system: shared six-page design and SVG navigation / 六页统一视觉回归",
+      "file": "ui-ux-structural.spec.cjs",
+      "line": 417,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 14,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 6196,
+          "error": {
+            "message": "Error: Horizontal overflow at quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1367\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m",
+            "stack": "Error: Horizontal overflow at quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1367\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:445:63",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+              "column": 63,
+              "line": 445
+            },
+            "snippet": "  443 |       pageWidth:document.documentElement.scrollWidth\n  444 |     }));\n> 445 |     expect(geometry.pageWidth,'Horizontal overflow at '+name).toBeLessThanOrEqual(geometry.viewport+1);\n      |                                                               ^\n  446 |     const screenshot=info.outputPath('ui-system-'+name+'-1366.png');\n  447 |     await page.screenshot({path:screenshot,fullPage:false});\n  448 |     await info.attach('ui-system-'+name,{path:screenshot,contentType:'image/png'});"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+                "column": 63,
+                "line": 445
+              },
+              "message": "Error: Horizontal overflow at quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1367\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n\n  443 |       pageWidth:document.documentElement.scrollWidth\n  444 |     }));\n> 445 |     expect(geometry.pageWidth,'Horizontal overflow at '+name).toBeLessThanOrEqual(geometry.viewport+1);\n      |                                                               ^\n  446 |     const screenshot=info.outputPath('ui-system-'+name+'-1366.png');\n  447 |     await page.screenshot({path:screenshot,fullPage:false});\n  448 |     await info.attach('ui-system-'+name,{path:screenshot,contentType:'image/png'});\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs:445:63"
+            }
+          ],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:40:49.307Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "ui-system-project",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/attachments/ui-system-project-4469b3450f26d6e897469fbcccc89ac933987216.png"
+            },
+            {
+              "name": "ui-system-items",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/attachments/ui-system-items-f06c718ec2a8d4cdb76f2b20bc86968b26051d0c.png"
+            },
+            {
+              "name": "ui-system-assign",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/attachments/ui-system-assign-dcd237407c6e78baa0ebf67b921fa303472c0337.png"
+            },
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/test-failed-1.png"
+            },
+            {
+              "name": "ux-structural-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/attachments/ux-structural-server-log-57698ddc58d33f5a322095e92549402431b42323.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-ux-structural-UX-visual-bf694-and-SVG-navigation-六页统一视觉回归/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs",
+            "column": 63,
+            "line": 445
+          }
+        }
+      ]
+    },
+    {
+      "id": "be37453cde8da053d6b1-36d5b34cd5c3bfbab825",
+      "title": "UI V2 B1 real workspace and visual layout 1366x768",
+      "file": "ui-v2-b1.spec.cjs",
+      "line": 53,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 15,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 9678,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:142:29",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+              "column": 29,
+              "line": 142
+            },
+            "snippet": "  140 |     expect(layout.firstRowTop).toBeLessThan(viewport.height);\n  141 |     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);\n> 142 |     expect(layout.bodyFont).toBe('14px');\n      |                             ^\n  143 |\n  144 |     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');\n  145 |     await page.screenshot({path:file,fullPage:true});"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+                "column": 29,
+                "line": 142
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m\n\n  140 |     expect(layout.firstRowTop).toBeLessThan(viewport.height);\n  141 |     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);\n> 142 |     expect(layout.bodyFont).toBe('14px');\n      |                             ^\n  143 |\n  144 |     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');\n  145 |     await page.screenshot({path:file,fullPage:true});\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:142:29"
+            }
+          ],
+          "stdout": [
+            {
+              "text": "SRM_UI_V2_B1_METRIC={\"viewport\":{\"width\":1366,\"height\":768},\"documentWidth\":1366,\"scrollY\":0,\"sidebar\":{\"width\":224,\"height\":768},\"tableTop\":0,\"firstRowTop\":552.828125,\"firstRowBottom\":584.828125,\"bodyFont\":\"14.5px\",\"tableFont\":\"12.5px\"}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:40:57.741Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/test-failed-1.png"
+            },
+            {
+              "name": "ui-v2-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/attachments/ui-v2-server-log-09ed34c38b7f239ce974605309470763134902a8.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1366x768/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+            "column": 29,
+            "line": 142
+          }
+        }
+      ]
+    },
+    {
+      "id": "be37453cde8da053d6b1-7edc718898954fe26e5f",
+      "title": "UI V2 B1 real workspace and visual layout 1600x900",
+      "file": "ui-v2-b1.spec.cjs",
+      "line": 53,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 16,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 9692,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:142:29",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+              "column": 29,
+              "line": 142
+            },
+            "snippet": "  140 |     expect(layout.firstRowTop).toBeLessThan(viewport.height);\n  141 |     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);\n> 142 |     expect(layout.bodyFont).toBe('14px');\n      |                             ^\n  143 |\n  144 |     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');\n  145 |     await page.screenshot({path:file,fullPage:true});"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+                "column": 29,
+                "line": 142
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"14px\"\u001b[39m\nReceived: \u001b[31m\"14\u001b[7m.5\u001b[27mpx\"\u001b[39m\n\n  140 |     expect(layout.firstRowTop).toBeLessThan(viewport.height);\n  141 |     expect(layout.firstRowBottom).toBeLessThanOrEqual(viewport.height);\n> 142 |     expect(layout.bodyFont).toBe('14px');\n      |                             ^\n  143 |\n  144 |     const file=info.outputPath('srm-ui-v2-b1-'+viewport.width+'x'+viewport.height+'-items.png');\n  145 |     await page.screenshot({path:file,fullPage:true});\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs:142:29"
+            }
+          ],
+          "stdout": [
+            {
+              "text": "SRM_UI_V2_B1_METRIC={\"viewport\":{\"width\":1600,\"height\":900},\"documentWidth\":1600,\"scrollY\":0,\"sidebar\":{\"width\":224,\"height\":900},\"tableTop\":0,\"firstRowTop\":596.453125,\"firstRowBottom\":628.453125,\"bodyFont\":\"14.5px\",\"tableFont\":\"12.5px\"}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:41:09.734Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/test-failed-1.png"
+            },
+            {
+              "name": "ui-v2-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/attachments/ui-v2-server-log-2888efe47e9675ae3d1e94caaa36968c3ed535f4.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b1-UI-V2-B1-real-workspace-and-visual-layout-1600x900/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b1.spec.cjs",
+            "column": 29,
+            "line": 142
+          }
+        }
+      ]
+    },
+    {
+      "id": "40b54dbc01a542bfc0bb-78a47f9b824463129de2",
+      "title": "B2 allocation real-browser 1366x768",
+      "file": "ui-v2-b2.spec.cjs",
+      "line": 44,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 17,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 8998,
+          "errors": [],
+          "stdout": [
+            {
+              "text": "SRM_UI_V2_B2_METRIC={\"width\":1366,\"height\":768,\"documentWidth\":1366,\"scrollY\":0,\"navBottom\":236.890625,\"rowTop\":728.203125,\"rowBottom\":760.203125}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:41:21.684Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "supplier-first-1366",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b2-B2-allocation-real-browser-1366x768/attachments/supplier-first-1366-33ba041b95dfe3f497f603f14401bc7106e79457.png"
+            },
+            {
+              "name": "item-first-1366",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b2-B2-allocation-real-browser-1366x768/attachments/item-first-1366-dae385eead177f199e1429e810e6ab4d0eafde4e.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b2-B2-allocation-real-browser-1366x768/attachments/server-log-1ea66f3e476457735d596732c1c214495c2d31e1.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b2-B2-allocation-real-browser-1366x768/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40b54dbc01a542bfc0bb-7d165276071833c85100",
+      "title": "B2 allocation real-browser 1600x900",
+      "file": "ui-v2-b2.spec.cjs",
+      "line": 44,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 17,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 10200,
+          "errors": [],
+          "stdout": [
+            {
+              "text": "SRM_UI_V2_B2_METRIC={\"width\":1600,\"height\":900,\"documentWidth\":1600,\"scrollY\":0,\"navBottom\":246.515625,\"rowTop\":743.828125,\"rowBottom\":775.828125}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:41:31.455Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "supplier-first-1600",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b2-B2-allocation-real-browser-1600x900/attachments/supplier-first-1600-9cb1df4e2afc996d4ae04962e9542cc653f0507d.png"
+            },
+            {
+              "name": "item-first-1600",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b2-B2-allocation-real-browser-1600x900/attachments/item-first-1600-c5b670b5e1f5c704bae9c9143153e543046774a3.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b2-B2-allocation-real-browser-1600x900/attachments/server-log-4132360f52fd4fe58e8cff13386ea28f891a6c3b.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b2-B2-allocation-real-browser-1600x900/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "16f3aa108219d9d3c2c6-17755cc7fd0fdaffb3bc",
+      "title": "B3 quote and comparison with real SQLite 1366x768",
+      "file": "ui-v2-b3.spec.cjs",
+      "line": 52,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 17,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 17218,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:112:37",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+              "column": 37,
+              "line": 112
+            },
+            "snippet": "  110 |  }));\n  111 |  console.log('SRM_UI_V2_B3_QUOTE_METRIC='+JSON.stringify(quoteMetrics));\n> 112 |  expect(quoteMetrics.documentWidth).toBeLessThanOrEqual(viewport.width+2);\n      |                                     ^\n  113 |  await page.screenshot({path:info.outputPath('b3-quote-'+viewport.width+'.png'),fullPage:true});\n  114 |  await info.attach('b3-quote-'+viewport.width,{path:info.outputPath('b3-quote-'+viewport.width+'.png'),contentType:'image/png'});\n  115 |  await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+                "column": 37,
+                "line": 112
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n\n  110 |  }));\n  111 |  console.log('SRM_UI_V2_B3_QUOTE_METRIC='+JSON.stringify(quoteMetrics));\n> 112 |  expect(quoteMetrics.documentWidth).toBeLessThanOrEqual(viewport.width+2);\n      |                                     ^\n  113 |  await page.screenshot({path:info.outputPath('b3-quote-'+viewport.width+'.png'),fullPage:true});\n  114 |  await info.attach('b3-quote-'+viewport.width,{path:info.outputPath('b3-quote-'+viewport.width+'.png'),contentType:'image/png'});\n  115 |  await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:112:37"
+            }
+          ],
+          "stdout": [
+            {
+              "text": "SRM_UI_V2_B3_QUOTE_METRIC={\"viewport\":{\"width\":1366,\"height\":768},\"documentWidth\":1512,\"roundTop\":1470.984375,\"coverageTop\":1031.640625,\"firstImportTop\":610.875,\"primaryVisible\":[\"confirmQuoteRound\"]}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:41:42.042Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/attachments/server-log-7d5a048e0f25a4f8271308d23b0a4f9475501ac6.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1366x768/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+            "column": 37,
+            "line": 112
+          }
+        }
+      ]
+    },
+    {
+      "id": "16f3aa108219d9d3c2c6-39854897cd4822bbebc9",
+      "title": "B3 quote and comparison with real SQLite 1600x900",
+      "file": "ui-v2-b3.spec.cjs",
+      "line": 52,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 18,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 11821,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:112:37",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+              "column": 37,
+              "line": 112
+            },
+            "snippet": "  110 |  }));\n  111 |  console.log('SRM_UI_V2_B3_QUOTE_METRIC='+JSON.stringify(quoteMetrics));\n> 112 |  expect(quoteMetrics.documentWidth).toBeLessThanOrEqual(viewport.width+2);\n      |                                     ^\n  113 |  await page.screenshot({path:info.outputPath('b3-quote-'+viewport.width+'.png'),fullPage:true});\n  114 |  await info.attach('b3-quote-'+viewport.width,{path:info.outputPath('b3-quote-'+viewport.width+'.png'),contentType:'image/png'});\n  115 |  await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+                "column": 37,
+                "line": 112
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m\n\n  110 |  }));\n  111 |  console.log('SRM_UI_V2_B3_QUOTE_METRIC='+JSON.stringify(quoteMetrics));\n> 112 |  expect(quoteMetrics.documentWidth).toBeLessThanOrEqual(viewport.width+2);\n      |                                     ^\n  113 |  await page.screenshot({path:info.outputPath('b3-quote-'+viewport.width+'.png'),fullPage:true});\n  114 |  await info.attach('b3-quote-'+viewport.width,{path:info.outputPath('b3-quote-'+viewport.width+'.png'),contentType:'image/png'});\n  115 |  await page.locator('.srm-v2-sideitem[data-srm-v2-tab=\"quotes\"]').click();\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs:112:37"
+            }
+          ],
+          "stdout": [
+            {
+              "text": "SRM_UI_V2_B3_QUOTE_METRIC={\"viewport\":{\"width\":1600,\"height\":900},\"documentWidth\":1746,\"roundTop\":1451.09375,\"coverageTop\":1011.75,\"firstImportTop\":654.5,\"primaryVisible\":[\"confirmQuoteRound\"]}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:42:02.209Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/test-failed-1.png"
+            },
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/attachments/server-log-fc868a8dc1a54c2ee4db4d1a6df7a7fb10c26dd0.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-quote-and-comparison-with-real-SQLite-1600x900/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-b3.spec.cjs",
+            "column": 37,
+            "line": 112
+          }
+        }
+      ]
+    },
+    {
+      "id": "16f3aa108219d9d3c2c6-ff84a7b28d3cde58bcfc",
+      "title": "B3 tied-lowest manual award semantics and persistence / 并列最低定标与决策状态",
+      "file": "ui-v2-b3.spec.cjs",
+      "line": 145,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 19,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 13285,
+          "errors": [],
+          "stdout": [],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:42:16.679Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/attachments/server-log-9ee4529f11b6bca57162205b66f223d70a9299fa.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-b3-B3-tied-lowest-ma-c7322-and-persistence-并列最低定标与决策状态/trace.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "36cd1b3ff825093287b7-d568f2875261860c1b5c",
+      "title": "EXPLORATORY: desktop stages, control visibility and geometry 1024x768",
+      "file": "ui-v2-exploratory.spec.cjs",
+      "line": 87,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 19,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 6283,
+          "error": {
+            "message": "Error: No whole-page horizontal overflow for quotes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1026\u001b[39m\nReceived:    \u001b[31m1074\u001b[39m",
+            "stack": "Error: No whole-page horizontal overflow for quotes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1026\u001b[39m\nReceived:    \u001b[31m1074\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+              "column": 76,
+              "line": 132
+            },
+            "snippet": "  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+                "column": 76,
+                "line": 132
+              },
+              "message": "Error: No whole-page horizontal overflow for quotes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1026\u001b[39m\nReceived:    \u001b[31m1074\u001b[39m\n\n  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76"
+            }
+          ],
+          "stdout": [
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1143.078125,\"bottom\":1143.078125,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":235.890625,\"width\":926,\"height\":823.1875,\"bottom\":1059.078125,\"right\":1008},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":60,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1211,\"bottom\":1211,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":235.890625,\"width\":926,\"height\":891.109375,\"bottom\":1127,\"right\":1008},\"table\":{\"x\":92,\"y\":660.625,\"width\":577.390625,\"height\":412.125,\"bottom\":1072.75,\"right\":669.390625},\"tablewrap\":{\"x\":91,\"y\":659.625,\"width\":579.390625,\"height\":414.125,\"bottom\":1073.75,\"right\":670.390625},\"firstDataRow\":{\"x\":92,\"y\":689.75,\"width\":577.390625,\"height\":32,\"bottom\":721.75,\"right\":669.390625},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":58,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1024,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1788.84375,\"bottom\":1788.84375,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":235.890625,\"width\":926,\"height\":1468.953125,\"bottom\":1704.84375,\"right\":1008},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":82,\"y\":646.875,\"width\":926,\"height\":453.140625,\"bottom\":1100.015625,\"right\":1008},\"quoteReview\":{\"x\":82,\"y\":1112.015625,\"width\":926,\"height\":415.734375,\"bottom\":1527.75,\"right\":1008},\"confirmButton\":{\"x\":869,\"y\":1473.5,\"width\":123,\"height\":40.25,\"bottom\":1513.75,\"right\":992},\"tableScrollable\":false,\"panelButtons\":33,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quotes\",\"width\":1024,\"height\":768,\"scrollY\":0,\"documentWidth\":1074,\"sidebar\":{\"x\":0,\"y\":0,\"width\":62,\"height\":768,\"bottom\":768,\"right\":62},\"app\":{\"x\":0,\"y\":0,\"width\":1024,\"height\":1332.03125,\"bottom\":1332.03125,\"right\":1024},\"appContentLeft\":82,\"panel\":{\"x\":82,\"y\":235.890625,\"width\":926,\"height\":1012.140625,\"bottom\":1248.03125,\"right\":1008},\"table\":{\"x\":101,\"y\":777.765625,\"width\":888,\"height\":39.84375,\"bottom\":817.609375,\"right\":989},\"tablewrap\":{\"x\":100,\"y\":776.765625,\"width\":890,\"height\":41.84375,\"bottom\":818.609375,\"right\":990},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":13,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:42:31.039Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "explore-1024-items",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-items-d5c7345a9d6085283eedd976183a8358a4a818b5.png"
+            },
+            {
+              "name": "explore-1024-assign",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-assign-6de5d0f1fdb1a294998d55bfd591b09e301a91a8.png"
+            },
+            {
+              "name": "explore-1024-quoteImport",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/explore-1024-quoteImport-bcec1c0155a9519b09cf9b328d3289559d4ba42e.png"
+            },
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/test-failed-1.png"
+            },
+            {
+              "name": "isolated-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/attachments/isolated-server-log-14d932c779045be819e473986b077c4b220aca80.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16b3f-ility-and-geometry-1024x768/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+            "column": 76,
+            "line": 132
+          }
+        }
+      ]
+    },
+    {
+      "id": "36cd1b3ff825093287b7-a171d305e1c2cc5a7aa1",
+      "title": "EXPLORATORY: desktop stages, control visibility and geometry 1366x768",
+      "file": "ui-v2-exploratory.spec.cjs",
+      "line": 87,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 20,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 5687,
+          "error": {
+            "message": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m",
+            "stack": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+              "column": 76,
+              "line": 132
+            },
+            "snippet": "  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+                "column": 76,
+                "line": 132
+              },
+              "message": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1368\u001b[39m\nReceived:    \u001b[31m1512\u001b[39m\n\n  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76"
+            }
+          ],
+          "stdout": [
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1138.078125,\"bottom\":1138.078125,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":230.890625,\"width\":1088,\"height\":823.1875,\"bottom\":1054.078125,\"right\":1339},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":60,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1366,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1251.453125,\"bottom\":1251.453125,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":242.890625,\"width\":1088,\"height\":924.5625,\"bottom\":1167.453125,\"right\":1339},\"table\":{\"x\":267,\"y\":690.078125,\"width\":701.03125,\"height\":416.125,\"bottom\":1106.203125,\"right\":968.03125},\"tablewrap\":{\"x\":266,\"y\":689.078125,\"width\":703.03125,\"height\":418.125,\"bottom\":1107.203125,\"right\":969.03125},\"firstDataRow\":{\"x\":267,\"y\":723.203125,\"width\":701.03125,\"height\":32,\"bottom\":755.203125,\"right\":968.03125},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":58,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1366,\"height\":768,\"scrollY\":0,\"documentWidth\":1512,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":768,\"bottom\":768,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1366,\"height\":1569.234375,\"bottom\":1569.234375,\"right\":1366},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":230.890625,\"width\":1088,\"height\":1254.34375,\"bottom\":1485.234375,\"right\":1339},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":251,\"y\":610.875,\"width\":1088,\"height\":342.53125,\"bottom\":953.40625,\"right\":1339},\"quoteReview\":{\"x\":251,\"y\":965.40625,\"width\":1088,\"height\":342.734375,\"bottom\":1308.140625,\"right\":1339},\"confirmButton\":{\"x\":1200,\"y\":1253.890625,\"width\":123,\"height\":40.25,\"bottom\":1294.140625,\"right\":1323},\"tableScrollable\":false,\"panelButtons\":33,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:42:39.550Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "explore-1366-items",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-items-69ae50dd5a3c9e346fe52a923ab71ba9f492e9ab.png"
+            },
+            {
+              "name": "explore-1366-assign",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/explore-1366-assign-742b0ed36e528b4ff42eb3678966a66b547602eb.png"
+            },
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/test-failed-1.png"
+            },
+            {
+              "name": "isolated-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/attachments/isolated-server-log-c1641e47d311ccceb85afa850d5424c5f91e44d8.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-5d56a-ility-and-geometry-1366x768/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+            "column": 76,
+            "line": 132
+          }
+        }
+      ]
+    },
+    {
+      "id": "36cd1b3ff825093287b7-312d24236b4c51ca307c",
+      "title": "EXPLORATORY: desktop stages, control visibility and geometry 1600x900",
+      "file": "ui-v2-exploratory.spec.cjs",
+      "line": 87,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 21,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 6005,
+          "error": {
+            "message": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m",
+            "stack": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+              "column": 76,
+              "line": 132
+            },
+            "snippet": "  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+                "column": 76,
+                "line": 132
+              },
+              "message": "Error: No whole-page horizontal overflow for quoteImport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1602\u001b[39m\nReceived:    \u001b[31m1746\u001b[39m\n\n  130 |     measurements.push(m);\n  131 |     console.log('SRM_V2_EXPLORE_METRIC='+JSON.stringify(m));\n> 132 |     expect(m.documentWidth,'No whole-page horizontal overflow for '+stage).toBeLessThanOrEqual(size.width+2);\n      |                                                                            ^\n  133 |     expect(m.appContentLeft,'Visible main content must not be under sidebar').toBeGreaterThanOrEqual(m.sidebar.right-1);\n  134 |     expect(m.panel.width,'A substantial content workspace must remain').toBeGreaterThan(420);\n  135 |     expect(m.panelButtons,'Functional controls must remain mounted').toBeGreaterThan(0);\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs:132:76"
+            }
+          ],
+          "stdout": [
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"items\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1181.703125,\"bottom\":1181.703125,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":255.515625,\"width\":1322,\"height\":842.1875,\"bottom\":1097.703125,\"right\":1573},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":60,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"assign\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1600,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1267.078125,\"bottom\":1267.078125,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":255.515625,\"width\":1322,\"height\":927.5625,\"bottom\":1183.078125,\"right\":1573},\"table\":{\"x\":267,\"y\":705.703125,\"width\":860.15625,\"height\":416.125,\"bottom\":1121.828125,\"right\":1127.15625},\"tablewrap\":{\"x\":266,\"y\":704.703125,\"width\":862.15625,\"height\":418.125,\"bottom\":1122.828125,\"right\":1128.15625},\"firstDataRow\":{\"x\":267,\"y\":738.828125,\"width\":860.15625,\"height\":32,\"bottom\":770.828125,\"right\":1127.15625},\"quoteIntake\":null,\"quoteReview\":null,\"confirmButton\":null,\"tableScrollable\":false,\"panelButtons\":58,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            },
+            {
+              "text": "SRM_V2_EXPLORE_METRIC={\"stage\":\"quoteImport\",\"width\":1600,\"height\":900,\"scrollY\":0,\"documentWidth\":1746,\"sidebar\":{\"x\":0,\"y\":0,\"width\":224,\"height\":900,\"bottom\":900,\"right\":224},\"app\":{\"x\":0,\"y\":0,\"width\":1600,\"height\":1549.34375,\"bottom\":1549.34375,\"right\":1600},\"appContentLeft\":251,\"panel\":{\"x\":251,\"y\":255.515625,\"width\":1322,\"height\":1209.828125,\"bottom\":1465.34375,\"right\":1573},\"table\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"tablewrap\":{\"x\":0,\"y\":0,\"width\":0,\"height\":0,\"bottom\":0,\"right\":0},\"firstDataRow\":null,\"quoteIntake\":{\"x\":251,\"y\":654.5,\"width\":1322,\"height\":279.015625,\"bottom\":933.515625,\"right\":1573},\"quoteReview\":{\"x\":251,\"y\":945.515625,\"width\":1322,\"height\":342.734375,\"bottom\":1288.25,\"right\":1573},\"confirmButton\":{\"x\":1434,\"y\":1234,\"width\":123,\"height\":40.25,\"bottom\":1274.25,\"right\":1557},\"tableScrollable\":false,\"panelButtons\":33,\"hiddenOffscreenControls\":[],\"saveMessage\":\"保存状态待确认\"}\n"
+            }
+          ],
+          "stderr": [
+            {
+              "buffer": ""
+            }
+          ],
+          "retry": 0,
+          "startTime": "2026-10-29T06:42:47.642Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "explore-1600-items",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-items-eea6a8394f4fbb13ca0323b24468f27cfbfa9420.png"
+            },
+            {
+              "name": "explore-1600-assign",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/explore-1600-assign-3a270123ca29cd96694342fbb63220f398477543.png"
+            },
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/test-failed-1.png"
+            },
+            {
+              "name": "isolated-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/attachments/isolated-server-log-99f47f6e1c180edc2c049a918078026149be934b.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-v2-exploratory-EXPLORAT-16e35-ility-and-geometry-1600x900/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v2-exploratory.spec.cjs",
+            "column": 76,
+            "line": 132
+          }
+        }
+      ]
+    },
+    {
+      "id": "f95fb36e88536e4fd7f8-3f3b95cb7962d03787a7",
+      "title": "UI V3 integration: theme, active navigation and responsive workspace / 视觉与导航回归",
+      "file": "ui-v3-integration.spec.cjs",
+      "line": 45,
+      "status": "unexpected",
+      "results": [
+        {
+          "workerIndex": 22,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 2500,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"UI V3\"\u001b[39m\nReceived string:    \u001b[31m\"SRM Lite · 采购询价工作台\"\u001b[39m",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"UI V3\"\u001b[39m\nReceived string:    \u001b[31m\"SRM Lite · 采购询价工作台\"\u001b[39m\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:62:23",
+            "location": {
+              "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+              "column": 23,
+              "line": 62
+            },
+            "snippet": "  60 |     };\n  61 |   });\n> 62 |   expect(theme.title).toContain('UI V3');\n     |                       ^\n  63 |   // 中文：V3.1 的浅灰背景来自已确认的结构层，而非旧版 V3 首批色值。\n  64 |   // English: Expect the approved V3.1 workspace token, not the earlier transitional theme.\n  65 |   expect(theme.bodyBackground).toBe('rgb(246, 248, 251)');"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+                "column": 23,
+                "line": 62
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"UI V3\"\u001b[39m\nReceived string:    \u001b[31m\"SRM Lite · 采购询价工作台\"\u001b[39m\n\n  60 |     };\n  61 |   });\n> 62 |   expect(theme.title).toContain('UI V3');\n     |                       ^\n  63 |   // 中文：V3.1 的浅灰背景来自已确认的结构层，而非旧版 V3 首批色值。\n  64 |   // English: Expect the approved V3.1 workspace token, not the earlier transitional theme.\n  65 |   expect(theme.bodyBackground).toBe('rgb(246, 248, 251)');\n    at /workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs:62:23"
+            }
+          ],
+          "stdout": [],
+          "stderr": [],
+          "retry": 0,
+          "startTime": "2026-10-29T06:42:56.331Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "screenshot",
+              "contentType": "image/png",
+              "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/test-failed-1.png"
+            },
+            {
+              "name": "srm-v3-ui-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/attachments/srm-v3-ui-server-log-6cd0976dfea7c8e2ecdf20c5b3a989825614e985.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-in-541a1-esponsive-workspace-视觉与导航回归/trace.zip"
+            }
+          ],
+          "errorLocation": {
+            "file": "/workspace/srmf8-product/prototype/m1-lite/tests/e2e/ui-v3-integration.spec.cjs",
+            "column": 23,
+            "line": 62
+          }
+        }
+      ]
+    },
+    {
+      "id": "f95fb36e88536e4fd7f8-c321b5048683cb05cfaf",
+      "title": "UI V3.1 P2 buyer layout and semantic controls / 正式 RFQ 标题、抽屉、分配与决策",
+      "file": "ui-v3-integration.spec.cjs",
+      "line": 111,
+      "status": "expected",
+      "results": [
+        {
+          "workerIndex": 23,
+          "parallelIndex": 0,
+          "status": "passed",
+          "duration": 7191,
+          "errors": [],
+          "stdout": [],
+          "stderr": [],
+          "retry": 0,
+          "startTime": "2026-10-29T06:43:00.980Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "srm-v3-ui-server-log",
+              "contentType": "text/plain",
+              "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-1--67357-controls-正式-RFQ-标题、抽屉、分配与决策/attachments/srm-v3-ui-server-log-2783c7d104ab45e8265599fe3b606ff14180cd00.log"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/workspace/srmf8-product/test-results/ui-v3-integration-UI-V3-1--67357-controls-正式-RFQ-标题、抽屉、分配与决策/trace.zip"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
