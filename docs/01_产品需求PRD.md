@@ -694,12 +694,13 @@ M5 起开始永久保存历史，M7 负责查询/分析体验。
 ### 27.1 Master-data autofill
 
 主数据应以稳定且明确的唯一查找键匹配；命中唯一结果时带出名称、单位、规格等属性，未命中或多候选必须提示，不能猜测。主数据属性与本次 RFQ 数量、交期等交易字段分离。
-Define master-data models and unique lookup keys in M1, then integrate autofill for items, suppliers and other entry objects during M2/M3; populate attributes only for a unique match, and flag unknown or ambiguous matches rather than guessing.
+Match master data by a stable, explicit unique key; populate attributes only for one unambiguous result, and flag unknown or ambiguous matches rather than guessing. Keep master attributes separate from RFQ transaction fields.
 
 主数据补齐不覆盖用户已经手工修改的 RFQ 专属字段；物料主数据与询价数量、交付要求等交易字段严格分离。
 Master-data matching must be unambiguous and must not overwrite buyer-edited RFQ transaction fields; keep item master attributes separate from inquiry quantities and delivery terms.
 
 > 当前实现状态（2026-11-03）：M1 Lite 已支持 ERP 核心字段导入兼容和未知原始列保留，但尚未实现 ERP API 实时主数据同步。物料/供应商是否必须先存在于主数据、未命中时是否允许临时录入，仍是待确认的业务设计问题；不得把本节目标描述为已交付功能。
+> Implementation status (2026-11-03): M1 Lite supports ERP core-field import compatibility and retention of unmapped source columns, but live ERP API master-data synchronization is not implemented. Whether item/supplier codes must be pre-registered and how unmatched records are handled remain open business decisions; do not describe this target as delivered.
 
 ### 27.2 表格列、排序与搜索
 ### 27.2 Table columns, sorting, and searching

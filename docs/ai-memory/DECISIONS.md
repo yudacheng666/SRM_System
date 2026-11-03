@@ -20,7 +20,7 @@
 | D-013 | 2026-10-16 | VALID | ERP 已用中文核心字段对齐，保留未知原列但不臆断语义；RFQ Line ID 与存货编码不同。 Align core fields without claiming all 220-field mapping. | #15; docs/20261016_SRM_ERP核心字段统一与兼容范围_V1.md |
 | D-014 | 2026-10-13 | VALID | SQLite 版本条件写入防冲突；只在服务端成功确认后显示保存，真实资产不得进入 Git。 Safe local persistence and data isolation. | docs/architecture.md; prototype/m1-lite/backend/README.md |
 | D-015 | 2026-10-14 | VALID | S4 ZIP 内部备份需一致数据库/已登记 PDF 和校验；恢复仅空白目录，不能向供应商外发内部 ZIP。 Atomic full backup, empty-root-only restore. | prototype/m1-lite/backend/README.md; #33/#34 |
-| D-016 | 2026-10-22 | VALID | UI 先清晰的采购决策层级：报价回收紧凑视图/安全只读刷新、比价决策前置、报表与 S4 管理分开，不改变报价及恢复语义。 Approved design direction, not necessarily accepted implementation. | PR #44; PR #46; PR #52 |
+| D-016 | 2026-10-22 | VALID | UI 先清晰的采购决策层级：报价回收紧凑视图/安全只读刷新、比价决策前置、报表与 S4 管理分开，不改变报价及恢复语义。 Approved UI direction, implemented in PR #46 and promoted to main via PR #52; CI evidence does not replace buyer usability feedback. | PR #44; PR #46; PR #52 |
 | D-017 | 2026-10-22（再次确认） | VALID | ChatGPT 主导业务/代码/主记忆，Codex Cloud 只做独立 TEST-ONLY 与证据归档；准确 SHA 的 CI 门槛先于独立验收。 Separate developer and independent tester roles. | 用户本次明确指令; #24/#39/#46 |
 | D-018 | 2026-09-28（仓库初始规范） | VALID | 文档/代码/测试/截图仅用匿名虚构资料，即使私有仓库也不保存真实业务数据。 Synthetic-only repository fixtures. | README.md; docs/01_产品需求PRD.md |
 | D-019 | 2026-10-22 | VALID | main 不因候选开发/测试自动更新；合并任何 PR 必须用户明确批准，证据 PR 不等于产品合并。 Explicit owner merge gate; distinguish main/dev/evidence. | 用户本次明确指令; #2; #24; #43 |
@@ -36,4 +36,4 @@
 - Do not upgrade a historical proposal or a statement in a Draft PR to VALID unless user confirmation or authoritative existing approved rule supports it.
   Draft PR 的实现说明本身不代表业务授权。
 - D-016 records the approved UI direction, implemented in PR #46 and promoted to main through PR #52; CI evidence is recorded in PROJECT_STATE.md. D-020 describes the documented collaboration workflow, not an autonomous background service.
-  界面设计批准不等于产品实现已验收；自动固化依赖实际执行任务时读取本规则。
+  UI 方向已实施并进入 main；仍需区分自动化验收与采购员现场体验。自动固化依赖实际执行任务时读取本规则。
