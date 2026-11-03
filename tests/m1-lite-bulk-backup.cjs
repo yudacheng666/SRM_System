@@ -1,0 +1,36 @@
+// 中文：备份全部询价与单笔旧备份双格式回归，不包含真实业务数据。
+// English: Bulk and legacy single-RFQ backup format regressions with synthetic data only.
+"use strict";
+const assert=require("node:assert/strict");
+globalThis.M1WorkspaceCore=require("../src/m1-lite/workspace-core.js");
+const core=globalThis.M1WorkspaceCore,backup=require("../src/m1-lite/portable-backup.js");
+const w1=core.createEmptyWorkspace("RFQ-BULK-A"),w2=core.createEmptyWorkspace("RFQ-BULK-B");
+w1.state.items.push({lineId:"L-1",id:"0000001",name:"模拟物料",qty:6,unit:"件"});
+w1.state.lineSeq=1;w1.state.createdSeq=1;w2.revision=3;
+const json=backup.createAll([w1,w2],"2026-10-13T08:00:00.000Z");
+const parsed=backup.parseAll(json);
+assert.equal(parsed.workspaces.length,2);
+assert.equal(parsed.workspaces[0].state.items[0].id,"0000001");
+assert.equal(backup.previewAll(parsed)[0].itemCount,1);
+assert.equal(backup.previewAll(parsed)[1].revision,3);
+console.log("PASS BULK01: full backup round-trips distinct saved RFQs with original revisions and leading zeros");
+const legacy=backup.create(w1),old=backup.parse(legacy);
+assert.equal(old.workspace.workspaceId,"RFQ-BULK-A");
+assert.throws(()=>backup.parseAll(legacy),/BULK_FORMAT/);
+assert.throws(()=>backup.parse(json),/FORMAT/);
+console.log("PASS BULK02: old single JSON remains compatible and is not confused with all-RFQ format");
+assert.throws(()=>backup.createAll([w1,w1]),/DUPLICATE/);
+const mutated=JSON.parse(json);
+mutated.workspaces[1].workspace.workspaceId=w1.workspaceId;
+assert.throws(()=>backup.parseAll(JSON.stringify(mutated)),/DUPLICATE/);
+mutated.workspaces[1].workspace.workspaceId="RFQ-BULK-B";
+mutated.workspaces[0].recordCounts.items=99;
+assert.throws(()=>backup.parseAll(JSON.stringify(mutated)),/COUNT_items/);
+console.log("PASS BULK03: duplicate workspace IDs and falsified record counts are rejected");
+const bad=JSON.parse(json);
+bad.workspaces[0].workspace.state.items[0].id="";
+assert.throws(()=>backup.parseAll(JSON.stringify(bad)),/M1_MODEL/);
+const claim=JSON.parse(json);claim.attachmentsIncluded=true;
+assert.throws(()=>backup.parseAll(JSON.stringify(claim)),/ATTACHMENT/);
+console.log("PASS BULK04: malformed business records and unsupported attached-binary claim rejected");
+console.log("PASS 4/4 validated multi-RFQ backup format tests");

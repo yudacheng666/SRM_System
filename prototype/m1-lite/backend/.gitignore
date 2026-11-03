@@ -1,0 +1,13 @@
+# 中文：防止本地业务文件及测试产物进入 Git。
+# English: Prevent local business files and test artifacts from entering Git.
+*.sqlite
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.db
+*.db-wal
+*.db-shm
+__pycache__/
+data/
+backups/
+assets/

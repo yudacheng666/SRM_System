@@ -1,0 +1,85 @@
+// 中文：真实 Chromium 离线 XLSX 物料、供应商、报价三类导入/导出及失败保护。
+ // English: Independent openpyxl-produced XLSX imports, actual downloaded workbook, integrity protections.
+"use strict";
+const assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path");
+const {pathToFileURL}=require("node:url"),{chromium}=require("playwright");
+const fixtures="/tmp/srm-lite-xlsx-fixtures",url=pathToFileURL(path.resolve(__dirname,"../../prototype/m1-lite/index.html")).href;
+(async()=>{
+ const browser=await chromium.launch({headless:true});
+ const context=await browser.newContext({acceptDownloads:true}),page=await context.newPage(),errors=[],dialogs=[];
+ page.on("pageerror",e=>errors.push(e.message));
+ page.on("dialog",async d=>{dialogs.push(d.message());await d.accept()});
+ async function choose(id,name){await page.locator(id).setInputFiles(path.join(fixtures,name))}
+ try{
+  await page.goto(url);
+  assert.equal(await page.locator("#importFile").getAttribute("accept"),".xlsx,.csv,.txt");
+  await page.waitForFunction(()=>!document.getElementById("pilotNewWorkspace").disabled);
+  await page.locator("#pilotNewWorkspace").click();
+  await page.waitForFunction(()=>SRMPilot.isBuyer());
+  assert.equal(await page.evaluate(()=>items.length),0);
+  console.log("PASS EXCEL01: a clean buyer workspace accepts actual Excel inputs");
+  await page.locator("#toggleItemIntake").click();
+  await choose("#importFile","items.xlsx");
+  await page.waitForFunction(()=>document.querySelector("#importPreview").style.display!=="none");
+  assert.match(await page.locator("#importPreview").innerText(),/0001/);
+  assert.equal(await page.locator("#importPreview tr").count()>1,true);
+  await page.locator("#confirmImportRows").click();
+  assert.deepEqual(await page.evaluate(()=>items.map(it=>[it.id,it.qty,it.unit])),
+   [["0001",10,"件"],["PART-002",3,"套"]]);
+  console.log("PASS EXCEL02: genuine deflated openpyxl .xlsx imports two items preserving leading zero IDs");
+  await choose("#pilotSupplierExcel","suppliers.xlsx");
+  await page.waitForFunction(()=>document.querySelector("#pilotSupplierExcelPreview").style.display==="block");
+  assert.match(await page.locator("#pilotSupplierExcelPreview").innerText(),/2 家/);
+  assert.equal(await page.evaluate(()=>suppliers.length),0);
+  await page.locator("#pilotImportSupplierConfirm").click();
+  assert.equal(await page.evaluate(()=>suppliers.length),2);
+  assert.equal(await page.evaluate(()=>suppliers[0].counterpartyCode),"CP-01");
+  assert.equal(await page.evaluate(()=>suppliers[0].supplierCode),"SUP-01");
+  console.log("PASS EXCEL03: supplier xlsx previews then atomically adds two counterparties with separate codes");
+  await choose("#pilotSupplierExcel","suppliers.xlsx");
+  await page.waitForFunction(()=>document.querySelector("#pilotSupplierExcelStatus").textContent.includes("校验失败"));
+  assert.equal(await page.evaluate(()=>suppliers.length),2);
+  assert.equal(await page.locator("#pilotImportSupplierConfirm").isDisabled(),true);
+  console.log("PASS EXCEL04: duplicate supplier workbook rejected without partial imports");
+  await page.locator('[data-tab="assign"]').click();
+  await page.locator("#assignItemBody [data-ai]").first().check();
+  await page.locator("#assignItemBody [data-ai]").nth(1).check();
+  await page.locator('[data-add="SUP-01"]').click();
+  await page.locator('[data-tab="quoteImport"]').click();
+  await page.locator("#quoteImportSupplier").selectOption("SUP-01");
+  await page.locator("#quoteTermsNote").fill("报价有效期30天、含包装");
+  await choose("#quoteImportFile","quote.xlsx");
+  await page.waitForFunction(()=>document.querySelector("#quoteImportPreview").style.display!=="none");
+  assert.match(await page.locator("#quoteImportPreviewBody").innerText(),/更换包装；可替代，需确认/);
+  await page.locator("#commitQuoteImport").click();
+  await page.locator("#confirmQuoteRound").click();
+  assert.equal(await page.evaluate(()=>quoteRounds[0].lines.length),2);
+  assert.equal(await page.evaluate(()=>quoteRounds[0].lines.find(x=>x.itemId==="0001").price),12.5);
+  console.log("PASS EXCEL05: real compressed XLSX quotes, commercial terms and punctuated remarks survive confirmation");
+  const before=await page.evaluate(()=>quoteRounds[0].lines.map(x=>x.price));
+  await choose("#quoteImportFile","formula.xlsx");
+  await page.waitForFunction(()=>document.querySelector("#quoteFileFeedback").textContent.includes("读取失败"));
+  assert.deepEqual(await page.evaluate(()=>quoteRounds[0].lines.map(x=>x.price)),before);
+  console.log("PASS EXCEL06: formula cells rejected; confirmed quotations unchanged");
+  await page.locator('[data-tab="items"]').click();
+  await choose("#importFile","multi_matching.xlsx");
+  await page.waitForFunction(()=>document.querySelector("#itemFileFeedback").textContent.includes("读取失败"));
+  assert.equal(await page.evaluate(()=>items.length),2);
+  console.log("PASS EXCEL07: multi-match worksheets rejected to prevent silent partial imports");
+  await page.locator("#pilotSaveWorkspace").click();
+  await page.waitForFunction(()=>document.querySelector("#pilotSaveStatus").textContent.includes("已保存到本机"));
+  const download=page.waitForEvent("download");
+  await page.locator("#pilotExportExcel").click();
+  const file=await download,savePath=path.join(fixtures,"exported-business.xlsx");
+  await file.saveAs(savePath);
+  assert.match(file.suggestedFilename(),/\.xlsx$/);
+  assert.ok(fs.statSync(savePath).size>700);
+  console.log("PASS EXCEL08: buyer downloaded an actual XLSX business workbook to filesystem");
+  await page.reload();
+  await page.waitForFunction(()=>document.querySelector("#pilotSaveStatus").textContent.includes("已自动恢复本机正式工作"));
+  assert.equal(await page.evaluate(()=>quoteRounds[0].lines.find(x=>x.itemId==="0001").remark),"更换包装；可替代，需确认");
+  console.log("PASS EXCEL09: after reopen all imported quotes and remarks survived IndexedDB");
+  assert.deepEqual(errors,[]);
+  console.log("PASS EXCEL10: no uncaught JavaScript exceptions in offline browser");
+ }finally{await browser.close()}
+})().catch(e=>{console.error(e.stack||e);process.exitCode=1});

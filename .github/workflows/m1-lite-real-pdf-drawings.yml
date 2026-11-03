@@ -1,0 +1,93 @@
+# 中文：M1-B0 最小离线构建与真实浏览器检测；保留 M0 原有业务回归。
+# English: Validate the minimal offline build and Chromium probe without changing accepted M0.
+name: M1 Lite Real PDF Drawings and Confidential Supplier Packages
+on:
+  push:
+    branches:
+      - draft/20261013-m1-lite-real-pdf-drawings-plan
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  b0:
+    name: Supplier-confidential RFQ, selectable Excel comparison and legacy regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build dependency-free standalone HTML
+        run: node scripts/build-m1-b0.cjs
+      - name: Check standalone build and safe failure mode
+        run: node tests/m1-b0-logic.cjs
+      - name: Validate serializable M1 core workspace and demo isolation
+        run: node tests/m1-b1-model.cjs
+      - name: Validate backup contract and reject malformed files
+        run: node tests/m1-lite-portable-backup.cjs
+      - name: Check supplier privacy, comparable-scope totals and revision history
+        run: node tests/m1-lite-report-model.cjs
+      - name: Validate all-RFQ backup format and compatibility
+        run: node tests/m1-lite-bulk-backup.cjs
+      - name: Check PDF-capable safe ZIP handling
+        run: node tests/m1-lite-drawing-zip.cjs
+      - name: Generate independent Excel fixture workbooks
+        run: |
+          python -m pip install --quiet openpyxl==3.1.5
+          python tests/generate-m1-lite-xlsx.py
+      - name: Install browser test runtime
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Real Chromium test using file URL
+        run: node tests/browser/m1-b0.cjs
+      - name: Verify actual M0 memory structures can round-trip in Chromium
+        run: node tests/browser/m1-b1.cjs
+      - name: Verify user-facing XLSX rejection and actual CSV imports
+        run: node tests/browser/m1-lite-safe-import.cjs
+      - name: Exercise buyer workspace and IndexedDB manual save in Chromium
+        run: node tests/browser/m1-lite-manual-save.cjs
+      - name: Verify independent repeated RFQs, archive switching and stale-tab rejection
+        run: node tests/browser/m1-lite-multiple-rfqs.cjs
+      - name: Verify bulk backup, selected/full restore and all-supplier ZIP with Chromium
+        run: node tests/browser/m1-lite-bulk-backup-and-rfq.cjs
+      - name: Browser acceptance for real PDF storage, linked drawings and full-package recovery
+        run: node tests/browser/m1-lite-real-drawings.cjs
+      - name: Independently verify PDF binary hashes and strict supplier ZIP scoping
+        run: python tests/verify-m1-lite-real-drawings.py
+      - name: Independently inspect per-supplier Excel files in ZIP
+        run: python tests/verify-m1-lite-rfq-batch-zip.py
+      - name: Verify downloadable backup and safe restore in Chromium
+        run: node tests/browser/m1-lite-portable-backup.cjs
+      - name: Check ERP headers and quote remarks in real browser
+        run: node tests/browser/m1-lite-erp-fields-notes.cjs
+      - name: Verify genuine XLSX imports and downloaded business workbook
+        run: node tests/browser/m1-lite-native-xlsx.cjs
+      - name: Independently validate downloaded Excel workbook
+        run: python tests/verify-m1-lite-xlsx-export.py
+      - name: Download supplier RFQ and price comparison in Chromium
+        run: node tests/browser/m1-lite-report-exports.cjs
+      - name: Independently validate both exported business Excel reports
+        run: python tests/verify-m1-lite-report-xlsx.py
+      - name: Generate anonymous M0 test fixtures before any M0 checks
+        run: node tests/generate-m0-fixtures.cjs
+      - name: Preserve existing M0 logic regressions
+        run: |
+          node tests/m0-p0-regression.cjs
+          node tests/m0-p1-regression.cjs
+          node tests/m0-p2-regression.cjs
+          node tests/m0-common-scope-regression.cjs
+      - name: Preserve existing M0 full browser flow
+        run: |
+          node tests/browser/basic.cjs
+          node tests/browser/uat-feedback.cjs
+          node tests/browser/full.cjs
+      - name: Upload synthetic offline diagnostic HTML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m1-lite-selectable-report-candidate
+          path: prototype/m1-lite/index.html
+          if-no-files-found: ignore
+          retention-days: 30
