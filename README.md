@@ -22,11 +22,10 @@ For Windows local use, follow the [M1 Lite runtime and test guide](prototype/m1-
 
 ## 文档入口 / Documentation
 
-- [文档索引 / Documentation index](docs/README.md)
 - [产品需求 PRD / Product requirements](docs/01_产品需求PRD.md)
 - [业务规则 / Business rules](docs/02_业务规则.md)
 - [当前架构 / Current architecture](docs/architecture.md)
-- [ERP 核心字段映射边界 / ERP field mapping scope](docs/20261016_SRM_ERP核心字段统一与兼容范围_V1.md)
+- [ERP 核心字段映射边界 / ERP field mapping scope](docs/erp-core-fields.md)
 - [当前项目状态 / Project state](docs/ai-memory/PROJECT_STATE.md)
 - [长期决策 / Durable decisions](docs/ai-memory/DECISIONS.md)
 

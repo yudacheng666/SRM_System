@@ -17,7 +17,7 @@
 | D-010 | 2026-09-29（用户历史确认） | VALID | 阶梯价为可选结构；保留全部档位，仅取当前数量适用价；无适用档不得猜价。 Preserve tiers; no invented prices. | docs/02_业务规则.md §K |
 | D-011 | 2026-10-09（原始确认日待核实） | VALID | 默认最低有效价；非最低选择记录理由；公平总价必须同范围，缺报价不按零。 Lowest valid by default; explain overrides; compare like-for-like. | docs/02_业务规则.md §L; #2 |
 | D-012 | 2026-10-09（原始确认日待核实） | VALID | 历史导入只还原有证据的信息，不编造历史 RFQ/轮次；保留来源和异常。 Evidence-based historical migration only. | docs/02_业务规则.md §§M-N |
-| D-013 | 2026-10-16 | VALID | ERP 已用中文核心字段对齐，保留未知原列但不臆断语义；RFQ Line ID 与存货编码不同。 Align core fields without claiming all 220-field mapping. | #15; docs/20261016_SRM_ERP核心字段统一与兼容范围_V1.md |
+| D-013 | 2026-10-16 | VALID | ERP 已用中文核心字段对齐，保留未知原列但不臆断语义；RFQ Line ID 与存货编码不同。 Align core fields without claiming all 220-field mapping. | #15; docs/erp-core-fields.md |
 | D-014 | 2026-10-13 | VALID | SQLite 版本条件写入防冲突；只在服务端成功确认后显示保存，真实资产不得进入 Git。 Safe local persistence and data isolation. | docs/architecture.md; prototype/m1-lite/backend/README.md |
 | D-015 | 2026-10-14 | VALID | S4 ZIP 内部备份需一致数据库/已登记 PDF 和校验；恢复仅空白目录，不能向供应商外发内部 ZIP。 Atomic full backup, empty-root-only restore. | prototype/m1-lite/backend/README.md; #33/#34 |
 | D-016 | 2026-10-22 | VALID | UI 先清晰的采购决策层级：报价回收紧凑视图/安全只读刷新、比价决策前置、报表与 S4 管理分开，不改变报价及恢复语义。 Approved UI direction, implemented in PR #46 and promoted to main via PR #52; CI evidence does not replace buyer usability feedback. | PR #44; PR #46; PR #52 |

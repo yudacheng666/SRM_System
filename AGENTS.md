@@ -7,8 +7,8 @@
 
 1. Read AGENTS.md, docs/ai-memory/PROJECT_STATE.md and docs/ai-memory/DECISIONS.md before substantive work.
    实质任务开始前先读这三个文件。
-2. Read only directly relevant records under docs/ai-memory/sessions/; do not load every historical session.
-   仅按任务目标补读相关 Session，不全量加载。
+2. If optional docs/ai-memory/sessions/ milestone records exist, read only those directly relevant; never require dated transcripts.
+   仅在存在且与任务直接相关时补读阶段交接；历史对话不必保存在仓库。
 3. Check actual GitHub refs, branch HEAD, open/merged PRs, changed paths and exact-SHA CI/independent evidence before deciding what is implemented.
    以 GitHub 实际引用、当前代码及准确 SHA 测试为准；不得把 Draft、证据 PR、计划或旧 MD 当作发布事实。
 4. When a state file contradicts current facts, preserve links and update the state; unresolved contradictions are marked 待核实 / UNVERIFIED.
@@ -92,11 +92,11 @@ When a new ChatGPT/Codex session receives repo access, perform the Startup check
   删除文档前，先把仍有效的已批准规则并入正式需求/业务规则/架构文档，并更新所有当前引用。
 - Keep screenshots only when a current defect cannot be reproduced without them; anonymize them and link them to a specific issue/PR. Do not commit screenshots as general progress records.
   仅在当前缺陷无法复现时保留必要截图，必须匿名并关联具体 Issue/PR，不把截图当作日常进度记录提交。
-- Keep PROJECT_STATE concise (target <=200 lines); detailed chronology belongs in Git history and only substantial milestone handoffs belong in sessions.
-  PROJECT_STATE 保持精简（目标不超过 200 行）；详细历史由 Git 记录，sessions 只保留重要里程碑交接。
+- Keep PROJECT_STATE concise (target <=200 lines); detailed chronology belongs in Git history, not in dated cleanup/session logs.
+  PROJECT_STATE 保持精简（目标不超过 200 行）；详细历史由 Git 记录，不积累日期清理日志/会话日志。
 
 ## Canonical memory paths / 主记忆路径
 
 - docs/ai-memory/PROJECT_STATE.md — current status / 当前状态
 - docs/ai-memory/DECISIONS.md — durable decisions with history / 长期决策
-- docs/ai-memory/sessions/ — milestone handoffs / 阶段交接
+- 

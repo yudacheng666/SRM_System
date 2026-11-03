@@ -687,8 +687,8 @@ M5 起开始永久保存历史，M7 负责查询/分析体验。
 
 开发修改默认进入草稿分支。只有用户明确确认后才能合并主线。
 
-## 27. M0 第三轮体验反馈与需求修订（2026-10-08）
-## 27. M0 third-round UX review and requirement amendments (2026-10-08)
+## 27. 已确认的补充业务与交互规则
+## 27. Confirmed additional business and interaction rules
 
 ### 27.1 主数据自动补齐
 ### 27.1 Master-data autofill
@@ -723,8 +723,8 @@ Every multi-select list needs a Clear Selection action that clears temporary sel
 剪贴板及 CSV/TXT 第一行必须是列标题，第二行开始才是数据；列顺序可自由调整，可省略非必需列，禁止无表头的纯数据直接导入。
 The first row of pasted or CSV/TXT input must contain column headers and data starts on row two; columns may be reordered and optional columns omitted, but headerless data must be rejected.
 
-物料导入必须精确包含“物料编码”标题；不以标题别名或第一列位置替代。数量和单位为本次询价的必填数据字段，名称等主数据属性在当前 M0 可留空等待未来主数据补齐。
-Item imports require the exact header “物料编码”; do not infer it from an alias or column position. Quantity and unit remain required RFQ data; other item-master attributes may be omitted in M0 pending master-data enrichment.
+物料导入必须精确包含“物料编码”标题；不以标题别名或第一列位置替代。数量和单位为本次询价的必填数据字段，名称等主数据属性的缺失按照当前导入校验和未来主数据匹配规则处理，不得静默补全。
+Item imports require the exact header “物料编码”; do not infer it from an alias or column position. Quantity and unit remain required RFQ data; missing item-master attributes follow the current import validation and future master-data matching rules; never invent them.
 
 报价导入要求包含“RFQ Line ID”或“物料编码”其中至少一个精确列标题；两者同时存在时优先使用非空 RFQ Line ID，缺少 Line ID 时仅在物料编码唯一匹配时回退；多匹配必须报错。
 Quotation imports require at least one exact key header, “RFQ Line ID” or “物料编码”; prefer nonempty Line ID if both exist, and fall back to item code only for a unique match; ambiguous codes are errors.
@@ -756,20 +756,15 @@ Consolidation must protect assignments, generated RFQ packages and confirmed quo
 界面将同一轮内修订显示为“第1版 / 第2版”，不使用“修订1”直译；内部保留 revisionNo 和不可覆盖历史。
 Show within-round submissions as “Version 1 / Version 2”, not the ambiguous literal revision label; retain revisionNo and immutable history internally.
 
-支持按供应商及当前报价轮次导出漏报明细（CSV，正式版可扩展 Excel），包含 RFQ 编号、供应商、轮次、RFQ Line ID、物料编码、名称、数量、单位，文件内容不得包含不相关供应商信息。
-Export omission lists per supplier and quotation round (CSV for M0, Excel may follow), with RFQ, supplier, round, RFQ Line ID, item code, name, quantity and unit, excluding unrelated suppliers.
+支持按供应商及当前报价轮次导出漏报明细（CSV，未来可扩展 Excel），包含 RFQ 编号、供应商、轮次、RFQ Line ID、物料编码、名称、数量、单位，文件内容不得包含不相关供应商信息。
+Export omission lists per supplier and quotation round (CSV today; Excel may be added later), with RFQ, supplier, round, RFQ Line ID, item code, name, quantity and unit, excluding unrelated suppliers.
 
 ### 27.6 双语文档及代码解释
 ### 27.6 Bilingual documentation and code explanations
 
-从本轮开始，新增或实质更新的正式文档按中文一行、对应英文一行书写；界面仍以中文为主，历史旧文档保留历史属性，后续改版逐步统一。
-From this iteration forward, new or materially updated official documentation uses paired Chinese and English lines; the application UI remains Chinese-first and historical documents can be migrated progressively.
+新增或实质更新的正式文档按中文一行、对应英文一行书写；界面仍以中文为主。
+New or materially updated official documentation uses paired Chinese and English lines; the application UI remains Chinese-first.
 
 代码采用中英双语的模块说明、函数注释和重要业务判断注释；不为每一个赋值或括号强制单独加注释。
 Code uses bilingual module, function and critical-business-rule comments, without mandatory comments on every assignment or closing brace.
 
-### 27.7 M0 回归验收
-### 27.7 M0 regression acceptance
-
-新增回归：字段标题重排/缺失、带引号/空列、物料编码合并与冲突、排序多字段稳定性、搜索确认按钮、清空选择不影响关联、报价状态显示、漏报 CSV 内容以及原有轮次/阶梯价回归。
-Expand regression tests to cover reordered/missing headers, quoted/empty cells, compatible merge vs conflicts, stable multi-sort, explicit searches, selection clearing without relationship loss, status labels, omission CSV and previous quotation/tier cases.

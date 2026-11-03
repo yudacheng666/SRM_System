@@ -64,10 +64,10 @@ PR #46 integrated the UI changes into M1 development; PR #52 promoted the full M
 
 - [产品需求 PRD](../01_产品需求PRD.md)；[业务规则](../02_业务规则.md)；[当前架构](../architecture.md)。
 - [Product requirements](../01_产品需求PRD.md); [business rules](../02_业务规则.md); [current architecture](../architecture.md).
-- [ERP 字段映射范围](../20261016_SRM_ERP核心字段统一与兼容范围_V1.md)。
-- [ERP field mapping scope](../20261016_SRM_ERP核心字段统一与兼容范围_V1.md).
-- [本机运行与测试说明](../../prototype/m1-lite/backend/README.md)；[文档索引](../README.md)。
-- [Local runtime/test guide](../../prototype/m1-lite/backend/README.md); [documentation index](../README.md).
+- [ERP 字段映射范围](../erp-core-fields.md)。
+- [ERP field mapping scope](../erp-core-fields.md).
+- [本机运行与测试说明](../../prototype/m1-lite/backend/README.md)。
+- [Local runtime/test guide](../../prototype/m1-lite/backend/README.md).
 
 ## 7. 协作与验收纪律 / Collaboration and acceptance
 

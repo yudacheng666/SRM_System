@@ -1,13 +1,13 @@
-# 20261016 SRM ERP 核心字段统一与兼容范围 V1
-# 20261016 SRM ERP Core Field Alignment and Compatibility Scope V1
+# ERP 核心字段与兼容规则
+# ERP Core Field Mapping and Compatibility Rules
 
-## 本轮范围 / Scope
+> 当前 M1 Lite 正式字段映射和未完成边界，核实于 2026-11-03。
+> Active M1 Lite mapping and outstanding boundaries, verified on 2026-11-03.
 
-本轮仅执行已经能够从现有 SRM 项目规则与代码核实的核心字段映射和兼容性处理，不宣称完成全部 220 个 ERP 业务字段逐项校验。
-This release aligns core fields grounded in the existing SRM rules and code; it does not claim a verified, field-by-field mapping of all 220 ERP business columns.
+## 已核实范围 / Verified scope
 
-此前上传的“存货档案模板”和“往来单位模板”在本轮可访问的数据源中未能重新获取；完整字典仍待核对，正式 ERP 列名应最终以原模板为准。
-The previously supplied inventory and counterparty templates could not be retrieved in the current accessible sources; the full dictionary requires verification against the actual ERP originals.
+目前 M1 Lite 支持以下 ERP 核心字段及兼容表头，不代表全部 220 项 ERP 字段已经完成逐项核验。正式 ERP 字段定义应最终以原始存货档案、往来单位模板或 ERP 接口字典为准。
+M1 Lite supports the mapped ERP core fields and legacy headers below; this is not a field-by-field verification of all 220 ERP columns. The authoritative dictionary must be reconciled against the original inventory/counterparty templates or ERP API schema.
 
 ## 字段映射 / Field Mapping
 
@@ -55,7 +55,7 @@ Supplier-facing RFQs can include specifications, but exclude ERP reference codes
 采购员内部业务明细 XLSX 的“询价物料”工作表保留已识别核心列及存在过值的 ERP 原始附加列，便于核对。
 The internal business-detail workbook retains core columns and populated raw ERP headings within the material sheet for later reconciliation.
 
-## 验收与未完成事项 / Verification and Outstanding Items
+## 已有测试范围与未完成事项 / Tests and outstanding items
 
 使用虚构 ERP 表头测试 XLSX/CSV 导入、同编码同规格合并、不同规格冲突、别名值冲突、搜索、编辑、SQLite 保存恢复及报表；不将任何真实业务数据写入 GitHub。
 Use synthetic ERP headers to test XLSX/CSV ingestion, merge/conflict behavior, alias rejection, search/edit, SQLite restore and reports. Never commit actual business records.
@@ -63,5 +63,5 @@ Use synthetic ERP headers to test XLSX/CSV ingestion, merge/conflict behavior, a
 全部 220 项原始字典的准确字段名、字段类型、选择项、ERP 代码转换、采购单位换算，以及主数据自动补齐尚未经过原始模板核实，因此不在本次完成范围内。
 Accurate 220-column definitions, types, enumerations, ERP code conversion, purchase-unit conversions and master-data autofill are not verified from the original templates and remain outside this delivery.
 
-本分支只供开发验收和下一轮 Windows 实机测试；没有用户确认不得合并开发基线，更不能合并 `main`。
-This isolated branch is for acceptance before Windows pilot testing; it must not be merged into the development baseline or `main` without explicit user approval.
+当前字段映射已随 M1 Lite 进入 `main`。ERP API 主数据同步、停用编码与编码映射冲突处理以及供应商/物料未命中时的临时录入策略均未实施或未获业务确认。
+This mapping is part of the current M1 Lite `main`. ERP API synchronization, inactive-code and mapping-conflict handling, and provisional item/supplier entry rules are not yet implemented or approved.
