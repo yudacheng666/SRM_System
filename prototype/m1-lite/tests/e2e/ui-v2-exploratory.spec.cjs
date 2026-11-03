@@ -39,11 +39,11 @@ const test=base.extend({
 });
 async function ensureOpen(page,id){
   const drawer=page.locator(id);
-  if(!await drawer.evaluate(el=>el.open))await drawer.locator('summary').click();
+  if(!await drawer.evaluate(el=>el.open))await drawer.locator(':scope > summary').click();
 }
 async function ensureClosed(page,id){
   const drawer=page.locator(id);
-  if(await drawer.evaluate(el=>el.open))await drawer.locator('summary').click();
+  if(await drawer.evaluate(el=>el.open))await drawer.locator(':scope > summary').click();
 }
 async function seed(page,app){
   await ensureOpen(page,'#uiProjectDetails');

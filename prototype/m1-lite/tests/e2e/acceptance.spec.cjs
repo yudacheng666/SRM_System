@@ -46,7 +46,7 @@ const tab = (page, name) => page.locator(`[data-tab="${name}"]`).click();
 // English: Expand new UI drawers as a buyer would, never force visibility by script.
 async function openTools(page, id) {
   const details=page.locator(id);
-  if (!await details.evaluate(node => node.open)) await details.locator('summary').click();
+  if (!await details.evaluate(node => node.open)) await details.locator(':scope > summary').click();
   await expect(details).toHaveAttribute('open', '');
 }
 async function saved(page) {
@@ -87,21 +87,21 @@ async function allocated(page, app) {
 }
 async function quotes(page, app) {
   await tab(page,'quoteImport'); await page.locator('#quoteImportSupplier').selectOption('SUP-A');
-  await page.locator('#quoteImportFile').setInputFiles(path.join(app.fixtures,'quotes.xlsx'));
+  await page.locator('[data-v4-quote-mode="file"]').click(); await page.locator('#quoteImportFile').setInputFiles(path.join(app.fixtures,'quotes.xlsx'));
   await expect(page.locator('#quoteImportPreviewBody')).toContainText('17.25');
   await page.locator('#commitQuoteImport').click();
   await expect(page.locator('#qcQuoted')).toHaveText('2'); await expect(page.locator('#qcMissing')).toHaveText('10');
   await page.locator('#confirmQuoteRound').click();
   await expect(page.locator('#confirmQuoteRound')).toBeDisabled();
   await page.locator('#newQuoteRound').click();
-  await page.locator('#quoteManualItem').fill('TST-001'); await page.locator('#quoteManualPrice').fill('15.125');
+  await page.locator('[data-v4-quote-mode="manual"]').click(); await page.locator('#quoteManualItem').fill('TST-001'); await page.locator('#quoteManualPrice').fill('15.125');
   await page.locator('#quoteManualLead').fill('5'); await page.locator('#quoteManualMoq').fill('1');
   await page.locator('#quoteManualAdd').click(); await page.locator('#commitQuoteImport').click();
   await page.locator('#confirmQuoteRound').click();
   await page.locator('#newQuoteRevision').click();
   await expect.poll(async () => (await snapshot(page)).state.quoteRounds.filter(r=>r.supplierId==='SUP-A').length).toBe(3);
   await page.locator('#quoteImportSupplier').selectOption('SUP-B');
-  await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\nTST-001,16.75,6,1,正常报价\nTST-002,22.25,8,1,正常报价');
+  await page.locator('[data-v4-quote-mode="paste"]').click(); await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\nTST-001,16.75,6,1,正常报价\nTST-002,22.25,8,1,正常报价');
   await page.locator('#quoteParsePaste').click(); await page.locator('#commitQuoteImport').click(); await page.locator('#confirmQuoteRound').click();
   await save(page);
 }
@@ -193,7 +193,7 @@ test('04 real quote imports, rounds, tiers, immutable confirmation and compariso
   await expect(page.locator('#quoteAnalysis')).toContainText('30.25');
   await expect(page.locator('#quoteAnalysis')).toContainText('33.50');
   await saved(page);
-  await openTools(page,'#uiDataTools'); await page.locator('#pilotReportOpen').click(); await page.locator('#pilotReportType').selectOption('comparison');
+  await openTools(page,'#uiBusinessExports'); await page.locator('#pilotReportOpen').click(); await page.locator('#pilotReportType').selectOption('comparison');
   for(const check of await page.locator('[data-report-supplier]').all()) await check.check();
   const file=await download(page,'#pilotReportDownload',info,'comparison.xlsx');
   const z=inspectZip(file); expect(z['[Content_Types].xml']).toBeTruthy();
@@ -242,7 +242,7 @@ test('05 PDF matching, manual correction, refresh and scoped supplier ZIP / 图�
   await page.locator('[data-mode="supplierFirst"]').click(); await page.locator('[data-sf-s="SUP-B"]').click();
   const ws=await snapshot(page), line=ws.state.items.find(x=>x.id==='TST-002').lineId;
   await page.locator(`[data-sfi="${line}"]`).check(); await save(page);
-  await openTools(page,'#uiDataTools'); await page.locator('#pilotReportOpen').click();
+  await openTools(page,'#uiBusinessExports'); await page.locator('#pilotReportOpen').click();
   const crypto=require('node:crypto');
   for(const sid of ['SUP-A','SUP-B']) {
     await page.locator('#pilotReportSupplier').selectOption(sid); const file=await download(page,'#pilotReportDownload',info,sid+'.zip'); const z=inspectZip(file);
@@ -386,12 +386,12 @@ test('11 formal RFQ identity in missing-quote CSV and working export shortcut / 
   await allocated(page,app);
   const ws=await snapshot(page);
   await page.locator('#generateBtn').click();
-  await expect(page.locator('#uiDataTools')).toHaveAttribute('open','');
+  await expect(page.locator('#uiBusinessExports')).toHaveAttribute('open','');
   await expect(page.locator('#pilotReportPanel')).toBeVisible();
   await expect(page.locator('#pilotReportType')).toHaveValue('rfq');
   await tab(page,'quoteImport');
   await page.locator('#quoteImportSupplier').selectOption('SUP-B');
-  await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\nTST-001,19,5,1,正常报价');
+  await page.locator('[data-v4-quote-mode="paste"]').click(); await page.locator('#quotePaste').fill('存货编码,报价单价,交期,MOQ,报价状态\nTST-001,19,5,1,正常报价');
   await page.locator('#quoteParsePaste').click();
   await page.locator('#commitQuoteImport').click();
   await expect(page.locator('#qcMissing')).toHaveText('11');
@@ -405,7 +405,7 @@ test('11 formal RFQ identity in missing-quote CSV and working export shortcut / 
   expect(data).toContain(ws.workspaceId);
   expect(data).not.toContain('RFQ-DEMO-001');
   await tab(page,'quotes');
-  await openTools(page,'#uiDataTools');
+  await openTools(page,'#uiBusinessExports');
   if(!await page.locator('#pilotReportPanel').isVisible())await page.locator('#pilotReportOpen').click();
   await page.locator('#pilotReportType').selectOption('comparison');
   await expect(page.locator('#pilotReportDownload')).toContainText('内部比价议价单');
@@ -424,7 +424,7 @@ test('12 supplier status and report context reset on RFQ change / 保存提示�
   await page.locator('#selectAssignAll').click();
   await page.locator('[data-add="SUP-A"]').click();
   await saved(page);
-  await openTools(page,'#uiDataTools');
+  await openTools(page,'#uiBusinessExports');
   await page.locator('#pilotReportOpen').click();
   await expect(page.locator('#pilotReportSupplier option')).toHaveCount(1);
   const downloadWait=page.waitForEvent('download');
@@ -485,6 +485,9 @@ test('14 common-scope CSV uses the real RFQ ID across two workspaces and restart
     await expect(page.locator('#quoteAnalysis')).toContainText('共同有效报价 1 项');
     const current=await snapshot(page);
     expect(current.workspaceId).toMatch(/^RFQ-/);
+    // 中文：V4 将金额分析放在按需展开区，导出仍然依赖真实共同报价范围。
+    // English: Expand V4 scoped analytics before exporting actual shared-scope rows.
+    await page.locator('#srmV4AnalysisDisclosure > summary').click();
     const downloadPromise=page.waitForEvent('download');
     await page.locator('#exportSelectedCommonScope').click();
     const downloaded=await downloadPromise;
@@ -600,7 +603,7 @@ test('44 S4 blocked-download reason stays visible beside the action / 备份阻�
   // English: Keep the project drawer collapsed and require a real warning beside disabled S4.
   await openTools(page,'#uiDataTools');
   const projectDrawer=page.locator('#uiProjectDetails');
-  if(await projectDrawer.evaluate(node=>node.open)) await projectDrawer.locator('summary').click();
+  if(await projectDrawer.evaluate(node=>node.open)) await projectDrawer.locator(':scope > summary').click();
   await expect(projectDrawer).not.toHaveAttribute('open','');
   const button=page.locator('#pilotS4DownloadFull');
   await button.scrollIntoViewIfNeeded();
@@ -704,4 +707,91 @@ test('46 P3-NAV-01 view navigation versus actual unsaved edit / 只读导航与�
   expect((await snapshot(page)).workspaceId).toBe(before.workspaceId);
   await saved(page);
   await expect.poll(()=>page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
+});
+
+
+// 中文：V4 结构整改只改变显示，不丢失报价文件预览、草稿或持久化修订。
+// English: V4 view refresh and column density must preserve the in-flight quote preview and persisted revision.
+test('47 V4 quote intake refresh and compact details / 安全刷新及紧凑主表', async ({page,app})=>{
+  await allocated(page,app);
+  await tab(page,'quoteImport');
+  await page.locator('#quoteImportSupplier').selectOption('SUP-A');
+  const before=await snapshot(page);
+  const chosen=await page.locator('#quoteRoundSelect').inputValue();
+  await page.locator('[data-v4-quote-mode="file"]').click(); await page.locator('#quoteImportFile').setInputFiles(path.join(app.fixtures,'quotes.xlsx'));
+  await expect(page.locator('#quoteImportPreviewBody')).toContainText('17.25');
+  const preview=await page.locator('#quoteImportPreviewBody').innerText();
+  await page.locator('#quoteRefreshDisplay').click();
+  await expect(page.locator('#quoteRefreshFeedback')).toContainText('未更改');
+  await expect(page.locator('#quoteImportPreview')).toBeVisible();
+  expect(await page.locator('#quoteImportPreviewBody').innerText()).toBe(preview);
+  expect(await page.locator('#quoteRoundSelect').inputValue()).toBe(chosen);
+  expect((await snapshot(page)).state).toEqual(before.state);
+  expect((await snapshot(page)).revision).toBe(before.revision);
+  await page.locator('#commitQuoteImport').click();
+  await expect(page.locator('#quoteRoundBody tr')).toHaveCount(2);
+  // 中文：写入报价确实改变报价状态；只要求后续纯界面密度切换不再改变数据。
+  // English: A real quote import does mutate quote state; capture the post-import baseline before view-only toggles.
+  const afterImport=await snapshot(page);
+  expect(await page.locator('#quoteImport').evaluate(el=>el.classList.contains('srm-v4-compact'))).toBe(true);
+  const hidden=await page.locator('#quoteRoundTable thead th').nth(3).evaluate(el=>getComputedStyle(el).display);
+  expect(hidden).toBe('none');
+  await page.locator('#quoteRoundBody tr').first().locator('.srm-v4-quote-details summary').click();
+  await expect(page.locator('#quoteRoundBody .srm-v4-quote-details').first()).toHaveAttribute('open','');
+  await expect(page.locator('#quoteRoundBody .srm-v4-quote-details').first()).toContainText('MOQ');
+  await page.locator('#quoteDensityToggle').click();
+  await expect(page.locator('#quoteDensityToggle')).toHaveAttribute('aria-pressed','true');
+  const visible=await page.locator('#quoteRoundTable thead th').nth(3).evaluate(el=>getComputedStyle(el).display);
+  expect(visible).not.toBe('none');
+  await page.locator('#quoteDensityToggle').click();
+  expect((await snapshot(page)).state.quoteRounds).toEqual(afterImport.state.quoteRounds);
+});
+
+// 中文：比价界面决策优先，点击报价详情不得发生人工定标或跳过理由。
+// English: Comparison details must remain read-only; expanding them cannot award a supplier.
+test('48 V4 comparison details separate from real awards / 决策和商务详情隔离', async({page,app})=>{
+  await allocated(page,app);
+  await quotes(page,app);
+  await tab(page,'quotes');
+  await expect(page.locator('#srmV31DecisionBoard')).toBeVisible();
+  await expect(page.locator('.srm-v4-matrix-heading')).toContainText('逐物料比价与人工定标');
+  await expect(page.locator('#srmV4AnalysisDisclosure')).toHaveCount(1);
+  await expect(page.locator('#srmV4AnalysisDisclosure')).not.toHaveAttribute('open','');
+  const before=await snapshot(page);
+  const beforeManual=before.state.manualAwards;
+  const details=page.locator('#quoteTable .srm-v4-bid-details summary').first();
+  await expect(details).toBeVisible();
+  await details.click();
+  await expect(page.locator('#quoteTable .srm-v4-bid-details').first()).toHaveAttribute('open','');
+  expect((await snapshot(page)).state.manualAwards).toEqual(beforeManual);
+  await page.locator('#srmV4AnalysisDisclosure > summary').click();
+  await expect(page.locator('#srmV4AnalysisDisclosure')).toHaveAttribute('open','');
+  await expect(page.locator('#quoteAnalysis')).toContainText('不同范围，不可直接排名');
+  expect((await snapshot(page)).state.manualAwards).toEqual(beforeManual);
+});
+
+
+// 中文：V4 顶部 RFQ 上下文与业务报表快捷入口不能制造业务脏状态。
+// English: Contextual report access and the single authoritative RFQ status are read-only.
+test('49 V4 RFQ status and contextual exports / 统一状态与报表管理分离',async({page,app})=>{
+  await allocated(page,app);
+  const before=await snapshot(page);
+  await expect(page.locator('#uiCurrentRfq')).toContainText(before.workspaceId);
+  await expect(page.locator('.ui-context #srmV2LiveStatus')).toBeVisible();
+  await openProject(page);
+  await expect(page.locator('#uiStatusDetails')).not.toHaveAttribute('open','');
+  await page.locator('#uiStatusDetails summary').click();
+  await expect(page.locator('#pilotAutosaveStatus')).toContainText('保存');
+  await tab(page,'assign');
+  await page.locator('#srmV4SupplierReport').click();
+  await expect(page.locator('#uiBusinessExports')).toHaveAttribute('open','');
+  await expect(page.locator('#pilotReportPanel')).toBeVisible();
+  await expect(page.locator('#pilotReportType')).toHaveValue('rfq');
+  await tab(page,'quotes');
+  await page.locator('#srmV4ComparisonReport').click();
+  await expect(page.locator('#pilotReportType')).toHaveValue('comparison');
+  await openTools(page,'#uiDataTools');
+  await expect(page.locator('#pilotS4DownloadFull')).toBeVisible();
+  expect((await snapshot(page)).state).toEqual(before.state);
+  expect(await page.evaluate(()=>window.SRMPilot.dirty())).toBe(false);
 });

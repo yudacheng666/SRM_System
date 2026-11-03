@@ -34,7 +34,7 @@ const test=base.extend({
 const status=page=>page.evaluate(()=>window.SRMPilot.snapshot());
 const open=async(page,id)=>{
   const el=page.locator(id);
-  if(!await el.evaluate(n=>n.open))await el.locator('summary').click();
+  if(!await el.evaluate(n=>n.open))await el.locator(':scope > summary').click();
   await expect(el).toHaveAttribute('open','');
 };
 for(const viewport of [{width:1366,height:768},{width:1600,height:900}]){
