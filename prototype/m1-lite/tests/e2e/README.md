@@ -35,5 +35,5 @@ npx playwright show-trace path/to/trace.zip
 定期备份的 24 小时节流、变化检测和 7 份保留由 test_auto_backup.py 的隔离时间测试覆盖；浏览器测试验证真实 main 进程首次自动备份。
 Isolated time tests in test_auto_backup.py cover the 24-hour throttle, change detection and seven-copy retention; browser tests check the real main process's first automatic backup.
 
-浏览器测试不替代 Windows 双击启动和长期运行验收；最终执行状态详见 docs 中验收报告。
-Browser tests do not replace Windows double-click or long-running acceptance; consult the report in docs for executed statuses.
+浏览器自动化不能代替原生 Windows 文件对话框、Excel 操作及长期运行试用；准确 SHA 的测试记录以 GitHub Actions 为准，当前阶段状态见 `docs/ai-memory/PROJECT_STATE.md`。
+Browser automation does not replace native Windows file dialogs, Excel operations or long-running user trials; exact-SHA evidence lives in GitHub Actions, with the current state in `docs/ai-memory/PROJECT_STATE.md`.

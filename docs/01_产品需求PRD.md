@@ -1,9 +1,9 @@
 # 01 产品需求 PRD
 
-> 文档状态：SRM V1 当前需求基线  
-> 更新日期：2026-10-08  
-> 适用阶段：M0 → V1  
-> 本文档整合项目对话中已经确认的需求、采购反馈和 M0 复盘结论。后续确认的产品变更应更新本文档；讨论过程保留在对话/PR，本文档只保留当前有效结论。
+> 文档状态：当前产品需求基线（M1 Lite 实施中）  
+> 更新日期：2026-11-03  
+> 适用范围：M1 Lite 当前实现及后续 V1 演进  
+> 本文档记录已确认的产品需求与业务边界，不作为当前功能完成或验收状态报告；实现状态以 `docs/ai-memory/PROJECT_STATE.md` 和准确 SHA 的测试证据为准。
 
 ## 1. 产品目标
 
@@ -518,11 +518,11 @@ Revision 不能被覆盖删除。
 
 只描述供应商自身报价规模。
 
-### 19.2 同物料范围总价
+### 19.2 指定供应商组同范围总价
 
-对参与比较的供应商先求“共同有效报价物料集合”，再用同一集合比较总额。
+采购员主动选择至少两家供应商组成比价组，只在该组供应商共同有效报价的 RFQ Line ID 集合上比较；不得默认使用整份 RFQ 的全部供应商交集。必须显示选中供应商、共同物料数量及范围。
 
-必须显示共同物料数量/范围。
+少于两家供应商时不计算同范围总价；选够两家但没有共同有效报价时显示“无可比项目”，不得显示误导性的 0 元总价。逐行金额按适用单价 × RFQ 数量计算，先逐行四舍五入到人民币分，再汇总；原始单价精度不得因金额显示精度而截断。明确有效报价为 0 与未报价是不同状态。
 
 ### 19.3 指定范围总价
 
@@ -625,18 +625,15 @@ M5 起开始永久保存历史，M7 负责查询/分析体验。
 
 ## 23. 技术原则
 
-M0 可以继续使用单 HTML + 浏览器内虚构数据验证交互。
+当前 M1 Lite 已采用浏览器 UI + Python 本机 HTTP 服务 + SQLite 的本地单用户架构；通过 `prototype/m1-lite/run_local.bat` 启动，浏览器访问 `http://127.0.0.1:8765/`。业务数据以 SQLite 版本化快照保存，PDF 原件独立存储并进行 SHA-256 校验；完整备份包含 SQLite 与已登记 PDF，恢复仅允许写入空白数据目录。
 
-进入 M1 前必须完成正式本地运行架构决策，重点验证：
+- 业务写入必须在服务端确认成功后才能显示已保存；版本冲突不得静默覆盖。
+- 已确认报价和历史版本不得被原位改写。
+- S4 完整备份必须同时覆盖数据库与已登记 PDF，并验证 ZIP 清单、数据库完整性及文件哈希。
+- 服务默认仅监听 `127.0.0.1`，不是公司内网共享服务。
+- 服务器化、多用户权限、SSO、ERP 实时 API 对接及生产部署属于后续阶段；不得将本地单用户架构描述为已完成企业部署。
 
-- 本地数据库的可靠持久化
-- PDF/附件文件访问与目录打包
-- 备份恢复
-- 断网运行
-- 数据升级/迁移
-- 浏览器 file:// / IndexedDB 限制
-
-正式 V1 不应把“浏览器临时存储”作为唯一业务数据保障。
+详细运行和数据目录见 `prototype/m1-lite/backend/README.md`；当前架构边界见 `docs/architecture.md`。
 
 ## 24. 数据完整性原则
 
@@ -650,9 +647,9 @@ M0 可以继续使用单 HTML + 浏览器内虚构数据验证交互。
 - 后轮漏报不是自动沿用
 - 所有业务对象使用稳定内部 ID，不依赖显示文本或行顺序
 
-## 25. M0 通过标准
+## 25. 核心业务验收原则
 
-M0 通过不是“页面看起来完整”，而是证明核心业务交互和数据语义不会明显误导采购员。
+本节保留从 M0 原型阶段形成、对 M1 Lite 及后续版本仍然有效的业务验收要求。页面完整或自动化用例通过，不等于采购员现场试用或生产部署验收通过。
 
 必须满足：
 
@@ -690,17 +687,20 @@ M0 通过不是“页面看起来完整”，而是证明核心业务交互和�
 
 开发修改默认进入草稿分支。只有用户明确确认后才能合并主线。
 
-## 27. M0 第三轮体验反馈与需求修订（2026-10-08）
-## 27. M0 third-round UX review and requirement amendments (2026-10-08)
+## 27. 已确认的补充业务与交互规则
+## 27. Confirmed additional business and interaction rules
 
 ### 27.1 主数据自动补齐
 ### 27.1 Master-data autofill
 
-在 M1 确定主数据模型和唯一查找键，在 M2/M3 接入物料、供应商及其他录入对象的自动补齐；命中唯一结果时带出名称、单位、规格等主数据属性，未命中或多候选必须提示，不能猜测。
-Define master-data models and unique lookup keys in M1, then integrate autofill for items, suppliers and other entry objects during M2/M3; populate attributes only for a unique match, and flag unknown or ambiguous matches rather than guessing.
+主数据应以稳定且明确的唯一查找键匹配；命中唯一结果时带出名称、单位、规格等属性，未命中或多候选必须提示，不能猜测。主数据属性与本次 RFQ 数量、交期等交易字段分离。
+Match master data by a stable, explicit unique key; populate attributes only for one unambiguous result, and flag unknown or ambiguous matches rather than guessing. Keep master attributes separate from RFQ transaction fields.
 
 主数据补齐不覆盖用户已经手工修改的 RFQ 专属字段；物料主数据与询价数量、交付要求等交易字段严格分离。
-Master-data autofill must not overwrite user-edited RFQ transaction fields; keep item master attributes separate from inquiry quantities and delivery terms.
+Master-data matching must be unambiguous and must not overwrite buyer-edited RFQ transaction fields; keep item master attributes separate from inquiry quantities and delivery terms.
+
+> 当前实现状态（2026-11-03）：M1 Lite 已支持 ERP 核心字段导入兼容和未知原始列保留，但尚未实现 ERP API 实时主数据同步。物料/供应商是否必须先存在于主数据、未命中时是否允许临时录入，仍是待确认的业务设计问题；不得把本节目标描述为已交付功能。
+> Implementation status (2026-11-03): M1 Lite supports ERP core-field import compatibility and retention of unmapped source columns, but live ERP API master-data synchronization is not implemented. Whether item/supplier codes must be pre-registered and how unmatched records are handled remain open business decisions; do not describe this target as delivered.
 
 ### 27.2 表格列、排序与搜索
 ### 27.2 Table columns, sorting, and searching
@@ -723,8 +723,8 @@ Every multi-select list needs a Clear Selection action that clears temporary sel
 剪贴板及 CSV/TXT 第一行必须是列标题，第二行开始才是数据；列顺序可自由调整，可省略非必需列，禁止无表头的纯数据直接导入。
 The first row of pasted or CSV/TXT input must contain column headers and data starts on row two; columns may be reordered and optional columns omitted, but headerless data must be rejected.
 
-物料导入必须精确包含“物料编码”标题；不以标题别名或第一列位置替代。数量和单位为本次询价的必填数据字段，名称等主数据属性在当前 M0 可留空等待未来主数据补齐。
-Item imports require the exact header “物料编码”; do not infer it from an alias or column position. Quantity and unit remain required RFQ data; other item-master attributes may be omitted in M0 pending master-data enrichment.
+物料导入必须精确包含“物料编码”标题；不以标题别名或第一列位置替代。数量和单位为本次询价的必填数据字段，名称等主数据属性的缺失按照当前导入校验和未来主数据匹配规则处理，不得静默补全。
+Item imports require the exact header “物料编码”; do not infer it from an alias or column position. Quantity and unit remain required RFQ data; missing item-master attributes follow the current import validation and future master-data matching rules; never invent them.
 
 报价导入要求包含“RFQ Line ID”或“物料编码”其中至少一个精确列标题；两者同时存在时优先使用非空 RFQ Line ID，缺少 Line ID 时仅在物料编码唯一匹配时回退；多匹配必须报错。
 Quotation imports require at least one exact key header, “RFQ Line ID” or “物料编码”; prefer nonempty Line ID if both exist, and fall back to item code only for a unique match; ambiguous codes are errors.
@@ -756,20 +756,15 @@ Consolidation must protect assignments, generated RFQ packages and confirmed quo
 界面将同一轮内修订显示为“第1版 / 第2版”，不使用“修订1”直译；内部保留 revisionNo 和不可覆盖历史。
 Show within-round submissions as “Version 1 / Version 2”, not the ambiguous literal revision label; retain revisionNo and immutable history internally.
 
-支持按供应商及当前报价轮次导出漏报明细（CSV，正式版可扩展 Excel），包含 RFQ 编号、供应商、轮次、RFQ Line ID、物料编码、名称、数量、单位，文件内容不得包含不相关供应商信息。
-Export omission lists per supplier and quotation round (CSV for M0, Excel may follow), with RFQ, supplier, round, RFQ Line ID, item code, name, quantity and unit, excluding unrelated suppliers.
+支持按供应商及当前报价轮次导出漏报明细（CSV，未来可扩展 Excel），包含 RFQ 编号、供应商、轮次、RFQ Line ID、物料编码、名称、数量、单位，文件内容不得包含不相关供应商信息。
+Export omission lists per supplier and quotation round (CSV today; Excel may be added later), with RFQ, supplier, round, RFQ Line ID, item code, name, quantity and unit, excluding unrelated suppliers.
 
 ### 27.6 双语文档及代码解释
 ### 27.6 Bilingual documentation and code explanations
 
-从本轮开始，新增或实质更新的正式文档按中文一行、对应英文一行书写；界面仍以中文为主，历史旧文档保留历史属性，后续改版逐步统一。
-From this iteration forward, new or materially updated official documentation uses paired Chinese and English lines; the application UI remains Chinese-first and historical documents can be migrated progressively.
+新增或实质更新的正式文档按中文一行、对应英文一行书写；界面仍以中文为主。
+New or materially updated official documentation uses paired Chinese and English lines; the application UI remains Chinese-first.
 
 代码采用中英双语的模块说明、函数注释和重要业务判断注释；不为每一个赋值或括号强制单独加注释。
 Code uses bilingual module, function and critical-business-rule comments, without mandatory comments on every assignment or closing brace.
 
-### 27.7 M0 回归验收
-### 27.7 M0 regression acceptance
-
-新增回归：字段标题重排/缺失、带引号/空列、物料编码合并与冲突、排序多字段稳定性、搜索确认按钮、清空选择不影响关联、报价状态显示、漏报 CSV 内容以及原有轮次/阶梯价回归。
-Expand regression tests to cover reordered/missing headers, quoted/empty cells, compatible merge vs conflicts, stable multi-sort, explicit searches, selection clearing without relationship loss, status labels, omission CSV and previous quotation/tier cases.

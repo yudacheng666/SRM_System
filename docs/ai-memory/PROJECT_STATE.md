@@ -1,242 +1,84 @@
-# SRM_System PROJECT_STATE / 项目当前有效状态
-
-> 核实日期 / Checked: 2026-11-03. Main promotion and exact-SHA Actions evidence verified; this is a point-in-time record, not continuous monitoring.
-> 本文件现已进入 main；后续开发状态以 GitHub 实际分支、PR 和准确 SHA 为准。
-
-## Goal / 产品目标
-
-- 本地轻量 SRM：物料 → 多供应商询价分配 → Excel/PDF 询价包 → 回收报价/多轮议价 → 同范围比价与定标 → SQLite 历史和 S4 安全备份。
-- Lightweight local RFQ lifecycle with supplier-specific documents, revisions, traceable price comparison and backup; suppliers do not log in.
-- 当前为 Windows localhost + SQLite 采购员试用开发版，不是正式部署的 ERP/多用户系统。
-- No real enterprise data in GitHub, even in private repos; only synthetic fixtures.
-
-## Branch truth / 当前分支和版本
-
-| Layer / 层级 | Verified ref / 准确版本 | Status / 状态 |
-| --- | --- | --- |
-| 正式主线 / Main | main @ `9ee26c2c1db67263fa1155fedc08ba17053ef33f` | M1 Lite promoted on 2026-11-03 via PR #52; official main now contains the validated M1 source tree. Not yet deployed to company servers. |
-| M1 开发分支 / Development | draft/20261013-m1-storage-ui-audit @ `cdf25af58736253bbf5343ceccdf543cf1119631` | Same product tree as main after PR #52 promotion; continue feature development here before future main promotions. |
-| 已批准 UI 设计 / Design | [#44](https://github.com/yudacheng666/SRM_System/pull/44) Draft @ \`8e643520\` | Architecture and acceptance matrix only, not product code |
-| 并行历史候选 / Alternate | [#45](https://github.com/yudacheng666/SRM_System/pull/45) Draft @ `4480482c5bbb280257c06aa44889706705663280` | Still open and unmerged; overlaps the now-merged #46 UI files, diverged alternative. Do not merge without a separate reconciliation decision. |
-| 已合并 UI 功能 / Merged UI | [#46](https://github.com/yudacheng666/SRM_System/pull/46) Merged 2026-11-03 | Merge commit `cdf25af58736253bbf5343ceccdf543cf1119631`; exact source tree `69f467638cde0fd1483b8490fc9c26c969dd4cd6`. Pre-merge UI/S3-S4 Actions [41587890315](https://github.com/yudacheng666/SRM_System/actions/runs/41587890315) and [41587890277](https://github.com/yudacheng666/SRM_System/actions/runs/41587890277) SUCCESS; post-merge M1 Actions [41590629311](https://github.com/yudacheng666/SRM_System/actions/runs/41590629311) SUCCESS on exact M1 HEAD. |
-| 项目记忆 / Memory | [#47](https://github.com/yudacheng666/SRM_System/pull/47), merged 2026-10-22 | AGENTS.md + PROJECT_STATE + DECISIONS + original session now on M1 dev, not main |
-
-## 2026-11-03 M1 promoted to main / M1 已正式提升到 main
-
-- Owner explicitly requested promotion of the complete M1 development baseline to `main`. PR [#52](https://github.com/yudacheng666/SRM_System/pull/52) merged at 2026-11-03 06:45:33 UTC using a merge commit: [`9ee26c2c1db67263fa1155fedc08ba17053ef33f`](https://github.com/yudacheng666/SRM_System/commit/9ee26c2c1db67263fa1155fedc08ba17053ef33f). PR #52 is CLOSED/MERGED.
-- Source M1 HEAD: `cdf25af58736253bbf5343ceccdf543cf1119631`; prior main was `f330de510f97c552629052ff1841d7223194e7f8`. Compare showed main was an ancestor of M1 (424 commits ahead, 0 behind). The merge commit's tree is identical to the tested M1 source tree: zero changed files between source `cdf25af` and main merge commit `9ee26c2`.
-- Exact-SHA Actions evidence: UI V2 [41587890315](https://github.com/yudacheng666/SRM_System/actions/runs/41587890315) SUCCESS (Python44/44, Node10/10, Chromium E2E58/58, Windows business-safety PASS); M1 post-merge S3/S4 [41590629311](https://github.com/yudacheng666/SRM_System/actions/runs/41590629311) SUCCESS (Linux Python/Node/Chromium E2E and Windows S3/S4 all jobs SUCCESS). The latter ran on exact source SHA `cdf25af`.
-- PR [#46](https://github.com/yudacheng666/SRM_System/pull/46) first merged the UI into M1; PR #52 then promoted the entire M1 codebase to main. Main is now M1, not the former M0-only baseline.
-- Promotion is source-code integration only: no binary release, server deployment, or production rollout. Native Windows purchaser GUI WIN-03 full lifecycle remains a separate acceptance item and must not be described as passed by these Actions.
-- PR [#45](https://github.com/yudacheng666/SRM_System/pull/45) remains open/Draft as a divergent overlapping UI alternative; do not merge without reviewing any unique remaining requirements.
-
-## Validated development history / 已核实开发和证据
-
-- M1 development has local SQLite persistence/round history, imported XLSX/CSV, RFQ supplier assignment, quote-tier applicable pricing, line-level awards, original PDF per RFQ line, supplier-isolated ZIP exports and safe empty-target-only S4 restore.
-  这些能力属于 M1 开发基线，不代表完整采购员现场实机验收。
-- ERP Chinese core fields and unknown-column retention were integrated; semantics of the complete historical ERP field dictionary remain unverified.
-  ERP 全字段语义与现场源数据尚未完成核验。
-- Scope-specific TEST-ONLY evidence: #33 S4 feedback, #34 S4 restore, #39 export/navigation at \`9633c03\`, and #43 C08/C09 at \`c8429ef\`. These are exact-SHA limited acceptance reports, not blanket approval of future UI code.
-  不把历史 PASS 迁移为新提交 PASS。
-- PR #45 CI: [UI 39729243552](https://github.com/yudacheng666/SRM_System/actions/runs/39729243552) SUCCESS, [S3/S4 39729243554](https://github.com/yudacheng666/SRM_System/actions/runs/39729243554) SUCCESS. It remains a separate unmerged UI candidate.
-
-## Most recent development / 最新续开发
-
-- [Commit c2737f0](https://github.com/yudacheng666/SRM_System/commit/c2737f0221a7b529114da2df363e062e75c7544c) on PR #46 edits only \`prototype/m1-lite/index.html\` and \`prototype/m1-lite/tests/e2e/ui-ux-structural.spec.cjs\`.
-- Fixes quote comparison's “仅显示待人工决定”: filter **valid quotable lines before pagination**, respect original full-list item index for pricing, preserve unfiltered totals/decision overview, reset pager and show accurate filtered count.
-  解决以前“只隐藏当前页行，导致空白页和统计不符”的静态可确认逻辑问题。
-- Added isolated synthetic 12-line Chromium+SQLite E2E covering two pages (10+2), read-only filter, real award selection and full-scope counts.
-  8 个页面内嵌 JS 和新增测试源码 V8 语法解析 PASS；随后 Codex Cloud 在真实 Chromium 上执行新增3项及全部49项 E2E，连同后端/Node共102 PASS，均为临时非 Actions 证据。
-
-## Latest independent UAT and repair / 最新独立验收与修复
-
-- [Codex continuation PR #50](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6337865994) @ evidence 8296b853b3de03eb406ccd1f6eca50fdfdfdfa44 tested prior product SHA c2737f0: independent 14 groups **12 PASS / 2 FAIL**, plus native Windows **3 NOT TESTED**. Passed real round/revision/tier, price decisions, supplier ZIP, S4 empty restore + nonempty rejection and three-viewport geometry/keyboard checks. P2 UX-01: missing manual-only subtotal (3 manual items ¥1,979.00, theoretical ¥6,940.00, mixed recommendations ¥7,064.00); P3 UX-02: duplicate technical autosave mirror in top header. No confirmed corruption or security leakage.
-- ChatGPT fixed **both** on [PR #46 commit 2dbde57](https://github.com/yudacheng666/SRM_System/commit/2dbde578165de720fed290cddbfef0a34e99f032): valid, non-review buyer selections now have a separate manual-only amount, and top header no longer duplicates raw technical status; raw diagnostics remain expandable. UI regression updated across 3 test files, one new manual-only E2E; 8 page scripts + 3 E2E test files syntax PASS. **New-SHA real test status is superseded below by PR #50 evidence; static tests were preliminary.**
-- [PR #46 developer retest instruction](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6338965924) was **completed**. [PR #50 exact-SHA evidence](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6341985654) @ `17fbf6bbb72b8f536cb50fc55bf466c8e3000a82`: **Python43 / Node10 / Chromium50 = 103 PASS** (0 FAIL/SKIP/RETRY) run on actual **`2dbde578165de720fed290cddbfef0a34e99f032`**; independent P2/C05 5 PASS + P3/V01 3 PASS = **8 PASS**, no new confirmed product defect. Windows-native 3 NOT TESTED; exact SHA GitHub Actions still have no runner, not CI-green.
-- Actual 12-line buyer fixture: independently verified **¥1,979.00 (3 manual)** distinct from **¥6,940.00 theoretical / ¥7,064.00 mixed**, and **¥1,815.00 (2 manual)** after one bid changed to a new confirmed revision requiring review. Reset/zero-quote path and 46 actual export/ZIP/PDF checks passed. Three viewport tests verified one visible save status and actual pending PUT 200 / real stale-tab 409 with expandable raw diagnostics. `保存状态待确认` during in-flight saving is an optional wording improvement, **not** a confirmed blocking defect.
-- [ChatGPT evidence review comment PR #46](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6342862031) accepts the **scoped** fix verification as PASS, not as release readiness. Original c2737f0 evidence and two earlier defects remain in old PR #50 directories without being rewritten.
-  已提交两项修复，但旧版的 102 PASS / 12 PASS 不得套用到新 SHA。
-
-
-## 2026-10-26 buyer pilot feedback / Windows 试用四处反馈
-
-- User annotated four issues in the locally running older UI: top S4/SQLite technical message incomprehensible to buyer, opaque `RFQ-179...-...` identity repeatedly raised, unnecessary English `Current RFQ` and `PURCHASING WORKSPACE`. This is **actual user visual feedback**; no inference of business quote data from screenshots.
-- **Owner clarified D-024 on 2026-10-26:** SRM is **still a test-stage product**; previous test SQLite/ZIP snapshots and sample RFQ names are disposable and can be regenerated. **Do not require backward compatibility, migrations, or a dedicated legacy-import test gate for old synthetic data.** This narrows the prior `legacy restore` test handoff: current `08f4c57` should be tested with fresh isolated synthetic RFQs for rename → actual SQLite save → reload → history switching, and current-version S4 backup/restore plus quotation/PDF ID integrity. The optional blank-name fallback is not a commitment to migrate all previous pilot records. Keep actual existing user local files untouched; real ERP historical imports remain separately scoped.
-  不再让旧试用数据兼容阻塞项目；新版关联和安全不放松。
-- ChatGPT implemented [PR #46 new head `08f4c57`](https://github.com/yudacheng666/SRM_System/commit/08f4c570666060cd263883949e24616c73811fa9): simple Chinese status text and labels including local-mode badge, optional editable `state.projectName` for buyer-facing current/history display; immutable `workspaceId` retained for SQLite, revisions, supplier files, quotation and PDF bindings and only shown in technical detail. New Python list-index/history and Playwright rename/reload checks; updated two outdated UI assertions that required `RFQ-` visible.
-- The HTML inline JS and affected E2E JS passed static V8 syntax; **no actual new-head Python/Node/Chromium/Windows acceptance has run**. Prior [PR #50 evidence 103 + 8 PASS](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6341985654) is for **`2dbde57` only**; it remains valid history, cannot be relabeled as current-head PASS. [PR #46 test-only instruction](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6406983737) requests an exact `08f4c57` isolated Codex rerun and new independent business-title/legacy-backup verification.
-- GitHub Actions runner/account restriction and native Windows three NOT TESTED remain; locally running user's application is not automatically upgraded by GitHub commits. Under approved [D-022](DECISIONS.md) development alternative, reverify cloud suites for the changed SHA, then native Windows and separate user authorization before any merge. [D-023](DECISIONS.md) records buyer-friendly Chinese naming/copy rule; no backend ID migration.
-  新提交仅静态检查通过；不要把旧版全绿报告套用到新版本。
-
-- **Buyer feedback #5 (2026-10-26):** Clicking `询价项目` opened the project controls but left `物料与图纸` selected in the sidebar. [PR #46 fix `424dce4`](https://github.com/yudacheng666/SRM_System/commit/424dce48c7ba0a66e25d4f97de633d40c4c1ccd6) makes project/admin drawer actions retain the **exclusive** `aria-current` selection until navigating to another page or collapsing that active drawer. Same behavior for header shortcuts; no business-state mutation. Added precise assertions in `ui-v2-exploratory.spec.cjs`. **8 inline JS scripts and test spec parse PASS; actual Chromium on new head NOT YET RUN**. User expressly requested incremental fixes and **one consolidated Codex Cloud run only after declaring feedback complete**, not tests after each minor bug.
-  当前先继续采集并修复问题；待用户明确“统一测试”后冻结最终SHA一次性复验，不自动启动Codex。
-
-- **Buyer feedback #6 (2026-10-26):** Project is the **first procurement workflow stage**, not an accordion above items/assign. [PR #46 `9bac5eb`](https://github.com/yudacheng666/SRM_System/commit/9bac5ebe09d219722380f0b0c1c8d83e3014e49e) creates visible `#project.panel` as step①, shifts items/assign/quote/comparison to steps②–⑤, reuses the original project form with its details permanently open and no fold control, relocates supplier management to allocation page. Sidebar and workflow tabs now agree. Existing eight Playwright files were adjusted/extended with project-first assertions. **Static JS syntax only; no new browser/backend/Windows evidence.** Durable rule [D-025](DECISIONS.md). Codex Cloud consolidated test still pending user signal.
-  用户要求先让“询价项目”成为完整第一步，不再顶部折叠；继续逐项修改，最后统一验收。
-
-- **Buyer feedback #7 (2026-10-26):** Four screenshot annotations request backup and management out of the project workspace, labels “新建”“保存”, and clarification of old “恢复当前已保存记录”. The actual `recover()` simply reloads latest SQLite active saved snapshot after warning about losing unsaved edits (not rollback to old revision or ZIP restore). [PR #46 `a16d810`](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6408464127) places `#uiDataTools` and technical save diagnostics in a **dedicated #backup.panel** outside 5-step business navigation, relocates reload into a labeled auxiliary management control, and preserves original event/backup safety handlers. E2E sources updated for routing and a new backup separation regression. **8 inline scripts and modified test JS syntax PASS, actual Chromium/back-end/Node/Windows not run.** [D-026](DECISIONS.md) records placement/label decision.
-  新功能及现有备份仍保持未验收状态；继续按用户要求收集问题，最终准确SHA统一测试。
-
-- **Buyer feedback #8 (2026-10-26):** Three annotated screenshots show Excel import-preview spacing as the correct density, while `#itemBody` rows are too tall and show both PDF and “缺图纸”. [PR #46 `4165116`](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6408786011) reduces only the item-detail body padding/line height/button height and renders `缺图纸` inside the existing drawing action when a required PDF is missing. Attached real PDF still shows PDF; explicitly `not_required` remains `无需图纸`, with metadata in hover description, original bindings intact. E2E source adds 12-line rendering/row-height/clickability assertion. **8 embedded scripts and modified E2E source syntax PASS; no browser/Node/Python/Windows real run.** User-requested batch collection continues until “统一测试”. [D-027](DECISIONS.md) records the UX rule.
-  新版只是静态检查，不能宣称已通过真实采购试用或Codex完整测试。
-
-- **Buyer feedback #9 (2026-10-26):** Supplier allocation screenshots show obsolete PDF on missing drawings, 60px+ table rows and vertical item/code/spec/name accumulation. [PR #46 `66a0579`](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6408969664) makes shared `itemCell` reuse `itemDrawingCell`, horizontal single-line material summary with ellipsis/complete tooltip and removes duplicated name lines in allocation/supplier-centric/comparison lists; all panel table-body rows use compact padding/line height, with extra specificity for quote/award tables. New 12-line browser regression added; **8 HTML scripts and modified E2E script syntactically parse, real browser/backend/Windows not run**. Revisit after final feedback batch, not after each small fix. [D-028](DECISIONS.md).
-  不将旧版103+8的实测结果套用到新SHA；最终统一让Codex Cloud TEST-ONLY验收。
-
-## 2026-10-26 consolidated batch-testing authorization / 九组问题统一验收
-
-- Owner explicitly requested **“统一测试”**, completing the nine-group buyer UI feedback batch. Exact frozen product SHA: `66a0579d88177143737b109efb3a8790c6cce053`. PR #46/#48/#50 remain Draft, no merge or new product changes.
-- [PR #50 full TEST-ONLY brief](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6409929850) and [PR #46 handoff](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6409938764) request fresh **full Python/Node/Chromium**, independent UX-01–09 buyer scenarios (project-first/name/current save, backup separation, PDF badge/dense lists), and persistent quote comparison/S4/supplier safety, using synthetic isolated data. Append new evidence under `docs/uat/20261026-pr46-66a0579-unified/` in existing Draft PR #50; old evidence immutable.
-- **State: task posted to GitHub but actual Codex Cloud execution has NOT begun** because this chat has no Codex Cloud task-start interface. Do not count the comments as test execution. Windows-native 3 remain NOT TESTED until real separate Windows run; GitHub Actions still no-runner and not formally green. Temporary D-022 alternative remains valid, official checks and user-specific merge approval remain outstanding.
-
-## 2026-10-26 final Codex result and ChatGPT remediation / 统一验收失败后的整改
-
-- Codex Cloud **actually ran** [full unified evidence on PR #50](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6410744522) for product SHA `66a0579d88177143737b109efb3a8790c6cce053` (evidence commit `369e2b775c2b8a022521c1b3b3411dec9005e8be`). Python **44 PASS**, Node **10 PASS**, Chromium **40 PASS/15 FAIL** = **94 PASS/15 FAIL**. Independent UX **7 PASS, 1 P3 FAIL (comparison UX09), 1 BLOCKED (extra S4 tamper-negative)**; core scenario 11 PASS / 1 BLOCKED. Native Windows 3 NOT TESTED, exact GitHub Actions NOT SUCCESS. Verdict **NOT READY**.
-- [15 classified failures](https://github.com/yudacheng666/SRM_System/blob/369e2b775c2b8a022521c1b3b3411dec9005e8be/docs/uat/20261026-pr46-66a0579-unified/automation/failure-classification.json) are obsolete test navigation, old `正式` text/old `规格：` prefix, old collapsible project expectation, missing real app fixtures (three tests), and newest-first sorting assumption. They are **not 15 confirmed product defects**; **subsequent unreachable assertions remained NOT REACHED**, not PASS.
-- Actual user-visible **P3-UX09-01**: comparison row 58.375–62px vs items/allocation31–32; 1366×768 first quoted row y≈884.97 (below viewport). S4 true current-version backup, blank-root UI restore, nonempty-root rejection PASS; optional content-tamper path **BLOCKED**, as fixture used ZIP_DEFLATED but current accepts ZIP_STORED, and Playwright response body was evicted before full verification. This is **not** a confirmed S4 corruption defect.
-- ChatGPT fixed on **new source SHA `795f663933f6883bc6e05d30b4ebbc2623a3301c`**: scoped compare CSS aligns price/disclosure side-by-side and reduces vertical chrome, but real UX09 geometry is **UNVERIFIED**; four affected E2E files patched exact failure preconditions without deleting original business assertions, and added actual new geometry regression. **Eight HTML JS blocks and four browser spec scripts V8 parse PASS only**. [PR #46 developer review](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6414180453).
-- [TEST-ONLY scoped smoke → full suite → legitimate S4 ZIP_STORED content-hash negative handoff on PR #50](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6414197317) **POSTED, NOT STARTED**. Do not reuse or rewrite prior results; evidence goes in new independent subdirectory of existing Draft PR #50, not another PR. No product/main/M1 merge or CI status promotion.
-
-## 2026-10-26 second Codex retest and new closure / 第二轮复验与最后整改
-
-- Real Codex Cloud [`795f663` report](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6415100958): **Python44PASS + Node10PASS + Chromium49PASS/7FAIL = 103PASS/7FAIL**, old15 corrected **12PASS/3FAIL**, independent UX **8PASS/1FAIL** (UX09 density 44.4375px; first quoted row y843.97 at1366×768). Core **12PASS**, legitimate `ZIP_STORED` PDF-content sha256 tamper rejection **400 RESTORE_PDF_HASH_MISMATCH**, target unchanged, good restore & nonempty refusal pass. Native Windows3 NOT TESTED. **NOT READY** and prior reports remain immutable.
-- Remaining **six E2E selector/precondition** issues: PDF acceptance reload hidden Materials field; offline save Supplier form hidden; U7 reload asserts permanent Project collapsed; pending-only/manual-only/tied-lowest choose bid cell center and hit newly added disclosure. The true user-visible product P3 is too tall comparison first screen.
-- ChatGPT code changes on current [PR #46 `f4bfcda8efdf3998c833ed25c3193a056fdde451`](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6415422410): repair those six original test paths without dropping business assertions; compact header/decision grid and regular price rows, relocate **full rule disclosure** to below quote matrix, preserve award maths and all price/terms data; UX09 test now requires **entire** first quoted row inside 768px. **8 HTML script blocks + three affected E2E scripts V8 parse PASS; no real browser/full suite on this SHA yet**.
-- [Next independent Codex task PR #50](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6415440257) only **ASSIGNED ON GITHUB, NOT STARTED**; exact-SHA targeted7 → whole suite → independent current-version business/S4 smoke; new evidence in `docs/uat/20261026-pr46-f4bfcda-final-closure/`. No GitHub Actions, merge, main or protected base update.
-
-## 2026-10-26 cloud acceptance closure and Windows-only gate / 云端验收全绿
-
-- **Actual TEST-ONLY Codex Cloud [full result in PR #50](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6416014875)** for **PR #46 exact product `f4bfcda8efdf3998c833ed25c3193a056fdde451`**: Python **44 PASS**, Node **10 PASS**, Chromium **56 PASS**, total **110 PASS/0 FAIL/0 SKIP/0 retry**; targeted seven **7 PASS**, independent UX01–09 **9 PASS**, independent core business **12 PASS**. Cloud scoped **READY**; no new confirmed P1/P2/P3. Evidence PR #50 head `b73a7ec339c26a9b07f4ac2ea80a7bc0d6b53f94`; old reports unchanged.
-- UX09 at1366×768, scrollY0: first real quoted row top=663.21875/bottom=705/height=41.78125px, strict ≤44 and fully visible. 1024×768 still requires vertical scroll, 1600×900 is bottom≈900.17; accepted scope does not demand full row above fold at other widths. No overall horizontal overflow. S4 valid ZIP_STORED PDF 1-byte hash tamper 400 RESTORE_PDF_HASH_MISMATCH, target unchanged, valid restore200 and nonempty409 all **retested PASS**. One independent fixture oracle omission corrected once and fresh attempt02 passed, original error preserved.
-- **Remaining acceptance blockers, not code defects:** 3 actual **native Windows** groups (Python3.13, Node22, PowerShell/BAT+local launch/safety) **NOT TESTED**; no verified official current-head GitHub Actions SUCCESS, and no explicit owner consent to merge. Cloud Linux/Node24 cannot certify native Windows. [Posted Windows plan PR #50](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6416864097) is **not a run**. [PR #46 status comment](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6416876704) marks no product/head changes; all PR #46/#48/#50 Draft. D-022 temporary development evidence accepted only up to cloud stage; no main or M1 merge allowed automatically.
-- Source control note: PR #46 base points to M1 branch at `f117cf3ca512a4ca7e1eec505b5e28744159343f` (PR #48 metadata still b0629a06); recheck base/merge compatibility **after Windows PASS**, before requesting separate merge authorization. Do not silently rebase tested product code and treat old SHA evidence as valid for new merge SHA.
-
-## 2026-10-29 genuine product visual-system work
-
-- User explicitly rejected another design-only cycle; original PR #44 approved UI architecture remains reference. [D-029](DECISIONS.md) directs real M1 code changes, not a new standalone mockup.
-- PR #46 current SHA `0868d422dfdc227f23f2c9e90bab4b3a3f3770e9`: unified light navigation, seven SVG icons, Chinese labels, typography, buttons, forms, cards and business tables across five RFQ stages and backup. Three legacy density CSS blocks consolidated into one; total style blocks 6 to 4. Added real-browser six-page screenshot/regression spec. All eight inline JS scripts byte-identical to tested `f4bfcda8`; original business DOM IDs preserved; static parsing PASS. **No real current-SHA test run**, no merge.
-- Windows user on older `f4bfcda8` ran local Python 3.15 backend 44/44 PASS, health API offline/SQLite/S4 OK; user says basic functions usable. This does not satisfy D-022 Python3.13, Node22 or full Windows end-to-end requirements.
-- 2026-10-29 buyer displayed real `0868d422dfdc227f23f2c9e90bab4b3a3f3770e9` Windows project and quotation pages. User-supplied images establish: project landing is visually underfilled, quote intake has very small text and cramped supplier/round/terms controls; screen geometry suggests reduced browser zoom, **not confirmed** (buyer should reset zoom to 100% for comparable review). No actual Windows E2E passed just by opening the UI.
-- ChatGPT directly updated [PR #46 `f06c1af960438c8cf7b422950bcf422e3bb7be64`](https://github.com/yudacheng666/SRM_System/commit/f06c1af960438c8cf7b422950bcf422e3bb7be64) following those images: project page now has read-only process guidance without new business controls; quote intake controls use readable two-stage visual grouping, shared typography/navigation/cards/forms enlarged, tab title and quote heading Chinese. All original HTML business IDs retained; eight inline business scripts byte-identical; style blocks remain four. Commit message includes `[skip ci]` to avoid executing paid Actions; no intentional manual runner invocation. **Current new SHA static source preflight only**, no actual Python/Node/Chromium or native Windows visual retest. Previous UX09 first-row geometry not certified on new SHA.
-- Next: user reloads new `f06c1af960438c8cf7b422950bcf422e3bb7be64` in a freshly extracted isolated Windows source directory, restores browser zoom to 100%, visually reviews project/quote and remaining pages, sends grounded feedback; ChatGPT updates same PR46. Only after visual direction is accepted, freeze latest SHA and request Codex TEST-ONLY complete exact-SHA acceptance. No merge; #48/#50 still Draft.
-
-## 2026-11-03 GitHub Actions runner repair and exact PR #46 acceptance / Runner 修复与正式验收
-
-- The original product commit `6a7c6f73fce5e0dff14259734121b3baf82bf786` included `[skip ci]`; the first same-tree trigger commit `a0fadcf5bca04cd7f61bf5a64e6f1593d6abe0e3` retained product tree `69f467638cde0fd1483b8490fc9c26c969dd4cd6`.
-- Root cause of Linux failures: GitHub `ubuntu-latest` resolved to Ubuntu 26.04, unsupported by locked Playwright 1.58.2. CI-only repair on M1 development baseline `draft/20261013-m1-storage-ui-audit`: UI workflow commit [f6d1b64](https://github.com/yudacheng666/SRM_System/commit/f6d1b64ce082504b242a17ea36188d10d8f6f016) and S3/S4 workflow commit [b18e2a6](https://github.com/yudacheng666/SRM_System/commit/b18e2a63138a6bf28e4327da12d9a2cc8d40ebd8) each change exactly one runner line from `ubuntu-latest` to `ubuntu-24.04`; no test logic, product, dependency, or main changes.
-- Final PR #46 trigger commit [140f9d8](https://github.com/yudacheng666/SRM_System/commit/140f9d861ae0d0a2ab47a6485ce5dc000933cc83) has the same Git tree as product SHA `6a7c6f7`; it changes no source files.
-- [UI V2 Unified Acceptance run 41587890315](https://github.com/yudacheng666/SRM_System/actions/runs/41587890315): **SUCCESS**. Actual runner `ubuntu-24.04` and real Chromium installed. Linux: Python **44/44**, Node **10/10**, real Chromium M1-Lite/UI V2 E2E **58/58**. Windows business-safety job SUCCESS with Python44, Node10, launcher encoding/relative-path and isolated pilot launcher checks.
-- [S3/S4 Regression run 41587890277](https://github.com/yudacheng666/SRM_System/actions/runs/41587890277): **SUCCESS**. Actual runner `ubuntu-24.04` and real Chromium installed. Linux: Python **44/44**, Node **10/10**, real Chromium E2E **58/58**. Windows S3/S4 job SUCCESS with Python44, Node10 and launcher checks.
-- Both final PR workflows report **0 failed / 0 skipped tests**. Artifacts: UI `srm-ui-v2-candidate-chromium-evidence` ID `13209480890`; S3/S4 `srm-playwright-evidence` ID `13208564160`. The baseline-branch push run [41587840766](https://github.com/yudacheng666/SRM_System/actions/runs/41587840766) also passed 43 Python + 10 Node + 46 E2E, but is supplementary; the two PR #46 runs above are the release-candidate evidence.
-- **Result: Linux runner incompatibility fixed; latest PR #46 candidate's two GitHub Actions workflows PASS end-to-end.** PR #46 remains Draft/Open and is not merged. No Codex used. No product source, tests, or main changed.
-
-## 2026-10-29 buyer feedback: hide explanatory microcopy / 说明改悬浮
-
-- Owner reviewed actual Windows SRM screens and specifically requested removing all explanatory small copy from the normal layout, revealing it on mouse hover. Recorded [D-030](DECISIONS.md). This **does not authorize hiding critical live statuses, errors, warnings, record counts, buyer decisions or required field labels**.
-- ChatGPT modified **real PR #46** `prototype/m1-lite/index.html`, latest [`b7d19e778004ecf3b10352eb6c276d5a0fe5eefe`](https://github.com/yudacheng666/SRM_System/commit/b7d19e778004ecf3b10352eb6c276d5a0fe5eefe): 43 static help controls, two dynamically generated page introductions handled in separate presentation-only script, and two additional comparison explanations moved behind icons. Simplified duplicate project and settings explanations; interactive icon supports hover/focus/tap, Esc/click-away. Eight existing business script bodies remain byte-identical, original business IDs and seven sections retained. This follows previous screenshot patch `f06c1af960438c8cf7b422950bcf422e3bb7be64`. New commit messages use `[skip ci]`; repository check returned zero Actions runs. No chargeable CI manually triggered.
-- Latest SHA verification: source anchors, DOM-ID preservation, stylesheet block count and presentation JS syntax **PASS**, original eight inline scripts unchanged. Actual browser screenshot visual test, keyboard/touch behavior in real browser, Python/Node/Chromium suites, S4 business regression and native Windows three-group acceptance **NOT TESTED on this SHA**; no merge to M1/main. Old `f4bfcda8` 110 PASS remains historical only.
-- Next: download exact `b7d19e778004ecf3b10352eb6c276d5a0fe5eefe` complete source into a separate Windows directory, launch with isolated `SRM_DATA_DIR`, visually verify helper popovers do not clip, compare all pages and confirm essential save/quote warnings visible. Collect user's response before final test-only Codex run.
-
-## 2026-10-30 exact-SHA Linux acceptance closure / 云端收口验收
-
-- **Product PR #46 HEAD stays `2aaa478c8f1966e41b9372d9d989c383dbaa1972`**, Draft, unmerged; only last source change was one stale UI kicker assertion, not business code.
-- Codex Cloud [PR #50 TEST-ONLY report](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6502258493), evidence commit `83d78f82416f2439a2763e977c06a237ea09e237`: new isolated Linux checkout, actual HTTP HTML and E2E source identity; Python44 / Node10 / full Chromium58 **112 PASS /0 FAIL/0 SKIP**. A separate focused UI integration PASS overlaps the full 58; both traces evidence 100 in-case assertions, including **79 formerly unreached** after the previously failing settings kicker. All 5 previously failed complete cases now 5/5 PASS.
-- Same-SHA independent buyer E2E, 18 six-page/three-viewport captures, 83 hover/focus/Esc tooltip samples, 1366×768 quoted first row, supplier ZIP isolation, 46 export checks, 30 backup categories, valid S4 positive recovery, ZIP_STORED tamper reject, nonempty reject, save pending/200/409/offline and old quote history PASS. The initial grep selector error and prematurely interrupted suite are explicitly archived as incomplete, **not treated as pass**; correct final full suite ran all 58.
-- Initial `#runAssignSearch` actionability incident was **NOT REPRODUCED** with frame/hit-test evidence on this SHA; original **ROOT CAUSE UNKNOWN** remains, no forced clicks/timeouts or asserted fix. Native Windows WIN-01/02/03 **NOT TESTED**; official Actions not run under account restrictions; **full M1 development merge gate NOT READY**, no owner merge approval, main/M1 not changed.
-- Next step: **do not alter this accepted cloud-PASS product SHA or rerun Linux** without a new actual defect. Secure real isolated native Windows verification and separate owner decision. GitHub comments are handoffs, not evidence of actual execution.
-
-
-## 2026-10-30 native Windows attempt — environment BLOCKED / 原生环境阻塞
-
-- [PR #50 independent native-preflight result](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6512117365), mirrored to [PR #46](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6512118584), tested access to an executor for unchanged product `2aaa478c8f1966e41b9372d9d989c383dbaa1972`. Only Linux 6.18.55 x86_64 was available, with no verified real Windows executor; no CMD/PowerShell, genuine Windows browser, or disk tests performed. **Environment = BLOCKED; WIN-01/02/03 = 3 NOT TESTED; Windows 0 PASS/0 FAIL.** No Windows-native test artifacts are claimed.
-- The exact-SHA **Linux cloud 112 PASS/0 FAIL and independent buyer/S4/UX PASS remain separate and valid**, not enough for D-022 Windows gate. No new product defect follows from unavailable executor; no product/test/CI change, no Actions, no merge or PR closure. The first search-click timeout remains NOT REPRODUCED / ROOT CAUSE UNKNOWN.
-- Operational decision: **stop requesting the same TEST-ONLY Windows task from Linux-only Codex Cloud**. Next action needs a user-authorized verifiable native Windows 10/11 desktop/executor, Python3.13/Node22 where applicable, isolated synthetic fixtures, and no existing data destruction. Until present, keep M1 merge **NOT READY** and frozen PR46 unchanged.
-
-
-## 2026-10-30 real Windows retry and Python version clarification / 实测续验与版本差异
-
-- [Codex Windows evidence](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6514142172), evidence SHA `8c3f7c7a5dbb1cdc86333af599b553dc6cae2a6a`, actually used native Windows x64 Build26200.9711; exact 146 source blobs and `index.html` SHA256 validated. WIN-01 Python3.13 and WIN-02 Node22 **NOT TESTED** due to missing tool versions/npm. WIN-03 **BLOCKED**, with separate BAT relocation, API persistence and isolated S4 recovery/409 safety subchecks PASS; real Edge purchaser workflow, PDF rendering, supplier ZIP and browser disconnected-save checks incomplete. All task server PIDs stopped; 8765 free. No confirmed product failure; PR46 SHA unchanged.
-- **Version-policy correction needed, not a known runtime bug:** current `run_local.bat` explicitly allows **Python >=3.10** and successfully launched under native 3.15 during Windows supplemental checks; `srm-s3-regression.yml` and `srm-ui-v2-unified-acceptance.yml` selected **Windows Python3.13/Node22** and **Linux Python3.12/Node22**. D-022 copies this matrix for a temporary strict acceptance gate, not a statement that 3.15 is unsupported. Genuine Python3.15 full unit suite can be run as version-labeled evidence; existing formal 3.13 gate is not silently rewritten. Need owner decision before substituting new acceptance versions; ordinary CI and explicit merge approval remain separate.
-
-
-## 2026-10-30 owner amendment D-032 / Python 3.15 代替原3.13验收门槛
-
-- Owner questions original arbitrary 3.13 and directs changing to installed Python3.15. [D-032](DECISIONS.md) amends **only the native WIN-01 Python minor-version gate** under temporary D-022 for PR #46 frozen `2aaa478c8f1966e41b9372d9d989c383dbaa1972`. Old 3.13 CI version remains historical; `run_local.bat` requires Python>=3.10 and was actually launched with Python3.15 on Windows, but full Windows Python3.15 backend test is **NOT YET RUN**. A real full unittest must pass before WIN-01 can change to PASS.
-- Existing workflow YAML still specifies Python3.13 (official CI not run); it is **not** silently modified, to preserve the exact already-cloud-PASS product SHA. WIN-02 Node22/npm and WIN-03 real Windows browser remain outstanding. Other D-022 safeguards and explicit merge authorization unchanged.
-
-
-## 2026-10-30 native Windows Python3.15 WIN-01 formally PASS
-
-- [PR #50 Windows WIN-01 report](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6514371763) at precise product SHA `2aaa478c8f1966e41b9372d9d989c383dbaa1972`, evidence-only commit `f07591f30319252a6de407790c48d9f479825a4b`. Genuine native Windows11 Pro x64 Build26200.9711, installed Python3.15.0, SQLite3.53.4; original complete backend `unittest discover` ran once: **44 PASS/0 FAIL/0 ERROR/0 SKIP, exit0**. Detailed module counts 10 auto-backup + 8 S3 + 8 S4 backup + 4 S4 server + 7 server + 7 store. Original stdout was empty and full stderr contains `Ran 44 tests in 9.552s / OK`; actual PID/command/exit and pre/post all 146 product/test source file identities preserved. No reuse of Linux PASS.
-- **D-032 WIN-01 gate is satisfied (PASS)**; the prior 3.13 NOT TESTED remains an immutable historical fact, not a blocker under owner-approved changed version. Actual target SHA unchanged. WIN-02 remains **NOT TESTED** (Node22/npm missing; Node24 is installed); WIN-03 remains **BLOCKED** (native browser control unavailable; earlier launcher/SQLite/S4 API subchecks PASS, real full buyer browser steps not completed). Full M1 **NOT READY**, no evidence of new product failure, official Actions unavailable.
-- Next handoff must focus exclusively on genuine Windows WIN-02 and WIN-03, without unnecessary reruns of WIN-01/Linux, without installs, product/test/CI edits, real data modification or unapproved merge. If the 22/npm prerequisite remains unavailable, explain the blocker and distinguish optional Node24 additional diagnostics from the current Node22 acceptance gate.
-
-
-## 2026-10-30 owner amendment D-033: accept installed Node24 on Windows WIN-02
-
-- User explicitly rejected the historical Node22 pin as an arbitrary test blocker and approved available Node24. [D-033](DECISIONS.md) changes the temporary PR46 M1 Windows WIN-02 gate only: real Windows Node24 + two **unchanged original `node:test` files**, 10/10 PASS, exit0 with accurate SHA and logs, qualifies as WIN-02. A missing npm binary does not prevent `node --test` standalone built-in business suite (the original `npm test` script only delegates to it). **No Windows WIN-02 test has yet been run on Node24, so it is not PASS yet.** Official npm install reproducibility and browser Playwright dependency management remain separately unverified; original Actions YAML is not rewritten.
-- WIN-01 native Windows Python3.15 44/44 PASS remains accepted, WIN-03 full real Windows browser still BLOCKED, Linux cloud 112/112 PASS remains separate. No change to product SHA, main/M1, or independent owner merge authorization.
-
-
-## 2026-10-30 native Node 24 WIN-02 completion / 第二组 Windows 业务单测全绿
-
-- [Codex exact-SHA PR #50 WIN-02 result](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6514711494) on real native Windows11 x64 Build26200.9711, existing Node v24.22.1; original `node --test prototype/m1-lite/tests/autosave_rules.test.cjs prototype/m1-lite/tests/supplier_package.test.cjs` actually ran **10 PASS/0 FAIL/0 SKIP/0 CANCELLED/0 TODO, exit0**; 4 autosave + 6 supplier package, first-and-last SHA/source original 146 file blobs unchanged. Original stdout/stderr, timings and isolated synthetic fixture evidence committed only to TEST-ONLY PR #50 at `54ae36f3639d0a68c5c3e7e81928e1767b81bf0b`. No npm/npm ci or Playwright run is claimed. Under D-033 current M1 temporary **WIN-02 is PASS**; old Node22 NOT TESTED remains historical.
-- **Remaining only WIN-03 BLOCKED**. Latest [native browser check](https://github.com/yudacheng666/SRM_System/blob/54ae36f3639d0a68c5c3e7e81928e1767b81bf0b/docs/uat/20261030-pr46-2aaa478-win02-node24/browser-preflight.json) found Edge/Chrome installed binaries without actually launching them; attached native browser-control connection unavailable, missing Playwright in two checked resolution roots. This does *not* prove native Edge/Chrome cannot launch or be driven by a permitted direct method. Bounded test of native browser launch/control is now the only prerequisite, then actual Windows buyer UI flow; no more Linux/Python/Node reruns. M1 full gate NOT READY, Actions not run, PR46 SHA frozen.
-
-
-## 2026-10-30 WIN-03 real Windows Edge/CDP controls established; independent driver screenshot timeout
-
-- [PR #50 WIN-03 native CDP evidence](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6515539794) at same frozen product `2aaa478c8f1966e41b9372d9d989c383dbaa1972`, evidence-only commit `fec427e9b2c0c017fd460fedee29f478452b7013`. Real Windows11 x64 with existing Edge156, Node24, fresh Edge profile and loopback-only randomly assigned CDP port 61109. Actual `Browser.getVersion`, navigated exact-SHA SRM localhost page, `/api/health`/HTML hash, real DOM and 1366x768 application screenshot. All 146 original tracked blobs unchanged.
-- **First real app screenshot** `Page.captureScreenshot` returned after **12075ms** but independent driver `CDP.send` hardcoded `setTimeout(...,12000)`; the 75ms excess produced exit1, then genuine unedited error-evidence PNG captured in 125ms. Root reason for 12s delay remains undiagnosed. This is **a test-driver timing failure**, **not a confirmed product defect**, and does not count as WIN-03 GUI UAT. Actual `Input.*` commands **0**; real purchaser workflows all **NOT TESTED**. `WIN-03 BLOCKED / full M1 NOT READY`. No repeat of WIN-01/Python44, WIN-02/Node10, or cloud 112.
-- Next authorised run should use the **same already proven native Windows Edge+Node24 CDP approach**, not return to missing CUA/Playwright arguments. In new TEST-ONLY evidence, use bounded method-specific timeout (screenshot around 30s) with raw timing/error logging and real native click/input validation before full business UAT. Keep source exactly frozen, isolate synthetic browser/data and record cleanup. Previous test-driver file under PR50 evidence is immutable; a new driver version may live only in new TEST-ONLY evidence without changing any original product/tests/CI.
-- This time task-owned Edge PID14724 and server PID31636 exited; CDP61109/HTTP8765 ports free. All PRs remain Draft/open; Actions not triggered, main/M1 not modified.
-
-
-## 2026-10-30 WIN-03 native Edge interactive continuation: two RFQs GUI PASS, material import blocked at alert
-
-- Actual [PR #50 WIN-03 report](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6516034954) and evidence-only commit `35be9ae3c37d8483e7c3ea76ec35c33c2f992a78` at PR46 frozen SHA `2aaa478c8f1966e41b9372d9d989c383dbaa1972`: Native Windows11 Edge156 + Node24 built-in CDP, 26 mouse, 14 keyboard, 2 text commands; real user interface creates, renames and actually saves two fake RFQs (read-only server revisions A=1, B=2); screenshots109ms, **14045ms**,161ms successful under independent30s screenshot deadline. 146 original SHA files before/after unchanged; no installs or user data accessed.
-- Real 12-row XLSX file import preview: 12 rows,0 conflict,0 error. `03-import-materials.json` clicked `#confirmImportRows` as **ordinary `click`**; product `addRowsToRfq` first mutates frontend `items`, then synchronous `alert('新增12行...')`, which actually opened at 05:29:56.769Z, **17ms after `Input.dispatchMouseEvent(mouseReleased)` was submitted**. The independent driver awaited mouse release before handling the native dialog; command timed out after12s, screenshot after30s, later Page.enable after12s and another screenshot30s. One later new-session acknowledgement yielded `-32602 No dialog is showing`, not proof the original alert was successfully dismissed; final server GET saw A items `[]`. This is a strong driver/dialog-lifecycle deadlock explanation, not yet a verified end-to-end fix or confirmed product data loss.
-- User-facing “新增12行” is a preview/accepted in-memory import notification, **not a backend durable save ACK**. Since autosave uses idle semantics (`IDLE_MS=2500`) and blocking JavaScript dialogs can pause progress, require the next driver to handle expected dialog correctly and separately verify UI pending→saved plus durable 12 items/revision on the same workspace and F5. Import is currently **PARTIAL/BLOCKED**; supplier/PDF/ZIP/quote/S4/960 layouts remain NOT TESTED in native Windows. No confirmed product FAIL. Linux cloud112 PASS, WIN01 Python3.15 44 PASS, WIN02 Node24 10 PASS are preserved and must not rerun.
-- [New exact-SHA targeted WIN03 TEST-ONLY handoff](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6516086544) posted: change only copied independent test-driver action script to use its existing `dialogClick`, subscribe to expected `Page.javascriptDialogOpening`, handle on same target/session before awaiting click mouse-release, then verify dialog-close and real saved state. If missing/unexpected dialog or CDP remains blocked, stop and preserve evidence; do not blindly increase deadlines, force-click or hide original failures. Later continue genuine full GUI buyer UAT only if this passes. All task-owned services and ports cleaned; PR46/PR48/PR50 Draft, no Actions or merges.
-
-
-## 2026-10-30 TEST-ONLY native dialog preflight V1 actual PASS; full buyer-plan next
-
-- [PR #50 evidence](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6518992778), [new evidence-only commit](https://github.com/yudacheng666/SRM_System/commit/af8d185e5f2cd80ecb9c8edeb824d306ab5c43b2), native Windows11 Node24.22.1: **84/84 NEW static/mock node:test PASS**, **9/9 new CJS syntax checks PASS**; two positive `contract-test` files 38 examples statically pass; last Windows failure's two ordinary clicks are rejected before launch with exit2, malformed JSON also rejected. 146 fixed product/original-test source blobs unchanged; no browser, real CDP, actual business requests/writes and no repeated prior suites.
-- Policy contains 28 registered UI operations; 27 reviewed, **1 quote partial-commit branch NEEDS REVIEW**. Other unreviewed PDF/version/quote fixture branches are refused. The 38 contract examples are **not a runnable complete purchaser plan**, nor actual native Windows WIN03 success, and the 84 NEW tests do not equal HTML's lexical total of 84 dialog call expressions. Current WIN03 remains PARTIAL/BLOCKED. The prior Windows material rows12 SQLite/F5 and supplier import2 PASS remain valid, assignment0 links and rest GUI NOT TESTED.
-- [New PR #50 narrowly scoped full executable buyer-plan task](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6520453902): build ground-truth source-reviewed plan/fixtures for assignment through PDFs, ZIPs, quote revisions, award, offline/F5, S4 restore+409 and layouts; prove strict preflight of **the actual entire buyer-plan** before native Windows is attempted. No new browser/CDP/HTTP while planning; no parallel unverified driver; only existing PR50 V1. If missing details remain, list NEEDS REVIEW rather than guess. This is task assignment, not proof of execution.
-- Linux112/WIN01 Python44/WIN02 Node10 remain PASS, product SHA fixed `2aaa478c8f1966e41b9372d9d989c383dbaa1972`, PR46 still Draft and NOT READY, official Actions not dispatched; no product/test/CI or main/M1 change, no merge.
-
-
-## Open gates / 后续门槛
-
-1. **WIN03 PARTIAL/BLOCKED; buyer-plan V2 is not executable.** [PR50 V2 evidence](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6521140925): 9 buyer-plan files/219 steps, 124 tool/static tests PASS, but 111 steps across 7 capabilities lack actual dispatchers or executable postconditions; full-plan preflight exit2/BLOCKED. No real browser/CDP/HTTP/business write occurred in V2. Next [PR50 V3 TEST-ONLY task](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6521261879) must implement and mock-test view controls, save/SQLite oracle, downloads, PDF viewer session, Windows lifecycle, two-session nonempty-409 race and layout observer; all 219 steps must be executable before a separate Windows authorization. Do not rerun Linux112/WIN01 44/WIN02 10; do not change product SHA `2aaa478c8f1966e41b9372d9d989c383dbaa1972`, original tests, CI, main or M1; no Actions or merge.
-2. New 2dbde57 push triggered [UI 39766115997](https://github.com/yudacheng666/SRM_System/actions/runs/39766115997) and [S3-S4 39766115887](https://github.com/yudacheng666/SRM_System/actions/runs/39766115887); four jobs again steps=[] / no runner. In November, first inspect account billing/limit, then rerun exact new HEAD on actual Actions runners.
-3. Historical exact-SHA sequence remains immutable: `2dbde57` 103+8 PASS; `66a0579` 94/15 FAIL; `795f663` 103/7 FAIL; **current `f4bfcda` cloud 110/0 + independent UX9/9+core12/12 PASS**. [D-022](DECISIONS.md): Windows-native3 actual PASS + separate owner explicit PR #46→M1 merge approval + check latest M1 base/old #45; GitHub Actions must eventually run and repository required checks cannot be bypassed; do not promote M1 to `main`.
-4. Reconcile #45/#46 duplication, collect buyer feedback, and ask owner for explicit permission before any merge to M1/main. Main stays M0 until approved.
-5. Update canonical memory after each substantial new code/CI/UAT/decision milestone through authorized docs-only PRs; do not overwrite this unmerged checkpoint concurrently.
-
-## 2026-10-29 final stale UI kicker assertion / 中文设置页验收收尾
-
-- [PR #50 report](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6501055724) tested product `fbb98944a4bcee439e4e81ebfe3ef710bee4a3d0`: Python 44 PASS, Node 10 PASS, Chromium 57 PASS /1 FAIL, all five old stopping points cleared. Remaining complete UI integration case FAIL is an old `/\\d\\d|ADMIN/` page-kicker assumption after the approved background check; current visible settings kicker is “系统设置”, not `ADMIN`. All later assertions after this failure are NOT REACHED in the original run.
-- [PR #46 commit `2aaa478c8f1966e41b9372d9d989c383dbaa1972`](https://github.com/yudacheng666/SRM_System/commit/2aaa478c8f1966e41b9372d9d989c383dbaa1972) **only changes the old test** to assert “系统设置” for settings and a two-digit workflow prefix for procurement pages, preserving all downstream stage/nav/geometry checks; V8 compile PASS. No product/CSS/backend business logic change. This is **NOT RETESTED**, not 112 PASS.
-- Prior-SHA independent six pages, 83 tooltip samples, S4 restore and quote history, supplier isolation, 1366×768 full first quote row PASS; first search button NOT REPRODUCED / ROOT CAUSE UNKNOWN; Windows3 NOT TESTED. PR #46/#48/#50 remain Draft; no Actions dispatch, no merge/main change.
-
-
-## 2026-10-30 WIN-03 second native-dialog blocker: materials PASS, supplier assignment driver omission
-
-- [PR50 latest native Windows report](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6516695256) at frozen product/original-test SHA `2aaa478c8f1966e41b9372d9d989c383dbaa1972`. Windows11 Build26200.9711 + Edge156 + Node24.22.1. Prior Linux112/WIN01 Python44/WIN02 Node10 were not rerun.
-- Material step now genuinely PASS: prearmed expected alert, same CDP session accept, observed Opening→Closed(result=true)→mouseReleased resolved; SQLite revision1→2/items12 with unique complete RFQ Line IDs; true dynamic pending→auto-saved; F5 persisted revision2/items12. Two supplier records imported via real UI and saved, revision3/items12/suppliers2.
-- Supplier assignment is **DRIVER BLOCKED**, not product FAIL: `06-assign-all.json` uses `type:"click"` for SUP-A and SUP-B. Frozen product `applySupplierBulkChange()` calls native `confirm` before changing links. Existing `act-alert.cjs` has working `dialogClick`; `06-assignment-proposed-NOT-RUN.json` contains corrective action but explicitly was not executed. Native confirm appeared; mouseReleased12s, Runtime.evaluate12s, screenshot30s, later Page.enable12s timeouts; final assignment link count0. PDF/ZIP/quotes/awards/restart/offline/S4/409/layout not tested. No confirmed product FAIL; WIN03 remains BLOCKED.
-- **Process/root cause:** action JSON is manually assembled step by step; driver handles dialogs only if a step explicitly says `dialogClick`. It does not statically validate a known dialog-triggering product operation encoded as ordinary click. The prior handoff focused on the material alert but did not require a complete remaining-workflow dialog audit/action preflight; ChatGPT also failed to inspect the exact assignment JSON against frozen source before the Windows run. This was a preventable handoff/review omission and is recorded honestly, not attributed to the user.
-- Static source scan of exact frozen HTML found 58 `alert(`,20 `confirm(`,6 `prompt(` call expressions (raw occurrences, many validation/error-only; not all occur in happy path). Before another Windows run, audit each planned WIN03 workflow step (assignment, PDF linking, supplier package export, quote edit/import/partial acceptance/round lock/carry-forward, S4 restore) into a matrix: selector/function, dialog type, expected message, accept/cancel, expected postcondition. Add TEST-ONLY action schema/preflight: reject known dialog-triggering ordinary-click actions before browser launch; require exact dialog metadata for expected dialogs; handle same-session only; unexpected dialogs stop safely with evidence, never auto-accept unknown confirms/prompts. Then resume from assignment (reuse valid synthetic fixture if available, otherwise rebuild only synthetic data) and complete remaining genuine GUI workflow. Do not rerun Linux/WIN01/WIN02; no product/original-test/CI edits or Actions.
-- [PR50 ChatGPT review/preflight gate](https://github.com/yudacheng666/SRM_System/pull/50#issuecomment-6516741576) and [PR46 sync](https://github.com/yudacheng666/SRM_System/pull/46#issuecomment-6516745174). Evidence commit `a17cf78c8fc9493dae82b6c48721c7c714186681` adds only new PR50 test evidence; 146 frozen product/test files unchanged, SHA unchanged. PR46/50/48 remain Draft; no merge.
-
-
-## Decisions / 需要用户决定
-
-- Review current PR #46 UX in isolated buyer pilot.
-- Whether #46 supersedes #45 **after** CI and independent acceptance.
-- Promotion of M1 to main is a separate explicit owner decision.
-
-Detailed durable business decisions remain in \`docs/ai-memory/DECISIONS.md\`; historical original evidence remains in earlier session files.
+# SRM_System 当前项目状态 / Current project state
+
+> 核实日期：2026-11-03。以 GitHub 当前 refs、PR 和准确 SHA 为准；本文件是核实快照，不是后台实时监控。
+> Verified: 2026-11-03. GitHub refs, PRs and exact SHAs are authoritative; this is a snapshot, not background monitoring.
+
+## 1. 产品目标 / Product goal
+
+轻量采购询比价闭环：RFQ → 物料 → 供应商分配 → 询价包 → 多轮报价 → 同范围比价 → 人工定标 → 历史与备份。
+A lightweight procurement workflow: RFQ → items → supplier allocation → RFQ packages → multi-round quotations → like-for-like comparison → buyer awards → history and backups.
+
+当前主线是 M1 Lite 本机单用户试用版，不是 ERP 替代系统或已部署的企业多用户服务。
+The current mainline is an M1 Lite local single-user pilot, not an ERP replacement or deployed enterprise multi-user service.
+
+## 2. 分支与版本 / Branches and versions
+
+| 层级 | 准确版本 | 当前状态 |
+|---|---|---|
+| 正式主线 / Main | `main` @ `8686ea7956a8d717bcb0489a7d6b06ffc545547d` | M1 Lite 已于 2026-11-03 通过 PR #52 提升；PR #53 同步项目记忆。 |
+| M1 开发分支 / Development | `draft/20261013-m1-storage-ui-audit` @ `cdf25af58736253bbf5343ceccdf543cf1119631` | 与 main 的产品代码树一致；后续功能先在开发分支迭代，再按授权提升。 |
+| UI 设计参考 / Design | PR #44 | Draft 设计资料，不是独立可执行产品。 |
+| 并行 UI 候选 / Alternate | PR #45 | 仍为 Draft/Open；与已合并 UI 有重叠，不得未经差异审查直接合并。 |
+
+PR #46 已将 UI 结构整改合并到 M1 开发基线；PR #52 将完整 M1 基线合并到 main；PR #53 将当前状态记忆同步到 main。
+PR #46 integrated the UI changes into M1 development; PR #52 promoted the full M1 baseline to main; PR #53 synchronized current project memory.
+
+## 3. 已实现范围 / Implemented scope
+
+- Windows 本机启动：Python HTTP 服务，默认访问 `http://127.0.0.1:8765/`。
+- Windows local launch through a Python HTTP service at `http://127.0.0.1:8765/`.
+- SQLite 工作区持久化、历史修订、保存冲突保护及自动保存。
+- SQLite workspace persistence, revision history, write-conflict protection and autosave.
+- RFQ 物料导入、供应商导入/选择、物料—供应商多对多分配。
+- RFQ item import, supplier import/selection and many-to-many item/supplier allocation.
+- PDF 图纸关联、批量匹配预览、供应商范围隔离导出。
+- PDF drawing association, batch-match preview and supplier-scoped exports.
+- 多轮报价、同轮修订、阶梯价、报价覆盖检查、同范围比价和人工定标。
+- Multi-round quotations, same-round revisions, tier pricing, coverage checks, like-for-like comparison and buyer awards.
+- SQLite + PDF 完整 S4 备份/恢复、自动完整备份及保留策略。
+- Full SQLite + PDF S4 backup/restore, automatic full backups and retention.
+
+## 4. 准确 SHA 测试证据 / Exact-SHA test evidence
+
+- [UI V2 Unified Actions #41587890315](https://github.com/yudacheng666/SRM_System/actions/runs/41587890315)：PR #46 候选源码树验收 SUCCESS；Linux Python 44/44、Node 10/10、Chromium E2E 58/58，Windows 作业 PASS。
+- [UI V2 Unified Actions #41587890315](https://github.com/yudacheng666/SRM_System/actions/runs/41587890315): PR #46 candidate source-tree acceptance SUCCESS; Linux Python 44/44, Node 10/10, Chromium E2E 58/58 and Windows job PASS.
+- [M1 合并后 S3/S4 Actions #41590629311](https://github.com/yudacheng666/SRM_System/actions/runs/41590629311)：在准确 M1 SHA `cdf25af` 执行，Linux Python/Node/Chromium 与 Windows S3/S4 作业均 SUCCESS。
+- [Post-promotion M1 S3/S4 Actions #41590629311](https://github.com/yudacheng666/SRM_System/actions/runs/41590629311): ran on exact M1 SHA `cdf25af`; Linux Python/Node/Chromium and Windows S3/S4 jobs all SUCCESS.
+- PR #53 只更新文档；main 当前产品代码与上述已测 M1 源码树一致。文档清理属于后续独立 PR，不得把文档改动说成新产品测试。
+- PR #53 changed documentation only; main product code matches the tested M1 source tree. Subsequent documentation cleanup is a separate PR and must not be described as new product testing.
+
+## 5. 尚未完成 / Open items
+
+- Windows 原生采购员完整 GUI 流程 WIN-03 尚未完成独立验收。Windows Actions 的 S3/S4 回归 PASS 不等于原生 Edge/Excel/文件对话框完整 UAT PASS。
+- Native Windows buyer GUI flow WIN-03 has not completed independent acceptance. Windows S3/S4 Actions PASS is not equivalent to full Edge/Excel/file-dialog UAT PASS.
+- ERP 核心字段兼容已实现，但完整 220 字段字典、代码转换、单位换算及所有字段语义仍待原始 ERP 模板核验。
+- ERP core-field compatibility exists, but the complete 220-field dictionary, code conversions, unit conversions and all field semantics still require verification against original ERP templates.
+- ERP API 主数据同步尚未实现。物料/供应商是否强制先建主数据、未命中是否允许临时录入、如何处理停用编码和同步冲突，仍待业务决策。
+- ERP API master-data sync is not implemented. Whether items/suppliers must be pre-registered, whether unmatched records may be entered temporarily, and how inactive codes/sync conflicts are handled remain open business decisions.
+- 原始邮件、聊天截图等报价凭证的文件化存储尚未实现；当前 S4 主要覆盖 SQLite 与登记的 PDF 图纸。
+- File-based storage for original quotation emails and chat screenshots is not implemented; current S4 primarily covers SQLite and registered PDF drawings.
+- 公司服务器部署、多用户并发、SSO 和企业权限后置，尚未实施。
+- Company-server deployment, multi-user concurrency, SSO and enterprise permissions are deferred.
+
+## 6. 核心规则与文档入口 / Canonical rules and docs
+
+- [产品需求 PRD](../01_产品需求PRD.md)；[业务规则](../02_业务规则.md)；[当前架构](../architecture.md)。
+- [Product requirements](../01_产品需求PRD.md); [business rules](../02_业务规则.md); [current architecture](../architecture.md).
+- [ERP 字段映射范围](../erp-core-fields.md)。
+- [ERP field mapping scope](../erp-core-fields.md).
+- [本机运行与测试说明](../../prototype/m1-lite/backend/README.md)。
+- [Local runtime/test guide](../../prototype/m1-lite/backend/README.md).
+
+## 7. 协作与验收纪律 / Collaboration and acceptance
+
+先读取 `AGENTS.md`、本文件和 `DECISIONS.md`，核对 GitHub 实际分支、PR、准确 SHA 与已有 Actions 证据。
+Read `AGENTS.md`, this file and `DECISIONS.md` first; verify actual GitHub branches, PRs, exact SHAs and existing Actions evidence.
+
+GitHub Actions 是默认自动化验收入口；相同 SHA/环境/用例已有可核验 PASS 时，不重复运行整套测试。Codex 只用于 CI 未覆盖或高风险独立验收。
+GitHub Actions is the default automation gate; do not rerun an identical suite when exact-SHA/environment/test evidence already passes. Use Codex only for uncovered CI scope or high-risk independent acceptance.
+
+开发先进入独立分支和 PR；未经用户明确批准不得合并、直写 main 或关闭其他 PR。
+Develop on an isolated branch and PR first; never merge, write directly to main or close another PR without explicit user approval.
+
+仓库示例、测试数据和文档只使用虚构/匿名资料；禁止提交真实业务数据。
+Repository examples, fixtures and documents must use synthetic/anonymized information only; never commit real business data.
