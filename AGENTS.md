@@ -82,6 +82,19 @@ Checkpoint procedure / 固化动作：
 When a new ChatGPT/Codex session receives repo access, perform the Startup checks above and pick up the last evidence-backed unfinished item. Do not assume the model automatically loaded these files; explicitly fetch them if unavailable.
 新对话需要主动从 GitHub 读取这三个入口文件，并重新核实 PR/代码事实；仅靠聊天记忆无法保证自动注入。
 
+## Documentation hygiene / 文档精简纪律
+
+- Keep only canonical product requirements, business rules, current architecture, ERP field scope, project memory and currently useful run/test instructions in the working tree.
+  工作树只保留正式需求、业务规则、当前架构、ERP 字段范围、项目记忆及仍可用的运行/测试说明。
+- Do not accumulate dated scratch plans, duplicate per-commit reports, obsolete UI concepts, repeated CI logs or raw screenshots in main. Keep historical traceability in Git commits, PR discussions and Actions artifacts.
+  main 不堆积日期草稿、重复修复报告、过时 UI 概念、重复 CI 日志或零散截图；历史追溯使用 Git 提交、PR 讨论和 Actions 产物。
+- Before deleting a document, move any still-valid approved rule into the canonical PRD/business rules/architecture and update all active references.
+  删除文档前，先把仍有效的已批准规则并入正式需求/业务规则/架构文档，并更新所有当前引用。
+- Keep screenshots only when a current defect cannot be reproduced without them; anonymize them and link them to a specific issue/PR. Do not commit screenshots as general progress records.
+  仅在当前缺陷无法复现时保留必要截图，必须匿名并关联具体 Issue/PR，不把截图当作日常进度记录提交。
+- Keep PROJECT_STATE concise (target <=200 lines); detailed chronology belongs in Git history and only substantial milestone handoffs belong in sessions.
+  PROJECT_STATE 保持精简（目标不超过 200 行）；详细历史由 Git 记录，sessions 只保留重要里程碑交接。
+
 ## Canonical memory paths / 主记忆路径
 
 - docs/ai-memory/PROJECT_STATE.md — current status / 当前状态

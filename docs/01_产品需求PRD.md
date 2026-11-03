@@ -1,9 +1,9 @@
 # 01 产品需求 PRD
 
-> 文档状态：SRM V1 当前需求基线  
-> 更新日期：2026-10-08  
-> 适用阶段：M0 → V1  
-> 本文档整合项目对话中已经确认的需求、采购反馈和 M0 复盘结论。后续确认的产品变更应更新本文档；讨论过程保留在对话/PR，本文档只保留当前有效结论。
+> 文档状态：当前产品需求基线（M1 Lite 实施中）  
+> 更新日期：2026-11-03  
+> 适用范围：M1 Lite 当前实现及后续 V1 演进  
+> 本文档记录已确认的产品需求与业务边界，不作为当前功能完成或验收状态报告；实现状态以 `docs/ai-memory/PROJECT_STATE.md` 和准确 SHA 的测试证据为准。
 
 ## 1. 产品目标
 
@@ -518,11 +518,11 @@ Revision 不能被覆盖删除。
 
 只描述供应商自身报价规模。
 
-### 19.2 同物料范围总价
+### 19.2 指定供应商组同范围总价
 
-对参与比较的供应商先求“共同有效报价物料集合”，再用同一集合比较总额。
+采购员主动选择至少两家供应商组成比价组，只在该组供应商共同有效报价的 RFQ Line ID 集合上比较；不得默认使用整份 RFQ 的全部供应商交集。必须显示选中供应商、共同物料数量及范围。
 
-必须显示共同物料数量/范围。
+少于两家供应商时不计算同范围总价；选够两家但没有共同有效报价时显示“无可比项目”，不得显示误导性的 0 元总价。逐行金额按适用单价 × RFQ 数量计算，先逐行四舍五入到人民币分，再汇总；原始单价精度不得因金额显示精度而截断。明确有效报价为 0 与未报价是不同状态。
 
 ### 19.3 指定范围总价
 
@@ -625,18 +625,15 @@ M5 起开始永久保存历史，M7 负责查询/分析体验。
 
 ## 23. 技术原则
 
-M0 可以继续使用单 HTML + 浏览器内虚构数据验证交互。
+当前 M1 Lite 已采用浏览器 UI + Python 本机 HTTP 服务 + SQLite 的本地单用户架构；通过 `prototype/m1-lite/run_local.bat` 启动，浏览器访问 `http://127.0.0.1:8765/`。业务数据以 SQLite 版本化快照保存，PDF 原件独立存储并进行 SHA-256 校验；完整备份包含 SQLite 与已登记 PDF，恢复仅允许写入空白数据目录。
 
-进入 M1 前必须完成正式本地运行架构决策，重点验证：
+- 业务写入必须在服务端确认成功后才能显示已保存；版本冲突不得静默覆盖。
+- 已确认报价和历史版本不得被原位改写。
+- S4 完整备份必须同时覆盖数据库与已登记 PDF，并验证 ZIP 清单、数据库完整性及文件哈希。
+- 服务默认仅监听 `127.0.0.1`，不是公司内网共享服务。
+- 服务器化、多用户权限、SSO、ERP 实时 API 对接及生产部署属于后续阶段；不得将本地单用户架构描述为已完成企业部署。
 
-- 本地数据库的可靠持久化
-- PDF/附件文件访问与目录打包
-- 备份恢复
-- 断网运行
-- 数据升级/迁移
-- 浏览器 file:// / IndexedDB 限制
-
-正式 V1 不应把“浏览器临时存储”作为唯一业务数据保障。
+详细运行和数据目录见 `prototype/m1-lite/backend/README.md`；当前架构边界见 `docs/architecture.md`。
 
 ## 24. 数据完整性原则
 
@@ -650,9 +647,9 @@ M0 可以继续使用单 HTML + 浏览器内虚构数据验证交互。
 - 后轮漏报不是自动沿用
 - 所有业务对象使用稳定内部 ID，不依赖显示文本或行顺序
 
-## 25. M0 通过标准
+## 25. 核心业务验收原则
 
-M0 通过不是“页面看起来完整”，而是证明核心业务交互和数据语义不会明显误导采购员。
+本节保留从 M0 原型阶段形成、对 M1 Lite 及后续版本仍然有效的业务验收要求。页面完整或自动化用例通过，不等于采购员现场试用或生产部署验收通过。
 
 必须满足：
 
@@ -696,11 +693,13 @@ M0 通过不是“页面看起来完整”，而是证明核心业务交互和�
 ### 27.1 主数据自动补齐
 ### 27.1 Master-data autofill
 
-在 M1 确定主数据模型和唯一查找键，在 M2/M3 接入物料、供应商及其他录入对象的自动补齐；命中唯一结果时带出名称、单位、规格等主数据属性，未命中或多候选必须提示，不能猜测。
+主数据应以稳定且明确的唯一查找键匹配；命中唯一结果时带出名称、单位、规格等属性，未命中或多候选必须提示，不能猜测。主数据属性与本次 RFQ 数量、交期等交易字段分离。
 Define master-data models and unique lookup keys in M1, then integrate autofill for items, suppliers and other entry objects during M2/M3; populate attributes only for a unique match, and flag unknown or ambiguous matches rather than guessing.
 
 主数据补齐不覆盖用户已经手工修改的 RFQ 专属字段；物料主数据与询价数量、交付要求等交易字段严格分离。
-Master-data autofill must not overwrite user-edited RFQ transaction fields; keep item master attributes separate from inquiry quantities and delivery terms.
+Master-data matching must be unambiguous and must not overwrite buyer-edited RFQ transaction fields; keep item master attributes separate from inquiry quantities and delivery terms.
+
+> 当前实现状态（2026-11-03）：M1 Lite 已支持 ERP 核心字段导入兼容和未知原始列保留，但尚未实现 ERP API 实时主数据同步。物料/供应商是否必须先存在于主数据、未命中时是否允许临时录入，仍是待确认的业务设计问题；不得把本节目标描述为已交付功能。
 
 ### 27.2 表格列、排序与搜索
 ### 27.2 Table columns, sorting, and searching
